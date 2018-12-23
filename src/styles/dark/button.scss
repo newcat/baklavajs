@@ -1,0 +1,16 @@
+.dark-button {
+
+    background-color: $color-control-dark-background;
+    color: $color-control-dark-foreground;
+    transition: background-color $visual-transition;
+
+    padding: 0 0.5em;
+
+    &:hover {
+        background-color: $color-control-dark-hover;
+    }
+    &:active {
+        background-color: $color-primary;
+    }
+
+}

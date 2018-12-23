@@ -1,29 +1,39 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+    <div id="app">
+        <editor
+            :nodes.sync="nodes"
+            :connections.sync="connections"
+        ></editor>
+    </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import Editor from './components/Editor.vue';
+import { INode } from '@/types/node';
+import { IConnection } from '@/types/connection';
 
 @Component({
   components: {
-    HelloWorld,
-  },
+    Editor
+  }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+
+    nodes: INode[] = [
+        { id: "n1", type: "a", position: { x: 5, y: 5 }, name: "MyNode", interfaces: [] },
+        { id: "n2", type: "a", position: { x: 45, y: 45 }, name: "MyNode", interfaces: [] }
+    ];
+
+    connections: IConnection[] = [];
+
+}
 </script>
 
-<style lang="scss">
+<style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+    margin: 30px 0;
+    height: 500px;
 }
 </style>
+

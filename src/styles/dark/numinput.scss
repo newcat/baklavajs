@@ -1,0 +1,56 @@
+@import "../imports";
+
+.dark-num-input {
+    background: $color-control-dark-background;
+    color: $color-control-dark-foreground;
+    border-radius: $border-radius;
+    display: flex;
+
+    & > .__button {
+        display: flex;
+        flex: 0 0 auto;
+        width: 20px;        
+        justify-content: center;
+        align-items: center;
+        transition: background $visual-transition;
+
+        &:hover {
+            background-color: $color-control-dark-hover;
+        }
+        &:active {
+            background-color: $color-control-dark-active;
+        }
+
+    }
+
+    & > .__content {
+        display: flex;
+        flex: 1 1 auto;
+
+        &:hover {
+            background-color: $color-control-dark-hover;
+        }
+        &:active {
+            background-color: $color-control-dark-active;
+        }
+
+        & > .__label, & > .__value {
+            flex: 1 1 auto;
+            margin: 0.35em 0;
+            padding: 0 0.5em;
+        }
+
+        & > .__value {
+            text-align: right;
+        }
+
+        & > input {
+            background-color: $color-control-dark-background;
+            color: $color-control-dark-foreground;
+            caret-color: $color-primary;
+            padding: 0.35em;
+        }
+
+    }
+
+}

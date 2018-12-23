@@ -1,0 +1,27 @@
+.connection {
+    stroke: white;
+    stroke-width: 2px;
+    fill: none;
+
+    &.--temporary {
+        stroke-width: 4px;
+        stroke-dasharray: 5 5;
+        stroke-dashoffset: 0;
+        animation: dash 1s linear infinite;
+    }
+
+    @keyframes dash {
+        to {
+            stroke-dashoffset: 20;
+        }
+    }
+
+    &.--allowed {
+        stroke: green;
+    }
+
+    &.--forbidden {
+        stroke: red;
+    }
+
+}

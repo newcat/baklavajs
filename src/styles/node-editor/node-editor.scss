@@ -1,0 +1,34 @@
+@import "../imports";
+@import "./node";
+@import "./node-interface";
+@import "./connection";
+
+.node-editor {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    outline: none !important;
+    @include backgroundpattern();
+
+    & > * {
+        user-select: none;
+    }
+
+}
+
+.ignore-mouse * {
+    pointer-events: none;
+}
+.ignore-mouse .__port {
+    pointer-events: all;
+}
+
+.connections-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}

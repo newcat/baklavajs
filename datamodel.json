@@ -1,0 +1,44 @@
+{
+    "nodes": [
+        {
+            "id": "5s39abc",
+            "type": "myNode",
+            "name": "Custom Name",
+            "position": {
+                "x": 500,
+                "y": 300
+            },
+            "state": {
+                "this": "field will be ignored",
+                "so": "you can store arbitrary values in here"
+            },
+            "interfaces": [
+                {
+                    "id": "jds82js",
+                    "type": "number",
+                    "name": "Multiplier",
+                    "isInput": true
+                },
+                {
+                    "id": "kldfg933",
+                    "type": "string",
+                    "name": "Result",
+                    "isInput": false
+                }
+            ]
+        }
+    ],
+    "connections": [
+        {
+            "id": "8dja33x",
+            "from": {
+                "node": "5s39abc",
+                "interface": "kldfg933"
+            },
+            "to": {
+                "node": "5s39abc",
+                "interface": "jds82js"
+            }
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "defaultSeverity": "warn",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "trailing-comma": false,
+        "ordered-imports": false,
+        "object-literal-sort-keys": false,
+        "member-access": false,
+        "arrow-parens": false
+    },
+    "rulesDirectory": []
+}

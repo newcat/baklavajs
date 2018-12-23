@@ -1,0 +1,91 @@
+@import "../imports";
+
+.dark-select {
+    width: 100%;
+    position: relative;
+    color: $color-control-dark-foreground;
+
+    &.--open > .__selected {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    &.--open > .__selected > .__icon {
+        transform: rotate(180deg);
+    }
+
+    & > .__selected {
+        background-color: $color-control-dark-background;
+        padding: 0.35em 1em;
+        border-radius: $border-radius;
+        transition: background $visual-transition;
+        min-height: 1.7em;
+        display: flex;
+
+        &:hover {
+            background: $color-control-dark-hover;
+        }
+        &:active {
+            background: $color-control-dark-active;
+        }
+
+        & > .__text {
+            flex: 1 0 auto;
+        }
+
+        & > .__icon {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.25s ease;
+        }
+
+    }
+
+    & > .__dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        background-color: #000000AA;
+        filter: drop-shadow(0 0 4px black);
+        border-radius: 0 0 $border-radius $border-radius;
+
+        max-height: 15em;
+        overflow-y: scroll; 
+        &::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #FF0000;
+        }
+        
+        & > .item {
+            padding: 0.35em;
+            padding-left: 1em;
+            transition: background 0.05s linear;
+            
+            &:not(.--header):not(.--active) {
+                &:hover {
+                    background: $color-control-dark-hover;
+                }
+            }
+
+            &.--active {
+                background: $color-primary;
+            }
+
+            &.--header {
+                color: gray;
+                border-bottom: 1px solid gray;
+                padding: 0.5em 0.35em;
+                padding-left: 1em;
+            }
+
+        }
+
+    }
+
+}

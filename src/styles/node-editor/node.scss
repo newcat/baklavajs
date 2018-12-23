@@ -1,0 +1,31 @@
+.node {
+    max-width: 20rem;
+    font-size: 0.8rem;
+    background: #3f3f3fcc;
+    color: white;
+    border-radius: 4px;
+    position: absolute;
+    filter: drop-shadow(0 0 3px #000000cc);
+
+    &.--selected {
+        z-index: 5;
+        box-shadow: 0 0 0 1px orange;
+    }
+
+    & > .__title {
+        background: black;
+        color: white;
+        padding: 0.4em 0.75em;
+        border-radius: 4px 4px 0 0;
+    }
+
+    & > .__content {
+        padding: 0.75em;
+
+        & > div {
+            margin: 0.5em 0;
+        }
+
+    }
+
+}
