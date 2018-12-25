@@ -24,7 +24,6 @@
             :data="node"
             :selected="selectedNode === node"
             @select="selectNode(node)"
-            @input="updateNode(node.id, $event)"
         >
         </node>
     </div>
@@ -73,14 +72,6 @@ export default class EditorView extends Vue {
 
     get connections() {
         return this.model ? this.model.connections : [];
-    }
-
-    registerNode(id: string, node: NodeView) {
-        // this.$set(this.nodes, id, node);
-    }
-
-    unregisterNode(id: string) {
-        // this.$delete(this.nodes, id);
     }
 
     hoveredOver(ni: NodeInterface|undefined) {
@@ -152,13 +143,6 @@ export default class EditorView extends Vue {
 
     selectNode(node: Node) {
         this.selectedNode = node;
-    }
-
-    updateNode(id: string, value: Node) {
-        /*const copy = this.nodes.slice();
-        const index = copy.findIndex((x) => x.id === id);
-        copy[index] = value;
-        this.$emit("update:nodes", copy);*/
     }
 
 }

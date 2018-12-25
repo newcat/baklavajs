@@ -19,7 +19,6 @@
             <node-option
                 v-for="(option, key) in (nodedata.Options)"
                 :key="key"
-                :rname="'Options.' + key"
                 :data="option"
             ></node-option>
             -->
@@ -52,9 +51,6 @@ export default class NodeView extends Vue {
     @Prop({ type: Object })
     data!: Node;
 
-    @Prop({ type: String })
-    id!: string;
-
     @Prop({ type: Boolean, default: false })
     selected!: boolean;
 
@@ -81,14 +77,6 @@ export default class NodeView extends Vue {
         return this.data.interfaces.filter((i) => i.isInput);
     }
 
-    mounted() {
-        this.parent.registerNode(this.id, this);
-    }
-
-    beforeDestroy() {
-        this.parent.unregisterNode(this.id);
-    }
-
     startDrag() {
         this.dragging = true;
         document.addEventListener("mousemove", this.handleMove);
@@ -108,14 +96,6 @@ export default class NodeView extends Vue {
 
     handleMove(ev: MouseEvent) {
         if (this.dragging) {
-            /*this.$emit("input", {
-                ...this.data,
-                position: {
-                    x: this.data.position.x + ev.movementX,
-                    y: this.data.position.y + ev.movementY
-                }
-            });*/
-            this.$emit("moved");
             this.data.position.x += ev.movementX;
             this.data.position.y += ev.movementY;
         }
