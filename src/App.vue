@@ -1,21 +1,22 @@
 <template>
     <div id="app">
-        <editor
-            :nodes.sync="nodes"
-            :connections.sync="connections"
-        ></editor>
+        <editor-view
+            :model="editor"
+        ></editor-view>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Editor from './components/Editor.vue';
-import { INode } from '@/types/node';
-import { IConnection } from '@/types/connection';
+import { Component, Vue } from "vue-property-decorator";
+import EditorView from "./components/Editor.vue";
+import { INode } from "@/types/node";
+import { IConnection } from "@/types/connection";
+import Editor from "@/model/editor";
+import TestNode from "@/nodes/TestNode";
 
 @Component({
   components: {
-    Editor
+    EditorView
   }
 })
 export default class App extends Vue {
@@ -26,6 +27,12 @@ export default class App extends Vue {
     ];
 
     connections: IConnection[] = [];
+
+    editor = new Editor();
+
+    mounted() {
+        this.editor.addNode(new TestNode());
+    }
 
 }
 </script>

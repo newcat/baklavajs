@@ -3,9 +3,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import ConnectionView from "./ConnectionView.vue";
-import { IConnection } from "@/types/connection";
+import Connection from "@/model/connection";
 import resolveDom from "@/utility/domResolver";
 
 @Component({
@@ -16,10 +16,12 @@ import resolveDom from "@/utility/domResolver";
 export default class ConnectionWrapper extends Vue {
 
     @Prop({ type: Object })
-    connection!: IConnection;
+    connection!: Connection;
 
-    get d() {
+    d = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
+    @Watch("connection", { immediate: true, deep: true })
+    updateCoords() {
         const from = resolveDom(this.connection.from);
         const to = resolveDom(this.connection.to);
         if (from.node && from.interface && to.node && to.interface) {
@@ -27,9 +29,9 @@ export default class ConnectionWrapper extends Vue {
             const y1 = from.node.offsetTop + from.interface.offsetTop + from.interface.clientHeight / 2;
             const x2 = to.node.offsetLeft;
             const y2 = to.node.offsetTop + to.interface.offsetTop + to.interface.clientHeight / 2;
-            return { x1, y1, x2, y2 };
+            this.d = { x1, y1, x2, y2 };
         } else {
-            return { x1: 0, y1: 0, x2: 0, y2: 0 };
+            this.d = { x1: 0, y1: 0, x2: 0, y2: 0 };
         }
     }
 

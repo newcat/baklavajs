@@ -1,5 +1,5 @@
 <template>
-    <div :class="['node', { '--selected': selected }]" :style="styles">
+    <div :id="data.id" :class="['node', { '--selected': selected }]" :style="styles">
 
         <div class="__title" @mousedown.prevent.stop="startDrag">
             {{ data.name }}
@@ -108,13 +108,16 @@ export default class Node extends Vue {
 
     handleMove(ev: MouseEvent) {
         if (this.dragging) {
-            this.$emit("input", {
+            /*this.$emit("input", {
                 ...this.data,
                 position: {
                     x: this.data.position.x + ev.movementX,
                     y: this.data.position.y + ev.movementY
                 }
-            });
+            });*/
+            this.$emit("moved");
+            this.data.position.x += ev.movementX;
+            this.data.position.y += ev.movementY;
         }
     }
 

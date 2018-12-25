@@ -1,4 +1,4 @@
-import { INodeInterfacePair } from "./connection";
+import { INodeInterfacePair } from "@/model/connection";
 
 export enum TemporaryConnectionState {
     NONE,

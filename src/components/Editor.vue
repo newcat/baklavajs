@@ -15,8 +15,7 @@
             </g>
             <temp-connection
                 v-if="temporaryConnection"
-                :data="temporaryConnection"
-                :valid="temporaryConnectionValid"
+                :connection="temporaryConnection"
             ></temp-connection>
         </svg>
         <node
@@ -34,54 +33,57 @@
 <script lang="ts">
 import { Component, Vue, Prop, Provide } from "vue-property-decorator";
 
-import { INode } from "@/types/node";
-import { IConnection } from "@/types/connection";
+import Editor from "@/model/editor";
+import Node from "@/model/node";
+import Connection from "@/model/connection";
+import NodeInterface from "@/model/nodeInterface";
 
-import Node from "./node/Node.vue";
-import NodeInterface from "./node/NodeInterface.vue";
-import Connection from "./connection/ConnectionWrapper.vue";
-import TempConnection from "./connection/TemporaryConnection.vue";
+import NodeView from "./node/Node.vue";
+import NodeInterfaceView from "./node/NodeInterface.vue";
+import ConnectionView from "./connection/ConnectionWrapper.vue";
+import TempConnectionView from "./connection/TemporaryConnection.vue";
+
 import { ITemporaryConnection, TemporaryConnectionState } from "@/types/temporaryConnection";
-import generateId from "@/utility/idGenerator";
-import { INodeInterface } from "@/types/nodeInterface";
 
 @Component({
     components: {
-        "node": Node,
-        "connection": Connection,
-        "temp-connection": TempConnection
+        "node": NodeView,
+        "connection": ConnectionView,
+        "temp-connection": TempConnectionView
     }
 })
-export default class Editor extends Vue {
+export default class EditorView extends Vue {
 
-    @Prop({ type: Array, default: () => [] })
-    nodes!: INode[];
-
-    @Prop({ type: Array, default: () => [] })
-    connections!: IConnection[];
-
-    @Prop({ type: Boolean, default: false })
-    temporaryConnectionValid!: boolean;
+    @Prop({ type: Object })
+    model!: Editor;
 
     xOffset = 0;
     yOffset = 0;
 
     temporaryConnection: ITemporaryConnection|null = null;
-    hoveringOver?: INodeInterface|null = null;
+    hoveringOver?: NodeInterface|null = null;
     selectedNodeId: string = "";
 
     @Provide("editor")
-    nodeeditor: Editor = this;
+    nodeeditor: EditorView = this;
 
-    registerNode(id: string, node: Node) {
-        this.$set(this.nodes, id, node);
+    get nodes() {
+        return this.model ? this.model.nodes : [];
+    }
+
+    get connections() {
+        return this.model ? this.model.connections : [];
+    }
+
+    registerNode(id: string, node: NodeView) {
+        // this.$set(this.nodes, id, node);
     }
 
     unregisterNode(id: string) {
-        this.$delete(this.nodes, id);
+        // this.$delete(this.nodes, id);
     }
 
-    hoveredOver(ni: INodeInterface|undefined) {
+    hoveredOver(ni: NodeInterface|undefined) {
         this.hoveringOver = ni;
         if (ni && this.temporaryConnection && this.temporaryConnection.from.interface !== ni) {
             this.temporaryConnection.to = {
@@ -120,7 +122,7 @@ export default class Editor extends Vue {
                 this.temporaryConnection = {
                     status: TemporaryConnectionState.NONE,
                     from: {
-                        node: this.hoveringOver.parent,
+                        node: this.hoveringOver.parent as Node,
                         interface: this.hoveringOver
                     }
                 };
@@ -137,11 +139,8 @@ export default class Editor extends Vue {
     mouseUp(ev: MouseEvent) {
         const tc = this.temporaryConnection;
         if (tc && this.hoveringOver) {
-            const newConnections = this.connections.concat([{
-                id: generateId(),
-                from: tc.from,
-                to: tc.to!
-            }]);
+            this.model.connections.push(new Connection(tc.from, tc.to!));
+            const newConnections = this.connections.concat([]);
             this.$emit("update:connections", newConnections);
         }
         this.temporaryConnection = null;
@@ -157,11 +156,11 @@ export default class Editor extends Vue {
         this.selectedNodeId = id;
     }
 
-    updateNode(id: string, value: INode) {
-        const copy = this.nodes.slice();
+    updateNode(id: string, value: Node) {
+        /*const copy = this.nodes.slice();
         const index = copy.findIndex((x) => x.id === id);
         copy[index] = value;
-        this.$emit("update:nodes", copy);
+        this.$emit("update:nodes", copy);*/
     }
 
 }

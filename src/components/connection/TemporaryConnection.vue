@@ -9,11 +9,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+
 import ConnectionView from "./ConnectionView.vue";
-import { IConnection, INodeInterfacePair } from "@/types/connection";
-import { INodeInterface } from "@/types/nodeInterface";
-import { INode } from "@/types/node";
-import { ITemporaryConnection } from "@/types/temporaryConnection";
+import { INodeInterfacePair } from "@/model/connection";
+import { ITemporaryConnection, TemporaryConnectionState } from "@/types/temporaryConnection";
 import resolveDom from "@/utility/domResolver";
 
 @Component({
@@ -26,7 +25,17 @@ export default class TemporaryConnection extends Vue {
     @Prop({ type: Object })
     connection!: ITemporaryConnection;
 
+    get status() {
+        return this.connection ? this.connection.status : TemporaryConnectionState.NONE;
+    }
+
     get d() {
+        if (!this.connection) {
+            return {
+                input: { x: 0, y: 0 },
+                output: { x: 0, y: 0 }
+            };
+        }
 
         const start = this.getCoords(this.connection.from);
         const end = this.connection.to ?
