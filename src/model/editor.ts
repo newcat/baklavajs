@@ -13,6 +13,7 @@ export default class Editor {
         this.nodeTypes[typeName] = type;
     }
 
+    /* Nodes */
     public addNode(typeNameOrInstance: string|Node) {
         let n = typeNameOrInstance;
         if (typeof(n) === "string") {
@@ -22,6 +23,23 @@ export default class Editor {
             }
         } else {
             this.nodes.push(n);
+        }
+    }
+
+    public removeNode(n: Node) {
+        if (this.nodes.includes(n)) {
+            this.nodes.splice(this.nodes.indexOf(n), 1);
+        }
+    }
+
+    /* Connections */
+    public addConnection(c: Connection) {
+        this.connections.push(c);
+    }
+
+    public removeConnection(c: Connection) {
+        if (this.connections.includes(c)) {
+            this.connections.splice(this.connections.indexOf(c), 1);
         }
     }
 

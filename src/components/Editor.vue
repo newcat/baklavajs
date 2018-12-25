@@ -22,8 +22,8 @@
             v-for="node in nodes"
             :key="node.id"
             :data="node"
-            :selected="selectedNodeId === node.id"
-            @select="selectNode(node.id)"
+            :selected="selectedNode === node"
+            @select="selectNode(node)"
             @input="updateNode(node.id, $event)"
         >
         </node>
@@ -62,7 +62,7 @@ export default class EditorView extends Vue {
 
     temporaryConnection: ITemporaryConnection|null = null;
     hoveringOver?: NodeInterface|null = null;
-    selectedNodeId: string = "";
+    selectedNode?: Node|null = null;
 
     @Provide("editor")
     nodeeditor: EditorView = this;
@@ -117,7 +117,7 @@ export default class EditorView extends Vue {
                         interface: connection.from.interface
                     }
                 };
-                this.$emit("deleteConnection", connection);
+                this.model.removeConnection(connection);
             } else {
                 this.temporaryConnection = {
                     status: TemporaryConnectionState.NONE,
@@ -132,28 +132,26 @@ export default class EditorView extends Vue {
             this.$set(this.temporaryConnection as any, "my", ev.y);
 
         } else {
-            this.selectedNodeId = "";
+            this.selectedNode = null;
         }
     }
 
     mouseUp(ev: MouseEvent) {
         const tc = this.temporaryConnection;
         if (tc && this.hoveringOver) {
-            this.model.connections.push(new Connection(tc.from, tc.to!));
-            const newConnections = this.connections.concat([]);
-            this.$emit("update:connections", newConnections);
+            this.model.addConnection(new Connection(tc.from, tc.to!));
         }
         this.temporaryConnection = null;
     }
 
     keyDown(ev: KeyboardEvent) {
-        if (ev.key === "Delete" && this.selectedNodeId) {
-            this.$emit("deleteNode", this.selectedNodeId);
+        if (ev.key === "Delete" && this.selectedNode) {
+            this.model.removeNode(this.selectedNode);
         }
     }
 
-    selectNode(id: string) {
-        this.selectedNodeId = id;
+    selectNode(node: Node) {
+        this.selectedNode = node;
     }
 
     updateNode(id: string, value: Node) {

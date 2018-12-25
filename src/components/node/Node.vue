@@ -40,17 +40,17 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import NodeInterface from "./NodeInterface.vue";
 import NodeEditor from "../Editor.vue";
-import { INode } from "@/types/node";
+import Node from "@/model/node";
 
 @Component({
     components: {
         "node-interface": NodeInterface
     }
 })
-export default class Node extends Vue {
+export default class NodeView extends Vue {
 
     @Prop({ type: Object })
-    data!: INode;
+    data!: Node;
 
     @Prop({ type: String })
     id!: string;

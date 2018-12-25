@@ -9,8 +9,6 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import EditorView from "./components/Editor.vue";
-import { INode } from "@/types/node";
-import { IConnection } from "@/types/connection";
 import Editor from "@/model/editor";
 import TestNode from "@/nodes/TestNode";
 
@@ -21,16 +19,11 @@ import TestNode from "@/nodes/TestNode";
 })
 export default class App extends Vue {
 
-    nodes: INode[] = [
-        { id: "n1", type: "a", position: { x: 5, y: 5 }, name: "MyNode", interfaces: [] },
-        { id: "n2", type: "a", position: { x: 45, y: 45 }, name: "MyNode", interfaces: [] }
-    ];
-
-    connections: IConnection[] = [];
-
     editor = new Editor();
 
     mounted() {
+        this.editor.addNode(new TestNode());
+        this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
     }
 
