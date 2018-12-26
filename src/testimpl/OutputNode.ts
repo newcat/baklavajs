@@ -12,4 +12,8 @@ export default class OutputNode extends Node {
         ];
     }
 
+    public getOptions() {
+        return {};
+    }
+
 }

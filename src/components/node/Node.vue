@@ -15,13 +15,12 @@
             ></node-interface>
 
             <!-- Options -->
-            <!-- TODO
-            <node-option
-                v-for="(option, key) in (nodedata.Options)"
+            <component
+                v-for="(option, key) in (options)"
                 :key="key"
-                :data="option"
-            ></node-option>
-            -->
+                :is="option"
+                :name="key"
+            ></component>
 
             <!-- Inputs -->
             <node-interface
@@ -75,6 +74,10 @@ export default class NodeView extends Vue {
 
     get inputs() {
         return this.data.interfaces.filter((i) => i.isInput);
+    }
+
+    get options() {
+        return this.data.options;
     }
 
     startDrag() {

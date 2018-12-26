@@ -10,8 +10,9 @@
 import { Component, Vue } from "vue-property-decorator";
 import EditorView from "./components/Editor.vue";
 import Editor from "@/model/editor";
-import TestNode from "@/nodes/TestNode";
-import OutputNode from "@/nodes/OutputNode";
+
+import TestNode from "@/testimpl/TestNode";
+import OutputNode from "@/testimpl/OutputNode";
 
 @Component({
   components: {

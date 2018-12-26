@@ -1,5 +1,6 @@
 import Node from "@/model/node";
 import NodeInterface from "@/model/nodeInterface";
+import TestOption from "./TestOption.vue";
 
 export default class TestNode extends Node {
 
@@ -11,6 +12,12 @@ export default class TestNode extends Node {
             new NodeInterface(this, true, "boolean", "InputIF"),
             new NodeInterface(this, false, "boolean", "OutputIF")
         ];
+    }
+
+    public getOptions() {
+        return {
+            test: TestOption
+        };
     }
 
 }
