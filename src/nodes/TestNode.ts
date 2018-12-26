@@ -3,11 +3,8 @@ import NodeInterface from "@/model/nodeInterface";
 
 export default class TestNode extends Node {
 
-    public static type = "TestNode";
-
-    public constructor() {
-        super(TestNode.type);
-    }
+    public type = "TestNode";
+    public name = this.type;
 
     public getInterfaces(): NodeInterface[] {
         return [

@@ -11,6 +11,7 @@ import { Component, Vue } from "vue-property-decorator";
 import EditorView from "./components/Editor.vue";
 import Editor from "@/model/editor";
 import TestNode from "@/nodes/TestNode";
+import OutputNode from "@/nodes/OutputNode";
 
 @Component({
   components: {
@@ -25,6 +26,7 @@ export default class App extends Vue {
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
+        this.editor.addNode(new OutputNode());
     }
 
 }
