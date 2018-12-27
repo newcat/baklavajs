@@ -9,23 +9,25 @@
             
             <!-- Outputs -->
             <node-interface
-                v-for="output in outputs"
+                v-for="(output, name) in outputs"
                 :key="output.id"
+                :name="name"
                 :data="output"
             ></node-interface>
 
             <!-- Options -->
             <component
-                v-for="(option, key) in (options)"
+                v-for="(optionView, key) in optionViews"
                 :key="key"
-                :is="option"
-                :name="key"
+                :is="optionView"
+                v-model="data.options[key]"
             ></component>
 
             <!-- Inputs -->
             <node-interface
-                v-for="input in inputs"
+                v-for="(input, name) in inputs"
                 :key="input.id"
+                :name="name"
                 :data="input"
             ></node-interface>
 
@@ -36,6 +38,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import _ from "lodash";
+
 import NodeInterface from "./NodeInterface.vue";
 import NodeEditor from "../Editor.vue";
 import Node from "@/model/node";
@@ -69,15 +73,15 @@ export default class NodeView extends Vue {
     }
 
     get outputs() {
-        return this.data.interfaces.filter((i) => !i.isInput);
+        return _.pickBy(this.data.interfaces, (i) => !i.isInput);
     }
 
     get inputs() {
-        return this.data.interfaces.filter((i) => i.isInput);
+        return _.pickBy(this.data.interfaces, (i) => i.isInput);
     }
 
-    get options() {
-        return this.data.options;
+    get optionViews() {
+        return this.data.optionViews;
     }
 
     startDrag() {

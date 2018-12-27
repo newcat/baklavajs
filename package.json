@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build-lib": "vue-cli-service build --target lib --name baklavajs ./src/components/Editor.vue"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.119",
+    "lodash": "^4.17.11",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0"

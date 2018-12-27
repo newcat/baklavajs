@@ -26,12 +26,7 @@ export default class NodeTreeBuilder {
         // DFS for initial tree building and cycle detection
         const outputs: Node[] = nodes.filter((n) => n.type === "OutputNode");
         const root: ITreeNode = {
-            children: [...new Set(
-                    outputs
-                        .map((o) => this.adjacency.get(o))
-                        .filter((nArr) => !!nArr)
-                        .flatMap((nArr) => nArr!)
-                )].map((n) => ({ n, children: new Array<ITreeNode>() }))
+            children: outputs.map((o) => ({ n: o, children: [] }))
         };
 
         this.findDescendants(root, []);

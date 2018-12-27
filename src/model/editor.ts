@@ -64,6 +64,13 @@ export default class Editor {
         }
     }
 
+    /* Calculate */
+    public async calculate() {
+        for (const n of this._nodeCalculationOrder) {
+            await n.calculate();
+        }
+    }
+
     private calculateNodeTree() {
         const ntb = new NodeTreeBuilder();
         this._nodeCalculationOrder = ntb.calculateTree(this.nodes, this.connections);

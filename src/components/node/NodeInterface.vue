@@ -1,7 +1,7 @@
 <template>
     <div :id="data.id" :class="['node-interface', typeClass, { '--input': data.isInput, '--output': !data.isInput }]">
         <div class="__port" @mouseover="startHover" @mouseout="endHover"></div>
-        <span class="align-middle">{{ data.name }}</span>
+        <span class="align-middle">{{ name }}</span>
     </div>
 </template>
 
@@ -15,6 +15,9 @@ export default class NodeInterfaceView extends Vue {
 
     @Prop({ type: Object, default: () => ({}) })
     data!: NodeInterface;
+
+    @Prop({ type: String, default: "" })
+    name!: string;
 
     @Prop({ type: Boolean, default: false })
     isConnected!: boolean;

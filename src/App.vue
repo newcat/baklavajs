@@ -3,6 +3,7 @@
         <editor-view
             :model="editor"
         ></editor-view>
+        <button @click="calculate">Calculate</button>
     </div>
 </template>
 
@@ -28,6 +29,10 @@ export default class App extends Vue {
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new OutputNode());
+    }
+
+    calculate() {
+        this.editor.calculate();
     }
 
 }

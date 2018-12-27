@@ -17,6 +17,16 @@ export default class Connection {
         this.id = generateId();
         this.from = from;
         this.to = to;
+        this.from.interface.registerListener(this, this.transferValue);
+        this.transferValue(this.from.interface.value);
+    }
+
+    public destruct() {
+        this.from.interface.unregisterListener(this.transferValue);
+    }
+
+    private transferValue(v: any) {
+        this.to.interface.value = v;
     }
 
 }

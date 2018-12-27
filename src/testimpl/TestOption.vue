@@ -1,28 +1,17 @@
 <template>
-    <div>
-        <p>{{ data }}</p>
-        <input v-model="data" />
-    </div>
+    <input :value="value" @input="$emit('input', $event.target.value)" />
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import INodeOption from "@/model/nodeOption";
 
 @Component
-export default class TestOption extends Vue implements INodeOption {
+export default class TestOption extends Vue {
 
     type = "TestOption";
 
-    data = "";
-
-    loadState(state: string) {
-        this.data = state;
-    }
-
-    getState() {
-        return this.data;
-    }
+    @Prop()
+    value!: string;
 
 }
 </script>

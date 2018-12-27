@@ -1,9 +1,8 @@
-import Vue, { VueConstructor } from "vue";
+import { VueConstructor } from "vue";
 import generateId from "@/utility/idGenerator";
 import NodeInterface from "./nodeInterface";
-import INodeOption from "./nodeOption";
 
-type OptionsType = Record<string, VueConstructor<Vue & INodeOption>>;
+type OptionViewsObject = StringRecord<VueConstructor>;
 
 export default abstract class Node {
 
@@ -11,18 +10,32 @@ export default abstract class Node {
     public abstract name: string;
 
     public id: string;
-    public interfaces: NodeInterface[] = [];
-    public options: OptionsType;
+    public interfaces: StringRecord<NodeInterface>;
+    public optionViews: OptionViewsObject;
+    public options: StringRecord<any>;
 
     public position = { x: 0, y: 0 };
+    public state = {};
 
     public constructor() {
         this.id = "node_" + generateId();
         this.interfaces = this.getInterfaces();
-        this.options = this.getOptions() as OptionsType;
+        this.optionViews = this.getOptions();
+        this.options = Object.keys(this.optionViews).reduce((p, k) => {
+            p[k] = null;
+            return p;
+        }, {} as StringRecord<any>);
     }
 
-    protected abstract getInterfaces(): NodeInterface[];
-    protected abstract getOptions(): Record<string, VueConstructor>;
+    /**
+     * The default implementation does nothing.
+     * Overwrite this method to do calculation.
+     */
+    public calculate() {
+        // Empty
+    }
+
+    protected abstract getInterfaces(): StringRecord<NodeInterface>;
+    protected abstract getOptions(): OptionViewsObject;
 
 }
