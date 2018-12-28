@@ -1,5 +1,7 @@
 <template>
-    <input type="text" class="dark-input" :value="value" @input="$emit('input', $event.target.value)">
+    <div>
+        <input type="text" class="dark-input" :value="value" @input="$emit('input', $event.target.value)">
+    </div>
 </template>
 
 <script lang="ts">

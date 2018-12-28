@@ -19,6 +19,7 @@
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "typescript": "^3.0.0",
+    "v-click-outside": "^2.0.2",
     "vue-template-compiler": "^2.5.17"
   },
   "postcss": {

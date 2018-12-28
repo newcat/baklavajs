@@ -4,7 +4,8 @@
     caret-color: $color-primary;
     border: none;
     border-radius: $border-radius;
-    padding: 0.35em;
+    padding: 0.35em 1em;
+    width: 100%;
 
     &:hover {
         background-color: $color-control-dark-hover;

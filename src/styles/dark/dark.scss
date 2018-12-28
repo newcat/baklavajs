@@ -1,3 +1,9 @@
+.dark-foreground {
+    color: $color-control-dark-foreground;
+    fill: $color-control-dark-foreground;
+    stroke: $color-control-dark-foreground;
+}
+
 @import "./button";
 @import "./checkbox";
 @import "./color-picker";

@@ -19,6 +19,7 @@
             <component
                 v-for="(optionView, key) in optionViews"
                 :key="key"
+                :name="key"
                 :is="optionView"
                 v-model="data.options[key]"
             ></component>
