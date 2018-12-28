@@ -1,0 +1,16 @@
+.dark-input {
+    background-color: $color-control-dark-background;
+    color: $color-control-dark-foreground;
+    caret-color: $color-primary;
+    border: none;
+    border-radius: $border-radius;
+    padding: 0.35em;
+
+    &:hover {
+        background-color: $color-control-dark-hover;
+    }
+    &:active {
+        background-color: $color-control-dark-active;
+    }
+
+}

@@ -1,6 +1,6 @@
 import Node from "@/model/node";
 import NodeInterface from "@/model/nodeInterface";
-import TestOption from "./TestOption.vue";
+import InputOption from "@/options/InputOption.vue";
 
 export default class TestNode extends Node {
 
@@ -8,20 +8,19 @@ export default class TestNode extends Node {
     public name = this.type;
 
     public calculate() {
-        const optValue = this.options.test;
-        this.interfaces.OutputIF.value = optValue;
+        this.interfaces.OutputIF.value = this.interfaces.InputIF.value;
     }
 
     public getInterfaces(): StringRecord<NodeInterface> {
         return {
-            InputIF: new NodeInterface(this, true, "boolean"),
+            InputIF: new NodeInterface(this, true, "boolean", InputOption),
             OutputIF: new NodeInterface(this, false, "boolean")
         };
     }
 
     public getOptions() {
         return {
-            test: TestOption
+            test: InputOption
         };
     }
 

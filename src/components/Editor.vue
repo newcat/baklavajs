@@ -82,9 +82,13 @@ export default class EditorView extends Vue {
                 interface: ni
             };
             this.$emit("checkTemporaryConnection", this.temporaryConnection);
+            this.connections
+                .filter((c) => c.to.interface === ni)
+                .forEach((c) => { c.isInDanger = true; });
         } else if (!ni && this.temporaryConnection) {
             this.$set(this.temporaryConnection, "to", undefined);
             this.$emit("checkTemporaryConnection");
+            this.connections.forEach((c) => { c.isInDanger = false; });
         }
     }
 

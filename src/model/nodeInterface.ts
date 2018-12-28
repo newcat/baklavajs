@@ -1,5 +1,6 @@
 import Node from "./node";
 import generateId from "@/utility/idGenerator";
+import { VueConstructor } from "vue";
 
 type ListenerType = (value: any) => void;
 interface IListener {
@@ -11,8 +12,10 @@ export default class NodeInterface {
 
     public id: string;
     public isInput: boolean;
+    public isConnected = false;
     public type: string;
     public parent: Node;
+    public option?: VueConstructor;
 
     private listeners: IListener[] = [];
     private _value: any;
@@ -25,11 +28,12 @@ export default class NodeInterface {
         return this._value;
     }
 
-    public constructor(parent: Node, isInput: boolean, type: string) {
+    public constructor(parent: Node, isInput: boolean, type: string, option?: VueConstructor) {
         this.parent = parent;
         this.isInput = isInput;
         this.id = "ni_" + generateId();
         this.type = type;
+        this.option = option;
     }
 
     /* Listeners */

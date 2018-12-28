@@ -1,7 +1,13 @@
 <template>
-    <div :id="data.id" :class="['node-interface', typeClass, { '--input': data.isInput, '--output': !data.isInput }]">
+    <div :id="data.id" :class="classes">
         <div class="__port" @mouseover="startHover" @mouseout="endHover"></div>
         <span class="align-middle">{{ name }}</span>
+        <component
+            v-show="!data.isConnected && data.option"
+            :is="data.option"
+            :value="data.value"
+            @input="data.value = $event"
+        ></component>
     </div>
 </template>
 
@@ -19,14 +25,16 @@ export default class NodeInterfaceView extends Vue {
     @Prop({ type: String, default: "" })
     name!: string;
 
-    @Prop({ type: Boolean, default: false })
-    isConnected!: boolean;
-
     @Inject()
     editor!: Editor;
 
-    get typeClass() {
-        return "--iftype-" + this.data.type;
+    get classes() {
+        return {
+            "node-interface": true,
+            ["--iftype-" + this.data.type]: true,
+            "--input": this.data.isInput,
+            "--output": !this.data.isInput
+        };
     }
 
     startHover() {

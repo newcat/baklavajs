@@ -43,24 +43,34 @@ export default class Editor {
     /* Connections */
     public addConnection(c: Connection) {
 
+        if (c.from.interface.isInput || !c.to.interface.isInput) {
+            throw new Error("Connections are only allowed from input to output interface");
+        } else if (c.from.node === c.to.node) {
+            throw new Error("Connections must be between two separate nodes.");
+        }
+
+        // TODO
         // check whether this connection is possible or
         // would result in a cycle in the graph
-        try {
-            /*const copy = this.connections.slice();
-            copy.push(c);*/
-            this.connections.push(c);
-            this.calculateNodeTree();
-        } catch {
-            // tslint:disable-next-line:no-console
-            console.warn("Detected cycle");
-        }
+
+        // Delete all other connections to the target interface
+        // as only one connection to an input interface is allowed
+        this.connections
+            .filter((conn) => conn.to.interface === c.to.interface)
+            .forEach((conn) => this.removeConnection(conn, false));
+
+        this.connections.push(c);
+        this.calculateNodeTree();
 
     }
 
-    public removeConnection(c: Connection) {
+    public removeConnection(c: Connection, calculateNodeTree = true) {
         if (this.connections.includes(c)) {
+            c.destruct();
             this.connections.splice(this.connections.indexOf(c), 1);
-            this.calculateNodeTree();
+            if (this.calculateNodeTree) {
+                this.calculateNodeTree();
+            }
         }
     }
 
