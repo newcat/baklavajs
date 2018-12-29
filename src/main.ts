@@ -3,7 +3,7 @@ import App from "./App.vue";
 
 Vue.config.productionTip = false;
 
-import "@/styles/styles.scss";
+import "@/testimpl/styles.scss";
 
 new Vue({
   render: h => h(App),

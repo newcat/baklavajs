@@ -1,0 +1,10 @@
+@import "../styles/variables.scss";
+
+$iftypes: (
+    boolean: darkcyan,
+    color: gold,
+    color-array: gold,
+    number: gray
+);
+
+@import "../styles/styles.scss";

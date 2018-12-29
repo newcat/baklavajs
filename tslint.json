@@ -10,7 +10,8 @@
         "object-literal-sort-keys": false,
         "member-access": false,
         "arrow-parens": false,
-        "variable-name": false
+        "variable-name": false,
+        "member-ordering": false
     },
     "rulesDirectory": []
 }

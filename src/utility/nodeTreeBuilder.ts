@@ -1,5 +1,5 @@
 import Node from "@/model/node";
-import Connection from "@/model/connection";
+import { IConnection } from "@/model/connection";
 
 interface ITreeNode {
     n?: Node;
@@ -10,7 +10,7 @@ export default class NodeTreeBuilder {
 
     private adjacency = new Map<Node, Node[]>();
 
-    public calculateTree(nodes: Node[], connections: Connection[]) {
+    public calculateTree(nodes: Node[], connections: IConnection[]) {
 
         this.adjacency.clear();
 

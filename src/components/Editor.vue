@@ -81,13 +81,16 @@ export default class EditorView extends Vue {
                 node: ni.parent,
                 interface: ni
             };
-            this.$emit("checkTemporaryConnection", this.temporaryConnection);
+            this.temporaryConnection.status =
+                this.model.checkConnection(this.temporaryConnection.from, this.temporaryConnection.to) ?
+                TemporaryConnectionState.ALLOWED :
+                TemporaryConnectionState.FORBIDDEN;
             this.connections
                 .filter((c) => c.to.interface === ni)
                 .forEach((c) => { c.isInDanger = true; });
         } else if (!ni && this.temporaryConnection) {
             this.$set(this.temporaryConnection, "to", undefined);
-            this.$emit("checkTemporaryConnection");
+            this.temporaryConnection.status = TemporaryConnectionState.NONE;
             this.connections.forEach((c) => { c.isInDanger = false; });
         }
     }
@@ -134,7 +137,7 @@ export default class EditorView extends Vue {
     mouseUp(ev: MouseEvent) {
         const tc = this.temporaryConnection;
         if (tc && this.hoveringOver) {
-            this.model.addConnection(new Connection(tc.from, tc.to!));
+            this.model.addConnection(tc.from, tc.to!);
         }
         this.temporaryConnection = null;
     }

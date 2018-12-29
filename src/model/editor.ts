@@ -1,6 +1,9 @@
 import Node from "./node";
-import Connection from "./connection";
+import Connection, { INodeInterfacePair, IConnection } from "./connection";
 import NodeTreeBuilder from "@/utility/nodeTreeBuilder";
+import DummyConnection from "./dummyConnection";
+
+type TypeComparer = (c: IConnection) => boolean;
 
 export default class Editor {
 
@@ -11,6 +14,11 @@ export default class Editor {
     private _nodeCalculationOrder: Node[] = [];
     public get nodeCalculationOrder() {
         return this._nodeCalculationOrder;
+    }
+
+    private _typeComparer: TypeComparer = (c) => c.from.interface.type === c.to.interface.type;
+    public set typeComparer(value: TypeComparer) {
+        this._typeComparer = value;
     }
 
     /* Node Types */
@@ -41,26 +49,22 @@ export default class Editor {
     }
 
     /* Connections */
-    public addConnection(c: Connection) {
+    public addConnection(from: INodeInterfacePair, to: INodeInterfacePair) {
 
-        if (c.from.interface.isInput || !c.to.interface.isInput) {
-            throw new Error("Connections are only allowed from input to output interface");
-        } else if (c.from.node === c.to.node) {
-            throw new Error("Connections must be between two separate nodes.");
+        if (!this.checkConnection(from, to)) {
+            return false;
         }
-
-        // TODO
-        // check whether this connection is possible or
-        // would result in a cycle in the graph
 
         // Delete all other connections to the target interface
         // as only one connection to an input interface is allowed
         this.connections
-            .filter((conn) => conn.to.interface === c.to.interface)
+            .filter((conn) => conn.to.interface === to.interface)
             .forEach((conn) => this.removeConnection(conn, false));
 
+        const c = new Connection(from, to);
         this.connections.push(c);
         this.calculateNodeTree();
+        return true;
 
     }
 
@@ -68,10 +72,37 @@ export default class Editor {
         if (this.connections.includes(c)) {
             c.destruct();
             this.connections.splice(this.connections.indexOf(c), 1);
-            if (this.calculateNodeTree) {
+            if (calculateNodeTree) {
                 this.calculateNodeTree();
             }
         }
+    }
+
+    public checkConnection(from: INodeInterfacePair, to: INodeInterfacePair): boolean {
+
+        if (from.interface.isInput || !to.interface.isInput) {
+            // connections are only allowed from input to output interface
+            return false;
+        } else if (from.node === to.node) {
+            // connections must be between two separate nodes.
+            return false;
+        }
+
+        // check if the new connection would result in a cycle
+        const ntb = new NodeTreeBuilder();
+        const dc = new DummyConnection(from, to);
+        const copy = (this.connections as IConnection[]).concat([dc]);
+        copy.filter((conn) => conn.to.interface !== to.interface);
+        try {
+            ntb.calculateTree(this.nodes, copy);
+        } catch (err) {
+            // this connection would create a cycle in the graph
+            return false;
+        }
+
+        // check type compatibility between the two interfaces
+        return this._typeComparer(dc);
+
     }
 
     /* Calculate */

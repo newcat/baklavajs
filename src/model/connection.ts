@@ -7,7 +7,13 @@ export interface INodeInterfacePair {
     interface: NodeInterface;
 }
 
-export default class Connection {
+export interface IConnection {
+    id: string;
+    from: INodeInterfacePair;
+    to: INodeInterfacePair;
+}
+
+export default class Connection implements IConnection {
 
     public id: string;
     public from: INodeInterfacePair;
