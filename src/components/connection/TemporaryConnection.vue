@@ -12,7 +12,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 import ConnectionView from "./ConnectionView.vue";
 import { INodeInterfacePair } from "@/model/connection";
-import { ITemporaryConnection, TemporaryConnectionState } from "@/types/temporaryConnection";
+import { ITemporaryConnection, TemporaryConnectionState } from "@/model/temporaryConnection";
 import resolveDom from "@/utility/domResolver";
 
 @Component({

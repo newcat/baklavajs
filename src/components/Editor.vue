@@ -42,7 +42,7 @@ import NodeInterfaceView from "./node/NodeInterface.vue";
 import ConnectionView from "./connection/ConnectionWrapper.vue";
 import TempConnectionView from "./connection/TemporaryConnection.vue";
 
-import { ITemporaryConnection, TemporaryConnectionState } from "@/types/temporaryConnection";
+import { ITemporaryConnection, TemporaryConnectionState } from "@/model/temporaryConnection";
 
 @Component({
     components: {

@@ -1,35 +1,40 @@
 {
-  "name": "baklavajs",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build-lib": "vue-cli-service build --target lib --name baklavajs ./src/components/Editor.vue"
-  },
-  "dependencies": {
-    "@types/lodash": "^4.14.119",
-    "lodash": "^4.17.11",
-    "vue": "^2.5.17",
-    "vue-class-component": "^6.0.0",
-    "vue-property-decorator": "^7.0.0"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-typescript": "^3.2.0",
-    "@vue/cli-service": "^3.2.0",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.1",
-    "typescript": "^3.0.0",
-    "v-click-outside": "^2.0.2",
-    "vue-template-compiler": "^2.5.17"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+    "name": "baklavajs",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build-lib": "webpack --mode production"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@types/lodash": "^4.14.119",
+        "@vue/cli-plugin-typescript": "^3.2.0",
+        "@vue/cli-service": "^3.2.0",
+        "clean-webpack-plugin": "^1.0.0",
+        "copy-webpack-plugin": "^4.6.0",
+        "lodash": "^4.17.11",
+        "node-sass": "^4.9.0",
+        "sass-loader": "^7.0.1",
+        "ts-loader": "^5.3.2",
+        "typescript": "^3.0.0",
+        "v-click-outside": "^2.0.2",
+        "vue": "^2.5.17",
+        "vue-class-component": "^6.0.0",
+        "vue-loader": "^15.4.2",
+        "vue-property-decorator": "^7.0.0",
+        "vue-template-compiler": "^2.5.17",
+        "webpack": "^4.28.3",
+        "webpack-cli": "^3.1.2"
+    },
+    "postcss": {
+        "plugins": {
+            "autoprefixer": {}
+        }
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 8"
+    ]
 }
