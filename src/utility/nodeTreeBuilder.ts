@@ -1,5 +1,4 @@
-import Node from "@/model/node";
-import { IConnection } from "@/model/connection";
+import { Node, IConnection } from "../model";
 
 interface ITreeNode {
     n?: Node;

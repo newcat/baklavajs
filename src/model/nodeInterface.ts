@@ -1,5 +1,5 @@
-import Node from "./node";
-import generateId from "@/utility/idGenerator";
+import { Node } from "./node";
+import generateId from "../utility/idGenerator";
 import { VueConstructor } from "vue";
 
 type ListenerType = (value: any) => void;
@@ -8,7 +8,7 @@ interface IListener {
     f: ListenerType;
 }
 
-export default class NodeInterface {
+export class NodeInterface {
 
     public id: string;
     public isInput: boolean;

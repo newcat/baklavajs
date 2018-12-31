@@ -2,9 +2,19 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: './src/library.ts',
+    entry: {
+        lib: './src/lib.ts',
+        styles: './src/styles/all.scss'
+    },
+    externals: {
+        commonjs: 'vue',
+        commonjs2: 'vue',
+        amd: 'vue',
+        root: 'Vue'
+    },
     module: {
         rules: [
             {
@@ -18,31 +28,29 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: [ 'style-loader', 'css-loader', 'sass-loader' ]
+                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
             }
         ]
     },
     resolve: {
-        extensions: ['.js', '.ts', '.vue'],
-        alias: {
-            '@': 'F:\\Daten\\Eigene Dokumente\\Programmieren\\baklavajs\\src',
-            vue$: 'vue/dist/vue.runtime.esm.js'
-        },
+        extensions: ['.js', '.ts', '.vue']
     },
     plugins: [
         new VueLoaderPlugin(),
         new CleanWebpackPlugin([ 'dist' ]),
         new CopyWebpackPlugin([
             { from: "src/styles", to: "styles" },
-            { from: "src/model", to: "model" },
             { from: "src/options", to: "options" }
-        ])
+        ]),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+        })
     ],
     output: {
-        filename: 'baklava.js',
         path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js',
         library: 'BaklavaJS',
         libraryTarget: 'umd',
-        libraryExport: 'default'
+        umdNamedDefine: true
     }
 };

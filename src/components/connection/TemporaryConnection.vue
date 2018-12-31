@@ -11,9 +11,8 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 import ConnectionView from "./ConnectionView.vue";
-import { INodeInterfacePair } from "@/model/connection";
-import { ITemporaryConnection, TemporaryConnectionState } from "@/model/temporaryConnection";
-import resolveDom from "@/utility/domResolver";
+import { INodeInterfacePair, ITemporaryConnection, TemporaryConnectionState } from "../../model";
+import resolveDom from "../../utility/domResolver";
 
 @Component({
     components: {

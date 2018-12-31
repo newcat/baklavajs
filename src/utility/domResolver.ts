@@ -1,4 +1,4 @@
-import { INodeInterfacePair } from "@/model/connection";
+import { INodeInterfacePair } from "../model/connection";
 
 export default function getDomElements(p: INodeInterfacePair) {
 

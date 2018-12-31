@@ -1,18 +1,18 @@
 import { VueConstructor } from "vue";
-import generateId from "@/utility/idGenerator";
-import NodeInterface from "./nodeInterface";
+import generateId from "../utility/idGenerator";
+import { NodeInterface } from "./nodeInterface";
 
-type OptionViewsObject = StringRecord<VueConstructor>;
+type OptionViewsObject = Record<string, VueConstructor>;
 
-export default abstract class Node {
+export abstract class Node {
 
     public abstract type: string;
     public abstract name: string;
 
     public id: string;
-    public interfaces: StringRecord<NodeInterface>;
+    public interfaces: Record<string, NodeInterface>;
     public optionViews: OptionViewsObject;
-    public options: StringRecord<any>;
+    public options: Record<string, any>;
 
     public position = { x: 0, y: 0 };
     public state = {};
@@ -24,7 +24,7 @@ export default abstract class Node {
         this.options = Object.keys(this.optionViews).reduce((p, k) => {
             p[k] = null;
             return p;
-        }, {} as StringRecord<any>);
+        }, {} as Record<string, any>);
     }
 
     /**
@@ -35,7 +35,7 @@ export default abstract class Node {
         // Empty
     }
 
-    protected abstract getInterfaces(): StringRecord<NodeInterface>;
+    protected abstract getInterfaces(): Record<string, NodeInterface>;
     protected abstract getOptions(): OptionViewsObject;
 
 }

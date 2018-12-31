@@ -1,6 +1,5 @@
-import Node from "@/model/node";
-import NodeInterface from "@/model/nodeInterface";
-import TextOption from "@/options/TextOption.vue";
+import { Node, NodeInterface } from "../model";
+import TextOption from "../options/TextOption.vue";
 
 export default class OutputNode extends Node {
 
@@ -11,7 +10,7 @@ export default class OutputNode extends Node {
         this.options.output = this.interfaces.InputIF.value;
     }
 
-    protected getInterfaces(): StringRecord<NodeInterface> {
+    protected getInterfaces(): Record<string, NodeInterface> {
         return {
             InputIF: new NodeInterface(this, true, "boolean")
         };

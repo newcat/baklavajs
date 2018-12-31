@@ -1,25 +1,20 @@
 <template>
     <div id="app">
-        <editor-view
+        <baklava-editor
             :model="editor"
-        ></editor-view>
+        ></baklava-editor>
         <button @click="calculate">Calculate</button>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import EditorView from "./components/Editor.vue";
-import Editor from "@/model/editor";
+import { Editor } from "../model";
 
-import TestNode from "@/testimpl/TestNode";
-import OutputNode from "@/testimpl/OutputNode";
+import TestNode from "../testimpl/TestNode";
+import OutputNode from "../testimpl/OutputNode";
 
-@Component({
-  components: {
-    EditorView
-  }
-})
+@Component
 export default class App extends Vue {
 
     editor = new Editor();

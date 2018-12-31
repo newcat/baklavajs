@@ -8,6 +8,7 @@
         stroke-dasharray: 5 5;
         stroke-dashoffset: 0;
         animation: dash 1s linear infinite;
+        transform: translateY(-1px);
     }
 
     @keyframes dash {

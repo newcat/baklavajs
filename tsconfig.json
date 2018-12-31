@@ -11,6 +11,9 @@
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "sourceMap": true,
+    "declaration": true,
+    "outDir": "lib",
+    "declarationDir": "dist",
     "baseUrl": ".",
     "types": [
       "webpack-env"

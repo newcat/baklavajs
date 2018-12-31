@@ -1,4 +1,4 @@
-import generateId from "@/utility/idGenerator";
+import generateId from "../utility/idGenerator";
 import { INodeInterfacePair, IConnection } from "./connection";
 
 /**
@@ -6,7 +6,7 @@ import { INodeInterfacePair, IConnection } from "./connection";
  * It will not transfer values!
  * It will, however, also not alter any state of the connected nodes
  */
-export default class DummyConnection implements IConnection {
+export class DummyConnection implements IConnection {
 
     public id: string;
     public from: INodeInterfacePair;

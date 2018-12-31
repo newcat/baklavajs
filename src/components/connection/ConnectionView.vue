@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { TemporaryConnectionState } from "@/types/temporaryConnection";
+import { TemporaryConnectionState } from "../../model";
 
 @Component
 export default class Connection extends Vue {

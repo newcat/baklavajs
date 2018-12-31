@@ -1,6 +1,6 @@
-import Node from "./node";
-import NodeInterface from "./nodeInterface";
-import generateId from "@/utility/idGenerator";
+import { Node } from "./node";
+import { NodeInterface } from "./nodeInterface";
+import generateId from "../utility/idGenerator";
 
 export interface INodeInterfacePair {
     node: Node;
@@ -13,7 +13,7 @@ export interface IConnection {
     to: INodeInterfacePair;
 }
 
-export default class Connection implements IConnection {
+export class Connection implements IConnection {
 
     public id: string;
     public from: INodeInterfacePair;

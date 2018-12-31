@@ -1,11 +1,11 @@
-import Node from "./node";
-import Connection, { INodeInterfacePair, IConnection } from "./connection";
-import NodeTreeBuilder from "@/utility/nodeTreeBuilder";
-import DummyConnection from "./dummyConnection";
+import { Node } from "./node";
+import { INodeInterfacePair, IConnection, Connection } from "./connection";
+import NodeTreeBuilder from "../utility/nodeTreeBuilder";
+import { DummyConnection } from "./dummyConnection";
 
 type TypeComparer = (c: IConnection) => boolean;
 
-export default class Editor {
+export class Editor {
 
     public nodes: Node[] = [];
     public connections: Connection[] = [];

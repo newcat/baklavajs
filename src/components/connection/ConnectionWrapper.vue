@@ -5,9 +5,8 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import ConnectionView from "./ConnectionView.vue";
-import Connection from "@/model/connection";
-import resolveDom from "@/utility/domResolver";
-import { TemporaryConnectionState } from "@/types/temporaryConnection";
+import resolveDom from "../../utility/domResolver";
+import { Connection, TemporaryConnectionState } from "../../model";
 
 @Component({
     components: {

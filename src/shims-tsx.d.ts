@@ -12,6 +12,4 @@ declare global {
         }
     }
 
-    type StringRecord<T> = Record<string, T>
-
 }

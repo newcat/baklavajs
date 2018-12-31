@@ -43,7 +43,7 @@ import _ from "lodash";
 
 import NodeInterface from "./NodeInterface.vue";
 import NodeEditor from "../Editor.vue";
-import Node from "@/model/node";
+import { Node } from "../../model";
 
 @Component({
     components: {
