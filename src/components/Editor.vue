@@ -34,16 +34,16 @@ import { Component, Vue, Prop, Provide } from "vue-property-decorator";
 
 import { Editor, Node, Connection, NodeInterface, ITemporaryConnection, TemporaryConnectionState } from "../model";
 
-/*import NodeView from "./node/Node.vue";
+import NodeView from "./node/Node.vue";
 import ConnectionView from "./connection/ConnectionWrapper.vue";
-import TempConnectionView from "./connection/TemporaryConnection.vue";*/
+import TempConnectionView from "./connection/TemporaryConnection.vue";
 
 @Component({
-    /*components: {
+    components: {
         "node": NodeView,
         "connection": ConnectionView,
         "temp-connection": TempConnectionView
-    }*/
+    }
 })
 export default class EditorView extends Vue {
 

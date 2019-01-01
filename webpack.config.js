@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+    mode: "production",
     entry: {
         lib: './src/lib.ts',
         styles: './src/styles/all.scss'
@@ -12,14 +13,16 @@ module.exports = {
     externals: {
         commonjs: 'vue',
         commonjs2: 'vue',
-        amd: 'vue',
         root: 'Vue'
     },
     module: {
         rules: [
             {
                 test: /\.ts$/,
-                use: 'ts-loader',
+                loader: 'ts-loader',
+                options: {
+                    appendTsSuffixTo: [/\.vue$/],
+                },
                 exclude: /node_modules/
             },
             {
@@ -54,6 +57,7 @@ module.exports = {
         filename: '[name].js',
         library: 'BaklavaJS',
         libraryTarget: 'umd',
-        umdNamedDefine: true
+        umdNamedDefine: true,
+        globalObject: `(typeof self !== 'undefined' ? self : this)`
     }
 };

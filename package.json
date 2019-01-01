@@ -3,7 +3,8 @@
     "version": "0.1.0",
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build-lib": "webpack --mode development"
+        "build-lib": "webpack",
+        "build-test": "vue-cli-service build --target lib --name BaklavaJS src/lib.ts"
     },
     "dependencies": {},
     "devDependencies": {
