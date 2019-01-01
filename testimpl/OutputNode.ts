@@ -1,5 +1,5 @@
-import { Node, NodeInterface } from "../model";
-import TextOption from "../options/TextOption.vue";
+import { Node, NodeInterface } from "../src/model";
+import TextOption from "../src/options/TextOption.vue";
 
 export default class OutputNode extends Node {
 

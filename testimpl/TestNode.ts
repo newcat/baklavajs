@@ -1,6 +1,6 @@
-import { Node, NodeInterface } from "../model";
-import InputOption from "../options/InputOption.vue";
-import SelectOption from "../options/SelectOption.vue";
+import { Node, NodeInterface } from "../src/model";
+import InputOption from "../src/options/InputOption.vue";
+import SelectOption from "../src/options/SelectOption.vue";
 
 export default class TestNode extends Node {
 

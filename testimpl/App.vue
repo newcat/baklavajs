@@ -9,10 +9,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Editor } from "../model";
+import { Editor } from "../src/model";
 
-import TestNode from "../testimpl/TestNode";
-import OutputNode from "../testimpl/OutputNode";
+import TestNode from "./TestNode";
+import OutputNode from "./OutputNode";
 
 @Component
 export default class App extends Vue {

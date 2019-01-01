@@ -33,7 +33,10 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js', '.ts', '.vue']
+        extensions: ['.js', '.ts', '.vue'],
+        /*alias: {
+            vue$: 'vue/dist/vue.runtime.esm.js'
+        }*/
     },
     plugins: [
         new VueLoaderPlugin(),
