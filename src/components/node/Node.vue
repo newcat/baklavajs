@@ -39,15 +39,16 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import _ from "lodash";
+import { VueConstructor } from "vue";
+import pickBy from "lodash/pickBy";
 
-import NodeInterface from "./NodeInterface.vue";
 import NodeEditor from "../Editor.vue";
-import { Node } from "../../model";
+import { Node, NodeInterface } from "../../model";
+import NodeInterfaceView from './NodeInterface.vue';
 
 @Component({
     components: {
-        "node-interface": NodeInterface
+        "node-interface": NodeInterfaceView
     }
 })
 export default class NodeView extends Vue {
@@ -73,12 +74,12 @@ export default class NodeView extends Vue {
         };
     }
 
-    get outputs() {
-        return _.pickBy(this.data.interfaces, (i) => !i.isInput);
+    get outputs(): Record<string, NodeInterface> {
+        return pickBy(this.data.interfaces, (i) => !i.isInput);
     }
 
-    get inputs() {
-        return _.pickBy(this.data.interfaces, (i) => i.isInput);
+    get inputs(): Record<string, NodeInterface> {
+        return pickBy(this.data.interfaces, (i) => i.isInput);
     }
 
     get optionViews() {

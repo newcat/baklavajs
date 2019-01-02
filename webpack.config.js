@@ -7,13 +7,16 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
     mode: "production",
     entry: {
-        lib: './src/lib.ts',
+        index: './src/index.ts',
         styles: './src/styles/all.scss'
     },
     externals: {
-        commonjs: 'vue',
-        commonjs2: 'vue',
-        root: 'Vue'
+        vue: {
+            commonjs: 'vue',
+            commonjs2: 'vue',
+            amd: 'vue',
+            root: 'Vue'
+        }
     },
     module: {
         rules: [
@@ -59,5 +62,11 @@ module.exports = {
         libraryTarget: 'umd',
         umdNamedDefine: true,
         globalObject: `(typeof self !== 'undefined' ? self : this)`
+    },
+    optimization: {
+        minimize: false
+    },
+    performance: {
+        maxEntrypointSize: 200000
     }
 };
