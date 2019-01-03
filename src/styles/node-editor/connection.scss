@@ -1,5 +1,5 @@
 .connection {
-    stroke: white;
+    stroke: $color-connection-default;
     stroke-width: 2px;
     fill: none;
 
@@ -18,11 +18,11 @@
     }
 
     &.--allowed {
-        stroke: green;
+        stroke: $color-connection-allowed;
     }
 
     &.--forbidden {
-        stroke: red;
+        stroke: $color-connection-forbidden;
     }
 
 }

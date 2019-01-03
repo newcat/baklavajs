@@ -1,3 +1,6 @@
 # TextOption
 
-TODO
+Option which displays arbitrary text
+
+## Data type
+`string`

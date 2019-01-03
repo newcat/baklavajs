@@ -1,3 +1,5 @@
+import isEmpty from "lodash/isEmpty";
+
 import { Node, IConnection } from "../model";
 
 interface ITreeNode {
@@ -23,7 +25,7 @@ export default class NodeTreeBuilder {
         });
 
         // DFS for initial tree building and cycle detection
-        const outputs: Node[] = nodes.filter((n) => n.type === "OutputNode");
+        const outputs: Node[] = nodes.filter((n) => isEmpty(n.outputInterfaces));
         const root: ITreeNode = {
             children: outputs.map((o) => ({ n: o, children: [] }))
         };

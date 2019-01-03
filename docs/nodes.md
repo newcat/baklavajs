@@ -32,6 +32,8 @@ All of these parts are customizable.
 ### getInterfaces
 This method is used to create a new set of [NodeInterfaces](nodeInterfaces.md) (inputs/outputs of a node).
 ```js
+import { NodeInterface } from "baklavajs";
+
 getInterfaces() {
     return {
         input1: new NodeInterface(this, true, "number"),
@@ -52,7 +54,7 @@ There are prebuilt options that can be used:
 - [TextOption](options/text.md): Displays arbitrary strings
 
 ```js
-import InputOption from "baklavajs/options/InputOption.vue";
+import InputOption from "baklavajs/dist/options/InputOption.vue";
 
 getOptions() {
     return {

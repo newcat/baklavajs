@@ -1,22 +1,22 @@
 .node {
     max-width: 20rem;
     font-size: 0.8rem;
-    background: #3f3f3fcc;
-    color: white;
-    border-radius: 4px;
+    background: $color-node-background;
+    color: $color-node-foreground;
+    border-radius: $border-radius-node;
     position: absolute;
     filter: drop-shadow(0 0 3px #000000cc);
 
     &.--selected {
         z-index: 5;
-        box-shadow: 0 0 0 1px orange;
+        box-shadow: 0 0 0 1px $color-node-selected;
     }
 
     & > .__title {
-        background: black;
-        color: white;
+        background: $color-node-title-background;
+        color: $color-node-title-foreground;
         padding: 0.4em 0.75em;
-        border-radius: 4px 4px 0 0;
+        border-radius: $border-radius-node $border-radius-node 0 0;
     }
 
     & > .__content {

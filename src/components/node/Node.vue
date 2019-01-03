@@ -9,7 +9,7 @@
             
             <!-- Outputs -->
             <node-interface
-                v-for="(output, name) in outputs"
+                v-for="(output, name) in data.outputInterfaces"
                 :key="output.id"
                 :name="name"
                 :data="output"
@@ -26,7 +26,7 @@
 
             <!-- Inputs -->
             <node-interface
-                v-for="(input, name) in inputs"
+                v-for="(input, name) in data.inputInterfaces"
                 :key="input.id"
                 :name="name"
                 :data="input"
@@ -40,11 +40,10 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { VueConstructor } from "vue";
-import pickBy from "lodash/pickBy";
 
 import NodeEditor from "../Editor.vue";
 import { Node, NodeInterface } from "../../model";
-import NodeInterfaceView from './NodeInterface.vue';
+import NodeInterfaceView from "./NodeInterface.vue";
 
 @Component({
     components: {
@@ -72,14 +71,6 @@ export default class NodeView extends Vue {
             left: `${this.data.position.x + this.parent.xOffset}px`,
             width: `${this.width}px`,
         };
-    }
-
-    get outputs(): Record<string, NodeInterface> {
-        return pickBy(this.data.interfaces, (i) => !i.isInput);
-    }
-
-    get inputs(): Record<string, NodeInterface> {
-        return pickBy(this.data.interfaces, (i) => i.isInput);
     }
 
     get optionViews() {
