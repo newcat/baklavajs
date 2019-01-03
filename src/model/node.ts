@@ -1,4 +1,6 @@
 import { VueConstructor } from "vue";
+import pickBy from "lodash/pickBy";
+
 import generateId from "../utility/idGenerator";
 import { NodeInterface } from "./nodeInterface";
 
@@ -16,6 +18,14 @@ export abstract class Node {
 
     public position = { x: 0, y: 0 };
     public state = {};
+
+    public get inputInterfaces() {
+        return pickBy(this.interfaces, (i) => i.isInput);
+    }
+
+    public get outputInterfaces() {
+        return pickBy(this.interfaces, (i) => !i.isInput);
+    }
 
     public constructor() {
         this.id = "node_" + generateId();

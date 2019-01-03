@@ -1,11 +1,26 @@
+// Controls
 $color-primary: #5379B5;
-
 $color-control-dark-background: #2C2C2C;
 $color-control-dark-foreground: white;
 $color-control-dark-hover: #4C4C4C;
 $color-control-dark-active: #6C6C6C;
+$border-radius-control: 3px;
 
-$border-radius: 3px;
-$visual-transition: 0.1s linear;
+// Nodes
+$color-node-background: #3f3f3fcc;
+$color-node-foreground: white;
+$color-node-selected: $color-primary;
+$color-node-title-background: black;
+$color-node-title-foreground: white;
+$border-radius-node: 4px;
 
+// Connections
+$color-connection-default: white;
+$color-connection-allowed: green;
+$color-connection-forbidden: red;
+
+// Interface colors
 $iftypes: ();
+
+// Misc
+$visual-transition: 0.1s linear;

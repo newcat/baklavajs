@@ -14,7 +14,7 @@
     & > .__selected {
         background-color: $color-control-dark-background;
         padding: 0.35em 1em;
-        border-radius: $border-radius;
+        border-radius: $border-radius-control;
         transition: background $visual-transition;
         min-height: 1.7em;
         display: flex;
@@ -50,16 +50,13 @@
         z-index: 10;
         background-color: #000000AA;
         filter: drop-shadow(0 0 4px black);
-        border-radius: 0 0 $border-radius $border-radius;
+        border-radius: 0 0 $border-radius-control $border-radius-control;
 
         max-height: 15em;
         overflow-y: scroll; 
         &::-webkit-scrollbar {
             width: 0px;
             background: transparent;
-        }
-        &::-webkit-scrollbar-thumb {
-            background: #FF0000;
         }
         
         & > .item {
