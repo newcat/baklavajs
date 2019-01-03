@@ -1,4 +1,7 @@
 language: node_js
+node_js:
+  - "node"
+  - "11"
 cache: yarn
 branches:
   only:
