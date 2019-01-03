@@ -21,7 +21,6 @@ deploy:
   provider: npm
   email: freddy.wagner@web.de
   on:
-    tags: true
     branch: master
   skip_cleanup: true
   api_key:
