@@ -2,13 +2,20 @@
     "name": "baklavajs",
     "version": "0.1.0",
     "description": "Node/Graph editor for the browser using VueJS",
-    "keywords": [ "node", "graph", "editor", "blender" ],
+    "keywords": [
+        "node",
+        "graph",
+        "editor",
+        "blender"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/newcat/baklavajs"
     },
     "license": "MIT",
-    "files": [ "./dist/**/*" ],
+    "files": [
+        "./dist/**/*"
+    ],
     "main": "dist/index.js",
     "scripts": {
         "serve": "vue-cli-service serve",
