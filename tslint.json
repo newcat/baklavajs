@@ -11,7 +11,8 @@
         "member-access": false,
         "arrow-parens": false,
         "variable-name": false,
-        "member-ordering": false
+        "member-ordering": false,
+        "max-classes-per-file": false
     },
     "rulesDirectory": []
 }

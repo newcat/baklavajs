@@ -13,6 +13,20 @@ export interface IConnection {
     to: INodeInterfacePair;
 }
 
+export enum TemporaryConnectionState {
+    NONE,
+    ALLOWED,
+    FORBIDDEN
+}
+
+export interface ITemporaryConnection {
+    status: TemporaryConnectionState;
+    from: INodeInterfacePair;
+    to?: INodeInterfacePair;
+    mx?: number;
+    my?: number;
+}
+
 export class Connection implements IConnection {
 
     public id: string;
@@ -44,6 +58,31 @@ export class Connection implements IConnection {
 
     private transferValue(v: any) {
         this.to.interface.value = v;
+    }
+
+}
+
+/**
+ * This class is used for calculation purposes only.
+ * It will not transfer values!
+ * It will, however, also not alter any state of the connected nodes
+ */
+export class DummyConnection implements IConnection {
+
+    public id: string;
+    public from: INodeInterfacePair;
+    public to: INodeInterfacePair;
+
+    public constructor(from: INodeInterfacePair, to: INodeInterfacePair) {
+
+        if (!from || !to) {
+            throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
+        }
+
+        this.id = generateId();
+        this.from = from;
+        this.to = to;
+
     }
 
 }

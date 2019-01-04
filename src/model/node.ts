@@ -1,8 +1,10 @@
 import { VueConstructor } from "vue";
 import pickBy from "lodash/pickBy";
+import mapValues from "lodash/mapValues";
 
 import generateId from "../utility/idGenerator";
 import { NodeInterface } from "./nodeInterface";
+import { INodeState } from "./state";
 
 type OptionViewsObject = Record<string, VueConstructor>;
 
@@ -35,6 +37,31 @@ export abstract class Node {
             p[k] = null;
             return p;
         }, {} as Record<string, any>);
+    }
+
+    public load(state: INodeState) {
+        this.id = state.id;
+        this.name = state.name;
+        this.position = state.position;
+        this.options = state.options;
+        this.state = state.state;
+        Object.keys(state.interfaces).forEach((k) => {
+            if (this.interfaces[k]) {
+                this.interfaces[k].load(state.interfaces[k]);
+            }
+        });
+    }
+
+    public save(): INodeState {
+        return {
+            type: this.type,
+            id: this.id,
+            name: this.name,
+            position: this.position,
+            options: this.options,
+            state: this.state,
+            interfaces: mapValues(this.interfaces, (i) => i.save())
+        };
     }
 
     /**
