@@ -1,6 +1,7 @@
 import { Node } from "./node";
 import generateId from "../utility/idGenerator";
 import { VueConstructor } from "vue";
+import { IInterfaceState } from "./state";
 
 type ListenerType = (value: any) => void;
 interface IListener {
@@ -34,6 +35,18 @@ export class NodeInterface {
         this.id = "ni_" + generateId();
         this.type = type;
         this.option = option;
+    }
+
+    public load(state: IInterfaceState) {
+        this.id = state.id;
+        this.value = state.value;
+    }
+
+    public save(): IInterfaceState {
+        return {
+            id: this.id,
+            value: this.value
+        };
     }
 
     /* Listeners */

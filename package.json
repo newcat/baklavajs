@@ -1,6 +1,6 @@
 {
     "name": "baklavajs",
-    "version": "0.1.3",
+    "version": "0.2.0",
     "description": "Node/Graph editor for the browser using VueJS",
     "keywords": [
         "node",

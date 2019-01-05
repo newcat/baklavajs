@@ -19,8 +19,8 @@ export default class NodeTreeBuilder {
         nodes.forEach((n) => {
             this.adjacency.set(n,
                 connections
-                    .filter((c) => c.to && c.to.node === n)
-                    .map((c) => c.from.node)
+                    .filter((c) => c.to && c.to.parent === n)
+                    .map((c) => c.from.parent)
             );
         });
 

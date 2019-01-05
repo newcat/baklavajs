@@ -4,8 +4,8 @@
 The constructor accepts the following parameters
 - `parent: Node` | The node instance which this interface belongs to
 - `isInput: boolean` | Specifies, whether this is an input (=`true`) or an output (=`false`) interface
-- `type: string` | Sets the type of the interface. See [Types](##Types)
-- `option?: VueConstructor` | This is an optional parameter. See [Option](##Option)
+- `type: string` | Sets the type of the interface. See [Types](#Types)
+- `option?: VueConstructor` | This is an optional parameter. See [Option](#Option)
 
 ## Types
 The type can be any word (spaces would break the CSS class).

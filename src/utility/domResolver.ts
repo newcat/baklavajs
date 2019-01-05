@@ -1,10 +1,9 @@
-import { INodeInterfacePair } from "../model/connection";
+import { NodeInterface } from "../model";
 
-export default function getDomElements(p: INodeInterfacePair) {
+export default function getDomElements(ni: NodeInterface) {
 
-    const { node, interface: intf } = p;
-    const nodeDOM = document.getElementById(node.id);
-    const interfaceDOM = document.getElementById(intf.id);
+    const nodeDOM = document.getElementById(ni.parent.id);
+    const interfaceDOM = document.getElementById(ni.id);
 
     return {
         node: nodeDOM,
