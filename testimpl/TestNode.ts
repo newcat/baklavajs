@@ -1,6 +1,6 @@
 import { Node, NodeInterface } from "../src/model";
 import InputOption from "../src/options/InputOption.vue";
-import SelectOption from "../src/options/SelectOption.vue";
+import CheckboxOption from "../src/options/CheckboxOption.vue";
 
 export default class TestNode extends Node {
 
@@ -9,12 +9,12 @@ export default class TestNode extends Node {
 
     constructor() {
         super();
-        this.options = {
+        /*this.options = {
             "Select one": {
                 selected: "Test1",
                 items: [ "Test1", "Test2", "Test3" ]
             }
-        };
+        };*/
     }
 
     public calculate() {
@@ -31,7 +31,7 @@ export default class TestNode extends Node {
     public getOptions() {
         return {
             "test": InputOption,
-            "Select one": SelectOption
+            "This is a checkbox": CheckboxOption
         };
     }
 
