@@ -70,17 +70,14 @@ export default class EditorView extends Vue {
 
     hoveredOver(ni: NodeInterface|undefined) {
         this.hoveringOver = ni;
-        if (ni && this.temporaryConnection && this.temporaryConnection.from.interface !== ni) {
-            this.temporaryConnection.to = {
-                node: ni.parent,
-                interface: ni
-            };
+        if (ni && this.temporaryConnection && this.temporaryConnection.from !== ni) {
+            this.temporaryConnection.to = ni;
             this.temporaryConnection.status =
                 this.model.checkConnection(this.temporaryConnection.from, this.temporaryConnection.to) ?
                 TemporaryConnectionState.ALLOWED :
                 TemporaryConnectionState.FORBIDDEN;
             this.connections
-                .filter((c) => c.to.interface === ni)
+                .filter((c) => c.to === ni)
                 .forEach((c) => { c.isInDanger = true; });
         } else if (!ni && this.temporaryConnection) {
             this.$set(this.temporaryConnection, "to", undefined);
@@ -100,23 +97,17 @@ export default class EditorView extends Vue {
 
             // if this interface is an input and already has a connection
             // to it, remove the connection and make it temporary
-            const connection = this.connections.find((c) => c.to.interface === this.hoveringOver);
+            const connection = this.connections.find((c) => c.to === this.hoveringOver);
             if (this.hoveringOver.isInput && connection) {
                 this.temporaryConnection = {
                     status: TemporaryConnectionState.NONE,
-                    from: {
-                        node: connection.from.node,
-                        interface: connection.from.interface
-                    }
+                    from: connection.from
                 };
                 this.model.removeConnection(connection);
             } else {
                 this.temporaryConnection = {
                     status: TemporaryConnectionState.NONE,
-                    from: {
-                        node: this.hoveringOver.parent as Node,
-                        interface: this.hoveringOver
-                    }
+                    from: this.hoveringOver
                 };
             }
 

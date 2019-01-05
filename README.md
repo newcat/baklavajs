@@ -1,14 +1,24 @@
 # baklavajs
 Graph / node editor in the browser using VueJS
+![example](docs/img/example.png)
 
 ## Getting started
-First, you need to tell Vue to use this library. Add the following code in your application entry file (usually `index.js` or `main.js`):
+First, you need to install the library:
+```bash
+# npm
+npm i baklavajs
+
+# yarn
+yarn add baklavajs
+```
+
+Now you need to tell Vue to use this library. Add the following code in your application entry file (usually `index.js` or `main.js`):
 ```js
 import BaklavaJS from "baklavajs";
 Vue.use(BaklavaJS);
 ```
 
-Now the library is installed and ready to use.
+The library is now installed and ready to use.
 To actually use it, you need to create an `Editor` instance, which you can provide to the editor component.
 This is a minimal wrapper component:
 ```vue
@@ -30,4 +40,6 @@ export default {
 ```
 
 ## Further documentation
-TODO
+* [Editor functions](docs/editor.md)
+* [Creating custom nodes](docs/nodes.md)
+* [Customize styles and colors](docs/styling.md)

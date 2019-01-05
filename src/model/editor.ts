@@ -1,5 +1,6 @@
 import { Node } from "./node";
-import { INodeInterfacePair, IConnection, Connection } from "./connection";
+import { NodeInterface } from "./nodeInterface";
+import { IConnection, Connection } from "./connection";
 import NodeTreeBuilder from "../utility/nodeTreeBuilder";
 import { DummyConnection } from "./connection";
 import { IState } from "./state";
@@ -21,14 +22,14 @@ export class Editor {
         return this._nodeCalculationOrder;
     }
 
-    private _typeComparer: TypeComparer = (c) => c.from.interface.type === c.to.interface.type;
+    private _typeComparer: TypeComparer = (c) => c.from.type === c.to.type;
     /**
      * Use this to override the default type comparer.
      * The function will be called with a connection.
      * You can check whether this connection is allowed using
      * the fields `from` and `to` of the connection.
      * Default type comparer:
-     * `(c) => c.from.interface.type === c.to.interface.type;`
+     * `(c) => c.from.type === c.to.type;`
      */
     public set typeComparer(value: TypeComparer) {
         this._typeComparer = value;
@@ -40,6 +41,10 @@ export class Editor {
     }
 
     /* Nodes */
+    /**
+     * Add a node to the list of nodes.
+     * @param typeNameOrInstance Either a registered node type or a node instance
+     */
     public addNode(typeNameOrInstance: string|Node) {
         let n = typeNameOrInstance;
         if (typeof(n) === "string") {
@@ -52,10 +57,15 @@ export class Editor {
         }
     }
 
+    /**
+     * Removes a node from the list.
+     * Will also remove all connections from and to the node.
+     * @param n Reference to a node in the list.
+     */
     public removeNode(n: Node) {
         if (this.nodes.includes(n)) {
             this.connections
-                .filter((c) => c.from.node === n || c.to.node === n)
+                .filter((c) => c.from.parent === n || c.to.parent === n)
                 .forEach((c) => this.removeConnection(c));
             this.nodes.splice(this.nodes.indexOf(n), 1);
         }
@@ -69,7 +79,7 @@ export class Editor {
      * @param calculateNodeTree Whether to update the node calculation order after adding the connection
      * @returns Whether the connection was successfully created
      */
-    public addConnection(from: INodeInterfacePair, to: INodeInterfacePair, calculateNodeTree = true) {
+    public addConnection(from: NodeInterface, to: NodeInterface, calculateNodeTree = true): boolean {
 
         if (!this.checkConnection(from, to)) {
             return false;
@@ -78,7 +88,7 @@ export class Editor {
         // Delete all other connections to the target interface
         // as only one connection to an input interface is allowed
         this.connections
-            .filter((conn) => conn.to.interface === to.interface)
+            .filter((conn) => conn.to === to)
             .forEach((conn) => this.removeConnection(conn, false));
 
         const c = new Connection(from, to);
@@ -98,12 +108,12 @@ export class Editor {
         }
     }
 
-    public checkConnection(from: INodeInterfacePair, to: INodeInterfacePair): boolean {
+    public checkConnection(from: NodeInterface, to: NodeInterface): boolean {
 
-        if (from.interface.isInput || !to.interface.isInput) {
+        if (from.isInput || !to.isInput) {
             // connections are only allowed from input to output interface
             return false;
-        } else if (from.node === to.node) {
+        } else if (from.parent === to.parent) {
             // connections must be between two separate nodes.
             return false;
         }
@@ -112,7 +122,7 @@ export class Editor {
         const ntb = new NodeTreeBuilder();
         const dc = new DummyConnection(from, to);
         const copy = (this.connections as IConnection[]).concat([dc]);
-        copy.filter((conn) => conn.to.interface !== to.interface);
+        copy.filter((conn) => conn.to !== to);
         try {
             ntb.calculateTree(this.nodes, copy);
         } catch (err) {
@@ -132,7 +142,7 @@ export class Editor {
         }
     }
 
-    private calculateNodeTree() {
+    public calculateNodeTree() {
         const ntb = new NodeTreeBuilder();
         this._nodeCalculationOrder = ntb.calculateTree(this.nodes, this.connections);
     }
@@ -177,11 +187,7 @@ export class Editor {
                 console.warn(`Could not find interface with id ${c.to}`);
                 continue;
             } else {
-                this.addConnection(
-                    { interface: fromIf, node: fromIf.parent },
-                    { interface: toIf, node: toIf.parent },
-                    false
-                );
+                this.addConnection(fromIf, toIf, false);
             }
         }
 
@@ -204,8 +210,8 @@ export class Editor {
             nodes: this.nodes.map((n) => n.save()),
             connections: this.connections.map((c) => ({
                 id: c.id,
-                from: c.from.interface.id,
-                to: c.to.interface.id
+                from: c.from.id,
+                to: c.to.id
             }))
         };
     }

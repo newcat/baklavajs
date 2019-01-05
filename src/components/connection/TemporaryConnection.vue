@@ -11,7 +11,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 import ConnectionView from "./ConnectionView.vue";
-import { INodeInterfacePair, ITemporaryConnection, TemporaryConnectionState } from "../../model";
+import { ITemporaryConnection, TemporaryConnectionState, NodeInterface } from "../../model";
 import resolveDom from "../../utility/domResolver";
 
 @Component({
@@ -41,7 +41,7 @@ export default class TemporaryConnection extends Vue {
                 this.getCoords(this.connection.to) :
                 { x: this.connection.mx, y: this.connection.my };
 
-        if (this.connection.from.interface.isInput) {
+        if (this.connection.from.isInput) {
             return {
                 input: end,
                 output: start
@@ -55,10 +55,10 @@ export default class TemporaryConnection extends Vue {
 
     }
 
-    getCoords(p: INodeInterfacePair) {
-        const d = resolveDom(p);
+    getCoords(ni: NodeInterface) {
+        const d = resolveDom(ni);
         if (d.node && d.interface) {
-            const x = p.interface.isInput ? d.node.offsetLeft : d.node.offsetLeft + d.node.clientWidth;
+            const x = ni.isInput ? d.node.offsetLeft : d.node.offsetLeft + d.node.clientWidth;
             const y = d.node.offsetTop + d.interface.offsetTop + d.interface.clientHeight / 2 + 2;
             return { x, y };
         } else {
