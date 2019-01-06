@@ -1,12 +1,13 @@
 <template>
     <div :id="data.id" :class="classes">
         <div class="__port" @mouseover="startHover" @mouseout="endHover"></div>
-        <span class="align-middle">{{ name }}</span>
+        <span v-show="data.connectionCount > 0 || !data.option" class="align-middle">{{ name }}</span>
         <component
-            v-show="!data.isConnected && data.option"
+            v-show="data.connectionCount === 0 && data.option"
             :is="data.option"
             :value="data.value"
             @input="data.value = $event"
+            :name="name"
         ></component>
     </div>
 </template>

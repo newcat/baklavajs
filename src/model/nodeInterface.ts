@@ -13,7 +13,7 @@ export class NodeInterface {
 
     public id: string;
     public isInput: boolean;
-    public isConnected = false;
+    public connectionCount = 0;
     public type: string;
     public parent: Node;
     public option?: VueConstructor;

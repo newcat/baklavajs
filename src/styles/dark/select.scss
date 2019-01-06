@@ -13,7 +13,7 @@
 
     & > .__selected {
         background-color: $color-control-dark-background;
-        padding: 0.35em 1em;
+        padding: 0.35em 0.75em;
         border-radius: $border-radius-control;
         transition: background $visual-transition;
         min-height: 1.7em;
@@ -38,6 +38,12 @@
             transition: transform 0.25s ease;
             width: 18px;
             height: 18px;
+            
+            & path {
+                stroke: $color-control-dark-foreground;
+                fill: $color-control-dark-foreground;
+            }
+
         }
 
     }

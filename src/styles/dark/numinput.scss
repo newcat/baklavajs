@@ -19,6 +19,19 @@
             background-color: $color-control-dark-active;
         }
 
+        &.--dec > svg {
+            transform: rotateZ(90deg);
+        }
+
+        &.--inc > svg {
+            transform: rotateZ(-90deg);
+        }
+
+        & path {
+            stroke: $color-control-dark-foreground;
+            fill: $color-control-dark-foreground;
+        }
+
     }
 
     & > .__content {
@@ -36,6 +49,7 @@
             flex: 1 1 auto;
             margin: 0.35em 0;
             padding: 0 0.5em;
+            text-overflow: ellipsis;
         }
 
         & > .__value {
@@ -47,6 +61,7 @@
             color: $color-control-dark-foreground;
             caret-color: $color-primary;
             padding: 0.35em;
+            width: 100%;
         }
 
     }
