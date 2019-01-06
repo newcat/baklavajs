@@ -38,8 +38,8 @@ export class Connection implements IConnection {
         this.from = from;
         this.to = to;
 
-        this.from.isConnected = true;
-        this.to.isConnected = true;
+        this.from.connectionCount++;
+        this.to.connectionCount++;
 
         this.from.registerListener(this, this.transferValue);
         this.transferValue(this.from.value);
@@ -47,6 +47,8 @@ export class Connection implements IConnection {
     }
 
     public destruct() {
+        this.from.connectionCount--;
+        this.to.connectionCount--;
         this.from.unregisterListener(this.transferValue);
     }
 

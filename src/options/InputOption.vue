@@ -1,6 +1,12 @@
 <template>
     <div>
-        <input type="text" class="dark-input" :value="value" @input="$emit('input', $event.target.value)">
+        <input
+            type="text"
+            class="dark-input"
+            :value="value"
+            @input="$emit('input', $event.target.value)"
+            :placeholder="name"
+        >
     </div>
 </template>
 
@@ -12,6 +18,9 @@ export default class InputOption extends Vue {
 
     @Prop({ type: String, default: "" })
     value!: string;
+
+    @Prop({ type: String })
+    name!: string;
 
 }
 </script>
