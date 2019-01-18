@@ -6,12 +6,16 @@ import { DummyConnection } from "./connection";
 import { IState } from "./state";
 
 type TypeComparer = (c: IConnection) => boolean;
-type NodeConstructor = new () => Node;
+export type NodeConstructor = new () => Node;
 
+/** The main model class for BaklavaJS */
 export class Editor {
 
+    /** List of all nodes */
     public nodes: Node[] = [];
+    /** List of all connections */
     public connections: Connection[] = [];
+    /** List of all registered node types */
     public nodeTypes: Record<string, NodeConstructor> = {};
 
     private _nodeCalculationOrder: Node[] = [];
@@ -28,22 +32,25 @@ export class Editor {
      * The function will be called with a connection.
      * You can check whether this connection is allowed using
      * the fields `from` and `to` of the connection.
-     * Default type comparer:
-     * `(c) => c.from.type === c.to.type;`
+     *
+     * @default (c) => c.from.type === c.to.type;
      */
     public set typeComparer(value: TypeComparer) {
         this._typeComparer = value;
     }
 
-    /* Node Types */
+    /**
+     * Register a new node type
+     * @param {string} typeName Name of the node (must be equal to the node's `type` field)
+     * @param {NodeConstructor} type Actual type / constructor of the node
+     */
     public registerNodeType(typeName: string, type: NodeConstructor) {
         this.nodeTypes[typeName] = type;
     }
 
-    /* Nodes */
     /**
      * Add a node to the list of nodes.
-     * @param typeNameOrInstance Either a registered node type or a node instance
+     * @param {string|Node} typeNameOrInstance Either a registered node type or a node instance
      */
     public addNode(typeNameOrInstance: string|Node) {
         let n = typeNameOrInstance;
@@ -60,7 +67,7 @@ export class Editor {
     /**
      * Removes a node from the list.
      * Will also remove all connections from and to the node.
-     * @param n Reference to a node in the list.
+     * @param {Node} n Reference to a node in the list.
      */
     public removeNode(n: Node) {
         if (this.nodes.includes(n)) {
@@ -71,13 +78,13 @@ export class Editor {
         }
     }
 
-    /* Connections */
     /**
      * Add a connection to the list of connections.
-     * @param from Start interface for the connection
-     * @param to Target interface for the connection
-     * @param calculateNodeTree Whether to update the node calculation order after adding the connection
-     * @returns Whether the connection was successfully created
+     * @param {NodeInterface} from Start interface for the connection
+     * @param {NodeInterface} to Target interface for the connection
+     * @param {boolean} [calculateNodeTree=true]
+     * Whether to update the node calculation order after adding the connection
+     * @returns {boolean} Whether the connection was successfully created
      */
     public addConnection(from: NodeInterface, to: NodeInterface, calculateNodeTree = true): boolean {
 
@@ -98,6 +105,13 @@ export class Editor {
 
     }
 
+    /**
+     * Remove a connection from the list of connections.
+     * @param {Connection} c Connection instance that should be removed.
+     * @param {boolean} [calculateNodeTree=true] Whether to update the node calculation order.
+     * Set to false if you do multiple remove operations and call {@link calculateNodeTree} manually
+     * after the last remove operation.
+     */
     public removeConnection(c: Connection, calculateNodeTree = true) {
         if (this.connections.includes(c)) {
             c.destruct();
@@ -108,6 +122,12 @@ export class Editor {
         }
     }
 
+    /**
+     * Checks, whether a connection between two node interfaces would be valid.
+     * @param {NodeInterface} from The starting node interface (must be an output interface)
+     * @param {NodeInterface} to The target node interface (must be an input interface)
+     * @returns {boolean} Whether the connection is allowed or not.
+     */
     public checkConnection(from: NodeInterface, to: NodeInterface): boolean {
 
         if (from.isInput || !to.isInput) {
@@ -135,19 +155,23 @@ export class Editor {
 
     }
 
-    /* Calculate */
+    /** Calculate all nodes */
     public async calculate() {
         for (const n of this._nodeCalculationOrder) {
             await n.calculate();
         }
     }
 
+    /** Recalculate the node calculation order */
     public calculateNodeTree() {
         const ntb = new NodeTreeBuilder();
         this._nodeCalculationOrder = ntb.calculateTree(this.nodes, this.connections);
     }
 
-    /* Loading / Saving */
+    /**
+     * Load a state
+     * @param {IState} state State to load
+     */
     public load(state: IState) {
 
         // Clear current state
@@ -205,6 +229,10 @@ export class Editor {
         }
     }
 
+    /**
+     * Save a state
+     * @returns {IState} Current state
+     */
     public save(): IState {
         return {
             nodes: this.nodes.map((n) => n.save()),

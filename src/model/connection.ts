@@ -58,11 +58,9 @@ export class Connection implements IConnection {
 
 }
 
-/**
- * This class is used for calculation purposes only.
- * It will not transfer values!
- * It will, however, also not alter any state of the connected nodes
- */
+// This class is used for calculation purposes only.
+// It will not transfer values!
+// It will, however, also not alter any state of the connected nodes
 export class DummyConnection implements IConnection {
 
     public id: string;

@@ -29,12 +29,11 @@ export class NodeInterface {
         return this._value;
     }
 
-    public constructor(parent: Node, isInput: boolean, type: string, option?: VueConstructor) {
+    public constructor(parent: Node, isInput: boolean, type: string) {
         this.parent = parent;
         this.isInput = isInput;
         this.id = "ni_" + generateId();
         this.type = type;
-        this.option = option;
     }
 
     public load(state: IInterfaceState) {

@@ -6,6 +6,11 @@
     border-radius: $border-radius-node;
     position: absolute;
     filter: drop-shadow(0 0 3px #000000cc);
+    transition: box-shadow $visual-transition;
+
+    &:hover {
+        box-shadow: 0 0 0 0.35px $color-node-selected;
+    }
 
     &.--selected {
         z-index: 5;

@@ -4,7 +4,8 @@ $iftypes: (
     boolean: darkcyan,
     color: gold,
     color-array: gold,
-    number: gray
+    number: gray,
+    string: purple
 );
 
 @import "../src/styles/styles.scss";
