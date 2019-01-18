@@ -15,6 +15,7 @@ import { Editor } from "../src/model";
 
 import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";
+import BuilderTestNode from "./BuilderTestNode";
 
 @Component
 export default class App extends Vue {
@@ -24,10 +25,12 @@ export default class App extends Vue {
     mounted() {
         this.editor.registerNodeType("TestNode", TestNode);
         this.editor.registerNodeType("OutputNode", OutputNode);
+        this.editor.registerNodeType("BuilderTestNode", BuilderTestNode);
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new OutputNode());
+        this.editor.addNode(new BuilderTestNode());
     }
 
     calculate() {
