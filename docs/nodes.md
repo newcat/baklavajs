@@ -7,13 +7,12 @@ There are two ways to create custom nodes:
 ### Node Builder
 The node builder is a simple way to build nodes "on the fly".
 ```ts
-import { NodeBuilder } from "baklavajs";
-import InputOption from "baklavajs/options/InputOption.vue";
+import { NodeBuilder, Options } from "baklavajs";
 
 export default new NodeBuilder("BuilderTestNode")
-    .addInputInterface("Input 1", "string", InputOption, "default1")
-    .addInputInterface("Input 2", "string", InputOption, "default2")
-    .addOption("Separator", InputOption, ",")
+    .addInputInterface("Input 1", "string", Options.InputOption, "default1")
+    .addInputInterface("Input 2", "string", Options.InputOption, "default2")
+    .addOption("Separator", Options.InputOption, ",")
     .addOutputInterface("Output", "string")
     .onCalculate((n) => {
         const s1 = n.getInterface("Input 1").value;
@@ -29,9 +28,7 @@ If you have a more complex node, you can create a subclass of `Node`
 and implement the required methods/properties yourself.
 A minimal class could look like this:
 ```js
-import { Node } from "baklavajs";
-import InputOption from "baklavajs/options/InputOption.vue";
-import SelectOption from "baklavajs/options/SelectOption.vue";
+import { Node, Options } from "baklavajs";
 
 export class MyNode extends Node {
     
@@ -40,9 +37,9 @@ export class MyNode extends Node {
 
     constructor() {
         super();
-        this.addInputInterface("Input", "boolean", InputOption);
+        this.addInputInterface("Input", "boolean", Options.InputOption);
         this.addOutputInterface("Output", "boolean");
-        this.addOption("Select", SelectOption, { selected: "Test1", items: ["Test1", "Test2", "Test3"] })
+        this.addOption("Select", Options.SelectOption, { selected: "Test1", items: ["Test1", "Test2", "Test3"] })
     }
 
     public calculate() {
@@ -66,9 +63,13 @@ Their value can be written or read by using the [setOptionValue](api.md#Node+set
 or [getOptionValue](api.md#Node+getOptionValue) methods.
 
 There are prebuilt options that can be used:
+- [CheckboxOption](options/checkbox.md): A checkbox for setting boolean values
 - [InputOption](options/input.md): A simple text field
+- [NumberOption](options/number.md): A numeric up/down field for numeric values
 - [SelectOption](options/select.md): A dropdown select
 - [TextOption](options/text.md): Displays arbitrary strings
+
+These options are under the `Options` namespace. For usage examples, see the code snippets above.
 
 
 ## Calculation

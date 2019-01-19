@@ -37,7 +37,7 @@ export abstract class Node {
      * @property
      * All input interfaces of the node
      */
-    public get inputInterfaces() {
+    public get inputInterfaces(): Record<string, NodeInterface> {
         return pickBy(this.interfaces, (i) => i.isInput);
     }
 
@@ -45,7 +45,7 @@ export abstract class Node {
      * @property
      * All output interfaces of the node
      */
-    public get outputInterfaces() {
+    public get outputInterfaces(): Record<string, NodeInterface> {
         return pickBy(this.interfaces, (i) => !i.isInput);
     }
 
@@ -88,10 +88,11 @@ export abstract class Node {
      * Add an input interface to the node
      * @param {string} name Name of the interface
      * @param {string} type Type of the interface
-     * @param {VueConstructor} option
-     * An optional NodeOption which is displayed when the interface is not connected to set its value
+     * @param {VueConstructor} [option]
+     * Optional NodeOption which is displayed when the interface is not connected to set its value
+     * @param {any} [defaultValue] Optional default value for the interface/option
      */
-    protected addInputInterface(name: string, type: string, option?: VueConstructor) {
+    protected addInputInterface(name: string, type: string, option?: VueConstructor, defaultValue?: any) {
         return this.addInterface(true, name, type, option);
     }
 

@@ -161,7 +161,7 @@ Will also remove all connections from and to the node.</p>
     * *[.inputInterfaces](#Node+inputInterfaces)*
     * *[.outputInterfaces](#Node+outputInterfaces)*
     * **[.calculate()](#Node+calculate) ⇒ <code>any</code>**
-    * *[.addInputInterface(name, type, option)](#Node+addInputInterface)*
+    * *[.addInputInterface(name, type, [option], [defaultValue])](#Node+addInputInterface)*
     * *[.addOutputInterface(name, type)](#Node+addOutputInterface)*
     * *[.addOption(name, option, [defaultValue])](#Node+addOption)*
     * *[.getInterface(name)](#Node+getInterface)*
@@ -198,7 +198,7 @@ Overwrite this method to do calculation.</p>
 **Returns**: <code>any</code> - <p>This method can return a promise.</p>  
 <a name="Node+addInputInterface"></a>
 
-### *node.addInputInterface(name, type, option)*
+### *node.addInputInterface(name, type, [option], [defaultValue])*
 <p>Add an input interface to the node</p>
 
 **Kind**: instance method of [<code>Node</code>](#Node)  
@@ -207,7 +207,8 @@ Overwrite this method to do calculation.</p>
 | --- | --- | --- |
 | name | <code>string</code> | <p>Name of the interface</p> |
 | type | <code>string</code> | <p>Type of the interface</p> |
-| option | <code>VueConstructor</code> | <p>An optional NodeOption which is displayed when the interface is not connected to set its value</p> |
+| [option] | <code>VueConstructor</code> | <p>Optional NodeOption which is displayed when the interface is not connected to set its value</p> |
+| [defaultValue] | <code>any</code> | <p>Optional default value for the interface/option</p> |
 
 <a name="Node+addOutputInterface"></a>
 

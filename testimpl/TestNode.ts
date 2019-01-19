@@ -1,8 +1,4 @@
-import { Node } from "../src/model";
-import InputOption from "../src/options/InputOption.vue";
-import CheckboxOption from "../src/options/CheckboxOption.vue";
-import NumberOption from "../src/options/NumberOption.vue";
-import SelectOption from "../src/options/SelectOption.vue";
+import { Node, Options } from "../src";
 
 export default class TestNode extends Node {
 
@@ -11,12 +7,12 @@ export default class TestNode extends Node {
 
     constructor() {
         super();
-        this.addInputInterface("Input", "boolean", InputOption);
+        this.addInputInterface("Input", "boolean", Options.InputOption);
         this.addOutputInterface("Output", "boolean");
-        this.addOption("test", InputOption);
-        this.addOption("Select", SelectOption, { selected: "Test1", items: ["Test1", "Test2", "Test3"] });
-        this.addOption("This is a checkbox", CheckboxOption, true);
-        this.addOption("Number", NumberOption);
+        this.addOption("test", Options.InputOption);
+        this.addOption("Select", Options.SelectOption, { selected: "Test1", items: ["Test1", "Test2", "Test3"] });
+        this.addOption("This is a checkbox", Options.CheckboxOption, true);
+        this.addOption("Number", Options.NumberOption);
     }
 
     public calculate() {

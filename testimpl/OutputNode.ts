@@ -1,6 +1,4 @@
-import { Node } from "../src/model";
-import TextOption from "../src/options/TextOption.vue";
-import InputOption from "../src/options/InputOption.vue";
+import { Node, Options } from "../src";
 
 export default class OutputNode extends Node {
 
@@ -9,8 +7,8 @@ export default class OutputNode extends Node {
 
     public constructor() {
         super();
-        this.addInputInterface("Input", "string", InputOption);
-        this.addOption("output", TextOption);
+        this.addInputInterface("Input", "string", Options.InputOption);
+        this.addOption("output", Options.TextOption);
     }
 
     public calculate() {
