@@ -24,22 +24,29 @@ export default new NodeBuilder("BuilderTestNode")
     .build();
 ```
 
-To create a custom node, you need to write a class which inherits from the base node class provided by the library.
+### Class
+If you have a more complex node, you can create a subclass of `Node`
+and implement the required methods/properties yourself.
 A minimal class could look like this:
 ```js
 import { Node } from "baklavajs";
+import InputOption from "baklavajs/options/InputOption.vue";
+import SelectOption from "baklavajs/options/SelectOption.vue";
 
 export class MyNode extends Node {
     
     type = "MyNode";
-    name = "MyNode";
+    name = this.type;
 
-    getInterfaces() {
-        return {};
+    constructor() {
+        super();
+        this.addInputInterface("Input", "boolean", InputOption);
+        this.addOutputInterface("Output", "boolean");
+        this.addOption("Select", SelectOption, { selected: "Test1", items: ["Test1", "Test2", "Test3"] })
     }
 
-    getOptions() {
-        return {};
+    public calculate() {
+        this.getInterface("Output").value = this.getInterface("Input");
     }
 
 }
@@ -52,42 +59,19 @@ Every node consists of three parts:
 
 All of these parts are customizable.
 
-### getInterfaces
-This method is used to create a new set of [NodeInterfaces](nodeInterfaces.md) (inputs/outputs of a node).
-```js
-import { NodeInterface } from "baklavajs";
 
-getInterfaces() {
-    return {
-        input1: new NodeInterface(this, true, "number"),
-        input2: new NodeInterface(this, true, "number"),
-        output: new NodeInterface(this, false, "number")
-    }
-}
-```
-
-### getOptions
-This method is used to create a new set of options. Options are just Vue components,
-that support the `v-model` directive. Their value can be written to or read from the
-`options` field of the instance.
+## Node Options
+Options are just Vue components, that support the `v-model` directive.
+Their value can be written or read by using the [setOptionValue](api.md#Node+setOptionValue)
+or [getOptionValue](api.md#Node+getOptionValue) methods.
 
 There are prebuilt options that can be used:
 - [InputOption](options/input.md): A simple text field
 - [SelectOption](options/select.md): A dropdown select
 - [TextOption](options/text.md): Displays arbitrary strings
 
-```js
-import InputOption from "baklavajs/dist/options/InputOption.vue";
 
-getOptions() {
-    return {
-        myOption: InputOption
-    };
-}
-```
-The value can later be accessed with `this.options.myOptions`
-
-### Calculation
+## Calculation
 Each Node class can overwrite the `calculate()` function to perform some logic.
 Usually the calculation functions reads the values from the input interfaces and the options,
 performs some logic and sets the values of the output interfaces with the results.

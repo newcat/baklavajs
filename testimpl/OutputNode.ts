@@ -10,17 +10,11 @@ export default class OutputNode extends Node {
     public constructor() {
         super();
         this.addInputInterface("Input", "string", InputOption);
+        this.addOption("output", TextOption);
     }
 
     public calculate() {
-        console.log(this.getInterface("Input").value);
         this.setOptionValue("output", this.getInterface("Input").value);
-    }
-
-    protected getOptions() {
-        return {
-            output: TextOption
-        };
     }
 
 }
