@@ -43,3 +43,4 @@ export default {
 * [Editor functions](docs/editor.md)
 * [Creating custom nodes](docs/nodes.md)
 * [Customize styles and colors](docs/styling.md)
+* [API Reference](docs/api.md)

@@ -5,6 +5,8 @@
 <dd><p>The main model class for BaklavaJS</p></dd>
 <dt><a href="#Node">Node</a></dt>
 <dd><p>Abstract base class for every node</p></dd>
+<dt><a href="#NodeBuilder">NodeBuilder</a></dt>
+<dd><p>Utility class for creating custom nodes</p></dd>
 </dl>
 
 <a name="Editor"></a>
@@ -156,28 +158,44 @@ Will also remove all connections from and to the node.</p>
 **Kind**: global abstract class  
 
 * *[Node](#Node)*
-    * **[.inputInterfaces](#Node+inputInterfaces)**
-    * **[.calculate()](#Node+calculate) ⇒**
-    * **[.addInterface()](#Node+addInterface) ⇒ <code>Record.&lt;string, VueConstructor&gt;</code>**
+    * *[.inputInterfaces](#Node+inputInterfaces)*
+    * *[.outputInterfaces](#Node+outputInterfaces)*
+    * **[.calculate()](#Node+calculate) ⇒ <code>any</code>**
     * *[.addInputInterface(name, type, option)](#Node+addInputInterface)*
     * *[.addOutputInterface(name, type)](#Node+addOutputInterface)*
+    * *[.addOption(name, option, [defaultValue])](#Node+addOption)*
     * *[.getInterface(name)](#Node+getInterface)*
     * *[.getOptionValue(name)](#Node+getOptionValue)*
     * *[.setOptionValue(name, value)](#Node+setOptionValue)*
 
 <a name="Node+inputInterfaces"></a>
 
-### **node.inputInterfaces**
-**Kind**: instance abstract property of [<code>Node</code>](#Node)  
+### *node.inputInterfaces*
+**Kind**: instance property of [<code>Node</code>](#Node)  
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| All | <p>input interfaces of the node</p> |
+
+<a name="Node+outputInterfaces"></a>
+
+### *node.outputInterfaces*
+**Kind**: instance property of [<code>Node</code>](#Node)  
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| All | <p>output interfaces of the node</p> |
+
 <a name="Node+calculate"></a>
 
-### **node.calculate() ⇒**
-**Kind**: instance abstract method of [<code>Node</code>](#Node)  
-**Returns**: <p>This method can return a promise.</p>  
-<a name="Node+addInterface"></a>
+### **node.calculate() ⇒ <code>any</code>**
+<p>The default implementation does nothing.
+Overwrite this method to do calculation.</p>
 
-### **node.addInterface() ⇒ <code>Record.&lt;string, VueConstructor&gt;</code>**
 **Kind**: instance abstract method of [<code>Node</code>](#Node)  
+**Returns**: <code>any</code> - <p>This method can return a promise.</p>  
 <a name="Node+addInputInterface"></a>
 
 ### *node.addInputInterface(name, type, option)*
@@ -202,6 +220,19 @@ Will also remove all connections from and to the node.</p>
 | --- | --- | --- |
 | name | <code>string</code> | <p>Name of the interface</p> |
 | type | <code>string</code> | <p>Type of the interface</p> |
+
+<a name="Node+addOption"></a>
+
+### *node.addOption(name, option, [defaultValue])*
+<p>Add a node option to the node</p>
+
+**Kind**: instance method of [<code>Node</code>](#Node)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| name | <code>string</code> |  | <p>Name of the option</p> |
+| option | <code>VueConstructor</code> |  | <p>Option component</p> |
+| [defaultValue] | <code>any</code> | <code></code> | <p>Default value for the option</p> |
 
 <a name="Node+getInterface"></a>
 
@@ -237,4 +268,83 @@ Will also remove all connections from and to the node.</p>
 | --- | --- | --- |
 | name | <code>string</code> | <p>Name of the option</p> |
 | value | <code>any</code> | <p>New value</p> |
+
+<a name="NodeBuilder"></a>
+
+## NodeBuilder
+<p>Utility class for creating custom nodes</p>
+
+**Kind**: global class  
+
+* [NodeBuilder](#NodeBuilder)
+    * [.build()](#NodeBuilder+build) ⇒ <code>NodeConstructor</code>
+    * [.addInputInterface(name, type, [option], [defaultValue])](#NodeBuilder+addInputInterface) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
+    * [.addOutputInterface(name, type)](#NodeBuilder+addOutputInterface) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
+    * [.addOption(name, option, [defaultValue])](#NodeBuilder+addOption) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
+    * [.onCalculate(cb)](#NodeBuilder+onCalculate) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
+
+<a name="NodeBuilder+build"></a>
+
+### nodeBuilder.build() ⇒ <code>NodeConstructor</code>
+<p>Build the node class.
+This must be called as the last operation when building a node.</p>
+
+**Kind**: instance method of [<code>NodeBuilder</code>](#NodeBuilder)  
+**Returns**: <code>NodeConstructor</code> - <p>The generated node class</p>  
+<a name="NodeBuilder+addInputInterface"></a>
+
+### nodeBuilder.addInputInterface(name, type, [option], [defaultValue]) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
+<p>Add an input interface to the node</p>
+
+**Kind**: instance method of [<code>NodeBuilder</code>](#NodeBuilder)  
+**Returns**: [<code>NodeBuilder</code>](#NodeBuilder) - <p>Current node builder instance for chaining</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | <p>Name of the interface</p> |
+| type | <code>string</code> | <p>Type of the interface</p> |
+| [option] | <code>VueConstructor</code> | <p>A node option component to be displayed when the interface is not connected</p> |
+| [defaultValue] | <code>any</code> | <p>Default value for the node option</p> |
+
+<a name="NodeBuilder+addOutputInterface"></a>
+
+### nodeBuilder.addOutputInterface(name, type) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
+<p>Add an output interface to the node</p>
+
+**Kind**: instance method of [<code>NodeBuilder</code>](#NodeBuilder)  
+**Returns**: [<code>NodeBuilder</code>](#NodeBuilder) - <p>Current node builder instance for chaining</p>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | <p>Name of the interface</p> |
+| type | <code>string</code> | <p>Type of the interface</p> |
+
+<a name="NodeBuilder+addOption"></a>
+
+### nodeBuilder.addOption(name, option, [defaultValue]) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
+<p>Add a node option to the node</p>
+
+**Kind**: instance method of [<code>NodeBuilder</code>](#NodeBuilder)  
+**Returns**: [<code>NodeBuilder</code>](#NodeBuilder) - <p>Current node builder instance for chaining</p>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| name | <code>string</code> |  | <p>Name of the option</p> |
+| option | <code>VueConstructor</code> |  | <p>Option component</p> |
+| [defaultValue] | <code>any</code> | <code></code> | <p>Default value for the option</p> |
+
+<a name="NodeBuilder+onCalculate"></a>
+
+### nodeBuilder.onCalculate(cb) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
+<p>Register a callback for the calculation function.
+The callback will receive the node instance as first parameter.
+(If you do not use ES6 arrow functions, the node instance
+will also be bound to <code>this</code>)</p>
+
+**Kind**: instance method of [<code>NodeBuilder</code>](#NodeBuilder)  
+**Returns**: [<code>NodeBuilder</code>](#NodeBuilder) - <p>Current node builder instance for chaining</p>  
+
+| Param | Description |
+| --- | --- |
+| cb | <p>Callback to be executed when <code>calculate()</code> is called on the node</p> |
 

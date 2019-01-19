@@ -13,21 +13,14 @@ export default class TestNode extends Node {
         super();
         this.addInputInterface("Input", "boolean", InputOption);
         this.addOutputInterface("Output", "boolean");
-        this.setOptionValue("This is a checkbox", true);
-        this.setOptionValue("Select", { selected: "Test1", items: ["Test1", "Test2", "Test3"] });
+        this.addOption("test", InputOption);
+        this.addOption("Select", SelectOption, { selected: "Test1", items: ["Test1", "Test2", "Test3"] });
+        this.addOption("This is a checkbox", CheckboxOption, true);
+        this.addOption("Number", NumberOption);
     }
 
     public calculate() {
         this.getInterface("Output").value = this.getInterface("Input");
-    }
-
-    public getOptions() {
-        return {
-            "test": InputOption,
-            "Select": SelectOption,
-            "This is a checkbox": CheckboxOption,
-            "Number": NumberOption
-        };
     }
 
 }

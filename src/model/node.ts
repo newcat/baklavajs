@@ -25,30 +25,28 @@ export abstract class Node {
     /** @abstract Name of the node. Should be set equal to {@link type} by default */
     public abstract name: string;
 
-    public id: string;
-    public interfaces: Record<string, NodeInterface>;
-    public optionViews: OptionViewsObject;
-    public options: Record<string, any>;
+    public id: string = "node_" + generateId();
+    public interfaces: Record<string, NodeInterface> = {};
+    public optionViews: OptionViewsObject = {};
+    public options: Record<string, any> = {};
 
     public position = { x: 0, y: 0 };
     public state = {};
 
+    /**
+     * @property
+     * All input interfaces of the node
+     */
     public get inputInterfaces() {
         return pickBy(this.interfaces, (i) => i.isInput);
     }
 
+    /**
+     * @property
+     * All output interfaces of the node
+     */
     public get outputInterfaces() {
         return pickBy(this.interfaces, (i) => !i.isInput);
-    }
-
-    public constructor() {
-        this.id = "node_" + generateId();
-        this.interfaces = {};
-        this.optionViews = this.getOptions();
-        this.options = Object.keys(this.optionViews).reduce((p, k) => {
-            p[k] = null;
-            return p;
-        }, {} as Record<string, any>);
     }
 
     public load(state: INodeState) {
@@ -78,29 +76,12 @@ export abstract class Node {
 
     /**
      * @virtual
-     * The default implementation does nothing.
+     * @description The default implementation does nothing.
      * Overwrite this method to do calculation.
-     * @return This method can return a promise.
+     * @return {any} This method can return a promise.
      */
-    public calculate() {
+    public calculate(): any {
         // Empty
-    }
-
-    /**
-     * @abstract
-     * This method must be overwritten and provide a record
-     * of all options of this node.
-     * Example:
-     * `{ optionA: TextOption, optionB: InputOption }`
-     * Each option is a Vue component
-     * @returns {Record<string, VueConstructor>}
-     */
-    protected abstract getOptions(): OptionViewsObject;
-
-    private addInterface(isInput: boolean, name: string, type: string, option?: VueConstructor) {
-        const intf = new NodeInterface(this, isInput, type);
-        intf.option = option;
-        this.interfaces[name] = intf;
     }
 
     /**
@@ -121,6 +102,17 @@ export abstract class Node {
      */
     protected addOutputInterface(name: string, type: string) {
         return this.addInterface(false, name, type);
+    }
+
+    /**
+     * Add a node option to the node
+     * @param {string} name Name of the option
+     * @param {VueConstructor} option Option component
+     * @param {any} [defaultValue=null] Default value for the option
+     */
+    protected addOption(name: string, option: VueConstructor, defaultValue: any = null) {
+        this.optionViews[name] = option;
+        this.options[name] = defaultValue;
     }
 
     /**
@@ -150,6 +142,12 @@ export abstract class Node {
      */
     public setOptionValue(name: string, value: any) {
         this.options[name] = value;
+    }
+
+    private addInterface(isInput: boolean, name: string, type: string, option?: VueConstructor) {
+        const intf = new NodeInterface(this, isInput, type);
+        intf.option = option;
+        this.interfaces[name] = intf;
     }
 
 }

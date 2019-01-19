@@ -20,7 +20,7 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "build-lib": "webpack",
-        "gen-doc": "jsdoc2md --files ./src/model/*.ts --configure ./jsdoc2md.json > ./docs/api.md"
+        "gen-doc": "jsdoc2md --files ./src/model/*.ts ./src/utility/nodeBuilder.ts --configure ./jsdoc2md.json > ./docs/api.md"
     },
     "dependencies": {},
     "devDependencies": {
