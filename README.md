@@ -1,4 +1,4 @@
-# baklavajs
+# BaklavaJS
 Graph / node editor in the browser using VueJS
 ![example](docs/img/example.png)
 
@@ -44,3 +44,10 @@ export default {
 * [Creating custom nodes](docs/nodes.md)
 * [Customize styles and colors](docs/styling.md)
 * [API Reference](docs/api.md)
+
+## Roadmap
+* Add panning for all nodes
+* Renaming nodes
+* Context-Menu for operations
+* Optional keyboard shortcuts
+* Fix quirk when creating a connection and hovering over the starting node interface

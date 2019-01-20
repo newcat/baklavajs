@@ -26,6 +26,10 @@
             @select="selectNode(node)"
         >
         </node>
+
+        <!-- Remove after debug -->
+        <context-menu></context-menu>
+
     </div>
 </template>
 
@@ -38,11 +42,15 @@ import NodeView from "./node/Node.vue";
 import ConnectionView from "./connection/ConnectionWrapper.vue";
 import TempConnectionView from "./connection/TemporaryConnection.vue";
 
+// REMOVE AFTER DEBUG
+import ContextMenu from "./ContextMenu.vue";
+
 @Component({
     components: {
         "node": NodeView,
         "connection": ConnectionView,
-        "temp-connection": TempConnectionView
+        "temp-connection": TempConnectionView,
+        ContextMenu
     }
 })
 export default class EditorView extends Vue {

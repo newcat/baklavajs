@@ -9,6 +9,7 @@
     position: relative;
     overflow: hidden;
     outline: none !important;
+    font-size: 0.8rem;
     @include backgroundpattern();
 
     & > * {

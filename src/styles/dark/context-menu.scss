@@ -1,0 +1,26 @@
+.dark-context-menu {
+    color: $color-control-dark-foreground;
+    position: absolute;
+    width: 200px;
+    z-index: 10;
+    background-color: #000000AA;
+    filter: drop-shadow(0 0 4px black);
+    border-radius: 0 0 $border-radius-control $border-radius-control;
+
+    & > .item {
+        padding: 0.35em;
+        padding-left: 1em;
+        transition: background 0.05s linear;
+        
+        &:not(.--header):not(.--active) {
+            &:hover {
+                background: $color-primary;
+            }
+        }
+
+        &.--active {
+            background: $color-primary;
+        }
+    }
+
+}
