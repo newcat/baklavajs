@@ -6,6 +6,7 @@
         @mousedown="mouseDown"
         @mouseup="mouseUp"
         @keydown="keyDown"
+        @contextmenu.self.prevent="openContextMenu"
     >
         <svg class="connections-container">
             <g v-for="connection in connections" :key="connection.id">
@@ -27,8 +28,13 @@
         >
         </node>
 
-        <!-- Remove after debug -->
-        <context-menu></context-menu>
+        <context-menu
+            v-model="contextMenu.show"
+            :x="contextMenu.x"
+            :y="contextMenu.y"
+            :items="context"
+            @click="onContextMenuClick"
+        ></context-menu>
 
     </div>
 </template>
@@ -41,8 +47,6 @@ import { Editor, Node, Connection, NodeInterface, ITemporaryConnection, Temporar
 import NodeView from "./node/Node.vue";
 import ConnectionView from "./connection/ConnectionWrapper.vue";
 import TempConnectionView from "./connection/TemporaryConnection.vue";
-
-// REMOVE AFTER DEBUG
 import ContextMenu from "./ContextMenu.vue";
 
 @Component({
@@ -65,6 +69,12 @@ export default class EditorView extends Vue {
     hoveringOver?: NodeInterface|null = null;
     selectedNode?: Node|null = null;
 
+    contextMenu = {
+        show: false,
+        x: 0,
+        y: 0
+    };
+
     @Provide("editor")
     nodeeditor: EditorView = this;
 
@@ -74,6 +84,28 @@ export default class EditorView extends Vue {
 
     get connections() {
         return this.model ? this.model.connections : [];
+    }
+
+    get context() {
+
+        const categories = Object.keys(this.model.nodeCategories)
+            .filter((c) => c !== "default")
+            .map((c) => {
+                const nodes = this.model.nodeCategories[c]
+                    .map((n) => ({ value: "addNode:" + n, label: n }));
+                return { label: c, submenu: nodes };
+            });
+
+        const defaultNodes = this.model.nodeCategories.default
+            .map((n) => ({ value: "addNode:" + n, label: n }));
+
+        return [
+            {
+                label: "Add Node",
+                submenu: [ ...categories, ...defaultNodes ]
+            }
+        ];
+
     }
 
     hoveredOver(ni: NodeInterface|undefined) {
@@ -143,6 +175,23 @@ export default class EditorView extends Vue {
 
     selectNode(node: Node) {
         this.selectedNode = node;
+    }
+
+    openContextMenu(event: MouseEvent) {
+        this.contextMenu.show = true;
+        this.contextMenu.x = event.offsetX;
+        this.contextMenu.y = event.offsetY;
+    }
+
+    onContextMenuClick(action: string) {
+        if (action.startsWith("addNode:")) {
+            const nodeName = action.substring(action.indexOf(":") + 1);
+            const node = this.model.addNode(nodeName);
+            if (node) {
+                node.position.x = this.contextMenu.x;
+                node.position.y = this.contextMenu.y;
+            }
+        }
     }
 
 }

@@ -1,3 +1,4 @@
+import Vue from "vue";
 import { Node } from "./node";
 import { NodeInterface } from "./nodeInterface";
 import { IConnection, Connection } from "./connection";
@@ -17,6 +18,8 @@ export class Editor {
     public connections: Connection[] = [];
     /** List of all registered node types */
     public nodeTypes: Record<string, NodeConstructor> = {};
+    /** Mapping of nodes to node categories */
+    public nodeCategories: Record<string, string[]> = { default: [] };
 
     private _nodeCalculationOrder: Node[] = [];
     /**
@@ -43,24 +46,35 @@ export class Editor {
      * Register a new node type
      * @param {string} typeName Name of the node (must be equal to the node's `type` field)
      * @param {NodeConstructor} type Actual type / constructor of the node
+     * @param {string} [category="default"] Category of the node. Will be used in the context menu for adding nodes
      */
-    public registerNodeType(typeName: string, type: NodeConstructor) {
-        this.nodeTypes[typeName] = type;
+    public registerNodeType(typeName: string, type: NodeConstructor, category = "default") {
+        Vue.set(this.nodeTypes, typeName, type);
+        if (!this.nodeCategories[category]) {
+            Vue.set(this.nodeCategories, category, []);
+        }
+        this.nodeCategories[category].push(typeName);
     }
 
     /**
      * Add a node to the list of nodes.
      * @param {string|Node} typeNameOrInstance Either a registered node type or a node instance
+     * @returns {Node} Instance of the node
      */
-    public addNode(typeNameOrInstance: string|Node) {
+    public addNode(typeNameOrInstance: string|Node): Node|undefined {
         let n = typeNameOrInstance;
         if (typeof(n) === "string") {
             if (this.nodeTypes[n]) {
                 n = new (this.nodeTypes[n])();
-                this.addNode(n);
+                return this.addNode(n);
+            } else {
+                return undefined;
             }
-        } else {
+        } else if (typeof(n) === "object") {
             this.nodes.push(n);
+            return n;
+        } else {
+            throw new TypeError("Expected Object, got " + typeof(n));
         }
     }
 

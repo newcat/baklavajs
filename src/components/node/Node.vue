@@ -1,8 +1,20 @@
 <template>
     <div :id="data.id" :class="['node', { '--selected': selected }]" :style="styles">
 
-        <div class="__title" @mousedown.prevent.stop="startDrag">
+        <div
+            class="__title"
+            @mousedown.prevent.stop="startDrag"
+            @contextmenu.self.prevent="openContextMenu"
+        >
             {{ data.name }}
+
+            <context-menu
+                v-model="contextMenu.show"
+                :x="contextMenu.x" :y="contextMenu.y"
+                :items="contextMenu.items"
+                @click="onContextMenu"
+            ></context-menu>
+
         </div>
 
         <div class="__content">
@@ -44,10 +56,12 @@ import { VueConstructor } from "vue";
 import NodeEditor from "../Editor.vue";
 import { Node, NodeInterface } from "../../model";
 import NodeInterfaceView from "./NodeInterface.vue";
+import ContextMenu from "../ContextMenu.vue";
 
 @Component({
     components: {
-        "node-interface": NodeInterfaceView
+        "node-interface": NodeInterfaceView,
+        ContextMenu
     }
 })
 export default class NodeView extends Vue {
@@ -60,6 +74,16 @@ export default class NodeView extends Vue {
 
     dragging = false;
     width = 200;
+
+    contextMenu = {
+        show: false,
+        x: 0,
+        y: 0,
+        items: [
+            { value: "rename", label: "Rename" },
+            { value: "delete", label: "Delete" }
+        ]
+    };
 
     get parent() {
         return this.$parent as NodeEditor;
@@ -98,6 +122,20 @@ export default class NodeView extends Vue {
         if (this.dragging) {
             this.data.position.x += ev.movementX;
             this.data.position.y += ev.movementY;
+        }
+    }
+
+    openContextMenu(ev: MouseEvent) {
+        this.contextMenu.show = true;
+        this.contextMenu.x = ev.offsetX;
+        this.contextMenu.y = ev.offsetY;
+    }
+
+    onContextMenu(action: string) {
+        switch (action) {
+            case "delete":
+                this.parent.model.removeNode(this.data);
+                break;
         }
     }
 

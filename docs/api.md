@@ -19,8 +19,8 @@
 * [Editor](#Editor)
     * [.nodeCalculationOrder](#Editor+nodeCalculationOrder)
     * [.typeComparer](#Editor+typeComparer)
-    * [.registerNodeType(typeName, type)](#Editor+registerNodeType)
-    * [.addNode(typeNameOrInstance)](#Editor+addNode)
+    * [.registerNodeType(typeName, type, [category])](#Editor+registerNodeType)
+    * [.addNode(typeNameOrInstance)](#Editor+addNode) ⇒ [<code>Node</code>](#Node)
     * [.removeNode(n)](#Editor+removeNode)
     * [.addConnection(from, to, [calculateNodeTree])](#Editor+addConnection) ⇒ <code>boolean</code>
     * [.removeConnection(c, [calculateNodeTree])](#Editor+removeConnection)
@@ -48,22 +48,24 @@ the fields <code>from</code> and <code>to</code> of the connection.</p>
 **Default**: <code>(c) &#x3D;&gt; c.from.type &#x3D;&#x3D;&#x3D; c.to.type;</code>  
 <a name="Editor+registerNodeType"></a>
 
-### editor.registerNodeType(typeName, type)
+### editor.registerNodeType(typeName, type, [category])
 <p>Register a new node type</p>
 
 **Kind**: instance method of [<code>Editor</code>](#Editor)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| typeName | <code>string</code> | <p>Name of the node (must be equal to the node's <code>type</code> field)</p> |
-| type | <code>NodeConstructor</code> | <p>Actual type / constructor of the node</p> |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| typeName | <code>string</code> |  | <p>Name of the node (must be equal to the node's <code>type</code> field)</p> |
+| type | <code>NodeConstructor</code> |  | <p>Actual type / constructor of the node</p> |
+| [category] | <code>string</code> | <code>&quot;\&quot;default\&quot;&quot;</code> | <p>Category of the node. Will be used in the context menu for adding nodes</p> |
 
 <a name="Editor+addNode"></a>
 
-### editor.addNode(typeNameOrInstance)
+### editor.addNode(typeNameOrInstance) ⇒ [<code>Node</code>](#Node)
 <p>Add a node to the list of nodes.</p>
 
 **Kind**: instance method of [<code>Editor</code>](#Editor)  
+**Returns**: [<code>Node</code>](#Node) - <p>Instance of the node</p>  
 
 | Param | Type | Description |
 | --- | --- | --- |

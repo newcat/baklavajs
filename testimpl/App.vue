@@ -23,9 +23,9 @@ export default class App extends Vue {
     editor = new Editor();
 
     mounted() {
-        this.editor.registerNodeType("TestNode", TestNode);
-        this.editor.registerNodeType("OutputNode", OutputNode);
-        this.editor.registerNodeType("BuilderTestNode", BuilderTestNode);
+        this.editor.registerNodeType("TestNode", TestNode, "Tests");
+        this.editor.registerNodeType("OutputNode", OutputNode, "Outputs");
+        this.editor.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());

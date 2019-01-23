@@ -1,16 +1,17 @@
 .dark-context-menu {
     color: $color-control-dark-foreground;
     position: absolute;
-    width: 200px;
-    z-index: 10;
+    display: inline-block;
+    z-index: 100;
     background-color: #000000AA;
     filter: drop-shadow(0 0 4px black);
     border-radius: 0 0 $border-radius-control $border-radius-control;
+    min-width: 100px;
 
     & > .item {
-        padding: 0.35em;
-        padding-left: 1em;
+        padding: 0.35em 1em;
         transition: background 0.05s linear;
+        position: relative;
         
         &:not(.--header):not(.--active) {
             &:hover {
@@ -21,6 +22,22 @@
         &.--active {
             background: $color-primary;
         }
+
+        &.submenu::after {
+            content: "";
+            float: right;
+            margin-left: 1em;
+            margin-top: 4px;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 5px solid $color-control-dark-foreground;
+        }
+
+        &.submenu > .dark-context-menu {
+            left: 100%;
+            top: 0;
+        }
+
     }
 
 }
