@@ -1,12 +1,19 @@
 <template>
-    <div :id="data.id" :class="['node', { '--selected': selected }]" :style="styles">
+    <div @mousedown.stop="" :id="data.id" :class="['node', { '--selected': selected }]" :style="styles">
 
         <div
             class="__title"
-            @mousedown.prevent.stop="startDrag"
+            @mousedown.self.prevent.stop="startDrag"
             @contextmenu.self.prevent="openContextMenu"
         >
-            {{ data.name }}
+
+            <span v-if="!renaming">{{ data.name }}</span>
+            <input-option
+                v-else
+                v-model="tempName"
+                v-click-outside="doneRenaming"
+                @keydown.enter="doneRenaming"
+            ></input-option>
 
             <context-menu
                 v-model="contextMenu.show"
@@ -53,15 +60,23 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
+// @ts-ignore
+import ClickOutside from "v-click-outside";
+
 import NodeEditor from "../Editor.vue";
 import { Node, NodeInterface } from "../../model";
 import NodeInterfaceView from "./NodeInterface.vue";
 import ContextMenu from "../ContextMenu.vue";
+import InputOption from "../../options/InputOption.vue";
 
 @Component({
     components: {
         "node-interface": NodeInterfaceView,
-        ContextMenu
+        ContextMenu,
+        InputOption
+    },
+    directives: {
+        ClickOutside: ClickOutside.directive
     }
 })
 export default class NodeView extends Vue {
@@ -74,6 +89,9 @@ export default class NodeView extends Vue {
 
     dragging = false;
     width = 200;
+
+    renaming = false;
+    tempName = "";
 
     contextMenu = {
         show: false,
@@ -136,7 +154,15 @@ export default class NodeView extends Vue {
             case "delete":
                 this.parent.model.removeNode(this.data);
                 break;
+            case "rename":
+                this.tempName = this.data.name;
+                this.renaming = true;
         }
+    }
+
+    doneRenaming() {
+        this.data.name = this.tempName;
+        this.renaming = false;
     }
 
 }

@@ -51,7 +51,6 @@ export default {
 
 ## Roadmap
 * Add panning for all nodes
-* Renaming nodes
-* Context-Menu for operations
 * Optional keyboard shortcuts
 * Fix quirk when creating a connection and hovering over the starting node interface
+* Modal / side popout for complex node options

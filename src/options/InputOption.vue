@@ -4,7 +4,7 @@
             type="text"
             class="dark-input"
             :value="value"
-            @input="$emit('input', $event.target.value)"
+            v-on="listeners"
             :placeholder="name"
         >
     </div>
@@ -21,6 +21,10 @@ export default class InputOption extends Vue {
 
     @Prop({ type: String })
     name!: string;
+
+    get listeners(): any {
+        return { ...this.$listeners, input: (ev: any) => this.$emit("input", ev.target.value) };
+    }
 
 }
 </script>

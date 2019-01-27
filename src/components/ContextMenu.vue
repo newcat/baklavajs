@@ -2,7 +2,8 @@
     <div
         class="dark-context-menu"
         :style="styles"
-        v-click-outside="() => { $emit('input', false) }"
+        v-show="value"
+        v-click-outside="onClickOutside"
     >
         <div
             v-for="(item, index) in _items"
@@ -66,7 +67,6 @@ export default class ContextMenu extends Vue {
             s.top = this.y + "px";
             s.left = this.x + "px";
         }
-        s.visibility = this.value ? "visible" : "hidden";
         return s;
     }
 
@@ -85,6 +85,12 @@ export default class ContextMenu extends Vue {
         this.$emit("click", value);
         this.activeMenu = -1;
         if (!this.isNested) {
+            this.$emit("input", false);
+        }
+    }
+
+    onClickOutside() {
+        if (this.value) {
             this.$emit("input", false);
         }
     }
