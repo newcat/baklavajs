@@ -6,7 +6,11 @@ import generateId from "../utility/idGenerator";
 import { NodeInterface } from "./nodeInterface";
 import { INodeState } from "./state";
 
-export type OptionViewsObject = Record<string, VueConstructor>;
+export interface IOption {
+    component: VueConstructor;
+    data: any;
+    sidebarComponent?: VueConstructor;
+}
 
 export interface IInterfaceCreateOptions {
     type?: string;
@@ -27,11 +31,11 @@ export abstract class Node {
 
     public id: string = "node_" + generateId();
     public interfaces: Record<string, NodeInterface> = {};
-    public optionViews: OptionViewsObject = {};
-    public options: Record<string, any> = {};
+    public options: Record<string, IOption> = {};
 
     public position = { x: 0, y: 0 };
     public state = {};
+    public disablePointerEvents = false;
 
     /**
      * @property
@@ -108,12 +112,17 @@ export abstract class Node {
     /**
      * Add a node option to the node
      * @param {string} name Name of the option
-     * @param {VueConstructor} option Option component
+     * @param {VueConstructor} component Option component
      * @param {any} [defaultValue=null] Default value for the option
+     * @param {VueConstructor} [sidebarComponent] Optional component to display in the sidebar
      */
-    protected addOption(name: string, option: VueConstructor, defaultValue: any = null) {
-        this.optionViews[name] = option;
-        this.options[name] = defaultValue;
+    protected addOption(name: string, component: VueConstructor,
+                        defaultValue: any = null, sidebarComponent?: VueConstructor) {
+        this.options[name] = {
+            data: defaultValue,
+            component,
+            sidebarComponent
+        };
     }
 
     /**
@@ -133,7 +142,7 @@ export abstract class Node {
      * @param {string} name Name of the option
      */
     public getOptionValue(name: string) {
-        return this.options[name];
+        return this.options[name].data;
     }
 
     /**
@@ -142,7 +151,7 @@ export abstract class Node {
      * @param {any} value New value
      */
     public setOptionValue(name: string, value: any) {
-        this.options[name] = value;
+        this.options[name].data = value;
     }
 
     private addInterface(isInput: boolean, name: string, type: string, option?: VueConstructor) {

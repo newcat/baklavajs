@@ -36,6 +36,8 @@
             @click="onContextMenuClick"
         ></context-menu>
 
+        <sidebar></sidebar>
+
     </div>
 </template>
 
@@ -48,13 +50,15 @@ import NodeView from "./node/Node.vue";
 import ConnectionView from "./connection/ConnectionWrapper.vue";
 import TempConnectionView from "./connection/TemporaryConnection.vue";
 import ContextMenu from "./ContextMenu.vue";
+import Sidebar from "./Sidebar.vue";
 
 @Component({
     components: {
         "node": NodeView,
         "connection": ConnectionView,
         "temp-connection": TempConnectionView,
-        ContextMenu
+        ContextMenu,
+        Sidebar
     }
 })
 export default class EditorView extends Vue {
@@ -154,7 +158,7 @@ export default class EditorView extends Vue {
             this.$set(this.temporaryConnection as any, "mx", ev.x);
             this.$set(this.temporaryConnection as any, "my", ev.y);
 
-        } else {
+        } else if (ev.target === this.$el) {
             this.selectedNode = null;
         }
     }

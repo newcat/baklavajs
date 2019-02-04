@@ -22,7 +22,9 @@
         "build-lib": "webpack",
         "gen-doc": "jsdoc2md --files ./src/model/*.ts ./src/utility/nodeBuilder.ts --configure ./jsdoc2md.json > ./docs/api.md"
     },
-    "dependencies": {},
+    "dependencies": {
+        "portal-vue": "^1.5.1"
+    },
     "devDependencies": {
         "@babel/cli": "^7.2.3",
         "@babel/core": "^7.2.2",

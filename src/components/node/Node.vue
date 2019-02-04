@@ -1,5 +1,5 @@
 <template>
-    <div @mousedown.stop="" :id="data.id" :class="['node', { '--selected': selected }]" :style="styles">
+    <div :id="data.id" :class="['node', { '--selected': selected }]" :style="styles">
 
         <div
             class="__title"
@@ -35,13 +35,23 @@
             ></node-interface>
 
             <!-- Options -->
-            <component
-                v-for="(optionView, key) in optionViews"
-                :key="key"
-                :name="key"
-                :is="optionView"
-                v-model="data.options[key]"
-            ></component>
+            <template v-for="(option, name) in data.options">
+
+                <component
+                    :key="name"
+                    :name="name"
+                    :is="option.component"
+                    v-model="option.data"
+                    @openSidebar="openSidebar(name)"
+                ></component>
+
+                <portal :key="'sb_' + name" to="sidebar"
+                    v-if="$baklava.sidebar.nodeId === data.id && $baklava.sidebar.optionName === name && option.sidebarComponent"
+                >
+                    <component :is="option.sidebarComponent" :name="name" v-model="option.data"></component>
+                </portal>
+
+            </template>
 
             <!-- Inputs -->
             <node-interface
@@ -64,7 +74,7 @@ import { VueConstructor } from "vue";
 import ClickOutside from "v-click-outside";
 
 import NodeEditor from "../Editor.vue";
-import { Node, NodeInterface } from "../../model";
+import { Node, NodeInterface, IOption } from "../../model";
 import NodeInterfaceView from "./NodeInterface.vue";
 import ContextMenu from "../ContextMenu.vue";
 import InputOption from "../../options/InputOption.vue";
@@ -115,10 +125,6 @@ export default class NodeView extends Vue {
         };
     }
 
-    get optionViews() {
-        return this.data.optionViews;
-    }
-
     startDrag() {
         this.dragging = true;
         document.addEventListener("mousemove", this.handleMove);
@@ -163,6 +169,12 @@ export default class NodeView extends Vue {
     doneRenaming() {
         this.data.name = this.tempName;
         this.renaming = false;
+    }
+
+    openSidebar(optionName: string) {
+        this.$baklava.sidebar.nodeId = this.data.id;
+        this.$baklava.sidebar.optionName = optionName;
+        this.$baklava.sidebar.visible = true;
     }
 
 }

@@ -1,5 +1,5 @@
 import { VueConstructor } from "vue";
-import { Node, OptionViewsObject, NodeConstructor } from "../model";
+import { Node, NodeConstructor, IOption } from "../model";
 
 interface IInterfaceOptions {
     isInput: boolean;
@@ -13,8 +13,7 @@ type CalculationFunction = (this: Node, n: Node) => any;
 
 function generateNode(
     type: string, intfs: IInterfaceOptions[],
-    options: OptionViewsObject, optionValues: Record<string, any>,
-    calcFunction?: CalculationFunction
+    options: Record<string, IOption>, calcFunction?: CalculationFunction
 ) {
     return class extends Node {
 
@@ -30,11 +29,7 @@ function generateNode(
                     this.addOutputInterface(i.name, i.type);
                 }
             }
-            this.options = optionValues;
-        }
-
-        protected getOptions(): OptionViewsObject {
-            return options;
+            this.options = options;
         }
 
         public calculate(): any {
@@ -51,8 +46,7 @@ export class NodeBuilder {
 
     private name = "";
     private intfs: IInterfaceOptions[] = [];
-    private options: OptionViewsObject = {};
-    private optionValues: Record<string, any> = {};
+    private options: Record<string, IOption> = {};
     private calcFunction?: CalculationFunction;
 
     public constructor(name: string) {
@@ -64,9 +58,8 @@ export class NodeBuilder {
      * This must be called as the last operation when building a node.
      * @returns {NodeConstructor} The generated node class
      */
-    public build() {
-        return generateNode(
-            this.name, this.intfs, this.options, this.optionValues, this.calcFunction) as NodeConstructor;
+    public build(): NodeConstructor {
+        return generateNode(this.name, this.intfs, this.options, this.calcFunction) as NodeConstructor;
     }
 
     /**
@@ -77,7 +70,7 @@ export class NodeBuilder {
      * @param {any} [defaultValue] Default value for the node option
      * @returns {NodeBuilder} Current node builder instance for chaining
      */
-    public addInputInterface(name: string, type: string, option?: VueConstructor, defaultValue?: any) {
+    public addInputInterface(name: string, type: string, option?: VueConstructor, defaultValue?: any): NodeBuilder {
         this.intfs.push({ isInput: true, name, type, option, defaultValue });
         return this;
     }
@@ -88,7 +81,7 @@ export class NodeBuilder {
      * @param {string} type Type of the interface
      * @returns {NodeBuilder} Current node builder instance for chaining
      */
-    public addOutputInterface(name: string, type: string) {
+    public addOutputInterface(name: string, type: string): NodeBuilder {
         this.intfs.push({ isInput: false, name, type });
         return this;
     }
@@ -96,13 +89,18 @@ export class NodeBuilder {
     /**
      * Add a node option to the node
      * @param {string} name Name of the option
-     * @param {VueConstructor} option Option component
+     * @param {VueConstructor} component Option component
      * @param {any} [defaultValue=null] Default value for the option
+     * @param {VueConstructor} [sidebarComponent] Optional component to display in the sidebar
      * @returns {NodeBuilder} Current node builder instance for chaining
      */
-    public addOption(name: string, option: VueConstructor, defaultValue: any = null) {
-        this.options[name] = option;
-        this.optionValues[name] = defaultValue;
+    public addOption(name: string, component: VueConstructor,
+                     defaultValue: any = null, sidebarComponent?: VueConstructor): NodeBuilder {
+        this.options[name] = {
+            data: defaultValue,
+            component,
+            sidebarComponent
+        };
         return this;
     }
 
@@ -114,7 +112,7 @@ export class NodeBuilder {
      * @param cb Callback to be executed when `calculate()` is called on the node
      * @returns {NodeBuilder} Current node builder instance for chaining
      */
-    public onCalculate(cb: CalculationFunction) {
+    public onCalculate(cb: CalculationFunction): NodeBuilder {
         this.calcFunction = cb;
         return this;
     }

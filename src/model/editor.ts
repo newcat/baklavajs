@@ -144,7 +144,9 @@ export class Editor {
      */
     public checkConnection(from: NodeInterface, to: NodeInterface): boolean {
 
-        if (from.isInput || !to.isInput) {
+        if (!from || !to) {
+            return false;
+        } else if (from.isInput || !to.isInput) {
             // connections are only allowed from input to output interface
             return false;
         } else if (from.parent === to.parent) {

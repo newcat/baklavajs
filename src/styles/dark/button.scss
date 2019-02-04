@@ -3,14 +3,20 @@
     background-color: $color-control-dark-background;
     color: $color-control-dark-foreground;
     transition: background-color $visual-transition;
+    border: none;
 
-    padding: 0 0.5em;
+    padding: 0.45em 0.35em;
+    border-radius: $border-radius-control;
 
     &:hover {
         background-color: $color-control-dark-hover;
     }
     &:active {
         background-color: $color-primary;
+    }
+
+    &.--block {
+        width: 100%;
     }
 
 }

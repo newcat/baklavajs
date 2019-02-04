@@ -6,6 +6,11 @@
         <button @click="calculate">Calculate</button>
         <button @click="save">Save</button>
         <button @click="load">Load</button>
+
+        <hr>
+
+        <portal-target name="sidebar"></portal-target>
+
     </div>
 </template>
 
