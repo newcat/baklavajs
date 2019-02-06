@@ -22,4 +22,12 @@
         transform: translateX(0);
     }
 
+    & .__close {
+        font-size: 2em;
+        border: none;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+    }
+
 }

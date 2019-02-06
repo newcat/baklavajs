@@ -7,10 +7,6 @@
         <button @click="save">Save</button>
         <button @click="load">Load</button>
 
-        <hr>
-
-        <portal-target name="sidebar"></portal-target>
-
     </div>
 </template>
 
@@ -56,7 +52,7 @@ export default class App extends Vue {
 <style>
 #app {
     margin: 30px 0;
-    height: 500px;
+    height: 700px;
 }
 </style>
 

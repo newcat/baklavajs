@@ -23,16 +23,6 @@
             background: $color-primary;
         }
 
-        &.submenu::after {
-            content: "";
-            float: right;
-            margin-left: 1em;
-            margin-top: 4px;
-            border-top: 5px solid transparent;
-            border-bottom: 5px solid transparent;
-            border-left: 5px solid $color-control-dark-foreground;
-        }
-
         &.submenu > .dark-context-menu {
             left: 100%;
             top: 0;

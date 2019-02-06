@@ -53,7 +53,3 @@ export default {
 * Add panning for all nodes
 * Optional keyboard shortcuts
 * Fix quirk when creating a connection and hovering over the starting node interface
-* Modal / side popout for complex node options
-
-## Known bugs
-* Multiple (sidebar?) options reference single data object

@@ -1,5 +1,6 @@
 import { VueConstructor } from "vue";
 import { Node, NodeConstructor, IOption } from "../model";
+import forOwn from "lodash/forOwn";
 
 interface IInterfaceOptions {
     isInput: boolean;
@@ -10,6 +11,14 @@ interface IInterfaceOptions {
 }
 
 type CalculationFunction = (this: Node, n: Node) => any;
+
+function getDefaultValue(v: any) {
+    if (typeof(v) === "function") {
+        return v();
+    } else {
+        return v;
+    }
+}
 
 function generateNode(
     type: string, intfs: IInterfaceOptions[],
@@ -24,12 +33,19 @@ function generateNode(
             super();
             for (const i of intfs) {
                 if (i.isInput) {
-                    this.addInputInterface(i.name, i.type, i.option);
+                    this.addInputInterface(i.name, i.type, i.option, getDefaultValue(i.defaultValue));
                 } else {
                     this.addOutputInterface(i.name, i.type);
                 }
             }
-            this.options = options;
+            this.options = {};
+            forOwn(options, (v, k) => {
+                this.options[k] = {
+                    component: v.component,
+                    data: getDefaultValue(v.data),
+                    sidebarComponent: v.sidebarComponent
+                };
+            });
         }
 
         public calculate(): any {
@@ -67,10 +83,14 @@ export class NodeBuilder {
      * @param {string} name Name of the interface
      * @param {string} type Type of the interface
      * @param {VueConstructor} [option] A node option component to be displayed when the interface is not connected
-     * @param {any} [defaultValue] Default value for the node option
+     * @param {any} [defaultValue]
+     * Default value for the interface.
+     * If the default value is a primitive (e. g. string, number) then the value can be passed directly.
+     * For objects provide a function that returns the default value.
      * @returns {NodeBuilder} Current node builder instance for chaining
      */
     public addInputInterface(name: string, type: string, option?: VueConstructor, defaultValue?: any): NodeBuilder {
+        this.checkDefaultValue(defaultValue);
         this.intfs.push({ isInput: true, name, type, option, defaultValue });
         return this;
     }
@@ -90,12 +110,16 @@ export class NodeBuilder {
      * Add a node option to the node
      * @param {string} name Name of the option
      * @param {VueConstructor} component Option component
-     * @param {any} [defaultValue=null] Default value for the option
+     * @param {any} [defaultValue]
+     * Default value for the option.
+     * If the default value is a primitive (e. g. string, number) then the value can be passed directly.
+     * For objects provide a function that returns the default value.
      * @param {VueConstructor} [sidebarComponent] Optional component to display in the sidebar
      * @returns {NodeBuilder} Current node builder instance for chaining
      */
     public addOption(name: string, component: VueConstructor,
-                     defaultValue: any = null, sidebarComponent?: VueConstructor): NodeBuilder {
+                     defaultValue?: any, sidebarComponent?: VueConstructor): NodeBuilder {
+        this.checkDefaultValue(defaultValue);
         this.options[name] = {
             data: defaultValue,
             component,
@@ -115,6 +139,12 @@ export class NodeBuilder {
     public onCalculate(cb: CalculationFunction): NodeBuilder {
         this.calcFunction = cb;
         return this;
+    }
+
+    private checkDefaultValue(v: any) {
+        if (typeof(v) === "object") {
+            throw new Error("If the default value is an object, provide a generator function instead of the object");
+        }
     }
 
 }

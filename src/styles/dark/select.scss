@@ -18,6 +18,7 @@
         transition: background $visual-transition;
         min-height: 1.7em;
         display: flex;
+        align-items: center;
 
         &:hover {
             background: $color-control-dark-hover;

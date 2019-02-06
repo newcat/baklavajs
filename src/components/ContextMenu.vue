@@ -12,8 +12,10 @@
             @mouseenter="activeMenu = index"
             @mouseleave="activeMenu = -1"
             @click="onClick(item)"
+            class="d-flex align-items-center"
         >
-            {{ item.label }}
+            <div class="flex-fill">{{ item.label }}</div>
+            <div v-if="item.submenu" class="ml-3">&#9205;</div>
             <context-menu
                 v-if="item.submenu"
                 :value="activeMenu === index"

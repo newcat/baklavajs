@@ -1,9 +1,9 @@
 <template>
     <div :class="['sidebar', { '--open': $baklava.sidebar.visible }]">
         
-        <div>
-            <button class="__close" @click="close">Close</button>
-            <span>{{ nodeName }}</span>
+        <div class="d-flex align-items-center">
+            <button class="__close" @click="close">&times;</button>
+            <div class="ml-2"><b>{{ nodeName }}</b></div>
         </div>
 
         <portal-target name="sidebar"></portal-target>

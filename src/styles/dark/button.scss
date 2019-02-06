@@ -7,6 +7,7 @@
 
     padding: 0.45em 0.35em;
     border-radius: $border-radius-control;
+    font-size: inherit;
 
     &:hover {
         background-color: $color-control-dark-hover;

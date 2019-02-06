@@ -10,11 +10,16 @@
     position: relative;
     overflow: hidden;
     outline: none !important;
-    font-size: 0.8rem;
+    font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
     @include backgroundpattern();
 
-    & > * {
+    & * {
         user-select: none;
+    }
+
+    & *, & *::after, & *::before {
+        box-sizing: border-box;
     }
 
 }
