@@ -52,4 +52,3 @@ export default {
 ## Roadmap
 * Add panning for all nodes
 * Optional keyboard shortcuts
-* Fix quirk when creating a connection and hovering over the starting node interface

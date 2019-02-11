@@ -2,7 +2,7 @@
     <div
         tabindex="0"
         :class="['node-editor', { 'ignore-mouse': !!temporaryConnection }]"
-        @mousemove="mouseMoveHandler"
+        @mousemove.self="mouseMoveHandler"
         @mousedown="mouseDown"
         @mouseup="mouseUp"
         @keydown="keyDown"
@@ -114,7 +114,7 @@ export default class EditorView extends Vue {
 
     hoveredOver(ni: NodeInterface|undefined) {
         this.hoveringOver = ni;
-        if (ni && this.temporaryConnection && this.temporaryConnection.from !== ni) {
+        if (ni && this.temporaryConnection) {
             this.temporaryConnection.to = ni;
             this.temporaryConnection.status =
                 this.model.checkConnection(this.temporaryConnection.from, this.temporaryConnection.to) ?
