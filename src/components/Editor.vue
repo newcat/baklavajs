@@ -49,7 +49,7 @@ import { Editor, Node, Connection, NodeInterface, ITemporaryConnection, Temporar
 import NodeView from "./node/Node.vue";
 import ConnectionView from "./connection/ConnectionWrapper.vue";
 import TempConnectionView from "./connection/TemporaryConnection.vue";
-import ContextMenu from "./ContextMenu.vue";
+import ContextMenu, { IMenuItem } from "./ContextMenu.vue";
 import Sidebar from "./Sidebar.vue";
 
 @Component({
@@ -106,9 +106,9 @@ export default class EditorView extends Vue {
         return [
             {
                 label: "Add Node",
-                submenu: [ ...categories, ...defaultNodes ]
+                submenu: [ ...categories, { isDivider: true }, ...defaultNodes ]
             }
-        ];
+        ] as IMenuItem[];
 
     }
 

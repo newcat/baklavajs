@@ -5,25 +5,31 @@
         v-show="value"
         v-click-outside="onClickOutside"
     >
-        <div
-            v-for="(item, index) in _items"
-            :key="index"
-            :class="{ 'item': true, 'submenu': !!item.submenu }"
-            @mouseenter="activeMenu = index"
-            @mouseleave="activeMenu = -1"
-            @click="onClick(item)"
-            class="d-flex align-items-center"
-        >
-            <div class="flex-fill">{{ item.label }}</div>
-            <div v-if="item.submenu" class="ml-3">&#9205;</div>
-            <context-menu
-                v-if="item.submenu"
-                :value="activeMenu === index"
-                :items="item.submenu"
-                :is-nested="true"
-                @click="onChildClick"
-            ></context-menu>
-        </div>
+        <template v-for="(item, index) in _items">
+
+            <div v-if="item.isDivider" :key="index" class="divider"></div>
+
+            <div
+                v-else
+                :key="index"
+                :class="{ 'item': true, 'submenu': !!item.submenu }"
+                @mouseenter="activeMenu = index"
+                @mouseleave="activeMenu = -1"
+                @click="onClick(item)"
+                class="d-flex align-items-center"
+            >
+                <div class="flex-fill">{{ item.label }}</div>
+                <div v-if="item.submenu" class="ml-3">&#9205;</div>
+                <context-menu
+                    v-if="item.submenu"
+                    :value="activeMenu === index"
+                    :items="item.submenu"
+                    :is-nested="true"
+                    @click="onChildClick"
+                ></context-menu>
+            </div>
+
+        </template>
     </div>
 </template>
 
@@ -36,6 +42,7 @@ import ClickOutside from "v-click-outside";
 export interface IMenuItem {
     label: string;
     value?: any;
+    isDivider?: boolean;
     submenu?: IMenuItem[];
 }
 

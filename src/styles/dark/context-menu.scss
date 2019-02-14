@@ -30,4 +30,10 @@
 
     }
 
+    & > .divider {
+        margin: 0.35em 0;
+        height: 1px;
+        background-color: $color-control-dark-hover;
+    }
+
 }

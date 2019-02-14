@@ -165,7 +165,7 @@ Will also remove all connections from and to the node.</p>
     * **[.calculate()](#Node+calculate) ⇒ <code>any</code>**
     * *[.addInputInterface(name, type, [option], [defaultValue])](#Node+addInputInterface)*
     * *[.addOutputInterface(name, type)](#Node+addOutputInterface)*
-    * *[.addOption(name, option, [defaultValue])](#Node+addOption)*
+    * *[.addOption(name, component, [defaultValue], [sidebarComponent])](#Node+addOption)*
     * *[.getInterface(name)](#Node+getInterface)*
     * *[.getOptionValue(name)](#Node+getOptionValue)*
     * *[.setOptionValue(name, value)](#Node+setOptionValue)*
@@ -226,7 +226,7 @@ Overwrite this method to do calculation.</p>
 
 <a name="Node+addOption"></a>
 
-### *node.addOption(name, option, [defaultValue])*
+### *node.addOption(name, component, [defaultValue], [sidebarComponent])*
 <p>Add a node option to the node</p>
 
 **Kind**: instance method of [<code>Node</code>](#Node)  
@@ -234,8 +234,9 @@ Overwrite this method to do calculation.</p>
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | name | <code>string</code> |  | <p>Name of the option</p> |
-| option | <code>VueConstructor</code> |  | <p>Option component</p> |
+| component | <code>VueConstructor</code> |  | <p>Option component</p> |
 | [defaultValue] | <code>any</code> | <code></code> | <p>Default value for the option</p> |
+| [sidebarComponent] | <code>VueConstructor</code> |  | <p>Optional component to display in the sidebar</p> |
 
 <a name="Node+getInterface"></a>
 
@@ -283,7 +284,7 @@ Overwrite this method to do calculation.</p>
     * [.build()](#NodeBuilder+build) ⇒ <code>NodeConstructor</code>
     * [.addInputInterface(name, type, [option], [defaultValue])](#NodeBuilder+addInputInterface) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
     * [.addOutputInterface(name, type)](#NodeBuilder+addOutputInterface) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
-    * [.addOption(name, option, [defaultValue])](#NodeBuilder+addOption) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
+    * [.addOption(name, component, [defaultValue], [sidebarComponent])](#NodeBuilder+addOption) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
     * [.onCalculate(cb)](#NodeBuilder+onCalculate) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
 
 <a name="NodeBuilder+build"></a>
@@ -307,7 +308,7 @@ This must be called as the last operation when building a node.</p>
 | name | <code>string</code> | <p>Name of the interface</p> |
 | type | <code>string</code> | <p>Type of the interface</p> |
 | [option] | <code>VueConstructor</code> | <p>A node option component to be displayed when the interface is not connected</p> |
-| [defaultValue] | <code>any</code> | <p>Default value for the node option</p> |
+| [defaultValue] | <code>any</code> | <p>Default value for the interface. If the default value is a primitive (e. g. string, number) then the value can be passed directly. For objects provide a function that returns the default value.</p> |
 
 <a name="NodeBuilder+addOutputInterface"></a>
 
@@ -324,17 +325,18 @@ This must be called as the last operation when building a node.</p>
 
 <a name="NodeBuilder+addOption"></a>
 
-### nodeBuilder.addOption(name, option, [defaultValue]) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
+### nodeBuilder.addOption(name, component, [defaultValue], [sidebarComponent]) ⇒ [<code>NodeBuilder</code>](#NodeBuilder)
 <p>Add a node option to the node</p>
 
 **Kind**: instance method of [<code>NodeBuilder</code>](#NodeBuilder)  
 **Returns**: [<code>NodeBuilder</code>](#NodeBuilder) - <p>Current node builder instance for chaining</p>  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| name | <code>string</code> |  | <p>Name of the option</p> |
-| option | <code>VueConstructor</code> |  | <p>Option component</p> |
-| [defaultValue] | <code>any</code> | <code></code> | <p>Default value for the option</p> |
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | <p>Name of the option</p> |
+| component | <code>VueConstructor</code> | <p>Option component</p> |
+| [defaultValue] | <code>any</code> | <p>Default value for the option. If the default value is a primitive (e. g. string, number) then the value can be passed directly. For objects provide a function that returns the default value.</p> |
+| [sidebarComponent] | <code>VueConstructor</code> | <p>Optional component to display in the sidebar</p> |
 
 <a name="NodeBuilder+onCalculate"></a>
 
