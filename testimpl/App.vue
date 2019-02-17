@@ -6,6 +6,7 @@
         <button @click="calculate">Calculate</button>
         <button @click="save">Save</button>
         <button @click="load">Load</button>
+
     </div>
 </template>
 
@@ -16,6 +17,7 @@ import { Editor } from "../src/model";
 import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";
 import BuilderTestNode from "./BuilderTestNode";
+import MathNode from "./MathNode";
 
 @Component
 export default class App extends Vue {
@@ -23,9 +25,10 @@ export default class App extends Vue {
     editor = new Editor();
 
     mounted() {
-        this.editor.registerNodeType("TestNode", TestNode);
-        this.editor.registerNodeType("OutputNode", OutputNode);
-        this.editor.registerNodeType("BuilderTestNode", BuilderTestNode);
+        this.editor.registerNodeType("TestNode", TestNode, "Tests");
+        this.editor.registerNodeType("OutputNode", OutputNode, "Outputs");
+        this.editor.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");
+        this.editor.registerNodeType("MathNode", MathNode);
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
@@ -51,7 +54,7 @@ export default class App extends Vue {
 <style>
 #app {
     margin: 30px 0;
-    height: 500px;
+    height: 700px;
 }
 </style>
 

@@ -1,16 +1,8 @@
+@import "./utils";
 @import "./animations";
 @import "./dark/dark";
 
 @import "./node-editor/node-editor";
-
-body {
-    font-family: 'Lato', sans-serif;
-    line-height: 1.5;
-}
-
-*, *::after, *::before {
-    box-sizing: border-box;
-}
 
 .overlay {
     z-index: 100;

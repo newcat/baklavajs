@@ -1,0 +1,39 @@
+.dark-context-menu {
+    color: $color-control-dark-foreground;
+    position: absolute;
+    display: inline-block;
+    z-index: 100;
+    background-color: #000000AA;
+    filter: drop-shadow(0 0 4px black);
+    border-radius: 0 0 $border-radius-control $border-radius-control;
+    min-width: 100px;
+
+    & > .item {
+        padding: 0.35em 1em;
+        transition: background 0.05s linear;
+        position: relative;
+        
+        &:not(.--header):not(.--active) {
+            &:hover {
+                background: $color-primary;
+            }
+        }
+
+        &.--active {
+            background: $color-primary;
+        }
+
+        &.submenu > .dark-context-menu {
+            left: 100%;
+            top: 0;
+        }
+
+    }
+
+    & > .divider {
+        margin: 0.35em 0;
+        height: 1px;
+        background-color: $color-control-dark-hover;
+    }
+
+}

@@ -2,6 +2,7 @@
 @import "./node";
 @import "./node-interface";
 @import "./connection";
+@import "./sidebar";
 
 .node-editor {
     width: 100%;
@@ -9,10 +10,16 @@
     position: relative;
     overflow: hidden;
     outline: none !important;
+    font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
     @include backgroundpattern();
 
-    & > * {
+    & * {
         user-select: none;
+    }
+
+    & *, & *::after, & *::before {
+        box-sizing: border-box;
     }
 
 }

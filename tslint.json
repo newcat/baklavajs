@@ -12,7 +12,8 @@
         "arrow-parens": false,
         "variable-name": false,
         "member-ordering": false,
-        "max-classes-per-file": false
+        "max-classes-per-file": false,
+        "max-line-length": [true, 140]
     },
     "rulesDirectory": []
 }

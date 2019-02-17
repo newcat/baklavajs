@@ -9,7 +9,7 @@
                 ></path>
             </svg>
         </div>
-        <div style="margin-left: 5px;">{{ name }}</div>
+        <div class="ml-2">{{ name }}</div>
     </div>
 </template>
 
@@ -28,7 +28,7 @@ export default class InputOption extends Vue {
 }
 </script>
 
-<style>
+<style lang="scss">
 .checkbox-container {
     display: flex;
 }

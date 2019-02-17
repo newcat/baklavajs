@@ -19,7 +19,7 @@ export class NodeInterface {
     public option?: VueConstructor;
 
     private listeners: IListener[] = [];
-    private _value: any;
+    private _value: any = null;
 
     public set value(v: any) {
         this._value = v;
