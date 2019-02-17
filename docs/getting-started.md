@@ -12,6 +12,7 @@ yarn add baklavajs
 Now you need to tell Vue to use this library. Add the following code in your application entry file (usually `index.js` or `main.js`):
 ```js
 import BaklavaJS from "baklavajs";
+import "baklavajs/dist/styles/all.scss";
 Vue.use(BaklavaJS);
 ```
 
@@ -34,4 +35,18 @@ export default {
     }
 }
 </script>
+```
+
+> If you do not see the node editor, add a wrapper element with width and height properties around the editor.
+> By default, the editor fills its parent completely. However, if the parent is the `<body>` element, this won't work.
+
+## Electron
+If you want to use this library in Electron, you need to add BaklavaJS to the whitelisted externals.
+To do that, add the following code to your `package.json`:
+```json
+{
+    "electronWebpack": {
+        "whiteListedModules": [ "baklavajs" ]
+    }
+}
 ```
