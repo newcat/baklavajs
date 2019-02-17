@@ -17,6 +17,7 @@
     ],
     "license": "MIT",
     "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
         "serve": "vue-cli-service serve",
         "build-lib": "webpack",
