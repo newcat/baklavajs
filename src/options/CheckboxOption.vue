@@ -28,7 +28,7 @@ export default class InputOption extends Vue {
 }
 </script>
 
-<style>
+<style lang="scss">
 .checkbox-container {
     display: flex;
 }
