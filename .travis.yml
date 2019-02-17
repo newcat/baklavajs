@@ -3,6 +3,8 @@ node_js: "11"
 
 cache: yarn
 
+if: tag IS present
+
 branches:
   only:
   - master

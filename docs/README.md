@@ -5,8 +5,3 @@
 
 Graph / node editor in the browser using VueJS
 ![example](img/example.png)
-
-### Roadmap
-* Add panning for all nodes
-* Allow connections from input to output (auto-reverse)
-* Optional keyboard shortcuts
