@@ -21,6 +21,8 @@ script:
 
 deploy:
   provider: npm
+  on:
+    all_branches: true
   email: freddy.wagner@web.de
   skip_cleanup: true
   api_key:
