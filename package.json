@@ -22,9 +22,7 @@
         "build-lib": "webpack",
         "gen-doc": "jsdoc2md --files ./src/model/*.ts ./src/utility/nodeBuilder.ts --configure ./jsdoc2md.json > ./docs/api.md"
     },
-    "dependencies": {
-        "portal-vue": "^1.5.1"
-    },
+    "dependencies": {},
     "devDependencies": {
         "@babel/cli": "^7.2.3",
         "@babel/core": "^7.2.2",
@@ -43,6 +41,7 @@
         "lodash": "^4.17.11",
         "mini-css-extract-plugin": "^0.5.0",
         "node-sass": "^4.9.0",
+        "portal-vue": "^1.5.1",
         "sass-loader": "^7.0.1",
         "ts-loader": "^5.3.2",
         "typescript": "^3.2.2",

@@ -1,18 +1,16 @@
-# Editor
+# Editor <!-- omit in toc -->
 The editor class is the main class of the model. You can do most things like adding/removing nodes and connections, loading/saving, ... from here.
 
 > Please only use the provided functions and do not modify fields directly.
 
-- [Editor](#editor)
-  - [Nodes](#nodes)
-    - [Adding / removing nodes](#adding--removing-nodes)
-  - [Connections](#connections)
-    - [Connection validity](#connection-validity)
-    - [Adding / removing connections](#adding--removing-connections)
-  - [Calculation](#calculation)
-  - [Saving / Export](#saving--export)
-  - [Loading / Import](#loading--import)
-
+- [Nodes](#nodes)
+  - [Adding / removing nodes](#adding--removing-nodes)
+- [Connections](#connections)
+  - [Connection validity](#connection-validity)
+  - [Adding / removing connections](#adding--removing-connections)
+- [Calculation](#calculation)
+- [Saving / Export](#saving--export)
+- [Loading / Import](#loading--import)
 
 ## Nodes
 > You should register all [custom node types](nodes.md) in the editor.
@@ -39,14 +37,15 @@ To prevent infinite loops in node calculation, the graph must not contain cycles
 Additionally, you can allow connections only between certain interface types. By default, connections are only allowed between interfaces with the same type. If you want to change this behavior, provide a custom predicate to the [typeComparer](api.md#Editor+typeComparer) field.
 
 The `typeComparer` is a function, that takes an `IConnection` as a parameter and returns a boolean that specifies, whether this connection is allowed or not. The default implementation is:
-```ts
-(c) => c.from.type === c.to.type;
+```js
+function compare(connection) {
+    connection.from.type === connection.to.type;
+}
 ```
 
 ### Adding / removing connections
-[addConnection](api.md#Editor+addConnection)
-
-[removeConnection](api.md#Editor+removeConnection)
+Use the [addConnection](api.md#Editor+addConnection) and [removeConnection()](api.md#Editor+removeConnection) methods
+for adding or removing connections.
 
 > Never remove a connection from the list yourself! This will result in the connection not being GCed.
 > Always use the `removeConnection` method.
