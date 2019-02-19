@@ -1,5 +1,6 @@
 import { NodeInterface } from "./nodeInterface";
 import generateId from "../utility/idGenerator";
+import { NodeInterfaceTypeManager } from "./iftypeManager";
 
 export interface IConnection {
     id: string;
@@ -28,7 +29,9 @@ export class Connection implements IConnection {
     public to: NodeInterface;
     public isInDanger = false;
 
-    public constructor(from: NodeInterface, to: NodeInterface) {
+    private nodeInterfaceTypes: NodeInterfaceTypeManager;
+
+    public constructor(from: NodeInterface, to: NodeInterface, tm: NodeInterfaceTypeManager) {
 
         if (!from || !to) {
             throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
@@ -37,6 +40,7 @@ export class Connection implements IConnection {
         this.id = generateId();
         this.from = from;
         this.to = to;
+        this.nodeInterfaceTypes = tm;
 
         this.from.connectionCount++;
         this.to.connectionCount++;
@@ -53,7 +57,7 @@ export class Connection implements IConnection {
     }
 
     private transferValue(v: any) {
-        this.to.value = v;
+        this.to.value = this.nodeInterfaceTypes.convert(this.from.type, this.to.type, v);
     }
 
 }

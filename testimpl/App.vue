@@ -34,6 +34,13 @@ export default class App extends Vue {
         this.editor.addNode(new TestNode());
         this.editor.addNode(new OutputNode());
         this.editor.addNode(new BuilderTestNode());
+        this.editor.nodeInterfaceTypes
+            .setType("string", "#00FF00")
+            .setType("number", "red")
+            .setType("boolean", "purple")
+            .addConversion("string", "number", (v) => parseInt(v))
+            .addConversion("number", "string", (v) => v.toString())
+            .addConversion("boolean", "string", (v) => v ? v.toString() : "null");
     }
 
     calculate() {

@@ -1,6 +1,6 @@
 <template>
     <div :id="data.id" :class="classes">
-        <div class="__port" @mouseover="startHover" @mouseout="endHover"></div>
+        <div class="__port" :style="portStyle" @mouseover="startHover" @mouseout="endHover"></div>
         <span v-show="data.connectionCount > 0 || !data.option" class="align-middle">{{ name }}</span>
         <component
             v-show="data.connectionCount === 0 && data.option"
@@ -32,10 +32,18 @@ export default class NodeInterfaceView extends Vue {
     get classes() {
         return {
             "node-interface": true,
-            ["--iftype-" + this.data.type]: true,
             "--input": this.data.isInput,
             "--output": !this.data.isInput
         };
+    }
+
+    get portStyle() {
+        const type = this.editor.model.nodeInterfaceTypes.types[this.data.type];
+        if (type) {
+            return { "background-color": type.color };
+        } else {
+            return {};
+        }
     }
 
     startHover() {

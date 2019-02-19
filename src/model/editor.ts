@@ -5,8 +5,8 @@ import { IConnection, Connection } from "./connection";
 import NodeTreeBuilder from "../utility/nodeTreeBuilder";
 import { DummyConnection } from "./connection";
 import { IState } from "./state";
+import { NodeInterfaceTypeManager } from "./iftypeManager";
 
-type TypeComparer = (c: IConnection) => boolean;
 export type NodeConstructor = new () => Node;
 
 /** The main model class for BaklavaJS */
@@ -29,18 +29,8 @@ export class Editor {
         return this._nodeCalculationOrder;
     }
 
-    private _typeComparer: TypeComparer = (c) => c.from.type === c.to.type;
-    /**
-     * Use this to override the default type comparer.
-     * The function will be called with a connection.
-     * You can check whether this connection is allowed using
-     * the fields `from` and `to` of the connection.
-     *
-     * @default (c) => c.from.type === c.to.type;
-     */
-    public set typeComparer(value: TypeComparer) {
-        this._typeComparer = value;
-    }
+    /** Used to manage all node interface types and implementing conversions between them */
+    public nodeInterfaceTypes = new NodeInterfaceTypeManager();
 
     /**
      * Register a new node type
@@ -102,17 +92,18 @@ export class Editor {
      */
     public addConnection(from: NodeInterface, to: NodeInterface, calculateNodeTree = true): boolean {
 
-        if (!this.checkConnection(from, to)) {
+        const dc = this.checkConnection(from, to);
+        if (!dc) {
             return false;
         }
 
         // Delete all other connections to the target interface
         // as only one connection to an input interface is allowed
         this.connections
-            .filter((conn) => conn.to === to)
+            .filter((conn) => conn.to === dc.to)
             .forEach((conn) => this.removeConnection(conn, false));
 
-        const c = new Connection(from, to);
+        const c = new Connection(dc.from, dc.to, this.nodeInterfaceTypes);
         this.connections.push(c);
         if (calculateNodeTree) { this.calculateNodeTree(); }
         return true;
@@ -142,15 +133,24 @@ export class Editor {
      * @param {NodeInterface} to The target node interface (must be an input interface)
      * @returns {boolean} Whether the connection is allowed or not.
      */
-    public checkConnection(from: NodeInterface, to: NodeInterface): boolean {
+    public checkConnection(from: NodeInterface, to: NodeInterface): false|IConnection {
 
         if (!from || !to) {
             return false;
-        } else if (from.isInput || !to.isInput) {
-            // connections are only allowed from input to output interface
-            return false;
         } else if (from.parent === to.parent) {
             // connections must be between two separate nodes.
+            return false;
+        }
+
+        if (from.isInput && !to.isInput) {
+            // reverse connection
+            const tmp = from;
+            from = to;
+            to = tmp;
+        }
+
+        if (from.isInput || !to.isInput) {
+            // connections are only allowed from input to output interface
             return false;
         }
 
@@ -167,7 +167,11 @@ export class Editor {
         }
 
         // check type compatibility between the two interfaces
-        return this._typeComparer(dc);
+        if (this.nodeInterfaceTypes.canConvert(dc.from.type, dc.to.type)) {
+            return dc;
+        } else {
+            return false;
+        }
 
     }
 

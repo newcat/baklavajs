@@ -3,9 +3,8 @@ import App from "./App.vue";
 
 Vue.config.productionTip = false;
 
-import "./styles.scss";
-// import lib from "../dist/lib.js";
 import lib from "../src";
+import "../src/styles/all.scss";
 Vue.use(lib);
 
 new Vue({
