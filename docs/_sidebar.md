@@ -8,4 +8,4 @@
   * [Creating Custom Nodes](/custom-nodes.md)
   * [Prebuilt Options](/prebuilt-options.md)
 * **Reference**
-  * [API Reference](/api/index.html)
+  * [API Reference](/baklavajs/api/index.html)
