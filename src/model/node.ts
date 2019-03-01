@@ -95,15 +95,19 @@ export abstract class Node {
      * @param option
      * Optional NodeOption which is displayed when the interface is not connected to set its value
      * @param defaultValue Optional default value for the interface/option
+     * @returns The created interface
      */
     protected addInputInterface(name: string, type: string, option?: VueConstructor, defaultValue?: any) {
-        return this.addInterface(true, name, type, option);
+        const intf = this.addInterface(true, name, type, option);
+        intf.value = defaultValue;
+        return intf;
     }
 
     /**
      * Add an output interface to the node
      * @param name Name of the interface
      * @param type Type of the interface
+     * @returns The created interface
      */
     protected addOutputInterface(name: string, type: string) {
         return this.addInterface(false, name, type);
@@ -158,6 +162,7 @@ export abstract class Node {
         const intf = new NodeInterface(this, isInput, type);
         intf.option = option;
         this.interfaces[name] = intf;
+        return intf;
     }
 
 }
