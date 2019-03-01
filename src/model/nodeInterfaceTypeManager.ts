@@ -12,15 +12,32 @@ export class NodeInterfaceTypeManager {
 
     public types: Record<string, INodeInterfaceType> = {};
 
-    public setType(name: string, color: string): this {
+    /**
+     * Add a new node interface type
+     * @param name Name of the type
+     * @param color Color of the type. Will be used to color the ports of the node interfaces.
+     */
+    public addType(name: string, color: string): this {
         this.types[name] = { color, conversions: [] };
         return this;
     }
 
-    public addConversion(from: string, to: string, transformationFunction: (value: any) => any): this {
+    /**
+     * A conversion makes it possible to connect two node interfaces altough they have different types.
+     * @param from Type to convert from
+     * @param to Type to convert to
+     * @param transformationFunction
+     * Will be called to transform the value from one type to another.
+     * A transformation to convert the type `string` to `number` could be `parseInt`.
+     */
+    public addConversion(from: string, to: string, transformationFunction?: (value: any) => any): this {
 
         if (!this.types[from]) {
             throw new Error(`Can not add conversion for unknown type "${from}"`);
+        }
+
+        if (!transformationFunction) {
+            transformationFunction = (value) => value;
         }
 
         this.types[from].conversions.push({

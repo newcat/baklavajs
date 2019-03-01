@@ -72,7 +72,7 @@ export class NodeBuilder {
     /**
      * Build the node class.
      * This must be called as the last operation when building a node.
-     * @returns {NodeConstructor} The generated node class
+     * @returns The generated node class
      */
     public build(): NodeConstructor {
         return generateNode(this.name, this.intfs, this.options, this.calcFunction) as NodeConstructor;
@@ -80,14 +80,14 @@ export class NodeBuilder {
 
     /**
      * Add an input interface to the node
-     * @param {string} name Name of the interface
-     * @param {string} type Type of the interface
-     * @param {VueConstructor} [option] A node option component to be displayed when the interface is not connected
-     * @param {any} [defaultValue]
+     * @param name Name of the interface
+     * @param type Type of the interface
+     * @param option A node option component to be displayed when the interface is not connected
+     * @param defaultValue
      * Default value for the interface.
      * If the default value is a primitive (e. g. string, number) then the value can be passed directly.
      * For objects provide a function that returns the default value.
-     * @returns {NodeBuilder} Current node builder instance for chaining
+     * @returns Current node builder instance for chaining
      */
     public addInputInterface(name: string, type: string, option?: VueConstructor, defaultValue?: any): NodeBuilder {
         this.checkDefaultValue(defaultValue);
@@ -97,9 +97,9 @@ export class NodeBuilder {
 
     /**
      * Add an output interface to the node
-     * @param {string} name Name of the interface
-     * @param {string} type Type of the interface
-     * @returns {NodeBuilder} Current node builder instance for chaining
+     * @param name Name of the interface
+     * @param type Type of the interface
+     * @returns Current node builder instance for chaining
      */
     public addOutputInterface(name: string, type: string): NodeBuilder {
         this.intfs.push({ isInput: false, name, type });
@@ -108,14 +108,14 @@ export class NodeBuilder {
 
     /**
      * Add a node option to the node
-     * @param {string} name Name of the option
-     * @param {VueConstructor} component Option component
-     * @param {any} [defaultValue]
+     * @param name Name of the option
+     * @param component Option component
+     * @param defaultValue
      * Default value for the option.
      * If the default value is a primitive (e. g. string, number) then the value can be passed directly.
      * For objects provide a function that returns the default value.
-     * @param {VueConstructor} [sidebarComponent] Optional component to display in the sidebar
-     * @returns {NodeBuilder} Current node builder instance for chaining
+     * @param sidebarComponent Optional component to display in the sidebar
+     * @returns Current node builder instance for chaining
      */
     public addOption(name: string, component: VueConstructor,
                      defaultValue?: any, sidebarComponent?: VueConstructor): NodeBuilder {
@@ -134,7 +134,7 @@ export class NodeBuilder {
      * (If you do not use ES6 arrow functions, the node instance
      * will also be bound to `this`)
      * @param cb Callback to be executed when `calculate()` is called on the node
-     * @returns {NodeBuilder} Current node builder instance for chaining
+     * @returns Current node builder instance for chaining
      */
     public onCalculate(cb: CalculationFunction): NodeBuilder {
         this.calcFunction = cb;

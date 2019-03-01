@@ -5,7 +5,7 @@ import { IConnection, Connection } from "./connection";
 import NodeTreeBuilder from "../utility/nodeTreeBuilder";
 import { DummyConnection } from "./connection";
 import { IState } from "./state";
-import { NodeInterfaceTypeManager } from "./iftypeManager";
+import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";
 
 export type NodeConstructor = new () => Node;
 
@@ -34,9 +34,9 @@ export class Editor {
 
     /**
      * Register a new node type
-     * @param {string} typeName Name of the node (must be equal to the node's `type` field)
-     * @param {NodeConstructor} type Actual type / constructor of the node
-     * @param {string} [category="default"] Category of the node. Will be used in the context menu for adding nodes
+     * @param typeName Name of the node (must be equal to the node's `type` field)
+     * @param type Actual type / constructor of the node
+     * @param category Category of the node. Will be used in the context menu for adding nodes
      */
     public registerNodeType(typeName: string, type: NodeConstructor, category = "default") {
         Vue.set(this.nodeTypes, typeName, type);
@@ -48,8 +48,8 @@ export class Editor {
 
     /**
      * Add a node to the list of nodes.
-     * @param {string|Node} typeNameOrInstance Either a registered node type or a node instance
-     * @returns {Node} Instance of the node
+     * @param typeNameOrInstance Either a registered node type or a node instance
+     * @returns Instance of the node
      */
     public addNode(typeNameOrInstance: string|Node): Node|undefined {
         let n = typeNameOrInstance;
@@ -71,7 +71,7 @@ export class Editor {
     /**
      * Removes a node from the list.
      * Will also remove all connections from and to the node.
-     * @param {Node} n Reference to a node in the list.
+     * @param n Reference to a node in the list.
      */
     public removeNode(n: Node) {
         if (this.nodes.includes(n)) {
@@ -84,11 +84,10 @@ export class Editor {
 
     /**
      * Add a connection to the list of connections.
-     * @param {NodeInterface} from Start interface for the connection
-     * @param {NodeInterface} to Target interface for the connection
-     * @param {boolean} [calculateNodeTree=true]
-     * Whether to update the node calculation order after adding the connection
-     * @returns {boolean} Whether the connection was successfully created
+     * @param from Start interface for the connection
+     * @param to Target interface for the connection
+     * @param calculateNodeTree Whether to update the node calculation order after adding the connection
+     * @returns Whether the connection was successfully created
      */
     public addConnection(from: NodeInterface, to: NodeInterface, calculateNodeTree = true): boolean {
 
@@ -112,8 +111,8 @@ export class Editor {
 
     /**
      * Remove a connection from the list of connections.
-     * @param {Connection} c Connection instance that should be removed.
-     * @param {boolean} [calculateNodeTree=true] Whether to update the node calculation order.
+     * @param c Connection instance that should be removed.
+     * @param calculateNodeTree Whether to update the node calculation order.
      * Set to false if you do multiple remove operations and call {@link calculateNodeTree} manually
      * after the last remove operation.
      */
@@ -129,9 +128,9 @@ export class Editor {
 
     /**
      * Checks, whether a connection between two node interfaces would be valid.
-     * @param {NodeInterface} from The starting node interface (must be an output interface)
-     * @param {NodeInterface} to The target node interface (must be an input interface)
-     * @returns {boolean} Whether the connection is allowed or not.
+     * @param from The starting node interface (must be an output interface)
+     * @param to The target node interface (must be an input interface)
+     * @returns Whether the connection is allowed or not.
      */
     public checkConnection(from: NodeInterface, to: NodeInterface): false|IConnection {
 
@@ -190,7 +189,7 @@ export class Editor {
 
     /**
      * Load a state
-     * @param {IState} state State to load
+     * @param state State to load
      */
     public load(state: IState) {
 
@@ -251,7 +250,7 @@ export class Editor {
 
     /**
      * Save a state
-     * @returns {IState} Current state
+     * @returns Current state
      */
     public save(): IState {
         return {

@@ -2,7 +2,7 @@
     <div :class="['sidebar', { '--open': $baklava.sidebar.visible }]">
         
         <div class="d-flex align-items-center">
-            <button class="__close" @click="close">&times;</button>
+            <button tabindex="-1" class="__close" @click="close">&times;</button>
             <div class="ml-2"><b>{{ nodeName }}</b></div>
         </div>
 
