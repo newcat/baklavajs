@@ -27,7 +27,7 @@ Interfaces are used to receive data from other nodes (*input interfaces*) or sen
 | Property | Description |
 | --- | --- |
 | <p>**name**</p> | <p>The name is displayed to the user. You also need the name to get the value of the interface</p> |
-| <p>**type**</p> | <p> The type can be any word (spaces would break the CSS class). By default, connections are only allowed between NodeInterfaces, that have the same type. The "dot" will also be assigned the following CSS class: `--iftype-{TYPE}`. For example, if the type is "string", the CSS class would be `--iftype-string`. You can use this to [style](styling.md) your interfaces.</p> |
+| <p>**type**</p> | <p> The type can be any string. For more information, see [Node Interface Types](/interface-types.md)</p> |
 
 An input interface, which is not connected, can display a node option to allow the user to change its value.
 

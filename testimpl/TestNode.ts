@@ -7,7 +7,7 @@ export default class TestNode extends Node {
 
     constructor() {
         super();
-        this.addInputInterface("Input", "boolean", Options.InputOption);
+        this.addInputInterface("Input", "boolean", Options.CheckboxOption);
         this.addOutputInterface("Output", "boolean");
         this.addOption("test", Options.InputOption);
         this.addOption("Select", Options.SelectOption, { selected: "Test1", items: ["Test1", "Test2", "Test3"] });
@@ -16,7 +16,7 @@ export default class TestNode extends Node {
     }
 
     public calculate() {
-        this.getInterface("Output").value = this.getInterface("Input");
+        this.getInterface("Output").value = this.getInterface("Input").value;
     }
 
 }

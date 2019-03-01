@@ -1,6 +1,6 @@
 <template>
     <div
-        tabindex="0"
+        tabindex="-1"
         :class="['node-editor', { 'ignore-mouse': !!temporaryConnection }]"
         @mousemove.self="mouseMoveHandler"
         @mousedown="mouseDown"
@@ -174,6 +174,8 @@ export default class EditorView extends Vue {
     keyDown(ev: KeyboardEvent) {
         if (ev.key === "Delete" && this.selectedNode) {
             this.model.removeNode(this.selectedNode);
+        } else if (ev.key === "Tab") {
+            ev.preventDefault();
         }
     }
 

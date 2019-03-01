@@ -34,6 +34,13 @@ export default class App extends Vue {
         this.editor.addNode(new TestNode());
         this.editor.addNode(new OutputNode());
         this.editor.addNode(new BuilderTestNode());
+        this.editor.nodeInterfaceTypes
+            .addType("string", "#00FF00")
+            .addType("number", "red")
+            .addType("boolean", "purple")
+            .addConversion("string", "number", (v) => parseInt(v))
+            .addConversion("number", "string", (v) => v !== null && v !== undefined && v.toString() || "0")
+            .addConversion("boolean", "string", (v) => typeof(v) === "boolean" ? v.toString() : "null");
     }
 
     calculate() {
@@ -45,7 +52,7 @@ export default class App extends Vue {
     }
 
     load() {
-        this.editor.load(JSON.parse('{"nodes":[{"type":"TestNode","id":"node_1546630151806","name":"TestNode","position":{"x":16,"y":16},"options":{"Select one":{"selected":"Test1","items":["Test1","Test2","Test3"]}},"state":{},"interfaces":{"InputIF":{"id":"ni_1546630151807"},"OutputIF":{"id":"ni_1546630151808"}}},{"type":"TestNode","id":"node_1546630151810","name":"TestNode","position":{"x":166,"y":208},"options":{"Select one":{"selected":"Test1","items":["Test1","Test2","Test3"]}},"state":{},"interfaces":{"InputIF":{"id":"ni_1546630151811","value":"asdfasdf"},"OutputIF":{"id":"ni_1546630151812","value":"asdfasdf"}}},{"type":"TestNode","id":"node_1546630151813","name":"TestNode","position":{"x":479,"y":69},"options":{"Select one":{"selected":"Test3","items":["Test1","Test2","Test3"]},"test":"4444444"},"state":{},"interfaces":{"InputIF":{"id":"ni_1546630151814","value":"asdfasdf"},"OutputIF":{"id":"ni_1546630151815","value":"asdfasdf"}}},{"type":"OutputNode","id":"node_1546630151816","name":"OutputNode","position":{"x":704,"y":58},"options":{"output":"asdfasdf"},"state":{},"interfaces":{"InputIF":{"id":"ni_1546630151817","value":"asdfasdf"}}}],"connections":[{"id":"1546630996055","from":"ni_1546630151815","to":"ni_1546630151817"},{"id":"1546630996057","from":"ni_1546630151812","to":"ni_1546630151814"}]}'));
+        this.editor.load(JSON.parse('{"nodes":[{"type":"TestNode","id":"node_1551399780462","name":"TestNode","position":{"x":107,"y":101},"options":{"test":null,"Select":{"selected":"Test1","items":["Test1","Test2","Test3"]},"This is a checkbox":true,"Number":null},"state":{},"interfaces":{"Input":{"id":"ni_1551399780463","value":true},"Output":{"id":"ni_1551399780464","value":true}}},{"type":"OutputNode","id":"node_1551399780468","name":"OutputNode","position":{"x":768,"y":173},"options":{"output":"true, false"},"state":{},"interfaces":{"Input":{"id":"ni_1551399780469","value":"true, false"}}},{"type":"BuilderTestNode","id":"node_1551399780470","name":"BuilderTestNode","position":{"x":473,"y":239},"options":{"Separator":", ","SidebarTest":{"testtext":"any"}},"state":{},"interfaces":{"Input 1":{"id":"ni_1551399780472","value":"true"},"Input 2":{"id":"ni_1551399780473","value":"false"},"Output":{"id":"ni_1551399780474","value":"true, false"}}},{"type":"TestNode","id":"node_1551399803206","name":"TestNode","position":{"x":104,"y":387},"options":{"test":null,"Select":{"selected":"Test1","items":["Test1","Test2","Test3"]},"This is a checkbox":true,"Number":null},"state":{},"interfaces":{"Input":{"id":"ni_1551399803207","value":false},"Output":{"id":"ni_1551399803208","value":false}}}],"connections":[{"id":"1551399806084","from":"ni_1551399780464","to":"ni_1551399780472"},{"id":"1551399807504","from":"ni_1551399803208","to":"ni_1551399780473"},{"id":"1551399809643","from":"ni_1551399780474","to":"ni_1551399780469"}]}'));
     }
 
 }

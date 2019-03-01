@@ -21,7 +21,7 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "build-lib": "webpack",
-        "gen-doc": "jsdoc2md --files ./src/model/*.ts ./src/utility/nodeBuilder.ts --configure ./jsdoc2md.json > ./docs/api.md"
+        "gen-doc": "typedoc"
     },
     "dependencies": {},
     "devDependencies": {
@@ -37,14 +37,13 @@
         "clean-webpack-plugin": "^1.0.0",
         "copy-webpack-plugin": "^4.6.0",
         "css-loader": "^2.1.0",
-        "jsdoc-babel": "^0.5.0",
-        "jsdoc-to-markdown": "^4.0.1",
         "lodash": "^4.17.11",
         "mini-css-extract-plugin": "^0.5.0",
         "node-sass": "^4.9.0",
         "portal-vue": "^1.5.1",
         "sass-loader": "^7.0.1",
         "ts-loader": "^5.3.2",
+        "typedoc": "^0.14.2",
         "typescript": "^3.2.2",
         "v-click-outside": "^2.0.2",
         "vue": "^2.5.17",

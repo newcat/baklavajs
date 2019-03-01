@@ -12,5 +12,4 @@ https://newcat.github.io/baklavajs
 ## Roadmap
 * Add panning for all nodes
 * Allow connections from input to output (auto-reverse)
-* Utility for node interface type comparison
 * Optional keyboard shortcuts
