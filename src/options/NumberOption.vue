@@ -9,7 +9,7 @@
             @click="enterEditMode"
         >
             <div class="__label .text-truncate">{{ name }}</div>
-            <div class="__value">{{ v.toFixed(3) }}</div>
+            <div class="__value">{{ stringRepresentation }}</div>
         </div>
         <div v-else class="__content">
             <input
@@ -36,6 +36,8 @@ import Arrow from "./Arrow.vue";
 })
 export default class NumberOption extends Vue {
 
+    MAX_STRING_LENGTH = 9;
+
     @Prop()
     value!: any;
 
@@ -53,6 +55,13 @@ export default class NumberOption extends Vue {
         } else {
             return 0;
         }
+    }
+
+    get stringRepresentation() {
+        const s = this.v.toFixed(3);
+        return s.length > this.MAX_STRING_LENGTH ?
+            this.v.toExponential(this.MAX_STRING_LENGTH - 5) :
+            s;
     }
 
     increment() {
