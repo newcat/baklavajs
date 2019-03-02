@@ -48,11 +48,23 @@ export class NodeInterface {
         };
     }
 
-    /* Listeners */
-    public registerListener(t: any, cb: ListenerType) {
-        this.listeners.push({ t, f: cb });
+    /**
+     * Register a callback function that is called whenever the value of the interface changes.
+     * Used primarily for connections to work (they will "transmit" the value from one interface
+     * to another when the value changes.)
+     * Note: Inline ES6 arrow functions won't work as you need a reference to the callback
+     * later to unregister the listener.
+     * @param thisValue The value `this` will be bound to in the callback function.
+     * @param cb The callback function that will be called with the new value as parameter.
+     */
+    public registerListener(thisValue: any, cb: ListenerType) {
+        this.listeners.push({ t: thisValue, f: cb });
     }
 
+    /**
+     * Unregisters a listener.
+     * @param cb The reference to the callback function.
+     */
     public unregisterListener(cb: ListenerType) {
         const index = this.listeners.findIndex((x) => x.f === cb);
         if (index) {

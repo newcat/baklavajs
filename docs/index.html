@@ -11,12 +11,14 @@
 </head>
 <body>
   <div id="app"></div>
+  <script src="apiPlugin.js"></script>
   <script>
     window.$docsify = {
         name: "BaklavaJS",
         loadSidebar: true,
         subMaxLevel: 1,
-        noCompileLinks: [ "/baklavajs/api/.*" ]
+        noCompileLinks: [ "/baklavajs/api/.*" ],
+        plugins: [ apiPlugin ]
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>

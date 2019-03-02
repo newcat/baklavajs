@@ -6,6 +6,7 @@
   * [Styling](/styling.md)
 * **Custom Nodes**
   * [Creating Custom Nodes](/custom-nodes.md)
+  * [Node Options](/node-options.md)
   * [Prebuilt Options](/prebuilt-options.md)
 * **Reference**
   * [API Reference](/baklavajs/api/index.html)

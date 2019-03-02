@@ -18,6 +18,7 @@ import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";
 import BuilderTestNode from "./BuilderTestNode";
 import MathNode from "./MathNode";
+import AdvancedNode from "./AdvancedNode";
 
 @Component
 export default class App extends Vue {
@@ -29,6 +30,7 @@ export default class App extends Vue {
         this.editor.registerNodeType("OutputNode", OutputNode, "Outputs");
         this.editor.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");
         this.editor.registerNodeType("MathNode", MathNode);
+        this.editor.registerNodeType("AdvancedNode", AdvancedNode);
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());

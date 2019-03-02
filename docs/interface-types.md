@@ -11,7 +11,7 @@ For adding conversions and coloring the ports, you need to register the type.
 editor.nodeInterfaceTypes.addType("string", "#00FF00");
 ```
 
-The [addType](/api/classes/nodeinterfacetypemanager.html#addtype) method takes two parameters:
+The [addType](!!API%{ "type": "class", "name": "nodeinterfacetypemanager", "field": "addtype" }%) method takes two parameters:
 * `name`: Name of the interface.
 * `color`: Color for the port. The color can be any valid CSS color.
 

@@ -41,6 +41,7 @@
                     :key="name"
                     :name="name"
                     :is="option.component"
+                    :node="data"
                     v-model="option.data"
                     @openSidebar="openSidebar(name)"
                 ></component>

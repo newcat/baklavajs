@@ -12,21 +12,35 @@ export type NodeConstructor = new () => Node;
 /** The main model class for BaklavaJS */
 export class Editor {
 
-    /** List of all nodes */
-    public nodes: Node[] = [];
-    /** List of all connections */
-    public connections: Connection[] = [];
-    /** List of all registered node types */
-    public nodeTypes: Record<string, NodeConstructor> = {};
-    /** Mapping of nodes to node categories */
-    public nodeCategories: Record<string, string[]> = { default: [] };
-
+    private _nodes: Node[] = [];
+    private _connections: Connection[] = [];
+    private _nodeTypes: Record<string, NodeConstructor> = {};
+    private _nodeCategories: Record<string, string[]> = { default: [] };
     private _nodeCalculationOrder: Node[] = [];
-    /**
-     * The order, in which the nodes must be calculated
-     */
+
+    /** The order, in which the nodes must be calculated */
     public get nodeCalculationOrder() {
         return this._nodeCalculationOrder;
+    }
+
+    /** List of all nodes */
+    public get nodes() {
+        return this._nodes as ReadonlyArray<Node>;
+    }
+
+    /** List of all connections */
+    public get connections() {
+        return this._connections as ReadonlyArray<Connection>;
+    }
+
+    /** List of all registered node types */
+    public get nodeTypes() {
+        return this._nodeTypes as Readonly<Record<string, NodeConstructor>>;
+    }
+
+    /** Mapping of nodes to node categories */
+    public get nodeCategories() {
+        return this._nodeCategories as Readonly<Record<string, string[]>>;
     }
 
     /** Used to manage all node interface types and implementing conversions between them */
@@ -61,7 +75,8 @@ export class Editor {
                 return undefined;
             }
         } else if (typeof(n) === "object") {
-            this.nodes.push(n);
+            n.registerEditor(this);
+            this._nodes.push(n);
             return n;
         } else {
             throw new TypeError("Expected Object, got " + typeof(n));
@@ -78,7 +93,7 @@ export class Editor {
             this.connections
                 .filter((c) => c.from.parent === n || c.to.parent === n)
                 .forEach((c) => this.removeConnection(c));
-            this.nodes.splice(this.nodes.indexOf(n), 1);
+            this._nodes.splice(this.nodes.indexOf(n), 1);
         }
     }
 
@@ -103,7 +118,7 @@ export class Editor {
             .forEach((conn) => this.removeConnection(conn, false));
 
         const c = new Connection(dc.from, dc.to, this.nodeInterfaceTypes);
-        this.connections.push(c);
+        this._connections.push(c);
         if (calculateNodeTree) { this.calculateNodeTree(); }
         return true;
 
@@ -119,7 +134,7 @@ export class Editor {
     public removeConnection(c: Connection, calculateNodeTree = true) {
         if (this.connections.includes(c)) {
             c.destruct();
-            this.connections.splice(this.connections.indexOf(c), 1);
+            this._connections.splice(this.connections.indexOf(c), 1);
             if (calculateNodeTree) {
                 this.calculateNodeTree();
             }
@@ -156,10 +171,10 @@ export class Editor {
         // check if the new connection would result in a cycle
         const ntb = new NodeTreeBuilder();
         const dc = new DummyConnection(from, to);
-        const copy = (this.connections as IConnection[]).concat([dc]);
+        const copy = (this._connections as IConnection[]).concat([dc]);
         copy.filter((conn) => conn.to !== to);
         try {
-            ntb.calculateTree(this.nodes, copy);
+            ntb.calculateTree(this._nodes, copy);
         } catch (err) {
             // this connection would create a cycle in the graph
             return false;
@@ -184,7 +199,7 @@ export class Editor {
     /** Recalculate the node calculation order */
     public calculateNodeTree() {
         const ntb = new NodeTreeBuilder();
-        this._nodeCalculationOrder = ntb.calculateTree(this.nodes, this.connections);
+        this._nodeCalculationOrder = ntb.calculateTree(this._nodes, this._connections);
     }
 
     /**
