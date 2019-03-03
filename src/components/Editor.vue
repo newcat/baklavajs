@@ -1,40 +1,44 @@
 <template>
-    <div
-        tabindex="-1"
-        :class="['node-editor', { 'ignore-mouse': !!temporaryConnection }]"
-        @mousemove.self="mouseMoveHandler"
-        @mousedown="mouseDown"
-        @mouseup="mouseUp"
-        @keydown="keyDown"
-        @contextmenu.self.prevent="openContextMenu"
-    >
-        <svg class="connections-container">
-            <g v-for="connection in connections" :key="connection.id">
-                <slot name="connections" :connection="connection">
-                    <connection :connection="connection"></connection>
-                </slot>
-            </g>
-            <temp-connection
-                v-if="temporaryConnection"
-                :connection="temporaryConnection"
-            ></temp-connection>
-        </svg>
-        <node
-            v-for="node in nodes"
-            :key="node.id"
-            :data="node"
-            :selected="selectedNode === node"
-            @select="selectNode(node)"
+    <div tabindex="-1" class="node-editor">
+        <div ref="container"
+            :class="[ 'node-container', { 'ignore-mouse': !!temporaryConnection }]"
+            :style="styles"
+            @mousemove.self="mouseMoveHandler"
+            @mousedown="mouseDown"
+            @mouseup="mouseUp"
+            @mousewheel="mouseWheel"
+            @keydown="keyDown"
+            @contextmenu.self.prevent="openContextMenu"
         >
-        </node>
+            <svg class="connections-container">
+                <g v-for="connection in connections" :key="connection.id">
+                    <slot name="connections" :connection="connection">
+                        <connection :connection="connection"></connection>
+                    </slot>
+                </g>
+                <temp-connection
+                    v-if="temporaryConnection"
+                    :connection="temporaryConnection"
+                ></temp-connection>
+            </svg>
+            <node
+                v-for="node in nodes"
+                :key="node.id"
+                :data="node"
+                :selected="selectedNode === node"
+                @select="selectNode(node)"
+            >
+            </node>
 
-        <context-menu
-            v-model="contextMenu.show"
-            :x="contextMenu.x"
-            :y="contextMenu.y"
-            :items="context"
-            @click="onContextMenuClick"
-        ></context-menu>
+            <context-menu
+                v-model="contextMenu.show"
+                :x="contextMenu.x"
+                :y="contextMenu.y"
+                :items="context"
+                @click="onContextMenuClick"
+            ></context-menu>
+
+        </div>
 
         <sidebar></sidebar>
 
@@ -66,12 +70,10 @@ export default class EditorView extends Vue {
     @Prop({ type: Object })
     model!: Editor;
 
-    xOffset = 0;
-    yOffset = 0;
-
     temporaryConnection: ITemporaryConnection|null = null;
     hoveringOver?: NodeInterface|null = null;
     selectedNode?: Node|null = null;
+    dragging = false;
 
     contextMenu = {
         show: false,
@@ -81,6 +83,13 @@ export default class EditorView extends Vue {
 
     @Provide("editor")
     nodeeditor: EditorView = this;
+
+    get styles() {
+        return {
+            "transform-origin": this.model.scaling.centerX + "px " + this.model.scaling.centerY + "px",
+            "transform": `scale(${this.model.scaling.factor})`
+        };
+    }
 
     get nodes() {
         return this.model ? this.model.nodes : [];
@@ -131,9 +140,13 @@ export default class EditorView extends Vue {
     }
 
     mouseMoveHandler(ev: MouseEvent) {
-        if (!this.temporaryConnection) { return; }
-        this.temporaryConnection.mx = ev.offsetX;
-        this.temporaryConnection.my = ev.offsetY;
+        if (this.temporaryConnection) {
+            this.temporaryConnection.mx = ev.offsetX;
+            this.temporaryConnection.my = ev.offsetY;
+        } else if (this.dragging) {
+            this.model.panning.x += ev.movementX / this.model.scaling.factor;
+            this.model.panning.y += ev.movementY / this.model.scaling.factor;
+        }
     }
 
     mouseDown(ev: MouseEvent) {
@@ -155,20 +168,29 @@ export default class EditorView extends Vue {
                 };
             }
 
-            this.$set(this.temporaryConnection as any, "mx", ev.x);
-            this.$set(this.temporaryConnection as any, "my", ev.y);
+            this.$set(this.temporaryConnection as any, "mx", null);
+            this.$set(this.temporaryConnection as any, "my", null);
 
-        } else if (ev.target === this.$el) {
+        } else if (ev.target === this.$refs.container) {
             this.selectedNode = null;
+            this.dragging = true;
         }
     }
 
     mouseUp(ev: MouseEvent) {
+        this.dragging = false;
         const tc = this.temporaryConnection;
         if (tc && this.hoveringOver) {
             this.model.addConnection(tc.from, tc.to!);
         }
         this.temporaryConnection = null;
+    }
+
+    mouseWheel(ev: MouseWheelEvent) {
+        // TODO: Zoom target https://stackoverflow.com/questions/46647138/zoom-in-on-a-mousewheel-point-using-scale-and-translate
+        this.model.scaling.centerX += (ev.offsetX / 100);
+        this.model.scaling.centerY += (ev.offsetY / 100);
+        this.model.scaling.factor *= (1 - ev.deltaY / 5000);
     }
 
     keyDown(ev: KeyboardEvent) {

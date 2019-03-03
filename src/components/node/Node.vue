@@ -120,8 +120,8 @@ export default class NodeView extends Vue {
 
     get styles() {
         return {
-            top: `${this.data.position.y + this.parent.yOffset}px`,
-            left: `${this.data.position.x + this.parent.xOffset}px`,
+            top: `${this.data.position.y + this.parent.model.panning.y}px`,
+            left: `${this.data.position.x + this.parent.model.panning.x}px`,
             width: `${this.width}px`,
         };
     }
@@ -145,8 +145,8 @@ export default class NodeView extends Vue {
 
     handleMove(ev: MouseEvent) {
         if (this.dragging) {
-            this.data.position.x += ev.movementX;
-            this.data.position.y += ev.movementY;
+            this.data.position.x += ev.movementX / this.parent.model.scaling.factor;
+            this.data.position.y += ev.movementY / this.parent.model.scaling.factor;
         }
     }
 

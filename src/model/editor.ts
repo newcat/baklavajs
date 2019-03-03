@@ -20,7 +20,7 @@ export class Editor {
 
     /** The order, in which the nodes must be calculated */
     public get nodeCalculationOrder() {
-        return this._nodeCalculationOrder;
+        return this._nodeCalculationOrder as ReadonlyArray<Node>;
     }
 
     /** List of all nodes */
@@ -45,6 +45,13 @@ export class Editor {
 
     /** Used to manage all node interface types and implementing conversions between them */
     public nodeInterfaceTypes = new NodeInterfaceTypeManager();
+
+    public panning = { x: 0, y: 0 };
+    public scaling = {
+        centerX: 0,
+        centerY: 0,
+        factor: 1
+    };
 
     /**
      * Register a new node type

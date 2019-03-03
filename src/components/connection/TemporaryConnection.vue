@@ -39,7 +39,7 @@ export default class TemporaryConnection extends Vue {
         const start = this.getCoords(this.connection.from);
         const end = this.connection.to ?
                 this.getCoords(this.connection.to) :
-                { x: this.connection.mx, y: this.connection.my };
+                { x: this.connection.mx || start.x, y: this.connection.my || start.y };
 
         if (this.connection.from.isInput) {
             return {
