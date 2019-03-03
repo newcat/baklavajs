@@ -8,8 +8,3 @@ Graph / node editor in the browser using VueJS
 
 ## Getting Started and Documentation
 https://newcat.github.io/baklavajs
-
-## Roadmap
-* Add panning for all nodes
-* Allow connections from input to output (auto-reverse)
-* Optional keyboard shortcuts
