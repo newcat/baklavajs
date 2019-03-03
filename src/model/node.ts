@@ -113,6 +113,10 @@ export abstract class Node {
         return this.addInterface(false, name, type);
     }
 
+    /**
+     * Remove an existing interface
+     * @param name Name of the interface.
+     */
     protected removeInterface(name: string) {
         const intf = this.getInterface(name);
         if (intf) {
@@ -148,11 +152,22 @@ export abstract class Node {
      */
     protected addOption(name: string, component: VueConstructor,
                         defaultValue: any = null, sidebarComponent?: VueConstructor) {
-        this.options[name] = {
+        Vue.set(this.options, name, {
             data: defaultValue,
             component,
             sidebarComponent
-        };
+        });
+    }
+
+    /**
+     * Remove an existing option
+     * @param name Name of the option
+     */
+    protected removeOption(name: string) {
+        if (this.options[name]) {
+            Vue.delete(this.options, name);
+            delete this.options[name];
+        }
     }
 
     /**

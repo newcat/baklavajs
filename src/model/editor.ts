@@ -2,7 +2,7 @@ import Vue from "vue";
 import { Node } from "./node";
 import { NodeInterface } from "./nodeInterface";
 import { IConnection, Connection } from "./connection";
-import NodeTreeBuilder from "../utility/nodeTreeBuilder";
+import { NodeTreeBuilder } from "../utility/nodeTreeBuilder";
 import { DummyConnection } from "./connection";
 import { IState } from "./state";
 import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";

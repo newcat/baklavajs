@@ -7,7 +7,7 @@ interface ITreeNode {
     children: ITreeNode[];
 }
 
-export default class NodeTreeBuilder {
+export class NodeTreeBuilder {
 
     private adjacency = new Map<Node, Node[]>();
 
