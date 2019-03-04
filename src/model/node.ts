@@ -36,7 +36,7 @@ export abstract class Node {
     public disablePointerEvents = false;
 
     /** Use this property to save additional state of the node */
-    public state = {};
+    public state: Record<string, any> = {};
 
     private editorInstance?: Editor;
 
