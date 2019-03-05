@@ -5,13 +5,8 @@ interface ITreeNode {
     children: ITreeNode[];
 }
 
-function isEmpty(a: any) {
-    if (Array.isArray(a)) {
-        return !a.length;
-    } else {
-        throw new Error("Not an array");
-    }
-}
+const isEmpty = (obj: any) =>
+    [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
 
 export class NodeTreeBuilder {
 

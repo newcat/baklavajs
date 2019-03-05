@@ -145,8 +145,10 @@ export default class NodeView extends Vue {
 
     handleMove(ev: MouseEvent) {
         if (this.dragging) {
-            this.data.position.x += ev.movementX / this.parent.model.scaling.factor;
-            this.data.position.y += ev.movementY / this.parent.model.scaling.factor;
+            this.data.position.x += ev.movementX * this.parent.model.scaling.factor;
+            this.data.position.y += ev.movementY * this.parent.model.scaling.factor;
+            // this.data.position.x += ev.movementX;
+            // this.data.position.y += ev.movementY;
         }
     }
 

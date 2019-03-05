@@ -87,7 +87,8 @@ export default class EditorView extends Vue {
     get styles() {
         return {
             "transform-origin": this.model.scaling.centerX + "px " + this.model.scaling.centerY + "px",
-            "transform": `scale(${this.model.scaling.factor})`
+            "transform": `scale(${this.model.scaling.factor})`,
+            "background-color": "white"
         };
     }
 
@@ -187,6 +188,7 @@ export default class EditorView extends Vue {
     }
 
     mouseWheel(ev: MouseWheelEvent) {
+        ev.preventDefault();
         // TODO: Zoom target https://stackoverflow.com/questions/46647138/zoom-in-on-a-mousewheel-point-using-scale-and-translate
         this.model.scaling.centerX += (ev.offsetX / 100);
         this.model.scaling.centerY += (ev.offsetY / 100);

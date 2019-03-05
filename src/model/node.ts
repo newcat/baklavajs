@@ -6,7 +6,6 @@ import { INodeState } from "./state";
 import { Editor } from "./editor";
 
 function pickBy(obj: Record<string, any>, predicate: (x: any) => boolean): Record<string, any> {
-    debugger;
     return Object.entries(obj)
         .filter(([k, v]) => predicate(v))
         .reduce((p, [k, v]) => {
