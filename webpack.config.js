@@ -3,6 +3,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     mode: "production",
@@ -33,7 +34,7 @@ module.exports = {
                 use: 'vue-loader'
             },
             {
-                test: /\.scss$/,
+                test: /\.(sa|sc|c)ss$/,
                 use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
             }
         ]
@@ -53,7 +54,8 @@ module.exports = {
         ]),
         new MiniCssExtractPlugin({
             filename: "[name].css",
-        })
+        }),
+        new BundleAnalyzerPlugin()
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),

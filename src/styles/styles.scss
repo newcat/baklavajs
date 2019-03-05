@@ -7,3 +7,13 @@
 .overlay {
     z-index: 100;
 }
+
+.checkbox-container {
+    display: flex;
+}
+
+.checkmark-container {
+    display: flex;
+    border: 1px solid red;
+    border-radius: 2px;
+}

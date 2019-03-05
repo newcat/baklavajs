@@ -1,10 +1,16 @@
-import isEmpty from "lodash/isEmpty";
-
 import { Node, IConnection } from "../model";
 
 interface ITreeNode {
     n?: Node;
     children: ITreeNode[];
+}
+
+function isEmpty(a: any) {
+    if (Array.isArray(a)) {
+        return !a.length;
+    } else {
+        throw new Error("Not an array");
+    }
 }
 
 export class NodeTreeBuilder {

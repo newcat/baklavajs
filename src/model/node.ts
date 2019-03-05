@@ -1,11 +1,27 @@
 import Vue, { VueConstructor } from "vue";
-import pickBy from "lodash/pickBy";
-import mapValues from "lodash/mapValues";
 
 import generateId from "../utility/idGenerator";
 import { NodeInterface } from "./nodeInterface";
 import { INodeState } from "./state";
 import { Editor } from "./editor";
+
+function pickBy(obj: Record<string, any>, predicate: (x: any) => boolean): Record<string, any> {
+    debugger;
+    return Object.entries(obj)
+        .filter(([k, v]) => predicate(v))
+        .reduce((p, [k, v]) => {
+            p[k] = v;
+            return p;
+        }, {} as Record<string, any>);
+}
+
+function mapValues<T, U>(obj: Record<string, T>, mapFunction: (x: T) => U): Record<string, U> {
+    const picked: Record<string, U> = {};
+    Object.entries(obj).map(([k, v]) => {
+        picked[k] = mapFunction(v);
+    });
+    return picked;
+}
 
 export interface IOption {
     component: VueConstructor;
