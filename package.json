@@ -21,7 +21,10 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "build-lib": "webpack",
-        "gen-doc": "typedoc"
+        "gen-doc": "typedoc",
+        "test:ui": "cypress open",
+        "test:unit": "mocha-webpack --webpack-config tests/unit/webpack.config.js \"tests/unit/**/*.spec.ts\"",
+        "test:unit2": "vue-cli-service test:unit"
     },
     "dependencies": {},
     "devDependencies": {
@@ -31,12 +34,19 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
         "@babel/preset-env": "^7.2.3",
         "@babel/preset-typescript": "^7.1.0",
+        "@cypress/webpack-preprocessor": "^4.0.3",
+        "@types/chai": "^4.1.7",
+        "@types/mocha": "^5.2.6",
         "@vue/cli-plugin-typescript": "^3.2.0",
+        "@vue/cli-plugin-unit-mocha": "^3.4.1",
         "@vue/cli-service": "^3.2.0",
+        "chai": "^4.2.0",
         "clean-webpack-plugin": "^1.0.0",
         "copy-webpack-plugin": "^4.6.0",
         "css-loader": "^2.1.0",
+        "cypress": "^3.1.5",
         "mini-css-extract-plugin": "^0.5.0",
+        "mocha": "^6.0.2",
         "node-sass": "^4.9.0",
         "portal-vue": "^1.5.1",
         "sass-loader": "^7.0.1",
