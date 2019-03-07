@@ -3,11 +3,7 @@ import generateId from "../utility/idGenerator";
 import { VueConstructor } from "vue";
 import { IInterfaceState } from "./state";
 
-type ListenerType = (value: any) => void;
-interface IListener {
-    t: any;
-    f: ListenerType;
-}
+export type ListenerType = (value: any) => void;
 
 export class NodeInterface {
 
@@ -18,12 +14,12 @@ export class NodeInterface {
     public parent: Node;
     public option?: VueConstructor;
 
-    private listeners: IListener[] = [];
+    private listeners: Array<(v: any) => void> = [];
     private _value: any = null;
 
     public set value(v: any) {
         this._value = v;
-        this.listeners.forEach((l) => l.f.call(l.t, v));
+        this.listeners.forEach((l) => l(v));
     }
     public get value() {
         return this._value;
@@ -48,16 +44,21 @@ export class NodeInterface {
         };
     }
 
-    /* Listeners */
-    public registerListener(t: any, cb: ListenerType) {
-        this.listeners.push({ t, f: cb });
-    }
-
-    public unregisterListener(cb: ListenerType) {
-        const index = this.listeners.findIndex((x) => x.f === cb);
-        if (index) {
-            this.listeners.splice(index, 1);
-        }
+    /**
+     * Register a callback function that is called whenever the value of the interface changes.
+     * Used primarily for connections to work (they will "transmit" the value from one interface
+     * to another when the value changes.)
+     * @param cb The callback function that will be called with the new value as parameter.
+     * @returns Unsubscribe function. Call the returned function to unsubscribe.
+     */
+    public registerListener(cb: ListenerType): () => void {
+        this.listeners.push(cb);
+        return () => {
+            const index = this.listeners.indexOf(cb);
+            if (index >= 0) {
+                this.listeners.splice(index, 1);
+            }
+        };
     }
 
 }

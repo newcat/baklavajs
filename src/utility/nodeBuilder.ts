@@ -1,6 +1,5 @@
 import { VueConstructor } from "vue";
 import { Node, NodeConstructor, IOption } from "../model";
-import forOwn from "lodash/forOwn";
 
 interface IInterfaceOptions {
     isInput: boolean;
@@ -39,7 +38,7 @@ function generateNode(
                 }
             }
             this.options = {};
-            forOwn(options, (v, k) => {
+            Object.entries(options).forEach(([k, v]) => {
                 this.options[k] = {
                     component: v.component,
                     data: getDefaultValue(v.data),

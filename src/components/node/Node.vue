@@ -41,6 +41,7 @@
                     :key="name"
                     :name="name"
                     :is="option.component"
+                    :node="data"
                     v-model="option.data"
                     @openSidebar="openSidebar(name)"
                 ></component>
@@ -119,8 +120,8 @@ export default class NodeView extends Vue {
 
     get styles() {
         return {
-            top: `${this.data.position.y + this.parent.yOffset}px`,
-            left: `${this.data.position.x + this.parent.xOffset}px`,
+            top: `${this.data.position.y}px`,
+            left: `${this.data.position.x}px`,
             width: `${this.width}px`,
         };
     }
@@ -144,8 +145,10 @@ export default class NodeView extends Vue {
 
     handleMove(ev: MouseEvent) {
         if (this.dragging) {
-            this.data.position.x += ev.movementX;
-            this.data.position.y += ev.movementY;
+            this.data.position.x += ev.movementX / this.parent.model.scaling;
+            this.data.position.y += ev.movementY / this.parent.model.scaling;
+            // this.data.position.x += ev.movementX;
+            // this.data.position.y += ev.movementY;
         }
     }
 

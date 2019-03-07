@@ -1,5 +1,3 @@
-import isEmpty from "lodash/isEmpty";
-
 import { Node, IConnection } from "../model";
 
 interface ITreeNode {
@@ -7,11 +5,14 @@ interface ITreeNode {
     children: ITreeNode[];
 }
 
-export default class NodeTreeBuilder {
+const isEmpty = (obj: any) =>
+    [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
+
+export class NodeTreeBuilder {
 
     private adjacency = new Map<Node, Node[]>();
 
-    public calculateTree(nodes: Node[], connections: IConnection[]) {
+    public calculateTree(nodes: ReadonlyArray<Node>, connections: ReadonlyArray<IConnection>) {
 
         this.adjacency.clear();
 

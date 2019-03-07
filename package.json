@@ -13,7 +13,7 @@
         "url": "https://github.com/newcat/baklavajs"
     },
     "files": [
-        "dist/**/*"
+        "dist/**/!(report.html)"
     ],
     "license": "MIT",
     "main": "dist/index.js",
@@ -21,7 +21,11 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "build-lib": "webpack",
-        "gen-doc": "typedoc"
+        "gen-doc": "typedoc",
+        "cypress": "cypress open",
+        "test:ui": "cypress run",
+        "test:unit": "vue-cli-service test:unit",
+        "test": "npm run test:unit && npm run test:ui"
     },
     "dependencies": {},
     "devDependencies": {
@@ -31,17 +35,25 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
         "@babel/preset-env": "^7.2.3",
         "@babel/preset-typescript": "^7.1.0",
-        "@types/lodash": "^4.14.119",
+        "@cypress/webpack-preprocessor": "^4.0.3",
+        "@types/chai": "^4.1.7",
+        "@types/mocha": "^5.2.6",
+        "@types/sinon": "^7.0.9",
         "@vue/cli-plugin-typescript": "^3.2.0",
+        "@vue/cli-plugin-unit-mocha": "^3.4.1",
         "@vue/cli-service": "^3.2.0",
+        "chai": "^4.2.0",
         "clean-webpack-plugin": "^1.0.0",
         "copy-webpack-plugin": "^4.6.0",
         "css-loader": "^2.1.0",
-        "lodash": "^4.17.11",
+        "cypress": "^3.1.5",
+        "fork-ts-checker-webpack-plugin": "^1.0.0",
         "mini-css-extract-plugin": "^0.5.0",
+        "mocha": "^6.0.2",
         "node-sass": "^4.9.0",
         "portal-vue": "^1.5.1",
         "sass-loader": "^7.0.1",
+        "sinon": "^7.2.7",
         "ts-loader": "^5.3.2",
         "typedoc": "^0.14.2",
         "typescript": "^3.2.2",
@@ -52,6 +64,7 @@
         "vue-property-decorator": "^7.0.0",
         "vue-template-compiler": "^2.5.17",
         "webpack": "^4.28.3",
+        "webpack-bundle-analyzer": "^3.1.0",
         "webpack-cli": "^3.1.2"
     },
     "postcss": {

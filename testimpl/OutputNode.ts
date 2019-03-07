@@ -8,6 +8,7 @@ export default class OutputNode extends Node {
     public constructor() {
         super();
         this.addInputInterface("Input", "string", Options.InputOption);
+        this.addInputInterface("BooleanInput", "boolean", Options.CheckboxOption);
         this.addOption("output", Options.TextOption);
     }
 

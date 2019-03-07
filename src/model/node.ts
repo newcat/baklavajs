@@ -1,10 +1,26 @@
-import { VueConstructor } from "vue";
-import pickBy from "lodash/pickBy";
-import mapValues from "lodash/mapValues";
+import Vue, { VueConstructor } from "vue";
 
 import generateId from "../utility/idGenerator";
 import { NodeInterface } from "./nodeInterface";
 import { INodeState } from "./state";
+import { Editor } from "./editor";
+
+function pickBy(obj: Record<string, any>, predicate: (x: any) => boolean): Record<string, any> {
+    return Object.entries(obj)
+        .filter(([k, v]) => predicate(v))
+        .reduce((p, [k, v]) => {
+            p[k] = v;
+            return p;
+        }, {} as Record<string, any>);
+}
+
+function mapValues<T, U>(obj: Record<string, T>, mapFunction: (x: T) => U): Record<string, U> {
+    const picked: Record<string, U> = {};
+    Object.entries(obj).map(([k, v]) => {
+        picked[k] = mapFunction(v);
+    });
+    return picked;
+}
 
 export interface IOption {
     component: VueConstructor;
@@ -31,21 +47,20 @@ export abstract class Node {
     public id: string = "node_" + generateId();
     public interfaces: Record<string, NodeInterface> = {};
     public options: Record<string, IOption> = {};
-
     public position = { x: 0, y: 0 };
-    public state = {};
     public disablePointerEvents = false;
 
-    /**
-     * All input interfaces of the node
-     */
+    /** Use this property to save additional state of the node */
+    public state: Record<string, any> = {};
+
+    private editorInstance?: Editor;
+
+    /** All input interfaces of the node */
     public get inputInterfaces(): Record<string, NodeInterface> {
         return pickBy(this.interfaces, (i) => i.isInput);
     }
 
-    /**
-     * All output interfaces of the node
-     */
+    /** All output interfaces of the node */
     public get outputInterfaces(): Record<string, NodeInterface> {
         return pickBy(this.interfaces, (i) => !i.isInput);
     }
@@ -114,6 +129,36 @@ export abstract class Node {
     }
 
     /**
+     * Remove an existing interface
+     * @param name Name of the interface.
+     */
+    protected removeInterface(name: string) {
+        const intf = this.getInterface(name);
+        if (intf) {
+
+            if (intf.connectionCount > 0) {
+                if (this.editorInstance) {
+                    const connections = this.editorInstance.connections.filter(
+                        (c) => c.from === intf || c.to === intf
+                    );
+                    connections.forEach((c) => {
+                        this.editorInstance!.removeConnection(c, false);
+                    });
+                    this.editorInstance.calculateNodeTree();
+                } else {
+                    throw new Error(
+                        "Interface is connected, but no editor instance is specified. Unable to delete interface"
+                    );
+                }
+            }
+
+            Vue.delete(this.interfaces, name);
+            delete this.interfaces[name];
+
+        }
+    }
+
+    /**
      * Add a node option to the node
      * @param name Name of the option
      * @param component Option component
@@ -122,11 +167,22 @@ export abstract class Node {
      */
     protected addOption(name: string, component: VueConstructor,
                         defaultValue: any = null, sidebarComponent?: VueConstructor) {
-        this.options[name] = {
+        Vue.set(this.options, name, {
             data: defaultValue,
             component,
             sidebarComponent
-        };
+        });
+    }
+
+    /**
+     * Remove an existing option
+     * @param name Name of the option
+     */
+    protected removeOption(name: string) {
+        if (this.options[name]) {
+            Vue.delete(this.options, name);
+            delete this.options[name];
+        }
     }
 
     /**
@@ -136,7 +192,7 @@ export abstract class Node {
      */
     public getInterface(name: string): NodeInterface {
         if (!this.interfaces[name]) {
-            throw new Error(`No interface named '{name}'`);
+            throw new Error(`No interface named '${name}'`);
         }
         return this.interfaces[name];
     }
@@ -158,10 +214,18 @@ export abstract class Node {
         this.options[name].data = value;
     }
 
+    /**
+     * This function will automatically be called as soon as the node is added to an editor.
+     * @param editor Editor instance
+     */
+    public registerEditor(editor: Editor) {
+        this.editorInstance = editor;
+    }
+
     private addInterface(isInput: boolean, name: string, type: string, option?: VueConstructor) {
         const intf = new NodeInterface(this, isInput, type);
         intf.option = option;
-        this.interfaces[name] = intf;
+        Vue.set(this.interfaces, name, intf);
         return intf;
     }
 

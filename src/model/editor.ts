@@ -2,7 +2,7 @@ import Vue from "vue";
 import { Node } from "./node";
 import { NodeInterface } from "./nodeInterface";
 import { IConnection, Connection } from "./connection";
-import NodeTreeBuilder from "../utility/nodeTreeBuilder";
+import { NodeTreeBuilder } from "../utility/nodeTreeBuilder";
 import { DummyConnection } from "./connection";
 import { IState } from "./state";
 import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";
@@ -12,25 +12,42 @@ export type NodeConstructor = new () => Node;
 /** The main model class for BaklavaJS */
 export class Editor {
 
-    /** List of all nodes */
-    public nodes: Node[] = [];
-    /** List of all connections */
-    public connections: Connection[] = [];
-    /** List of all registered node types */
-    public nodeTypes: Record<string, NodeConstructor> = {};
-    /** Mapping of nodes to node categories */
-    public nodeCategories: Record<string, string[]> = { default: [] };
-
+    private _nodes: Node[] = [];
+    private _connections: Connection[] = [];
+    private _nodeTypes: Record<string, NodeConstructor> = {};
+    private _nodeCategories: Record<string, string[]> = { default: [] };
     private _nodeCalculationOrder: Node[] = [];
-    /**
-     * The order, in which the nodes must be calculated
-     */
+
+    /** The order, in which the nodes must be calculated */
     public get nodeCalculationOrder() {
-        return this._nodeCalculationOrder;
+        return this._nodeCalculationOrder as ReadonlyArray<Node>;
+    }
+
+    /** List of all nodes */
+    public get nodes() {
+        return this._nodes as ReadonlyArray<Node>;
+    }
+
+    /** List of all connections */
+    public get connections() {
+        return this._connections as ReadonlyArray<Connection>;
+    }
+
+    /** List of all registered node types */
+    public get nodeTypes() {
+        return this._nodeTypes as Readonly<Record<string, NodeConstructor>>;
+    }
+
+    /** Mapping of nodes to node categories */
+    public get nodeCategories() {
+        return this._nodeCategories as Readonly<Record<string, string[]>>;
     }
 
     /** Used to manage all node interface types and implementing conversions between them */
     public nodeInterfaceTypes = new NodeInterfaceTypeManager();
+
+    public panning = { x: 0, y: 0 };
+    public scaling = 1;
 
     /**
      * Register a new node type
@@ -51,17 +68,21 @@ export class Editor {
      * @param typeNameOrInstance Either a registered node type or a node instance
      * @returns Instance of the node
      */
-    public addNode(typeNameOrInstance: string|Node): Node|undefined {
+    public addNode(typeNameOrInstance: string|Node, calculateNodeTree = true): Node|undefined {
         let n = typeNameOrInstance;
         if (typeof(n) === "string") {
             if (this.nodeTypes[n]) {
                 n = new (this.nodeTypes[n])();
-                return this.addNode(n);
+                return this.addNode(n, calculateNodeTree);
             } else {
                 return undefined;
             }
         } else if (typeof(n) === "object") {
-            this.nodes.push(n);
+            n.registerEditor(this);
+            this._nodes.push(n);
+            if (calculateNodeTree) {
+                this.calculateNodeTree();
+            }
             return n;
         } else {
             throw new TypeError("Expected Object, got " + typeof(n));
@@ -73,12 +94,15 @@ export class Editor {
      * Will also remove all connections from and to the node.
      * @param n Reference to a node in the list.
      */
-    public removeNode(n: Node) {
+    public removeNode(n: Node, calculateNodeTree = true) {
         if (this.nodes.includes(n)) {
             this.connections
                 .filter((c) => c.from.parent === n || c.to.parent === n)
                 .forEach((c) => this.removeConnection(c));
-            this.nodes.splice(this.nodes.indexOf(n), 1);
+            this._nodes.splice(this.nodes.indexOf(n), 1);
+            if (calculateNodeTree) {
+                this.calculateNodeTree();
+            }
         }
     }
 
@@ -87,13 +111,13 @@ export class Editor {
      * @param from Start interface for the connection
      * @param to Target interface for the connection
      * @param calculateNodeTree Whether to update the node calculation order after adding the connection
-     * @returns Whether the connection was successfully created
+     * @returns The created connection. If no connection could be created, returns `undefined`.
      */
-    public addConnection(from: NodeInterface, to: NodeInterface, calculateNodeTree = true): boolean {
+    public addConnection(from: NodeInterface, to: NodeInterface, calculateNodeTree = true): Connection|undefined {
 
         const dc = this.checkConnection(from, to);
         if (!dc) {
-            return false;
+            return undefined;
         }
 
         // Delete all other connections to the target interface
@@ -103,9 +127,9 @@ export class Editor {
             .forEach((conn) => this.removeConnection(conn, false));
 
         const c = new Connection(dc.from, dc.to, this.nodeInterfaceTypes);
-        this.connections.push(c);
+        this._connections.push(c);
         if (calculateNodeTree) { this.calculateNodeTree(); }
-        return true;
+        return c;
 
     }
 
@@ -119,7 +143,7 @@ export class Editor {
     public removeConnection(c: Connection, calculateNodeTree = true) {
         if (this.connections.includes(c)) {
             c.destruct();
-            this.connections.splice(this.connections.indexOf(c), 1);
+            this._connections.splice(this.connections.indexOf(c), 1);
             if (calculateNodeTree) {
                 this.calculateNodeTree();
             }
@@ -156,10 +180,10 @@ export class Editor {
         // check if the new connection would result in a cycle
         const ntb = new NodeTreeBuilder();
         const dc = new DummyConnection(from, to);
-        const copy = (this.connections as IConnection[]).concat([dc]);
+        const copy = (this._connections as IConnection[]).concat([dc]);
         copy.filter((conn) => conn.to !== to);
         try {
-            ntb.calculateTree(this.nodes, copy);
+            ntb.calculateTree(this._nodes, copy);
         } catch (err) {
             // this connection would create a cycle in the graph
             return false;

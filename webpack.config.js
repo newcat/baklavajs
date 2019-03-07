@@ -3,6 +3,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
     mode: "production",
@@ -24,6 +26,7 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'ts-loader',
                 options: {
+                    transpileOnly: true,
                     appendTsSuffixTo: [/\.vue$/],
                 },
                 exclude: /node_modules/
@@ -33,7 +36,7 @@ module.exports = {
                 use: 'vue-loader'
             },
             {
-                test: /\.scss$/,
+                test: /\.(sa|sc|c)ss$/,
                 use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
             }
         ]
@@ -46,13 +49,22 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(),
+        new ForkTsCheckerWebpackPlugin({
+            vue: true,
+            tslint: true,
+            formatter: 'codeframe',
+            checkSyntacticErrors: false
+        }),
         new CleanWebpackPlugin([ 'dist' ]),
         new CopyWebpackPlugin([
-            { from: "src/styles", to: "styles" },
-            { from: "src/options", to: "options" }
+            { from: "src/styles", to: "styles" }
         ]),
         new MiniCssExtractPlugin({
             filename: "[name].css",
+        }),
+        new BundleAnalyzerPlugin({
+            analyzerMode: "static",
+            openAnalyzer: false
         })
     ],
     output: {

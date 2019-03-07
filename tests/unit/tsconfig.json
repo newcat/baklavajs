@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "esnext",
+        "strict": true,
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "baseUrl": "../../node_modules",
+        "types": [
+            "mocha",
+            "chai"
+        ],
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable",
+            "scripthost"
+        ],
+        "paths": {
+            "@/*": [ "../src/*" ],
+            "testimpl/*": [ "../testimpl/*" ]
+        }
+    },
+    "include": [
+        "**/*.spec.ts",
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

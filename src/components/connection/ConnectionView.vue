@@ -3,8 +3,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Inject } from "vue-property-decorator";
 import { TemporaryConnectionState } from "../../model";
+import EditorView from "@/components/Editor.vue";
 
 @Component
 export default class Connection extends Vue {
@@ -25,10 +26,14 @@ export default class Connection extends Vue {
     @Prop({ type: Boolean, default: false })
     isTemporary!: boolean;
 
+    @Inject("editor")
+    editor!: EditorView;
+
     get d() {
-        const dx = 0.3 * Math.abs(this.x1 - this.x2);
-        return `M ${this.x1} ${this.y1}` +
-            `C ${this.x1 + dx} ${this.y1}, ${this.x2 - dx} ${this.y2}, ${this.x2} ${this.y2}`;
+        const [tx1, ty1] = this.transform(this.x1, this.y1);
+        const [tx2, ty2] = this.transform(this.x2, this.y2);
+        const dx = 0.3 * Math.abs(tx1 - tx2);
+        return `M ${tx1} ${ty1} C ${tx1 + dx} ${ty1}, ${tx2 - dx} ${ty2}, ${tx2} ${ty2}`;
     }
 
     get classes() {
@@ -38,6 +43,12 @@ export default class Connection extends Vue {
             "--allowed": this.state === TemporaryConnectionState.ALLOWED,
             "--forbidden": this.state === TemporaryConnectionState.FORBIDDEN
         };
+    }
+
+    transform(x: number, y: number) {
+        const tx = (x + this.editor.model.panning.x) * this.editor.model.scaling;
+        const ty = (y + this.editor.model.panning.y) * this.editor.model.scaling;
+        return [tx, ty];
     }
 
 }

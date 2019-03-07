@@ -1,13 +1,14 @@
 <template>
-    <div
-        tabindex="-1"
+    <div tabindex="-1"
         :class="['node-editor', { 'ignore-mouse': !!temporaryConnection }]"
         @mousemove.self="mouseMoveHandler"
         @mousedown="mouseDown"
         @mouseup="mouseUp"
+        @mousewheel.self="mouseWheel"
         @keydown="keyDown"
         @contextmenu.self.prevent="openContextMenu"
     >
+
         <svg class="connections-container">
             <g v-for="connection in connections" :key="connection.id">
                 <slot name="connections" :connection="connection">
@@ -19,14 +20,18 @@
                 :connection="temporaryConnection"
             ></temp-connection>
         </svg>
-        <node
-            v-for="node in nodes"
-            :key="node.id"
-            :data="node"
-            :selected="selectedNode === node"
-            @select="selectNode(node)"
-        >
-        </node>
+
+        <div class="node-container" :style="styles">
+            <node
+                v-for="node in nodes"
+                :key="node.id"
+                :data="node"
+                :selected="selectedNode === node"
+                @select="selectNode(node)"
+            >
+            </node>
+
+        </div>
 
         <context-menu
             v-model="contextMenu.show"
@@ -66,12 +71,10 @@ export default class EditorView extends Vue {
     @Prop({ type: Object })
     model!: Editor;
 
-    xOffset = 0;
-    yOffset = 0;
-
     temporaryConnection: ITemporaryConnection|null = null;
     hoveringOver?: NodeInterface|null = null;
     selectedNode?: Node|null = null;
+    dragging = false;
 
     contextMenu = {
         show: false,
@@ -81,6 +84,14 @@ export default class EditorView extends Vue {
 
     @Provide("editor")
     nodeeditor: EditorView = this;
+
+    get styles() {
+        return {
+            "transform-origin": "0 0",
+            // transform: `translate(${this.model.panning.x}px, ${this.model.panning.y}px) scale(${this.model.scaling})`
+            "transform": `scale(${this.model.scaling}) translate(${this.model.panning.x}px, ${this.model.panning.y}px)`
+        };
+    }
 
     get nodes() {
         return this.model ? this.model.nodes : [];
@@ -131,9 +142,13 @@ export default class EditorView extends Vue {
     }
 
     mouseMoveHandler(ev: MouseEvent) {
-        if (!this.temporaryConnection) { return; }
-        this.temporaryConnection.mx = ev.offsetX;
-        this.temporaryConnection.my = ev.offsetY;
+        if (this.temporaryConnection) {
+            this.temporaryConnection.mx = (ev.offsetX / this.model.scaling) - this.model.panning.x;
+            this.temporaryConnection.my = (ev.offsetY / this.model.scaling) - this.model.panning.y;
+        } else if (this.dragging) {
+            this.model.panning.x += ev.movementX / this.model.scaling;
+            this.model.panning.y += ev.movementY / this.model.scaling;
+        }
     }
 
     mouseDown(ev: MouseEvent) {
@@ -155,20 +170,42 @@ export default class EditorView extends Vue {
                 };
             }
 
-            this.$set(this.temporaryConnection as any, "mx", ev.x);
-            this.$set(this.temporaryConnection as any, "my", ev.y);
+            this.$set(this.temporaryConnection as any, "mx", null);
+            this.$set(this.temporaryConnection as any, "my", null);
 
         } else if (ev.target === this.$el) {
             this.selectedNode = null;
+            this.dragging = true;
         }
     }
 
     mouseUp(ev: MouseEvent) {
+        this.dragging = false;
         const tc = this.temporaryConnection;
         if (tc && this.hoveringOver) {
             this.model.addConnection(tc.from, tc.to!);
         }
         this.temporaryConnection = null;
+    }
+
+    mouseWheel(ev: MouseWheelEvent) {
+        ev.preventDefault();
+        const newScale = this.model.scaling * (1 - ev.deltaY / 3000);
+        const currentPoint = [
+            (ev.offsetX / this.model.scaling) - this.model.panning.x,
+            (ev.offsetY / this.model.scaling) - this.model.panning.y
+        ];
+        const newPoint = [
+            (ev.offsetX / newScale) - this.model.panning.x,
+            (ev.offsetY / newScale) - this.model.panning.y
+        ];
+        const diff = [
+            newPoint[0] - currentPoint[0],
+            newPoint[1] - currentPoint[1]
+        ];
+        this.model.panning.x += diff[0];
+        this.model.panning.y += diff[1];
+        this.model.scaling = newScale;
     }
 
     keyDown(ev: KeyboardEvent) {

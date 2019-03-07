@@ -28,8 +28,10 @@ export class Connection implements IConnection {
     public from: NodeInterface;
     public to: NodeInterface;
     public isInDanger = false;
+    public destructed = false;
 
     private nodeInterfaceTypes: NodeInterfaceTypeManager;
+    private unsubscribe: (() => void)|null = null;
 
     public constructor(from: NodeInterface, to: NodeInterface, tm: NodeInterfaceTypeManager) {
 
@@ -45,7 +47,7 @@ export class Connection implements IConnection {
         this.from.connectionCount++;
         this.to.connectionCount++;
 
-        this.from.registerListener(this, this.transferValue);
+        this.unsubscribe = this.from.registerListener((v) => this.transferValue(v));
         this.transferValue(this.from.value);
 
     }
@@ -53,7 +55,10 @@ export class Connection implements IConnection {
     public destruct() {
         this.from.connectionCount--;
         this.to.connectionCount--;
-        this.from.unregisterListener(this.transferValue);
+        if (this.unsubscribe) {
+            this.unsubscribe();
+        }
+        this.destructed = true;
     }
 
     private transferValue(v: any) {

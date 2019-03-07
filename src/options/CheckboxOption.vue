@@ -27,14 +27,3 @@ export default class InputOption extends Vue {
 
 }
 </script>
-
-<style lang="scss">
-.checkbox-container {
-    display: flex;
-}
-.checkmark-container {
-    display: flex;
-    border: 1px solid red;
-    border-radius: 2px;
-}
-</style>
