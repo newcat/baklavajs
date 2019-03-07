@@ -75,7 +75,7 @@ describe("Editor", () => {
         const n1 = e.addNode(new TestNode())!;
         const n2 = e.addNode(new OutputNode())!;
         e.addConnection(n1.getInterface("Output"), n2.getInterface("BooleanInput"), false);
-        expect(e.nodeCalculationOrder).to.have.lengthOf(0);
+        expect(e.nodeCalculationOrder).to.have.lengthOf(1);
     });
 
     it("can remove a connection", () => {
