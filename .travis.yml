@@ -9,7 +9,11 @@ cache:
 jobs:
   include:
     - stage: test
-      script: npm run test
+      script:
+        - npm run test:unit
+        - npm run serve -- --silent &
+        - npm run test:ui
+        - kill $(jobs -p) || true
     - stage: build
       if: branch =~ /^v.*$/ AND tag IS present
       script: npm run build-lib

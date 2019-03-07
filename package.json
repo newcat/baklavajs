@@ -22,7 +22,8 @@
         "serve": "vue-cli-service serve",
         "build-lib": "webpack",
         "gen-doc": "typedoc",
-        "test:ui": "cypress open",
+        "cypress": "cypress open",
+        "test:ui": "cypress run",
         "test:unit": "vue-cli-service test:unit",
         "test": "npm run test:unit && npm run test:ui"
     },
