@@ -12,7 +12,7 @@ export class NodeTreeBuilder {
 
     private adjacency = new Map<Node, Node[]>();
 
-    public calculateTree(nodes: Node[], connections: IConnection[]) {
+    public calculateTree(nodes: ReadonlyArray<Node>, connections: ReadonlyArray<IConnection>) {
 
         this.adjacency.clear();
 

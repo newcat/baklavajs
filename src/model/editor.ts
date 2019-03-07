@@ -73,6 +73,8 @@ export class Editor {
      * @returns Instance of the node
      */
     public addNode(typeNameOrInstance: string|Node): Node|undefined {
+        // TODO: Even if nodes are added/removed, the node tree needs be updated
+        // as output nodes are directly added to the node tree
         let n = typeNameOrInstance;
         if (typeof(n) === "string") {
             if (this.nodeTypes[n]) {
@@ -109,13 +111,13 @@ export class Editor {
      * @param from Start interface for the connection
      * @param to Target interface for the connection
      * @param calculateNodeTree Whether to update the node calculation order after adding the connection
-     * @returns Whether the connection was successfully created
+     * @returns The created connection. If no connection could be created, returns `undefined`.
      */
-    public addConnection(from: NodeInterface, to: NodeInterface, calculateNodeTree = true): boolean {
+    public addConnection(from: NodeInterface, to: NodeInterface, calculateNodeTree = true): Connection|undefined {
 
         const dc = this.checkConnection(from, to);
         if (!dc) {
-            return false;
+            return undefined;
         }
 
         // Delete all other connections to the target interface
@@ -127,7 +129,7 @@ export class Editor {
         const c = new Connection(dc.from, dc.to, this.nodeInterfaceTypes);
         this._connections.push(c);
         if (calculateNodeTree) { this.calculateNodeTree(); }
-        return true;
+        return c;
 
     }
 
@@ -206,7 +208,7 @@ export class Editor {
     /** Recalculate the node calculation order */
     public calculateNodeTree() {
         const ntb = new NodeTreeBuilder();
-        this._nodeCalculationOrder = ntb.calculateTree(this._nodes, this._connections);
+        this._nodeCalculationOrder = ntb.calculateTree(this.nodes, this.connections);
     }
 
     /**
