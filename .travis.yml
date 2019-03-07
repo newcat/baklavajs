@@ -7,7 +7,7 @@ notifications:
     on_failure: always
 
 cache:
-  yarn: true
+  npm: true
   directories:
     - ~./cache
 
@@ -19,12 +19,9 @@ jobs:
         - npm run serve -- --silent &
         - npm run test:ui
         - kill $(jobs -p) || true
-    - stage: build
+    - stage: build and deploy
       if: branch =~ /^v.*$/ AND tag IS present
       script: npm run build-lib
-    - stage: deploy
-      if: branch =~ /^v.*$/ AND tag IS present
-      script: true
       deploy:
         provider: npm
         on:
