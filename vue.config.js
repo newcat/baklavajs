@@ -6,5 +6,8 @@ module.exports = {
         app.clear();
         app.add("./testimpl/main.ts");
         config.resolve.alias.set("testimpl", path.resolve(__dirname, "testimpl"));
+        if (process.env.CI) {
+            config.plugins.delete('progress');
+        }
     }
 }
