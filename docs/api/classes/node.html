@@ -114,6 +114,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="node.html#load" class="tsd-kind-icon">load</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="node.html#registereditor" class="tsd-kind-icon">register<wbr>Editor</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="node.html#removeinterface" class="tsd-kind-icon">remove<wbr>Interface</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="node.html#removeoption" class="tsd-kind-icon">remove<wbr>Option</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="node.html#save" class="tsd-kind-icon">save</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="node.html#setoptionvalue" class="tsd-kind-icon">set<wbr>Option<wbr>Value</a></li>
 							</ul>
@@ -135,7 +136,7 @@
 					<div class="tsd-signature tsd-kind-icon">disable<wbr>Pointer<wbr>Events<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L36">model/node.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L51">model/node.ts:51</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -145,7 +146,7 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;node_&quot; + generateId()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L32">model/node.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L47">model/node.ts:47</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -155,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">interfaces<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="nodeinterface.html" class="tsd-signature-type">NodeInterface</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L33">model/node.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L48">model/node.ts:48</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -165,7 +166,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L30">model/node.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L45">model/node.ts:45</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -180,28 +181,23 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/ioption.html" class="tsd-signature-type">IOption</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L34">model/node.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L49">model/node.ts:49</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="state" class="tsd-anchor"></a>
 					<h3>state</h3>
-					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L39">model/node.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L54">model/node.ts:54</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Use this property to save additional state of the node</p>
 						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
@@ -210,7 +206,7 @@
 					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L28">model/node.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L43">model/node.ts:43</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -232,7 +228,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L44">model/node.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L59">model/node.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -254,7 +250,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L49">model/node.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L64">model/node.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -279,7 +275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L100">model/node.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L115">model/node.ts:115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -329,7 +325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L149">model/node.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L168">model/node.ts:168</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -378,7 +374,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L112">model/node.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L127">model/node.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -416,7 +412,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L87">model/node.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L102">model/node.ts:102</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -440,7 +436,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L163">model/node.ts:163</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L193">model/node.ts:193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -472,7 +468,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L174">model/node.ts:174</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L204">model/node.ts:204</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -503,7 +499,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L53">model/node.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L68">model/node.ts:68</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -526,7 +522,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L191">model/node.ts:191</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L221">model/node.ts:221</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -557,13 +553,52 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L116">model/node.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L135">model/node.ts:135</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove an existing interface</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the interface.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="removeoption" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> remove<wbr>Option</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Option<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L181">model/node.ts:181</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove an existing option</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the option</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -580,7 +615,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L70">model/node.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L85">model/node.ts:85</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/inodestate.html" class="tsd-signature-type">INodeState</a></h4>
@@ -597,7 +632,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L183">model/node.ts:183</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L213">model/node.ts:213</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -633,7 +668,7 @@
 					<div class="tsd-signature tsd-kind-icon">position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L35">model/node.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L50">model/node.ts:50</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -642,7 +677,7 @@
 						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L35">model/node.ts:35</a></li>
+								<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L50">model/node.ts:50</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -652,7 +687,7 @@
 						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L35">model/node.ts:35</a></li>
+								<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/node.ts#L50">model/node.ts:50</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -740,6 +775,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="node.html#removeinterface" class="tsd-kind-icon">remove<wbr>Interface</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="node.html#removeoption" class="tsd-kind-icon">remove<wbr>Option</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="node.html#save" class="tsd-kind-icon">save</a>
 							</li>
@@ -794,6 +832,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/itemporaryconnection.html" class="tsd-kind-icon">ITemporary<wbr>Connection</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#listenertype" class="tsd-kind-icon">Listener<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#nodeconstructor" class="tsd-kind-icon">Node<wbr>Constructor</a>
