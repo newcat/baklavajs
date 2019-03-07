@@ -7,14 +7,12 @@
         background-color: $color-control-dark-background;
         border-radius: $border-radius-control;
         transition: background-color $visual-transition;
-
-        &:hover {
-            background-color: $color-control-dark-hover;
-        }
-        &:active {
-            background-color: $color-control-dark-active;
-        }
-
+    }
+    &:hover .__checkmark-container {
+        background-color: $color-control-dark-hover;
+    }
+    &:active .__checkmark-container {
+        background-color: $color-control-dark-active;
     }
 
     .__checkmark {

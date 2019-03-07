@@ -47,11 +47,7 @@ export class Editor {
     public nodeInterfaceTypes = new NodeInterfaceTypeManager();
 
     public panning = { x: 0, y: 0 };
-    public scaling = {
-        centerX: 0,
-        centerY: 0,
-        factor: 1
-    };
+    public scaling = 1;
 
     /**
      * Register a new node type
