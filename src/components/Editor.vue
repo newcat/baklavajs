@@ -4,7 +4,7 @@
         @mousemove.self="mouseMoveHandler"
         @mousedown="mouseDown"
         @mouseup="mouseUp"
-        @mousewheel="mouseWheel"
+        @mousewheel.self="mouseWheel"
         @keydown="keyDown"
         @contextmenu.self.prevent="openContextMenu"
     >
@@ -190,8 +190,22 @@ export default class EditorView extends Vue {
 
     mouseWheel(ev: MouseWheelEvent) {
         ev.preventDefault();
-        // TODO: Zoom target https://stackoverflow.com/questions/46647138/zoom-in-on-a-mousewheel-point-using-scale-and-translate
-        this.model.scaling *= (1 - ev.deltaY / 5000);
+        const newScale = this.model.scaling * (1 - ev.deltaY / 3000);
+        const currentPoint = [
+            (ev.offsetX / this.model.scaling) - this.model.panning.x,
+            (ev.offsetY / this.model.scaling) - this.model.panning.y
+        ];
+        const newPoint = [
+            (ev.offsetX / newScale) - this.model.panning.x,
+            (ev.offsetY / newScale) - this.model.panning.y
+        ];
+        const diff = [
+            newPoint[0] - currentPoint[0],
+            newPoint[1] - currentPoint[1]
+        ];
+        this.model.panning.x += diff[0];
+        this.model.panning.y += diff[1];
+        this.model.scaling = newScale;
     }
 
     keyDown(ev: KeyboardEvent) {

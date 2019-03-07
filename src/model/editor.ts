@@ -68,20 +68,21 @@ export class Editor {
      * @param typeNameOrInstance Either a registered node type or a node instance
      * @returns Instance of the node
      */
-    public addNode(typeNameOrInstance: string|Node): Node|undefined {
-        // TODO: Even if nodes are added/removed, the node tree needs be updated
-        // as output nodes are directly added to the node tree
+    public addNode(typeNameOrInstance: string|Node, calculateNodeTree = true): Node|undefined {
         let n = typeNameOrInstance;
         if (typeof(n) === "string") {
             if (this.nodeTypes[n]) {
                 n = new (this.nodeTypes[n])();
-                return this.addNode(n);
+                return this.addNode(n, calculateNodeTree);
             } else {
                 return undefined;
             }
         } else if (typeof(n) === "object") {
             n.registerEditor(this);
             this._nodes.push(n);
+            if (calculateNodeTree) {
+                this.calculateNodeTree();
+            }
             return n;
         } else {
             throw new TypeError("Expected Object, got " + typeof(n));
@@ -93,12 +94,15 @@ export class Editor {
      * Will also remove all connections from and to the node.
      * @param n Reference to a node in the list.
      */
-    public removeNode(n: Node) {
+    public removeNode(n: Node, calculateNodeTree = true) {
         if (this.nodes.includes(n)) {
             this.connections
                 .filter((c) => c.from.parent === n || c.to.parent === n)
                 .forEach((c) => this.removeConnection(c));
             this._nodes.splice(this.nodes.indexOf(n), 1);
+            if (calculateNodeTree) {
+                this.calculateNodeTree();
+            }
         }
     }
 
