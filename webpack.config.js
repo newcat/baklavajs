@@ -4,7 +4,6 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
     mode: "production",
@@ -26,7 +25,6 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'ts-loader',
                 options: {
-                    transpileOnly: true,
                     appendTsSuffixTo: [/\.vue$/],
                 },
                 exclude: /node_modules/
@@ -49,12 +47,6 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(),
-        new ForkTsCheckerWebpackPlugin({
-            vue: true,
-            tslint: true,
-            formatter: 'codeframe',
-            checkSyntacticErrors: false
-        }),
         new CleanWebpackPlugin([ 'dist' ]),
         new CopyWebpackPlugin([
             { from: "src/styles", to: "styles" }
