@@ -15,11 +15,11 @@
                 :class="{ 'item': true, 'submenu': !!item.submenu }"
                 @mouseenter="activeMenu = index"
                 @mouseleave="activeMenu = -1"
-                @click="onClick(item)"
+                @click.stop.prevent="onClick(item)"
                 class="d-flex align-items-center"
             >
                 <div class="flex-fill">{{ item.label }}</div>
-                <div v-if="item.submenu" class="ml-3">&#9205;</div>
+                <div v-if="item.submenu" class="ml-3" style="line-height:1em;">&#9205;</div>
                 <context-menu
                     v-if="item.submenu"
                     :value="activeMenu === index"
@@ -98,7 +98,7 @@ export default class ContextMenu extends Vue {
         }
     }
 
-    onClickOutside() {
+    onClickOutside(event: MouseEvent) {
         if (this.value) {
             this.$emit("input", false);
         }

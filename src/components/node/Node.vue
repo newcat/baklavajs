@@ -49,7 +49,7 @@
                 <portal :key="'sb_' + name" to="sidebar"
                     v-if="$baklava.sidebar.nodeId === data.id && $baklava.sidebar.optionName === name && option.sidebarComponent"
                 >
-                    <component :is="option.sidebarComponent" :name="name" v-model="option.data"></component>
+                    <component :is="option.sidebarComponent" :name="name" v-model="option.data" :node="data"></component>
                 </portal>
 
             </template>
