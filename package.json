@@ -27,9 +27,6 @@
         "test:unit": "vue-cli-service test:unit",
         "test": "npm run test:unit && npm run test:ui"
     },
-    "gitHooks": {
-        "pre-commit": "npm run gen-doc"
-    },
     "dependencies": {},
     "devDependencies": {
         "@babel/cli": "^7.2.3",
