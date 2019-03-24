@@ -1,5 +1,5 @@
 import { Node } from "./node";
-import generateId from "../utility/idGenerator";
+import generateId from "./idGenerator";
 import { VueConstructor } from "vue";
 import { IInterfaceState } from "./state";
 

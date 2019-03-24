@@ -1,12 +1,5 @@
 import { NodeInterface } from "./nodeInterface";
-import generateId from "../utility/idGenerator";
-import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";
-
-export interface IConnection {
-    id: string;
-    from: NodeInterface;
-    to: NodeInterface;
-}
+import generateId from "./idGenerator";
 
 export enum TemporaryConnectionState {
     NONE,
@@ -22,61 +15,13 @@ export interface ITemporaryConnection {
     my?: number;
 }
 
-export class Connection implements IConnection {
+export class Connection {
 
     public id: string;
     public from: NodeInterface;
     public to: NodeInterface;
     public isInDanger = false;
     public destructed = false;
-
-    private nodeInterfaceTypes: NodeInterfaceTypeManager;
-    private unsubscribe: (() => void)|null = null;
-
-    public constructor(from: NodeInterface, to: NodeInterface, tm: NodeInterfaceTypeManager) {
-
-        if (!from || !to) {
-            throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
-        }
-
-        this.id = generateId();
-        this.from = from;
-        this.to = to;
-        this.nodeInterfaceTypes = tm;
-
-        this.from.connectionCount++;
-        this.to.connectionCount++;
-
-        this.unsubscribe = this.from.registerListener((v) => this.transferValue(v));
-        this.transferValue(this.from.value);
-
-    }
-
-    public destruct() {
-        this.from.connectionCount--;
-        this.to.connectionCount--;
-        if (this.unsubscribe) {
-            this.unsubscribe();
-        }
-        this.destructed = true;
-    }
-
-    private transferValue(v: any) {
-        this.to.value = this.nodeInterfaceTypes.convert(this.from.type, this.to.type, v);
-    }
-
-}
-
-/**
- * This class is used for calculation purposes only.
- * It will not transfer values!
- * It will, however, also not alter any state of the connected nodes
- */
-export class DummyConnection implements IConnection {
-
-    public id: string;
-    public from: NodeInterface;
-    public to: NodeInterface;
 
     public constructor(from: NodeInterface, to: NodeInterface) {
 
@@ -88,6 +33,15 @@ export class DummyConnection implements IConnection {
         this.from = from;
         this.to = to;
 
+        this.from.connectionCount++;
+        this.to.connectionCount++;
+
+    }
+
+    public destruct() {
+        this.from.connectionCount--;
+        this.to.connectionCount--;
+        this.destructed = true;
     }
 
 }

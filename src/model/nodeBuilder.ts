@@ -1,5 +1,5 @@
 import { VueConstructor } from "vue";
-import { Node, NodeConstructor, IOption } from "../model";
+import { Node, NodeConstructor, IOption } from ".";
 
 interface IInterfaceOptions {
     isInput: boolean;

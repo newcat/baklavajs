@@ -7,8 +7,8 @@ export interface INodeState {
     type: string;
     name: string;
     id: string;
-    interfaces: Record<string, IInterfaceState>;
-    options: Record<string, any>;
+    interfaces: Array<[string, IInterfaceState]>;
+    options: Array<[string, any]>;
     position: { x: number, y: number };
     state: any;
 }

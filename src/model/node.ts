@@ -1,9 +1,8 @@
-import Vue, { VueConstructor } from "vue";
-
-import generateId from "../utility/idGenerator";
+import generateId from "./idGenerator";
 import { NodeInterface } from "./nodeInterface";
 import { INodeState } from "./state";
 import { Editor } from "./editor";
+import { BaklavaEventEmitter, IAddInterfaceEventData, IInterfaceEventData, IAddOptionEventData, IOptionEventData } from "../events";
 
 function pickBy(obj: Record<string, any>, predicate: (x: any) => boolean): Record<string, any> {
     return Object.entries(obj)
@@ -14,30 +13,22 @@ function pickBy(obj: Record<string, any>, predicate: (x: any) => boolean): Recor
         }, {} as Record<string, any>);
 }
 
-function mapValues<T, U>(obj: Record<string, T>, mapFunction: (x: T) => U): Record<string, U> {
-    const picked: Record<string, U> = {};
-    Object.entries(obj).map(([k, v]) => {
-        picked[k] = mapFunction(v);
-    });
-    return picked;
-}
-
 export interface IOption {
-    component: VueConstructor;
+    optionComponent: string;
     data: any;
-    sidebarComponent?: VueConstructor;
+    sidebarComponent?: string;
 }
 
 export interface IInterfaceCreateOptions {
     type?: string;
     name?: string;
-    option?: VueConstructor;
+    optionName?: string;
 }
 
 /**
  * Abstract base class for every node
  */
-export abstract class Node {
+export abstract class Node extends BaklavaEventEmitter {
 
     /** Type of the node */
     public abstract type: string;
@@ -45,8 +36,8 @@ export abstract class Node {
     public abstract name: string;
 
     public id: string = "node_" + generateId();
-    public interfaces: Record<string, NodeInterface> = {};
-    public options: Record<string, IOption> = {};
+    public interfaces: Map<string, NodeInterface> = new Map();
+    public options: Map<string, IOption> = new Map();
     public position = { x: 0, y: 0 };
     public disablePointerEvents = false;
 
@@ -71,13 +62,13 @@ export abstract class Node {
         this.position = state.position;
         this.state = state.state;
         Object.keys(state.options).forEach((k) => {
-            if (this.options[k]) {
-                this.options[k].data = state.options[k];
+            if (this.options.has(k)) {
+                this.options.get(k)!.data = state.options[k];
             }
         });
         Object.keys(state.interfaces).forEach((k) => {
-            if (this.interfaces[k]) {
-                this.interfaces[k].load(state.interfaces[k]);
+            if (this.interfaces.has(k)) {
+                this.interfaces.get(k)!.load(state.interfaces[k]);
             }
         });
     }
@@ -88,9 +79,9 @@ export abstract class Node {
             id: this.id,
             name: this.name,
             position: this.position,
-            options: mapValues(this.options, (o) => o.data),
+            options: Array.from(this.options.entries()).map(([k, o]) => [k, o.data]) as any,
             state: this.state,
-            interfaces: mapValues(this.interfaces, (i) => i.save())
+            interfaces: Array.from(this.interfaces.entries()).map(([k, i]) => [k, i.save()]) as any
         };
     }
 
@@ -112,9 +103,15 @@ export abstract class Node {
      * @param defaultValue Optional default value for the interface/option
      * @returns The created interface
      */
-    protected addInputInterface(name: string, type: string, option?: VueConstructor, defaultValue?: any) {
+    protected addInputInterface(name: string, type: string, option?: string, defaultValue?: any) {
+        if (this.emitPreventable<IAddInterfaceEventData>("beforeAddInterface", {
+            name, type, isInput: true, option, defaultValue
+        })) {
+            return;
+        }
         const intf = this.addInterface(true, name, type, option);
         intf.value = defaultValue;
+        this.emit<IInterfaceEventData>("addInterface", { interface: intf });
         return intf;
     }
 
@@ -125,7 +122,12 @@ export abstract class Node {
      * @returns The created interface
      */
     protected addOutputInterface(name: string, type: string) {
-        return this.addInterface(false, name, type);
+        if (this.emitPreventable<IAddInterfaceEventData>("beforeAddInterface", { name, type, isInput: false, })) {
+            return;
+        }
+        const intf = this.addInterface(false, name, type);
+        this.emit<IInterfaceEventData>("addInterface", { interface: intf });
+        return intf;
     }
 
     /**
@@ -136,15 +138,16 @@ export abstract class Node {
         const intf = this.getInterface(name);
         if (intf) {
 
+            if (this.emitPreventable<IInterfaceEventData>("beforeRemoveInterface", { interface: intf })) { return; }
+
             if (intf.connectionCount > 0) {
                 if (this.editorInstance) {
                     const connections = this.editorInstance.connections.filter(
                         (c) => c.from === intf || c.to === intf
                     );
                     connections.forEach((c) => {
-                        this.editorInstance!.removeConnection(c, false);
+                        this.editorInstance!.removeConnection(c);
                     });
-                    this.editorInstance.calculateNodeTree();
                 } else {
                     throw new Error(
                         "Interface is connected, but no editor instance is specified. Unable to delete interface"
@@ -152,8 +155,8 @@ export abstract class Node {
                 }
             }
 
-            Vue.delete(this.interfaces, name);
-            delete this.interfaces[name];
+            this.interfaces.delete(name);
+            this.emit<IInterfaceEventData>("removeInterface", { interface: intf });
 
         }
     }
@@ -165,13 +168,19 @@ export abstract class Node {
      * @param defaultValue Default value for the option
      * @param sidebarComponent Optional component to display in the sidebar
      */
-    protected addOption(name: string, component: VueConstructor,
-                        defaultValue: any = null, sidebarComponent?: VueConstructor) {
-        Vue.set(this.options, name, {
+    protected addOption(name: string, component: string, defaultValue: any = null, sidebarComponent?: string) {
+        if (this.emitPreventable<IAddOptionEventData>("beforeAddOption", {
+            name, component, defaultValue, sidebarComponent
+        })) {
+            return;
+        }
+        const opt = {
             data: defaultValue,
-            component,
+            optionComponent: component,
             sidebarComponent
-        });
+        };
+        this.options.set(name, opt);
+        this.emit<IOptionEventData>("addOption", { option: opt });
     }
 
     /**
@@ -191,10 +200,10 @@ export abstract class Node {
      * @param name Name of the requested interface
      */
     public getInterface(name: string): NodeInterface {
-        if (!this.interfaces[name]) {
+        if (!this.interfaces.has(name)) {
             throw new Error(`No interface named '${name}'`);
         }
-        return this.interfaces[name];
+        return this.interfaces.get(name)!;
     }
 
     /**
@@ -202,7 +211,10 @@ export abstract class Node {
      * @param name Name of the option
      */
     public getOptionValue(name: string) {
-        return this.options[name].data;
+        if (!this.options.has(name)) {
+            throw new Error(`No option named '${name}'`);
+        }
+        return this.options.get(name)!.data;
     }
 
     /**
@@ -211,7 +223,10 @@ export abstract class Node {
      * @param value New value
      */
     public setOptionValue(name: string, value: any) {
-        this.options[name].data = value;
+        if (!this.options.has(name)) {
+            throw new Error(`No option named '${name}'`);
+        }
+        this.options.get(name)!.data = value;
     }
 
     /**

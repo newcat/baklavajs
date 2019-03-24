@@ -1,6 +1,6 @@
 export * from "./model";
 export { default as Options } from "./options";
-export { NodeBuilder } from "./utility/nodeBuilder";
+export { NodeBuilder } from "./model/nodeBuilder";
 
 import Baklava from "./baklava";
 import { Editor } from "./model/editor";

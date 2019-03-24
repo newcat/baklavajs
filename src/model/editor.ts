@@ -1,27 +1,21 @@
 import Vue from "vue";
 import { Node } from "./node";
 import { NodeInterface } from "./nodeInterface";
-import { IConnection, Connection } from "./connection";
-import { NodeTreeBuilder } from "../utility/nodeTreeBuilder";
-import { DummyConnection } from "./connection";
+import { Connection } from "./connection";
 import { IState } from "./state";
 import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";
+import { containsCycle } from "../engine/nodeTreeBuilder";
+import * as Events from "../events";
 
 export type NodeConstructor = new () => Node;
 
 /** The main model class for BaklavaJS */
-export class Editor {
+export class Editor extends Events.BaklavaEventEmitter {
 
     private _nodes: Node[] = [];
     private _connections: Connection[] = [];
-    private _nodeTypes: Record<string, NodeConstructor> = {};
-    private _nodeCategories: Record<string, string[]> = { default: [] };
-    private _nodeCalculationOrder: Node[] = [];
-
-    /** The order, in which the nodes must be calculated */
-    public get nodeCalculationOrder() {
-        return this._nodeCalculationOrder as ReadonlyArray<Node>;
-    }
+    private _nodeTypes: Map<string, NodeConstructor> = new Map();
+    private _nodeCategories: Map<string, string[]> = new Map([["default", []]]);
 
     /** List of all nodes */
     public get nodes() {
@@ -35,12 +29,12 @@ export class Editor {
 
     /** List of all registered node types */
     public get nodeTypes() {
-        return this._nodeTypes as Readonly<Record<string, NodeConstructor>>;
+        return this._nodeTypes as ReadonlyMap<string, NodeConstructor>;
     }
 
     /** Mapping of nodes to node categories */
     public get nodeCategories() {
-        return this._nodeCategories as Readonly<Record<string, string[]>>;
+        return this._nodeCategories as ReadonlyMap<string, string[]>;
     }
 
     /** Used to manage all node interface types and implementing conversions between them */
@@ -56,11 +50,11 @@ export class Editor {
      * @param category Category of the node. Will be used in the context menu for adding nodes
      */
     public registerNodeType(typeName: string, type: NodeConstructor, category = "default") {
-        Vue.set(this.nodeTypes, typeName, type);
-        if (!this.nodeCategories[category]) {
+        this._nodeTypes.set(typeName, type);
+        if (!this.nodeCategories.has(category)) {
             Vue.set(this.nodeCategories, category, []);
         }
-        this.nodeCategories[category].push(typeName);
+        this.nodeCategories.get(category)!.push(typeName);
     }
 
     /**
@@ -68,21 +62,20 @@ export class Editor {
      * @param typeNameOrInstance Either a registered node type or a node instance
      * @returns Instance of the node
      */
-    public addNode(typeNameOrInstance: string|Node, calculateNodeTree = true): Node|undefined {
+    public addNode(typeNameOrInstance: string|Node): Node|undefined {
         let n = typeNameOrInstance;
         if (typeof(n) === "string") {
-            if (this.nodeTypes[n]) {
-                n = new (this.nodeTypes[n])();
-                return this.addNode(n, calculateNodeTree);
+            if (this.nodeTypes.has(n)) {
+                n = new (this.nodeTypes.get(n)!)();
+                return this.addNode(n);
             } else {
                 return undefined;
             }
         } else if (typeof(n) === "object") {
+            if (this.emitPreventable<Events.INodeEventData>("beforeAddNode", { nodeInstance: n })) { return; }
             n.registerEditor(this);
             this._nodes.push(n);
-            if (calculateNodeTree) {
-                this.calculateNodeTree();
-            }
+            this.emit<Events.INodeEventData>("addNode", { nodeInstance: n });
             return n;
         } else {
             throw new TypeError("Expected Object, got " + typeof(n));
@@ -94,15 +87,14 @@ export class Editor {
      * Will also remove all connections from and to the node.
      * @param n Reference to a node in the list.
      */
-    public removeNode(n: Node, calculateNodeTree = true) {
+    public removeNode(n: Node) {
         if (this.nodes.includes(n)) {
+            if (this.emitPreventable<Events.INodeEventData>("beforeRemoveNode", { nodeInstance: n })) { return; }
             this.connections
                 .filter((c) => c.from.parent === n || c.to.parent === n)
                 .forEach((c) => this.removeConnection(c));
             this._nodes.splice(this.nodes.indexOf(n), 1);
-            if (calculateNodeTree) {
-                this.calculateNodeTree();
-            }
+            this.emit<Events.INodeEventData>("removeNode", { nodeInstance: n });
         }
     }
 
@@ -110,25 +102,28 @@ export class Editor {
      * Add a connection to the list of connections.
      * @param from Start interface for the connection
      * @param to Target interface for the connection
-     * @param calculateNodeTree Whether to update the node calculation order after adding the connection
      * @returns The created connection. If no connection could be created, returns `undefined`.
      */
-    public addConnection(from: NodeInterface, to: NodeInterface, calculateNodeTree = true): Connection|undefined {
+    public addConnection(from: NodeInterface, to: NodeInterface): Connection|undefined {
 
         const dc = this.checkConnection(from, to);
         if (!dc) {
             return undefined;
         }
 
+        if (this.emitPreventable<Events.IAddConnectionEventData>("beforeAddConnection", { from, to })) { return; }
+
         // Delete all other connections to the target interface
         // as only one connection to an input interface is allowed
         this.connections
             .filter((conn) => conn.to === dc.to)
-            .forEach((conn) => this.removeConnection(conn, false));
+            .forEach((conn) => this.removeConnection(conn));
 
-        const c = new Connection(dc.from, dc.to, this.nodeInterfaceTypes);
+        const c = new Connection(dc.from, dc.to);
         this._connections.push(c);
-        if (calculateNodeTree) { this.calculateNodeTree(); }
+
+        this.emit<Events.IConnectionEventData>("addConnection", { connection: c });
+
         return c;
 
     }
@@ -140,13 +135,12 @@ export class Editor {
      * Set to false if you do multiple remove operations and call {@link calculateNodeTree} manually
      * after the last remove operation.
      */
-    public removeConnection(c: Connection, calculateNodeTree = true) {
+    public removeConnection(c: Connection) {
         if (this.connections.includes(c)) {
+            if (this.emitPreventable<Events.IConnectionEventData>("beforeRemoveConnection", { connection: c })) { return; }
             c.destruct();
             this._connections.splice(this.connections.indexOf(c), 1);
-            if (calculateNodeTree) {
-                this.calculateNodeTree();
-            }
+            this.emit<Events.IConnectionEventData>("removeConnection", { connection: c });
         }
     }
 
@@ -156,7 +150,7 @@ export class Editor {
      * @param to The target node interface (must be an input interface)
      * @returns Whether the connection is allowed or not.
      */
-    public checkConnection(from: NodeInterface, to: NodeInterface): false|IConnection {
+    public checkConnection(from: NodeInterface, to: NodeInterface): false|Connection {
 
         if (!from || !to) {
             return false;
@@ -178,14 +172,10 @@ export class Editor {
         }
 
         // check if the new connection would result in a cycle
-        const ntb = new NodeTreeBuilder();
-        const dc = new DummyConnection(from, to);
-        const copy = (this._connections as IConnection[]).concat([dc]);
+        const dc = new Connection(from, to);
+        const copy = (this._connections as Connection[]).concat([dc]);
         copy.filter((conn) => conn.to !== to);
-        try {
-            ntb.calculateTree(this._nodes, copy);
-        } catch (err) {
-            // this connection would create a cycle in the graph
+        if (containsCycle(this.nodes, copy)) {
             return false;
         }
 
@@ -198,19 +188,6 @@ export class Editor {
 
     }
 
-    /** Calculate all nodes */
-    public async calculate() {
-        for (const n of this._nodeCalculationOrder) {
-            await n.calculate();
-        }
-    }
-
-    /** Recalculate the node calculation order */
-    public calculateNodeTree() {
-        const ntb = new NodeTreeBuilder();
-        this._nodeCalculationOrder = ntb.calculateTree(this.nodes, this.connections);
-    }
-
     /**
      * Load a state
      * @param state State to load
@@ -219,7 +196,7 @@ export class Editor {
 
         // Clear current state
         for (let i = this.connections.length - 1; i >= 0; i--) {
-            this.removeConnection(this.connections[i], false);
+            this.removeConnection(this.connections[i]);
         }
         for (let i = this.nodes.length - 1; i >= 0; i--) {
             this.removeNode(this.nodes[i]);
@@ -229,7 +206,7 @@ export class Editor {
         for (const n of state.nodes) {
 
             // find node type
-            const nt = this.nodeTypes[n.type];
+            const nt = this.nodeTypes.get(n.type);
             if (!nt) {
                 // tslint:disable-next-line:no-console
                 console.warn(`Node type ${n.type} is not registered`);
@@ -254,22 +231,10 @@ export class Editor {
                 console.warn(`Could not find interface with id ${c.to}`);
                 continue;
             } else {
-                this.addConnection(fromIf, toIf, false);
+                this.addConnection(fromIf, toIf);
             }
         }
 
-        this.calculateNodeTree();
-
-    }
-
-    private findNodeInterface(id: string) {
-        for (const n of this.nodes) {
-            for (const ik of Object.keys(n.interfaces)) {
-                if (n.interfaces[ik].id === id) {
-                    return n.interfaces[ik];
-                }
-            }
-        }
     }
 
     /**
@@ -285,6 +250,16 @@ export class Editor {
                 to: c.to.id
             }))
         };
+    }
+
+    private findNodeInterface(id: string) {
+        for (const n of this.nodes) {
+            for (const ik of Object.keys(n.interfaces)) {
+                if (n.interfaces[ik].id === id) {
+                    return n.interfaces[ik];
+                }
+            }
+        }
     }
 
 }
