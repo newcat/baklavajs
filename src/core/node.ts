@@ -31,6 +31,7 @@ export abstract class Node extends BaklavaEventEmitter {
     public state: Record<string, any> = {};
 
     private editorInstance?: Editor;
+    private unsubscribeHandlers = new Map<any, (() => void)>();
 
     /** All input interfaces of the node */
     public get inputInterfaces(): Record<string, NodeInterface> {
@@ -103,6 +104,7 @@ export abstract class Node extends BaklavaEventEmitter {
             return;
         }
         const intf = this.addInterface(true, name, option);
+        this.unsubscribeHandlers.set(intf, intf.addListener("setValue", () => this.));
         intf.value = defaultValue;
         this.emit<IInterfaceEventData>("addInterface", { interface: intf });
         return intf;

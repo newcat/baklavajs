@@ -153,6 +153,8 @@ export class Editor extends BaklavaEventEmitter {
             return false;
         }
 
+        if (this.emitPreventable<IAddConnectionEventData>("checkConnection", { from, to })) { return false; }
+
         return new DummyConnection(from, to);
 
     }

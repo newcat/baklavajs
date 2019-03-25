@@ -1,5 +1,6 @@
 import { NodeInterface } from "./nodeInterface";
 import generateId from "./idGenerator";
+import { BaklavaEventEmitter } from "./events";
 
 export enum TemporaryConnectionState {
     NONE,
@@ -21,7 +22,7 @@ export interface IConnection {
     to: NodeInterface;
 }
 
-export class Connection {
+export class Connection extends BaklavaEventEmitter {
 
     public id: string;
     public from: NodeInterface;
@@ -30,6 +31,7 @@ export class Connection {
     public destructed = false;
 
     public constructor(from: NodeInterface, to: NodeInterface) {
+        super();
 
         if (!from || !to) {
             throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
@@ -45,6 +47,7 @@ export class Connection {
     }
 
     public destruct() {
+        this.emit<null>("destruct", null);
         this.from.connectionCount--;
         this.to.connectionCount--;
         this.destructed = true;
