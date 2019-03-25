@@ -35,12 +35,12 @@
             ></node-interface>
 
             <!-- Options -->
-            <template v-for="(option, name) in data.options">
+            <template v-for="[name, option] in options">
 
                 <component
                     :key="name"
                     :name="name"
-                    :is="option.component"
+                    :is="getOptionComponent(option.optionComponent)"
                     :node="data"
                     v-model="option.data"
                     @openSidebar="openSidebar(name)"
@@ -49,7 +49,7 @@
                 <portal :key="'sb_' + name" to="sidebar"
                     v-if="$baklava.sidebar.nodeId === data.id && $baklava.sidebar.optionName === name && option.sidebarComponent"
                 >
-                    <component :is="option.sidebarComponent" :name="name" v-model="option.data" :node="data"></component>
+                    <component :is="getOptionComponent(option.sidebarComponent)" :name="name" v-model="option.data" :node="data"></component>
                 </portal>
 
             </template>
@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Inject } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
 // @ts-ignore
@@ -79,6 +79,7 @@ import { Node, NodeInterface, IOption } from "../../../core";
 import NodeInterfaceView from "./NodeInterface.vue";
 import ContextMenu from "../ContextMenu.vue";
 import InputOption from "../../options/InputOption.vue";
+import EditorView from "../Editor.vue";
 
 @Component({
     components: {
@@ -98,6 +99,9 @@ export default class NodeView extends Vue {
     @Prop({ type: Boolean, default: false })
     selected!: boolean;
 
+    @Inject("editor")
+    editor!: EditorView;
+
     dragging = false;
     width = 200;
 
@@ -114,6 +118,8 @@ export default class NodeView extends Vue {
         ]
     };
 
+    private unsubscribe: (() => void)|null = null;
+
     get parent() {
         return this.$parent as NodeEditor;
     }
@@ -124,6 +130,18 @@ export default class NodeView extends Vue {
             left: `${this.data.position.x}px`,
             width: `${this.width}px`,
         };
+    }
+
+    get options() {
+        return Array.from(this.data.options.entries());
+    }
+
+    mounted() {
+        this.unsubscribe = this.data.addListener("*", () => this.$forceUpdate());
+    }
+    
+    beforeDestroy() {
+        if (this.unsubscribe) { this.unsubscribe(); }
     }
 
     startDrag() {
@@ -178,6 +196,11 @@ export default class NodeView extends Vue {
         this.$baklava.sidebar.nodeId = this.data.id;
         this.$baklava.sidebar.optionName = optionName;
         this.$baklava.sidebar.visible = true;
+    }
+
+    getOptionComponent(name: string) {
+        if (!name || !this.editor.options) { return; }
+        return this.editor.options[name];
     }
 
 }

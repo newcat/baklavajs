@@ -1,12 +1,13 @@
 import { BaklavaEvent, PreventableBaklavaEvent } from "./event";
 
-type Listener = (ev?: BaklavaEvent<any>) => any;
+type Listener<T> = (ev: BaklavaEvent<T>) => any;
+type PreventableListener<T> = (ev: PreventableBaklavaEvent<T>) => any;
 
 export class BaklavaEventEmitter {
 
-    private listeners = new Map<string, Set<Listener>>();
+    private listeners = new Map<string, Set<Listener<any>>>();
 
-    public addListener(eventType: string, listener: Listener) {
+    public addListener<T>(eventType: string, listener: Listener<T>) {
         if (!this.listeners.has(eventType)) {
             this.listeners.set(eventType, new Set());
         }
@@ -19,8 +20,12 @@ export class BaklavaEventEmitter {
         };
     }
 
+    public addPreventableListener<T>(eventType: string, listener: PreventableListener<T>) {
+        return this.addListener<T>(eventType, listener as Listener<T>);
+    }
+
     protected emit<T>(eventType: string, data: T): void {
-        const listeners = this.listeners.get(eventType);
+        const listeners = this.getListenersForEvent(eventType);
         if (listeners) {
             listeners.forEach((l) => l(new BaklavaEvent(eventType, data)));
         }
@@ -33,7 +38,7 @@ export class BaklavaEventEmitter {
      * @returns `true` if the event was prevented, `false` otherwise.
      */
     protected emitPreventable<T>(eventType: string, data: T): boolean {
-        const listeners = this.listeners.get(eventType);
+        const listeners = this.getListenersForEvent(eventType);
         if (listeners) {
             for (const l of listeners) {
                 const ev = new PreventableBaklavaEvent(eventType, data);
@@ -44,6 +49,15 @@ export class BaklavaEventEmitter {
             }
         }
         return false;
+    }
+
+    private getListenersForEvent(eventType: string) {
+        const listeners = new Set<Listener<any>>();
+        const x = this.listeners.get(eventType);
+        if (x) { x.forEach((l) => listeners.add(l)); }
+        const y = this.listeners.get("*");
+        if (y) { y.forEach((l) => listeners.add(l)); }
+        return listeners;
     }
 
 }

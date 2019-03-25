@@ -2,17 +2,21 @@
     <div id="app">
         <baklava-editor
             :model="editor"
+            :options="options"
         ></baklava-editor>
         <button @click="calculate">Calculate</button>
         <button @click="save">Save</button>
         <button @click="load">Load</button>
-
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { VueConstructor } from "vue";
+
 import { Editor, Node } from "../src/core";
+import { BaklavaEvent, INodeEventData } from "../src/events";
+import { Options } from "../src";
 
 import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";
@@ -20,21 +24,34 @@ import BuilderTestNode from "./BuilderTestNode";
 import MathNode from "./MathNode";
 import AdvancedNode from "./AdvancedNode";
 
+import AddOption from "./AddOption";
+import TriggerOption from "./TriggerOption.vue";
+import SidebarOption from "./SidebarOption.vue";
+
 @Component
 export default class App extends Vue {
 
     editor = new Editor();
 
+    options = { AddOption, TriggerOption, SidebarOption };
+
     mounted() {
 
-        this.editor.hooks.addNode.tap("test", (node: Node, prevent) => {
-            console.log(node, prevent);
-            if (node.type === "TestNode") {
-                return [node, true];
-            } else {
-                return [node, false];
+        Object.entries(Options).forEach(([k, v]) => {
+            Vue.set(this.options, k, v);
+        });
+
+        this.editor.addPreventableListener<INodeEventData>("beforeAddNode", (ev) => {
+            if (ev.data.node.type === "TestNode") {
+                // ev.preventDefault();
             }
         });
+
+        this.editor.addPreventableListener<INodeEventData>("beforeAddNode", (ev) => {
+            console.log("two");
+        });
+
+        const unsub = this.editor.addListener("addNode", (ev) => console.log("listener", ev));
 
         /*this.editor.registerNodeType("TestNode", TestNode, "Tests");
         this.editor.registerNodeType("OutputNode", OutputNode, "Outputs");
@@ -46,6 +63,7 @@ export default class App extends Vue {
         this.editor.addNode(new TestNode());
         this.editor.addNode(new OutputNode());
         this.editor.addNode(new BuilderTestNode());
+        this.editor.addNode(new AdvancedNode());
         this.editor.nodeInterfaceTypes
             .addType("string", "#00FF00")
             .addType("number", "red")

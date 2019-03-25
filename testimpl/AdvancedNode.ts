@@ -1,16 +1,4 @@
-import Vue from "vue";
 import { Node } from "../src";
-
-const AddOption = Vue.extend({
-    props: [ "name", "node" ],
-    render(h) {
-        return h("button", {
-            on: {
-                click: () => { this.node.action(this.name); }
-            }
-        }, this.name as string);
-    }
-});
 
 export default class AdvancedNode extends Node {
 
@@ -21,8 +9,8 @@ export default class AdvancedNode extends Node {
 
     public constructor() {
         super();
-        this.addOption("Add Input", AddOption);
-        this.addOption("Remove Input", AddOption);
+        this.addOption("Add Input", "AddOption");
+        this.addOption("Remove Input", "AddOption");
     }
 
     public action(action: string) {

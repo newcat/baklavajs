@@ -37,3 +37,7 @@ export interface IAddOptionEventData {
 export interface IOptionEventData {
     option: IOption;
 }
+
+export interface IValueEventData {
+    value: any;
+}

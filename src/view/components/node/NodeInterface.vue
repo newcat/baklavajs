@@ -1,10 +1,11 @@
 <template>
     <div :id="data.id" :class="classes">
         <div class="__port" :style="portStyle" @mouseover="startHover" @mouseout="endHover"></div>
-        <span v-show="data.connectionCount > 0 || !data.option" class="align-middle">{{ name }}</span>
+        <span v-if="data.connectionCount > 0 || !data.option || !getOptionComponent(data.option)" class="align-middle">
+            {{ name }}
+        </span>
         <component
-            v-show="data.connectionCount === 0 && data.option"
-            :is="data.option"
+            :is="getOptionComponent(data.option)"
             :value="data.value"
             @input="data.value = $event"
             :name="name"
@@ -14,6 +15,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
+import { VueConstructor } from "vue";
 import Editor from "../Editor.vue";
 import { NodeInterface } from "../../../core";
 
@@ -51,6 +53,11 @@ export default class NodeInterfaceView extends Vue {
     }
     endHover() {
         this.editor.hoveredOver(undefined);
+    }
+
+    getOptionComponent(name: string) {
+        if (!name || !this.editor.options) { return; }
+        return this.editor.options[name];
     }
 
 }

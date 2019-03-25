@@ -6,17 +6,11 @@ import { IState } from "./state";
 import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";
 import { containsCycle } from "../engine/nodeTreeBuilder";
 import * as Events from "../events";
-import { SyncWaterfallHook } from "tapable";
 
 export type NodeConstructor = new () => Node;
 
 /** The main model class for BaklavaJS */
 export class Editor extends Events.BaklavaEventEmitter {
-
-    public readonly hooks = {
-        addNode: new SyncWaterfallHook([ "node", "prevent" ]),
-        removeNode: new SyncWaterfallHook([ "node", "prevent" ])
-    };
 
     private _nodes: Node[] = [];
     private _connections: Connection[] = [];
@@ -69,12 +63,11 @@ export class Editor extends Events.BaklavaEventEmitter {
      * @returns Instance of the node or undefined if the node was not added
      */
     public addNode(node: Node): Node|undefined {
-        const [n, prevent] = this.hooks.addNode.call(node, false);
-        if (!n || prevent) { return; }
-        n.registerEditor(this);
-        this._nodes.push(n);
-        this.emit<Events.INodeEventData>("addNode", { node: n });
-        return n;
+        if (this.emitPreventable<Events.INodeEventData>("beforeAddNode", { node })) { return; }
+        node.registerEditor(this);
+        this._nodes.push(node);
+        this.emit<Events.INodeEventData>("addNode", { node });
+        return node;
     }
 
     /**
@@ -84,13 +77,12 @@ export class Editor extends Events.BaklavaEventEmitter {
      */
     public removeNode(node: Node) {
         if (this.nodes.includes(node)) {
-            const [n, prevent] = this.hooks.removeNode.call(node, false);
-            if (!n || prevent) { return; }
+            if (this.emitPreventable<Events.INodeEventData>("beforeRemoveNode", { node })) { return; }
             this.connections
-                .filter((c) => c.from.parent === n || c.to.parent === n)
+                .filter((c) => c.from.parent === node || c.to.parent === node)
                 .forEach((c) => this.removeConnection(c));
-            this._nodes.splice(this.nodes.indexOf(n), 1);
-            this.emit<Events.INodeEventData>("removeNode", { node: n });
+            this._nodes.splice(this.nodes.indexOf(node), 1);
+            this.emit<Events.INodeEventData>("removeNode", { node });
         }
     }
 
@@ -126,17 +118,14 @@ export class Editor extends Events.BaklavaEventEmitter {
 
     /**
      * Remove a connection from the list of connections.
-     * @param c Connection instance that should be removed.
-     * @param calculateNodeTree Whether to update the node calculation order.
-     * Set to false if you do multiple remove operations and call {@link calculateNodeTree} manually
-     * after the last remove operation.
+     * @param connection Connection instance that should be removed.
      */
-    public removeConnection(c: Connection) {
-        if (this.connections.includes(c)) {
-            if (this.emitPreventable<Events.IConnectionEventData>("beforeRemoveConnection", { connection: c })) { return; }
-            c.destruct();
-            this._connections.splice(this.connections.indexOf(c), 1);
-            this.emit<Events.IConnectionEventData>("removeConnection", { connection: c });
+    public removeConnection(connection: Connection) {
+        if (this.connections.includes(connection)) {
+            if (this.emitPreventable<Events.IConnectionEventData>("beforeRemoveConnection", { connection })) { return; }
+            connection.destruct();
+            this._connections.splice(this.connections.indexOf(connection), 1);
+            this.emit<Events.IConnectionEventData>("removeConnection", { connection });
         }
     }
 

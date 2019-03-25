@@ -1,5 +1,8 @@
 export * from "./core";
-export { default as Options } from "./view/options";
+// export { default as Options } from "./view/options";
+
+import OptionsD from "./view/options";
+export const Options = OptionsD;
 
 import Baklava from "./baklava";
 import { Editor } from "./core/editor";

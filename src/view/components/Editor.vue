@@ -48,6 +48,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Provide } from "vue-property-decorator";
+import { VueConstructor } from "vue";
 
 import { Editor, Node, Connection, NodeInterface, ITemporaryConnection, TemporaryConnectionState } from "../../core";
 
@@ -70,6 +71,9 @@ export default class EditorView extends Vue {
 
     @Prop({ type: Object })
     model!: Editor;
+
+    @Prop({ type: Object, default: () => ({}) })
+    options!: Record<string, VueConstructor>;
 
     temporaryConnection: ITemporaryConnection|null = null;
     hoveringOver?: NodeInterface|null = null;

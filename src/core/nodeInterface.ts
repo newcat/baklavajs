@@ -1,10 +1,9 @@
 import { Node } from "./node";
 import generateId from "./idGenerator";
 import { IInterfaceState } from "./state";
+import { BaklavaEventEmitter, IValueEventData } from "../events";
 
-export type ListenerType = (value: any) => void;
-
-export class NodeInterface {
+export class NodeInterface extends BaklavaEventEmitter {
 
     public id: string;
     public isInput: boolean;
@@ -13,18 +12,19 @@ export class NodeInterface {
     public parent: Node;
     public option?: string;
 
-    private listeners: Array<(v: any) => void> = [];
     private _value: any = null;
 
     public set value(v: any) {
+        if (this.emitPreventable<IValueEventData>("beforeSetValue", { value: v })) { return; }
         this._value = v;
-        this.listeners.forEach((l) => l(v));
+        this.emit<IValueEventData>("setValue", { value: v });
     }
     public get value() {
         return this._value;
     }
 
     public constructor(parent: Node, isInput: boolean, type: string) {
+        super();
         this.parent = parent;
         this.isInput = isInput;
         this.id = "ni_" + generateId();
@@ -40,23 +40,6 @@ export class NodeInterface {
         return {
             id: this.id,
             value: this.value
-        };
-    }
-
-    /**
-     * Register a callback function that is called whenever the value of the interface changes.
-     * Used primarily for connections to work (they will "transmit" the value from one interface
-     * to another when the value changes.)
-     * @param cb The callback function that will be called with the new value as parameter.
-     * @returns Unsubscribe function. Call the returned function to unsubscribe.
-     */
-    public registerListener(cb: ListenerType): () => void {
-        this.listeners.push(cb);
-        return () => {
-            const index = this.listeners.indexOf(cb);
-            if (index >= 0) {
-                this.listeners.splice(index, 1);
-            }
         };
     }
 

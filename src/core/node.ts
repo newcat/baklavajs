@@ -4,15 +4,6 @@ import { INodeState } from "./state";
 import { Editor } from "./editor";
 import { BaklavaEventEmitter, IAddInterfaceEventData, IInterfaceEventData, IAddOptionEventData, IOptionEventData } from "../events";
 
-function pickBy(obj: Record<string, any>, predicate: (x: any) => boolean): Record<string, any> {
-    return Object.entries(obj)
-        .filter(([k, v]) => predicate(v))
-        .reduce((p, [k, v]) => {
-            p[k] = v;
-            return p;
-        }, {} as Record<string, any>);
-}
-
 export interface IOption {
     optionComponent: string;
     data: any;
@@ -48,12 +39,20 @@ export abstract class Node extends BaklavaEventEmitter {
 
     /** All input interfaces of the node */
     public get inputInterfaces(): Record<string, NodeInterface> {
-        return pickBy(this.interfaces, (i) => i.isInput);
+        const intf: Record<string, NodeInterface> = {};
+        this.interfaces.forEach((v, k) => {
+            if (v.isInput) { intf[k] = v; }
+        });
+        return intf;
     }
 
     /** All output interfaces of the node */
     public get outputInterfaces(): Record<string, NodeInterface> {
-        return pickBy(this.interfaces, (i) => !i.isInput);
+        const intf: Record<string, NodeInterface> = {};
+        this.interfaces.forEach((v, k) => {
+            if (!v.isInput) { intf[k] = v; }
+        });
+        return intf;
     }
 
     public load(state: INodeState) {
@@ -169,6 +168,7 @@ export abstract class Node extends BaklavaEventEmitter {
      * @param sidebarComponent Optional component to display in the sidebar
      */
     protected addOption(name: string, component: string, defaultValue: any = null, sidebarComponent?: string) {
+
         if (this.emitPreventable<IAddOptionEventData>("beforeAddOption", {
             name, component, defaultValue, sidebarComponent
         })) {
