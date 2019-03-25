@@ -1,13 +1,13 @@
-import { NodeBuilder, Options } from "../src/index";
+import { NodeBuilder } from "../src/index";
 
 export default new NodeBuilder("MathNode")
-    .addInputInterface("Number 1", "number", Options.NumberOption, 1)
-    .addInputInterface("Number 2", "number", Options.NumberOption, 10)
-    .addOption("Operation", Options.SelectOption, () => ({
+    .addInputInterface("Number 1", "NumberOption", 1)
+    .addInputInterface("Number 2", "NumberOption", 10)
+    .addOption("Operation", "SelectOption", () => ({
         selected: "Add",
         items: [ "Add", "Subtract" ]
     }))
-    .addOutputInterface("Output", "number")
+    .addOutputInterface("Output")
     .onCalculate((n) => {
         const n1 = n.getInterface("Number 1").value;
         const n2 = n.getInterface("Number 2").value;

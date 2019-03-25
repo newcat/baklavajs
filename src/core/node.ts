@@ -2,13 +2,8 @@ import generateId from "./idGenerator";
 import { NodeInterface } from "./nodeInterface";
 import { INodeState } from "./state";
 import { Editor } from "./editor";
-import { BaklavaEventEmitter, IAddInterfaceEventData, IInterfaceEventData, IAddOptionEventData, IOptionEventData } from "../events";
-
-export interface IOption {
-    optionComponent: string;
-    data: any;
-    sidebarComponent?: string;
-}
+import { BaklavaEventEmitter, IAddInterfaceEventData, IInterfaceEventData, IAddOptionEventData, IOptionEventData } from "./events";
+import { NodeOption } from "./nodeOption";
 
 export interface IInterfaceCreateOptions {
     type?: string;
@@ -28,7 +23,7 @@ export abstract class Node extends BaklavaEventEmitter {
 
     public id: string = "node_" + generateId();
     public interfaces: Map<string, NodeInterface> = new Map();
-    public options: Map<string, IOption> = new Map();
+    public options: Map<string, NodeOption> = new Map();
     public position = { x: 0, y: 0 };
     public disablePointerEvents = false;
 
@@ -62,7 +57,7 @@ export abstract class Node extends BaklavaEventEmitter {
         this.state = state.state;
         state.options.forEach(([k, v]) => {
             if (this.options.has(k)) {
-                this.options.get(k)!.data = v;
+                this.options.get(k)!.value = v;
             }
         });
         state.interfaces.forEach(([k, v]) => {
@@ -78,7 +73,7 @@ export abstract class Node extends BaklavaEventEmitter {
             id: this.id,
             name: this.name,
             position: this.position,
-            options: Array.from(this.options.entries()).map(([k, o]) => [k, o.data]) as any,
+            options: Array.from(this.options.entries()).map(([k, o]) => [k, o.value]) as any,
             state: this.state,
             interfaces: Array.from(this.interfaces.entries()).map(([k, i]) => [k, i.save()]) as any
         };
@@ -96,19 +91,18 @@ export abstract class Node extends BaklavaEventEmitter {
     /**
      * Add an input interface to the node
      * @param name Name of the interface
-     * @param type Type of the interface
      * @param option
      * Optional NodeOption which is displayed when the interface is not connected to set its value
      * @param defaultValue Optional default value for the interface/option
      * @returns The created interface
      */
-    protected addInputInterface(name: string, type: string, option?: string, defaultValue?: any) {
+    protected addInputInterface(name: string, option?: string, defaultValue?: any) {
         if (this.emitPreventable<IAddInterfaceEventData>("beforeAddInterface", {
-            name, type, isInput: true, option, defaultValue
+            name, isInput: true, option, defaultValue
         })) {
             return;
         }
-        const intf = this.addInterface(true, name, type, option);
+        const intf = this.addInterface(true, name, option);
         intf.value = defaultValue;
         this.emit<IInterfaceEventData>("addInterface", { interface: intf });
         return intf;
@@ -120,11 +114,11 @@ export abstract class Node extends BaklavaEventEmitter {
      * @param type Type of the interface
      * @returns The created interface
      */
-    protected addOutputInterface(name: string, type: string) {
-        if (this.emitPreventable<IAddInterfaceEventData>("beforeAddInterface", { name, type, isInput: false, })) {
+    protected addOutputInterface(name: string) {
+        if (this.emitPreventable<IAddInterfaceEventData>("beforeAddInterface", { name, isInput: false, })) {
             return;
         }
-        const intf = this.addInterface(false, name, type);
+        const intf = this.addInterface(false, name);
         this.emit<IInterfaceEventData>("addInterface", { interface: intf });
         return intf;
     }
@@ -174,11 +168,7 @@ export abstract class Node extends BaklavaEventEmitter {
         })) {
             return;
         }
-        const opt = {
-            data: defaultValue,
-            optionComponent: component,
-            sidebarComponent
-        };
+        const opt = new NodeOption(component, defaultValue, sidebarComponent);
         this.options.set(name, opt);
         this.emit<IOptionEventData>("addOption", { option: opt });
     }
@@ -213,7 +203,7 @@ export abstract class Node extends BaklavaEventEmitter {
         if (!this.options.has(name)) {
             throw new Error(`No option named '${name}'`);
         }
-        return this.options.get(name)!.data;
+        return this.options.get(name)!.value;
     }
 
     /**
@@ -225,7 +215,7 @@ export abstract class Node extends BaklavaEventEmitter {
         if (!this.options.has(name)) {
             throw new Error(`No option named '${name}'`);
         }
-        this.options.get(name)!.data = value;
+        this.options.get(name)!.value = value;
     }
 
     /**
@@ -236,8 +226,8 @@ export abstract class Node extends BaklavaEventEmitter {
         this.editorInstance = editor;
     }
 
-    private addInterface(isInput: boolean, name: string, type: string, option?: string) {
-        const intf = new NodeInterface(this, isInput, type);
+    private addInterface(isInput: boolean, name: string, option?: string) {
+        const intf = new NodeInterface(this, isInput);
         intf.option = option;
         this.interfaces.set(name, intf);
         return intf;

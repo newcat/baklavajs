@@ -5,7 +5,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
 import { TemporaryConnectionState } from "../../../core";
-import EditorView from "../Editor.vue";
+import { ViewPlugin } from "../../viewPlugin";
 
 @Component
 export default class Connection extends Vue {
@@ -26,8 +26,8 @@ export default class Connection extends Vue {
     @Prop({ type: Boolean, default: false })
     isTemporary!: boolean;
 
-    @Inject("editor")
-    editor!: EditorView;
+    @Inject("plugin")
+    plugin!: ViewPlugin;
 
     get d() {
         const [tx1, ty1] = this.transform(this.x1, this.y1);
@@ -46,8 +46,8 @@ export default class Connection extends Vue {
     }
 
     transform(x: number, y: number) {
-        const tx = (x + this.editor.model.panning.x) * this.editor.model.scaling;
-        const ty = (y + this.editor.model.panning.y) * this.editor.model.scaling;
+        const tx = (x + this.plugin.panning.x) * this.plugin.scaling;
+        const ty = (y + this.plugin.panning.y) * this.plugin.scaling;
         return [tx, ty];
     }
 

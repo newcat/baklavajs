@@ -3,7 +3,6 @@ import { Node, NodeConstructor, IOption } from ".";
 interface IInterfaceOptions {
     isInput: boolean;
     name: string;
-    type: string;
     option?: string;
     defaultValue?: any;
 }
@@ -31,13 +30,13 @@ function generateNode(
             super();
             for (const i of intfs) {
                 if (i.isInput) {
-                    this.addInputInterface(i.name, i.type, i.option, getDefaultValue(i.defaultValue));
+                    this.addInputInterface(i.name, i.option, getDefaultValue(i.defaultValue));
                 } else {
-                    this.addOutputInterface(i.name, i.type);
+                    this.addOutputInterface(i.name);
                 }
             }
             Array.from(options.entries()).forEach(([k, v]) => {
-                this.addOption(k, v.optionComponent, getDefaultValue(v.data), v.sidebarComponent);
+                this.addOption(k, v.optionComponent, getDefaultValue(v.value), v.sidebarComponent);
             });
         }
 
@@ -82,9 +81,9 @@ export class NodeBuilder {
      * For objects provide a function that returns the default value.
      * @returns Current node builder instance for chaining
      */
-    public addInputInterface(name: string, type: string, option?: string, defaultValue?: any): NodeBuilder {
+    public addInputInterface(name: string, option?: string, defaultValue?: any): NodeBuilder {
         this.checkDefaultValue(defaultValue);
-        this.intfs.push({ isInput: true, name, type, option, defaultValue });
+        this.intfs.push({ isInput: true, name, option, defaultValue });
         return this;
     }
 
@@ -94,8 +93,8 @@ export class NodeBuilder {
      * @param type Type of the interface
      * @returns Current node builder instance for chaining
      */
-    public addOutputInterface(name: string, type: string): NodeBuilder {
-        this.intfs.push({ isInput: false, name, type });
+    public addOutputInterface(name: string): NodeBuilder {
+        this.intfs.push({ isInput: false, name });
         return this;
     }
 
@@ -113,7 +112,7 @@ export class NodeBuilder {
     public addOption(name: string, optionComponent: string, defaultValue?: any, sidebarComponent?: string): NodeBuilder {
         this.checkDefaultValue(defaultValue);
         this.options.set(name, {
-            data: defaultValue,
+            value: defaultValue,
             optionComponent,
             sidebarComponent
         });

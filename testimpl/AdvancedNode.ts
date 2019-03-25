@@ -15,7 +15,7 @@ export default class AdvancedNode extends Node {
 
     public action(action: string) {
         if (action === "Add Input") {
-            this.addInputInterface("Input " + (++this.counter), "string");
+            this.addInputInterface("Input " + (++this.counter));
         } else if (action === "Remove Input" && this.counter > 0) {
             this.removeInterface("Input " + (this.counter--));
         }

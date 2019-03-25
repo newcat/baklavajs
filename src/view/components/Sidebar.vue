@@ -14,21 +14,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import NodeEditor from "./Editor.vue";
+import { Component, Prop, Vue, Inject } from "vue-property-decorator";
+import { ViewPlugin } from "../viewPlugin";
 
 @Component
 export default class Sidebar extends Vue {
 
     width = 300;
 
-    get parent() {
-        return this.$parent as NodeEditor;
-    }
+    @Inject("plugin")
+    plugin!: ViewPlugin;
 
     get nodeName() {
         const id = this.$baklava.sidebar.nodeId;
-        const n = this.parent.model.nodes.find((x) => x.id === id);
+        const n = this.plugin.editor.nodes.find((x) => x.id === id);
         return n ? n.name : "";
     }
 

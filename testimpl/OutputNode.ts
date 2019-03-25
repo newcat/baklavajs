@@ -1,4 +1,4 @@
-import { Node, Options } from "../src";
+import { Node } from "../src";
 
 export default class OutputNode extends Node {
 
@@ -7,9 +7,9 @@ export default class OutputNode extends Node {
 
     public constructor() {
         super();
-        this.addInputInterface("Input", "string", Options.InputOption);
-        this.addInputInterface("BooleanInput", "boolean", Options.CheckboxOption);
-        this.addOption("output", Options.TextOption);
+        this.addInputInterface("Input", "InputOption");
+        this.addInputInterface("BooleanInput", "CheckboxOption");
+        this.addOption("output", "TextOption");
     }
 
     public calculate() {

@@ -1,12 +1,13 @@
 <template>
     <div :id="data.id" :class="classes">
-        <div class="__port" :style="portStyle" @mouseover="startHover" @mouseout="endHover"></div>
+        <div class="__port" @mouseover="startHover" @mouseout="endHover"></div>
         <span v-if="data.connectionCount > 0 || !data.option || !getOptionComponent(data.option)" class="align-middle">
             {{ name }}
         </span>
         <component
+            v-else
             :is="getOptionComponent(data.option)"
-            :value="data.value"
+            :value="value"
             @input="data.value = $event"
             :name="name"
         ></component>
@@ -17,7 +18,7 @@
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 import Editor from "../Editor.vue";
-import { NodeInterface } from "../../../core";
+import { NodeInterface, IValueEventData } from "../../../core";
 
 @Component
 export default class NodeInterfaceView extends Vue {
@@ -31,6 +32,9 @@ export default class NodeInterfaceView extends Vue {
     @Inject()
     editor!: Editor;
 
+    value: any = null;
+    unsubscribe: any = null;
+
     get classes() {
         return {
             "node-interface": true,
@@ -39,13 +43,19 @@ export default class NodeInterfaceView extends Vue {
         };
     }
 
-    get portStyle() {
-        const type = this.editor.model.nodeInterfaceTypes.types[this.data.type];
-        if (type) {
-            return { "background-color": type.color };
-        } else {
-            return {};
-        }
+    beforeMount() {
+        this.value = this.data.value;
+        this.unsubscribe = this.data.addListener<IValueEventData>("*", (ev) => {
+            if (ev.eventType === "setValue") {
+                this.value = ev.data.value;
+            } else if (ev.eventType === "setConnectionCount") {
+                this.$forceUpdate();
+            }
+        });
+    }
+
+    beforeDestroy() {
+        if (this.unsubscribe) { this.unsubscribe(); }
     }
 
     startHover() {

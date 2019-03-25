@@ -37,19 +37,24 @@
             <!-- Options -->
             <template v-for="[name, option] in options">
 
-                <component
+                <node-option
                     :key="name"
                     :name="name"
-                    :is="getOptionComponent(option.optionComponent)"
+                    :option="option"
+                    :componentName="option.optionComponent"
                     :node="data"
-                    v-model="option.data"
                     @openSidebar="openSidebar(name)"
-                ></component>
+                ></node-option>
 
                 <portal :key="'sb_' + name" to="sidebar"
                     v-if="$baklava.sidebar.nodeId === data.id && $baklava.sidebar.optionName === name && option.sidebarComponent"
                 >
-                    <component :is="getOptionComponent(option.sidebarComponent)" :name="name" v-model="option.data" :node="data"></component>
+                    <node-option
+                        :name="name"
+                        :option="option"
+                        :componentName="option.sidebarComponent"
+                        :node="data"
+                    ></node-option>
                 </portal>
 
             </template>
@@ -74,9 +79,10 @@ import { VueConstructor } from "vue";
 // @ts-ignore
 import ClickOutside from "v-click-outside";
 
-import NodeEditor from "../Editor.vue";
-import { Node, NodeInterface, IOption } from "../../../core";
+import { Node, NodeInterface, NodeOption, BaklavaEvent } from "../../../core";
+import { ViewPlugin } from "../../viewPlugin";
 import NodeInterfaceView from "./NodeInterface.vue";
+import NodeOptionView from "./NodeOption.vue";
 import ContextMenu from "../ContextMenu.vue";
 import InputOption from "../../options/InputOption.vue";
 import EditorView from "../Editor.vue";
@@ -85,7 +91,8 @@ import EditorView from "../Editor.vue";
     components: {
         "node-interface": NodeInterfaceView,
         ContextMenu,
-        InputOption
+        InputOption,
+        "node-option": NodeOptionView
     },
     directives: {
         ClickOutside: ClickOutside.directive
@@ -101,6 +108,9 @@ export default class NodeView extends Vue {
 
     @Inject("editor")
     editor!: EditorView;
+
+    @Inject("plugin")
+    plugin!: ViewPlugin;
 
     dragging = false;
     width = 200;
@@ -120,10 +130,6 @@ export default class NodeView extends Vue {
 
     private unsubscribe: (() => void)|null = null;
 
-    get parent() {
-        return this.$parent as NodeEditor;
-    }
-
     get styles() {
         return {
             top: `${this.data.position.y}px`,
@@ -137,9 +143,13 @@ export default class NodeView extends Vue {
     }
 
     mounted() {
-        this.unsubscribe = this.data.addListener("*", () => this.$forceUpdate());
+        this.unsubscribe = this.data.addListener("*", (ev: BaklavaEvent<any>) => {
+            if (!ev.eventType.startsWith("before")) {
+                this.$forceUpdate();
+            }
+        });
     }
-    
+
     beforeDestroy() {
         if (this.unsubscribe) { this.unsubscribe(); }
     }
@@ -163,10 +173,8 @@ export default class NodeView extends Vue {
 
     handleMove(ev: MouseEvent) {
         if (this.dragging) {
-            this.data.position.x += ev.movementX / this.parent.model.scaling;
-            this.data.position.y += ev.movementY / this.parent.model.scaling;
-            // this.data.position.x += ev.movementX;
-            // this.data.position.y += ev.movementY;
+            this.data.position.x += ev.movementX / this.plugin.scaling;
+            this.data.position.y += ev.movementY / this.plugin.scaling;
         }
     }
 
@@ -179,7 +187,7 @@ export default class NodeView extends Vue {
     onContextMenu(action: string) {
         switch (action) {
             case "delete":
-                this.parent.model.removeNode(this.data);
+                this.plugin.editor.removeNode(this.data);
                 break;
             case "rename":
                 this.tempName = this.data.name;
@@ -196,11 +204,6 @@ export default class NodeView extends Vue {
         this.$baklava.sidebar.nodeId = this.data.id;
         this.$baklava.sidebar.optionName = optionName;
         this.$baklava.sidebar.visible = true;
-    }
-
-    getOptionComponent(name: string) {
-        if (!name || !this.editor.options) { return; }
-        return this.editor.options[name];
     }
 
 }

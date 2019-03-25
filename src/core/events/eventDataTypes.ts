@@ -1,4 +1,4 @@
-import { Node, NodeInterface, Connection, IOption } from "../core";
+import { Node, NodeInterface, Connection, IOption } from "..";
 
 // Editor
 export interface INodeEventData {
@@ -17,7 +17,6 @@ export interface IConnectionEventData {
 // Node
 export interface IAddInterfaceEventData {
     name: string;
-    type: string;
     isInput: boolean;
     option?: string;
     defaultValue?: any;

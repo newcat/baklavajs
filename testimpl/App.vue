@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <baklava-editor
-            :model="editor"
+            :plugin="viewPlugin"
             :options="options"
         ></baklava-editor>
         <button @click="calculate">Calculate</button>
@@ -14,8 +14,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
-import { Editor, Node } from "../src/core";
-import { BaklavaEvent, INodeEventData } from "../src/events";
+import { Editor, Node, BaklavaEvent, INodeEventData } from "../src/core";
 import { Options } from "../src";
 
 import TestNode from "./TestNode";
@@ -27,13 +26,21 @@ import AdvancedNode from "./AdvancedNode";
 import AddOption from "./AddOption";
 import TriggerOption from "./TriggerOption.vue";
 import SidebarOption from "./SidebarOption.vue";
+import { ViewPlugin } from "@/view/viewPlugin";
 
 @Component
 export default class App extends Vue {
 
-    editor = new Editor();
-
+    editor: Editor;
+    viewPlugin: ViewPlugin;
     options = { AddOption, TriggerOption, SidebarOption };
+
+    constructor() {
+        super();
+        this.editor = new Editor();
+        this.viewPlugin = new ViewPlugin();
+        this.editor.use(this.viewPlugin);
+    }
 
     mounted() {
 
@@ -46,12 +53,6 @@ export default class App extends Vue {
                 // ev.preventDefault();
             }
         });
-
-        this.editor.addPreventableListener<INodeEventData>("beforeAddNode", (ev) => {
-            console.log("two");
-        });
-
-        const unsub = this.editor.addListener("addNode", (ev) => console.log("listener", ev));
 
         /*this.editor.registerNodeType("TestNode", TestNode, "Tests");
         this.editor.registerNodeType("OutputNode", OutputNode, "Outputs");
