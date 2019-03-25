@@ -49,7 +49,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Provide } from "vue-property-decorator";
 
-import { Editor, Node, Connection, NodeInterface, ITemporaryConnection, TemporaryConnectionState } from "../model";
+import { Editor, Node, Connection, NodeInterface, ITemporaryConnection, TemporaryConnectionState } from "../../core";
 
 import NodeView from "./node/Node.vue";
 import ConnectionView from "./connection/ConnectionWrapper.vue";
@@ -103,7 +103,8 @@ export default class EditorView extends Vue {
 
     get context() {
 
-        const categories = Object.keys(this.model.nodeCategories)
+        // TODO
+        /*const categories = Object.keys(this.model.nodeCategories)
             .filter((c) => c !== "default")
             .map((c) => {
                 const nodes = this.model.nodeCategories[c]
@@ -119,7 +120,8 @@ export default class EditorView extends Vue {
                 label: "Add Node",
                 submenu: [ ...categories, { isDivider: true }, ...defaultNodes ]
             }
-        ] as IMenuItem[];
+        ] as IMenuItem[];*/
+        return [];
 
     }
 
@@ -228,12 +230,13 @@ export default class EditorView extends Vue {
 
     onContextMenuClick(action: string) {
         if (action.startsWith("addNode:")) {
-            const nodeName = action.substring(action.indexOf(":") + 1);
+            // TODO
+            /*const nodeName = action.substring(action.indexOf(":") + 1);
             const node = this.model.addNode(nodeName);
             if (node) {
                 node.position.x = this.contextMenu.x;
                 node.position.y = this.contextMenu.y;
-            }
+            }*/
         }
     }
 

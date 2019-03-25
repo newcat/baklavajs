@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Editor } from "../src/model";
+import { Editor, Node } from "../src/core";
 
 import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";
@@ -26,11 +26,21 @@ export default class App extends Vue {
     editor = new Editor();
 
     mounted() {
-        this.editor.registerNodeType("TestNode", TestNode, "Tests");
+
+        this.editor.hooks.addNode.tap("test", (node: Node, prevent) => {
+            console.log(node, prevent);
+            if (node.type === "TestNode") {
+                return [node, true];
+            } else {
+                return [node, false];
+            }
+        });
+
+        /*this.editor.registerNodeType("TestNode", TestNode, "Tests");
         this.editor.registerNodeType("OutputNode", OutputNode, "Outputs");
         this.editor.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");
         this.editor.registerNodeType("MathNode", MathNode);
-        this.editor.registerNodeType("AdvancedNode", AdvancedNode);
+        this.editor.registerNodeType("AdvancedNode", AdvancedNode);*/
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
@@ -46,7 +56,7 @@ export default class App extends Vue {
     }
 
     calculate() {
-        this.editor.calculate();
+        // this.editor.calculate();
     }
 
     save() {

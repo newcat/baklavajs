@@ -1,8 +1,10 @@
-import { Editor } from "../model";
+import { Editor, Node } from "../core";
+import { calculateOrder } from "./nodeTreeBuilder";
 
 export class Engine {
 
     private editor: Editor;
+    private _nodeCalculationOrder: Node[] = [];
 
     public constructor(editor: Editor) {
         this.editor = editor;
@@ -17,8 +19,7 @@ export class Engine {
 
     /** Recalculate the node calculation order */
     public calculateNodeTree() {
-        const ntb = new NodeTreeBuilder();
-        this._nodeCalculationOrder = ntb.calculateTree(this.nodes, this.connections);
+        this._nodeCalculationOrder = calculateOrder(this.editor.nodes, this.editor.connections);
     }
 
 }

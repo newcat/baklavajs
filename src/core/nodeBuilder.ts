@@ -1,11 +1,10 @@
-import { VueConstructor } from "vue";
 import { Node, NodeConstructor, IOption } from ".";
 
 interface IInterfaceOptions {
     isInput: boolean;
     name: string;
     type: string;
-    option?: VueConstructor;
+    option?: string;
     defaultValue?: any;
 }
 
@@ -21,7 +20,7 @@ function getDefaultValue(v: any) {
 
 function generateNode(
     type: string, intfs: IInterfaceOptions[],
-    options: Record<string, IOption>, calcFunction?: CalculationFunction
+    options: Map<string, IOption>, calcFunction?: CalculationFunction
 ) {
     return class extends Node {
 
@@ -37,13 +36,8 @@ function generateNode(
                     this.addOutputInterface(i.name, i.type);
                 }
             }
-            this.options = {};
-            Object.entries(options).forEach(([k, v]) => {
-                this.options[k] = {
-                    component: v.component,
-                    data: getDefaultValue(v.data),
-                    sidebarComponent: v.sidebarComponent
-                };
+            Array.from(options.entries()).forEach(([k, v]) => {
+                this.addOption(k, v.optionComponent, getDefaultValue(v.data), v.sidebarComponent);
             });
         }
 
@@ -61,7 +55,7 @@ export class NodeBuilder {
 
     private name = "";
     private intfs: IInterfaceOptions[] = [];
-    private options: Record<string, IOption> = {};
+    private options: Map<string, IOption> = new Map();
     private calcFunction?: CalculationFunction;
 
     public constructor(name: string) {
@@ -88,7 +82,7 @@ export class NodeBuilder {
      * For objects provide a function that returns the default value.
      * @returns Current node builder instance for chaining
      */
-    public addInputInterface(name: string, type: string, option?: VueConstructor, defaultValue?: any): NodeBuilder {
+    public addInputInterface(name: string, type: string, option?: string, defaultValue?: any): NodeBuilder {
         this.checkDefaultValue(defaultValue);
         this.intfs.push({ isInput: true, name, type, option, defaultValue });
         return this;
@@ -116,14 +110,13 @@ export class NodeBuilder {
      * @param sidebarComponent Optional component to display in the sidebar
      * @returns Current node builder instance for chaining
      */
-    public addOption(name: string, component: VueConstructor,
-                     defaultValue?: any, sidebarComponent?: VueConstructor): NodeBuilder {
+    public addOption(name: string, optionComponent: string, defaultValue?: any, sidebarComponent?: string): NodeBuilder {
         this.checkDefaultValue(defaultValue);
-        this.options[name] = {
+        this.options.set(name, {
             data: defaultValue,
-            component,
+            optionComponent,
             sidebarComponent
-        };
+        });
         return this;
     }
 

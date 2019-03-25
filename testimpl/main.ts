@@ -4,7 +4,7 @@ import App from "./App.vue";
 Vue.config.productionTip = false;
 
 import lib from "../src";
-import "../src/styles/all.scss";
+import "../src/view/styles/all.scss";
 Vue.use(lib);
 
 new Vue({

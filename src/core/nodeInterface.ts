@@ -1,6 +1,5 @@
 import { Node } from "./node";
 import generateId from "./idGenerator";
-import { VueConstructor } from "vue";
 import { IInterfaceState } from "./state";
 
 export type ListenerType = (value: any) => void;
@@ -12,7 +11,7 @@ export class NodeInterface {
     public connectionCount = 0;
     public type: string;
     public parent: Node;
-    public option?: VueConstructor;
+    public option?: string;
 
     private listeners: Array<(v: any) => void> = [];
     private _value: any = null;

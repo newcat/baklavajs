@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
-import { TemporaryConnectionState } from "../../model";
+import { TemporaryConnectionState } from "../../../core";
 import EditorView from "../Editor.vue";
 
 @Component

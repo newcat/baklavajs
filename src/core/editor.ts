@@ -6,11 +6,17 @@ import { IState } from "./state";
 import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";
 import { containsCycle } from "../engine/nodeTreeBuilder";
 import * as Events from "../events";
+import { SyncWaterfallHook } from "tapable";
 
 export type NodeConstructor = new () => Node;
 
 /** The main model class for BaklavaJS */
 export class Editor extends Events.BaklavaEventEmitter {
+
+    public readonly hooks = {
+        addNode: new SyncWaterfallHook([ "node", "prevent" ]),
+        removeNode: new SyncWaterfallHook([ "node", "prevent" ])
+    };
 
     private _nodes: Node[] = [];
     private _connections: Connection[] = [];
@@ -59,42 +65,32 @@ export class Editor extends Events.BaklavaEventEmitter {
 
     /**
      * Add a node to the list of nodes.
-     * @param typeNameOrInstance Either a registered node type or a node instance
-     * @returns Instance of the node
+     * @param node Instance of a node
+     * @returns Instance of the node or undefined if the node was not added
      */
-    public addNode(typeNameOrInstance: string|Node): Node|undefined {
-        let n = typeNameOrInstance;
-        if (typeof(n) === "string") {
-            if (this.nodeTypes.has(n)) {
-                n = new (this.nodeTypes.get(n)!)();
-                return this.addNode(n);
-            } else {
-                return undefined;
-            }
-        } else if (typeof(n) === "object") {
-            if (this.emitPreventable<Events.INodeEventData>("beforeAddNode", { nodeInstance: n })) { return; }
-            n.registerEditor(this);
-            this._nodes.push(n);
-            this.emit<Events.INodeEventData>("addNode", { nodeInstance: n });
-            return n;
-        } else {
-            throw new TypeError("Expected Object, got " + typeof(n));
-        }
+    public addNode(node: Node): Node|undefined {
+        const [n, prevent] = this.hooks.addNode.call(node, false);
+        if (!n || prevent) { return; }
+        n.registerEditor(this);
+        this._nodes.push(n);
+        this.emit<Events.INodeEventData>("addNode", { node: n });
+        return n;
     }
 
     /**
      * Removes a node from the list.
      * Will also remove all connections from and to the node.
-     * @param n Reference to a node in the list.
+     * @param node Reference to a node in the list.
      */
-    public removeNode(n: Node) {
-        if (this.nodes.includes(n)) {
-            if (this.emitPreventable<Events.INodeEventData>("beforeRemoveNode", { nodeInstance: n })) { return; }
+    public removeNode(node: Node) {
+        if (this.nodes.includes(node)) {
+            const [n, prevent] = this.hooks.removeNode.call(node, false);
+            if (!n || prevent) { return; }
             this.connections
                 .filter((c) => c.from.parent === n || c.to.parent === n)
                 .forEach((c) => this.removeConnection(c));
             this._nodes.splice(this.nodes.indexOf(n), 1);
-            this.emit<Events.INodeEventData>("removeNode", { nodeInstance: n });
+            this.emit<Events.INodeEventData>("removeNode", { node: n });
         }
     }
 
@@ -254,9 +250,9 @@ export class Editor extends Events.BaklavaEventEmitter {
 
     private findNodeInterface(id: string) {
         for (const n of this.nodes) {
-            for (const ik of Object.keys(n.interfaces)) {
-                if (n.interfaces[ik].id === id) {
-                    return n.interfaces[ik];
+            for (const ik of n.interfaces.keys()) {
+                if (n.interfaces.get(ik)!.id === id) {
+                    return n.interfaces.get(ik)!;
                 }
             }
         }

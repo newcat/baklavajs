@@ -1,4 +1,4 @@
-import { Node, IConnection } from "../model";
+import { Node, Connection } from "../core";
 
 interface ITreeNode {
     n?: Node;
@@ -8,13 +8,13 @@ interface ITreeNode {
 const isEmpty = (obj: any) =>
     [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
 
-export function calculateOrder(nodes: ReadonlyArray<Node>, connections: ReadonlyArray<IConnection>): Node[] {
+export function calculateOrder(nodes: ReadonlyArray<Node>, connections: ReadonlyArray<Connection>): Node[] {
 
     const adjacency = new Map<Node, Node[]>();
 
     // build adjacency list
     nodes.forEach((n) => {
-        this.adjacency.set(n,
+        adjacency.set(n,
             connections
                 .filter((c) => c.to && c.to.parent === n)
                 .map((c) => c.from.parent)
@@ -71,7 +71,7 @@ function findDescendants(tn: ITreeNode, ancestors: Node[], adjacency: Map<Node, 
     }
 }
 
-export function containsCycle(nodes: ReadonlyArray<Node>, connections: ReadonlyArray<IConnection>): boolean {
+export function containsCycle(nodes: ReadonlyArray<Node>, connections: ReadonlyArray<Connection>): boolean {
     try {
         calculateOrder(nodes, connections);
         return true;

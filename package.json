@@ -27,7 +27,10 @@
         "test:unit": "vue-cli-service test:unit",
         "test": "npm run test:unit && npm run test:ui"
     },
-    "dependencies": {},
+    "dependencies": {
+        "@types/tapable": "^1.0.4",
+        "tapable": "^1.1.1"
+    },
     "devDependencies": {
         "@babel/cli": "^7.2.3",
         "@babel/core": "^7.2.2",

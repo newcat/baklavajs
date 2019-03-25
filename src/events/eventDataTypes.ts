@@ -1,8 +1,8 @@
-import { Node, NodeInterface, Connection, IOption } from "../model";
+import { Node, NodeInterface, Connection, IOption } from "../core";
 
 // Editor
 export interface INodeEventData {
-    nodeInstance: Node;
+    node: Node;
 }
 
 export interface IAddConnectionEventData {

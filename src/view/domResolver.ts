@@ -1,4 +1,4 @@
-import { NodeInterface } from "../model";
+import { NodeInterface } from "../core";
 
 export default function getDomElements(ni: NodeInterface) {
 

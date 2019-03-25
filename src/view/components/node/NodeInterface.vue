@@ -15,7 +15,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
 import Editor from "../Editor.vue";
-import { NodeInterface } from "../../model";
+import { NodeInterface } from "../../../core";
 
 @Component
 export default class NodeInterfaceView extends Vue {

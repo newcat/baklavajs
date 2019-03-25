@@ -1,5 +1,5 @@
 import OurVue, { VueConstructor } from "vue";
-import Editor from "./components/Editor.vue";
+import Editor from "./view/components/Editor.vue";
 
 // @ts-ignore
 import PortalVue from "portal-vue";

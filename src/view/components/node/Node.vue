@@ -75,7 +75,7 @@ import { VueConstructor } from "vue";
 import ClickOutside from "v-click-outside";
 
 import NodeEditor from "../Editor.vue";
-import { Node, NodeInterface, IOption } from "../../model";
+import { Node, NodeInterface, IOption } from "../../../core";
 import NodeInterfaceView from "./NodeInterface.vue";
 import ContextMenu from "../ContextMenu.vue";
 import InputOption from "../../options/InputOption.vue";

@@ -61,14 +61,14 @@ export abstract class Node extends BaklavaEventEmitter {
         this.name = state.name;
         this.position = state.position;
         this.state = state.state;
-        Object.keys(state.options).forEach((k) => {
+        state.options.forEach(([k, v]) => {
             if (this.options.has(k)) {
-                this.options.get(k)!.data = state.options[k];
+                this.options.get(k)!.data = v;
             }
         });
-        Object.keys(state.interfaces).forEach((k) => {
+        state.interfaces.forEach(([k, v]) => {
             if (this.interfaces.has(k)) {
-                this.interfaces.get(k)!.load(state.interfaces[k]);
+                this.interfaces.get(k)!.load(v);
             }
         });
     }
@@ -188,9 +188,8 @@ export abstract class Node extends BaklavaEventEmitter {
      * @param name Name of the option
      */
     protected removeOption(name: string) {
-        if (this.options[name]) {
-            Vue.delete(this.options, name);
-            delete this.options[name];
+        if (this.options.has(name)) {
+            this.options.delete(name);
         }
     }
 
@@ -237,10 +236,10 @@ export abstract class Node extends BaklavaEventEmitter {
         this.editorInstance = editor;
     }
 
-    private addInterface(isInput: boolean, name: string, type: string, option?: VueConstructor) {
+    private addInterface(isInput: boolean, name: string, type: string, option?: string) {
         const intf = new NodeInterface(this, isInput, type);
         intf.option = option;
-        Vue.set(this.interfaces, name, intf);
+        this.interfaces.set(name, intf);
         return intf;
     }
 
