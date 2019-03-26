@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { Node, Options } from "@/index";
+import { Node } from "@/index";
 
 class CustomNode extends Node {
 
@@ -8,12 +8,12 @@ class CustomNode extends Node {
 
     constructor() {
         super();
-        this.addInputInterface("InputOption", "string", Options.InputOption);
-        this.addInputInterface("InputValue", "string", Options.InputOption, "defaultValue");
-        this.addOutputInterface("Output", "string");
-        this.addOption("MyOption", Options.InputOption);
-        this.addOption("MyOptionValue", Options.InputOption, "defaultValue");
-        this.addOption("SidebarOption", Options.ButtonOption, "defaultValue", Options.InputOption);
+        this.addInputInterface("InputOption", "InputOption");
+        this.addInputInterface("InputValue", "InputOption", "defaultValue");
+        this.addOutputInterface("Output");
+        this.addOption("MyOption", "InputOption");
+        this.addOption("MyOptionValue", "InputOption", "defaultValue");
+        this.addOption("SidebarOption", "ButtonOption", "defaultValue", "InputOption");
     }
 
     rmi() {
@@ -52,7 +52,7 @@ describe("Node", () => {
     it("can add an input interface with an option", () => {
         const n = new CustomNode();
         const ni = n.getInterface("InputOption");
-        expect(ni.option).to.equal(Options.InputOption);
+        expect(ni.option).to.equal("InputOption");
     });
 
     it("can add an input interface with a default value", () => {
@@ -70,7 +70,7 @@ describe("Node", () => {
 
     it("can add an option", () => {
         const n = new CustomNode();
-        expect(n.options).to.haveOwnProperty("MyOption");
+        expect(n.options.has("MyOption")).to.be.true;
     });
 
     it("can add an option with a default value", () => {
@@ -80,14 +80,14 @@ describe("Node", () => {
 
     it("can add an option with a sidebar component", () => {
         const n = new CustomNode();
-        expect(n.options.SidebarOption.sidebarComponent).to.equal(Options.InputOption);
+        expect(n.options.get("SidebarOption")!.sidebarComponent).to.equal("InputOption");
     });
 
     it("can remove an option", () => {
         const n = new CustomNode();
-        expect(n.options).to.haveOwnProperty("MyOption");
+        expect(n.options.has("MyOption")).to.be.true;
         n.rmo();
-        expect(n.options).to.not.haveOwnProperty("MyOption");
+        expect(n.options.has("MyOption")).to.be.false;
     });
 
     it("can set an option value by its name", () => {

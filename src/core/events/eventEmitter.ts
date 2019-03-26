@@ -25,7 +25,7 @@ export class BaklavaEvent<T> {
 export class PreventableBaklavaEvent<T> extends BaklavaEvent<T> {
 
     emit(data: T) {
-        for (const l of this.listeners.values()) {
+        for (const l of Array.from(this.listeners.values())) {
             if (l(data) === false) {
                 return true;
             }
