@@ -7,6 +7,7 @@ import ConnectionView from "./components/connection/ConnectionView.vue";
 
 export class ViewPlugin implements IPlugin {
 
+    public type = "ViewPlugin";
     public editor!: Editor;
     public panning = { x: 0, y: 0 };
     public scaling = 1;

@@ -11,6 +11,7 @@ export type NodeConstructor = new () => Node;
 /** The main model class for BaklavaJS */
 export class Editor {
 
+    private _plugins: Set<IPlugin> = new Set();
     private _nodes: Node[] = [];
     private _connections: Connection[] = [];
     private _nodeTypes: Map<string, NodeConstructor> = new Map();
@@ -48,6 +49,11 @@ export class Editor {
     /** Mapping of nodes to node categories */
     public get nodeCategories() {
         return this._nodeCategories as ReadonlyMap<string, string[]>;
+    }
+
+    /** List of all plugins in this editor */
+    public get plugins() {
+        return this._plugins as ReadonlySet<IPlugin>;
     }
 
     /** Used to manage all node interface types and implementing conversions between them */
@@ -251,6 +257,7 @@ export class Editor {
      * Register a plugin
      */
     public use(plugin: IPlugin) {
+        this._plugins.add(plugin);
         plugin.register(this);
     }
 

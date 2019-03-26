@@ -1,8 +1,9 @@
-import { Editor, Node, IPlugin, BaklavaEvent, PreventableBaklavaEvent, IAddConnectionEventData,
-    NodeInterface, DummyConnection, IConnection } from "../core";
+import { Editor, Node, IPlugin, NodeInterface, DummyConnection, IConnection } from "../core";
 import { calculateOrder, containsCycle } from "./nodeTreeBuilder";
 
 export class Engine implements IPlugin {
+
+    public type = "EnginePlugin";
 
     private editor!: Editor;
     private nodeCalculationOrder: Node[] = [];

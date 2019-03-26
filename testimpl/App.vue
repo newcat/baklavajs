@@ -13,7 +13,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
-import { Editor, Node, BaklavaEvent } from "../src/core";
+import { Editor, Node, BaklavaEvent, NodeInterface } from "../src/core";
 import { Options } from "../src";
 
 import TestNode from "./TestNode";
@@ -27,6 +27,7 @@ import TriggerOption from "./TriggerOption.vue";
 import SidebarOption from "./SidebarOption.vue";
 import { ViewPlugin } from "@/view/viewPlugin";
 import { Engine } from "@/engine/engine";
+import { InterfaceTypePlugin } from "@/interface-types/interfaceTypes";
 
 @Component
 export default class App extends Vue {
@@ -34,6 +35,7 @@ export default class App extends Vue {
     editor: Editor;
     viewPlugin: ViewPlugin;
     engine: Engine;
+    nodeInterfaceTypes: InterfaceTypePlugin;
     options = { AddOption, TriggerOption, SidebarOption };
 
     constructor() {
@@ -41,8 +43,10 @@ export default class App extends Vue {
         this.editor = new Editor();
         this.viewPlugin = new ViewPlugin();
         this.engine = new Engine(true);
+        this.nodeInterfaceTypes = new InterfaceTypePlugin();
         this.editor.use(this.viewPlugin);
         this.editor.use(this.engine);
+        this.editor.use(this.nodeInterfaceTypes);
 
         this.viewPlugin.hooks.renderNode.tap(this, (node) => {
             if (node.data.type === "TestNode") {
@@ -71,11 +75,11 @@ export default class App extends Vue {
         this.editor.addNode(new OutputNode());
         this.editor.addNode(new BuilderTestNode());
         this.editor.addNode(new AdvancedNode());
-        this.editor.nodeInterfaceTypes
+        this.nodeInterfaceTypes
             .addType("string", "#00FF00")
             .addType("number", "red")
             .addType("boolean", "purple")
-            .addConversion("string", "number", (v) => parseInt(v))
+            .addConversion("string", "number", (v) => parseInt(v, 10))
             .addConversion("number", "string", (v) => v !== null && v !== undefined && v.toString() || "0")
             .addConversion("boolean", "string", (v) => typeof(v) === "boolean" ? v.toString() : "null");
     }
