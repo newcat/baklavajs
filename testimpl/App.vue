@@ -14,7 +14,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
-import { Editor, Node, BaklavaEvent, INodeEventData } from "../src/core";
+import { Editor, Node, BaklavaEvent } from "../src/core";
 import { Options } from "../src";
 
 import TestNode from "./TestNode";
@@ -27,19 +27,23 @@ import AddOption from "./AddOption";
 import TriggerOption from "./TriggerOption.vue";
 import SidebarOption from "./SidebarOption.vue";
 import { ViewPlugin } from "@/view/viewPlugin";
+import { Engine } from "@/engine/engine";
 
 @Component
 export default class App extends Vue {
 
     editor: Editor;
     viewPlugin: ViewPlugin;
+    engine: Engine;
     options = { AddOption, TriggerOption, SidebarOption };
 
     constructor() {
         super();
         this.editor = new Editor();
         this.viewPlugin = new ViewPlugin();
+        this.engine = new Engine(true);
         this.editor.use(this.viewPlugin);
+        this.editor.use(this.engine);
     }
 
     mounted() {
@@ -48,9 +52,9 @@ export default class App extends Vue {
             Vue.set(this.options, k, v);
         });
 
-        this.editor.addPreventableListener<INodeEventData>("beforeAddNode", (ev) => {
-            if (ev.data.node.type === "TestNode") {
-                // ev.preventDefault();
+        this.editor.events.beforeAddNode.addListener(this, (node) => {
+            if (node.type === "TestNode") {
+                return false;
             }
         });
 

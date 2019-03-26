@@ -1,4 +1,4 @@
-import { BaklavaEventEmitter, IValueEventData } from "./events";
+import { PreventableBaklavaEvent, BaklavaEvent } from "./events";
 
 export interface IOption {
     optionComponent: string;
@@ -6,15 +6,19 @@ export interface IOption {
     sidebarComponent?: string;
 }
 
-export class NodeOption extends BaklavaEventEmitter implements IOption {
+export class NodeOption implements IOption {
 
     public optionComponent: string;
     public sidebarComponent?: string;
 
+    public events = {
+        beforeSetValue: new PreventableBaklavaEvent<any>(),
+        setValue: new BaklavaEvent<any>()
+    };
+
     private _value: any;
 
     public constructor(optionComponent: string, value?: any, sidebarComponent?: any) {
-        super();
         this.optionComponent = optionComponent;
         this.sidebarComponent = sidebarComponent;
         this._value = value;
@@ -25,9 +29,9 @@ export class NodeOption extends BaklavaEventEmitter implements IOption {
     }
 
     public set value(v: any) {
-        if (this.emitPreventable<IValueEventData>("beforeSetValue", { value: v })) { return; }
+        if (this.events.beforeSetValue.emit(v)) { return; }
         this._value = v;
-        this.emit<IValueEventData>("setValue", { value: v });
+        this.events.setValue.emit(v);
     }
 
 }

@@ -18,7 +18,7 @@
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 import Editor from "../Editor.vue";
-import { NodeInterface, IValueEventData } from "../../../core";
+import { NodeInterface } from "../../../core";
 
 @Component
 export default class NodeInterfaceView extends Vue {
@@ -33,7 +33,6 @@ export default class NodeInterfaceView extends Vue {
     editor!: Editor;
 
     value: any = null;
-    unsubscribe: any = null;
 
     get classes() {
         return {
@@ -45,17 +44,13 @@ export default class NodeInterfaceView extends Vue {
 
     beforeMount() {
         this.value = this.data.value;
-        this.unsubscribe = this.data.addListener<IValueEventData>("*", (ev) => {
-            if (ev.eventType === "setValue") {
-                this.value = ev.data.value;
-            } else if (ev.eventType === "setConnectionCount") {
-                this.$forceUpdate();
-            }
-        });
+        this.data.events.setValue.addListener(this, (v) => { this.value = v; });
+        this.data.events.setConnectionCount.addListener(this, () => { this.$forceUpdate(); });
     }
 
     beforeDestroy() {
-        if (this.unsubscribe) { this.unsubscribe(); }
+        this.data.events.setValue.removeListener(this);
+        this.data.events.setConnectionCount.removeListener(this);
     }
 
     startHover() {

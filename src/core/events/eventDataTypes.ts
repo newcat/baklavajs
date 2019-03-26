@@ -1,17 +1,9 @@
-import { Node, NodeInterface, Connection, IOption } from "..";
+import { NodeInterface, IOption, NodeOption } from "..";
 
 // Editor
-export interface INodeEventData {
-    node: Node;
-}
-
 export interface IAddConnectionEventData {
     from: NodeInterface;
     to: NodeInterface;
-}
-
-export interface IConnectionEventData {
-    connection: Connection;
 }
 
 // Node
@@ -22,10 +14,6 @@ export interface IAddInterfaceEventData {
     defaultValue?: any;
 }
 
-export interface IInterfaceEventData {
-    interface: NodeInterface;
-}
-
 export interface IAddOptionEventData {
     name: string;
     component: string;
@@ -34,9 +22,12 @@ export interface IAddOptionEventData {
 }
 
 export interface IOptionEventData {
+    name: string;
     option: IOption;
 }
 
-export interface IValueEventData {
-    value: any;
+export interface INodeUpdateEventData {
+    name: string;
+    option?: NodeOption;
+    interface?: NodeInterface;
 }

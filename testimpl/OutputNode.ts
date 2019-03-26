@@ -13,6 +13,7 @@ export default class OutputNode extends Node {
     }
 
     public calculate() {
+        console.log("Calc");
         this.setOptionValue("output", this.getInterface("Input").value);
     }
 

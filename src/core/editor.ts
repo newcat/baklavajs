@@ -1,21 +1,33 @@
 import Vue from "vue";
 import { Node } from "./node";
 import { NodeInterface } from "./nodeInterface";
-import { Connection, DummyConnection } from "./connection";
+import { Connection, DummyConnection, IConnection } from "./connection";
 import { IState } from "./state";
 import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";
-import { BaklavaEventEmitter, INodeEventData, IAddConnectionEventData, IConnectionEventData } from "./events";
+import { IAddConnectionEventData, PreventableBaklavaEvent, BaklavaEvent } from "./events";
 import { IPlugin } from "./plugin";
 
 export type NodeConstructor = new () => Node;
 
 /** The main model class for BaklavaJS */
-export class Editor extends BaklavaEventEmitter {
+export class Editor {
 
     private _nodes: Node[] = [];
     private _connections: Connection[] = [];
     private _nodeTypes: Map<string, NodeConstructor> = new Map();
     private _nodeCategories: Map<string, string[]> = new Map([["default", []]]);
+
+    public events = {
+        beforeAddNode: new PreventableBaklavaEvent<Node>(),
+        addNode: new BaklavaEvent<Node>(),
+        beforeRemoveNode: new PreventableBaklavaEvent<Node>(),
+        removeNode: new BaklavaEvent<Node>(),
+        beforeAddConnection: new PreventableBaklavaEvent<IAddConnectionEventData>(),
+        addConnection: new BaklavaEvent<IConnection>(),
+        checkConnection: new PreventableBaklavaEvent<IAddConnectionEventData>(),
+        beforeRemoveConnection: new PreventableBaklavaEvent<IConnection>(),
+        removeConnection: new BaklavaEvent<IConnection>()
+    };
 
     /** List of all nodes */
     public get nodes() {
@@ -60,10 +72,10 @@ export class Editor extends BaklavaEventEmitter {
      * @returns Instance of the node or undefined if the node was not added
      */
     public addNode(node: Node): Node|undefined {
-        if (this.emitPreventable<INodeEventData>("beforeAddNode", { node })) { return; }
+        if (this.events.beforeAddNode.emit(node)) { return; }
         node.registerEditor(this);
         this._nodes.push(node);
-        this.emit<INodeEventData>("addNode", { node });
+        this.events.addNode.emit(node);
         return node;
     }
 
@@ -74,12 +86,12 @@ export class Editor extends BaklavaEventEmitter {
      */
     public removeNode(node: Node) {
         if (this.nodes.includes(node)) {
-            if (this.emitPreventable<INodeEventData>("beforeRemoveNode", { node })) { return; }
+            if (this.events.beforeRemoveNode.emit(node)) { return; }
             this.connections
                 .filter((c) => c.from.parent === node || c.to.parent === node)
                 .forEach((c) => this.removeConnection(c));
             this._nodes.splice(this.nodes.indexOf(node), 1);
-            this.emit<INodeEventData>("removeNode", { node });
+            this.events.removeNode.emit(node);
         }
     }
 
@@ -96,7 +108,7 @@ export class Editor extends BaklavaEventEmitter {
             return undefined;
         }
 
-        if (this.emitPreventable<IAddConnectionEventData>("beforeAddConnection", { from, to })) { return; }
+        if (this.events.beforeAddConnection.emit({ from, to })) { return; }
 
         // Delete all other connections to the target interface
         // as only one connection to an input interface is allowed
@@ -107,7 +119,7 @@ export class Editor extends BaklavaEventEmitter {
         const c = new Connection(dc.from, dc.to);
         this._connections.push(c);
 
-        this.emit<IConnectionEventData>("addConnection", { connection: c });
+        this.events.addConnection.emit(c);
 
         return c;
 
@@ -119,10 +131,10 @@ export class Editor extends BaklavaEventEmitter {
      */
     public removeConnection(connection: Connection) {
         if (this.connections.includes(connection)) {
-            if (this.emitPreventable<IConnectionEventData>("beforeRemoveConnection", { connection })) { return; }
+            if (this.events.beforeRemoveConnection.emit(connection)) { return; }
             connection.destruct();
             this._connections.splice(this.connections.indexOf(connection), 1);
-            this.emit<IConnectionEventData>("removeConnection", { connection });
+            this.events.removeConnection.emit(connection);
         }
     }
 
@@ -153,7 +165,7 @@ export class Editor extends BaklavaEventEmitter {
             return false;
         }
 
-        if (this.emitPreventable<IAddConnectionEventData>("checkConnection", { from, to })) { return false; }
+        if (this.events.checkConnection.emit({ from, to })) { return false; }
 
         return new DummyConnection(from, to);
 

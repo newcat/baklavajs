@@ -12,7 +12,7 @@
 <script lang="ts">
 import { CreateElement, VueConstructor } from "vue";
 import { Component, Prop, Vue, Inject } from "vue-property-decorator";
-import { NodeOption, Node, IValueEventData } from "../../../core";
+import { NodeOption, Node } from "../../../core";
 import EditorView from "../Editor.vue";
 
 @Component
@@ -34,7 +34,6 @@ export default class NodeOptionView extends Vue {
     editor!: EditorView;
 
     value: any = null;
-    unregister: any;
 
     get component() {
         if (!this.editor.options || !this.componentName) { return; }
@@ -43,13 +42,11 @@ export default class NodeOptionView extends Vue {
 
     beforeMount() {
         this.value = this.option.value;
-        this.unregister = this.option.addListener<IValueEventData>("setValue", (ev) => {
-            this.value = ev.data.value;
-        });
+        this.option.events.setValue.addListener(this, (v) => { this.value = v; });
     }
 
     beforeDestroy() {
-        if (this.unregister) { this.unregister(); }
+        this.option.events.setValue.removeListener(this);
     }
 
     updateValue(v: any) {

@@ -143,15 +143,21 @@ export default class NodeView extends Vue {
     }
 
     mounted() {
-        this.unsubscribe = this.data.addListener("*", (ev: BaklavaEvent<any>) => {
-            if (!ev.eventType.startsWith("before")) {
-                this.$forceUpdate();
-            }
-        });
+        this.data.events.addInterface.addListener(this, () => this.update());
+        this.data.events.removeInterface.addListener(this, () => this.update());
+        this.data.events.addOption.addListener(this, () => this.update());
+        this.data.events.removeOption.addListener(this, () => this.update());
     }
 
     beforeDestroy() {
-        if (this.unsubscribe) { this.unsubscribe(); }
+        this.data.events.addInterface.removeListener(this);
+        this.data.events.removeInterface.removeListener(this);
+        this.data.events.addOption.removeListener(this);
+        this.data.events.removeOption.removeListener(this);
+    }
+
+    update() {
+        this.$forceUpdate();
     }
 
     startDrag() {
