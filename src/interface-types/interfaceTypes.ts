@@ -23,6 +23,15 @@ export class InterfaceTypePlugin implements IPlugin {
         this.editor.plugins.forEach((p) => {
             if (p.type === "ViewPlugin") { this.registerView(p as ViewPlugin); }
         });
+        this.editor.events.checkConnection.addListener(this, ({ from, to }) => {
+            const fromType = (from as any).type;
+            const toType = (to as any).type;
+            if (!fromType || !toType) {
+                return;
+            } else if (!this.canConvert(fromType, toType)) {
+                return false;
+            }
+        });
     }
 
     /**
@@ -85,9 +94,7 @@ export class InterfaceTypePlugin implements IPlugin {
 
     private registerView(vp: ViewPlugin) {
         vp.hooks.renderInterface.tap(this, (intf) => {
-            console.log("hook");
             const x = intf as any;
-            console.log(x.data.type);
             if (this.types.has(x.data.type)) {
                 const color = this.types.get(x.data.type)!.color;
                 const res = intf.$el.getElementsByClassName("__port");

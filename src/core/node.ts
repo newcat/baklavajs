@@ -109,11 +109,12 @@ export abstract class Node {
      * @param defaultValue Optional default value for the interface/option
      * @returns The created interface
      */
-    protected addInputInterface(name: string, option?: string, defaultValue?: any) {
+    protected addInputInterface(name: string, option?: string, defaultValue?: any, additionalProperties?: Record<string, any>) {
         if (this.events.beforeAddInterface.emit({ name, isInput: true, option, defaultValue })) { return; }
         const intf = this.addInterface(true, name, option);
         intf.events.setValue.addListener(this, () => this.events.update.emit({ name, interface: intf }));
         intf.value = defaultValue;
+        Object.entries(additionalProperties || {}).forEach(([k, v]) => { (intf as any)[k] = v; });
         this.events.addInterface.emit(intf);
         return intf;
     }
@@ -124,9 +125,10 @@ export abstract class Node {
      * @param type Type of the interface
      * @returns The created interface
      */
-    protected addOutputInterface(name: string) {
+    protected addOutputInterface(name: string, additionalProperties?: Record<string, any>) {
         if (this.events.beforeAddInterface.emit({ name, isInput: false })) { return; }
         const intf = this.addInterface(false, name);
+        Object.entries(additionalProperties || {}).forEach(([k, v]) => { (intf as any)[k] = v; });
         this.events.addInterface.emit(intf);
         return intf;
     }
@@ -169,9 +171,11 @@ export abstract class Node {
      * @param defaultValue Default value for the option
      * @param sidebarComponent Optional component to display in the sidebar
      */
-    protected addOption(name: string, component: string, defaultValue: any = null, sidebarComponent?: string) {
+    protected addOption(name: string, component: string, defaultValue: any = null,
+                        sidebarComponent?: string, additionalProperties?: Record<string, any>) {
         if (this.events.beforeAddOption.emit({ name, component, defaultValue, sidebarComponent })) { return; }
         const opt = new NodeOption(component, defaultValue, sidebarComponent);
+        Object.entries(additionalProperties || {}).forEach(([k, v]) => { (opt as any)[k] = v; });
         opt.events.setValue.addListener(this, () => { this.events.update.emit({ name, option: opt }); });
         this.options.set(name, opt);
         this.events.addOption.emit({ name, option: opt });
