@@ -17,8 +17,9 @@
 <script lang="ts">
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
 import { VueConstructor } from "vue";
-import Editor from "../Editor.vue";
+import EditorView from "../Editor.vue";
 import { NodeInterface } from "../../../core";
+import { ViewPlugin } from "../../viewPlugin";
 
 @Component
 export default class NodeInterfaceView extends Vue {
@@ -29,8 +30,11 @@ export default class NodeInterfaceView extends Vue {
     @Prop({ type: String, default: "" })
     name!: string;
 
-    @Inject()
-    editor!: Editor;
+    @Inject("plugin")
+    plugin!: ViewPlugin;
+
+    @Inject("editor")
+    editor!: EditorView;
 
     value: any = null;
 
@@ -48,6 +52,14 @@ export default class NodeInterfaceView extends Vue {
         this.data.events.setConnectionCount.addListener(this, () => { this.$forceUpdate(); });
     }
 
+    mounted() {
+        this.plugin.hooks.renderInterface.execute(this);
+    }
+
+    updated() {
+        this.plugin.hooks.renderInterface.execute(this);
+    }
+
     beforeDestroy() {
         this.data.events.setValue.removeListener(this);
         this.data.events.setConnectionCount.removeListener(this);
@@ -61,8 +73,8 @@ export default class NodeInterfaceView extends Vue {
     }
 
     getOptionComponent(name: string) {
-        if (!name || !this.editor.options) { return; }
-        return this.editor.options[name];
+        if (!name || !this.plugin.options) { return; }
+        return this.plugin.options[name];
     }
 
 }

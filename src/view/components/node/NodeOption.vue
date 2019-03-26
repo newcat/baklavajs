@@ -13,7 +13,7 @@
 import { CreateElement, VueConstructor } from "vue";
 import { Component, Prop, Vue, Inject } from "vue-property-decorator";
 import { NodeOption, Node } from "../../../core";
-import EditorView from "../Editor.vue";
+import { ViewPlugin } from "../../viewPlugin";
 
 @Component
 export default class NodeOptionView extends Vue {
@@ -30,19 +30,27 @@ export default class NodeOptionView extends Vue {
     @Prop()
     node!: Node;
 
-    @Inject("editor")
-    editor!: EditorView;
+    @Inject("plugin")
+    plugin!: ViewPlugin;
 
     value: any = null;
 
     get component() {
-        if (!this.editor.options || !this.componentName) { return; }
-        return this.editor.options[this.componentName];
+        if (!this.plugin.options || !this.componentName) { return; }
+        return this.plugin.options[this.componentName];
     }
 
     beforeMount() {
         this.value = this.option.value;
         this.option.events.setValue.addListener(this, (v) => { this.value = v; });
+    }
+
+    mounted() {
+        this.plugin.hooks.renderOption.execute(this);
+    }
+
+    updated() {
+        this.plugin.hooks.renderOption.execute(this);
     }
 
     beforeDestroy() {

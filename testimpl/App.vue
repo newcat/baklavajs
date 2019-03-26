@@ -2,7 +2,6 @@
     <div id="app">
         <baklava-editor
             :plugin="viewPlugin"
-            :options="options"
         ></baklava-editor>
         <button @click="calculate">Calculate</button>
         <button @click="save">Save</button>
@@ -44,25 +43,28 @@ export default class App extends Vue {
         this.engine = new Engine(true);
         this.editor.use(this.viewPlugin);
         this.editor.use(this.engine);
-    }
 
-    mounted() {
+        this.viewPlugin.hooks.renderNode.tap(this, (node) => {
+            if (node.data.type === "TestNode") {
+                (node.$el as HTMLElement).style.backgroundColor = "red";
+            }
+            return node;
+        });
 
         Object.entries(Options).forEach(([k, v]) => {
             Vue.set(this.options, k, v);
         });
+        this.viewPlugin.options = this.options;
 
-        this.editor.events.beforeAddNode.addListener(this, (node) => {
-            if (node.type === "TestNode") {
-                return false;
-            }
-        });
+    }
 
-        /*this.editor.registerNodeType("TestNode", TestNode, "Tests");
+    mounted() {
+
+        this.editor.registerNodeType("TestNode", TestNode, "Tests");
         this.editor.registerNodeType("OutputNode", OutputNode, "Outputs");
         this.editor.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");
         this.editor.registerNodeType("MathNode", MathNode);
-        this.editor.registerNodeType("AdvancedNode", AdvancedNode);*/
+        this.editor.registerNodeType("AdvancedNode", AdvancedNode);
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());

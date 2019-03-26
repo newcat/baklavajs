@@ -1,10 +1,9 @@
-import Vue from "vue";
 import { Node } from "./node";
 import { NodeInterface } from "./nodeInterface";
 import { Connection, DummyConnection, IConnection } from "./connection";
 import { IState } from "./state";
 import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";
-import { IAddConnectionEventData, PreventableBaklavaEvent, BaklavaEvent } from "./events";
+import { IAddConnectionEventData, PreventableBaklavaEvent, BaklavaEvent, IAddNodeTypeEventData } from "./events";
 import { IPlugin } from "./plugin";
 
 export type NodeConstructor = new () => Node;
@@ -18,6 +17,8 @@ export class Editor {
     private _nodeCategories: Map<string, string[]> = new Map([["default", []]]);
 
     public events = {
+        beforeRegisterNodeType: new PreventableBaklavaEvent<IAddNodeTypeEventData>(),
+        registerNodeType: new BaklavaEvent<IAddNodeTypeEventData>(),
         beforeAddNode: new PreventableBaklavaEvent<Node>(),
         addNode: new BaklavaEvent<Node>(),
         beforeRemoveNode: new PreventableBaklavaEvent<Node>(),
@@ -59,9 +60,10 @@ export class Editor {
      * @param category Category of the node. Will be used in the context menu for adding nodes
      */
     public registerNodeType(typeName: string, type: NodeConstructor, category = "default") {
+        if (this.events.beforeRegisterNodeType.emit({ typeName, type, category })) { return; }
         this._nodeTypes.set(typeName, type);
         if (!this.nodeCategories.has(category)) {
-            Vue.set(this.nodeCategories, category, []);
+            this._nodeCategories.set(category, []);
         }
         this.nodeCategories.get(category)!.push(typeName);
     }

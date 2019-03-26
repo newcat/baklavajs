@@ -29,6 +29,14 @@ export default class Connection extends Vue {
     @Inject("plugin")
     plugin!: ViewPlugin;
 
+    mounted() {
+        this.plugin.hooks.renderConnection.execute(this);
+    }
+
+    updated() {
+        this.plugin.hooks.renderConnection.execute(this);
+    }
+
     get d() {
         const [tx1, ty1] = this.transform(this.x1, this.y1);
         const [tx2, ty2] = this.transform(this.x2, this.y2);

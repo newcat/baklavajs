@@ -147,6 +147,11 @@ export default class NodeView extends Vue {
         this.data.events.removeInterface.addListener(this, () => this.update());
         this.data.events.addOption.addListener(this, () => this.update());
         this.data.events.removeOption.addListener(this, () => this.update());
+        this.plugin.hooks.renderNode.execute(this);
+    }
+
+    updated() {
+        this.plugin.hooks.renderNode.execute(this);
     }
 
     beforeDestroy() {

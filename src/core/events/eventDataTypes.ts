@@ -1,9 +1,16 @@
 import { NodeInterface, IOption, NodeOption } from "..";
+import { NodeConstructor } from "../editor";
 
 // Editor
 export interface IAddConnectionEventData {
     from: NodeInterface;
     to: NodeInterface;
+}
+
+export interface IAddNodeTypeEventData {
+    typeName: string;
+    type: NodeConstructor;
+    category: string;
 }
 
 // Node

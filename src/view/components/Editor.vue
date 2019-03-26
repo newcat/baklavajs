@@ -70,9 +70,6 @@ import Sidebar from "./Sidebar.vue";
 })
 export default class EditorView extends Vue {
 
-    @Prop({ type: Object, default: () => ({}) })
-    options!: Record<string, VueConstructor>;
-
     @Prop({ type: Object, required: true })
     @Provide("plugin")
     plugin!: ViewPlugin;
