@@ -3,7 +3,7 @@ import { NodeInterface } from "./nodeInterface";
 import { INodeState } from "./state";
 import { Editor } from "./editor";
 import { IAddInterfaceEventData, IAddOptionEventData, IOptionEventData,
-    PreventableBaklavaEvent, BaklavaEvent, INodeUpdateEventData } from "./events";
+    PreventableBaklavaEvent, BaklavaEvent, INodeUpdateEventData, SequentialHook } from "./events";
 import { NodeOption } from "./nodeOption";
 
 export interface IInterfaceCreateOptions {
@@ -43,6 +43,11 @@ export abstract class Node {
         update: new BaklavaEvent<INodeUpdateEventData>()
     };
 
+    public hooks = {
+        load: new SequentialHook<INodeState & Record<string, any>>(),
+        save: new SequentialHook<INodeState & Record<string, any>>()
+    };
+
     private editorInstance?: Editor;
 
     /** All input interfaces of the node */
@@ -78,10 +83,11 @@ export abstract class Node {
                 this.interfaces.get(k)!.load(v);
             }
         });
+        this.hooks.load.execute(state);
     }
 
     public save(): INodeState {
-        return {
+        const state: INodeState = {
             type: this.type,
             id: this.id,
             name: this.name,
@@ -90,6 +96,7 @@ export abstract class Node {
             state: this.state,
             interfaces: Array.from(this.interfaces.entries()).map(([k, i]) => [k, i.save()]) as any
         };
+        return this.hooks.save.execute(state);
     }
 
     /**

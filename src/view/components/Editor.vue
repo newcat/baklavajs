@@ -37,7 +37,7 @@
             v-model="contextMenu.show"
             :x="contextMenu.x"
             :y="contextMenu.y"
-            :items="context"
+            :items="contextMenu.items"
             @click="onContextMenuClick"
         ></context-menu>
 
@@ -83,6 +83,7 @@ export default class EditorView extends Vue {
     dragging = false;
 
     contextMenu = {
+        items: [] as IMenuItem[],
         show: false,
         x: 0,
         y: 0
@@ -103,27 +104,30 @@ export default class EditorView extends Vue {
         return this.plugin.editor ? this.plugin.editor.connections : [];
     }
 
-    get context() {
+    mounted() {
+        this.updateContextMenu();
+        this.plugin.editor.events.registerNodeType.addListener(this, () => this.updateContextMenu());
+    }
 
-        // TODO
-        /*const categories = Object.keys(this.plugin.editor.nodeCategories)
+    updateContextMenu() {
+
+        const categories = Array.from(this.plugin.editor.nodeCategories.keys())
             .filter((c) => c !== "default")
             .map((c) => {
-                const nodes = this.plugin.editor.nodeCategories[c]
+                const nodes = Array.from(this.plugin.editor.nodeCategories.get(c)!)
                     .map((n) => ({ value: "addNode:" + n, label: n }));
                 return { label: c, submenu: nodes };
             });
 
-        const defaultNodes = this.plugin.editor.nodeCategories.default
+        const defaultNodes = this.plugin.editor.nodeCategories.get("default")!
             .map((n) => ({ value: "addNode:" + n, label: n }));
 
-        return [
+        this.contextMenu.items = [
             {
                 label: "Add Node",
                 submenu: [ ...categories, { isDivider: true }, ...defaultNodes ]
             }
-        ] as IMenuItem[];*/
-        return [];
+        ] as IMenuItem[];
 
     }
 
@@ -232,13 +236,15 @@ export default class EditorView extends Vue {
 
     onContextMenuClick(action: string) {
         if (action.startsWith("addNode:")) {
-            // TODO
-            /*const nodeName = action.substring(action.indexOf(":") + 1);
-            const node = this.plugin.editor.addNode(nodeName);
-            if (node) {
-                node.position.x = this.contextMenu.x;
-                node.position.y = this.contextMenu.y;
-            }*/
+            const nodeName = action.substring(action.indexOf(":") + 1);
+            const nt = this.plugin.editor.nodeTypes.get(nodeName);
+            if (nt) {
+                const node = this.plugin.editor.addNode(new nt());
+                if (node) {
+                    node.position.x = this.contextMenu.x;
+                    node.position.y = this.contextMenu.y;
+                }
+            }
         }
     }
 

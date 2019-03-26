@@ -3,7 +3,7 @@ import { NodeInterface } from "./nodeInterface";
 import { Connection, DummyConnection, IConnection } from "./connection";
 import { IState } from "./state";
 import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";
-import { IAddConnectionEventData, PreventableBaklavaEvent, BaklavaEvent, IAddNodeTypeEventData } from "./events";
+import { IAddConnectionEventData, PreventableBaklavaEvent, BaklavaEvent, IAddNodeTypeEventData, SequentialHook } from "./events";
 import { IPlugin } from "./plugin";
 
 export type NodeConstructor = new () => Node;
@@ -29,6 +29,11 @@ export class Editor {
         checkConnection: new PreventableBaklavaEvent<IAddConnectionEventData>(),
         beforeRemoveConnection: new PreventableBaklavaEvent<IConnection>(),
         removeConnection: new BaklavaEvent<IConnection>()
+    };
+
+    public hooks = {
+        save: new SequentialHook<IState & Record<string, any>>(),
+        load: new SequentialHook<IState & Record<string, any>>()
     };
 
     /** List of all nodes */
@@ -72,6 +77,7 @@ export class Editor {
             this._nodeCategories.set(category, []);
         }
         this.nodeCategories.get(category)!.push(typeName);
+        this.events.registerNodeType.emit({ typeName, type, category });
     }
 
     /**
@@ -226,6 +232,8 @@ export class Editor {
             }
         }
 
+        this.hooks.load.execute(state);
+
     }
 
     /**
@@ -233,7 +241,7 @@ export class Editor {
      * @returns Current state
      */
     public save(): IState {
-        return {
+        const state = {
             nodes: this.nodes.map((n) => n.save()),
             connections: this.connections.map((c) => ({
                 id: c.id,
@@ -241,6 +249,16 @@ export class Editor {
                 to: c.to.id
             }))
         };
+        return this.hooks.save.execute(state);
+    }
+
+    /**
+     * Register a plugin
+     * @param plugin Plugin to register
+     */
+    public use(plugin: IPlugin) {
+        this._plugins.add(plugin);
+        plugin.register(this);
     }
 
     private findNodeInterface(id: string) {
@@ -251,14 +269,6 @@ export class Editor {
                 }
             }
         }
-    }
-
-    /**
-     * Register a plugin
-     */
-    public use(plugin: IPlugin) {
-        this._plugins.add(plugin);
-        plugin.register(this);
     }
 
 }

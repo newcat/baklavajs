@@ -1,7 +1,7 @@
 import { Node } from "./node";
 import generateId from "./idGenerator";
 import { IInterfaceState } from "./state";
-import { BaklavaEvent, PreventableBaklavaEvent } from "./events";
+import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "./events";
 
 export class NodeInterface {
 
@@ -14,6 +14,11 @@ export class NodeInterface {
         setConnectionCount: new BaklavaEvent<number>(),
         beforeSetValue: new PreventableBaklavaEvent<any>(),
         setValue: new BaklavaEvent<any>()
+    };
+
+    public hooks = {
+        load: new SequentialHook<IInterfaceState & Record<string, any>>(),
+        save: new SequentialHook<IInterfaceState & Record<string, any>>()
     };
 
     private _connectionCount = 0;
@@ -44,13 +49,15 @@ export class NodeInterface {
     public load(state: IInterfaceState) {
         this.id = state.id;
         this.value = state.value;
+        this.hooks.load.execute(state);
     }
 
     public save(): IInterfaceState {
-        return {
+        const state = {
             id: this.id,
             value: this.value
         };
+        return this.hooks.save.execute(state);
     }
 
 }

@@ -23,7 +23,16 @@ export class ViewPlugin implements IPlugin {
 
     public register(editor: Editor): void {
         this.editor = editor;
-        // TODO: Save / load hooks
+        this.editor.hooks.load.tap(this, (d) => {
+            this.panning = d.panning;
+            this.scaling = d.scaling;
+            return d;
+        });
+        this.editor.hooks.save.tap(this, (d) => {
+            d.panning = this.panning;
+            d.scaling = this.scaling;
+            return d;
+        });
     }
 
 }
