@@ -19,13 +19,25 @@ jobs:
         - npm run serve -- --silent &
         - npm run test:ui
         - kill $(jobs -p) || true
-    - stage: build and deploy
+    - stage: build and deploy (production)
       if: branch =~ /^v.*$/ AND tag IS present
       script: npm run build-lib
       deploy:
         provider: npm
         on:
           all_branches: true
+        email: freddy.wagner@web.de
+        skip_cleanup: true
+        api_key:
+          secure: j2HFraJOzl5oLJZUCFQ27mhU3d2A3n4urSelXsBh4R3iBTVcAejeBhWRkUxO8iDvmGp8M6lXvlZEnjFecds9PYPsJ80Mw/ZV6zjEM/Z/E9tM6h5vncE/dN1s7Y8CfE5pIw5fTAhdBDjoTqR6Ky6QMsOUdwasfUbK53M/ZF7no3aNa/wDS4dmSUJ5ZttONAkRK5I0DxMgrDZaPcpgZT2iRsaPSK26t3NQOfh/niz6HxEgMOTj4I3Wide4YncxyrVilsYWJt1xaYTNDc8hODOlBr8BIywjslF8G3/oztuD1Mq3ivXlnDRsQ+d4DoIK5nfQSqRVTMVvumI9Jz/1VFW0oP4NoBQrlCtKIyBGlJLL4wzHJH3D+sINJCWM2swe6rzL2Q/PgR8bM4HuGE/8yf+3aeqafSBi31OcpSr9iTL1yCAPyVunGzVnpTy8mT5BD/dnT0F3bTYb/yhHiS33c97sJNMNk6rRIMKXOL8X0oOVWW9vJmgg7B6N9CSo7dRFhi1OApzpx+N0MlI96BckJFYGU/E5fyLZmu5I6hu9uDI5P8CToLamZqdb+AYKaqD4BCOj9vsY0xrk0qQP5fZJSOCGLBqQXoTcbaoC8HlsDLAUdUdQrDtObq2YXLL34LHmpTpasE7LnHmUUeVtGJzUxHcmyPjQm01R2MxRB9BISJx2ucY=
+    - stage: build and deploy (dev)
+      if: branch = dev
+      script: npm run build-lib
+      deploy:
+        provider: npm
+        on:
+          all_branches: true
+        tag: dev
         email: freddy.wagner@web.de
         skip_cleanup: true
         api_key:
