@@ -2,7 +2,6 @@ import { Node } from "./node";
 import { NodeInterface } from "./nodeInterface";
 import { Connection, DummyConnection, IConnection } from "./connection";
 import { IState } from "./state";
-import { NodeInterfaceTypeManager } from "./nodeInterfaceTypeManager";
 import { IAddConnectionEventData, PreventableBaklavaEvent, BaklavaEvent, IAddNodeTypeEventData, SequentialHook } from "./events";
 import { IPlugin } from "./plugin";
 
@@ -28,12 +27,14 @@ export class Editor {
         addConnection: new BaklavaEvent<IConnection>(),
         checkConnection: new PreventableBaklavaEvent<IAddConnectionEventData>(),
         beforeRemoveConnection: new PreventableBaklavaEvent<IConnection>(),
-        removeConnection: new BaklavaEvent<IConnection>()
+        removeConnection: new BaklavaEvent<IConnection>(),
+        beforeUsePlugin: new PreventableBaklavaEvent<IPlugin>(),
+        usePlugin: new BaklavaEvent<IPlugin>()
     };
 
     public hooks = {
-        save: new SequentialHook<IState & Record<string, any>>(),
-        load: new SequentialHook<IState & Record<string, any>>()
+        save: new SequentialHook<IState>(),
+        load: new SequentialHook<IState>()
     };
 
     /** List of all nodes */
@@ -61,14 +62,11 @@ export class Editor {
         return this._plugins as ReadonlySet<IPlugin>;
     }
 
-    /** Used to manage all node interface types and implementing conversions between them */
-    public nodeInterfaceTypes = new NodeInterfaceTypeManager();
-
     /**
      * Register a new node type
      * @param typeName Name of the node (must be equal to the node's `type` field)
      * @param type Actual type / constructor of the node
-     * @param category Category of the node. Will be used in the context menu for adding nodes
+     * @param category Category of the node. Will be used in the view's context menu for adding nodes
      */
     public registerNodeType(typeName: string, type: NodeConstructor, category = "default") {
         if (this.events.beforeRegisterNodeType.emit({ typeName, type, category })) { return; }
@@ -255,10 +253,14 @@ export class Editor {
     /**
      * Register a plugin
      * @param plugin Plugin to register
+     * @returns Whether the plugin was successfully registered
      */
-    public use(plugin: IPlugin) {
+    public use(plugin: IPlugin): boolean {
+        if (this.events.beforeUsePlugin.emit(plugin)) { return false; }
         this._plugins.add(plugin);
         plugin.register(this);
+        this.events.usePlugin.emit(plugin);
+        return true;
     }
 
     private findNodeInterface(id: string) {

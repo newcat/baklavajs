@@ -1,4 +1,4 @@
-import { Editor, Node } from "../src";
+import { Editor, Node } from "../src/core";
 
 export default class TestNode extends Node {
 

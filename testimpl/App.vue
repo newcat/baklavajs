@@ -14,7 +14,10 @@ import { Component, Vue } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
 import { Editor, Node, BaklavaEvent, NodeInterface } from "../src/core";
-import { Options } from "../src";
+import { ViewPlugin } from "../src/view/viewPlugin";
+import { Engine } from "../src/engine/engine";
+import { InterfaceTypePlugin } from "../src/interface-types/interfaceTypes";
+import Options from "../src/options";
 
 import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";
@@ -25,9 +28,6 @@ import AdvancedNode from "./AdvancedNode";
 import AddOption from "./AddOption";
 import TriggerOption from "./TriggerOption.vue";
 import SidebarOption from "./SidebarOption.vue";
-import { ViewPlugin } from "@/view/viewPlugin";
-import { Engine } from "@/engine/engine";
-import { InterfaceTypePlugin } from "@/interface-types/interfaceTypes";
 
 @Component
 export default class App extends Vue {
@@ -89,10 +89,12 @@ export default class App extends Vue {
     }
 
     save() {
+        // tslint:disable-next-line:no-console
         console.log(JSON.stringify(this.editor.save()));
     }
 
     load() {
+        // tslint:disable-next-line:max-line-length
         this.editor.load(JSON.parse('{"nodes":[{"type":"TestNode","id":"node_1551399780462","name":"TestNode","position":{"x":107,"y":101},"options":{"test":null,"Select":{"selected":"Test1","items":["Test1","Test2","Test3"]},"This is a checkbox":true,"Number":null},"state":{},"interfaces":{"Input":{"id":"ni_1551399780463","value":true},"Output":{"id":"ni_1551399780464","value":true}}},{"type":"OutputNode","id":"node_1551399780468","name":"OutputNode","position":{"x":768,"y":173},"options":{"output":"true, false"},"state":{},"interfaces":{"Input":{"id":"ni_1551399780469","value":"true, false"}}},{"type":"BuilderTestNode","id":"node_1551399780470","name":"BuilderTestNode","position":{"x":473,"y":239},"options":{"Separator":", ","SidebarTest":{"testtext":"any"}},"state":{},"interfaces":{"Input 1":{"id":"ni_1551399780472","value":"true"},"Input 2":{"id":"ni_1551399780473","value":"false"},"Output":{"id":"ni_1551399780474","value":"true, false"}}},{"type":"TestNode","id":"node_1551399803206","name":"TestNode","position":{"x":104,"y":387},"options":{"test":null,"Select":{"selected":"Test1","items":["Test1","Test2","Test3"]},"This is a checkbox":true,"Number":null},"state":{},"interfaces":{"Input":{"id":"ni_1551399803207","value":false},"Output":{"id":"ni_1551399803208","value":false}}}],"connections":[{"id":"1551399806084","from":"ni_1551399780464","to":"ni_1551399780472"},{"id":"1551399807504","from":"ni_1551399803208","to":"ni_1551399780473"},{"id":"1551399809643","from":"ni_1551399780474","to":"ni_1551399780469"}]}'));
     }
 

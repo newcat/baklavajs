@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Options } from "../src/index";
+import Options from "../src/options";
 
 @Component({
     components: {

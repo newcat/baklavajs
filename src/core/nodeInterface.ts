@@ -17,8 +17,8 @@ export class NodeInterface {
     };
 
     public hooks = {
-        load: new SequentialHook<IInterfaceState & Record<string, any>>(),
-        save: new SequentialHook<IInterfaceState & Record<string, any>>()
+        load: new SequentialHook<IInterfaceState>(),
+        save: new SequentialHook<IInterfaceState>()
     };
 
     private _connectionCount = 0;

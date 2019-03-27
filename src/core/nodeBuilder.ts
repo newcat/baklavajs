@@ -5,6 +5,7 @@ interface IInterfaceOptions {
     name: string;
     option?: string;
     defaultValue?: any;
+    additionalProperties?: Record<string, any>;
 }
 
 type CalculationFunction = (this: Node, n: Node) => any;
@@ -30,9 +31,9 @@ function generateNode(
             super();
             for (const i of intfs) {
                 if (i.isInput) {
-                    this.addInputInterface(i.name, i.option, getDefaultValue(i.defaultValue));
+                    this.addInputInterface(i.name, i.option, getDefaultValue(i.defaultValue), i.additionalProperties);
                 } else {
-                    this.addOutputInterface(i.name);
+                    this.addOutputInterface(i.name, i.additionalProperties);
                 }
             }
             Array.from(options.entries()).forEach(([k, v]) => {
@@ -79,21 +80,22 @@ export class NodeBuilder {
      * Default value for the interface.
      * If the default value is a primitive (e. g. string, number) then the value can be passed directly.
      * For objects provide a function that returns the default value.
+     * @param additionalProperties Additional properties of the interface that can be used by plugins
      * @returns Current node builder instance for chaining
      */
-    public addInputInterface(name: string, option?: string, defaultValue?: any): NodeBuilder {
+    public addInputInterface(name: string, option?: string, defaultValue?: any, additionalProperties?: Record<string, any>): NodeBuilder {
         this.checkDefaultValue(defaultValue);
-        this.intfs.push({ isInput: true, name, option, defaultValue });
+        this.intfs.push({ isInput: true, name, option, defaultValue, additionalProperties });
         return this;
     }
 
     /**
      * Add an output interface to the node
      * @param name Name of the interface
-     * @param type Type of the interface
+     * @param additionalProperties Additional properties of the interface that can be used by plugins
      * @returns Current node builder instance for chaining
      */
-    public addOutputInterface(name: string): NodeBuilder {
+    public addOutputInterface(name: string, additionalProperties?: Record<string, any>): NodeBuilder {
         this.intfs.push({ isInput: false, name });
         return this;
     }
@@ -107,9 +109,11 @@ export class NodeBuilder {
      * If the default value is a primitive (e. g. string, number) then the value can be passed directly.
      * For objects provide a function that returns the default value.
      * @param sidebarComponent Optional component to display in the sidebar
+     * @param additionalProperties Additional properties of the option that can be used by plugins
      * @returns Current node builder instance for chaining
      */
-    public addOption(name: string, optionComponent: string, defaultValue?: any, sidebarComponent?: string): NodeBuilder {
+    public addOption(name: string, optionComponent: string, defaultValue?: any,
+                     sidebarComponent?: string, additionalProperties?: Record<string, any>): NodeBuilder {
         this.checkDefaultValue(defaultValue);
         this.options.set(name, {
             value: defaultValue,

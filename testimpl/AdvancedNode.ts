@@ -1,4 +1,4 @@
-import { Node } from "../src";
+import { Node } from "../src/core";
 
 export default class AdvancedNode extends Node {
 

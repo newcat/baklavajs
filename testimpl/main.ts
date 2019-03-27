@@ -3,9 +3,9 @@ import App from "./App.vue";
 
 Vue.config.productionTip = false;
 
-import lib from "../src";
+import { BaklavaVuePlugin } from "../src/view";
 import "../src/view/styles/all.scss";
-Vue.use(lib);
+Vue.use(BaklavaVuePlugin);
 
 new Vue({
   render: h => h(App),

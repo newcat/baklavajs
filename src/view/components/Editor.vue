@@ -4,7 +4,7 @@
         @mousemove.self="mouseMoveHandler"
         @mousedown="mouseDown"
         @mouseup="mouseUp"
-        @mousewheel.self="mouseWheel"
+        @wheel.self="mouseWheel"
         @keydown="keyDown"
         @contextmenu.self.prevent="openContextMenu"
     >
@@ -51,7 +51,7 @@ import { Component, Vue, Prop, Provide } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
 import { Editor, Node, Connection, NodeInterface, ITemporaryConnection, TemporaryConnectionState } from "../../core";
-import { ViewPlugin } from "../viewPlugin";
+import { ViewPlugin, IViewNode } from "../viewPlugin";
 
 import NodeView from "./node/Node.vue";
 import ConnectionView from "./connection/ConnectionWrapper.vue";
@@ -79,7 +79,7 @@ export default class EditorView extends Vue {
 
     temporaryConnection: ITemporaryConnection|null = null;
     hoveringOver?: NodeInterface|null = null;
-    selectedNode?: Node|null = null;
+    selectedNode?: IViewNode|null = null;
     dragging = false;
 
     contextMenu = {
@@ -224,7 +224,7 @@ export default class EditorView extends Vue {
         }
     }
 
-    selectNode(node: Node) {
+    selectNode(node: IViewNode) {
         this.selectedNode = node;
     }
 
@@ -239,7 +239,7 @@ export default class EditorView extends Vue {
             const nodeName = action.substring(action.indexOf(":") + 1);
             const nt = this.plugin.editor.nodeTypes.get(nodeName);
             if (nt) {
-                const node = this.plugin.editor.addNode(new nt());
+                const node = this.plugin.editor.addNode(new nt()) as IViewNode;
                 if (node) {
                     node.position.x = this.contextMenu.x;
                     node.position.y = this.contextMenu.y;

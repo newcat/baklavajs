@@ -47,7 +47,7 @@
                 ></node-option>
 
                 <portal :key="'sb_' + name" to="sidebar"
-                    v-if="$baklava.sidebar.nodeId === data.id && $baklava.sidebar.optionName === name && option.sidebarComponent"
+                    v-if="plugin.sidebar.nodeId === data.id && plugin.sidebar.optionName === name && option.sidebarComponent"
                 >
                     <node-option
                         :name="name"
@@ -80,12 +80,11 @@ import { VueConstructor } from "vue";
 import ClickOutside from "v-click-outside";
 
 import { Node, NodeInterface, NodeOption, BaklavaEvent } from "../../../core";
-import { ViewPlugin } from "../../viewPlugin";
+import { ViewPlugin, IViewNode } from "../../viewPlugin";
 import NodeInterfaceView from "./NodeInterface.vue";
 import NodeOptionView from "./NodeOption.vue";
 import ContextMenu from "../ContextMenu.vue";
-import InputOption from "../../options/InputOption.vue";
-import EditorView from "../Editor.vue";
+import InputOption from "../../../options/InputOption.vue";
 
 @Component({
     components: {
@@ -101,13 +100,10 @@ import EditorView from "../Editor.vue";
 export default class NodeView extends Vue {
 
     @Prop({ type: Object })
-    data!: Node;
+    data!: IViewNode;
 
     @Prop({ type: Boolean, default: false })
     selected!: boolean;
-
-    @Inject("editor")
-    editor!: EditorView;
 
     @Inject("plugin")
     plugin!: ViewPlugin;
@@ -212,9 +208,9 @@ export default class NodeView extends Vue {
     }
 
     openSidebar(optionName: string) {
-        this.$baklava.sidebar.nodeId = this.data.id;
-        this.$baklava.sidebar.optionName = optionName;
-        this.$baklava.sidebar.visible = true;
+        this.plugin.sidebar.nodeId = this.data.id;
+        this.plugin.sidebar.optionName = optionName;
+        this.plugin.sidebar.visible = true;
     }
 
 }

@@ -1,5 +1,5 @@
 <template>
-    <div :class="['sidebar', { '--open': $baklava.sidebar.visible }]" :style="styles">
+    <div :class="['sidebar', { '--open': plugin.sidebar.visible }]" :style="styles">
         
         <div class="__resizer" @mousedown="startResize"></div>
 
@@ -26,7 +26,7 @@ export default class Sidebar extends Vue {
     plugin!: ViewPlugin;
 
     get nodeName() {
-        const id = this.$baklava.sidebar.nodeId;
+        const id = this.plugin.sidebar.nodeId;
         const n = this.plugin.editor.nodes.find((x) => x.id === id);
         return n ? n.name : "";
     }
@@ -38,7 +38,7 @@ export default class Sidebar extends Vue {
     }
 
     close() {
-        this.$baklava.sidebar.visible = false;
+        this.plugin.sidebar.visible = false;
     }
 
     startResize() {

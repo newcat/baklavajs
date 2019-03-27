@@ -21,12 +21,18 @@ export abstract class Node {
     public abstract type: string;
     /** Name of the node. Should be set equal to {@link type} by default */
     public abstract name: string;
-
+    /** Unique identifier of the node */
     public id: string = "node_" + generateId();
+    /** A map of all interfaces of the node.
+     * Key = Name of the interface
+     * Value = `NodeInterface` instance
+     */
     public interfaces: Map<string, NodeInterface> = new Map();
+    /** A map of all options of the node.
+     * Key = Name of the option
+     * Value = `NodeOption` instance
+     */
     public options: Map<string, NodeOption> = new Map();
-    public position = { x: 0, y: 0 };
-    public disablePointerEvents = false;
 
     /** Use this property to save additional state of the node */
     public state: Record<string, any> = {};
@@ -44,8 +50,8 @@ export abstract class Node {
     };
 
     public hooks = {
-        load: new SequentialHook<INodeState & Record<string, any>>(),
-        save: new SequentialHook<INodeState & Record<string, any>>()
+        load: new SequentialHook<INodeState>(),
+        save: new SequentialHook<INodeState>()
     };
 
     private editorInstance?: Editor;
@@ -71,7 +77,6 @@ export abstract class Node {
     public load(state: INodeState) {
         this.id = state.id;
         this.name = state.name;
-        this.position = state.position;
         this.state = state.state;
         state.options.forEach(([k, v]) => {
             if (this.options.has(k)) {
@@ -91,7 +96,6 @@ export abstract class Node {
             type: this.type,
             id: this.id,
             name: this.name,
-            position: this.position,
             options: Array.from(this.options.entries()).map(([k, o]) => [k, o.value]) as any,
             state: this.state,
             interfaces: Array.from(this.interfaces.entries()).map(([k, i]) => [k, i.save()]) as any
@@ -111,10 +115,10 @@ export abstract class Node {
     /**
      * Add an input interface to the node
      * @param name Name of the interface
-     * @param option
-     * Optional NodeOption which is displayed when the interface is not connected to set its value
+     * @param option Optional name of a NodeOption which is displayed when the interface is not connected
      * @param defaultValue Optional default value for the interface/option
-     * @returns The created interface
+     * @param additionalProperties Additional properties of the interface that can be used by plugins
+     * @returns The created interface or undefined, if the interface was not created
      */
     protected addInputInterface(name: string, option?: string, defaultValue?: any, additionalProperties?: Record<string, any>) {
         if (this.events.beforeAddInterface.emit({ name, isInput: true, option, defaultValue })) { return; }
@@ -129,8 +133,8 @@ export abstract class Node {
     /**
      * Add an output interface to the node
      * @param name Name of the interface
-     * @param type Type of the interface
-     * @returns The created interface
+     * @param additionalProperties Additional properties of the interface that can be used by plugins
+     * @returns The created interface or undefined, if the interface was not created
      */
     protected addOutputInterface(name: string, additionalProperties?: Record<string, any>) {
         if (this.events.beforeAddInterface.emit({ name, isInput: false })) { return; }
@@ -174,9 +178,11 @@ export abstract class Node {
     /**
      * Add a node option to the node
      * @param name Name of the option
-     * @param component Option component
+     * @param component Name of the option component
      * @param defaultValue Default value for the option
-     * @param sidebarComponent Optional component to display in the sidebar
+     * @param sidebarComponent Optional name of the component to display in the sidebar
+     * @param additionalProperties Additional properties of the option that can be used by plugins
+     * @returns The created option or undefined, if the option was not created
      */
     protected addOption(name: string, component: string, defaultValue: any = null,
                         sidebarComponent?: string, additionalProperties?: Record<string, any>) {
@@ -186,6 +192,7 @@ export abstract class Node {
         opt.events.setValue.addListener(this, () => { this.events.update.emit({ name, option: opt }); });
         this.options.set(name, opt);
         this.events.addOption.emit({ name, option: opt });
+        return opt;
     }
 
     /**

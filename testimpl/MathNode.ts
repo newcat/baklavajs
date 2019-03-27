@@ -1,4 +1,4 @@
-import { NodeBuilder } from "../src/index";
+import { NodeBuilder } from "../src/core";
 
 export default new NodeBuilder("MathNode")
     .addInputInterface("Number 1", "NumberOption", 1)

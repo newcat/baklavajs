@@ -1,4 +1,4 @@
-import { NodeBuilder } from "../src/index";
+import { NodeBuilder } from "../src/core";
 
 export default new NodeBuilder("BuilderTestNode")
     .addInputInterface("Input 1", "InputOption", "default1")

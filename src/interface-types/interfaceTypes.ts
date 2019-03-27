@@ -32,6 +32,9 @@ export class InterfaceTypePlugin implements IPlugin {
                 return false;
             }
         });
+        this.editor.events.usePlugin.addListener(this, (plugin) => {
+            if (plugin.type === "ViewPlugin") { this.registerView(plugin as ViewPlugin); }
+        });
     }
 
     /**

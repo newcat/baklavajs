@@ -8,7 +8,9 @@ export interface IOption {
 
 export class NodeOption implements IOption {
 
+    /** Name of the component that should be displayed for the option */
     public optionComponent: string;
+    /** Name of the component that should be displayed in the sidebar */
     public sidebarComponent?: string;
 
     public events = {
