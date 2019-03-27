@@ -9,7 +9,12 @@ module.exports = {
     mode: "production",
     entry: {
         index: './src/index.ts',
-        styles: './src/styles/all.scss'
+        /*core: './src/core/index.ts',
+        engine: './src/engine/index.ts',
+        interface_types: './src/interface-types/index.ts',
+        options: './src/options/index.ts',
+        view: './src/view/index.ts',*/
+        styles: './src/view/styles/all.scss'
     },
     externals: {
         vue: {
@@ -49,7 +54,7 @@ module.exports = {
         new VueLoaderPlugin(),
         new CleanWebpackPlugin([ 'dist' ]),
         new CopyWebpackPlugin([
-            { from: "src/styles", to: "styles" }
+            { from: "src/view/styles", to: "styles" }
         ]),
         new MiniCssExtractPlugin({
             filename: "[name].css",
@@ -68,9 +73,10 @@ module.exports = {
         globalObject: `(typeof self !== 'undefined' ? self : this)`
     },
     optimization: {
-        minimize: false
+        minimize: false,
+        concatenateModules: false
     },
     performance: {
-        maxEntrypointSize: 200000
+        maxEntrypointSize: 300000
     }
 };

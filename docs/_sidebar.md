@@ -1,8 +1,8 @@
 * **Usage**
-  * [Documentation](/)
-  * [Getting Started](/getting-started.md)
+  * [Getting Started](/)
   * [Editor Instance](/editor.md)
   * [Node Interface Types](/interface-types.md)
+  * [Event System](/event-system.md)
   * [Styling](/styling.md)
 * **Custom Nodes**
   * [Creating Custom Nodes](/custom-nodes.md)
