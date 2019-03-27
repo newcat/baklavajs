@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { spy } from "sinon";
-import { NodeInterface, NodeBuilder } from "@/index";
+import { NodeInterface, NodeBuilder } from "@/core";
 
 const n = new (new NodeBuilder("CustomNode").build())();
 

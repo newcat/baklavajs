@@ -1,4 +1,4 @@
-import { Editor } from "@/index";
+import { Editor } from "@/core";
 import TestNode from "testimpl/TestNode";
 import OutputNode from "testimpl/OutputNode";
 import { expect } from "chai";
