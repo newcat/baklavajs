@@ -65,10 +65,10 @@ export class MathNode extends Node {
         this.addInputInterface("Number 1", "number", Options.NumberOption, 1);
         this.addInputInterface("Number 2", "number", Options.NumberOption, 10);
         this.addOutputInterface("Output", "number");
-        this.addOption("Operation", Options.SelectOption, () => ({
+        this.addOption("Operation", Options.SelectOption, {
             selected: "Add",
             items: [ "Add", "Subtract" ]
-        }));
+        });
     }
 
     public calculate() {

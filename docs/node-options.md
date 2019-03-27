@@ -39,8 +39,7 @@ These are documented [here](/prebuilt-options).
 
 ### Default Values
 > When providing complex default values like arrays or objects as default values using the NodeBuilder's
-> [addInputInterface](!!API%{ "type": "class", "name": "nodebuilder", "field": "addinputinterface"}%) or
-> [addOption](!!API%{ "type": "class", "name": "nodebuilder", "field": "addoption"}%) method,
+> [addInputInterface](!!API%{ "type": "class", "name": "nodebuilder", "field": "addinputinterface"}%) method,
 > you need to provide an option that returns the default array or object.
 > This ensures that multiple instances of the node interface or node option
 > all have their own data objects.

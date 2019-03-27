@@ -1,4 +1,4 @@
-import { Editor, Node, Options } from "../src";
+import { Editor, Node } from "../src/core";
 
 export default class TestNode extends Node {
 
@@ -8,13 +8,13 @@ export default class TestNode extends Node {
 
     constructor() {
         super();
-        this.addInputInterface("Input", "boolean", Options.CheckboxOption);
-        this.addInputInterface("Test", "number", Options.NumberOption, 5);
-        this.addOutputInterface("Output", "boolean");
-        this.addOption("test", Options.InputOption);
-        this.addOption("Select", Options.SelectOption, { selected: "Test1", items: ["Test1", "Test2", "Test3"] });
-        this.addOption("This is a checkbox", Options.CheckboxOption, true);
-        this.addOption("Number", Options.NumberOption, 5);
+        this.addInputInterface("Input", "CheckboxOption", false, { type: "boolean" });
+        this.addInputInterface("Test", "NumberOption", 5, { type: "number" });
+        this.addOutputInterface("Output", { type: "boolean" });
+        this.addOption("test", "InputOption");
+        this.addOption("Select", "SelectOption", { selected: "Test1", items: ["Test1", "Test2", "Test3"] });
+        this.addOption("This is a checkbox", "CheckboxOption", true);
+        this.addOption("Number", "NumberOption", 5);
     }
 
     public registerEditor(editor: Editor) {

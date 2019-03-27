@@ -11,9 +11,6 @@
         "allowSyntheticDefaultImports": true,
         "downlevelIteration": true,
         "sourceMap": true,
-        "declaration": true,
-        "outDir": "lib",
-        "declarationDir": "dist",
         "baseUrl": ".",
         "types": [
             "webpack-env"
@@ -32,8 +29,9 @@
     },
     "include": [
         "./**/*.ts",
-        "./**/*.tsx",
-        "./**/*.vue"
+        "./**/*.vue",
+        "../src/**/*.ts",
+        "../src/**/*.vue"
     ],
     "exclude": [
         "node_modules"

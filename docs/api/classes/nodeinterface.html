@@ -85,17 +85,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="nodeinterface.html#connectioncount" class="tsd-kind-icon">connection<wbr>Count</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="nodeinterface.html#id" class="tsd-kind-icon">id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="nodeinterface.html#isinput" class="tsd-kind-icon">is<wbr>Input</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="nodeinterface.html#option" class="tsd-kind-icon">option</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="nodeinterface.html#parent" class="tsd-kind-icon">parent</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="nodeinterface.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="nodeinterface.html#connectioncount" class="tsd-kind-icon">connection<wbr>Count</a></li>
 								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="nodeinterface.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
@@ -103,8 +102,14 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="nodeinterface.html#load" class="tsd-kind-icon">load</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="nodeinterface.html#registerlistener" class="tsd-kind-icon">register<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="nodeinterface.html#save" class="tsd-kind-icon">save</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-class"><a href="nodeinterface.html#events" class="tsd-kind-icon">events</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-class"><a href="nodeinterface.html#hooks" class="tsd-kind-icon">hooks</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,13 +121,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Node<wbr>Interface<span class="tsd-signature-symbol">(</span>parent<span class="tsd-signature-symbol">: </span><a href="node.html" class="tsd-signature-type">Node</a>, isInput<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="nodeinterface.html" class="tsd-signature-type">NodeInterface</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Node<wbr>Interface<span class="tsd-signature-symbol">(</span>parent<span class="tsd-signature-symbol">: </span><a href="node.html" class="tsd-signature-type">Node</a>, isInput<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="nodeinterface.html" class="tsd-signature-type">NodeInterface</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L26">model/nodeInterface.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L41">core/nodeInterface.ts:41</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -133,9 +138,6 @@
 								<li>
 									<h5>isInput: <span class="tsd-signature-type">boolean</span></h5>
 								</li>
-								<li>
-									<h5>type: <span class="tsd-signature-type">string</span></h5>
-								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="nodeinterface.html" class="tsd-signature-type">NodeInterface</a></h4>
 						</li>
@@ -145,22 +147,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="connectioncount" class="tsd-anchor"></a>
-					<h3>connection<wbr>Count</h3>
-					<div class="tsd-signature tsd-kind-icon">connection<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L12">model/nodeInterface.ts:12</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L10">model/nodeInterface.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L8">core/nodeInterface.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -170,17 +162,17 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Input<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L11">model/nodeInterface.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L9">core/nodeInterface.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="option" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> option</h3>
-					<div class="tsd-signature tsd-kind-icon">option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">VueConstructor</span></div>
+					<div class="tsd-signature tsd-kind-icon">option<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L15">model/nodeInterface.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L11">core/nodeInterface.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -190,23 +182,45 @@
 					<div class="tsd-signature tsd-kind-icon">parent<span class="tsd-signature-symbol">:</span> <a href="node.html" class="tsd-signature-type">Node</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L14">model/nodeInterface.ts:14</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L13">model/nodeInterface.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L10">core/nodeInterface.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+					<a name="connectioncount" class="tsd-anchor"></a>
+					<h3>connection<wbr>Count</h3>
+					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> connectionCount<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> connectionCount<span class="tsd-signature-symbol">(</span>v<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L29">core/nodeInterface.ts:29</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L25">core/nodeInterface.ts:25</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>v: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
 					<a name="value" class="tsd-anchor"></a>
 					<h3>value</h3>
@@ -218,7 +232,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L24">model/nodeInterface.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L39">core/nodeInterface.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -226,7 +240,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L20">model/nodeInterface.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L34">core/nodeInterface.ts:34</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -252,7 +266,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L35">model/nodeInterface.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L49">core/nodeInterface.ts:49</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -266,52 +280,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="registerlistener" class="tsd-anchor"></a>
-					<h3>register<wbr>Listener</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Listener<span class="tsd-signature-symbol">(</span>cb<span class="tsd-signature-symbol">: </span><a href="../globals.html#listenertype" class="tsd-signature-type">ListenerType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L54">model/nodeInterface.ts:54</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Register a callback function that is called whenever the value of the interface changes.
-										Used primarily for connections to work (they will &quot;transmit&quot; the value from one interface
-									to another when the value changes.)</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>cb: <a href="../globals.html#listenertype" class="tsd-signature-type">ListenerType</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The callback function that will be called with the new value as parameter.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
-							<p>Unsubscribe function. Call the returned function to unsubscribe.</p>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter-siganture">
-									<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-										</li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="save" class="tsd-anchor"></a>
 					<h3>save</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -321,12 +289,85 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterface.ts#L40">model/nodeInterface.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L55">core/nodeInterface.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/iinterfacestate.html" class="tsd-signature-type">IInterfaceState</a></h4>
 						</li>
 					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class">
+					<a name="events" class="tsd-anchor"></a>
+					<h3>events</h3>
+					<div class="tsd-signature tsd-kind-icon">events<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L13">core/nodeInterface.ts:13</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="events.beforesetvalue" class="tsd-anchor"></a>
+						<h3>before<wbr>Set<wbr>Value</h3>
+						<div class="tsd-signature tsd-kind-icon">before<wbr>Set<wbr>Value<span class="tsd-signature-symbol">:</span> <a href="preventablebaklavaevent.html" class="tsd-signature-type">PreventableBaklavaEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new PreventableBaklavaEvent&lt;any&gt;()</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L15">core/nodeInterface.ts:15</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="events.setconnectioncount" class="tsd-anchor"></a>
+						<h3>set<wbr>Connection<wbr>Count</h3>
+						<div class="tsd-signature tsd-kind-icon">set<wbr>Connection<wbr>Count<span class="tsd-signature-symbol">:</span> <a href="baklavaevent.html" class="tsd-signature-type">BaklavaEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new BaklavaEvent&lt;number&gt;()</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L14">core/nodeInterface.ts:14</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="events.setvalue" class="tsd-anchor"></a>
+						<h3>set<wbr>Value</h3>
+						<div class="tsd-signature tsd-kind-icon">set<wbr>Value<span class="tsd-signature-symbol">:</span> <a href="baklavaevent.html" class="tsd-signature-type">BaklavaEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new BaklavaEvent&lt;any&gt;()</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L16">core/nodeInterface.ts:16</a></li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class">
+					<a name="hooks" class="tsd-anchor"></a>
+					<h3>hooks</h3>
+					<div class="tsd-signature tsd-kind-icon">hooks<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L19">core/nodeInterface.ts:19</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="hooks.load-1" class="tsd-anchor"></a>
+						<h3>load</h3>
+						<div class="tsd-signature tsd-kind-icon">load<span class="tsd-signature-symbol">:</span> <a href="sequentialhook.html" class="tsd-signature-type">SequentialHook</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/iinterfacestate.html" class="tsd-signature-type">IInterfaceState</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new SequentialHook&lt;IInterfaceState&gt;()</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L20">core/nodeInterface.ts:20</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="hooks.save-1" class="tsd-anchor"></a>
+						<h3>save</h3>
+						<div class="tsd-signature tsd-kind-icon">save<span class="tsd-signature-symbol">:</span> <a href="sequentialhook.html" class="tsd-signature-type">SequentialHook</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/iinterfacestate.html" class="tsd-signature-type">IInterfaceState</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new SequentialHook&lt;IInterfaceState&gt;()</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeInterface.ts#L21">core/nodeInterface.ts:21</a></li>
+							</ul>
+						</aside>
+					</section>
 				</section>
 			</section>
 		</div>
@@ -340,24 +381,6 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="../enums/temporaryconnectionstate.html" class="tsd-kind-icon">Temporary<wbr>Connection<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="connection.html" class="tsd-kind-icon">Connection</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="dummyconnection.html" class="tsd-kind-icon">Dummy<wbr>Connection</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="editor.html" class="tsd-kind-icon">Editor</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="node.html" class="tsd-kind-icon">Node</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="nodebuilder.html" class="tsd-kind-icon">Node<wbr>Builder</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -365,9 +388,6 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="nodeinterface.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="nodeinterface.html#connectioncount" class="tsd-kind-icon">connection<wbr>Count</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="nodeinterface.html#id" class="tsd-kind-icon">id</a>
@@ -381,8 +401,8 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="nodeinterface.html#parent" class="tsd-kind-icon">parent</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="nodeinterface.html#type" class="tsd-kind-icon">type</a>
+							<li class=" tsd-kind-accessor tsd-parent-kind-class">
+								<a href="nodeinterface.html#connectioncount" class="tsd-kind-icon">connection<wbr>Count</a>
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
 								<a href="nodeinterface.html#value" class="tsd-kind-icon">value</a>
@@ -391,66 +411,18 @@
 								<a href="nodeinterface.html#load" class="tsd-kind-icon">load</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="nodeinterface.html#registerlistener" class="tsd-kind-icon">register<wbr>Listener</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="nodeinterface.html#save" class="tsd-kind-icon">save</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-class">
+								<a href="nodeinterface.html#events" class="tsd-kind-icon">events</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-class">
+								<a href="nodeinterface.html#hooks" class="tsd-kind-icon">hooks</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="nodeinterfacetypemanager.html" class="tsd-kind-icon">Node<wbr>Interface<wbr>Type<wbr>Manager</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="nodetreebuilder.html" class="tsd-kind-icon">Node<wbr>Tree<wbr>Builder</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iconnection.html" class="tsd-kind-icon">IConnection</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iconnectionstate.html" class="tsd-kind-icon">IConnection<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iconversion.html" class="tsd-kind-icon">IConversion</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iinterfacecreateoptions.html" class="tsd-kind-icon">IInterface<wbr>Create<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iinterfacestate.html" class="tsd-kind-icon">IInterface<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/inodeinterfacetype.html" class="tsd-kind-icon">INode<wbr>Interface<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/inodestate.html" class="tsd-kind-icon">INode<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/ioption.html" class="tsd-kind-icon">IOption</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/istate.html" class="tsd-kind-icon">IState</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/itemporaryconnection.html" class="tsd-kind-icon">ITemporary<wbr>Connection</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#listenertype" class="tsd-kind-icon">Listener<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#nodeconstructor" class="tsd-kind-icon">Node<wbr>Constructor</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#createbaklava" class="tsd-kind-icon">create<wbr>Baklava</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#generateid" class="tsd-kind-icon">generate<wbr>Id</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#getdomelements" class="tsd-kind-icon">get<wbr>Dom<wbr>Elements</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
