@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>NodeInterfaceTypeManager | Reference - BaklavaJS</title>
+	<title>InterfaceTypePlugin | Reference - BaklavaJS</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="nodeinterfacetypemanager.html">NodeInterfaceTypeManager</a>
+					<a href="interfacetypeplugin.html">InterfaceTypePlugin</a>
 				</li>
 			</ul>
-			<h1>Class NodeInterfaceTypeManager</h1>
+			<h1>Class InterfaceTypePlugin</h1>
 		</div>
 	</div>
 </header>
@@ -68,8 +68,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">NodeInterfaceTypeManager</span>
+						<span class="target">InterfaceTypePlugin</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/iplugin.html" class="tsd-signature-type">IPlugin</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -79,17 +85,18 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="nodeinterfacetypemanager.html#types" class="tsd-kind-icon">types</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="interfacetypeplugin.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="nodeinterfacetypemanager.html#addconversion" class="tsd-kind-icon">add<wbr>Conversion</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="nodeinterfacetypemanager.html#addtype" class="tsd-kind-icon">add<wbr>Type</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="nodeinterfacetypemanager.html#canconvert" class="tsd-kind-icon">can<wbr>Convert</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="nodeinterfacetypemanager.html#convert" class="tsd-kind-icon">convert</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="nodeinterfacetypemanager.html#getconversion" class="tsd-kind-icon">get<wbr>Conversion</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interfacetypeplugin.html#addconversion" class="tsd-kind-icon">add<wbr>Conversion</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interfacetypeplugin.html#addtype" class="tsd-kind-icon">add<wbr>Type</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interfacetypeplugin.html#canconvert" class="tsd-kind-icon">can<wbr>Convert</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interfacetypeplugin.html#convert" class="tsd-kind-icon">convert</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interfacetypeplugin.html#getconversion" class="tsd-kind-icon">get<wbr>Conversion</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interfacetypeplugin.html#register" class="tsd-kind-icon">register</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,12 +105,13 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="types" class="tsd-anchor"></a>
-					<h3>types</h3>
-					<div class="tsd-signature tsd-kind-icon">types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/inodeinterfacetype.html" class="tsd-signature-type">INodeInterfaceType</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<a name="type" class="tsd-anchor"></a>
+					<h3>type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;InterfaceTypePlugin&quot;</span></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/iplugin.html">IPlugin</a>.<a href="../interfaces/iplugin.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterfaceTypeManager.ts#L13">model/nodeInterfaceTypeManager.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/interface-types/interfaceTypes.ts#L16">interface-types/interfaceTypes.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -120,7 +128,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterfaceTypeManager.ts#L33">model/nodeInterfaceTypeManager.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/interface-types/interfaceTypes.ts#L58">interface-types/interfaceTypes.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -164,7 +172,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterfaceTypeManager.ts#L20">model/nodeInterfaceTypeManager.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/interface-types/interfaceTypes.ts#L45">interface-types/interfaceTypes.ts:45</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -201,7 +209,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterfaceTypeManager.ts#L56">model/nodeInterfaceTypeManager.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/interface-types/interfaceTypes.ts#L81">interface-types/interfaceTypes.ts:81</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -227,7 +235,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterfaceTypeManager.ts#L61">model/nodeInterfaceTypeManager.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/interface-types/interfaceTypes.ts#L85">interface-types/interfaceTypes.ts:85</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -250,13 +258,13 @@
 					<a name="getconversion" class="tsd-anchor"></a>
 					<h3>get<wbr>Conversion</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Conversion<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, to<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/iconversion.html" class="tsd-signature-type">IConversion</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Conversion<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, to<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/iconversion.html" class="tsd-signature-type">IConversion</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/model/nodeInterfaceTypeManager.ts#L52">model/nodeInterfaceTypeManager.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/interface-types/interfaceTypes.ts#L77">interface-types/interfaceTypes.ts:77</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -270,8 +278,34 @@
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span>
 								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">false</span>
+								<span class="tsd-signature-symbol"> | </span>
 								<a href="../interfaces/iconversion.html" class="tsd-signature-type">IConversion</a>
 							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="register" class="tsd-anchor"></a>
+					<h3>register</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">register<span class="tsd-signature-symbol">(</span>editor<span class="tsd-signature-symbol">: </span><a href="editor.html" class="tsd-signature-type">Editor</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/iplugin.html">IPlugin</a>.<a href="../interfaces/iplugin.html#register">register</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/interface-types/interfaceTypes.ts#L21">interface-types/interfaceTypes.ts:21</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>editor: <a href="editor.html" class="tsd-signature-type">Editor</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -287,102 +321,36 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="../enums/temporaryconnectionstate.html" class="tsd-kind-icon">Temporary<wbr>Connection<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="connection.html" class="tsd-kind-icon">Connection</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="dummyconnection.html" class="tsd-kind-icon">Dummy<wbr>Connection</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="editor.html" class="tsd-kind-icon">Editor</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="node.html" class="tsd-kind-icon">Node</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="nodebuilder.html" class="tsd-kind-icon">Node<wbr>Builder</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="nodeinterface.html" class="tsd-kind-icon">Node<wbr>Interface</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="nodeinterfacetypemanager.html" class="tsd-kind-icon">Node<wbr>Interface<wbr>Type<wbr>Manager</a>
+						<a href="interfacetypeplugin.html" class="tsd-kind-icon">Interface<wbr>Type<wbr>Plugin</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="nodeinterfacetypemanager.html#types" class="tsd-kind-icon">types</a>
+								<a href="interfacetypeplugin.html#type" class="tsd-kind-icon">type</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="nodeinterfacetypemanager.html#addconversion" class="tsd-kind-icon">add<wbr>Conversion</a>
+								<a href="interfacetypeplugin.html#addconversion" class="tsd-kind-icon">add<wbr>Conversion</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="nodeinterfacetypemanager.html#addtype" class="tsd-kind-icon">add<wbr>Type</a>
+								<a href="interfacetypeplugin.html#addtype" class="tsd-kind-icon">add<wbr>Type</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="nodeinterfacetypemanager.html#canconvert" class="tsd-kind-icon">can<wbr>Convert</a>
+								<a href="interfacetypeplugin.html#canconvert" class="tsd-kind-icon">can<wbr>Convert</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="nodeinterfacetypemanager.html#convert" class="tsd-kind-icon">convert</a>
+								<a href="interfacetypeplugin.html#convert" class="tsd-kind-icon">convert</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="nodeinterfacetypemanager.html#getconversion" class="tsd-kind-icon">get<wbr>Conversion</a>
+								<a href="interfacetypeplugin.html#getconversion" class="tsd-kind-icon">get<wbr>Conversion</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="interfacetypeplugin.html#register" class="tsd-kind-icon">register</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="nodetreebuilder.html" class="tsd-kind-icon">Node<wbr>Tree<wbr>Builder</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iconnection.html" class="tsd-kind-icon">IConnection</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iconnectionstate.html" class="tsd-kind-icon">IConnection<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iconversion.html" class="tsd-kind-icon">IConversion</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iinterfacecreateoptions.html" class="tsd-kind-icon">IInterface<wbr>Create<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iinterfacestate.html" class="tsd-kind-icon">IInterface<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/inodeinterfacetype.html" class="tsd-kind-icon">INode<wbr>Interface<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/inodestate.html" class="tsd-kind-icon">INode<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/ioption.html" class="tsd-kind-icon">IOption</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/istate.html" class="tsd-kind-icon">IState</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/itemporaryconnection.html" class="tsd-kind-icon">ITemporary<wbr>Connection</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#listenertype" class="tsd-kind-icon">Listener<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#nodeconstructor" class="tsd-kind-icon">Node<wbr>Constructor</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#createbaklava" class="tsd-kind-icon">create<wbr>Baklava</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#generateid" class="tsd-kind-icon">generate<wbr>Id</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#getdomelements" class="tsd-kind-icon">get<wbr>Dom<wbr>Elements</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

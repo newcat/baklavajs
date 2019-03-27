@@ -19,18 +19,18 @@ export abstract class Node {
 
     /** Type of the node */
     public abstract type: string;
-    /** Name of the node. Should be set equal to {@link type} by default */
+    /** Name of the node. Should be set equal to [[type]] by default */
     public abstract name: string;
     /** Unique identifier of the node */
     public id: string = "node_" + generateId();
     /** A map of all interfaces of the node.
-     * Key = Name of the interface
-     * Value = `NodeInterface` instance
+     * | Key = Name of the interface
+     * | Value = [[NodeInterface]] instance
      */
     public interfaces: Map<string, NodeInterface> = new Map();
     /** A map of all options of the node.
-     * Key = Name of the option
-     * Value = `NodeOption` instance
+     * | Key = Name of the option
+     * | Value = [[NodeOption]] instance
      */
     public options: Map<string, NodeOption> = new Map();
 

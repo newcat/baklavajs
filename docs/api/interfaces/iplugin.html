@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IState | Reference - BaklavaJS</title>
+	<title>IPlugin | Reference - BaklavaJS</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="istate.html">IState</a>
+					<a href="iplugin.html">IPlugin</a>
 				</li>
 			</ul>
-			<h1>Interface IState</h1>
+			<h1>Interface IPlugin</h1>
 		</div>
 	</div>
 </header>
@@ -68,13 +68,16 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">object</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">IState</span>
-							</li>
-						</ul>
+						<span class="target">IPlugin</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implemented by</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../classes/engine.html" class="tsd-signature-type">Engine</a></li>
+					<li><a href="../classes/interfacetypeplugin.html" class="tsd-signature-type">InterfaceTypePlugin</a></li>
+					<li><a href="../classes/viewplugin.html" class="tsd-signature-type">ViewPlugin</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -84,8 +87,13 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="istate.html#connections" class="tsd-kind-icon">connections</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="istate.html#nodes" class="tsd-kind-icon">nodes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iplugin.html#type" class="tsd-kind-icon">type</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="iplugin.html#register" class="tsd-kind-icon">register</a></li>
 							</ul>
 						</section>
 					</div>
@@ -94,24 +102,40 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="connections" class="tsd-anchor"></a>
-					<h3>connections</h3>
-					<div class="tsd-signature tsd-kind-icon">connections<span class="tsd-signature-symbol">:</span> <a href="iconnectionstate.html" class="tsd-signature-type">IConnectionState</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="type" class="tsd-anchor"></a>
+					<h3>type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/state.ts#L3">core/state.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/plugin.ts#L4">core/plugin.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="nodes" class="tsd-anchor"></a>
-					<h3>nodes</h3>
-					<div class="tsd-signature tsd-kind-icon">nodes<span class="tsd-signature-symbol">:</span> <a href="inodestate.html" class="tsd-signature-type">INodeState</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/state.ts#L2">core/state.ts:2</a></li>
-						</ul>
-					</aside>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="register" class="tsd-anchor"></a>
+					<h3>register</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">register<span class="tsd-signature-symbol">(</span>editor<span class="tsd-signature-symbol">: </span><a href="../classes/editor.html" class="tsd-signature-type">Editor</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/plugin.ts#L5">core/plugin.ts:5</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>editor: <a href="../classes/editor.html" class="tsd-signature-type">Editor</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -128,13 +152,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="istate.html" class="tsd-kind-icon">IState</a>
+						<a href="iplugin.html" class="tsd-kind-icon">IPlugin</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="istate.html#connections" class="tsd-kind-icon">connections</a>
+								<a href="iplugin.html#type" class="tsd-kind-icon">type</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="istate.html#nodes" class="tsd-kind-icon">nodes</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="iplugin.html#register" class="tsd-kind-icon">register</a>
 							</li>
 						</ul>
 					</li>

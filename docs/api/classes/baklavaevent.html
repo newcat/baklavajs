@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DummyConnection | Reference - BaklavaJS</title>
+	<title>BaklavaEvent | Reference - BaklavaJS</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="dummyconnection.html">DummyConnection</a>
+					<a href="baklavaevent.html">BaklavaEvent</a>
 				</li>
 			</ul>
-			<h1>Class DummyConnection</h1>
+			<h1>Class BaklavaEvent&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -67,109 +67,166 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>This class is used for calculation purposes only.
-						It won&#39;t alter any state of the connected nodes</p>
+						<p>Main event class for Baklava</p>
 					</div>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">DummyConnection</span>
+						<span class="target">BaklavaEvent</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="preventablebaklavaevent.html" class="tsd-signature-type">PreventableBaklavaEvent</a>
+							</li>
+						</ul>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/iconnection.html" class="tsd-signature-type">IConnection</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
+						<section class="tsd-index-section tsd-is-private-protected">
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="dummyconnection.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="baklavaevent.html#listeners" class="tsd-kind-icon">listeners</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="dummyconnection.html#from" class="tsd-kind-icon">from</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="dummyconnection.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="dummyconnection.html#to" class="tsd-kind-icon">to</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="baklavaevent.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="baklavaevent.html#emit" class="tsd-kind-icon">emit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="baklavaevent.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="listeners" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> listeners</h3>
+					<div class="tsd-signature tsd-kind-icon">listeners<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#tokentype" class="tsd-signature-type">TokenType</a><span class="tsd-signature-symbol">, </span><a href="../globals.html#listener" class="tsd-signature-type">Listener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/events/eventEmitter.ts#L8">core/events/eventEmitter.ts:8</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Dummy<wbr>Connection<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="nodeinterface.html" class="tsd-signature-type">NodeInterface</a>, to<span class="tsd-signature-symbol">: </span><a href="nodeinterface.html" class="tsd-signature-type">NodeInterface</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="dummyconnection.html" class="tsd-signature-type">DummyConnection</a></li>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addlistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Listener<span class="tsd-signature-symbol">(</span>token<span class="tsd-signature-symbol">: </span><a href="../globals.html#tokentype" class="tsd-signature-type">TokenType</a>, listener<span class="tsd-signature-symbol">: </span><a href="../globals.html#listener" class="tsd-signature-type">Listener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/connection.ts#L69">core/connection.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/events/eventEmitter.ts#L15">core/events/eventEmitter.ts:15</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Subscribe to the event</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>from: <a href="nodeinterface.html" class="tsd-signature-type">NodeInterface</a></h5>
+									<h5>token: <a href="../globals.html#tokentype" class="tsd-signature-type">TokenType</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A token that can be used to unsubscribe from the event later on</p>
+									</div>
 								</li>
 								<li>
-									<h5>to: <a href="nodeinterface.html" class="tsd-signature-type">NodeInterface</a></h5>
+									<h5>listener: <a href="../globals.html#listener" class="tsd-signature-type">Listener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A callback that will be invoked when the event occurs</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="dummyconnection.html" class="tsd-signature-type">DummyConnection</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="from" class="tsd-anchor"></a>
-					<h3>from</h3>
-					<div class="tsd-signature tsd-kind-icon">from<span class="tsd-signature-symbol">:</span> <a href="nodeinterface.html" class="tsd-signature-type">NodeInterface</a></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/iconnection.html">IConnection</a>.<a href="../interfaces/iconnection.html#from">from</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/connection.ts#L68">core/connection.ts:68</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="emit" class="tsd-anchor"></a>
+					<h3>emit</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">emit<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/events/eventEmitter.ts#L34">core/events/eventEmitter.ts:34</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Invoke all listeners</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The data to invoke the listeners with.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/iconnection.html">IConnection</a>.<a href="../interfaces/iconnection.html#id">id</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/connection.ts#L67">core/connection.ts:67</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="to" class="tsd-anchor"></a>
-					<h3>to</h3>
-					<div class="tsd-signature tsd-kind-icon">to<span class="tsd-signature-symbol">:</span> <a href="nodeinterface.html" class="tsd-signature-type">NodeInterface</a></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/iconnection.html">IConnection</a>.<a href="../interfaces/iconnection.html#to">to</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/connection.ts#L69">core/connection.ts:69</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removelistener" class="tsd-anchor"></a>
+					<h3>remove<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Listener<span class="tsd-signature-symbol">(</span>token<span class="tsd-signature-symbol">: </span><a href="../globals.html#tokentype" class="tsd-signature-type">TokenType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/events/eventEmitter.ts#L24">core/events/eventEmitter.ts:24</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove a listener</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>token: <a href="../globals.html#tokentype" class="tsd-signature-type">TokenType</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The token that was specified when subscribing to the listener.
+										An invalid token does not result in an error.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -185,20 +242,20 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="dummyconnection.html" class="tsd-kind-icon">Dummy<wbr>Connection</a>
+					<li class="current tsd-kind-class tsd-has-type-parameter">
+						<a href="baklavaevent.html" class="tsd-kind-icon">Baklava<wbr>Event</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="dummyconnection.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="baklavaevent.html#listeners" class="tsd-kind-icon">listeners</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="dummyconnection.html#from" class="tsd-kind-icon">from</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="baklavaevent.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="dummyconnection.html#id" class="tsd-kind-icon">id</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="baklavaevent.html#emit" class="tsd-kind-icon">emit</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="dummyconnection.html#to" class="tsd-kind-icon">to</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="baklavaevent.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a>
 							</li>
 						</ul>
 					</li>

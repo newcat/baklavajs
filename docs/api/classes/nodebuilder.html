@@ -114,7 +114,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/utility/nodeBuilder.ts#L65">utility/nodeBuilder.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeBuilder.ts#L59">core/nodeBuilder.ts:59</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -134,13 +134,13 @@
 					<a name="addinputinterface" class="tsd-anchor"></a>
 					<h3>add<wbr>Input<wbr>Interface</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Input<wbr>Interface<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, option<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">VueConstructor</span>, defaultValue<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="nodebuilder.html" class="tsd-signature-type">NodeBuilder</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Input<wbr>Interface<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, option<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, defaultValue<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, additionalProperties<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="nodebuilder.html" class="tsd-signature-type">NodeBuilder</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/utility/nodeBuilder.ts#L91">utility/nodeBuilder.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeBuilder.ts#L86">core/nodeBuilder.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -157,13 +157,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>type: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Type of the interface</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> option: <span class="tsd-signature-type">VueConstructor</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> option: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A node option component to be displayed when the interface is not connected</p>
 									</div>
@@ -176,6 +170,12 @@
 										For objects provide a function that returns the default value.</p>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> additionalProperties: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Additional properties of the interface that can be used by plugins</p>
+									</div>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="nodebuilder.html" class="tsd-signature-type">NodeBuilder</a></h4>
 							<p>Current node builder instance for chaining</p>
@@ -186,13 +186,13 @@
 					<a name="addoption" class="tsd-anchor"></a>
 					<h3>add<wbr>Option</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Option<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, component<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">VueConstructor</span>, defaultValue<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, sidebarComponent<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">VueConstructor</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="nodebuilder.html" class="tsd-signature-type">NodeBuilder</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Option<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, optionComponent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, defaultValue<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, sidebarComponent<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, additionalProperties<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="nodebuilder.html" class="tsd-signature-type">NodeBuilder</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/utility/nodeBuilder.ts#L119">utility/nodeBuilder.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeBuilder.ts#L115">core/nodeBuilder.ts:115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -209,10 +209,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>component: <span class="tsd-signature-type">VueConstructor</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Option component</p>
-									</div>
+									<h5>optionComponent: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> defaultValue: <span class="tsd-signature-type">any</span></h5>
@@ -223,9 +220,15 @@
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sidebarComponent: <span class="tsd-signature-type">VueConstructor</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sidebarComponent: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Optional component to display in the sidebar</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> additionalProperties: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Additional properties of the option that can be used by plugins</p>
 									</div>
 								</li>
 							</ul>
@@ -238,13 +241,13 @@
 					<a name="addoutputinterface" class="tsd-anchor"></a>
 					<h3>add<wbr>Output<wbr>Interface</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Output<wbr>Interface<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="nodebuilder.html" class="tsd-signature-type">NodeBuilder</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Output<wbr>Interface<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, additionalProperties<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="nodebuilder.html" class="tsd-signature-type">NodeBuilder</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/utility/nodeBuilder.ts#L103">utility/nodeBuilder.ts:103</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeBuilder.ts#L98">core/nodeBuilder.ts:98</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -261,9 +264,9 @@
 									</div>
 								</li>
 								<li>
-									<h5>type: <span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> additionalProperties: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Type of the interface</p>
+										<p>Additional properties of the interface that can be used by plugins</p>
 									</div>
 								</li>
 							</ul>
@@ -282,7 +285,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/utility/nodeBuilder.ts#L76">utility/nodeBuilder.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeBuilder.ts#L70">core/nodeBuilder.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -306,7 +309,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/utility/nodeBuilder.ts#L138">utility/nodeBuilder.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/nodeBuilder.ts#L134">core/nodeBuilder.ts:134</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -343,21 +346,6 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="../enums/temporaryconnectionstate.html" class="tsd-kind-icon">Temporary<wbr>Connection<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="connection.html" class="tsd-kind-icon">Connection</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="dummyconnection.html" class="tsd-kind-icon">Dummy<wbr>Connection</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="editor.html" class="tsd-kind-icon">Editor</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="node.html" class="tsd-kind-icon">Node</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -385,60 +373,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="nodeinterface.html" class="tsd-kind-icon">Node<wbr>Interface</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="nodeinterfacetypemanager.html" class="tsd-kind-icon">Node<wbr>Interface<wbr>Type<wbr>Manager</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="nodetreebuilder.html" class="tsd-kind-icon">Node<wbr>Tree<wbr>Builder</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iconnection.html" class="tsd-kind-icon">IConnection</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iconnectionstate.html" class="tsd-kind-icon">IConnection<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iconversion.html" class="tsd-kind-icon">IConversion</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iinterfacecreateoptions.html" class="tsd-kind-icon">IInterface<wbr>Create<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iinterfacestate.html" class="tsd-kind-icon">IInterface<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/inodeinterfacetype.html" class="tsd-kind-icon">INode<wbr>Interface<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/inodestate.html" class="tsd-kind-icon">INode<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/ioption.html" class="tsd-kind-icon">IOption</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/istate.html" class="tsd-kind-icon">IState</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/itemporaryconnection.html" class="tsd-kind-icon">ITemporary<wbr>Connection</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#listenertype" class="tsd-kind-icon">Listener<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#nodeconstructor" class="tsd-kind-icon">Node<wbr>Constructor</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#createbaklava" class="tsd-kind-icon">create<wbr>Baklava</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#generateid" class="tsd-kind-icon">generate<wbr>Id</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#getdomelements" class="tsd-kind-icon">get<wbr>Dom<wbr>Elements</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
