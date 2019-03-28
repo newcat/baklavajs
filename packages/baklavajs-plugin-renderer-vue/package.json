@@ -1,7 +1,7 @@
 {
   "name": "@baklavajs/plugin-renderer-vue",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Add types to node interfaces for BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
@@ -19,7 +19,7 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "devDependencies": {
-    "@baklavajs/core": "^1.0.1",
+    "@baklavajs/core": "^1.0.2",
     "clean-webpack-plugin": "^2.0.1",
     "copy-webpack-plugin": "^5.0.2",
     "css-loader": "^2.1.1",

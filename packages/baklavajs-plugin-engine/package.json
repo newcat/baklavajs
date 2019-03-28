@@ -1,7 +1,7 @@
 {
   "name": "@baklavajs/plugin-engine",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Execute BaklavaJS graphs",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
@@ -19,7 +19,7 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "devDependencies": {
-    "@baklavajs/core": "^1.0.1",
+    "@baklavajs/core": "^1.0.2",
     "clean-webpack-plugin": "^2.0.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.3.4000",
