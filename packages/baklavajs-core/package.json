@@ -1,5 +1,6 @@
 {
   "name": "@baklavajs/core",
+  "private": false,
   "version": "1.0.1",
   "description": "Core logic of BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",
@@ -24,5 +25,6 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-merge": "^4.2.1"
-  }
+  },
+  "gitHead": "203a950ba2c0095003bff9014c47996c953f044b"
 }
