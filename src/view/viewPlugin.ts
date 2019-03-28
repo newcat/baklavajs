@@ -1,4 +1,4 @@
-import { VueConstructor } from "vue";
+import Vue, { VueConstructor } from "vue";
 import { IPlugin, Editor, SequentialHook, Node } from "../core";
 import NodeView from "./components/node/Node.vue";
 import NodeOptionView from "./components/node/NodeOption.vue";
@@ -52,6 +52,10 @@ export class ViewPlugin implements IPlugin {
                 return state;
             });
         });
+    }
+
+    public registerOption(name: string, component: VueConstructor) {
+        Vue.set(this.options, name, component);
     }
 
 }

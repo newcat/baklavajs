@@ -22,16 +22,16 @@ There are two ways to create custom nodes:
 ### Node Builder
 The [NodeBuilder](!!API%{ "type": "class", "name": "nodebuilder" }%) is a simple way to build nodes "on the fly".
 ```js
-import { NodeBuilder, Options } from "baklavajs";
+import { NodeBuilder } from "baklavajs";
 
 export default new NodeBuilder("MathNode")
-    .addInputInterface("Number 1", "number", Options.NumberOption, 1)
-    .addInputInterface("Number 2", "number", Options.NumberOption, 10)
-    .addOption("Operation", Options.SelectOption, () => ({
+    .addInputInterface("Number 1", "NumberOption", 1)
+    .addInputInterface("Number 2", "NumberOption", 10)
+    .addOption("Operation", "SelectOption", () => ({
         selected: "Add",
         items: [ "Add", "Subtract" ]
     }))
-    .addOutputInterface("Output", "number")
+    .addOutputInterface("Output")
     .onCalculate((n) => {
         const n1 = n.getInterface("Number 1").value;
         const n2 = n.getInterface("Number 2").value;
@@ -62,10 +62,10 @@ export class MathNode extends Node {
 
     constructor() {
         super();
-        this.addInputInterface("Number 1", "number", Options.NumberOption, 1);
-        this.addInputInterface("Number 2", "number", Options.NumberOption, 10);
-        this.addOutputInterface("Output", "number");
-        this.addOption("Operation", Options.SelectOption, {
+        this.addInputInterface("Number 1", "NumberOption", 1);
+        this.addInputInterface("Number 2", "NumberOption", 10);
+        this.addOutputInterface("Output");
+        this.addOption("Operation", "SelectOption", {
             selected: "Add",
             items: [ "Add", "Subtract" ]
         });
@@ -91,6 +91,8 @@ export class MathNode extends Node {
 Each Node class can overwrite the `calculate()` function to perform some logic.
 Usually the calculation functions reads the values from the input interfaces and the options,
 performs some logic and sets the values of the output interfaces with the results.
+
+This technique is used by the [Engine](!!API%{ "type": "class", "name": "engine" }%) plugin.
 
 For a node, that outputs the sum of its two inputs, the calculation function could look like this:
 ```js

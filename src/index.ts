@@ -4,4 +4,4 @@ import * as InterfaceTypes from "./interface-types";
 import * as Options from "./options";
 import * as View from "./view";
 
-export default { Core, Engine, InterfaceTypes, Options, View };
+export { Core, Engine, InterfaceTypes, Options, View };

@@ -17,7 +17,7 @@ import { Editor, Node, BaklavaEvent, NodeInterface } from "../src/core";
 import { ViewPlugin } from "../src/view/viewPlugin";
 import { Engine } from "../src/engine/engine";
 import { InterfaceTypePlugin } from "../src/interface-types/interfaceTypes";
-import Options from "../src/options";
+import { OptionPlugin } from "../src/options";
 
 import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";
@@ -40,13 +40,19 @@ export default class App extends Vue {
 
     constructor() {
         super();
+
         this.editor = new Editor();
+
         this.viewPlugin = new ViewPlugin();
-        this.engine = new Engine(true);
-        this.nodeInterfaceTypes = new InterfaceTypePlugin();
         this.editor.use(this.viewPlugin);
+
+        this.engine = new Engine(true);
         this.editor.use(this.engine);
+
+        this.nodeInterfaceTypes = new InterfaceTypePlugin();
         this.editor.use(this.nodeInterfaceTypes);
+
+        this.editor.use(new OptionPlugin());
 
         this.viewPlugin.hooks.renderNode.tap(this, (node) => {
             if (node.data.type === "TestNode") {
@@ -55,10 +61,9 @@ export default class App extends Vue {
             return node;
         });
 
-        Object.entries(Options).forEach(([k, v]) => {
-            Vue.set(this.options, k, v);
-        });
-        this.viewPlugin.options = this.options;
+        this.viewPlugin.registerOption("AddOption", AddOption);
+        this.viewPlugin.registerOption("TriggerOption", TriggerOption);
+        this.viewPlugin.registerOption("SidebarOption", SidebarOption);
 
     }
 

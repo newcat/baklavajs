@@ -9,12 +9,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import Options from "../src/options";
+import { InputOption } from "../src/options";
 
 @Component({
-    components: {
-        InputOption: Options.InputOption
-    }
+    components: { InputOption }
 })
 export default class SidebarOption extends Vue {
 

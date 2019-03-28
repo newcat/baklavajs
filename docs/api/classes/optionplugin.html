@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IPlugin | Reference - BaklavaJS</title>
+	<title>OptionPlugin | Reference - BaklavaJS</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="iplugin.html">IPlugin</a>
+					<a href="optionplugin.html">OptionPlugin</a>
 				</li>
 			</ul>
-			<h1>Interface IPlugin</h1>
+			<h1>Class OptionPlugin</h1>
 		</div>
 	</div>
 </header>
@@ -68,17 +68,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IPlugin</span>
+						<span class="target">OptionPlugin</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
-				<h3>Implemented by</h3>
+				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/engine.html" class="tsd-signature-type">Engine</a></li>
-					<li><a href="../classes/interfacetypeplugin.html" class="tsd-signature-type">InterfaceTypePlugin</a></li>
-					<li><a href="../classes/optionplugin.html" class="tsd-signature-type">OptionPlugin</a></li>
-					<li><a href="../classes/viewplugin.html" class="tsd-signature-type">ViewPlugin</a></li>
+					<li><a href="../interfaces/iplugin.html" class="tsd-signature-type">IPlugin</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -88,13 +85,13 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iplugin.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="optionplugin.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="iplugin.html#register" class="tsd-kind-icon">register</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="optionplugin.html#register" class="tsd-kind-icon">register</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,36 +99,38 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="type" class="tsd-anchor"></a>
 					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;OptionPlugin&quot;</span></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/iplugin.html">IPlugin</a>.<a href="../interfaces/iplugin.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/plugin.ts#L4">core/plugin.ts:4</a></li>
+							<li>Defined in options/optionPlugin.ts:8</li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="register" class="tsd-anchor"></a>
 					<h3>register</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">register<span class="tsd-signature-symbol">(</span>editor<span class="tsd-signature-symbol">: </span><a href="../classes/editor.html" class="tsd-signature-type">Editor</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">register<span class="tsd-signature-symbol">(</span>editor<span class="tsd-signature-symbol">: </span><a href="editor.html" class="tsd-signature-type">Editor</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/iplugin.html">IPlugin</a>.<a href="../interfaces/iplugin.html#register">register</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/newcat/baklavajs/blob/master/src/core/plugin.ts#L5">core/plugin.ts:5</a></li>
+									<li>Defined in options/optionPlugin.ts:10</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>editor: <a href="../classes/editor.html" class="tsd-signature-type">Editor</a></h5>
+									<h5>editor: <a href="editor.html" class="tsd-signature-type">Editor</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -152,14 +151,14 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="iplugin.html" class="tsd-kind-icon">IPlugin</a>
+					<li class="current tsd-kind-class">
+						<a href="optionplugin.html" class="tsd-kind-icon">Option<wbr>Plugin</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iplugin.html#type" class="tsd-kind-icon">type</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="optionplugin.html#type" class="tsd-kind-icon">type</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="iplugin.html#register" class="tsd-kind-icon">register</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="optionplugin.html#register" class="tsd-kind-icon">register</a>
 							</li>
 						</ul>
 					</li>

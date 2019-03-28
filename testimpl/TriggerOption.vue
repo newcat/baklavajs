@@ -7,12 +7,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import Options from "../src/options";
+import { ButtonOption } from "../src/options";
 
 @Component({
-    components: {
-        ButtonOption: Options.ButtonOption
-    }
+    components: { ButtonOption }
 })
 export default class TriggerOption extends Vue {
 
