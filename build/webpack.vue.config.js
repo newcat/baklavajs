@@ -54,6 +54,12 @@ module.exports = {
             filename: "[name].css",
         })
     ],
+    output: {
+        filename: '[name].js',
+        libraryTarget: 'umd',
+        umdNamedDefine: true,
+        globalObject: `(typeof self !== 'undefined' ? self : this)`
+    },
     optimization: {
         minimize: false,
         concatenateModules: false

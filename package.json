@@ -3,5 +3,8 @@
     "private": true,
     "workspaces": [
         "packages/*"
-    ]
+    ],
+    "devDependencies": {
+        "clean-webpack-plugin": "^2.0.1"
+    }
 }

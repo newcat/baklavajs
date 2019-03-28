@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { InputOption } from "../src/options";
+import { InputOption } from "@baklavajs/plugin-options-vue";
 
 @Component({
     components: { InputOption }

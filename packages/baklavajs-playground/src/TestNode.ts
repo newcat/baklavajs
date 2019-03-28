@@ -1,4 +1,4 @@
-import { Editor, Node } from "../src/core";
+import { Editor, Node } from "@baklavajs/core";
 
 export default class TestNode extends Node {
 

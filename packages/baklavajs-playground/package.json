@@ -1,0 +1,37 @@
+{
+  "name": "@baklavajs/playground",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve"
+  },
+  "dependencies": {
+    "vue": "^2.6.6",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^8.0.0"
+  },
+  "devDependencies": {
+    "@baklavajs/core": "^1.0.3",
+    "@baklavajs/plugin-engine": "^1.0.3",
+    "@baklavajs/plugin-interface-types": "^1.0.3",
+    "@baklavajs/plugin-options-vue": "^1.0.3",
+    "@baklavajs/plugin-renderer-vue": "^1.0.3",
+    "@vue/cli-plugin-typescript": "^3.5.0",
+    "@vue/cli-service": "^3.5.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "typescript": "^3.2.1",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "postcss": {
+    "useConfigFile": false,
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}

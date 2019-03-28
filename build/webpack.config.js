@@ -34,6 +34,12 @@ module.exports = {
             root: 'Vue'
         }
     },
+    output: {
+        filename: '[name].js',
+        libraryTarget: 'umd',
+        umdNamedDefine: true,
+        globalObject: `(typeof self !== 'undefined' ? self : this)`
+    },
     plugins: [
         new CleanWebpackPlugin()
     ]

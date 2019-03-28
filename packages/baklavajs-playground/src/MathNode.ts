@@ -1,4 +1,4 @@
-import { NodeBuilder } from "../src/core";
+import { NodeBuilder } from "@baklavajs/core";
 
 export default new NodeBuilder("MathNode")
     .addInputInterface("Number 1", "NumberOption", 1)
