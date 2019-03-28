@@ -1,6 +1,5 @@
 {
   "name": "@baklavajs/plugin-options-vue",
-  "private": false,
   "version": "1.0.2",
   "description": "This plugin adds a set of predefined option components to the renderer-vue plugin for BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",
@@ -33,5 +32,8 @@
     "webpack-cli": "^3.3.0",
     "webpack-merge": "^4.2.1"
   },
-  "gitHead": "203a950ba2c0095003bff9014c47996c953f044b"
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "723bf8b6249e6b67d9a7a5a9c84cf1ee0ca33739"
 }
