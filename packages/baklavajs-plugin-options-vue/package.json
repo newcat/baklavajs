@@ -14,6 +14,12 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "devDependencies": {
-    "@baklavajs/plugin-renderer-vue": "^1.0.0"
+    "@baklavajs/plugin-renderer-vue": "^1.0.0",
+    "v-click-outside": "^2.0.2",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.0.2",
+    "vue-loader": "^15.7.0",
+    "vue-property-decorator": "^8.1.0",
+    "vue-template-compiler": "^2.6.10"
   }
 }
