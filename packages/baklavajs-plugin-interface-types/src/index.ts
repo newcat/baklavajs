@@ -1,5 +1,5 @@
-import { IPlugin, Editor } from "../core";
-import { ViewPlugin } from "../view/viewPlugin";
+import { IPlugin, Editor } from "@baklavajs/core";
+import { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
 
 export interface IConversion {
     targetType: string;

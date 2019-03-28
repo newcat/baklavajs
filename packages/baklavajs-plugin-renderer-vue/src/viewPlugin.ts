@@ -1,5 +1,5 @@
 import Vue, { VueConstructor } from "vue";
-import { IPlugin, Editor, SequentialHook, Node } from "../core";
+import { IPlugin, Editor, SequentialHook, Node } from "@baklavajs/core";
 import NodeView from "./components/node/Node.vue";
 import NodeOptionView from "./components/node/NodeOption.vue";
 import NodeInterfaceView from "./components/node/NodeInterface.vue";

@@ -1,69 +1,20 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const merge = require('webpack-merge');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const base = require('../../build/webpack.vue.config');
 
-module.exports = {
-    mode: "production",
+module.exports = merge(base, {
     entry: {
         index: './src/index.ts',
         styles: './src/styles/all.scss'
     },
-    externals: {
-        vue: {
-            commonjs: 'vue',
-            commonjs2: 'vue',
-            amd: 'vue',
-            root: 'Vue'
-        }
-    },
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                loader: 'ts-loader',
-                options: {
-                    appendTsSuffixTo: [/\.vue$/],
-                },
-                exclude: /node_modules/
-            },
-            {
-                test: /\.vue$/,
-                use: 'vue-loader'
-            },
-            {
-                test: /\.(sa|sc|c)ss$/,
-                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
-            }
-        ]
-    },
-    resolve: {
-        extensions: ['.ts', '.vue']
-    },
     plugins: [
-        new VueLoaderPlugin(),
-        new CleanWebpackPlugin([ 'dist' ]),
         new CopyWebpackPlugin([
             { from: "src/styles", to: "styles" }
-        ]),
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-        })
+        ])
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js',
-        library: 'BaklavaJS',
-        libraryTarget: 'umd',
-        umdNamedDefine: true,
-        globalObject: `(typeof self !== 'undefined' ? self : this)`
+        library: 'BaklavaJSRendererVue'
     },
-    optimization: {
-        minimize: false,
-        concatenateModules: false
-    },
-    performance: {
-        maxEntrypointSize: 300000
-    }
-};
+});

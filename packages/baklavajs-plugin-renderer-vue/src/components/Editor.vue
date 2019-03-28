@@ -50,7 +50,7 @@
 import { Component, Vue, Prop, Provide } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
-import { Editor, Node, Connection, NodeInterface, ITemporaryConnection, TemporaryConnectionState } from "../../core";
+import { Editor, Node, Connection, NodeInterface, ITemporaryConnection, TemporaryConnectionState } from "@baklavajs/core";
 import { ViewPlugin, IViewNode } from "../viewPlugin";
 
 import NodeView from "./node/Node.vue";

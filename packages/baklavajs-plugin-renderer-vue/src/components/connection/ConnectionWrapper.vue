@@ -6,7 +6,7 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom from "../../domResolver";
-import { Connection, TemporaryConnectionState } from "../../../core";
+import { Connection, TemporaryConnectionState } from "@baklavajs/core";
 
 @Component({
     components: {

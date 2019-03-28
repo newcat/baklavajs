@@ -6,6 +6,10 @@
   "homepage": "https://newcat.github.io/baklavajs",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "webpack"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/newcat/baklavajs.git"
@@ -14,17 +18,24 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "devDependencies": {
+    "@baklavajs/core": "^1.0.0",
+    "clean-webpack-plugin": "^2.0.1",
     "copy-webpack-plugin": "^5.0.2",
     "css-loader": "^2.1.1",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "portal-vue": "^1.5.1",
     "sass-loader": "^7.1.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.4000",
     "v-click-outside": "^2.0.2",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
     "vue-loader": "^15.7.0",
     "vue-property-decorator": "^8.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-merge": "^4.2.1"
   }
 }

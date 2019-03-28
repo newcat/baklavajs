@@ -1,44 +1,7 @@
 {
     "name": "baklavajs",
-    "version": "0.7.0",
-    "description": "Node/Graph editor for the browser using VueJS",
-    "keywords": [
-        "node",
-        "graph",
-        "editor",
-        "blender"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/newcat/baklavajs"
-    },
-    "files": [
-        "dist/**/!(report.html)"
-    ],
-    "license": "MIT",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "scripts": {
-        "build-lib": "webpack",
-        "gen-doc": "typedoc",
-        "cypress": "cypress open",
-        "test:ui": "cypress run",
-        "test:unit": "vue-cli-service test:unit",
-        "test": "npm run test:unit && npm run test:ui"
-    },
-    "devDependencies": {
-        "@types/chai": "^4.1.7",
-        "@types/mocha": "^5.2.6",
-        "@types/sinon": "^7.0.9",
-        "chai": "^4.2.0",
-        "clean-webpack-plugin": "^1.0.0",
-        "lerna": "^3.13.1",
-        "mocha": "^6.0.2",
-        "sinon": "^7.2.7",
-        "ts-loader": "^5.3.2",
-        "typedoc": "^0.14.2",
-        "typescript": "^3.2.2",
-        "webpack": "^4.28.3",
-        "webpack-cli": "^3.1.2"
-    }
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ]
 }

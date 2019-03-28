@@ -18,7 +18,7 @@
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 import EditorView from "../Editor.vue";
-import { NodeInterface } from "../../../core";
+import { NodeInterface } from "@baklavajs/core";
 import { ViewPlugin } from "../../viewPlugin";
 
 @Component

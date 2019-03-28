@@ -11,7 +11,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 import ConnectionView from "./ConnectionView.vue";
-import { ITemporaryConnection, TemporaryConnectionState, NodeInterface } from "../../../core";
+import { ITemporaryConnection, TemporaryConnectionState, NodeInterface } from "@baklavajs/core";
 import resolveDom from "../../domResolver";
 
 @Component({

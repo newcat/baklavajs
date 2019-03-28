@@ -12,17 +12,7 @@
         "downlevelIteration": true,
         "sourceMap": true,
         "declaration": true,
-        "outDir": "lib",
-        "declarationDir": "dist",
         "baseUrl": ".",
-        "types": [
-            "webpack-env"
-        ],
-        "paths": {
-            "@/*": [
-                "src/*"
-            ]
-        },
         "lib": [
             "esnext",
             "dom",
@@ -30,11 +20,6 @@
             "scripthost"
         ]
     },
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.tsx",
-        "src/**/*.vue"
-    ],
     "exclude": [
         "node_modules"
     ]

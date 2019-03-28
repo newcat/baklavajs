@@ -5,7 +5,7 @@ export * from "./viewPlugin";
 import Vue from "vue";
 import { ViewPlugin } from "./viewPlugin";
 import { BaklavaVuePlugin } from "./baklavaVuePlugin";
-import { Editor } from "../core";
+import { Editor } from "@baklavajs/core";
 
 export function createBaklava(element: Element): ViewPlugin {
 

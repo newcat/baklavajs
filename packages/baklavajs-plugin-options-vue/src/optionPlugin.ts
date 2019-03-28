@@ -1,6 +1,5 @@
-import Vue from "vue";
-import { IPlugin, Editor } from "../core";
-import { ViewPlugin } from "../view";
+import { IPlugin, Editor } from "@baklavajs/core";
+import { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
 import * as Options from "./options";
 
 export class OptionPlugin implements IPlugin {

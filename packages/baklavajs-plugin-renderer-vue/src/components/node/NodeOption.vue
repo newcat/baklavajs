@@ -12,7 +12,7 @@
 <script lang="ts">
 import { CreateElement, VueConstructor } from "vue";
 import { Component, Prop, Vue, Inject } from "vue-property-decorator";
-import { NodeOption, Node } from "../../../core";
+import { NodeOption, Node } from "@baklavajs/core";
 import { ViewPlugin } from "../../viewPlugin";
 
 @Component

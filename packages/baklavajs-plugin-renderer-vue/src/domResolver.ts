@@ -1,4 +1,4 @@
-import { NodeInterface } from "../core";
+import { NodeInterface } from "@baklavajs/core";
 
 export default function getDomElements(ni: NodeInterface) {
 

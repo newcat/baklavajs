@@ -1,4 +1,4 @@
-import { Node, IConnection } from "../core";
+import { Node, IConnection } from "@baklavajs/core";
 
 interface ITreeNode {
     n?: Node;

@@ -8,12 +8,15 @@
         >
 
             <span v-if="!renaming">{{ data.name }}</span>
-            <input-option
+            <input
                 v-else
+                type="text"
+                class="dark-input"
                 v-model="tempName"
+                placeholder="Node Name"
                 v-click-outside="doneRenaming"
                 @keydown.enter="doneRenaming"
-            ></input-option>
+            >
 
             <context-menu
                 v-model="contextMenu.show"
@@ -79,18 +82,16 @@ import { VueConstructor } from "vue";
 // @ts-ignore
 import ClickOutside from "v-click-outside";
 
-import { Node, NodeInterface, NodeOption, BaklavaEvent } from "../../../core";
+import { Node, NodeInterface, NodeOption, BaklavaEvent } from "@baklavajs/core";
 import { ViewPlugin, IViewNode } from "../../viewPlugin";
 import NodeInterfaceView from "./NodeInterface.vue";
 import NodeOptionView from "./NodeOption.vue";
 import ContextMenu from "../ContextMenu.vue";
-import InputOption from "../../../options/InputOption.vue";
 
 @Component({
     components: {
         "node-interface": NodeInterfaceView,
         ContextMenu,
-        InputOption,
         "node-option": NodeOptionView
     },
     directives: {
