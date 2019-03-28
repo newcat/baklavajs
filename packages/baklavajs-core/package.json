@@ -1,0 +1,16 @@
+{
+  "name": "baklavajs-core",
+  "version": "1.0.0",
+  "description": "Core logic of BaklavaJS",
+  "author": "newcat <freddy.wagner@web.de>",
+  "homepage": "https://newcat.github.io/baklavajs",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newcat/baklavajs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/newcat/baklavajs/issues"
+  }
+}

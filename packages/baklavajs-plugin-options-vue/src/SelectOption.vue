@@ -63,8 +63,3 @@ export default class SelectOption extends Vue {
 
 }
 </script>
-
-<style>
-
-</style>
-

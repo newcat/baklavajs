@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import { NodeInterface, Connection } from "@/core";
-import TestNode from "testimpl/TestNode";
+import { NodeInterface, Connection } from "../src";
+import TestNode from "./TestNode";
 
 describe("Connection", () => {
 

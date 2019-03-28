@@ -1,7 +1,7 @@
-import { Editor } from "@/core";
-import TestNode from "testimpl/TestNode";
-import OutputNode from "testimpl/OutputNode";
 import { expect } from "chai";
+import { Editor } from "../src";
+import TestNode from "./TestNode";
+import OutputNode from "./OutputNode";
 
 describe("Editor", () => {
 
