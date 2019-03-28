@@ -5,6 +5,9 @@
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
   "license": "MIT",
+  "files": [
+    "dist/**/!(report.html)"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
