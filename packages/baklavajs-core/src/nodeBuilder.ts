@@ -96,7 +96,7 @@ export class NodeBuilder {
      * @returns Current node builder instance for chaining
      */
     public addOutputInterface(name: string, additionalProperties?: Record<string, any>): NodeBuilder {
-        this.intfs.push({ isInput: false, name });
+        this.intfs.push({ isInput: false, name, additionalProperties });
         return this;
     }
 
