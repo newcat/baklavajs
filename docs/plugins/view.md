@@ -8,8 +8,8 @@ For getting the editor view up and running, you need to follow these steps:
 ### 1. Vue Plugin and Styles
 ```js
 // in your main.js
-import { BaklavaVuePlugin } from "baklavajs/dist/view";
-import "baklavajs/styles.css";
+import { BaklavaVuePlugin } from "@baklavajs/plugin-renderer-vue";
+import "@baklavajs/plugin-renderer-vue/dist/styles.css";
 Vue.use(BaklavaVuePlugin);
 ```
 
@@ -20,8 +20,8 @@ Vue.use(BaklavaVuePlugin);
 </template>
 
 <script>
-import { Editor } from "baklavajs/dist/core";
-import { ViewPlugin } from "baklavajs/dist/view";
+import { Editor } from "@baklavajs/core";
+import { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
 
 export default {
     data() {

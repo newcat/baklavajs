@@ -53,6 +53,7 @@ export class Engine implements IPlugin {
         for (const n of this.nodeCalculationOrder) {
             await n.calculate();
             if (this.connectionsPerNode.has(n)) {
+                // TODO: Add support for interface-types plugin and conversions
                 this.connectionsPerNode.get(n)!.forEach((c) => { c.to.value = c.from.value; });
             }
         }

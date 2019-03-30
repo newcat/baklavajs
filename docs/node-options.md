@@ -43,18 +43,17 @@ They can be used through the [option plugin](/plugins/options.md).
 
 ### Default Values
 > When providing complex default values like arrays or objects as default values using the NodeBuilder's
-> [addInputInterface](!!API%{ "type": "class", "name": "nodebuilder", "field": "addinputinterface"}%) method,
+> [addOption](!!API%{ "type": "class", "name": "nodebuilder", "field": "addoption"}%) method,
 > you need to provide a function that returns the default array or object.
-> This ensures that multiple instances of the node interface or node option
-> all have their own data objects.
+> This ensures that multiple instances of the node option all have their own data objects.
 
 Example:
 ```js
 new NodeBuilder("MyNode")
     // This is fine, because we provide a primitive as default value
-    .addInputInterface("Primitive", "MyOption", "default")
+    .addOption("Primitive", "MyOption", "default")
     // But in this case we need to provide a function to create an object
-    .addInputInterface("Complex", "MyOption", () => {
+    .addOption("Complex", "MyOption", () => {
         return { a: 1, b: "Hello World!" };
     })
 ```

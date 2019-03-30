@@ -1,12 +1,21 @@
-# Prebuilt Options
+# Options Plugin
 
 ## Usage
-All options are provided through the `Options` namespace:
+
+### As Plugin
 ```js
-import { Options } from "baklavajs";
+import { Editor } from "@baklavajs/core";
+import { OptionsPlugin } from "@baklavajs/plugin-options-vue";
+const editor = new Editor();
+editor.use(new OptionsPlugin());
 
 // in the node constructor
-this.addOption("MyOption", Options.InputOption);
+this.addOption("MyOption", "InputOption");
+```
+
+### Import Single Options
+```js
+import { InputOption } from "@baklavajs/plugin-options-vue";
 ```
 
 ## List of Prebuilt Options

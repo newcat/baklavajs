@@ -1,6 +1,7 @@
 # Creating Custom Nodes <!-- omit in toc -->
 
 - [Basics](#basics)
+  - [Node Interfaces](#node-interfaces)
 - [Custom Node Implementation](#custom-node-implementation)
   - [Node Builder](#node-builder)
   - [Class](#class)
@@ -8,13 +9,24 @@
 
 ## Basics
 Every node consists of three parts:
-* [Output Interfaces](/node-interfaces.md)
+* Output Interfaces
 * [Options](/node-options.md)
-* [Input Interfaces](/node-interfaces.md)
+* Input Interfaces
 
 ![node parts](img/node_parts.png)
 
 All of these parts are customizable.
+
+### Node Interfaces
+
+Interfaces are used to receive data from other nodes (*input interfaces*) or send data to other nodes (*output interfaces*).
+Each node interface is identified by its name (this also means, every interface on a single node must have a unique name).
+An input interface, which is not connected, can display a node option to allow the user to change its value. The option will automatically be hidden when the interface is connected.
+
+> When providing complex default values like arrays or objects as default values using the NodeBuilder's
+> [addInputInterface](!!API%{ "type": "class", "name": "nodebuilder", "field": "addinputinterface"}%) method,
+> you need to provide a function that returns the default array or object.
+> This ensures that multiple instances of the node interface all have their own data objects.
 
 ## Custom Node Implementation
 There are two ways to create custom nodes:

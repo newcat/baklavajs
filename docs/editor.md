@@ -8,7 +8,6 @@ The editor class is the main class of the model. You can do most things like add
 - [Connections](#connections)
   - [Connection validity](#connection-validity)
   - [Adding / removing connections](#adding--removing-connections)
-- [Calculation](#calculation)
 - [Saving / Export](#saving--export)
 - [Loading / Import](#loading--import)
 
@@ -20,7 +19,7 @@ To register your node types call the [registerNodeType](!!API%{ "type": "class",
 
 ### Adding / removing nodes
 [addNode](!!API%{ "type": "class", "name": "editor", "field": "addnode" }%)  
-This function takes either a registered node type or a node instance and adds it to the list of nodes.
+This function takes a node instance and adds it to the list of nodes.
 
 [removeNode](!!API%{ "type": "class", "name": "editor", "field": "removenode" }%)  
 Pass an instance of a node in the `nodes` list as argument to remove the node from the list. This will also remove all connections from and to the node.
@@ -32,16 +31,11 @@ Connections connect an output of a node to an input of another node.
 > Please never instantiate the class `Connection` yourself. This will connect the nodes, but as the connection is not included in the `connections` list, errors may arise. If you absolutely need an implementation of the `IConnection` interface, use the `DummyConnection` class.
 
 ### Connection validity
-To prevent infinite loops in node calculation, the graph must not contain cycles. This will be checked whenever a connection is added.
+By default, every connection is allowed. However, there are certain exceptions:
+* The connection is between two interfaces of the same node
+* The connection is between two output or two input interfaces
 
-Additionally, you can allow connections only between certain interface types. By default, connections are only allowed between interfaces with the same type. If you want to change this behavior, have a look at the [typing system](interface-types.md).
-
-The `typeComparer` is a function, that takes an `IConnection` as a parameter and returns a boolean that specifies, whether this connection is allowed or not. The default implementation is:
-```js
-function compare(connection) {
-    connection.from.type === connection.to.type;
-}
-```
+Additionally, plugins can prevent connections from being created. For example, the [Interface Types](/plugins/interface-types.md) plugin will prevent connections between interfaces of different types unless a conversion exists. Similarly, the [Engine](/plugins/engine.md) plugin will prevent connections that would result in a cycle in the graph.
 
 ### Adding / removing connections
 Use the [addConnection](!!API%{ "type": "class", "name": "editor", "field": "addconnection" }%) and [removeConnection()](!!API%{ "type": "class", "name": "editor", "field": "removeconnection" }%) methods
@@ -49,12 +43,6 @@ for adding or removing connections.
 
 > Never remove a connection from the list yourself! This will result in the connection not being GCed.
 > Always use the `removeConnection` method.
-
-
-## Calculation
-The editor model also provides a convenience function to calculate all nodes based on the node tree. For this to work, you need to implement the [calculate](!!API%{ "type": "class", "name": "node", "field": "calculate" }%) method when creating custom nodes.
-You can also [export](#saving--export) the editor state and node tree to do calculations yourself. This could be useful if you have heavy logic that you want to perform in WASM or offload to a server.
-However, for simple use cases, using the `calculate()` method should be fine.
 
 
 ## Saving / Export
