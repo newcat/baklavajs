@@ -1,0 +1,35 @@
+{
+  "name": "@baklavajs/core",
+  "version": "1.0.4",
+  "description": "Core logic of BaklavaJS",
+  "author": "newcat <freddy.wagner@web.de>",
+  "homepage": "https://newcat.github.io/baklavajs",
+  "license": "MIT",
+  "files": [
+    "dist/**/!(report.html)"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newcat/baklavajs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/newcat/baklavajs/issues"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^2.0.1",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.4000",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-merge": "^4.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "723bf8b6249e6b67d9a7a5a9c84cf1ee0ca33739"
+}
