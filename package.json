@@ -5,6 +5,7 @@
         "packages/*"
     ],
     "devDependencies": {
-        "clean-webpack-plugin": "^2.0.1"
+        "clean-webpack-plugin": "^2.0.1",
+        "lerna": "^3.13.1"
     }
 }

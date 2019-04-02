@@ -7,7 +7,7 @@ notifications:
     on_failure: always
 
 cache:
-  npm: true
+  yarn: true
   directories:
     - ~./cache
 
@@ -15,13 +15,11 @@ jobs:
   include:
     - stage: test
       script:
-        - npm run test:unit
-        - npm run serve -- --silent &
-        - npm run test:ui
-        - kill $(jobs -p) || true
+        - lerna run test
     - stage: build and deploy
       if: branch =~ /^v.*$/ AND tag IS present
-      script: npm run build-lib
+      script:
+        - lerna run build
       deploy:
         provider: npm
         on:
