@@ -23,12 +23,6 @@
     "typescript": "^3.2.1",
     "vue-template-compiler": "^2.5.21"
   },
-  "postcss": {
-    "useConfigFile": false,
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",

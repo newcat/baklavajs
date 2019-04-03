@@ -209,8 +209,8 @@ export class Editor {
             }
 
             const node = new nt();
-            node.load(n);
             this.addNode(node);
+            node.load(n);
 
         }
 
