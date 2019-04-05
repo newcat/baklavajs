@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@baklavajs/core": "^1.0.7",
+    "@baklavajs/plugin-interface-types": "^1.0.7",
     "clean-webpack-plugin": "^2.0.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.3.4000",

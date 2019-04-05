@@ -8,7 +8,7 @@ interface ITreeNode {
 const isEmpty = (obj: any) =>
     [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
 
-export function calculateOrder(nodes: ReadonlyArray<Node>, connections: ReadonlyArray<IConnection>): Node[] {
+export function calculateOrder(nodes: ReadonlyArray<Node>, connections: ReadonlyArray<IConnection>, roots?: Node[]): Node[] {
 
     const adjacency = new Map<Node, Node[]>();
 
@@ -22,7 +22,7 @@ export function calculateOrder(nodes: ReadonlyArray<Node>, connections: Readonly
     });
 
     // DFS for initial tree building and cycle detection
-    const outputs: Node[] = nodes.filter((n) => isEmpty(n.outputInterfaces));
+    const outputs: Node[] = roots || nodes.filter((n) => isEmpty(n.outputInterfaces));
     const root: ITreeNode = {
         children: outputs.map((o) => ({ n: o, children: [] }))
     };
