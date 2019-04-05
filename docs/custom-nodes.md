@@ -104,7 +104,7 @@ Each Node class can overwrite the `calculate()` function to perform some logic.
 Usually the calculation functions reads the values from the input interfaces and the options,
 performs some logic and sets the values of the output interfaces with the results.
 
-This technique is used by the [Engine](!!API%{ "type": "class", "name": "engine" }%) plugin.
+This technique is used by the [Engine](plugins/engine.md) plugin.
 
 For a node, that outputs the sum of its two inputs, the calculation function could look like this:
 ```js

@@ -5,7 +5,6 @@
   * [Styling](/styling.md)
 * **Custom Nodes**
   * [Creating Custom Nodes](/custom-nodes.md)
-  * [Node Interfaces](/node-interfaces.md)
   * [Node Options](/node-options.md)
 * **Plugins**
   * [View](/plugins/view.md)
