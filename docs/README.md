@@ -1,10 +1,17 @@
 # BaklavaJS
 
 [![Build Status](https://travis-ci.org/newcat/baklavajs.svg?branch=master)](https://travis-ci.org/newcat/baklavajs)
-[![npm version](https://badge.fury.io/js/baklavajs.svg)](https://badge.fury.io/js/baklavajs)
 
 Graph / node editor in the browser using VueJS
 ![example](img/example.png)
+
+| Package | Version |
+| --- | --- |
+| @baklavajs/core | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/core.svg) |
+| @baklavajs/plugin-engine | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-engine.svg) |
+| @baklavajs/plugin-interface-types | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-interface-types.svg) |
+| @baklavajs/plugin-options-vue | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-options-vue.svg) |
+| @baklavajs/plugin-renderer-vue | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-renderer-vue.svg) |
 
 ## Introduction
 BaklavaJS is divided into three different parts:
@@ -14,9 +21,9 @@ BaklavaJS is divided into three different parts:
 
 The **core** contains all the necessary logic for the node editor. However, tt does not calculate nodes nor can it display anything. For that, the **engine** and **view** are used.
 
-# Getting Started
+## Getting Started
 
-## Without Vue / NPM
+### Without Vue / NPM
 Add these lines in your HTML file:
 ```html
 <!-- in your <head> -->
@@ -57,13 +64,4 @@ Now follow the steps described [here](/plugins/view.md)
 > If you do not see the node editor, add a wrapper element with width and height properties around the editor.
 > By default, the editor fills its parent completely. However, if the parent is the `<body>` element, this won't work.
 
-## Electron
-If you want to use this library in Electron, you need to add BaklavaJS to the whitelisted externals.
-To do that, add the following code to your `package.json`:
-```json
-{
-    "electronWebpack": {
-        "whiteListedModules": [ "baklavajs" ]
-    }
-}
-```
+

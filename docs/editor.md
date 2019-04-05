@@ -1,5 +1,5 @@
 # Editor <!-- omit in toc -->
-The editor class is the main class of the model. You can do most things like adding/removing nodes and connections, loading/saving, ... from here.
+The editor class is the main class of Baklava's core. You can do most things like adding/removing nodes and connections or loading/saving from here.
 
 > Please only use the provided functions and do not modify fields directly.
 

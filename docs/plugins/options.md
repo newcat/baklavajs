@@ -27,3 +27,14 @@ import { InputOption } from "@baklavajs/plugin-options-vue";
 | `NumberOption` | A numeric up/down field for numeric values. | `number` |
 | `SelectOption` | A dropdown select which allows the user to choose one of predefined values. | `{ selected: string, items: string[] }` |
 | `TextOption` | Displays arbitrary strings | `string` |
+
+## Electron
+If you want to use this plugin in Electron, you need to add it to the whitelisted externals.
+To do that, add the following code to your `package.json`:
+```json
+{
+    "electronWebpack": {
+        "whiteListedModules": [ "@baklavajs/plugin-options-vue" ]
+    }
+}
+```

@@ -46,3 +46,14 @@ When adding an option to a node, you only specify the type of the option as a st
 The ViewPlugin contains the [options](!!API%{ "type": "class", "name": "viewplugin", "field": "options" }%) field that maps these strings to actual view components.
 
 To add your custom option to this mapping, use the [registerOption](!!API%{ "type": "class", "name": "viewplugin", "field": "registerOption" }%) method.
+
+## Electron
+If you want to use this plugin in Electron, you need to add it to the whitelisted externals.
+To do that, add the following code to your `package.json`:
+```json
+{
+    "electronWebpack": {
+        "whiteListedModules": [ "@baklavajs/plugin-renderer-vue" ]
+    }
+}
+```
