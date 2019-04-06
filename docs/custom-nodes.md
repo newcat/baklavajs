@@ -24,7 +24,7 @@ Each node interface is identified by its name (this also means, every interface 
 An input interface, which is not connected, can display a node option to allow the user to change its value. The option will automatically be hidden when the interface is connected.
 
 > When providing complex default values like arrays or objects as default values using the NodeBuilder's
-> [addInputInterface](!!API%{ "type": "class", "name": "nodebuilder", "field": "addinputinterface"}%) method,
+> [addInputInterface](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "nodebuilder", "field": "addinputinterface"}%) method,
 > you need to provide a function that returns the default array or object.
 > This ensures that multiple instances of the node interface all have their own data objects.
 
@@ -32,7 +32,7 @@ An input interface, which is not connected, can display a node option to allow t
 There are two ways to create custom nodes:
 
 ### Node Builder
-The [NodeBuilder](!!API%{ "type": "class", "name": "nodebuilder" }%) is a simple way to build nodes "on the fly".
+The [NodeBuilder](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "nodebuilder" }%) is a simple way to build nodes "on the fly".
 ```js
 import { NodeBuilder } from "baklavajs";
 

@@ -52,7 +52,7 @@ const editor = plugin.editor;
 </script>
 ```
 
-The function will return a [ViewPlugin](!!API%{ "type": "class", "name": "viewplugin" }%) instance which in turn contains a reference to the [Editor](!!API%{ "type": "class", "name": "editor" }%) instance.
+The function will return a `ViewPlugin` instance which in turn contains a reference to the `Editor` instance.
 
 ## With Vue / NPM
 

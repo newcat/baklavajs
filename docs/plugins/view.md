@@ -43,9 +43,13 @@ export default {
 
 ## Register Options
 When adding an option to a node, you only specify the type of the option as a string. This is done to separate logic and view.
-The ViewPlugin contains the [options](!!API%{ "type": "class", "name": "viewplugin", "field": "options" }%) field that maps these strings to actual view components.
+The ViewPlugin contains the `options` field that maps these strings to actual view components.
 
-To add your custom option to this mapping, use the [registerOption](!!API%{ "type": "class", "name": "viewplugin", "field": "registerOption" }%) method.
+To add your custom option to this mapping, use the `registerOption` method:
+```js
+import MyOption from "MyOption.vue";
+viewPlugin.registerOption("MyOption", MyOption);
+```
 
 ## Electron
 If you want to use this plugin in Electron, you need to add it to the whitelisted externals.

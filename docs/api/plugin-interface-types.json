@@ -1,0 +1,673 @@
+{
+	"id": 0,
+	"name": "Reference - BaklavaJS",
+	"kind": 0,
+	"flags": {},
+	"children": [
+		{
+			"id": 9,
+			"name": "InterfaceTypePlugin",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 10,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 16,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"defaultValue": "\"InterfaceTypePlugin\""
+				},
+				{
+					"id": 18,
+					"name": "addConversion",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 19,
+							"name": "addConversion",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "A conversion makes it possible to connect two node interfaces altough they have different types."
+							},
+							"parameters": [
+								{
+									"id": 20,
+									"name": "from",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Type to convert from"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 21,
+									"name": "to",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Type to convert to"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 22,
+									"name": "transformationFunction",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "\nWill be called to transform the value from one type to another.\nA transformation to convert the type `string` to `number` could be `parseInt`.\n"
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											},
+											{
+												"type": "reflection",
+												"declaration": {
+													"id": 23,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"signatures": [
+														{
+															"id": 24,
+															"name": "__call",
+															"kind": 4096,
+															"kindString": "Call signature",
+															"flags": {},
+															"parameters": [
+																{
+																	"id": 25,
+																	"name": "value",
+																	"kind": 32768,
+																	"kindString": "Parameter",
+																	"flags": {},
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "any"
+																	}
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 58,
+							"character": 24
+						}
+					]
+				},
+				{
+					"id": 14,
+					"name": "addType",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 15,
+							"name": "addType",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Add a new node interface type"
+							},
+							"parameters": [
+								{
+									"id": 16,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the type"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 17,
+									"name": "color",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Color of the type. Will be used to color the ports of the node interfaces.\n"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 45,
+							"character": 18
+						}
+					]
+				},
+				{
+					"id": 30,
+					"name": "canConvert",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 31,
+							"name": "canConvert",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 32,
+									"name": "from",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 33,
+									"name": "to",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 81,
+							"character": 21
+						}
+					]
+				},
+				{
+					"id": 34,
+					"name": "convert",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 35,
+							"name": "convert",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 36,
+									"name": "from",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 37,
+									"name": "to",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 38,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "any"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 85,
+							"character": 18
+						}
+					]
+				},
+				{
+					"id": 26,
+					"name": "getConversion",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 27,
+							"name": "getConversion",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 28,
+									"name": "from",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 29,
+									"name": "to",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "intrinsic",
+										"name": "false"
+									},
+									{
+										"type": "reference",
+										"name": "IConversion",
+										"id": 1
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 77,
+							"character": 24
+						}
+					]
+				},
+				{
+					"id": 11,
+					"name": "register",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 12,
+							"name": "register",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 13,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "Editor"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 21,
+							"character": 19
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						10
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						18,
+						14,
+						30,
+						34,
+						26,
+						11
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 14,
+					"character": 32
+				}
+			],
+			"implementedTypes": [
+				{
+					"type": "reference",
+					"name": "IPlugin"
+				}
+			]
+		},
+		{
+			"id": 1,
+			"name": "IConversion",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 2,
+					"name": "targetType",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 5,
+							"character": 14
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 3,
+					"name": "transformationFunction",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 4,
+							"name": "transformationFunction",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "any"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 6,
+							"character": 26
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						2
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						3
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 4,
+					"character": 28
+				}
+			]
+		},
+		{
+			"id": 6,
+			"name": "INodeInterfaceType",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 7,
+					"name": "color",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 10,
+							"character": 9
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 8,
+					"name": "conversions",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 11,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "array",
+						"elementType": {
+							"type": "reference",
+							"name": "IConversion",
+							"id": 1
+						}
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						7,
+						8
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 9,
+					"character": 35
+				}
+			]
+		}
+	],
+	"groups": [
+		{
+			"title": "Classes",
+			"kind": 128,
+			"children": [
+				9
+			]
+		},
+		{
+			"title": "Interfaces",
+			"kind": 256,
+			"children": [
+				1,
+				6
+			]
+		}
+	]
+}
