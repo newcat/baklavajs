@@ -1,0 +1,462 @@
+{
+	"id": 0,
+	"name": "Reference - BaklavaJS",
+	"kind": 0,
+	"flags": {},
+	"children": [
+		{
+			"id": 10,
+			"name": "Engine",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 16,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "Construct a new Engine plugin"
+					},
+					"signatures": [
+						{
+							"id": 17,
+							"name": "new Engine",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Construct a new Engine plugin"
+							},
+							"parameters": [
+								{
+									"id": 18,
+									"name": "calculateOnChange",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"shortText": "Whether to automatically calculate all nodes when any node interface or node option is changed.\n"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "boolean"
+									},
+									"defaultValue": "false"
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Engine",
+								"id": 10
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "engine.ts",
+							"line": 25,
+							"character": 61
+						}
+					]
+				},
+				{
+					"id": 11,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "engine.ts",
+							"line": 7,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"defaultValue": "\"EnginePlugin\""
+				},
+				{
+					"id": 12,
+					"name": "rootNodes",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"getSignature": [
+						{
+							"id": 13,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "reference",
+									"name": "Node"
+								}
+							}
+						}
+					],
+					"setSignature": [
+						{
+							"id": 14,
+							"name": "__set",
+							"kind": 1048576,
+							"kindString": "Set signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 15,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "array",
+										"elementType": {
+											"type": "reference",
+											"name": "Node"
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "engine.ts",
+							"line": 9,
+							"character": 24
+						},
+						{
+							"fileName": "engine.ts",
+							"line": 13,
+							"character": 24
+						}
+					]
+				},
+				{
+					"id": 22,
+					"name": "calculate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 23,
+							"name": "calculate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Calculate all nodes.\nThis will automatically calculate the node calculation order if necessary and\ntransfer values between connected node interfaces."
+							},
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "engine.ts",
+							"line": 80,
+							"character": 26
+						}
+					]
+				},
+				{
+					"id": 19,
+					"name": "register",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 20,
+							"name": "register",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 21,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "Editor"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "engine.ts",
+							"line": 35,
+							"character": 19
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						16
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						11
+					]
+				},
+				{
+					"title": "Accessors",
+					"kind": 262144,
+					"children": [
+						12
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						22,
+						19
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "engine.ts",
+					"line": 5,
+					"character": 19
+				}
+			],
+			"implementedTypes": [
+				{
+					"type": "reference",
+					"name": "IPlugin"
+				}
+			]
+		},
+		{
+			"id": 1,
+			"name": "calculateOrder",
+			"kind": 64,
+			"kindString": "Function",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"signatures": [
+				{
+					"id": 2,
+					"name": "calculateOrder",
+					"kind": 4096,
+					"kindString": "Call signature",
+					"flags": {},
+					"parameters": [
+						{
+							"id": 3,
+							"name": "nodes",
+							"kind": 32768,
+							"kindString": "Parameter",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "ReadonlyArray",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Node"
+									}
+								]
+							}
+						},
+						{
+							"id": 4,
+							"name": "connections",
+							"kind": 32768,
+							"kindString": "Parameter",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "ReadonlyArray",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IConnection"
+									}
+								]
+							}
+						},
+						{
+							"id": 5,
+							"name": "roots",
+							"kind": 32768,
+							"kindString": "Parameter",
+							"flags": {
+								"isOptional": true
+							},
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "reference",
+									"name": "Node"
+								}
+							}
+						}
+					],
+					"type": {
+						"type": "array",
+						"elementType": {
+							"type": "reference",
+							"name": "Node"
+						}
+					}
+				}
+			],
+			"sources": [
+				{
+					"fileName": "nodeTreeBuilder.ts",
+					"line": 11,
+					"character": 30
+				}
+			]
+		},
+		{
+			"id": 6,
+			"name": "containsCycle",
+			"kind": 64,
+			"kindString": "Function",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"signatures": [
+				{
+					"id": 7,
+					"name": "containsCycle",
+					"kind": 4096,
+					"kindString": "Call signature",
+					"flags": {},
+					"parameters": [
+						{
+							"id": 8,
+							"name": "nodes",
+							"kind": 32768,
+							"kindString": "Parameter",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "ReadonlyArray",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Node"
+									}
+								]
+							}
+						},
+						{
+							"id": 9,
+							"name": "connections",
+							"kind": 32768,
+							"kindString": "Parameter",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "ReadonlyArray",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IConnection"
+									}
+								]
+							}
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "boolean"
+					}
+				}
+			],
+			"sources": [
+				{
+					"fileName": "nodeTreeBuilder.ts",
+					"line": 74,
+					"character": 29
+				}
+			]
+		}
+	],
+	"groups": [
+		{
+			"title": "Classes",
+			"kind": 128,
+			"children": [
+				10
+			]
+		},
+		{
+			"title": "Functions",
+			"kind": 64,
+			"children": [
+				1,
+				6
+			]
+		}
+	]
+}

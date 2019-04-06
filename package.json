@@ -5,13 +5,15 @@
         "packages/*"
     ],
     "devDependencies": {
+        "@types/chai": "^4.1.7",
+        "chai": "^4.2.0",
         "clean-webpack-plugin": "^2.0.1",
         "lerna": "^3.13.1"
     },
     "postcss": {
         "useConfigFile": false,
         "plugins": {
-          "autoprefixer": {}
+            "autoprefixer": {}
         }
     }
 }

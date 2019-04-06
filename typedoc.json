@@ -2,7 +2,6 @@
     "mode": "file",
     "excludeNotExported": true,
     "excludePrivate": true,
-    "out": "docs/api",
     "name": "Reference - BaklavaJS",
     "gitRevision": "master"
 }

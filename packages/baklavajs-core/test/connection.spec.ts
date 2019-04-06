@@ -1,4 +1,5 @@
-import { expect } from "chai";
+import chai from "chai";
+const expect = chai.expect;
 import { NodeInterface, Connection } from "../src";
 import TestNode from "./TestNode";
 

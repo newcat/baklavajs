@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { Node } from "@/core";
+import { Node } from "../src";
 
 class CustomNode extends Node {
 

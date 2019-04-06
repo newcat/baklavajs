@@ -15,6 +15,7 @@ jobs:
   include:
     - stage: test
       script:
+        - lerna run build
         - lerna run test
     - stage: build and deploy
       if: branch =~ /^v.*$/ AND tag IS present

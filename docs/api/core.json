@@ -1,0 +1,8127 @@
+{
+	"id": 0,
+	"name": "Reference - BaklavaJS",
+	"kind": 0,
+	"flags": {},
+	"children": [
+		{
+			"id": 209,
+			"name": "TemporaryConnectionState",
+			"kind": 4,
+			"kindString": "Enumeration",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 211,
+					"name": "ALLOWED",
+					"kind": 16,
+					"kindString": "Enumeration member",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 7,
+							"character": 11
+						}
+					]
+				},
+				{
+					"id": 212,
+					"name": "FORBIDDEN",
+					"kind": 16,
+					"kindString": "Enumeration member",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 8,
+							"character": 13
+						}
+					]
+				},
+				{
+					"id": 210,
+					"name": "NONE",
+					"kind": 16,
+					"kindString": "Enumeration member",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 6,
+							"character": 8
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Enumeration members",
+					"kind": 16,
+					"children": [
+						211,
+						212,
+						210
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "connection.ts",
+					"line": 5,
+					"character": 36
+				}
+			]
+		},
+		{
+			"id": 1,
+			"name": "BaklavaEvent",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"comment": {
+				"shortText": "Main event class for Baklava"
+			},
+			"typeParameter": [
+				{
+					"id": 2,
+					"name": "T",
+					"kind": 131072,
+					"kindString": "Type parameter",
+					"flags": {}
+				}
+			],
+			"children": [
+				{
+					"id": 3,
+					"name": "listeners",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isProtected": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 8,
+							"character": 23
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Map",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "TokenType",
+								"id": 55
+							},
+							{
+								"type": "reference",
+								"name": "Listener",
+								"id": 56,
+								"typeArguments": [
+									{
+										"type": "typeParameter",
+										"name": "T"
+									}
+								]
+							}
+						]
+					},
+					"defaultValue": " new Map()"
+				},
+				{
+					"id": 4,
+					"name": "addListener",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 5,
+							"name": "addListener",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Subscribe to the event"
+							},
+							"parameters": [
+								{
+									"id": 6,
+									"name": "token",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "A token that can be used to unsubscribe from the event later on"
+									},
+									"type": {
+										"type": "reference",
+										"name": "TokenType",
+										"id": 55
+									}
+								},
+								{
+									"id": 7,
+									"name": "listener",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "A callback that will be invoked when the event occurs\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Listener",
+										"id": 56,
+										"typeArguments": [
+											{
+												"type": "typeParameter",
+												"name": "T"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 15,
+							"character": 22
+						}
+					]
+				},
+				{
+					"id": 11,
+					"name": "emit",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 12,
+							"name": "emit",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Invoke all listeners"
+							},
+							"parameters": [
+								{
+									"id": 13,
+									"name": "data",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "The data to invoke the listeners with.\n"
+									},
+									"type": {
+										"type": "typeParameter",
+										"name": "T"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 34,
+							"character": 8
+						}
+					]
+				},
+				{
+					"id": 8,
+					"name": "removeListener",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 9,
+							"name": "removeListener",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Remove a listener"
+							},
+							"parameters": [
+								{
+									"id": 10,
+									"name": "token",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "The token that was specified when subscribing to the listener.\nAn invalid token does not result in an error.\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "TokenType",
+										"id": 55
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 24,
+							"character": 25
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						3
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						4,
+						11,
+						8
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventEmitter.ts",
+					"line": 6,
+					"character": 25
+				}
+			],
+			"extendedBy": [
+				{
+					"type": "reference",
+					"name": "PreventableBaklavaEvent",
+					"id": 14
+				}
+			]
+		},
+		{
+			"id": 223,
+			"name": "Connection",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 231,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 232,
+							"name": "new Connection",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 233,
+									"name": "from",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								},
+								{
+									"id": 234,
+									"name": "to",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Connection",
+								"id": 223
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 35,
+							"character": 6
+						}
+					]
+				},
+				{
+					"id": 228,
+					"name": "destructed",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 31,
+							"character": 21
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "boolean"
+					},
+					"defaultValue": "false"
+				},
+				{
+					"id": 225,
+					"name": "from",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 28,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					}
+				},
+				{
+					"id": 224,
+					"name": "id",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 27,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 227,
+					"name": "isInDanger",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 30,
+							"character": 21
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "boolean"
+					},
+					"defaultValue": "false"
+				},
+				{
+					"id": 226,
+					"name": "to",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 29,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					}
+				},
+				{
+					"id": 235,
+					"name": "destruct",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 236,
+							"name": "destruct",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 52,
+							"character": 19
+						}
+					]
+				},
+				{
+					"id": 229,
+					"name": "events",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"children": [
+						{
+							"id": 230,
+							"name": "destruct",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "connection.ts",
+									"line": 34,
+									"character": 16
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<void>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								230
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 33,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						231
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						228,
+						225,
+						224,
+						227,
+						226
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						235
+					]
+				},
+				{
+					"title": "Object literals",
+					"kind": 2097152,
+					"children": [
+						229
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "connection.ts",
+					"line": 25,
+					"character": 23
+				}
+			]
+		},
+		{
+			"id": 237,
+			"name": "DummyConnection",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"comment": {
+				"shortText": "This class is used for calculation purposes only.\nIt won't alter any state of the connected nodes"
+			},
+			"children": [
+				{
+					"id": 241,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 242,
+							"name": "new DummyConnection",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 243,
+									"name": "from",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								},
+								{
+									"id": 244,
+									"name": "to",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "DummyConnection",
+								"id": 237
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 69,
+							"character": 29
+						}
+					]
+				},
+				{
+					"id": 239,
+					"name": "from",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 68,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IConnection.from",
+						"id": 221
+					}
+				},
+				{
+					"id": 238,
+					"name": "id",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 67,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IConnection.id",
+						"id": 220
+					}
+				},
+				{
+					"id": 240,
+					"name": "to",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 69,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IConnection.to",
+						"id": 222
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						241
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						239,
+						238,
+						240
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "connection.ts",
+					"line": 65,
+					"character": 28
+				}
+			],
+			"implementedTypes": [
+				{
+					"type": "reference",
+					"name": "IConnection",
+					"id": 219
+				}
+			]
+		},
+		{
+			"id": 250,
+			"name": "Editor",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"comment": {
+				"shortText": "The main model class for BaklavaJS"
+			},
+			"children": [
+				{
+					"id": 270,
+					"name": "connections",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "List of all connections"
+					},
+					"getSignature": [
+						{
+							"id": 271,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"comment": {
+								"shortText": "List of all connections"
+							},
+							"type": {
+								"type": "reference",
+								"name": "ReadonlyArray",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Connection",
+										"id": 223
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 46,
+							"character": 26
+						}
+					]
+				},
+				{
+					"id": 275,
+					"name": "nodeCategories",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "Mapping of nodes to node categories"
+					},
+					"getSignature": [
+						{
+							"id": 276,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Mapping of nodes to node categories"
+							},
+							"type": {
+								"type": "reference",
+								"name": "ReadonlyMap",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "string"
+									},
+									{
+										"type": "array",
+										"elementType": {
+											"type": "intrinsic",
+											"name": "string"
+										}
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 56,
+							"character": 29
+						}
+					]
+				},
+				{
+					"id": 272,
+					"name": "nodeTypes",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "List of all registered node types"
+					},
+					"getSignature": [
+						{
+							"id": 273,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"comment": {
+								"shortText": "List of all registered node types"
+							},
+							"type": {
+								"type": "reference",
+								"name": "ReadonlyMap",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "string"
+									},
+									{
+										"type": "reflection",
+										"declaration": {
+											"id": 274,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {}
+										}
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 51,
+							"character": 24
+						}
+					]
+				},
+				{
+					"id": 268,
+					"name": "nodes",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "List of all nodes"
+					},
+					"getSignature": [
+						{
+							"id": 269,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"comment": {
+								"shortText": "List of all nodes"
+							},
+							"type": {
+								"type": "reference",
+								"name": "ReadonlyArray",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Node",
+										"id": 142
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 41,
+							"character": 20
+						}
+					]
+				},
+				{
+					"id": 277,
+					"name": "plugins",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "List of all plugins in this editor"
+					},
+					"getSignature": [
+						{
+							"id": 278,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"comment": {
+								"shortText": "List of all plugins in this editor"
+							},
+							"type": {
+								"type": "reference",
+								"name": "ReadonlySet",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IPlugin",
+										"id": 245
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 61,
+							"character": 22
+						}
+					]
+				},
+				{
+					"id": 290,
+					"name": "addConnection",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 291,
+							"name": "addConnection",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Add a connection to the list of connections.",
+								"returns": "The created connection. If no connection could be created, returns `undefined`.\n"
+							},
+							"parameters": [
+								{
+									"id": 292,
+									"name": "from",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Start interface for the connection"
+									},
+									"type": {
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								},
+								{
+									"id": 293,
+									"name": "to",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Target interface for the connection"
+									},
+									"type": {
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "Connection",
+										"id": 223
+									},
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 116,
+							"character": 24
+						}
+					]
+				},
+				{
+					"id": 284,
+					"name": "addNode",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 285,
+							"name": "addNode",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Add a node to the list of nodes.",
+								"returns": "Instance of the node or undefined if the node was not added\n"
+							},
+							"parameters": [
+								{
+									"id": 286,
+									"name": "node",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Instance of a node"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Node",
+										"id": 142
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "Node",
+										"id": 142
+									},
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 86,
+							"character": 18
+						}
+					]
+				},
+				{
+					"id": 297,
+					"name": "checkConnection",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 298,
+							"name": "checkConnection",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Checks, whether a connection between two node interfaces would be valid.",
+								"returns": "Whether the connection is allowed or not.\n"
+							},
+							"parameters": [
+								{
+									"id": 299,
+									"name": "from",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "The starting node interface (must be an output interface)"
+									},
+									"type": {
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								},
+								{
+									"id": 300,
+									"name": "to",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "The target node interface (must be an input interface)"
+									},
+									"type": {
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "false"
+									},
+									{
+										"type": "reference",
+										"name": "DummyConnection",
+										"id": 237
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 159,
+							"character": 26
+						}
+					]
+				},
+				{
+					"id": 301,
+					"name": "load",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 302,
+							"name": "load",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Load a state"
+							},
+							"parameters": [
+								{
+									"id": 303,
+									"name": "state",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "State to load\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "IState",
+										"id": 69
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 190,
+							"character": 15
+						}
+					]
+				},
+				{
+					"id": 279,
+					"name": "registerNodeType",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 280,
+							"name": "registerNodeType",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Register a new node type"
+							},
+							"parameters": [
+								{
+									"id": 281,
+									"name": "typeName",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the node (must be equal to the node's `type` field)"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 282,
+									"name": "type",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Actual type / constructor of the node"
+									},
+									"type": {
+										"type": "reference",
+										"name": "NodeConstructor",
+										"id": 309
+									}
+								},
+								{
+									"id": 283,
+									"name": "category",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Category of the node. Will be used in the view's context menu for adding nodes\n"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									},
+									"defaultValue": "\"default\""
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 71,
+							"character": 27
+						}
+					]
+				},
+				{
+					"id": 294,
+					"name": "removeConnection",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 295,
+							"name": "removeConnection",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Remove a connection from the list of connections."
+							},
+							"parameters": [
+								{
+									"id": 296,
+									"name": "connection",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Connection instance that should be removed.\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Connection",
+										"id": 223
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 144,
+							"character": 27
+						}
+					]
+				},
+				{
+					"id": 287,
+					"name": "removeNode",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 288,
+							"name": "removeNode",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Removes a node from the list.\nWill also remove all connections from and to the node."
+							},
+							"parameters": [
+								{
+									"id": 289,
+									"name": "node",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Reference to a node in the list.\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Node",
+										"id": 142
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 99,
+							"character": 21
+						}
+					]
+				},
+				{
+					"id": 304,
+					"name": "save",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 305,
+							"name": "save",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Save a state",
+								"returns": "Current state\n"
+							},
+							"type": {
+								"type": "reference",
+								"name": "IState",
+								"id": 69
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 241,
+							"character": 15
+						}
+					]
+				},
+				{
+					"id": 306,
+					"name": "use",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 307,
+							"name": "use",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Register a plugin",
+								"returns": "Whether the plugin was successfully registered\n"
+							},
+							"parameters": [
+								{
+									"id": 308,
+									"name": "plugin",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Plugin to register"
+									},
+									"type": {
+										"type": "reference",
+										"name": "IPlugin",
+										"id": 245
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 258,
+							"character": 14
+						}
+					]
+				},
+				{
+					"id": 251,
+					"name": "events",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"children": [
+						{
+							"id": 259,
+							"name": "addConnection",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 27,
+									"character": 21
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IConnection",
+										"id": 219
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<IConnection>()"
+						},
+						{
+							"id": 255,
+							"name": "addNode",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 23,
+									"character": 15
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Node",
+										"id": 142
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<Node>()"
+						},
+						{
+							"id": 258,
+							"name": "beforeAddConnection",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 26,
+									"character": 27
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IAddConnectionEventData",
+										"id": 311
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<IAddConnectionEventData>()"
+						},
+						{
+							"id": 254,
+							"name": "beforeAddNode",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 22,
+									"character": 21
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Node",
+										"id": 142
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<Node>()"
+						},
+						{
+							"id": 252,
+							"name": "beforeRegisterNodeType",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 20,
+									"character": 30
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IAddNodeTypeEventData",
+										"id": 314
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<IAddNodeTypeEventData>()"
+						},
+						{
+							"id": 261,
+							"name": "beforeRemoveConnection",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 29,
+									"character": 30
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IConnection",
+										"id": 219
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<IConnection>()"
+						},
+						{
+							"id": 256,
+							"name": "beforeRemoveNode",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 24,
+									"character": 24
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Node",
+										"id": 142
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<Node>()"
+						},
+						{
+							"id": 263,
+							"name": "beforeUsePlugin",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 31,
+									"character": 23
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IPlugin",
+										"id": 245
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<IPlugin>()"
+						},
+						{
+							"id": 260,
+							"name": "checkConnection",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 28,
+									"character": 23
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IAddConnectionEventData",
+										"id": 311
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<IAddConnectionEventData>()"
+						},
+						{
+							"id": 253,
+							"name": "registerNodeType",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 21,
+									"character": 24
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IAddNodeTypeEventData",
+										"id": 314
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<IAddNodeTypeEventData>()"
+						},
+						{
+							"id": 262,
+							"name": "removeConnection",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 30,
+									"character": 24
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IConnection",
+										"id": 219
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<IConnection>()"
+						},
+						{
+							"id": 257,
+							"name": "removeNode",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 25,
+									"character": 18
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Node",
+										"id": 142
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<Node>()"
+						},
+						{
+							"id": 264,
+							"name": "usePlugin",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 32,
+									"character": 17
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IPlugin",
+										"id": 245
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<IPlugin>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								259,
+								255,
+								258,
+								254,
+								252,
+								261,
+								256,
+								263,
+								260,
+								253,
+								262,
+								257,
+								264
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 19,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				},
+				{
+					"id": 265,
+					"name": "hooks",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"children": [
+						{
+							"id": 267,
+							"name": "load",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 37,
+									"character": 12
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SequentialHook",
+								"id": 41,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IState",
+										"id": 69
+									}
+								]
+							},
+							"defaultValue": " new SequentialHook<IState>()"
+						},
+						{
+							"id": 266,
+							"name": "save",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "editor.ts",
+									"line": 36,
+									"character": 12
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SequentialHook",
+								"id": 41,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IState",
+										"id": 69
+									}
+								]
+							},
+							"defaultValue": " new SequentialHook<IState>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								267,
+								266
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 35,
+							"character": 16
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Accessors",
+					"kind": 262144,
+					"children": [
+						270,
+						275,
+						272,
+						268,
+						277
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						290,
+						284,
+						297,
+						301,
+						279,
+						294,
+						287,
+						304,
+						306
+					]
+				},
+				{
+					"title": "Object literals",
+					"kind": 2097152,
+					"children": [
+						251,
+						265
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "editor.ts",
+					"line": 11,
+					"character": 19
+				}
+			]
+		},
+		{
+			"id": 27,
+			"name": "Hook",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true,
+				"isAbstract": true
+			},
+			"comment": {
+				"shortText": "Base class for hooks in Baklava"
+			},
+			"typeParameter": [
+				{
+					"id": 28,
+					"name": "I",
+					"kind": 131072,
+					"kindString": "Type parameter",
+					"flags": {}
+				},
+				{
+					"id": 29,
+					"name": "O",
+					"kind": 131072,
+					"kindString": "Type parameter",
+					"flags": {}
+				}
+			],
+			"children": [
+				{
+					"id": 30,
+					"name": "taps",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isProtected": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 65,
+							"character": 18
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Array",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "HookTap",
+								"id": 61,
+								"typeArguments": [
+									{
+										"type": "typeParameter",
+										"name": "I"
+									},
+									{
+										"type": "typeParameter",
+										"name": "O"
+									}
+								]
+							}
+						]
+					},
+					"defaultValue": " []"
+				},
+				{
+					"id": 38,
+					"name": "execute",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true,
+						"isAbstract": true
+					},
+					"signatures": [
+						{
+							"id": 39,
+							"name": "execute",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 40,
+									"name": "data",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "typeParameter",
+										"name": "I"
+									}
+								}
+							],
+							"type": {
+								"type": "typeParameter",
+								"name": "O"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 84,
+							"character": 27
+						}
+					]
+				},
+				{
+					"id": 31,
+					"name": "tap",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 32,
+							"name": "tap",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 33,
+									"name": "token",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "TokenType",
+										"id": 55
+									}
+								},
+								{
+									"id": 34,
+									"name": "tapFn",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "HookTap",
+										"id": 61,
+										"typeArguments": [
+											{
+												"type": "typeParameter",
+												"name": "I"
+											},
+											{
+												"type": "typeParameter",
+												"name": "O"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 67,
+							"character": 14
+						}
+					]
+				},
+				{
+					"id": 35,
+					"name": "untap",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 36,
+							"name": "untap",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 37,
+									"name": "token",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "TokenType",
+										"id": 55
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 75,
+							"character": 16
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						30
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						38,
+						31,
+						35
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventEmitter.ts",
+					"line": 62,
+					"character": 26
+				}
+			],
+			"extendedBy": [
+				{
+					"type": "reference",
+					"name": "SequentialHook",
+					"id": 41
+				}
+			]
+		},
+		{
+			"id": 142,
+			"name": "Node",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true,
+				"isAbstract": true
+			},
+			"comment": {
+				"shortText": "Abstract base class for every node"
+			},
+			"children": [
+				{
+					"id": 145,
+					"name": "id",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "Unique identifier of the node"
+					},
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 25,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"defaultValue": " \"node_\" + generateId()"
+				},
+				{
+					"id": 146,
+					"name": "interfaces",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "A map of all interfaces of the node.\n| Key = Name of the interface\n| Value = [[NodeInterface]] instance"
+					},
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 30,
+							"character": 21
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Map",
+						"typeArguments": [
+							{
+								"type": "intrinsic",
+								"name": "string"
+							},
+							{
+								"type": "reference",
+								"name": "NodeInterface",
+								"id": 90
+							}
+						]
+					},
+					"defaultValue": " new Map()"
+				},
+				{
+					"id": 144,
+					"name": "name",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true,
+						"isAbstract": true
+					},
+					"comment": {
+						"shortText": "Name of the node. Should be set equal to [[type]] by default"
+					},
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 23,
+							"character": 24
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 147,
+					"name": "options",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "A map of all options of the node.\n| Key = Name of the option\n| Value = [[NodeOption]] instance"
+					},
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 35,
+							"character": 18
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Map",
+						"typeArguments": [
+							{
+								"type": "intrinsic",
+								"name": "string"
+							},
+							{
+								"type": "reference",
+								"name": "NodeOption",
+								"id": 123
+							}
+						]
+					},
+					"defaultValue": " new Map()"
+				},
+				{
+					"id": 148,
+					"name": "state",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "Use this property to save additional state of the node"
+					},
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 38,
+							"character": 16
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Record",
+						"typeArguments": [
+							{
+								"type": "intrinsic",
+								"name": "string"
+							},
+							{
+								"type": "intrinsic",
+								"name": "any"
+							}
+						]
+					}
+				},
+				{
+					"id": 143,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true,
+						"isAbstract": true
+					},
+					"comment": {
+						"shortText": "Type of the node"
+					},
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 21,
+							"character": 24
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 162,
+					"name": "inputInterfaces",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "All input interfaces of the node"
+					},
+					"getSignature": [
+						{
+							"id": 163,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"comment": {
+								"shortText": "All input interfaces of the node"
+							},
+							"type": {
+								"type": "reference",
+								"name": "Record",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "string"
+									},
+									{
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 60,
+							"character": 30
+						}
+					]
+				},
+				{
+					"id": 164,
+					"name": "outputInterfaces",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "All output interfaces of the node"
+					},
+					"getSignature": [
+						{
+							"id": 165,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"comment": {
+								"shortText": "All output interfaces of the node"
+							},
+							"type": {
+								"type": "reference",
+								"name": "Record",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "string"
+									},
+									{
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 69,
+							"character": 31
+						}
+					]
+				},
+				{
+					"id": 173,
+					"name": "addInputInterface",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isProtected": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 174,
+							"name": "addInputInterface",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Add an input interface to the node",
+								"returns": "The created interface or undefined, if the interface was not created\n"
+							},
+							"parameters": [
+								{
+									"id": 175,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the interface"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 176,
+									"name": "option",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Optional name of a NodeOption which is displayed when the interface is not connected"
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											},
+											{
+												"type": "intrinsic",
+												"name": "string"
+											}
+										]
+									}
+								},
+								{
+									"id": 177,
+									"name": "defaultValue",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Optional default value for the interface/option"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								},
+								{
+									"id": 178,
+									"name": "additionalProperties",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Additional properties of the interface that can be used by plugins"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Record",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 123,
+							"character": 31
+						}
+					]
+				},
+				{
+					"id": 186,
+					"name": "addOption",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isProtected": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 187,
+							"name": "addOption",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Add a node option to the node",
+								"returns": "The created option or undefined, if the option was not created\n"
+							},
+							"parameters": [
+								{
+									"id": 188,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the option"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 189,
+									"name": "component",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the option component"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 190,
+									"name": "defaultValue",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Default value for the option"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									},
+									"defaultValue": " null"
+								},
+								{
+									"id": 191,
+									"name": "sidebarComponent",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Optional name of the component to display in the sidebar"
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											},
+											{
+												"type": "intrinsic",
+												"name": "string"
+											}
+										]
+									}
+								},
+								{
+									"id": 192,
+									"name": "additionalProperties",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Additional properties of the option that can be used by plugins"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Record",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "reference",
+										"name": "NodeOption",
+										"id": 123
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 187,
+							"character": 23
+						}
+					]
+				},
+				{
+					"id": 179,
+					"name": "addOutputInterface",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isProtected": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 180,
+							"name": "addOutputInterface",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Add an output interface to the node",
+								"returns": "The created interface or undefined, if the interface was not created\n"
+							},
+							"parameters": [
+								{
+									"id": 181,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the interface"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 182,
+									"name": "additionalProperties",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Additional properties of the interface that can be used by plugins"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Record",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 139,
+							"character": 32
+						}
+					]
+				},
+				{
+					"id": 171,
+					"name": "calculate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 172,
+							"name": "calculate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "The default implementation does nothing.\nOverwrite this method to do calculation.",
+								"returns": "This method can return a promise.\n"
+							},
+							"type": {
+								"type": "intrinsic",
+								"name": "any"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 111,
+							"character": 20
+						}
+					]
+				},
+				{
+					"id": 196,
+					"name": "getInterface",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 197,
+							"name": "getInterface",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Get an interface by its name. If the node does not have an interface with\n`name`, this method will throw an error."
+							},
+							"parameters": [
+								{
+									"id": 198,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the requested interface\n"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "NodeInterface",
+								"id": 90
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 216,
+							"character": 23
+						}
+					]
+				},
+				{
+					"id": 199,
+					"name": "getOptionValue",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 200,
+							"name": "getOptionValue",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Get the value of option `name`"
+							},
+							"parameters": [
+								{
+									"id": 201,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the option\n"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "any"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 227,
+							"character": 25
+						}
+					]
+				},
+				{
+					"id": 166,
+					"name": "load",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 167,
+							"name": "load",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 168,
+									"name": "state",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "INodeState",
+										"id": 73
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 77,
+							"character": 15
+						}
+					]
+				},
+				{
+					"id": 206,
+					"name": "registerEditor",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 207,
+							"name": "registerEditor",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "This function will automatically be called as soon as the node is added to an editor."
+							},
+							"parameters": [
+								{
+									"id": 208,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Editor instance\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Editor",
+										"id": 250
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 250,
+							"character": 25
+						}
+					]
+				},
+				{
+					"id": 183,
+					"name": "removeInterface",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isProtected": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 184,
+							"name": "removeInterface",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Remove an existing interface"
+							},
+							"parameters": [
+								{
+									"id": 185,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the interface.\n"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 151,
+							"character": 29
+						}
+					]
+				},
+				{
+					"id": 193,
+					"name": "removeOption",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isProtected": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 194,
+							"name": "removeOption",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Remove an existing option"
+							},
+							"parameters": [
+								{
+									"id": 195,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the option\n"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 202,
+							"character": 26
+						}
+					]
+				},
+				{
+					"id": 169,
+					"name": "save",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 170,
+							"name": "save",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "INodeState",
+								"id": 73
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 94,
+							"character": 15
+						}
+					]
+				},
+				{
+					"id": 202,
+					"name": "setOptionValue",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 203,
+							"name": "setOptionValue",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Set the value of option `name`"
+							},
+							"parameters": [
+								{
+									"id": 204,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the option"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 205,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "New value\n"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 239,
+							"character": 25
+						}
+					]
+				},
+				{
+					"id": 149,
+					"name": "events",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"children": [
+						{
+							"id": 151,
+							"name": "addInterface",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 42,
+									"character": 20
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<NodeInterface>()"
+						},
+						{
+							"id": 155,
+							"name": "addOption",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 46,
+									"character": 17
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IOptionEventData",
+										"id": 328
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<IOptionEventData>()"
+						},
+						{
+							"id": 150,
+							"name": "beforeAddInterface",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 41,
+									"character": 26
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IAddInterfaceEventData",
+										"id": 318
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<IAddInterfaceEventData>()"
+						},
+						{
+							"id": 154,
+							"name": "beforeAddOption",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 45,
+									"character": 23
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IAddOptionEventData",
+										"id": 323
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<IAddOptionEventData>()"
+						},
+						{
+							"id": 152,
+							"name": "beforeRemoveInterface",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 43,
+									"character": 29
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<NodeInterface>()"
+						},
+						{
+							"id": 156,
+							"name": "beforeRemoveOption",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 47,
+									"character": 26
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IOptionEventData",
+										"id": 328
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<IOptionEventData>()"
+						},
+						{
+							"id": 153,
+							"name": "removeInterface",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 44,
+									"character": 23
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "NodeInterface",
+										"id": 90
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<NodeInterface>()"
+						},
+						{
+							"id": 157,
+							"name": "removeOption",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 48,
+									"character": 20
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IOptionEventData",
+										"id": 328
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<IOptionEventData>()"
+						},
+						{
+							"id": 158,
+							"name": "update",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 49,
+									"character": 14
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "INodeUpdateEventData",
+										"id": 331
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<INodeUpdateEventData>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								151,
+								155,
+								150,
+								154,
+								152,
+								156,
+								153,
+								157,
+								158
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 40,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				},
+				{
+					"id": 159,
+					"name": "hooks",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"children": [
+						{
+							"id": 160,
+							"name": "load",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 53,
+									"character": 12
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SequentialHook",
+								"id": 41,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "INodeState",
+										"id": 73
+									}
+								]
+							},
+							"defaultValue": " new SequentialHook<INodeState>()"
+						},
+						{
+							"id": 161,
+							"name": "save",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node.ts",
+									"line": 54,
+									"character": 12
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SequentialHook",
+								"id": 41,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "INodeState",
+										"id": 73
+									}
+								]
+							},
+							"defaultValue": " new SequentialHook<INodeState>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								160,
+								161
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 52,
+							"character": 16
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						145,
+						146,
+						144,
+						147,
+						148,
+						143
+					]
+				},
+				{
+					"title": "Accessors",
+					"kind": 262144,
+					"children": [
+						162,
+						164
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						173,
+						186,
+						179,
+						171,
+						196,
+						199,
+						166,
+						206,
+						183,
+						193,
+						169,
+						202
+					]
+				},
+				{
+					"title": "Object literals",
+					"kind": 2097152,
+					"children": [
+						149,
+						159
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "node.ts",
+					"line": 18,
+					"character": 26
+				}
+			]
+		},
+		{
+			"id": 335,
+			"name": "NodeBuilder",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"comment": {
+				"shortText": "Utility class for creating custom nodes"
+			},
+			"children": [
+				{
+					"id": 336,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 337,
+							"name": "new NodeBuilder",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 338,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "NodeBuilder",
+								"id": 335
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeBuilder.ts",
+							"line": 59,
+							"character": 47
+						}
+					]
+				},
+				{
+					"id": 341,
+					"name": "addInputInterface",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 342,
+							"name": "addInputInterface",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Add an input interface to the node",
+								"returns": "Current node builder instance for chaining\n"
+							},
+							"parameters": [
+								{
+									"id": 343,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the interface"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 344,
+									"name": "option",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "A node option component to be displayed when the interface is not connected"
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											},
+											{
+												"type": "intrinsic",
+												"name": "string"
+											}
+										]
+									}
+								},
+								{
+									"id": 345,
+									"name": "defaultValue",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "\nDefault value for the interface.\nIf the default value is a primitive (e. g. string, number) then the value can be passed directly.\nFor objects provide a function that returns the default value."
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								},
+								{
+									"id": 346,
+									"name": "additionalProperties",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Additional properties of the interface that can be used by plugins"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Record",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "NodeBuilder",
+								"id": 335
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeBuilder.ts",
+							"line": 86,
+							"character": 28
+						}
+					]
+				},
+				{
+					"id": 351,
+					"name": "addOption",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 352,
+							"name": "addOption",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Add a node option to the node",
+								"returns": "Current node builder instance for chaining\n"
+							},
+							"parameters": [
+								{
+									"id": 353,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the option"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 354,
+									"name": "optionComponent",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 355,
+									"name": "defaultValue",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "\nDefault value for the option.\nIf the default value is a primitive (e. g. string, number) then the value can be passed directly.\nFor objects provide a function that returns the default value."
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								},
+								{
+									"id": 356,
+									"name": "sidebarComponent",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Optional component to display in the sidebar"
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											},
+											{
+												"type": "intrinsic",
+												"name": "string"
+											}
+										]
+									}
+								},
+								{
+									"id": 357,
+									"name": "additionalProperties",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Additional properties of the option that can be used by plugins"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Record",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "NodeBuilder",
+								"id": 335
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeBuilder.ts",
+							"line": 115,
+							"character": 20
+						}
+					]
+				},
+				{
+					"id": 347,
+					"name": "addOutputInterface",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 348,
+							"name": "addOutputInterface",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Add an output interface to the node",
+								"returns": "Current node builder instance for chaining\n"
+							},
+							"parameters": [
+								{
+									"id": 349,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the interface"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 350,
+									"name": "additionalProperties",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Additional properties of the interface that can be used by plugins"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Record",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "NodeBuilder",
+								"id": 335
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeBuilder.ts",
+							"line": 98,
+							"character": 29
+						}
+					]
+				},
+				{
+					"id": 339,
+					"name": "build",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 340,
+							"name": "build",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Build the node class.\nThis must be called as the last operation when building a node.",
+								"returns": "The generated node class\n"
+							},
+							"type": {
+								"type": "reference",
+								"name": "NodeConstructor",
+								"id": 309
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeBuilder.ts",
+							"line": 70,
+							"character": 16
+						}
+					]
+				},
+				{
+					"id": 358,
+					"name": "onCalculate",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 359,
+							"name": "onCalculate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Register a callback for the calculation function.\nThe callback will receive the node instance as first parameter.\n(If you do not use ES6 arrow functions, the node instance\nwill also be bound to `this`)",
+								"returns": "Current node builder instance for chaining\n"
+							},
+							"parameters": [
+								{
+									"id": 360,
+									"name": "cb",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Callback to be executed when `calculate()` is called on the node"
+									},
+									"type": {
+										"type": "reference",
+										"name": "CalculationFunction"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "NodeBuilder",
+								"id": 335
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeBuilder.ts",
+							"line": 134,
+							"character": 22
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						336
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						341,
+						351,
+						347,
+						339,
+						358
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "nodeBuilder.ts",
+					"line": 54,
+					"character": 24
+				}
+			]
+		},
+		{
+			"id": 90,
+			"name": "NodeInterface",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 110,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 111,
+							"name": "new NodeInterface",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 112,
+									"name": "parent",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "Node",
+										"id": 142
+									}
+								},
+								{
+									"id": 113,
+									"name": "isInput",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "boolean"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "NodeInterface",
+								"id": 90
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 41,
+							"character": 5
+						}
+					]
+				},
+				{
+					"id": 91,
+					"name": "id",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 8,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 92,
+					"name": "isInput",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 9,
+							"character": 18
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "boolean"
+					}
+				},
+				{
+					"id": 94,
+					"name": "option",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 11,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "undefined"
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					}
+				},
+				{
+					"id": 93,
+					"name": "parent",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 10,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Node",
+						"id": 142
+					}
+				},
+				{
+					"id": 102,
+					"name": "connectionCount",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"getSignature": [
+						{
+							"id": 105,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						}
+					],
+					"setSignature": [
+						{
+							"id": 103,
+							"name": "__set",
+							"kind": 1048576,
+							"kindString": "Set signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 104,
+									"name": "v",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 25,
+							"character": 30
+						},
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 29,
+							"character": 30
+						}
+					]
+				},
+				{
+					"id": 106,
+					"name": "value",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"getSignature": [
+						{
+							"id": 109,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "any"
+							}
+						}
+					],
+					"setSignature": [
+						{
+							"id": 107,
+							"name": "__set",
+							"kind": 1048576,
+							"kindString": "Set signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 108,
+									"name": "v",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 34,
+							"character": 20
+						},
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 39,
+							"character": 20
+						}
+					]
+				},
+				{
+					"id": 114,
+					"name": "load",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 115,
+							"name": "load",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 116,
+									"name": "state",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IInterfaceState",
+										"id": 81
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 49,
+							"character": 15
+						}
+					]
+				},
+				{
+					"id": 117,
+					"name": "save",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 118,
+							"name": "save",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "IInterfaceState",
+								"id": 81
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 55,
+							"character": 15
+						}
+					]
+				},
+				{
+					"id": 95,
+					"name": "events",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"children": [
+						{
+							"id": 97,
+							"name": "beforeSetValue",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "nodeInterface.ts",
+									"line": 15,
+									"character": 22
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<any>()"
+						},
+						{
+							"id": 96,
+							"name": "setConnectionCount",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "nodeInterface.ts",
+									"line": 14,
+									"character": 26
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "number"
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<number>()"
+						},
+						{
+							"id": 98,
+							"name": "setValue",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "nodeInterface.ts",
+									"line": 16,
+									"character": 16
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<any>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								97,
+								96,
+								98
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 13,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				},
+				{
+					"id": 99,
+					"name": "hooks",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"children": [
+						{
+							"id": 100,
+							"name": "load",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "nodeInterface.ts",
+									"line": 20,
+									"character": 12
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SequentialHook",
+								"id": 41,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IInterfaceState",
+										"id": 81
+									}
+								]
+							},
+							"defaultValue": " new SequentialHook<IInterfaceState>()"
+						},
+						{
+							"id": 101,
+							"name": "save",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "nodeInterface.ts",
+									"line": 21,
+									"character": 12
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SequentialHook",
+								"id": 41,
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "IInterfaceState",
+										"id": 81
+									}
+								]
+							},
+							"defaultValue": " new SequentialHook<IInterfaceState>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								100,
+								101
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeInterface.ts",
+							"line": 19,
+							"character": 16
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						110
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						91,
+						92,
+						94,
+						93
+					]
+				},
+				{
+					"title": "Accessors",
+					"kind": 262144,
+					"children": [
+						102,
+						106
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						114,
+						117
+					]
+				},
+				{
+					"title": "Object literals",
+					"kind": 2097152,
+					"children": [
+						95,
+						99
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "nodeInterface.ts",
+					"line": 6,
+					"character": 26
+				}
+			]
+		},
+		{
+			"id": 123,
+			"name": "NodeOption",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 129,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 130,
+							"name": "new NodeOption",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 131,
+									"name": "optionComponent",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 132,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								},
+								{
+									"id": 133,
+									"name": "sidebarComponent",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "NodeOption",
+								"id": 123
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeOption.ts",
+							"line": 21,
+							"character": 24
+						}
+					]
+				},
+				{
+					"id": 124,
+					"name": "optionComponent",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"comment": {
+						"shortText": "Name of the component that should be displayed for the option"
+					},
+					"sources": [
+						{
+							"fileName": "nodeOption.ts",
+							"line": 12,
+							"character": 26
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IOption.optionComponent",
+						"id": 120
+					}
+				},
+				{
+					"id": 125,
+					"name": "sidebarComponent",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"comment": {
+						"shortText": "Name of the component that should be displayed in the sidebar"
+					},
+					"sources": [
+						{
+							"fileName": "nodeOption.ts",
+							"line": 14,
+							"character": 27
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "undefined"
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IOption.sidebarComponent",
+						"id": 122
+					}
+				},
+				{
+					"id": 134,
+					"name": "value",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"getSignature": [
+						{
+							"id": 135,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "any"
+							}
+						}
+					],
+					"setSignature": [
+						{
+							"id": 136,
+							"name": "__set",
+							"kind": 1048576,
+							"kindString": "Set signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 137,
+									"name": "v",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeOption.ts",
+							"line": 29,
+							"character": 20
+						},
+						{
+							"fileName": "nodeOption.ts",
+							"line": 33,
+							"character": 20
+						}
+					],
+					"implementationOf": {
+						"type": "reference",
+						"name": "IOption.value",
+						"id": 121
+					}
+				},
+				{
+					"id": 126,
+					"name": "events",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"children": [
+						{
+							"id": 127,
+							"name": "beforeSetValue",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "nodeOption.ts",
+									"line": 17,
+									"character": 22
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "PreventableBaklavaEvent",
+								"id": 14,
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							},
+							"defaultValue": " new PreventableBaklavaEvent<any>()"
+						},
+						{
+							"id": 128,
+							"name": "setValue",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "nodeOption.ts",
+									"line": 18,
+									"character": 16
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "BaklavaEvent",
+								"id": 1,
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							},
+							"defaultValue": " new BaklavaEvent<any>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								127,
+								128
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "nodeOption.ts",
+							"line": 16,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						129
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						124,
+						125
+					]
+				},
+				{
+					"title": "Accessors",
+					"kind": 262144,
+					"children": [
+						134
+					]
+				},
+				{
+					"title": "Object literals",
+					"kind": 2097152,
+					"children": [
+						126
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "nodeOption.ts",
+					"line": 9,
+					"character": 23
+				}
+			],
+			"implementedTypes": [
+				{
+					"type": "reference",
+					"name": "IOption",
+					"id": 119
+				}
+			]
+		},
+		{
+			"id": 14,
+			"name": "PreventableBaklavaEvent",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"comment": {
+				"shortText": "Extension for the [[BaklavaEvent]] class. A listener can return `false` to prevent\nthis event from happening."
+			},
+			"typeParameter": [
+				{
+					"id": 15,
+					"name": "T",
+					"kind": 131072,
+					"kindString": "Type parameter",
+					"flags": {}
+				}
+			],
+			"children": [
+				{
+					"id": 19,
+					"name": "listeners",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isProtected": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 8,
+							"character": 23
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Map",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "TokenType",
+								"id": 55
+							},
+							{
+								"type": "reference",
+								"name": "Listener",
+								"id": 56,
+								"typeArguments": [
+									{
+										"type": "typeParameter",
+										"name": "T"
+									}
+								]
+							}
+						]
+					},
+					"defaultValue": " new Map()",
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "BaklavaEvent.listeners",
+						"id": 3
+					}
+				},
+				{
+					"id": 20,
+					"name": "addListener",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 21,
+							"name": "addListener",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Subscribe to the event"
+							},
+							"parameters": [
+								{
+									"id": 22,
+									"name": "token",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "A token that can be used to unsubscribe from the event later on"
+									},
+									"type": {
+										"type": "reference",
+										"name": "TokenType",
+										"id": 55
+									}
+								},
+								{
+									"id": 23,
+									"name": "listener",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "A callback that will be invoked when the event occurs\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Listener",
+										"id": 56,
+										"typeArguments": [
+											{
+												"type": "typeParameter",
+												"name": "T"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "BaklavaEvent.addListener",
+								"id": 4
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 15,
+							"character": 22
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "BaklavaEvent.addListener",
+						"id": 4
+					}
+				},
+				{
+					"id": 16,
+					"name": "emit",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 17,
+							"name": "emit",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Invoke all listeners.",
+								"returns": "`true` when one of the listeners requested to prevent the event, otherwise `false`\n"
+							},
+							"parameters": [
+								{
+									"id": 18,
+									"name": "data",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "The data to invoke all listeners with"
+									},
+									"type": {
+										"type": "typeParameter",
+										"name": "T"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							},
+							"overwrites": {
+								"type": "reference",
+								"name": "BaklavaEvent.emit",
+								"id": 11
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 50,
+							"character": 8
+						}
+					],
+					"overwrites": {
+						"type": "reference",
+						"name": "BaklavaEvent.emit",
+						"id": 11
+					}
+				},
+				{
+					"id": 24,
+					"name": "removeListener",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 25,
+							"name": "removeListener",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Remove a listener"
+							},
+							"parameters": [
+								{
+									"id": 26,
+									"name": "token",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "The token that was specified when subscribing to the listener.\nAn invalid token does not result in an error.\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "TokenType",
+										"id": 55
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "BaklavaEvent.removeListener",
+								"id": 8
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 24,
+							"character": 25
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "BaklavaEvent.removeListener",
+						"id": 8
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						19
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						20,
+						16,
+						24
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventEmitter.ts",
+					"line": 43,
+					"character": 36
+				}
+			],
+			"extendedTypes": [
+				{
+					"type": "reference",
+					"name": "BaklavaEvent",
+					"id": 1,
+					"typeArguments": [
+						{
+							"type": "typeParameter",
+							"name": "T"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": 41,
+			"name": "SequentialHook",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"comment": {
+				"shortText": "This class will run the taps one after each other and pass the data from every tap to another."
+			},
+			"typeParameter": [
+				{
+					"id": 42,
+					"name": "T",
+					"kind": 131072,
+					"kindString": "Type parameter",
+					"flags": {}
+				},
+				{
+					"id": 46,
+					"name": "O",
+					"kind": 131072,
+					"kindString": "Type parameter",
+					"flags": {}
+				}
+			],
+			"children": [
+				{
+					"id": 47,
+					"name": "taps",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isProtected": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 65,
+							"character": 18
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Array",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "HookTap",
+								"id": 61,
+								"typeArguments": [
+									{
+										"type": "typeParameter",
+										"name": "T"
+									},
+									{
+										"type": "typeParameter",
+										"name": "O"
+									}
+								]
+							}
+						]
+					},
+					"defaultValue": " []",
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "Hook.taps",
+						"id": 30
+					}
+				},
+				{
+					"id": 43,
+					"name": "execute",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 44,
+							"name": "execute",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 45,
+									"name": "data",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "typeParameter",
+										"name": "T"
+									}
+								}
+							],
+							"type": {
+								"type": "typeParameter",
+								"name": "T"
+							},
+							"overwrites": {
+								"type": "reference",
+								"name": "Hook.execute",
+								"id": 38
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 91,
+							"character": 18
+						}
+					],
+					"overwrites": {
+						"type": "reference",
+						"name": "Hook.execute",
+						"id": 38
+					}
+				},
+				{
+					"id": 48,
+					"name": "tap",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 49,
+							"name": "tap",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 50,
+									"name": "token",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "TokenType",
+										"id": 55
+									}
+								},
+								{
+									"id": 51,
+									"name": "tapFn",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "HookTap",
+										"id": 61,
+										"typeArguments": [
+											{
+												"type": "typeParameter",
+												"name": "T"
+											},
+											{
+												"type": "typeParameter",
+												"name": "O"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Hook.tap",
+								"id": 31
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 67,
+							"character": 14
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "Hook.tap",
+						"id": 31
+					}
+				},
+				{
+					"id": 52,
+					"name": "untap",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 53,
+							"name": "untap",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 54,
+									"name": "token",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "TokenType",
+										"id": 55
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Hook.untap",
+								"id": 35
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 75,
+							"character": 16
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"name": "Hook.untap",
+						"id": 35
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						47
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						43,
+						48,
+						52
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventEmitter.ts",
+					"line": 89,
+					"character": 27
+				}
+			],
+			"extendedTypes": [
+				{
+					"type": "reference",
+					"name": "Hook",
+					"id": 27,
+					"typeArguments": [
+						{
+							"type": "typeParameter",
+							"name": "T"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": 311,
+			"name": "IAddConnectionEventData",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 312,
+					"name": "from",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 6,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					}
+				},
+				{
+					"id": 313,
+					"name": "to",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 7,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						312,
+						313
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventDataTypes.ts",
+					"line": 5,
+					"character": 40
+				}
+			]
+		},
+		{
+			"id": 318,
+			"name": "IAddInterfaceEventData",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 322,
+					"name": "defaultValue",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 21,
+							"character": 16
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "any"
+					}
+				},
+				{
+					"id": 320,
+					"name": "isInput",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 19,
+							"character": 11
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "boolean"
+					}
+				},
+				{
+					"id": 319,
+					"name": "name",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 18,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 321,
+					"name": "option",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 20,
+							"character": 10
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "undefined"
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						322,
+						320,
+						319,
+						321
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventDataTypes.ts",
+					"line": 17,
+					"character": 39
+				}
+			]
+		},
+		{
+			"id": 314,
+			"name": "IAddNodeTypeEventData",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 317,
+					"name": "category",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 13,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 316,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 12,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeConstructor",
+						"id": 309
+					}
+				},
+				{
+					"id": 315,
+					"name": "typeName",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 11,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						317,
+						316,
+						315
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventDataTypes.ts",
+					"line": 10,
+					"character": 38
+				}
+			]
+		},
+		{
+			"id": 323,
+			"name": "IAddOptionEventData",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 325,
+					"name": "component",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 26,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 326,
+					"name": "defaultValue",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 27,
+							"character": 16
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "any"
+					}
+				},
+				{
+					"id": 324,
+					"name": "name",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 25,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 327,
+					"name": "sidebarComponent",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 28,
+							"character": 20
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "undefined"
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						325,
+						326,
+						324,
+						327
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventDataTypes.ts",
+					"line": 24,
+					"character": 36
+				}
+			]
+		},
+		{
+			"id": 219,
+			"name": "IConnection",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 221,
+					"name": "from",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 21,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					}
+				},
+				{
+					"id": 220,
+					"name": "id",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 20,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 222,
+					"name": "to",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 22,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						221,
+						220,
+						222
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "connection.ts",
+					"line": 19,
+					"character": 28
+				}
+			],
+			"implementedBy": [
+				{
+					"type": "reference",
+					"name": "DummyConnection",
+					"id": 237
+				}
+			]
+		},
+		{
+			"id": 85,
+			"name": "IConnectionState",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 87,
+					"name": "from",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 22,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 86,
+					"name": "id",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 21,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 88,
+					"name": "to",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 23,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						87,
+						86,
+						88
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "state.ts",
+					"line": 20,
+					"character": 33
+				}
+			],
+			"extendedTypes": [
+				{
+					"type": "reflection",
+					"declaration": {
+						"id": 89,
+						"name": "__type",
+						"kind": 65536,
+						"kindString": "Type literal",
+						"flags": {},
+						"sources": [
+							{
+								"fileName": "state.ts",
+								"line": 20,
+								"character": 41
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": 138,
+			"name": "IInterfaceCreateOptions",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 140,
+					"name": "name",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 11,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "undefined"
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					}
+				},
+				{
+					"id": 141,
+					"name": "optionName",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 12,
+							"character": 14
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "undefined"
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					}
+				},
+				{
+					"id": 139,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "node.ts",
+							"line": 10,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "undefined"
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						140,
+						141,
+						139
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "node.ts",
+					"line": 9,
+					"character": 40
+				}
+			]
+		},
+		{
+			"id": 81,
+			"name": "IInterfaceState",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 82,
+					"name": "id",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 16,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 83,
+					"name": "value",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 17,
+							"character": 9
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "any"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						82,
+						83
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "state.ts",
+					"line": 15,
+					"character": 32
+				}
+			],
+			"extendedTypes": [
+				{
+					"type": "reflection",
+					"declaration": {
+						"id": 84,
+						"name": "__type",
+						"kind": 65536,
+						"kindString": "Type literal",
+						"flags": {},
+						"sources": [
+							{
+								"fileName": "state.ts",
+								"line": 15,
+								"character": 40
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": 73,
+			"name": "INodeState",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 76,
+					"name": "id",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 9,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 77,
+					"name": "interfaces",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 10,
+							"character": 14
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Array",
+						"typeArguments": [
+							{
+								"type": "tuple",
+								"elements": [
+									{
+										"type": "intrinsic",
+										"name": "string"
+									},
+									{
+										"type": "reference",
+										"name": "IInterfaceState",
+										"id": 81
+									}
+								]
+							}
+						]
+					}
+				},
+				{
+					"id": 75,
+					"name": "name",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 8,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 78,
+					"name": "options",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 11,
+							"character": 11
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Array",
+						"typeArguments": [
+							{
+								"type": "tuple",
+								"elements": [
+									{
+										"type": "intrinsic",
+										"name": "string"
+									},
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							}
+						]
+					}
+				},
+				{
+					"id": 79,
+					"name": "state",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 12,
+							"character": 9
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "any"
+					}
+				},
+				{
+					"id": 74,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 7,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						76,
+						77,
+						75,
+						78,
+						79,
+						74
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "state.ts",
+					"line": 6,
+					"character": 27
+				}
+			],
+			"extendedTypes": [
+				{
+					"type": "reflection",
+					"declaration": {
+						"id": 80,
+						"name": "__type",
+						"kind": 65536,
+						"kindString": "Type literal",
+						"flags": {},
+						"sources": [
+							{
+								"fileName": "state.ts",
+								"line": 6,
+								"character": 35
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": 331,
+			"name": "INodeUpdateEventData",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 334,
+					"name": "interface",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 39,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					}
+				},
+				{
+					"id": 332,
+					"name": "name",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 37,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 333,
+					"name": "option",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 38,
+							"character": 10
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeOption",
+						"id": 123
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						334,
+						332,
+						333
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventDataTypes.ts",
+					"line": 36,
+					"character": 37
+				}
+			]
+		},
+		{
+			"id": 119,
+			"name": "IOption",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 120,
+					"name": "optionComponent",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "nodeOption.ts",
+							"line": 4,
+							"character": 19
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 122,
+					"name": "sidebarComponent",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "nodeOption.ts",
+							"line": 6,
+							"character": 20
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "undefined"
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					}
+				},
+				{
+					"id": 121,
+					"name": "value",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "nodeOption.ts",
+							"line": 5,
+							"character": 9
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "any"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						120,
+						122,
+						121
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "nodeOption.ts",
+					"line": 3,
+					"character": 24
+				}
+			],
+			"implementedBy": [
+				{
+					"type": "reference",
+					"name": "NodeOption",
+					"id": 123
+				}
+			]
+		},
+		{
+			"id": 328,
+			"name": "IOptionEventData",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 329,
+					"name": "name",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 32,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 330,
+					"name": "option",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "events/eventDataTypes.ts",
+							"line": 33,
+							"character": 10
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "IOption",
+						"id": 119
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						329,
+						330
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventDataTypes.ts",
+					"line": 31,
+					"character": 33
+				}
+			]
+		},
+		{
+			"id": 245,
+			"name": "IPlugin",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 246,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "plugin.ts",
+							"line": 4,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 247,
+					"name": "register",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"signatures": [
+						{
+							"id": 248,
+							"name": "register",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 249,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "Editor",
+										"id": 250
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "plugin.ts",
+							"line": 5,
+							"character": 12
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						246
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						247
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "plugin.ts",
+					"line": 3,
+					"character": 24
+				}
+			]
+		},
+		{
+			"id": 69,
+			"name": "IState",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 71,
+					"name": "connections",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 3,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "array",
+						"elementType": {
+							"type": "reference",
+							"name": "IConnectionState",
+							"id": 85
+						}
+					}
+				},
+				{
+					"id": 70,
+					"name": "nodes",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "state.ts",
+							"line": 2,
+							"character": 9
+						}
+					],
+					"type": {
+						"type": "array",
+						"elementType": {
+							"type": "reference",
+							"name": "INodeState",
+							"id": 73
+						}
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						71,
+						70
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "state.ts",
+					"line": 1,
+					"character": 23
+				}
+			],
+			"extendedTypes": [
+				{
+					"type": "reflection",
+					"declaration": {
+						"id": 72,
+						"name": "__type",
+						"kind": 65536,
+						"kindString": "Type literal",
+						"flags": {},
+						"sources": [
+							{
+								"fileName": "state.ts",
+								"line": 1,
+								"character": 31
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"id": 213,
+			"name": "ITemporaryConnection",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"children": [
+				{
+					"id": 215,
+					"name": "from",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 13,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					}
+				},
+				{
+					"id": 217,
+					"name": "mx",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 15,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "undefined"
+							},
+							{
+								"type": "intrinsic",
+								"name": "number"
+							}
+						]
+					}
+				},
+				{
+					"id": 218,
+					"name": "my",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 16,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "undefined"
+							},
+							{
+								"type": "intrinsic",
+								"name": "number"
+							}
+						]
+					}
+				},
+				{
+					"id": 214,
+					"name": "status",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 12,
+							"character": 10
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "TemporaryConnectionState",
+						"id": 209
+					}
+				},
+				{
+					"id": 216,
+					"name": "to",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "connection.ts",
+							"line": 14,
+							"character": 6
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "NodeInterface",
+						"id": 90
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						215,
+						217,
+						218,
+						214,
+						216
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "connection.ts",
+					"line": 11,
+					"character": 37
+				}
+			]
+		},
+		{
+			"id": 61,
+			"name": "HookTap",
+			"kind": 4194304,
+			"kindString": "Type alias",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"typeParameter": [
+				{
+					"id": 62,
+					"name": "I",
+					"kind": 131072,
+					"kindString": "Type parameter",
+					"flags": {}
+				},
+				{
+					"id": 63,
+					"name": "O",
+					"kind": 131072,
+					"kindString": "Type parameter",
+					"flags": {}
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventEmitter.ts",
+					"line": 3,
+					"character": 19
+				}
+			],
+			"type": {
+				"type": "reflection",
+				"declaration": {
+					"id": 64,
+					"name": "__type",
+					"kind": 65536,
+					"kindString": "Type literal",
+					"flags": {},
+					"signatures": [
+						{
+							"id": 65,
+							"name": "__call",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 66,
+									"name": "i",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "typeParameter",
+										"name": "I"
+									}
+								}
+							],
+							"type": {
+								"type": "typeParameter",
+								"name": "O"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 3,
+							"character": 27
+						}
+					]
+				}
+			}
+		},
+		{
+			"id": 56,
+			"name": "Listener",
+			"kind": 4194304,
+			"kindString": "Type alias",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"typeParameter": [
+				{
+					"id": 57,
+					"name": "T",
+					"kind": 131072,
+					"kindString": "Type parameter",
+					"flags": {}
+				}
+			],
+			"sources": [
+				{
+					"fileName": "events/eventEmitter.ts",
+					"line": 2,
+					"character": 20
+				}
+			],
+			"type": {
+				"type": "reflection",
+				"declaration": {
+					"id": 58,
+					"name": "__type",
+					"kind": 65536,
+					"kindString": "Type literal",
+					"flags": {},
+					"signatures": [
+						{
+							"id": 59,
+							"name": "__call",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 60,
+									"name": "ev",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "typeParameter",
+										"name": "T"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "any"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "events/eventEmitter.ts",
+							"line": 2,
+							"character": 25
+						}
+					]
+				}
+			}
+		},
+		{
+			"id": 309,
+			"name": "NodeConstructor",
+			"kind": 4194304,
+			"kindString": "Type alias",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"sources": [
+				{
+					"fileName": "editor.ts",
+					"line": 8,
+					"character": 27
+				}
+			],
+			"type": {
+				"type": "reflection",
+				"declaration": {
+					"id": 310,
+					"name": "__type",
+					"kind": 65536,
+					"kindString": "Type literal",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "editor.ts",
+							"line": 8,
+							"character": 29
+						}
+					]
+				}
+			}
+		},
+		{
+			"id": 55,
+			"name": "TokenType",
+			"kind": 4194304,
+			"kindString": "Type alias",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"sources": [
+				{
+					"fileName": "events/eventEmitter.ts",
+					"line": 1,
+					"character": 21
+				}
+			],
+			"type": {
+				"type": "union",
+				"types": [
+					{
+						"type": "intrinsic",
+						"name": "object"
+					},
+					{
+						"type": "intrinsic",
+						"name": "symbol"
+					}
+				]
+			}
+		},
+		{
+			"id": 67,
+			"name": "generateId",
+			"kind": 64,
+			"kindString": "Function",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"signatures": [
+				{
+					"id": 68,
+					"name": "generateId",
+					"kind": 4096,
+					"kindString": "Call signature",
+					"flags": {},
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				}
+			],
+			"sources": [
+				{
+					"fileName": "idGenerator.ts",
+					"line": 3,
+					"character": 34
+				}
+			]
+		}
+	],
+	"groups": [
+		{
+			"title": "Enumerations",
+			"kind": 4,
+			"children": [
+				209
+			]
+		},
+		{
+			"title": "Classes",
+			"kind": 128,
+			"children": [
+				1,
+				223,
+				237,
+				250,
+				27,
+				142,
+				335,
+				90,
+				123,
+				14,
+				41
+			]
+		},
+		{
+			"title": "Interfaces",
+			"kind": 256,
+			"children": [
+				311,
+				318,
+				314,
+				323,
+				219,
+				85,
+				138,
+				81,
+				73,
+				331,
+				119,
+				328,
+				245,
+				69,
+				213
+			]
+		},
+		{
+			"title": "Type aliases",
+			"kind": 4194304,
+			"children": [
+				61,
+				56,
+				309,
+				55
+			]
+		},
+		{
+			"title": "Functions",
+			"kind": 64,
+			"children": [
+				67
+			]
+		}
+	]
+}

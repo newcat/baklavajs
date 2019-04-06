@@ -27,6 +27,12 @@ module.exports = {
             amd: '@baklavajs/plugin-renderer-vue',
             root: 'BaklavaJSRendererVue'
         },
+        "@baklavajs/plugin-interface-types": {
+            commonjs: '@baklavajs/plugin-interface-types',
+            commonjs2: '@baklavajs/plugin-interface-types',
+            amd: '@baklavajs/plugin-interface-types',
+            root: 'BaklavaJSInterfaceTypes'
+        },
         vue: {
             commonjs: 'vue',
             commonjs2: 'vue',

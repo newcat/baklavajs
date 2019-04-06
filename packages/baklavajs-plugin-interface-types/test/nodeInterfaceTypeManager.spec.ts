@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { InterfaceTypePlugin } from "@/interface-types";
+import { InterfaceTypePlugin } from "../src";
 
 describe("Node Interface Type Manager", () => {
 

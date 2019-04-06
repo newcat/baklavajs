@@ -11,14 +11,18 @@ For more advanced use-cases, every option will also receive the node instance th
 This can be used to call functions in your node model.
 
 Their value can be written or read programatically by using the
-[setOptionValue](!!API%{ "type": "class", "name": "node", "field": "setoptionvalue" }%) and
-[getOptionValue](!!API%{ "type": "class", "name": "node", "field": "getoptionvalue" }%) methods.
+[setOptionValue](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "node", "field": "setoptionvalue" }%) and
+[getOptionValue](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "node", "field": "getoptionvalue" }%) methods.
 
 ### Options in the ViewPlugin
 When adding an option to a node, you only specify the type of the option as a string. This is done to separate logic and view.
-The ViewPlugin then contains the [options](!!API%{ "type": "class", "name": "viewplugin", "field": "options" }%) field that maps these strings to actual view components.
+The ViewPlugin then contains the `options` field that maps these strings to actual view components.
 
-To add your custom option to this mapping, use the [registerOption](!!API%{ "type": "class", "name": "viewplugin", "field": "registerOption" }%) method.
+To add your custom option to this mapping, use the `registerOption` method:
+```js
+import MyOption from "MyOption.vue";
+viewPlugin.registerOption("MyOption", MyOption);
+```
 
 ### Sidebar
 Some options can require a more complex UI which would not fit in the limited space that a node provides.
@@ -43,7 +47,7 @@ They can be used through the [option plugin](/plugins/options.md).
 
 ### Default Values
 > When providing complex default values like arrays or objects as default values using the NodeBuilder's
-> [addOption](!!API%{ "type": "class", "name": "nodebuilder", "field": "addoption"}%) method,
+> [addOption](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "nodebuilder", "field": "addoption"}%) method,
 > you need to provide a function that returns the default array or object.
 > This ensures that multiple instances of the node option all have their own data objects.
 
