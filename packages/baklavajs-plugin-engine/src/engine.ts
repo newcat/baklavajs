@@ -10,7 +10,7 @@ export class Engine implements IPlugin {
         return this._rootNodes;
     }
 
-    public set rootNodes(value: Node[]) {
+    public set rootNodes(value: Node[]|undefined) {
         this._rootNodes = value;
         this.recalculateOrder = true;
     }
@@ -21,7 +21,7 @@ export class Engine implements IPlugin {
     private recalculateOrder = false;
     private calculateOnChange = false;
     private calculationInProgress = false;
-    private _rootNodes: Node[] = [];
+    private _rootNodes: Node[]|undefined = undefined;
     private interfaceTypePlugins: InterfaceTypePlugin[] = [];
 
     /**
