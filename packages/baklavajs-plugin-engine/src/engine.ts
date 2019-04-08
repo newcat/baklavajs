@@ -80,8 +80,7 @@ export class Engine implements IPlugin {
     public async calculate() {
         this.calculationInProgress = true;
         if (this.recalculateOrder) {
-            this.calculateNodeTree();
-            this.recalculateOrder = false;
+            this.calculateOrder();
         }
         for (const n of this.nodeCalculationOrder) {
             await n.calculate();
@@ -98,6 +97,16 @@ export class Engine implements IPlugin {
             }
         }
         this.calculationInProgress = false;
+    }
+
+    /**
+     * Force the engine to recalculate the node execution order.
+     * This is normally done automatically. Use this method if the
+     * default change detection does not work in your scenario.
+     */
+    public calculateOrder() {
+        this.calculateNodeTree();
+        this.recalculateOrder = false;
     }
 
     private checkConnection(from: NodeInterface, to: NodeInterface) {
