@@ -49,6 +49,9 @@ export interface IMenuItem {
 @Component({
     directives: {
         ClickOutside: ClickOutside.directive
+    },
+    components: {
+        ContextMenu
     }
 })
 export default class ContextMenu extends Vue {
