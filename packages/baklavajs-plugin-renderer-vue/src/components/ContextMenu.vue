@@ -49,9 +49,6 @@ export interface IMenuItem {
 @Component({
     directives: {
         ClickOutside: ClickOutside.directive
-    },
-    components: {
-        ContextMenu
     }
 })
 export default class ContextMenu extends Vue {
@@ -104,6 +101,14 @@ export default class ContextMenu extends Vue {
     onClickOutside(event: MouseEvent) {
         if (this.value) {
             this.$emit("input", false);
+        }
+    }
+
+    created() {
+        if (this.$options.components) {
+            this.$options.components["context-menu"] = Vue.extend(ContextMenu);
+        } else {
+            this.$options.components = { "context-menu": Vue.extend(ContextMenu) };
         }
     }
 
