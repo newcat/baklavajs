@@ -1,6 +1,6 @@
 {
   "name": "@baklavajs/playground",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve"
@@ -11,11 +11,11 @@
     "vue-property-decorator": "^8.0.0"
   },
   "devDependencies": {
-    "@baklavajs/core": "^1.0.7",
-    "@baklavajs/plugin-engine": "^1.0.7",
-    "@baklavajs/plugin-interface-types": "^1.0.7",
-    "@baklavajs/plugin-options-vue": "^1.0.7",
-    "@baklavajs/plugin-renderer-vue": "^1.0.7",
+    "@baklavajs/core": "^1.0.8",
+    "@baklavajs/plugin-engine": "^1.0.8",
+    "@baklavajs/plugin-interface-types": "^1.0.8",
+    "@baklavajs/plugin-options-vue": "^1.0.8",
+    "@baklavajs/plugin-renderer-vue": "^1.0.8",
     "@vue/cli-plugin-typescript": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
     "node-sass": "^4.11.0",
