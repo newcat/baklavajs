@@ -1,5 +1,5 @@
 <template>
-    <div>{{ value }}</div>
+    <div>{{ sanitized }}</div>
 </template>
 
 <script lang="ts">
@@ -8,7 +8,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class TextOption extends Vue {
 
-    @Prop({ type: String, default: "" })
+    get sanitized() {
+        return String(this.value);
+    }
+
+    @Prop({ default: "" })
     value!: string;
 
 }
