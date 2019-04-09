@@ -91,7 +91,7 @@ export class Engine implements IPlugin {
                     if (conversion) {
                         c.to.value = conversion.convert((c.from as any).type, (c.to as any).type, c.from.value);
                     } else {
-                        c.to.value = c.to.value;
+                        c.to.value = c.from.value;
                     }
                 });
             }
