@@ -53,6 +53,7 @@
                     v-if="plugin.sidebar.nodeId === data.id && plugin.sidebar.optionName === name && option.sidebarComponent"
                 >
                     <node-option
+                        :key="data.id + name"
                         :name="name"
                         :option="option"
                         :componentName="option.sidebarComponent"
@@ -76,7 +77,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Inject } from "vue-property-decorator";
+import { Component, Vue, Prop, Inject, Watch } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
 // @ts-ignore

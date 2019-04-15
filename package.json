@@ -1,6 +1,9 @@
 {
     "name": "baklavajs",
     "private": true,
+    "scripts": {
+        "playground": "cd packages/baklavajs-playground && yarn run serve"
+    },
     "workspaces": [
         "packages/*"
     ],
