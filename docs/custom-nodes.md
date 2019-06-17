@@ -37,6 +37,7 @@ The [NodeBuilder](!!API%{ "module": "@baklavajs/core", "type": "class", "name": 
 import { NodeBuilder } from "baklavajs";
 
 export default new NodeBuilder("MathNode")
+    .setName("Math")
     .addInputInterface("Number 1", "NumberOption", 1)
     .addInputInterface("Number 2", "NumberOption", 10)
     .addOption("Operation", "SelectOption", () => ({
@@ -68,9 +69,9 @@ and implement the required methods/properties yourself.
 import { Node, Options } from "baklavajs";
 
 export class MathNode extends Node {
-    
+
     type = "MathNode";
-    name = this.type;
+    name = "Math";
 
     constructor() {
         super();

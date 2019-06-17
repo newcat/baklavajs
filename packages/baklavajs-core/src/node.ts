@@ -19,7 +19,7 @@ export abstract class Node {
 
     /** Type of the node */
     public abstract type: string;
-    /** Name of the node. Should be set equal to [[type]] by default */
+    /** Customizable display name of the node. */
     public abstract name: string;
     /** Unique identifier of the node */
     public id: string = "node_" + generateId();
