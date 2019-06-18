@@ -19,13 +19,13 @@ function getDefaultValue(v: any) {
 }
 
 function generateNode(
-    type: string, intfs: IInterfaceOptions[],
+    type: string, name: string, intfs: IInterfaceOptions[],
     options: Map<string, IOption>, calcFunction?: CalculationFunction
 ) {
     return class extends Node {
 
         type = type;
-        name = type;
+        name = name;
 
         constructor() {
             super();
@@ -53,13 +53,15 @@ function generateNode(
 /** Utility class for creating custom nodes */
 export class NodeBuilder {
 
+    private type = "";
     private name = "";
     private intfs: IInterfaceOptions[] = [];
     private options: Map<string, IOption> = new Map();
     private calcFunction?: CalculationFunction;
 
-    public constructor(name: string) {
-        this.name = name;
+    public constructor(type: string) {
+        this.type = type;
+        this.name = type;
     }
 
     /**
@@ -68,7 +70,17 @@ export class NodeBuilder {
      * @returns The generated node class
      */
     public build(): NodeConstructor {
-        return generateNode(this.name, this.intfs, this.options, this.calcFunction) as NodeConstructor;
+        return generateNode(this.type, this.name, this.intfs, this.options, this.calcFunction) as NodeConstructor;
+    }
+
+    /**
+     * Set a display name for the node.
+     * @param name New name of the node
+     * @returns Current node builder instance for chaining
+     */
+    public setName(name: string): NodeBuilder {
+        this.name = name;
+        return this;
     }
 
     /**
