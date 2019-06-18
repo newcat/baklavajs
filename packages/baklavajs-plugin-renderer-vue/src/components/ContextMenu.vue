@@ -13,8 +13,8 @@
                 v-else
                 :key="index"
                 :class="{ 'item': true, 'submenu': !!item.submenu }"
-                @mouseenter="activeMenu = index"
-                @mouseleave="activeMenu = -1"
+                @mouseenter="onMouseEnter($event, index)"
+                @mouseleave="onMouseLeave($event, index)"
                 @click.stop.prevent="onClick(item)"
                 class="d-flex align-items-center"
             >
@@ -54,6 +54,7 @@ export interface IMenuItem {
 export default class ContextMenu extends Vue {
 
     activeMenu = -1;
+    activeMenuResetTimeout: number|null = null;
 
     @Prop({ type: Boolean, default: false })
     value!: boolean;
@@ -101,6 +102,26 @@ export default class ContextMenu extends Vue {
     onClickOutside(event: MouseEvent) {
         if (this.value) {
             this.$emit("input", false);
+        }
+    }
+
+    onMouseEnter(event: MouseEvent, index: number) {
+        if (this.items[index].submenu) {
+            this.activeMenu = index;
+
+            if (this.activeMenuResetTimeout !== null) {
+                clearTimeout(this.activeMenuResetTimeout);
+                this.activeMenuResetTimeout = null;
+            }
+        }
+    }
+
+    onMouseLeave(event: MouseEvent, index: number) {
+        if (this.items[index].submenu) {
+            this.activeMenuResetTimeout = window.setTimeout(() => {
+                this.activeMenu = -1;
+                this.activeMenuResetTimeout = null;
+            }, 200);
         }
     }
 
