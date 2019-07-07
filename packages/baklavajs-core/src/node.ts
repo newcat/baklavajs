@@ -1,10 +1,10 @@
 import generateId from "./idGenerator";
 import { NodeInterface } from "./nodeInterface";
-import { INodeState } from "./state";
+import { INodeState } from "../types/state";
 import { Editor } from "./editor";
-import { IAddInterfaceEventData, IAddOptionEventData, IOptionEventData,
-    PreventableBaklavaEvent, BaklavaEvent, INodeUpdateEventData, SequentialHook } from "./events";
+import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "./events";
 import { NodeOption } from "./nodeOption";
+import { INode, IAddInterfaceEventData, IAddOptionEventData, IOptionEventData, INodeUpdateEventData } from "../types";
 
 export interface IInterfaceCreateOptions {
     type?: string;
@@ -15,7 +15,7 @@ export interface IInterfaceCreateOptions {
 /**
  * Abstract base class for every node
  */
-export abstract class Node {
+export abstract class Node implements INode {
 
     /** Type of the node */
     public abstract type: string;

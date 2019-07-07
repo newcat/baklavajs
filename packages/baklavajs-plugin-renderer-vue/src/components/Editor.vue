@@ -50,7 +50,8 @@
 import { Component, Vue, Prop, Provide } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
-import { Editor, Node, Connection, NodeInterface, ITemporaryConnection, TemporaryConnectionState } from "@baklavajs/core";
+import { IEditor, INode, ITransferConnection, INodeInterface,
+    ITemporaryConnection, TemporaryConnectionState } from "../../../baklavajs-core/types";
 import { ViewPlugin, IViewNode } from "../viewPlugin";
 
 import NodeView from "./node/Node.vue";
@@ -78,7 +79,7 @@ export default class EditorView extends Vue {
     nodeeditor: EditorView = this;
 
     temporaryConnection: ITemporaryConnection|null = null;
-    hoveringOver?: NodeInterface|null = null;
+    hoveringOver?: INodeInterface|null = null;
     selectedNode?: IViewNode|null = null;
     dragging = false;
 
@@ -131,7 +132,7 @@ export default class EditorView extends Vue {
 
     }
 
-    hoveredOver(ni: NodeInterface|undefined) {
+    hoveredOver(ni: INodeInterface|undefined) {
         this.hoveringOver = ni;
         if (ni && this.temporaryConnection) {
             this.temporaryConnection.to = ni;
@@ -141,11 +142,11 @@ export default class EditorView extends Vue {
                 TemporaryConnectionState.FORBIDDEN;
             this.connections
                 .filter((c) => c.to === ni)
-                .forEach((c) => { c.isInDanger = true; });
+                .forEach((c) => { (c as ITransferConnection).isInDanger = true; });
         } else if (!ni && this.temporaryConnection) {
             this.$set(this.temporaryConnection, "to", undefined);
             this.temporaryConnection.status = TemporaryConnectionState.NONE;
-            this.connections.forEach((c) => { c.isInDanger = false; });
+            this.connections.forEach((c) => { (c as ITransferConnection).isInDanger = false; });
         }
     }
 

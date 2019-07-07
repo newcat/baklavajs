@@ -1,10 +1,11 @@
-import { NodeInterface, IOption, NodeOption } from "..";
-import { NodeConstructor } from "../editor";
+import { INodeInterface } from "./nodeInterface";
+import { NodeConstructor } from "./editor";
+import { INodeOption } from "./nodeOption";
 
 // Editor
 export interface IAddConnectionEventData {
-    from: NodeInterface;
-    to: NodeInterface;
+    from: INodeInterface;
+    to: INodeInterface;
 }
 
 export interface IAddNodeTypeEventData {
@@ -30,11 +31,11 @@ export interface IAddOptionEventData {
 
 export interface IOptionEventData {
     name: string;
-    option: IOption;
+    option: INodeOption;
 }
 
 export interface INodeUpdateEventData {
     name: string;
-    option?: NodeOption;
-    interface?: NodeInterface;
+    option?: INodeOption;
+    interface?: INodeInterface;
 }

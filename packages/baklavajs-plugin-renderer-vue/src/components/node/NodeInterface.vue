@@ -18,14 +18,14 @@
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 import EditorView from "../Editor.vue";
-import { NodeInterface } from "@baklavajs/core";
+import { INodeInterface } from "../../../../baklavajs-core/types";
 import { ViewPlugin } from "../../viewPlugin";
 
 @Component
 export default class NodeInterfaceView extends Vue {
 
     @Prop({ type: Object, default: () => ({}) })
-    data!: NodeInterface;
+    data!: INodeInterface;
 
     @Prop({ type: String, default: "" })
     name!: string;

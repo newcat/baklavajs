@@ -13,11 +13,11 @@
 import { Component, Vue } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
-import { Editor, Node, BaklavaEvent, NodeInterface } from "@baklavajs/core";
-import { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
-import { Engine } from "@baklavajs/plugin-engine";
-import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
-import { OptionPlugin } from "@baklavajs/plugin-options-vue";
+import { Editor, Node, BaklavaEvent, NodeInterface } from "../../baklavajs-core/src";
+import { ViewPlugin } from "../../baklavajs-plugin-renderer-vue/src";
+import { Engine } from "../../baklavajs-plugin-engine/src";
+import { InterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/src";
+import { OptionPlugin } from "../../baklavajs-plugin-options-vue/src";
 
 import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";

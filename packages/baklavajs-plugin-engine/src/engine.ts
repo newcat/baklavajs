@@ -1,5 +1,5 @@
-import { Editor, Node, IPlugin, NodeInterface, DummyConnection, IConnection } from "@baklavajs/core";
-import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
+import { IEditor, INode, IPlugin, INodeInterface, IConnection } from "../../baklavajs-core/types";
+import { IInterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/types";
 import { calculateOrder, containsCycle } from "./nodeTreeBuilder";
 
 export class Engine implements IPlugin {
@@ -10,19 +10,19 @@ export class Engine implements IPlugin {
         return this._rootNodes;
     }
 
-    public set rootNodes(value: Node[]|undefined) {
+    public set rootNodes(value: INode[]|undefined) {
         this._rootNodes = value;
         this.recalculateOrder = true;
     }
 
-    private editor!: Editor;
-    private nodeCalculationOrder: Node[] = [];
-    private connectionsPerNode = new Map<Node, IConnection[]>();
+    private editor!: IEditor;
+    private nodeCalculationOrder: INode[] = [];
+    private connectionsPerNode = new Map<INode, IConnection[]>();
     private recalculateOrder = false;
     private calculateOnChange = false;
     private calculationInProgress = false;
-    private _rootNodes: Node[]|undefined = undefined;
-    private interfaceTypePlugins: InterfaceTypePlugin[] = [];
+    private _rootNodes: INode[]|undefined = undefined;
+    private interfaceTypePlugins: IInterfaceTypePlugin[] = [];
 
     /**
      * Construct a new Engine plugin
@@ -32,19 +32,19 @@ export class Engine implements IPlugin {
         this.calculateOnChange = calculateOnChange;
     }
 
-    public register(editor: Editor) {
+    public register(editor: IEditor) {
         this.editor = editor;
 
         // Search for previously registered interface type plugins
         this.editor.plugins.forEach((p) => {
             if (p.type === "InterfaceTypePlugin") {
-                this.interfaceTypePlugins.push(p as InterfaceTypePlugin);
+                this.interfaceTypePlugins.push(p as IInterfaceTypePlugin);
             }
         });
         // Watch for newly registered interface type plugins
         this.editor.events.usePlugin.addListener(this, (p) => {
             if (p.type === "InterfaceTypePlugin") {
-                this.interfaceTypePlugins.push(p as InterfaceTypePlugin);
+                this.interfaceTypePlugins.push(p as IInterfaceTypePlugin);
             }
         });
 
@@ -109,8 +109,8 @@ export class Engine implements IPlugin {
         this.recalculateOrder = false;
     }
 
-    private checkConnection(from: NodeInterface, to: NodeInterface) {
-        const dc = new DummyConnection(from, to);
+    private checkConnection(from: INodeInterface, to: INodeInterface) {
+        const dc = { from, to, id: "dc", destructed: false, isInDanger: false } as IConnection;
         const copy = (this.editor.connections as ReadonlyArray<IConnection>).concat([dc]);
         copy.filter((conn) => conn.to !== to);
         return containsCycle(this.editor.nodes, copy);

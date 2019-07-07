@@ -5,7 +5,9 @@ export * from "./viewPlugin";
 import Vue from "vue";
 import { ViewPlugin } from "./viewPlugin";
 import { BaklavaVuePlugin } from "./baklavaVuePlugin";
-import { Editor } from "@baklavajs/core";
+
+// TODO: Exclude all this into separate package
+import { Editor } from "../../baklavajs-core/src";
 
 export function createBaklava(element: Element): ViewPlugin {
 
@@ -16,7 +18,7 @@ export function createBaklava(element: Element): ViewPlugin {
     editor.use(plugin);
 
     new Vue({
-        render: h => h("baklava-editor", {
+        render: (h) => h("baklava-editor", {
             props: {
                 model: editor
             }

@@ -1,4 +1,5 @@
-import { Node, NodeConstructor, IOption } from ".";
+import { Node } from "./node";
+import { NodeConstructor } from "../types";
 
 interface IInterfaceOptions {
     isInput: boolean;
@@ -8,7 +9,15 @@ interface IInterfaceOptions {
     additionalProperties?: Record<string, any>;
 }
 
+interface INodeOptionParameters {
+    value: string;
+    optionComponent: string;
+    sidebarComponent?: string;
+    additionalProperties?: Record<string, any>;
+}
+
 type CalculationFunction = (this: Node, n: Node) => any;
+type NodeConstructorImpl = new () => Node;
 
 function getDefaultValue(v: any) {
     if (typeof(v) === "function") {
@@ -20,7 +29,7 @@ function getDefaultValue(v: any) {
 
 function generateNode(
     type: string, name: string, intfs: IInterfaceOptions[],
-    options: Map<string, IOption>, calcFunction?: CalculationFunction
+    options: Map<string, INodeOptionParameters>, calcFunction?: CalculationFunction
 ) {
     return class extends Node {
 
@@ -37,7 +46,7 @@ function generateNode(
                 }
             }
             Array.from(options.entries()).forEach(([k, v]) => {
-                this.addOption(k, v.optionComponent, getDefaultValue(v.value), v.sidebarComponent);
+                this.addOption(k, v.optionComponent, getDefaultValue(v.value), v.sidebarComponent, v.additionalProperties);
             });
         }
 
@@ -56,7 +65,7 @@ export class NodeBuilder {
     private type = "";
     private name = "";
     private intfs: IInterfaceOptions[] = [];
-    private options: Map<string, IOption> = new Map();
+    private options: Map<string, INodeOptionParameters> = new Map();
     private calcFunction?: CalculationFunction;
 
     public constructor(type: string) {
@@ -69,8 +78,8 @@ export class NodeBuilder {
      * This must be called as the last operation when building a node.
      * @returns The generated node class
      */
-    public build(): NodeConstructor {
-        return generateNode(this.type, this.name, this.intfs, this.options, this.calcFunction) as NodeConstructor;
+    public build(): NodeConstructorImpl {
+        return generateNode(this.type, this.name, this.intfs, this.options, this.calcFunction);
     }
 
     /**
@@ -130,7 +139,8 @@ export class NodeBuilder {
         this.options.set(name, {
             value: defaultValue,
             optionComponent,
-            sidebarComponent
+            sidebarComponent,
+            additionalProperties
         });
         return this;
     }

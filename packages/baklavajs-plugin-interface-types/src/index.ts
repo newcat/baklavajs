@@ -1,27 +1,18 @@
-import { IPlugin, Editor } from "@baklavajs/core";
-import { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
-
-export interface IConversion {
-    targetType: string;
-    transformationFunction(value: any): any;
-}
-
-export interface INodeInterfaceType {
-    color: string;
-    conversions: IConversion[];
-}
+import { IPlugin, IEditor } from "../../baklavajs-core/types";
+import { IViewPlugin } from "../../baklavajs-plugin-renderer-vue/types";
+import { INodeInterfaceType } from "../types";
 
 export class InterfaceTypePlugin implements IPlugin {
 
     public type = "InterfaceTypePlugin";
 
-    private editor!: Editor;
+    private editor!: IEditor;
     private types: Map<string, INodeInterfaceType> = new Map();
 
-    public register(editor: Editor) {
+    public register(editor: IEditor) {
         this.editor = editor;
         this.editor.plugins.forEach((p) => {
-            if (p.type === "ViewPlugin") { this.registerView(p as ViewPlugin); }
+            if (p.type === "ViewPlugin") { this.registerView(p as IViewPlugin); }
         });
         this.editor.events.checkConnection.addListener(this, ({ from, to }) => {
             const fromType = (from as any).type;
@@ -33,7 +24,7 @@ export class InterfaceTypePlugin implements IPlugin {
             }
         });
         this.editor.events.usePlugin.addListener(this, (plugin) => {
-            if (plugin.type === "ViewPlugin") { this.registerView(plugin as ViewPlugin); }
+            if (plugin.type === "ViewPlugin") { this.registerView(plugin as IViewPlugin); }
         });
     }
 
@@ -95,11 +86,10 @@ export class InterfaceTypePlugin implements IPlugin {
         }
     }
 
-    private registerView(vp: ViewPlugin) {
+    private registerView(vp: IViewPlugin) {
         vp.hooks.renderInterface.tap(this, (intf) => {
-            const x = intf as any;
-            if (this.types.has(x.data.type)) {
-                const color = this.types.get(x.data.type)!.color;
+            if (this.types.has(intf.data.type)) {
+                const color = this.types.get(intf.data.type)!.color;
                 const res = intf.$el.getElementsByClassName("__port");
                 Array.from(res).forEach((el) => {
                     (el as HTMLElement).style.backgroundColor = color;

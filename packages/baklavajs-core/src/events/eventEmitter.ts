@@ -1,9 +1,11 @@
+import { IBaklavaEvent, IHook } from "../../types";
+
 export type TokenType = object|symbol;
 export type Listener<T> = (ev: T) => any;
 export type HookTap<I, O> = (i: I) => O;
 
 /** Main event class for Baklava */
-export class BaklavaEvent<T> {
+export class BaklavaEvent<T> implements IBaklavaEvent<T> {
 
     protected listeners: Map<TokenType, Listener<T>> = new Map();
 
@@ -40,7 +42,7 @@ export class BaklavaEvent<T> {
 /** Extension for the [[BaklavaEvent]] class. A listener can return `false` to prevent
  * this event from happening.
  */
-export class PreventableBaklavaEvent<T> extends BaklavaEvent<T> {
+export class PreventableBaklavaEvent<T> extends BaklavaEvent<T> implements IBaklavaEvent<T> {
 
     /**
      * Invoke all listeners.
@@ -59,7 +61,7 @@ export class PreventableBaklavaEvent<T> extends BaklavaEvent<T> {
 }
 
 /** Base class for hooks in Baklava */
-export abstract class Hook<I, O = I> {
+export abstract class Hook<I, O = I> implements IHook<I, O> {
 
     private tapMap: Map<TokenType, HookTap<I, O>> = new Map();
     protected taps: Array<HookTap<I, O>> = [];

@@ -1,13 +1,14 @@
 import { Node } from "./node";
 import generateId from "./idGenerator";
-import { IInterfaceState } from "./state";
+import { IInterfaceState } from "../types/state";
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "./events";
+import { INodeInterface, INode } from "../types";
 
-export class NodeInterface {
+export class NodeInterface implements INodeInterface {
 
     public id: string;
     public isInput: boolean;
-    public parent: Node;
+    public parent: INode;
     public option?: string;
 
     public events = {
@@ -40,7 +41,7 @@ export class NodeInterface {
         return this._value;
     }
 
-    public constructor(parent: Node, isInput: boolean) {
+    public constructor(parent: INode, isInput: boolean) {
         this.parent = parent;
         this.isInput = isInput;
         this.id = "ni_" + generateId();

@@ -4,6 +4,6 @@
         "declarationDir": "dist"
     },
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts", "types/*.ts"
     ]
 }

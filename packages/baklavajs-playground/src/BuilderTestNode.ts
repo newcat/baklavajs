@@ -1,4 +1,4 @@
-import { NodeBuilder } from "@baklavajs/core";
+import { NodeBuilder } from "../../baklavajs-core/src";
 
 export default new NodeBuilder("BuilderTestNode")
     .addInputInterface("Input 1", "InputOption", "default1")

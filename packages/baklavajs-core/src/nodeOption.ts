@@ -1,12 +1,7 @@
+import { INodeOption } from "../types/nodeOption";
 import { PreventableBaklavaEvent, BaklavaEvent } from "./events";
 
-export interface IOption {
-    optionComponent: string;
-    value: any;
-    sidebarComponent?: string;
-}
-
-export class NodeOption implements IOption {
+export class NodeOption implements INodeOption {
 
     /** Name of the component that should be displayed for the option */
     public optionComponent: string;
