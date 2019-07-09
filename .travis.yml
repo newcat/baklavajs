@@ -14,6 +14,19 @@ jobs:
       script:
         - lerna run build
         - lerna run test
+    - stage: dev build and deploy
+      if: branch = dev
+      script:
+        - lerna run build
+      before_deploy:
+        - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
+      deploy:
+        provider: script
+        script: "lerna run publish --dist-tag next --canary --preid next --yes"
+        skip_cleanup: true
+        on:
+          node: "10"
+          tags: true
     - stage: build and deploy
       if: branch =~ /^v.*$/ AND tag IS present
       script:
@@ -22,7 +35,7 @@ jobs:
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
       deploy:
         provider: script
-        script: "lerna run publish"
+        script: "lerna run publish from-git --yes"
         skip_cleanup: true
         on:
           node: "10"
