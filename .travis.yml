@@ -24,9 +24,6 @@ jobs:
         provider: script
         script: "lerna run publish --dist-tag next --canary --preid next --yes"
         skip_cleanup: true
-        on:
-          node: "10"
-          tags: true
     - stage: build and deploy
       if: branch =~ /^v.*$/ AND tag IS present
       script:
@@ -38,5 +35,4 @@ jobs:
         script: "lerna run publish from-git --yes"
         skip_cleanup: true
         on:
-          node: "10"
           tags: true
