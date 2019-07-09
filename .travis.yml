@@ -22,7 +22,7 @@ jobs:
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
       deploy:
         provider: script
-        script: "lerna run publish --dist-tag next --canary --preid next --yes"
+        script: "lerna publish --dist-tag next --canary --preid next --yes"
         skip_cleanup: true
         on:
           all_branches: true
@@ -34,7 +34,7 @@ jobs:
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
       deploy:
         provider: script
-        script: "lerna run publish from-git --yes"
+        script: "lerna publish from-git --yes"
         skip_cleanup: true
         on:
           all_branches: true
