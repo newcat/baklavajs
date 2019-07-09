@@ -6,10 +6,7 @@ notifications:
     on_success: never
     on_failure: always
 
-cache:
-  yarn: true
-  directories:
-    - ~./cache
+cache: yarn
 
 jobs:
   include:
