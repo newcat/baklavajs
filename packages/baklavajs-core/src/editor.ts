@@ -1,14 +1,12 @@
 import { Node } from "./node";
 import { NodeInterface } from "./nodeInterface";
-import { Connection, DummyConnection, IConnection } from "./connection";
-import { IState } from "./state";
-import { IAddConnectionEventData, PreventableBaklavaEvent, BaklavaEvent, IAddNodeTypeEventData, SequentialHook } from "./events";
-import { IPlugin } from "./plugin";
-
-export type NodeConstructor = new () => Node;
+import { Connection, DummyConnection } from "./connection";
+import { IState } from "../types/state";
+import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "./events";
+import { IEditor, IPlugin, IConnection, NodeConstructor, INode, IAddConnectionEventData, IAddNodeTypeEventData } from "../types";
 
 /** The main model class for BaklavaJS */
-export class Editor {
+export class Editor implements IEditor {
 
     private _plugins: Set<IPlugin> = new Set();
     private _nodes: Node[] = [];
@@ -19,10 +17,10 @@ export class Editor {
     public events = {
         beforeRegisterNodeType: new PreventableBaklavaEvent<IAddNodeTypeEventData>(),
         registerNodeType: new BaklavaEvent<IAddNodeTypeEventData>(),
-        beforeAddNode: new PreventableBaklavaEvent<Node>(),
-        addNode: new BaklavaEvent<Node>(),
-        beforeRemoveNode: new PreventableBaklavaEvent<Node>(),
-        removeNode: new BaklavaEvent<Node>(),
+        beforeAddNode: new PreventableBaklavaEvent<INode>(),
+        addNode: new BaklavaEvent<INode>(),
+        beforeRemoveNode: new PreventableBaklavaEvent<INode>(),
+        removeNode: new BaklavaEvent<INode>(),
         beforeAddConnection: new PreventableBaklavaEvent<IAddConnectionEventData>(),
         addConnection: new BaklavaEvent<IConnection>(),
         checkConnection: new PreventableBaklavaEvent<IAddConnectionEventData>(),
@@ -208,7 +206,7 @@ export class Editor {
                 continue;
             }
 
-            const node = new nt();
+            const node = new nt() as Node;
             this.addNode(node);
             node.load(n);
 

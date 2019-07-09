@@ -1,4 +1,4 @@
-import { Node } from "@baklavajs/core";
+import { Node } from "../../baklavajs-core/src";
 
 export default class AdvancedNode extends Node {
 

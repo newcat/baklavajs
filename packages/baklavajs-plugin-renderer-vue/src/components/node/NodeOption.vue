@@ -12,7 +12,7 @@
 <script lang="ts">
 import { CreateElement, VueConstructor } from "vue";
 import { Component, Prop, Vue, Inject } from "vue-property-decorator";
-import { NodeOption, Node } from "@baklavajs/core";
+import { INodeOption, INode } from "../../../../baklavajs-core/types";
 import { ViewPlugin } from "../../viewPlugin";
 
 @Component
@@ -22,13 +22,13 @@ export default class NodeOptionView extends Vue {
     name!: string;
 
     @Prop()
-    option!: NodeOption;
+    option!: INodeOption;
 
     @Prop()
     componentName!: string;
 
     @Prop()
-    node!: Node;
+    node!: INode;
 
     @Inject("plugin")
     plugin!: ViewPlugin;

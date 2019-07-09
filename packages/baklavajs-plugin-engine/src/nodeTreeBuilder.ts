@@ -1,16 +1,16 @@
-import { Node, IConnection } from "@baklavajs/core";
+import { INode, IConnection } from "../../baklavajs-core/types";
 
 interface ITreeNode {
-    n?: Node;
+    n?: INode;
     children: ITreeNode[];
 }
 
 const isEmpty = (obj: any) =>
     [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
 
-export function calculateOrder(nodes: ReadonlyArray<Node>, connections: ReadonlyArray<IConnection>, roots?: Node[]): Node[] {
+export function calculateOrder(nodes: ReadonlyArray<INode>, connections: ReadonlyArray<IConnection>, roots?: INode[]): INode[] {
 
-    const adjacency = new Map<Node, Node[]>();
+    const adjacency = new Map<INode, INode[]>();
 
     // build adjacency list
     nodes.forEach((n) => {
@@ -22,7 +22,7 @@ export function calculateOrder(nodes: ReadonlyArray<Node>, connections: Readonly
     });
 
     // DFS for initial tree building and cycle detection
-    const outputs: Node[] = roots || nodes.filter((n) => isEmpty(n.outputInterfaces));
+    const outputs: INode[] = roots || nodes.filter((n) => isEmpty(n.outputInterfaces));
     const root: ITreeNode = {
         children: outputs.map((o) => ({ n: o, children: [] }))
     };
@@ -31,7 +31,7 @@ export function calculateOrder(nodes: ReadonlyArray<Node>, connections: Readonly
 
     // BFS with stack to find calculation order
     const queue: ITreeNode[] = [];
-    const stack: Node[] = [];
+    const stack: INode[] = [];
     queue.push(root);
 
     while (queue.length > 0) {
@@ -43,7 +43,7 @@ export function calculateOrder(nodes: ReadonlyArray<Node>, connections: Readonly
     }
 
     // Pop stack to reverse the order
-    const calculationOrder: Node[] = [];
+    const calculationOrder: INode[] = [];
     while (stack.length > 0) {
         const n = stack.pop()!;
         if (!calculationOrder.includes(n)) {
@@ -54,7 +54,7 @@ export function calculateOrder(nodes: ReadonlyArray<Node>, connections: Readonly
 
 }
 
-function findDescendants(tn: ITreeNode, ancestors: Node[], adjacency: Map<Node, Node[]>) {
+function findDescendants(tn: ITreeNode, ancestors: INode[], adjacency: Map<INode, INode[]>) {
     for (const c of tn.children) {
 
         if (ancestors.includes(c.n!)) {
@@ -71,7 +71,7 @@ function findDescendants(tn: ITreeNode, ancestors: Node[], adjacency: Map<Node, 
     }
 }
 
-export function containsCycle(nodes: ReadonlyArray<Node>, connections: ReadonlyArray<IConnection>): boolean {
+export function containsCycle(nodes: ReadonlyArray<INode>, connections: ReadonlyArray<IConnection>): boolean {
     try {
         calculateOrder(nodes, connections);
         return true;

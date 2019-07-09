@@ -1,11 +1,12 @@
 import Vue, { VueConstructor } from "vue";
-import { IPlugin, Editor, SequentialHook, Node } from "@baklavajs/core";
+import { IPlugin, IEditor, INode } from "../../baklavajs-core/types";
+import { SequentialHook } from "../../baklavajs-core/src/events";
 import NodeView from "./components/node/Node.vue";
 import NodeOptionView from "./components/node/NodeOption.vue";
 import NodeInterfaceView from "./components/node/NodeInterface.vue";
 import ConnectionView from "./components/connection/ConnectionView.vue";
 
-export interface IViewNode extends Node {
+export interface IViewNode extends INode {
     position: { x: number, y: number };
     disablePointerEvents: boolean;
 }
@@ -13,7 +14,7 @@ export interface IViewNode extends Node {
 export class ViewPlugin implements IPlugin {
 
     public type = "ViewPlugin";
-    public editor!: Editor;
+    public editor!: IEditor;
     public panning = { x: 0, y: 0 };
     public scaling = 1;
     public sidebar = { visible: false, nodeId: "", optionName: "" };
@@ -27,7 +28,7 @@ export class ViewPlugin implements IPlugin {
         renderConnection: new SequentialHook<ConnectionView>()
     };
 
-    public register(editor: Editor): void {
+    public register(editor: IEditor): void {
         this.editor = editor;
         this.editor.hooks.load.tap(this, (d) => {
             this.panning = d.panning;

@@ -1,28 +1,9 @@
 import { NodeInterface } from "./nodeInterface";
 import generateId from "./idGenerator";
 import { BaklavaEvent } from "./events";
+import { IConnection, ITransferConnection } from "../types/connection";
 
-export enum TemporaryConnectionState {
-    NONE,
-    ALLOWED,
-    FORBIDDEN
-}
-
-export interface ITemporaryConnection {
-    status: TemporaryConnectionState;
-    from: NodeInterface;
-    to?: NodeInterface;
-    mx?: number;
-    my?: number;
-}
-
-export interface IConnection {
-    id: string;
-    from: NodeInterface;
-    to: NodeInterface;
-}
-
-export class Connection {
+export class Connection implements ITransferConnection {
 
     public id: string;
     public from: NodeInterface;

@@ -6,7 +6,7 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom from "../../domResolver";
-import { Connection, TemporaryConnectionState } from "@baklavajs/core";
+import { ITransferConnection, TemporaryConnectionState } from "../../../../baklavajs-core/types";
 
 @Component({
     components: {
@@ -16,7 +16,7 @@ import { Connection, TemporaryConnectionState } from "@baklavajs/core";
 export default class ConnectionWrapper extends Vue {
 
     @Prop({ type: Object })
-    connection!: Connection;
+    connection!: ITransferConnection;
 
     d = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
