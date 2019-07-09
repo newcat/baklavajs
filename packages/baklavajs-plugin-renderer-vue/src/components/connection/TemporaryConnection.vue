@@ -11,7 +11,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 import ConnectionView from "./ConnectionView.vue";
-import { ITemporaryConnection, TemporaryConnectionState, NodeInterface } from "@baklavajs/core";
+import { ITemporaryConnection, TemporaryConnectionState, INodeInterface } from "../../../../baklavajs-core/types";
 import resolveDom from "../../domResolver";
 
 @Component({
@@ -55,7 +55,7 @@ export default class TemporaryConnection extends Vue {
 
     }
 
-    getCoords(ni: NodeInterface) {
+    getCoords(ni: INodeInterface) {
         const d = resolveDom(ni);
         if (d.node && d.interface) {
             const x = ni.isInput ? d.node.offsetLeft : d.node.offsetLeft + d.node.clientWidth;

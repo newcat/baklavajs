@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
-import { TemporaryConnectionState } from "@baklavajs/core";
+import { TemporaryConnectionState } from "../../../../baklavajs-core/types";
 import { ViewPlugin } from "../../viewPlugin";
 
 @Component

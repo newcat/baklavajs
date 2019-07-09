@@ -83,7 +83,6 @@ import { VueConstructor } from "vue";
 // @ts-ignore
 import ClickOutside from "v-click-outside";
 
-import { Node, NodeInterface, NodeOption, BaklavaEvent } from "@baklavajs/core";
 import { ViewPlugin, IViewNode } from "../../viewPlugin";
 import NodeInterfaceView from "./NodeInterface.vue";
 import NodeOptionView from "./NodeOption.vue";
