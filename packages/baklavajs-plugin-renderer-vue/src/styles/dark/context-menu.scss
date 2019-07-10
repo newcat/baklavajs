@@ -13,7 +13,11 @@
         transition: background 0.05s linear;
         position: relative;
         
-        &:not(.--header):not(.--active) {
+        &.--disabled {
+            color: $color-control-dark-hover;
+        }
+
+        &:not(.--header):not(.--active):not(.--disabled) {
             &:hover {
                 background: $color-primary;
             }

@@ -1,5 +1,5 @@
 import { INode } from "./node";
-import { IBaklavaEvent, IPreventableBaklavaEvent } from "./events";
+import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "./events";
 import { IInterfaceState } from "./state";
 
 export interface INodeInterface {
@@ -13,6 +13,11 @@ export interface INodeInterface {
         setConnectionCount: IBaklavaEvent<number>,
         beforeSetValue: IPreventableBaklavaEvent<any>,
         setValue: IBaklavaEvent<any>
+    };
+
+    hooks: {
+        load: IHook<IInterfaceState>,
+        save: IHook<IInterfaceState>
     };
 
     connectionCount: number;

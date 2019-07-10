@@ -12,7 +12,7 @@
             <div
                 v-else
                 :key="index"
-                :class="{ 'item': true, 'submenu': !!item.submenu }"
+                :class="{ 'item': true, 'submenu': !!item.submenu, '--disabled': !!item.disabled }"
                 @mouseenter="onMouseEnter($event, index)"
                 @mouseleave="onMouseLeave($event, index)"
                 @click.stop.prevent="onClick(item)"
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
 // @ts-ignore
 import ClickOutside from "v-click-outside";
@@ -44,6 +44,8 @@ export interface IMenuItem {
     value?: any;
     isDivider?: boolean;
     submenu?: IMenuItem[];
+    disabled?: boolean;
+    disabledFunction?: (() => boolean);
 }
 
 @Component({
@@ -130,6 +132,17 @@ export default class ContextMenu extends Vue {
             this.$options.components["context-menu"] = Vue.extend(ContextMenu);
         } else {
             this.$options.components = { "context-menu": Vue.extend(ContextMenu) };
+        }
+    }
+
+    @Watch("value", { immediate: true })
+    updateDisabledValues() {
+        if (this.value) {
+            this.items.forEach((item) => {
+                if (item.disabledFunction) {
+                    this.$set(item, "disabled", item.disabledFunction());
+                }
+            });
         }
     }
 
