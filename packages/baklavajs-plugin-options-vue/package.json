@@ -9,7 +9,7 @@
     "dist/**/!(report.html)"
   ],
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/baklavajs-plugin-options-vue/src/index.d.ts",
   "scripts": {
     "build": "webpack"
   },

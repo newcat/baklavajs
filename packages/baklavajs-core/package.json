@@ -9,7 +9,7 @@
     "dist/**/!(report.html)"
   ],
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "webpack",
     "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\""
