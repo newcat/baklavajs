@@ -1,6 +1,6 @@
 {
   "name": "@baklavajs/plugin-options-vue",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "description": "This plugin adds a set of predefined option components to the renderer-vue plugin for BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
