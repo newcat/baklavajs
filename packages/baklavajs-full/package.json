@@ -1,0 +1,33 @@
+{
+  "name": "@baklavajs/full",
+  "version": "1.1.0",
+  "description": "Full installation of BaklavaJS including the core and all plugins",
+  "author": "newcat <freddy.wagner@web.de>",
+  "homepage": "https://newcat.github.io/baklavajs",
+  "license": "MIT",
+  "files": [
+    "dist/**/!(report.html)"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/baklavajs-full/src/index.d.ts",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newcat/baklavajs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/newcat/baklavajs/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@baklavajs/core": "^1.1.0",
+    "@baklavajs/plugin-engine": "^1.1.0",
+    "@baklavajs/plugin-interface-types": "^1.1.0",
+    "@baklavajs/plugin-options-vue": "^1.1.0",
+    "@baklavajs/plugin-renderer-vue": "^1.1.0"
+  }
+}
