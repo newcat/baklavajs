@@ -27,7 +27,7 @@ jobs:
         on:
           all_branches: true
     - stage: build and deploy
-      if: commit_message =~ /Publish/
+      if: branch = master AND commit_message =~ /Publish/
       script:
         - lerna run build
       before_deploy:
