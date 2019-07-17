@@ -27,7 +27,7 @@ jobs:
         on:
           all_branches: true
     - stage: build and deploy
-      if: tag IS present
+      if: commit_message =~ /Publish/
       script:
         - lerna run build
       before_deploy:
