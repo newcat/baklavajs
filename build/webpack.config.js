@@ -1,4 +1,5 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     mode: "production",
@@ -15,7 +16,7 @@ module.exports = {
         extensions: ['.ts']
     },
     externals: {
-        "@baklavajs/core": {
+        /*"@baklavajs/core": {
             commonjs: '@baklavajs/core',
             commonjs2: '@baklavajs/core',
             amd: '@baklavajs/core',
@@ -32,7 +33,7 @@ module.exports = {
             commonjs2: '@baklavajs/plugin-interface-types',
             amd: '@baklavajs/plugin-interface-types',
             root: 'BaklavaJSInterfaceTypes'
-        },
+        },*/
         vue: {
             commonjs: 'vue',
             commonjs2: 'vue',
@@ -47,6 +48,10 @@ module.exports = {
         globalObject: `(typeof self !== 'undefined' ? self : this)`
     },
     plugins: [
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new BundleAnalyzerPlugin({
+            analyzerMode: "static",
+            openAnalyzer: false
+        })
     ]
 };
