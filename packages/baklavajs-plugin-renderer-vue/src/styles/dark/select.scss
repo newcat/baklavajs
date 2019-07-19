@@ -19,6 +19,7 @@
         min-height: 1.7em;
         display: flex;
         align-items: center;
+        cursor: pointer;
 
         &:hover {
             background: $color-control-dark-hover;
@@ -72,6 +73,7 @@
             transition: background 0.05s linear;
             
             &:not(.--header):not(.--active) {
+                cursor: pointer;
                 &:hover {
                     background: $color-control-dark-hover;
                 }
