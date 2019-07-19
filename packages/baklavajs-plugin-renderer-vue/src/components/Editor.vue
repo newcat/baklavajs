@@ -1,6 +1,6 @@
 <template>
     <div tabindex="-1"
-        :class="['node-editor', { 'ignore-mouse': !!temporaryConnection }]"
+        :class="['node-editor', { 'ignore-mouse': !!temporaryConnection, '--temporary-connection': !!temporaryConnection }]"
         @mousemove.self="mouseMoveHandler"
         @mousedown="mouseDown"
         @mouseup="mouseUp"
@@ -199,7 +199,11 @@ export default class EditorView extends Vue {
 
     mouseWheel(ev: MouseWheelEvent) {
         ev.preventDefault();
-        const newScale = this.plugin.scaling * (1 - ev.deltaY / 3000);
+        let scrollAmount = ev.deltaY;
+        if (ev.deltaMode === 1) {
+            scrollAmount *= 32; // Firefox fix, multiplier is trial & error
+        }
+        const newScale = this.plugin.scaling * (1 - scrollAmount / 3000);
         const currentPoint = [
             (ev.offsetX / this.plugin.scaling) - this.plugin.panning.x,
             (ev.offsetY / this.plugin.scaling) - this.plugin.panning.y
