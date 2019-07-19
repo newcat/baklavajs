@@ -37,4 +37,4 @@ jobs:
         script: "lerna publish from-git --yes"
         skip_cleanup: true
         on:
-          tags: true
+          branch: master
