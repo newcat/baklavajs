@@ -11,6 +11,7 @@ cache: yarn
 jobs:
   include:
     - stage: test
+      if: tag IS blank
       script:
         - lerna run build
         - lerna run test
