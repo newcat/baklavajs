@@ -12,7 +12,7 @@ const apiPlugin = function(hook, vm) {
             
             // The result can be accessed through the `m`-variable.
             const data = JSON.parse(m[1]);
-            let url = `/baklavajs/api/index.html#${encodeURIComponent(data.module)}/`;
+            let url = `/baklavajs/api/index.html#${data.module.replace("/", "%2F")}/`;
             if (data.type === "class") {
                 url += `classes/${data.name}`;
                 if (data.field) {

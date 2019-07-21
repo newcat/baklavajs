@@ -34,7 +34,7 @@ There are two ways to create custom nodes:
 ### Node Builder
 The [NodeBuilder](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "nodebuilder" }%) is a simple way to build nodes "on the fly".
 ```js
-import { NodeBuilder } from "baklavajs";
+import { NodeBuilder } from "@baklavajs/core";
 
 export default new NodeBuilder("MathNode")
     .setName("Math")
@@ -66,7 +66,7 @@ export default new NodeBuilder("MathNode")
 If you have a more complex node, you can create a subclass of `Node`
 and implement the required methods/properties yourself.
 ```js
-import { Node, Options } from "baklavajs";
+import { Node } from "@baklavajs/core";
 
 export class MathNode extends Node {
 

@@ -12,7 +12,8 @@
   "types": "dist/baklavajs-plugin-interface-types/src/index.d.ts",
   "scripts": {
     "build": "webpack",
-    "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\""
+    "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\"",
+    "docs": "typedoc --json ../../docs/api/plugin-interface-types.json"
   },
   "repository": {
     "type": "git",
