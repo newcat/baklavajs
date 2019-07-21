@@ -11,6 +11,7 @@
         justify-content: center;
         align-items: center;
         transition: background $visual-transition;
+        cursor: pointer;
 
         &:hover {
             background-color: $color-control-dark-hover;
@@ -37,6 +38,7 @@
     & > .__content {
         display: flex;
         flex: 1 1 auto;
+        cursor: pointer;
 
         &:hover {
             background-color: $color-control-dark-hover;
