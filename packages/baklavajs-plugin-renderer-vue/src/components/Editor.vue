@@ -246,8 +246,8 @@ export default class EditorView extends Vue {
             if (nt) {
                 const node = this.plugin.editor.addNode(new nt()) as IViewNode;
                 if (node) {
-                    node.position.x = this.contextMenu.x;
-                    node.position.y = this.contextMenu.y;
+                    node.position.x = (this.contextMenu.x / this.plugin.scaling) - this.plugin.panning.x;
+                    node.position.y = (this.contextMenu.y / this.plugin.scaling) - this.plugin.panning.y;
                 }
             }
         }
