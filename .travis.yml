@@ -32,6 +32,8 @@ jobs:
       script:
         - lerna run build
         - lerna run docs
+        - git commit -m "Updated docs"
+        - git push
       before_deploy:
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
       deploy:
