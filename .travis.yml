@@ -11,6 +11,7 @@ cache: yarn
 jobs:
   include:
     - stage: test
+      if: tag IS blank
       script:
         - lerna run build
         - lerna run test
@@ -30,6 +31,7 @@ jobs:
       if: branch = master AND commit_message =~ /Publish/
       script:
         - lerna run build
+        - lerna run docs
       before_deploy:
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
       deploy:
@@ -37,4 +39,4 @@ jobs:
         script: "lerna publish from-git --yes"
         skip_cleanup: true
         on:
-          tags: true
+          branch: master
