@@ -5,7 +5,7 @@
     border-radius: $border-radius-node;
     position: absolute;
     filter: drop-shadow(0 0 3px #000000cc);
-    transition: box-shadow $visual-transition;
+    transition: box-shadow $visual-transition, filter $visual-transition;
 
     &:hover {
         box-shadow: 0 0 0 0.35px $color-node-selected;
@@ -14,11 +14,14 @@
     &.--selected {
         z-index: 5;
         box-shadow: 0 0 0 1px $color-node-selected;
+    }
+
+    &.--dragging {
+        filter: drop-shadow(0 0 7px #000000cc);
 
         & > .__title {
             cursor: move;
         }
-
     }
 
     & > .__title {

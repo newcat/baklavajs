@@ -1,5 +1,5 @@
 <template>
-    <div :id="data.id" :class="['node', { '--selected': selected }]" :style="styles">
+    <div :id="data.id" :class="['node', { '--selected': selected, '--dragging': dragging }]" :style="styles">
 
         <div
             class="__title"

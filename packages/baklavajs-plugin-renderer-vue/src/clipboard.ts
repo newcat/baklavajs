@@ -32,7 +32,10 @@ export default class Clipboard {
 
     public paste() {
 
+        // Map old IDs to new IDs
         const idmap = new Map<string, string>();
+
+        // TODO: What is this?
         const intfmap = new Map<string, string>();
 
         const parsedNodeBuffer = JSON.parse(this.nodeBuffer) as INodeState[];
@@ -50,9 +53,10 @@ export default class Clipboard {
 
             copiedNode.interfaces.forEach((intf) => {
                 intf.hooks.load.tap(this, (intfState) => {
-                    idmap.set(intfState.id, intf.id);
+                    const newIntfId = this.editor.generateId("ni");
+                    idmap.set(intfState.id, newIntfId);
                     intfmap.set(intfState.id, generatedId);
-                    intfState.id = intf.id;
+                    intf.id = newIntfId;
                     intf.hooks.load.untap(this);
                     return intfState;
                 });

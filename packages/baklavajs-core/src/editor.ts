@@ -4,6 +4,7 @@ import { Connection, DummyConnection } from "./connection";
 import { IState } from "../types/state";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "./events";
 import { IEditor, IPlugin, IConnection, NodeConstructor, INode, IAddConnectionEventData, IAddNodeTypeEventData } from "../types";
+import generateId from "./idGenerator";
 
 /** The main model class for BaklavaJS */
 export class Editor implements IEditor {
@@ -259,6 +260,10 @@ export class Editor implements IEditor {
         plugin.register(this);
         this.events.usePlugin.emit(plugin);
         return true;
+    }
+
+    public generateId(prefix: string = ""): string {
+        return prefix + generateId();
     }
 
     private findNodeInterface(id: string) {
