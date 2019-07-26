@@ -31,7 +31,6 @@ jobs:
       if: branch = master AND commit_message =~ /Publish/
       script:
         - lerna run build
-        - lerna run docs
       before_deploy:
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
       deploy:
