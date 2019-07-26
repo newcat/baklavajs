@@ -13,3 +13,4 @@
   * [Options](/plugins/options.md)
 * **Reference**
   * [API Reference](/baklavajs/api/index.html)
+  * [Contributing Guide](/contributing.md)

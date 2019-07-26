@@ -1,6 +1,6 @@
 {
   "name": "@baklavajs/plugin-interface-types",
-  "version": "1.1.0",
+  "version": "1.1.3",
   "description": "Add types to node interfaces for BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
@@ -9,10 +9,11 @@
     "dist/**/!(report.html)"
   ],
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/baklavajs-plugin-interface-types/src/index.d.ts",
   "scripts": {
     "build": "webpack",
-    "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\""
+    "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\"",
+    "docs": "typedoc --json ../../docs/api/plugin-interface-types.json"
   },
   "repository": {
     "type": "git",

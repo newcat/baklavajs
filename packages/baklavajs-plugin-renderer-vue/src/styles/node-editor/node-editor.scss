@@ -14,12 +14,17 @@
     font-size: 13px;
     @include backgroundpattern();
 
-    & * {
+    & *:not(input) {
         user-select: none;
+        -moz-user-select: none;
     }
 
     & *, & *::after, & *::before {
         box-sizing: border-box;
+    }
+
+    &.--temporary-connection {
+        cursor: crosshair;
     }
 
 }

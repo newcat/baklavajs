@@ -4,10 +4,10 @@
     color: $color-control-dark-foreground;
     transition: background-color $visual-transition;
     border: none;
-
     padding: 0.45em 0.35em;
     border-radius: $border-radius-control;
     font-size: inherit;
+    cursor: pointer;
 
     &:hover {
         background-color: $color-control-dark-hover;
