@@ -6,6 +6,7 @@
         @mouseup="mouseUp"
         @wheel.self="mouseWheel"
         @keydown="keyDown"
+        @keyup="keyUp"
         @contextmenu.self.prevent="openContextMenu"
     >
 
@@ -26,7 +27,7 @@
                 v-for="node in nodes"
                 :key="node.id"
                 :data="node"
-                :selected="selectedNode === node"
+                :selected="selectedNodes.includes(node)"
                 @select="selectNode(node)"
             >
             </node>
@@ -53,6 +54,7 @@ import { VueConstructor } from "vue";
 import { IEditor, INode, ITransferConnection, INodeInterface,
     ITemporaryConnection, TemporaryConnectionState } from "../../../baklavajs-core/types";
 import { ViewPlugin, IViewNode } from "../viewPlugin";
+import Clipboard from "../clipboard";
 
 import NodeView from "./node/Node.vue";
 import ConnectionView from "./connection/ConnectionWrapper.vue";
@@ -78,10 +80,12 @@ export default class EditorView extends Vue {
     @Provide("editor")
     nodeeditor: EditorView = this;
 
+    clipboard!: Clipboard;
     temporaryConnection: ITemporaryConnection|null = null;
     hoveringOver?: INodeInterface|null = null;
-    selectedNode?: IViewNode|null = null;
+    selectedNodes: IViewNode[] = [];
     dragging = false;
+    ctrlPressed = false;
 
     contextMenu = {
         items: [] as IMenuItem[],
@@ -108,6 +112,7 @@ export default class EditorView extends Vue {
     mounted() {
         this.updateContextMenu();
         this.plugin.editor.events.registerNodeType.addListener(this, () => this.updateContextMenu());
+        this.clipboard = new Clipboard(this.plugin.editor);
     }
 
     updateContextMenu() {
@@ -127,6 +132,16 @@ export default class EditorView extends Vue {
             {
                 label: "Add Node",
                 submenu: [ ...categories, { isDivider: true }, ...defaultNodes ]
+            },
+            {
+                label: "Copy Nodes",
+                value: "copy",
+                disabledFunction: () => this.selectedNodes.length === 0
+            },
+            {
+                label: "Paste Nodes",
+                value: "paste",
+                disabledFunction: () => this.clipboard.isEmpty
             }
         ] as IMenuItem[];
 
@@ -161,30 +176,32 @@ export default class EditorView extends Vue {
     }
 
     mouseDown(ev: MouseEvent) {
-        if (this.hoveringOver) {
+        if (ev.button === 0) {
+            if (this.hoveringOver) {
 
-            // if this interface is an input and already has a connection
-            // to it, remove the connection and make it temporary
-            const connection = this.connections.find((c) => c.to === this.hoveringOver);
-            if (this.hoveringOver.isInput && connection) {
-                this.temporaryConnection = {
-                    status: TemporaryConnectionState.NONE,
-                    from: connection.from
-                };
-                this.plugin.editor.removeConnection(connection);
-            } else {
-                this.temporaryConnection = {
-                    status: TemporaryConnectionState.NONE,
-                    from: this.hoveringOver
-                };
+                // if this interface is an input and already has a connection
+                // to it, remove the connection and make it temporary
+                const connection = this.connections.find((c) => c.to === this.hoveringOver);
+                if (this.hoveringOver.isInput && connection) {
+                    this.temporaryConnection = {
+                        status: TemporaryConnectionState.NONE,
+                        from: connection.from
+                    };
+                    this.plugin.editor.removeConnection(connection);
+                } else {
+                    this.temporaryConnection = {
+                        status: TemporaryConnectionState.NONE,
+                        from: this.hoveringOver
+                    };
+                }
+
+                this.$set(this.temporaryConnection as any, "mx", null);
+                this.$set(this.temporaryConnection as any, "my", null);
+
+            } else if (ev.target === this.$el) {
+                this.unselectAllNodes();
+                this.dragging = true;
             }
-
-            this.$set(this.temporaryConnection as any, "mx", null);
-            this.$set(this.temporaryConnection as any, "my", null);
-
-        } else if (ev.target === this.$el) {
-            this.selectedNode = null;
-            this.dragging = true;
         }
     }
 
@@ -222,15 +239,30 @@ export default class EditorView extends Vue {
     }
 
     keyDown(ev: KeyboardEvent) {
-        if (ev.key === "Delete" && this.selectedNode) {
-            this.plugin.editor.removeNode(this.selectedNode);
+        if (ev.key === "Delete" && this.selectedNodes.length > 0) {
+            this.selectedNodes.forEach((n) => this.plugin.editor.removeNode(n));
         } else if (ev.key === "Tab") {
             ev.preventDefault();
+        } else if (ev.key === "Control") {
+            this.ctrlPressed = true;
+        }
+    }
+
+    keyUp(ev: KeyboardEvent) {
+        if (ev.key === "Control") {
+            this.ctrlPressed = false;
         }
     }
 
     selectNode(node: IViewNode) {
-        this.selectedNode = node;
+        if (!this.ctrlPressed) {
+            this.unselectAllNodes();
+        }
+        this.selectedNodes.push(node);
+    }
+
+    unselectAllNodes() {
+        this.selectedNodes.splice(0, this.selectedNodes.length);
     }
 
     openContextMenu(event: MouseEvent) {
@@ -250,6 +282,10 @@ export default class EditorView extends Vue {
                     node.position.y = (this.contextMenu.y / this.plugin.scaling) - this.plugin.panning.y;
                 }
             }
+        } else if (action === "copy" && this.selectedNodes.length > 0) {
+            this.clipboard.copy(this.selectedNodes);
+        } else if (action === "paste" && !this.clipboard.isEmpty) {
+            this.clipboard.paste();
         }
     }
 

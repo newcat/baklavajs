@@ -46,5 +46,6 @@ export interface IEditor {
     load(state: IState): void;
     save(): IState;
     use(plugin: IPlugin): boolean;
+    generateId(prefix?: string): string;
 
 }
