@@ -1,6 +1,6 @@
 <template>
     <div
-        class="dark-context-menu"
+        :class="{ 'dark-context-menu': true, '--flipped': flipped, '--nested': isNested }"
         :style="styles"
         v-show="value"
         v-click-outside="onClickOutside"
@@ -25,6 +25,7 @@
                     :value="activeMenu === index"
                     :items="item.submenu"
                     :is-nested="true"
+                    :is-flipped="flipped"
                     @click="onChildClick"
                 ></context-menu>
             </div>
@@ -58,7 +59,7 @@ export default class ContextMenu extends Vue {
     activeMenu = -1;
     activeMenuResetTimeout: number|null = null;
     height = 0;
-    isFlipped = false;
+    rootIsFlipped = false;
 
     @Prop({ type: Boolean, default: false })
     value!: boolean;
@@ -75,10 +76,13 @@ export default class ContextMenu extends Vue {
     @Prop({ type: Boolean, default: false })
     isNested!: boolean;
 
+    @Prop({ type: Boolean, default: false })
+    isFlipped!: boolean;
+
     get styles() {
         const s: any = {};
         if (!this.isNested) {
-            s.top = (this.isFlipped ? this.y - this.height : this.y) + "px";
+            s.top = (this.flipped ? this.y - this.height : this.y) + "px";
             s.left = this.x + "px";
         }
         return s;
@@ -86,6 +90,10 @@ export default class ContextMenu extends Vue {
 
     get _items() {
         return this.items.map((i) => ({ ...i, hover: false }));
+    }
+
+    get flipped() {
+        return this.rootIsFlipped || this.isFlipped;
     }
 
     onClick(item: IMenuItem) {
@@ -142,7 +150,7 @@ export default class ContextMenu extends Vue {
     updateFlipped() {
         this.height = this.items.length * 30;
         const parentHeight = (this.$parent.$el as HTMLElement).offsetHeight;
-        this.isFlipped = !this.isNested && this.y + this.height > parentHeight - 20;
+        this.rootIsFlipped = !this.isNested && this.y + this.height > parentHeight - 20;
     }
 
     @Watch("value", { immediate: true })

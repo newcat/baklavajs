@@ -27,11 +27,16 @@
             background: $color-primary;
         }
 
-        &.submenu > .dark-context-menu {
-            left: 100%;
-            top: 0;
-        }
+    }
 
+    &.--nested {
+        left: 100%;
+        top: 0;
+    }
+
+    &.--flipped.--nested {
+        top: unset;
+        bottom: 0;
     }
 
     & > .divider {
