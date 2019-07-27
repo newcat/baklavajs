@@ -37,20 +37,25 @@ export default class NodeInterfaceView extends Vue {
     editor!: EditorView;
 
     value: any = null;
+    isConnected = false;
 
     get classes() {
         return {
             "node-interface": true,
             "--input": this.data.isInput,
             "--output": !this.data.isInput,
-            "--connected": this.data.connectionCount > 0
+            "--connected": this.isConnected
         };
     }
 
     beforeMount() {
         this.value = this.data.value;
         this.data.events.setValue.addListener(this, (v) => { this.value = v; });
-        this.data.events.setConnectionCount.addListener(this, () => { this.$forceUpdate(); });
+        this.data.events.setConnectionCount.addListener(this, (c) => {
+            this.$forceUpdate();
+            this.isConnected = c > 0;
+        });
+        this.isConnected = this.data.connectionCount > 0;
     }
 
     mounted() {
