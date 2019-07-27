@@ -13,7 +13,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 import ConnectionView from "./ConnectionView.vue";
 import { ITemporaryConnection, TemporaryConnectionState, INodeInterface } from "../../../../baklavajs-core/types";
-import resolveDom from "../../domResolver";
+import resolveDom from "../../utility/domResolver";
 
 @Component({
     components: {

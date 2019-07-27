@@ -5,6 +5,7 @@ Vue.config.productionTip = false;
 
 import { BaklavaVuePlugin } from "../../baklavajs-plugin-renderer-vue/src";
 import "../../baklavajs-plugin-renderer-vue/src/styles/all.scss";
+import "./test.css";
 Vue.use(BaklavaVuePlugin);
 
 new Vue({

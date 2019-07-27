@@ -5,7 +5,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import ConnectionView from "./ConnectionView.vue";
-import resolveDom from "../../domResolver";
+import resolveDom from "../../utility/domResolver";
 import { ITransferConnection, TemporaryConnectionState } from "../../../../baklavajs-core/types";
 
 @Component({
