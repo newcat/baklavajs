@@ -47,5 +47,6 @@ export interface IEditor {
     save(): IState;
     use(plugin: IPlugin): boolean;
     generateId(prefix?: string): string;
+    findNodeInterface(id: string): INodeInterface|undefined;
 
 }

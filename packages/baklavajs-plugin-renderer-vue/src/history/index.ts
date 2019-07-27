@@ -2,6 +2,7 @@ import { ViewPlugin } from "../viewPlugin";
 
 import { IStep } from "./step";
 import NodeStep from "./nodeStep";
+import ConnectionStep from "./connectionStep";
 
 export default class History {
 
@@ -22,6 +23,12 @@ export default class History {
         });
         this.viewPlugin.editor.events.removeNode.addListener(this, (node) => {
             this.addStep(new NodeStep("removeNode", node.save()));
+        });
+        this.viewPlugin.editor.events.addConnection.addListener(this, (conn) => {
+            this.addStep(new ConnectionStep("addConnection", conn.id));
+        });
+        this.viewPlugin.editor.events.removeConnection.addListener(this, (conn) => {
+            this.addStep(new ConnectionStep("removeConnection", conn));
         });
     }
 
