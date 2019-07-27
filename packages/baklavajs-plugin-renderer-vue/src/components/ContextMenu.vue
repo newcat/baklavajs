@@ -41,7 +41,7 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import ClickOutside from "v-click-outside";
 
 export interface IMenuItem {
-    label: string;
+    label?: string;
     value?: any;
     isDivider?: boolean;
     submenu?: IMenuItem[];

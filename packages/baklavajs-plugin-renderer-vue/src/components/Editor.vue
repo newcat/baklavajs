@@ -133,10 +133,16 @@ export default class EditorView extends Vue {
         const defaultNodes = this.plugin.editor.nodeCategories.get("default")!
             .map((n) => ({ value: "addNode:" + n, label: n }));
 
+        const addNodeSubmenu: IMenuItem[] = [...categories];
+        if (categories.length > 0 && defaultNodes.length > 0) {
+            addNodeSubmenu.push({ isDivider: true });
+        }
+        addNodeSubmenu.push(...defaultNodes);
+
         this.contextMenu.items = [
             {
                 label: "Add Node",
-                submenu: [ ...categories, { isDivider: true }, ...defaultNodes ]
+                submenu: addNodeSubmenu
             },
             {
                 label: "Copy Nodes",
