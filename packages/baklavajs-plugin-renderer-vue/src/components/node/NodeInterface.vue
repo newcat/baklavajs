@@ -42,7 +42,8 @@ export default class NodeInterfaceView extends Vue {
         return {
             "node-interface": true,
             "--input": this.data.isInput,
-            "--output": !this.data.isInput
+            "--output": !this.data.isInput,
+            "--connected": this.data.connectionCount > 0
         };
     }
 
