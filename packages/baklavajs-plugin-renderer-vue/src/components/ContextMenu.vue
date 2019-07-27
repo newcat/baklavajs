@@ -57,6 +57,8 @@ export default class ContextMenu extends Vue {
 
     activeMenu = -1;
     activeMenuResetTimeout: number|null = null;
+    height = 0;
+    isFlipped = false;
 
     @Prop({ type: Boolean, default: false })
     value!: boolean;
@@ -76,7 +78,7 @@ export default class ContextMenu extends Vue {
     get styles() {
         const s: any = {};
         if (!this.isNested) {
-            s.top = this.y + "px";
+            s.top = (this.isFlipped ? this.y - this.height : this.y) + "px";
             s.left = this.x + "px";
         }
         return s;
@@ -133,6 +135,14 @@ export default class ContextMenu extends Vue {
         } else {
             this.$options.components = { "context-menu": Vue.extend(ContextMenu) };
         }
+    }
+
+    @Watch("y")
+    @Watch("items")
+    updateFlipped() {
+        this.height = this.items.length * 30;
+        const parentHeight = (this.$parent.$el as HTMLElement).offsetHeight;
+        this.isFlipped = !this.isNested && this.y + this.height > parentHeight - 20;
     }
 
     @Watch("value", { immediate: true })
