@@ -1,6 +1,6 @@
 <template>
     <div :id="data.id" :class="classes">
-        <div :class="'__port __port-' + (data.connectionCount > 0 ? 'closed' : 'opened')" @mouseover="startHover" @mouseout="endHover"></div>
+        <div class="__port" @mouseover="startHover" @mouseout="endHover"></div>
         <span v-if="data.connectionCount > 0 || !data.option || !getOptionComponent(data.option)" class="align-middle">
             {{ name }}
         </span>
@@ -42,7 +42,8 @@ export default class NodeInterfaceView extends Vue {
         return {
             "node-interface": true,
             "--input": this.data.isInput,
-            "--output": !this.data.isInput
+            "--output": !this.data.isInput,
+            "--connected": this.data.connectionCount > 0
         };
     }
 
