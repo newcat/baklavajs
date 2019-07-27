@@ -3,6 +3,7 @@
         :x1="d.input.x" :y1="d.input.y"
         :x2="d.output.x" :y2="d.output.y"
         :state="status"
+        :connection="connection"
         is-temporary
     ></connection-view>
 </template>
