@@ -54,7 +54,9 @@ import { VueConstructor } from "vue";
 import { IEditor, INode, ITransferConnection, INodeInterface,
     ITemporaryConnection, TemporaryConnectionState } from "../../../baklavajs-core/types";
 import { ViewPlugin, IViewNode } from "../viewPlugin";
+
 import Clipboard from "../clipboard";
+import History from "../history";
 
 import NodeView from "./node/Node.vue";
 import ConnectionView from "./connection/ConnectionWrapper.vue";
@@ -81,6 +83,8 @@ export default class EditorView extends Vue {
     nodeeditor: EditorView = this;
 
     clipboard!: Clipboard;
+    history!: History;
+
     temporaryConnection: ITemporaryConnection|null = null;
     hoveringOver?: INodeInterface|null = null;
     selectedNodes: IViewNode[] = [];
@@ -113,6 +117,7 @@ export default class EditorView extends Vue {
         this.updateContextMenu();
         this.plugin.editor.events.registerNodeType.addListener(this, () => this.updateContextMenu());
         this.clipboard = new Clipboard(this.plugin.editor);
+        this.history = new History(this.plugin);
     }
 
     updateContextMenu() {
@@ -128,10 +133,16 @@ export default class EditorView extends Vue {
         const defaultNodes = this.plugin.editor.nodeCategories.get("default")!
             .map((n) => ({ value: "addNode:" + n, label: n }));
 
+        const addNodeSubmenu: IMenuItem[] = [...categories];
+        if (categories.length > 0 && defaultNodes.length > 0) {
+            addNodeSubmenu.push({ isDivider: true });
+        }
+        addNodeSubmenu.push(...defaultNodes);
+
         this.contextMenu.items = [
             {
                 label: "Add Node",
-                submenu: [ ...categories, { isDivider: true }, ...defaultNodes ]
+                submenu: addNodeSubmenu
             },
             {
                 label: "Copy Nodes",
@@ -245,6 +256,10 @@ export default class EditorView extends Vue {
             ev.preventDefault();
         } else if (ev.key === "Control") {
             this.ctrlPressed = true;
+        } else if (ev.key === "z" && ev.ctrlKey) {
+            this.history.undo();
+        } else if (ev.key === "y" && ev.ctrlKey) {
+            this.history.redo();
         }
     }
 

@@ -1,11 +1,11 @@
 <template>
-    <connection-view :x1="d.x1" :y1="d.y1" :x2="d.x2" :y2="d.y2" :state="state"></connection-view>
+    <connection-view :x1="d.x1" :y1="d.y1" :x2="d.x2" :y2="d.y2" :state="state" :connection="connection"></connection-view>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import ConnectionView from "./ConnectionView.vue";
-import resolveDom from "../../domResolver";
+import resolveDom from "../../utility/domResolver";
 import { ITransferConnection, TemporaryConnectionState } from "../../../../baklavajs-core/types";
 
 @Component({

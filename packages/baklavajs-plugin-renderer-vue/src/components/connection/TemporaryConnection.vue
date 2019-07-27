@@ -3,6 +3,7 @@
         :x1="d.input.x" :y1="d.input.y"
         :x2="d.output.x" :y2="d.output.y"
         :state="status"
+        :connection="connection"
         is-temporary
     ></connection-view>
 </template>
@@ -12,7 +13,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 import ConnectionView from "./ConnectionView.vue";
 import { ITemporaryConnection, TemporaryConnectionState, INodeInterface } from "../../../../baklavajs-core/types";
-import resolveDom from "../../domResolver";
+import resolveDom from "../../utility/domResolver";
 
 @Component({
     components: {

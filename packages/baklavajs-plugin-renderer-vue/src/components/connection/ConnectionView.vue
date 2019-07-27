@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Inject } from "vue-property-decorator";
-import { TemporaryConnectionState } from "../../../../baklavajs-core/types";
+import { TemporaryConnectionState, ITransferConnection, ITemporaryConnection } from "../../../../baklavajs-core/types";
 import { ViewPlugin } from "../../viewPlugin";
 
 @Component
@@ -25,6 +25,9 @@ export default class Connection extends Vue {
 
     @Prop({ type: Boolean, default: false })
     isTemporary!: boolean;
+
+    @Prop({ type: Object })
+    connection!: ITransferConnection|ITemporaryConnection;
 
     @Inject("plugin")
     plugin!: ViewPlugin;

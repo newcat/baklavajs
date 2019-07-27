@@ -1,4 +1,4 @@
-import { INodeInterface } from "../../baklavajs-core/types";
+import { INodeInterface } from "../../../baklavajs-core/types";
 
 export default function getDomElements(ni: INodeInterface) {
 

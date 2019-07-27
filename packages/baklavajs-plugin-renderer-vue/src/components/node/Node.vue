@@ -1,5 +1,5 @@
 <template>
-    <div :id="data.id" :class="['node', { '--selected': selected, '--dragging': dragging }]" :style="styles">
+    <div :id="data.id" :class="classes" :style="styles">
 
         <div
             class="__title"
@@ -87,6 +87,7 @@ import { ViewPlugin, IViewNode } from "../../viewPlugin";
 import NodeInterfaceView from "./NodeInterface.vue";
 import NodeOptionView from "./NodeOption.vue";
 import ContextMenu from "../ContextMenu.vue";
+import { sanitizeName } from "../../utility/cssNames";
 
 @Component({
     components: {
@@ -126,6 +127,15 @@ export default class NodeView extends Vue {
     };
 
     private unsubscribe: (() => void)|null = null;
+
+    get classes() {
+        return {
+            "node": true,
+            "--selected": this.selected,
+            "--dragging": this.dragging,
+            [`--type-${sanitizeName(this.data.type)}`]: true
+        };
+    }
 
     get styles() {
         return {

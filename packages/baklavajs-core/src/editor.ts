@@ -266,7 +266,7 @@ export class Editor implements IEditor {
         return prefix + generateId();
     }
 
-    private findNodeInterface(id: string) {
+    public findNodeInterface(id: string) {
         for (const n of this.nodes) {
             for (const ik of n.interfaces.keys()) {
                 if (n.interfaces.get(ik)!.id === id) {
