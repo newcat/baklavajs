@@ -18,58 +18,63 @@
                 @keydown.enter="doneRenaming"
             >
 
-            <context-menu
+            <component
+                :is="plugin.components.contextMenu"
                 v-model="contextMenu.show"
                 :x="contextMenu.x" :y="contextMenu.y"
                 :items="contextMenu.items"
                 @click="onContextMenu"
-            ></context-menu>
+            ></component>
 
         </div>
 
         <div class="__content">
             
             <!-- Outputs -->
-            <node-interface
+            <component
+                :is="plugin.components.nodeInterface"
                 v-for="(output, name) in data.outputInterfaces"
                 :key="output.id"
                 :name="name"
                 :data="output"
-            ></node-interface>
+            ></component>
 
             <!-- Options -->
             <template v-for="[name, option] in options">
 
-                <node-option
+                <component
+                    :is="plugin.components.nodeOption"
                     :key="name"
                     :name="name"
                     :option="option"
                     :componentName="option.optionComponent"
                     :node="data"
                     @openSidebar="openSidebar(name)"
-                ></node-option>
+                ></component>
 
                 <portal :key="'sb_' + name" to="sidebar"
                     v-if="plugin.sidebar.nodeId === data.id && plugin.sidebar.optionName === name && option.sidebarComponent"
                 >
-                    <node-option
+                    <component
+                        :is="plugin.components.nodeOption"
                         :key="data.id + name"
                         :name="name"
                         :option="option"
                         :componentName="option.sidebarComponent"
                         :node="data"
-                    ></node-option>
+                    ></component>
                 </portal>
 
             </template>
 
             <!-- Inputs -->
-            <node-interface
+            <component
+                :is="plugin.components.nodeInterface"
                 v-for="(input, name) in data.inputInterfaces"
                 :key="input.id"
                 :name="name"
                 :data="input"
-            ></node-interface>
+            ></component>
 
         </div>
 
@@ -84,17 +89,9 @@ import { VueConstructor } from "vue";
 import ClickOutside from "v-click-outside";
 
 import { ViewPlugin, IViewNode } from "../../viewPlugin";
-import NodeInterfaceView from "./NodeInterface.vue";
-import NodeOptionView from "./NodeOption.vue";
-import ContextMenu from "../ContextMenu.vue";
 import { sanitizeName } from "../../utility/cssNames";
 
 @Component({
-    components: {
-        "node-interface": NodeInterfaceView,
-        ContextMenu,
-        "node-option": NodeOptionView
-    },
     directives: {
         ClickOutside: ClickOutside.directive
     }

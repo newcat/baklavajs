@@ -1,10 +1,15 @@
 import Vue, { VueConstructor } from "vue";
 import { IPlugin, IEditor, INode } from "../../baklavajs-core/types";
 import { SequentialHook } from "../../baklavajs-core/src/events";
+
 import NodeView from "./components/node/Node.vue";
 import NodeOptionView from "./components/node/NodeOption.vue";
 import NodeInterfaceView from "./components/node/NodeInterface.vue";
 import ConnectionView from "./components/connection/ConnectionView.vue";
+import ConnectionWrapper from "./components/connection/ConnectionWrapper.vue";
+import TempConnectionView from "./components/connection/TemporaryConnection.vue";
+import ContextMenu from "./components/ContextMenu.vue";
+import Sidebar from "./components/Sidebar.vue";
 
 export interface IViewNode extends INode {
     position: { x: number, y: number };
@@ -26,6 +31,16 @@ export class ViewPlugin implements IPlugin {
         renderOption: new SequentialHook<NodeOptionView>(),
         renderInterface: new SequentialHook<NodeInterfaceView>(),
         renderConnection: new SequentialHook<ConnectionView>()
+    };
+
+    public components = {
+        node: NodeView,
+        nodeOption: NodeOptionView,
+        nodeInterface: NodeInterfaceView,
+        connection: ConnectionWrapper,
+        tempConnection: TempConnectionView,
+        contextMenu: ContextMenu,
+        sidebar: Sidebar
     };
 
     public register(editor: IEditor): void {

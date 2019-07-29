@@ -26,6 +26,7 @@
                     :items="item.submenu"
                     :is-nested="true"
                     :is-flipped="{ x: flippedX, y: flippedY }"
+                    :flippable="flippable"
                     @click="onChildClick"
                 ></context-menu>
             </div>
@@ -80,6 +81,9 @@ export default class ContextMenu extends Vue {
     @Prop({ type: Object, default: () => ({ x: false, y: false }) })
     isFlipped!: { x: boolean, y: boolean };
 
+    @Prop({ type: Boolean, default: false })
+    flippable!: boolean;
+
     get styles() {
         const s: any = {};
         if (!this.isNested) {
@@ -103,11 +107,11 @@ export default class ContextMenu extends Vue {
     }
 
     get flippedX() {
-        return this.rootIsFlipped.x || this.isFlipped.x;
+        return this.flippable && (this.rootIsFlipped.x || this.isFlipped.x);
     }
 
     get flippedY() {
-        return this.rootIsFlipped.y || this.isFlipped.y;
+        return this.flippable && (this.rootIsFlipped.y || this.isFlipped.y);
     }
 
     onClick(item: IMenuItem) {

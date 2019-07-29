@@ -13,36 +13,40 @@
         <svg class="connections-container">
             <g v-for="connection in connections" :key="connection.id">
                 <slot name="connections" :connection="connection">
-                    <connection :connection="connection"></connection>
+                    <component :is="plugin.components.connection" :connection="connection"></component>
                 </slot>
             </g>
-            <temp-connection
+            <component
+                :is="plugin.components.tempConnection"
                 v-if="temporaryConnection"
                 :connection="temporaryConnection"
-            ></temp-connection>
+            ></component>
         </svg>
 
         <div class="node-container" :style="styles">
-            <node
+            <component
+                :is="plugin.components.node"
                 v-for="node in nodes"
                 :key="node.id"
                 :data="node"
                 :selected="selectedNodes.includes(node)"
                 @select="selectNode(node)"
             >
-            </node>
+            </component>
 
         </div>
 
-        <context-menu
+        <component
+            :is="plugin.components.contextMenu"
             v-model="contextMenu.show"
             :x="contextMenu.x"
             :y="contextMenu.y"
             :items="contextMenu.items"
+            flippable
             @click="onContextMenuClick"
-        ></context-menu>
+        ></component>
 
-        <sidebar></sidebar>
+        <component :is="plugin.components.sidebar"></component>
 
     </div>
 </template>
@@ -54,25 +58,12 @@ import { VueConstructor } from "vue";
 import { IEditor, INode, ITransferConnection, INodeInterface,
     ITemporaryConnection, TemporaryConnectionState } from "../../../baklavajs-core/types";
 import { ViewPlugin, IViewNode } from "../viewPlugin";
+import { IMenuItem } from "./ContextMenu.vue";
 
 import Clipboard from "../clipboard";
 import History from "../history";
 
-import NodeView from "./node/Node.vue";
-import ConnectionView from "./connection/ConnectionWrapper.vue";
-import TempConnectionView from "./connection/TemporaryConnection.vue";
-import ContextMenu, { IMenuItem } from "./ContextMenu.vue";
-import Sidebar from "./Sidebar.vue";
-
-@Component({
-    components: {
-        "node": NodeView,
-        "connection": ConnectionView,
-        "temp-connection": TempConnectionView,
-        ContextMenu,
-        Sidebar
-    }
-})
+@Component
 export default class EditorView extends Vue {
 
     @Prop({ type: Object, required: true })

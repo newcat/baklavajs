@@ -19,11 +19,14 @@ import { Engine } from "../../baklavajs-plugin-engine/src";
 import { InterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/src";
 import { OptionPlugin } from "../../baklavajs-plugin-options-vue/src";
 
+import CustomNodeRenderer from "./CustomNodeRenderer";
+
 import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";
 import BuilderTestNode from "./BuilderTestNode";
 import MathNode from "./MathNode";
 import AdvancedNode from "./AdvancedNode";
+import CommentNode from "./CommentNode";
 
 import AddOption from "./AddOption";
 import TriggerOption from "./TriggerOption.vue";
@@ -44,6 +47,7 @@ export default class App extends Vue {
         this.editor = new Editor();
 
         this.viewPlugin = new ViewPlugin();
+        this.viewPlugin.components.node = CustomNodeRenderer as any;
         this.editor.use(this.viewPlugin);
 
         this.engine = new Engine(true);
@@ -74,6 +78,7 @@ export default class App extends Vue {
         this.editor.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");
         this.editor.registerNodeType("MathNode", MathNode);
         this.editor.registerNodeType("AdvancedNode", AdvancedNode);
+        this.editor.registerNodeType("CommentNode", CommentNode);
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
