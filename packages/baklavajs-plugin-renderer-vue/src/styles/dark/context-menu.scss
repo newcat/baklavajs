@@ -34,7 +34,12 @@
         top: 0;
     }
 
-    &.--flipped.--nested {
+    &.--flipped-x.--nested {
+        left: unset;
+        right: 100%;
+    }
+
+    &.--flipped-y.--nested {
         top: unset;
         bottom: 0;
     }

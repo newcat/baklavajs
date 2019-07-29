@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="{ 'dark-context-menu': true, '--flipped': flipped, '--nested': isNested }"
+        :class="classes"
         :style="styles"
         v-show="value"
         v-click-outside="onClickOutside"
@@ -25,7 +25,7 @@
                     :value="activeMenu === index"
                     :items="item.submenu"
                     :is-nested="true"
-                    :is-flipped="flipped"
+                    :is-flipped="{ x: flippedX, y: flippedY }"
                     @click="onChildClick"
                 ></context-menu>
             </div>
@@ -58,8 +58,9 @@ export default class ContextMenu extends Vue {
 
     activeMenu = -1;
     activeMenuResetTimeout: number|null = null;
+
     height = 0;
-    rootIsFlipped = false;
+    rootIsFlipped = { x: false, y: false };
 
     @Prop({ type: Boolean, default: false })
     value!: boolean;
@@ -76,24 +77,37 @@ export default class ContextMenu extends Vue {
     @Prop({ type: Boolean, default: false })
     isNested!: boolean;
 
-    @Prop({ type: Boolean, default: false })
-    isFlipped!: boolean;
+    @Prop({ type: Object, default: () => ({ x: false, y: false }) })
+    isFlipped!: { x: boolean, y: boolean };
 
     get styles() {
         const s: any = {};
         if (!this.isNested) {
-            s.top = (this.flipped ? this.y - this.height : this.y) + "px";
+            s.top = (this.flippedY ? this.y - this.height : this.y) + "px";
             s.left = this.x + "px";
         }
         return s;
+    }
+
+    get classes() {
+        return {
+            "dark-context-menu": true,
+            "--flipped-x": this.flippedX,
+            "--flipped-y": this.flippedY,
+            "--nested": this.isNested
+        };
     }
 
     get _items() {
         return this.items.map((i) => ({ ...i, hover: false }));
     }
 
-    get flipped() {
-        return this.rootIsFlipped || this.isFlipped;
+    get flippedX() {
+        return this.rootIsFlipped.x || this.isFlipped.x;
+    }
+
+    get flippedY() {
+        return this.rootIsFlipped.y || this.isFlipped.y;
     }
 
     onClick(item: IMenuItem) {
@@ -149,8 +163,10 @@ export default class ContextMenu extends Vue {
     @Watch("items")
     updateFlipped() {
         this.height = this.items.length * 30;
+        const parentWidth = (this.$parent.$el as HTMLElement).offsetWidth;
         const parentHeight = (this.$parent.$el as HTMLElement).offsetHeight;
-        this.rootIsFlipped = !this.isNested && this.y + this.height > parentHeight - 20;
+        this.rootIsFlipped.x = !this.isNested && this.x > (parentWidth * 0.75);
+        this.rootIsFlipped.y = !this.isNested && this.y + this.height > parentHeight - 20;
     }
 
     @Watch("value", { immediate: true })
