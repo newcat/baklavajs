@@ -57,7 +57,8 @@ import { VueConstructor } from "vue";
 
 import { IEditor, INode, ITransferConnection, INodeInterface,
     ITemporaryConnection, TemporaryConnectionState } from "../../../baklavajs-core/types";
-import { ViewPlugin, IViewNode } from "../viewPlugin";
+import { ViewPlugin } from "../viewPlugin";
+import { IViewNode } from "../../types";
 import { IMenuItem } from "./ContextMenu.vue";
 
 import Clipboard from "../clipboard";
