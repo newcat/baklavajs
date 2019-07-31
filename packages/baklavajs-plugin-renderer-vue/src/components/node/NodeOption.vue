@@ -2,6 +2,7 @@
     <component
         :is="component"
         :name="name"
+        class="node-option"
         :node="node"
         :value="value"
         @input="updateValue"

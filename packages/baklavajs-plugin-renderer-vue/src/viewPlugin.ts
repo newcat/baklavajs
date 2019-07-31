@@ -1,6 +1,7 @@
 import Vue, { VueConstructor } from "vue";
-import { IPlugin, IEditor, INode } from "../../baklavajs-core/types";
+import { IPlugin, IEditor } from "../../baklavajs-core/types";
 import { SequentialHook } from "../../baklavajs-core/src/events";
+import { IViewNode, IViewPlugin } from "../types";
 
 import NodeView from "./components/node/Node.vue";
 import NodeOptionView from "./components/node/NodeOption.vue";
@@ -11,12 +12,7 @@ import TempConnectionView from "./components/connection/TemporaryConnection.vue"
 import ContextMenu from "./components/ContextMenu.vue";
 import Sidebar from "./components/Sidebar.vue";
 
-export interface IViewNode extends INode {
-    position: { x: number, y: number };
-    disablePointerEvents: boolean;
-}
-
-export class ViewPlugin implements IPlugin {
+export class ViewPlugin implements IPlugin, IViewPlugin {
 
     public type = "ViewPlugin";
     public editor!: IEditor;
@@ -59,12 +55,18 @@ export class ViewPlugin implements IPlugin {
             const n = node as IViewNode;
             n.position = { x: 0, y: 0 };
             n.disablePointerEvents = false;
+            n.twoColumn = n.twoColumn || false;
+            n.width = n.width || 200;
             node.hooks.save.tap(this, (state) => {
                 state.position = n.position;
+                state.width = n.width;
+                state.twoColumn = n.twoColumn;
                 return state;
             });
             node.hooks.load.tap(this, (state) => {
                 n.position = state.position;
+                n.width = state.width;
+                n.twoColumn = state.twoColumn;
                 return state;
             });
         });

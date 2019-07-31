@@ -1,4 +1,11 @@
-import { IPlugin, IEditor, IHook } from "../../baklavajs-core/types";
+import { IPlugin, IEditor, IHook, INode } from "../../baklavajs-core/types";
+
+export interface IViewNode extends INode {
+    position: { x: number, y: number };
+    width: number;
+    disablePointerEvents: boolean;
+    twoColumn: boolean;
+}
 
 export interface IViewPlugin extends IPlugin {
 

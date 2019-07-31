@@ -1,6 +1,6 @@
 import { NodeBuilder } from "../../baklavajs-core/src";
 
-export default new NodeBuilder("BuilderTestNode")
+export default new NodeBuilder("BuilderTestNode", { twoColumn: true, width: 400 })
     .addInputInterface("Input 1", "InputOption", "default1")
     .addInputInterface("Input 2", "InputOption", "default2")
     .addOption("Separator", "InputOption", ",")

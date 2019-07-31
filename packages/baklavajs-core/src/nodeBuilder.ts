@@ -28,7 +28,7 @@ function getDefaultValue(v: any) {
 }
 
 function generateNode(
-    type: string, name: string, intfs: IInterfaceOptions[],
+    type: string, name: string, additionalProperties: Record<string, any>|undefined, intfs: IInterfaceOptions[],
     options: Map<string, INodeOptionParameters>, calcFunction?: CalculationFunction
 ) {
     return class extends Node {
@@ -38,6 +38,9 @@ function generateNode(
 
         constructor() {
             super();
+            if (additionalProperties) {
+                Object.assign(this, additionalProperties);
+            }
             for (const i of intfs) {
                 if (i.isInput) {
                     this.addInputInterface(i.name, i.option, getDefaultValue(i.defaultValue), i.additionalProperties);
@@ -64,13 +67,20 @@ export class NodeBuilder {
 
     private type = "";
     private name = "";
+    private additionalProperties?: Record<string, any>;
     private intfs: IInterfaceOptions[] = [];
     private options: Map<string, INodeOptionParameters> = new Map();
     private calcFunction?: CalculationFunction;
 
-    public constructor(type: string) {
+    /**
+     * Create a new NodeBuilder instance
+     * @param type Type of the node to create
+     * @param additionalProperties Additional properties that can be used by plugins
+     */
+    public constructor(type: string, additionalProperties?: Record<string, any>) {
         this.type = type;
         this.name = type;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -79,7 +89,7 @@ export class NodeBuilder {
      * @returns The generated node class
      */
     public build(): NodeConstructorImpl {
-        return generateNode(this.type, this.name, this.intfs, this.options, this.calcFunction);
+        return generateNode(this.type, this.name, this.additionalProperties, this.intfs, this.options, this.calcFunction);
     }
 
     /**

@@ -31,50 +31,56 @@
         <div class="__content">
             
             <!-- Outputs -->
-            <component
-                :is="plugin.components.nodeInterface"
-                v-for="(output, name) in data.outputInterfaces"
-                :key="output.id"
-                :name="name"
-                :data="output"
-            ></component>
+            <div class="__outputs">
+                <component
+                    :is="plugin.components.nodeInterface"
+                    v-for="(output, name) in data.outputInterfaces"
+                    :key="output.id"
+                    :name="name"
+                    :data="output"
+                ></component>
+            </div>
 
             <!-- Options -->
-            <template v-for="[name, option] in options">
+            <div class="__options">
+                <template v-for="[name, option] in options">
 
-                <component
-                    :is="plugin.components.nodeOption"
-                    :key="name"
-                    :name="name"
-                    :option="option"
-                    :componentName="option.optionComponent"
-                    :node="data"
-                    @openSidebar="openSidebar(name)"
-                ></component>
-
-                <portal :key="'sb_' + name" to="sidebar"
-                    v-if="plugin.sidebar.nodeId === data.id && plugin.sidebar.optionName === name && option.sidebarComponent"
-                >
                     <component
                         :is="plugin.components.nodeOption"
-                        :key="data.id + name"
+                        :key="name"
                         :name="name"
                         :option="option"
-                        :componentName="option.sidebarComponent"
+                        :componentName="option.optionComponent"
                         :node="data"
+                        @openSidebar="openSidebar(name)"
                     ></component>
-                </portal>
 
-            </template>
+                    <portal :key="'sb_' + name" to="sidebar"
+                        v-if="plugin.sidebar.nodeId === data.id && plugin.sidebar.optionName === name && option.sidebarComponent"
+                    >
+                        <component
+                            :is="plugin.components.nodeOption"
+                            :key="data.id + name"
+                            :name="name"
+                            :option="option"
+                            :componentName="option.sidebarComponent"
+                            :node="data"
+                        ></component>
+                    </portal>
+
+                </template>
+            </div>
 
             <!-- Inputs -->
-            <component
-                :is="plugin.components.nodeInterface"
-                v-for="(input, name) in data.inputInterfaces"
-                :key="input.id"
-                :name="name"
-                :data="input"
-            ></component>
+            <div class="__inputs">
+                <component
+                    :is="plugin.components.nodeInterface"
+                    v-for="(input, name) in data.inputInterfaces"
+                    :key="input.id"
+                    :name="name"
+                    :data="input"
+                ></component>
+            </div>
 
         </div>
 
@@ -88,7 +94,8 @@ import { VueConstructor } from "vue";
 // @ts-ignore
 import ClickOutside from "v-click-outside";
 
-import { ViewPlugin, IViewNode } from "../../viewPlugin";
+import { ViewPlugin } from "../../viewPlugin";
+import { IViewNode } from "../../../types";
 import { sanitizeName } from "../../utility/cssNames";
 
 @Component({
@@ -108,8 +115,6 @@ export default class NodeView extends Vue {
     plugin!: ViewPlugin;
 
     dragging = false;
-    width = 200;
-
     renaming = false;
     tempName = "";
 
@@ -130,6 +135,7 @@ export default class NodeView extends Vue {
             "node": true,
             "--selected": this.selected,
             "--dragging": this.dragging,
+            "--two-column": !!this.data.twoColumn,
             [`--type-${sanitizeName(this.data.type)}`]: true
         };
     }
@@ -138,7 +144,7 @@ export default class NodeView extends Vue {
         return {
             top: `${this.data.position.y}px`,
             left: `${this.data.position.x}px`,
-            width: `${this.width}px`,
+            width: `${this.data.width}px`,
         };
     }
 
