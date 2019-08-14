@@ -1,5 +1,6 @@
 {
     "mode": "file",
+    "excludeExternals": true,
     "excludeNotExported": true,
     "excludePrivate": true,
     "name": "Reference - BaklavaJS",

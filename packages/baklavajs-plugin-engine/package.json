@@ -12,7 +12,7 @@
   "types": "dist/baklavajs-plugin-engine/src/index.d.ts",
   "scripts": {
     "build": "webpack",
-    "docs": "typedoc --json ../../docs/api/plugin-engine.json"
+    "docs": "typedoc --json ../../docs/api/plugin-engine.json --options ../../typedoc.json"
   },
   "repository": {
     "type": "git",

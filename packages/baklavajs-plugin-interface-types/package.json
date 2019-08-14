@@ -13,7 +13,7 @@
   "scripts": {
     "build": "webpack",
     "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\"",
-    "docs": "typedoc --json ../../docs/api/plugin-interface-types.json"
+    "docs": "typedoc --json ../../docs/api/plugin-interface-types.json --options ../../typedoc.json"
   },
   "repository": {
     "type": "git",

@@ -11,7 +11,8 @@
   "main": "dist/index.js",
   "types": "dist/baklavajs-plugin-renderer-vue/src/index.d.ts",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "docs": "typedoc --json ../../docs/api/plugin-renderer-vue.json --options ../../typedoc.json"
   },
   "repository": {
     "type": "git",

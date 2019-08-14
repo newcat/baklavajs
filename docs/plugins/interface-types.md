@@ -1,5 +1,7 @@
 # Interface Types
 
+[API reference](!!API%{ "module": "@baklavajs/plugin-interface-types", "type": "class", "name": "InterfaceTypePlugin" }%)
+
 Every node interface has a type associated with it. The type is an arbitrary string.
 By default, two node interfaces can only be connected if they have the same type.
 You can, however, override this behavior by using [*conversions*](#conversions).

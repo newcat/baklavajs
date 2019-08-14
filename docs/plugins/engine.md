@@ -30,4 +30,4 @@ After building the tree, all nodes are calculated from the bottom of the tree to
 ### Root Nodes
 By default, root nodes are all nodes that only have input interfaces but no output interfaces.
 This also means, that if you do not have such a node in your editor, nothing will be calculated as the tree will be empty.
-To change this behaviour, you can set the [rootNodes](!!API%{ "module": "@baklavajs/plugin-engine", "type": "class", "name": "engine", field: "rootNodes" }%) property of the `Engine` plugin to a custom array, which will be used as the root of the tree.
+To change this behaviour, you can set the [rootNodes](!!API%{ "module": "@baklavajs/plugin-engine", "type": "class", "name": "engine", "field": "rootNodes" }%) property of the `Engine` plugin to a custom array, which will be used as the root of the tree.

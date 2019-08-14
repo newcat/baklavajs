@@ -11,7 +11,8 @@ import { VueConstructor } from "vue";
 // @ts-ignore
 import ClickOutside from "v-click-outside";
 
-import { ViewPlugin, IViewNode } from "../../baklavajs-plugin-renderer-vue/src";
+import { ViewPlugin } from "../../baklavajs-plugin-renderer-vue/src";
+import { IViewNode } from "../../baklavajs-plugin-renderer-vue/types";
 
 @Component
 export default class CommentNode extends Vue {

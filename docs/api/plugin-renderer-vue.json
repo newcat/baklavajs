@@ -1,0 +1,2354 @@
+{
+	"id": 0,
+	"name": "Reference - BaklavaJS",
+	"kind": 0,
+	"flags": {},
+	"children": [
+		{
+			"id": 3,
+			"name": "Clipboard",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 6,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 7,
+							"name": "new Clipboard",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 8,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IEditor"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Clipboard",
+								"id": 3
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "clipboard.ts",
+							"line": 12,
+							"character": 5
+						}
+					]
+				},
+				{
+					"id": 4,
+					"name": "isEmpty",
+					"kind": 262144,
+					"kindString": "Accessor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"getSignature": [
+						{
+							"id": 5,
+							"name": "__get",
+							"kind": 524288,
+							"kindString": "Get signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "clipboard.ts",
+							"line": 10,
+							"character": 22
+						}
+					]
+				},
+				{
+					"id": 9,
+					"name": "clear",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 10,
+							"name": "clear",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "clipboard.ts",
+							"line": 18,
+							"character": 16
+						}
+					]
+				},
+				{
+					"id": 11,
+					"name": "copy",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 12,
+							"name": "copy",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 13,
+									"name": "selectedNodes",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "array",
+										"elementType": {
+											"type": "reference",
+											"name": "INode"
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "clipboard.ts",
+							"line": 23,
+							"character": 15
+						}
+					]
+				},
+				{
+					"id": 14,
+					"name": "paste",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 15,
+							"name": "paste",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "clipboard.ts",
+							"line": 33,
+							"character": 16
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						6
+					]
+				},
+				{
+					"title": "Accessors",
+					"kind": 262144,
+					"children": [
+						4
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						9,
+						11,
+						14
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "clipboard.ts",
+					"line": 3,
+					"character": 30
+				}
+			]
+		},
+		{
+			"id": 65,
+			"name": "ConnectionStep",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 67,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 68,
+							"name": "new ConnectionStep",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 69,
+									"name": "type",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "stringLiteral",
+												"value": "addConnection"
+											},
+											{
+												"type": "stringLiteral",
+												"value": "removeConnection"
+											}
+										]
+									}
+								},
+								{
+									"id": 70,
+									"name": "data",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "reference",
+												"name": "IConnection"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "ConnectionStep",
+								"id": 65
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/connectionStep.ts",
+							"line": 9,
+							"character": 47
+						}
+					]
+				},
+				{
+					"id": 66,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "history/connectionStep.ts",
+							"line": 6,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "stringLiteral",
+								"value": "addConnection"
+							},
+							{
+								"type": "stringLiteral",
+								"value": "removeConnection"
+							}
+						]
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IStep.type",
+						"id": 58
+					}
+				},
+				{
+					"id": 74,
+					"name": "redo",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 75,
+							"name": "redo",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 76,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IEditor"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"implementationOf": {
+								"type": "reference",
+								"name": "IStep.redo",
+								"id": 63
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/connectionStep.ts",
+							"line": 33,
+							"character": 15
+						}
+					],
+					"implementationOf": {
+						"type": "reference",
+						"name": "IStep.redo",
+						"id": 62
+					}
+				},
+				{
+					"id": 71,
+					"name": "undo",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 72,
+							"name": "undo",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 73,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IEditor"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"implementationOf": {
+								"type": "reference",
+								"name": "IStep.undo",
+								"id": 60
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/connectionStep.ts",
+							"line": 25,
+							"character": 15
+						}
+					],
+					"implementationOf": {
+						"type": "reference",
+						"name": "IStep.undo",
+						"id": 59
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						67
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						66
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						74,
+						71
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "history/connectionStep.ts",
+					"line": 4,
+					"character": 35
+				}
+			],
+			"implementedTypes": [
+				{
+					"type": "reference",
+					"name": "IStep",
+					"id": 57
+				}
+			]
+		},
+		{
+			"id": 89,
+			"name": "History",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 91,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 92,
+							"name": "new History",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 93,
+									"name": "viewPlugin",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "ViewPlugin",
+										"id": 16
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "History",
+								"id": 89
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/index.ts",
+							"line": 17,
+							"character": 43
+						}
+					]
+				},
+				{
+					"id": 90,
+					"name": "maxSteps",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "history/index.ts",
+							"line": 9,
+							"character": 19
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					},
+					"defaultValue": "200"
+				},
+				{
+					"id": 96,
+					"name": "commitTransaction",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 97,
+							"name": "commitTransaction",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/index.ts",
+							"line": 39,
+							"character": 28
+						}
+					]
+				},
+				{
+					"id": 100,
+					"name": "redo",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 101,
+							"name": "redo",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/index.ts",
+							"line": 50,
+							"character": 15
+						}
+					]
+				},
+				{
+					"id": 94,
+					"name": "startTransaction",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 95,
+							"name": "startTransaction",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/index.ts",
+							"line": 35,
+							"character": 27
+						}
+					]
+				},
+				{
+					"id": 98,
+					"name": "undo",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 99,
+							"name": "undo",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/index.ts",
+							"line": 43,
+							"character": 15
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						91
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						90
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						96,
+						100,
+						94,
+						98
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "history/index.ts",
+					"line": 7,
+					"character": 28
+				}
+			]
+		},
+		{
+			"id": 77,
+			"name": "NodeStep",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 79,
+					"name": "constructor",
+					"kind": 512,
+					"kindString": "Constructor",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 80,
+							"name": "new NodeStep",
+							"kind": 16384,
+							"kindString": "Constructor signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 81,
+									"name": "type",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "stringLiteral",
+												"value": "addNode"
+											},
+											{
+												"type": "stringLiteral",
+												"value": "removeNode"
+											}
+										]
+									}
+								},
+								{
+									"id": 82,
+									"name": "data",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "NodeStep",
+								"id": 77
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/nodeStep.ts",
+							"line": 9,
+							"character": 35
+						}
+					]
+				},
+				{
+					"id": 78,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "history/nodeStep.ts",
+							"line": 6,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "stringLiteral",
+								"value": "addNode"
+							},
+							{
+								"type": "stringLiteral",
+								"value": "removeNode"
+							}
+						]
+					},
+					"implementationOf": {
+						"type": "reference",
+						"name": "IStep.type",
+						"id": 58
+					}
+				},
+				{
+					"id": 86,
+					"name": "redo",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 87,
+							"name": "redo",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 88,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IEditor"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"implementationOf": {
+								"type": "reference",
+								"name": "IStep.redo",
+								"id": 63
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/nodeStep.ts",
+							"line": 28,
+							"character": 15
+						}
+					],
+					"implementationOf": {
+						"type": "reference",
+						"name": "IStep.redo",
+						"id": 62
+					}
+				},
+				{
+					"id": 83,
+					"name": "undo",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 84,
+							"name": "undo",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 85,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IEditor"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"implementationOf": {
+								"type": "reference",
+								"name": "IStep.undo",
+								"id": 60
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/nodeStep.ts",
+							"line": 20,
+							"character": 15
+						}
+					],
+					"implementationOf": {
+						"type": "reference",
+						"name": "IStep.undo",
+						"id": 59
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Constructors",
+					"kind": 512,
+					"children": [
+						79
+					]
+				},
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						78
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						86,
+						83
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "history/nodeStep.ts",
+					"line": 4,
+					"character": 29
+				}
+			],
+			"implementedTypes": [
+				{
+					"type": "reference",
+					"name": "IStep",
+					"id": 57
+				}
+			]
+		},
+		{
+			"id": 16,
+			"name": "ViewPlugin",
+			"kind": 128,
+			"kindString": "Class",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 18,
+					"name": "editor",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "viewPlugin.ts",
+							"line": 18,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "IEditor"
+					}
+				},
+				{
+					"id": 27,
+					"name": "options",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "viewPlugin.ts",
+							"line": 23,
+							"character": 18
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "Record",
+						"typeArguments": [
+							{
+								"type": "intrinsic",
+								"name": "string"
+							},
+							{
+								"type": "reference",
+								"name": "VueConstructor"
+							}
+						]
+					}
+				},
+				{
+					"id": 22,
+					"name": "scaling",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "viewPlugin.ts",
+							"line": 20,
+							"character": 18
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					},
+					"defaultValue": "1"
+				},
+				{
+					"id": 17,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "viewPlugin.ts",
+							"line": 17,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"defaultValue": "\"ViewPlugin\""
+				},
+				{
+					"id": 41,
+					"name": "register",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 42,
+							"name": "register",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 43,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IEditor"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "viewPlugin.ts",
+							"line": 49,
+							"character": 19
+						}
+					]
+				},
+				{
+					"id": 44,
+					"name": "registerOption",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 45,
+							"name": "registerOption",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Register a node option"
+							},
+							"parameters": [
+								{
+									"id": 46,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Name of the node option as used when defining nodes"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 47,
+									"name": "component",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Component that will be rendered for the option\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "VueConstructor"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "viewPlugin.ts",
+							"line": 87,
+							"character": 25
+						}
+					]
+				},
+				{
+					"id": 33,
+					"name": "components",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "Use this property to provide custom components,\nwhich will be used when rendering the respective entities"
+					},
+					"children": [
+						{
+							"id": 37,
+							"name": "connection",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 43,
+									"character": 18
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "VueConstructor",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " ConnectionWrapper"
+						},
+						{
+							"id": 39,
+							"name": "contextMenu",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 45,
+									"character": 19
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "VueConstructor",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " ContextMenu"
+						},
+						{
+							"id": 34,
+							"name": "node",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 40,
+									"character": 12
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "VueConstructor",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " NodeView"
+						},
+						{
+							"id": 36,
+							"name": "nodeInterface",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 42,
+									"character": 21
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "VueConstructor",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " NodeInterfaceView"
+						},
+						{
+							"id": 35,
+							"name": "nodeOption",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 41,
+									"character": 18
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "VueConstructor",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " NodeOptionView"
+						},
+						{
+							"id": 40,
+							"name": "sidebar",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 46,
+									"character": 15
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "VueConstructor",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " Sidebar"
+						},
+						{
+							"id": 38,
+							"name": "tempConnection",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 44,
+									"character": 22
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "VueConstructor",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " TempConnectionView"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								37,
+								39,
+								34,
+								36,
+								35,
+								40,
+								38
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "viewPlugin.ts",
+							"line": 39,
+							"character": 21
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				},
+				{
+					"id": 28,
+					"name": "hooks",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 32,
+							"name": "renderConnection",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": "Called whenever a connection is rendered"
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 33,
+									"character": 24
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SequentialHook",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " new SequentialHook<ConnectionView>()"
+						},
+						{
+							"id": 31,
+							"name": "renderInterface",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": "Called whenever an interface is rendered"
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 31,
+									"character": 23
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SequentialHook",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " new SequentialHook<NodeInterfaceView>()"
+						},
+						{
+							"id": 29,
+							"name": "renderNode",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": "Called whenever a node is rendered"
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 27,
+									"character": 18
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SequentialHook",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " new SequentialHook<NodeView>()"
+						},
+						{
+							"id": 30,
+							"name": "renderOption",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": "Called whenever an option is rendered"
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 29,
+									"character": 20
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "SequentialHook",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"name": "Vue"
+									}
+								]
+							},
+							"defaultValue": " new SequentialHook<NodeOptionView>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								32,
+								31,
+								29,
+								30
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "viewPlugin.ts",
+							"line": 25,
+							"character": 16
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				},
+				{
+					"id": 19,
+					"name": "panning",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 20,
+							"name": "x",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 19,
+									"character": 24
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0"
+						},
+						{
+							"id": 21,
+							"name": "y",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 19,
+									"character": 30
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								20,
+								21
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "viewPlugin.ts",
+							"line": 19,
+							"character": 18
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				},
+				{
+					"id": 23,
+					"name": "sidebar",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 25,
+							"name": "nodeId",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 21,
+									"character": 45
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"defaultValue": "\"\""
+						},
+						{
+							"id": 26,
+							"name": "optionName",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 21,
+									"character": 61
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"defaultValue": "\"\""
+						},
+						{
+							"id": 24,
+							"name": "visible",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "viewPlugin.ts",
+									"line": 21,
+									"character": 30
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							},
+							"defaultValue": "false"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								25,
+								26,
+								24
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "viewPlugin.ts",
+							"line": 21,
+							"character": 18
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						18,
+						27,
+						22,
+						17
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						41,
+						44
+					]
+				},
+				{
+					"title": "Object literals",
+					"kind": 2097152,
+					"children": [
+						33,
+						28,
+						19,
+						23
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "viewPlugin.ts",
+					"line": 15,
+					"character": 23
+				}
+			],
+			"implementedTypes": [
+				{
+					"type": "reference",
+					"name": "IPlugin"
+				},
+				{
+					"type": "reference",
+					"name": "IViewPlugin"
+				}
+			]
+		},
+		{
+			"id": 57,
+			"name": "IStep",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 58,
+					"name": "type",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "history/step.ts",
+							"line": 4,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 62,
+					"name": "redo",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 63,
+							"name": "redo",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 64,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IEditor"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/step.ts",
+							"line": 6,
+							"character": 8
+						}
+					]
+				},
+				{
+					"id": 59,
+					"name": "undo",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 60,
+							"name": "undo",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 61,
+									"name": "editor",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "IEditor"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "history/step.ts",
+							"line": 5,
+							"character": 8
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						58
+					]
+				},
+				{
+					"title": "Methods",
+					"kind": 2048,
+					"children": [
+						62,
+						59
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "history/step.ts",
+					"line": 3,
+					"character": 22
+				}
+			],
+			"implementedBy": [
+				{
+					"type": "reference",
+					"name": "ConnectionStep",
+					"id": 65
+				},
+				{
+					"type": "reference",
+					"name": "NodeStep",
+					"id": 77
+				}
+			]
+		},
+		{
+			"id": 1,
+			"name": "BaklavaVuePlugin",
+			"kind": 32,
+			"kindString": "Variable",
+			"flags": {
+				"isExported": true,
+				"isConst": true
+			},
+			"sources": [
+				{
+					"fileName": "baklavaVuePlugin.ts",
+					"line": 20,
+					"character": 29
+				}
+			],
+			"type": {
+				"type": "reflection",
+				"declaration": {
+					"id": 2,
+					"name": "__type",
+					"kind": 65536,
+					"kindString": "Type literal",
+					"flags": {}
+				}
+			},
+			"defaultValue": " Baklava"
+		},
+		{
+			"id": 105,
+			"name": "getDomElements",
+			"kind": 64,
+			"kindString": "Function",
+			"flags": {
+				"isExported": true
+			},
+			"signatures": [
+				{
+					"id": 106,
+					"name": "getDomElements",
+					"kind": 4096,
+					"kindString": "Call signature",
+					"flags": {},
+					"parameters": [
+						{
+							"id": 107,
+							"name": "ni",
+							"kind": 32768,
+							"kindString": "Parameter",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "INodeInterface"
+							}
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 108,
+							"name": "__type",
+							"kind": 65536,
+							"kindString": "Type literal",
+							"flags": {}
+						}
+					}
+				}
+			],
+			"sources": [
+				{
+					"fileName": "utility/domResolver.ts",
+					"line": 3,
+					"character": 38
+				}
+			]
+		},
+		{
+			"id": 102,
+			"name": "sanitizeName",
+			"kind": 64,
+			"kindString": "Function",
+			"flags": {
+				"isExported": true
+			},
+			"signatures": [
+				{
+					"id": 103,
+					"name": "sanitizeName",
+					"kind": 4096,
+					"kindString": "Call signature",
+					"flags": {},
+					"parameters": [
+						{
+							"id": 104,
+							"name": "name",
+							"kind": 32768,
+							"kindString": "Parameter",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				}
+			],
+			"sources": [
+				{
+					"fileName": "utility/cssNames.ts",
+					"line": 1,
+					"character": 28
+				}
+			]
+		},
+		{
+			"id": 48,
+			"name": "Components",
+			"kind": 2097152,
+			"kindString": "Object literal",
+			"flags": {
+				"isExported": true,
+				"isConst": true
+			},
+			"children": [
+				{
+					"id": 49,
+					"name": "Connection",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 13,
+							"character": 14
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "VueConstructor",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "Vue"
+							}
+						]
+					}
+				},
+				{
+					"id": 50,
+					"name": "ConnectionWrapper",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 13,
+							"character": 33
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "VueConstructor",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "Vue"
+							}
+						]
+					}
+				},
+				{
+					"id": 55,
+					"name": "ContextMenu",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 15,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "VueConstructor",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "Vue"
+							}
+						]
+					}
+				},
+				{
+					"id": 52,
+					"name": "Node",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 14,
+							"character": 8
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "VueConstructor",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "Vue"
+							}
+						]
+					}
+				},
+				{
+					"id": 53,
+					"name": "NodeInterface",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 14,
+							"character": 23
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "VueConstructor",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "Vue"
+							}
+						]
+					}
+				},
+				{
+					"id": 54,
+					"name": "NodeOption",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 14,
+							"character": 35
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "VueConstructor",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "Vue"
+							}
+						]
+					}
+				},
+				{
+					"id": 56,
+					"name": "Sidebar",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 15,
+							"character": 24
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "VueConstructor",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "Vue"
+							}
+						]
+					}
+				},
+				{
+					"id": 51,
+					"name": "TemporaryConnection",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 13,
+							"character": 54
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "VueConstructor",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "Vue"
+							}
+						]
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						49,
+						50,
+						55,
+						52,
+						53,
+						54,
+						56,
+						51
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 12,
+					"character": 23
+				}
+			],
+			"type": {
+				"type": "intrinsic",
+				"name": "object"
+			}
+		}
+	],
+	"groups": [
+		{
+			"title": "Classes",
+			"kind": 128,
+			"children": [
+				3,
+				65,
+				89,
+				77,
+				16
+			]
+		},
+		{
+			"title": "Interfaces",
+			"kind": 256,
+			"children": [
+				57
+			]
+		},
+		{
+			"title": "Variables",
+			"kind": 32,
+			"children": [
+				1
+			]
+		},
+		{
+			"title": "Functions",
+			"kind": 64,
+			"children": [
+				105,
+				102
+			]
+		},
+		{
+			"title": "Object literals",
+			"kind": 2097152,
+			"children": [
+				48
+			]
+		}
+	]
+}

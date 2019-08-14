@@ -23,12 +23,19 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
     public options: Record<string, VueConstructor> = {};
 
     public hooks = {
+        /** Called whenever a node is rendered */
         renderNode: new SequentialHook<NodeView>(),
+        /** Called whenever an option is rendered */
         renderOption: new SequentialHook<NodeOptionView>(),
+        /** Called whenever an interface is rendered */
         renderInterface: new SequentialHook<NodeInterfaceView>(),
+        /** Called whenever a connection is rendered */
         renderConnection: new SequentialHook<ConnectionView>()
     };
 
+    /** Use this property to provide custom components,
+     * which will be used when rendering the respective entities
+     */
     public components = {
         node: NodeView,
         nodeOption: NodeOptionView,
@@ -72,6 +79,11 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
         });
     }
 
+    /**
+     * Register a node option
+     * @param name Name of the node option as used when defining nodes
+     * @param component Component that will be rendered for the option
+     */
     public registerOption(name: string, component: VueConstructor) {
         Vue.set(this.options, name, component);
     }

@@ -10,8 +10,7 @@
 			"kind": 128,
 			"kindString": "Class",
 			"flags": {
-				"isExported": true,
-				"isExternal": true
+				"isExported": true
 			},
 			"children": [
 				{
@@ -21,8 +20,7 @@
 					"kindString": "Constructor",
 					"flags": {
 						"isPublic": true,
-						"isExported": true,
-						"isExternal": true
+						"isExported": true
 					},
 					"comment": {
 						"shortText": "Construct a new Engine plugin"
@@ -65,7 +63,7 @@
 						{
 							"fileName": "engine.ts",
 							"line": 25,
-							"character": 61
+							"character": 62
 						}
 					]
 				},
@@ -76,8 +74,7 @@
 					"kindString": "Property",
 					"flags": {
 						"isPublic": true,
-						"isExported": true,
-						"isExternal": true
+						"isExported": true
 					},
 					"sources": [
 						{
@@ -99,8 +96,7 @@
 					"kindString": "Accessor",
 					"flags": {
 						"isPublic": true,
-						"isExported": true,
-						"isExternal": true
+						"isExported": true
 					},
 					"getSignature": [
 						{
@@ -110,11 +106,20 @@
 							"kindString": "Get signature",
 							"flags": {},
 							"type": {
-								"type": "array",
-								"elementType": {
-									"type": "reference",
-									"name": "Node"
-								}
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "array",
+										"elementType": {
+											"type": "reference",
+											"name": "INode"
+										}
+									}
+								]
 							}
 						}
 					],
@@ -133,11 +138,20 @@
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
-										"type": "array",
-										"elementType": {
-											"type": "reference",
-											"name": "Node"
-										}
+										"type": "union",
+										"types": [
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"name": "INode"
+												}
+											},
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											}
+										]
 									}
 								}
 							],
@@ -167,8 +181,7 @@
 					"kindString": "Method",
 					"flags": {
 						"isPublic": true,
-						"isExported": true,
-						"isExternal": true
+						"isExported": true
 					},
 					"signatures": [
 						{
@@ -201,14 +214,46 @@
 					]
 				},
 				{
+					"id": 24,
+					"name": "calculateOrder",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 25,
+							"name": "calculateOrder",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Force the engine to recalculate the node execution order.\nThis is normally done automatically. Use this method if the\ndefault change detection does not work in your scenario."
+							},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "engine.ts",
+							"line": 107,
+							"character": 25
+						}
+					]
+				},
+				{
 					"id": 19,
 					"name": "register",
 					"kind": 2048,
 					"kindString": "Method",
 					"flags": {
 						"isPublic": true,
-						"isExported": true,
-						"isExternal": true
+						"isExported": true
 					},
 					"signatures": [
 						{
@@ -226,7 +271,7 @@
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"name": "Editor"
+										"name": "IEditor"
 									}
 								}
 							],
@@ -272,6 +317,7 @@
 					"kind": 2048,
 					"children": [
 						22,
+						24,
 						19
 					]
 				}
@@ -296,8 +342,7 @@
 			"kind": 64,
 			"kindString": "Function",
 			"flags": {
-				"isExported": true,
-				"isExternal": true
+				"isExported": true
 			},
 			"signatures": [
 				{
@@ -319,7 +364,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"name": "Node"
+										"name": "INode"
 									}
 								]
 							}
@@ -353,7 +398,7 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"name": "Node"
+									"name": "INode"
 								}
 							}
 						}
@@ -362,7 +407,7 @@
 						"type": "array",
 						"elementType": {
 							"type": "reference",
-							"name": "Node"
+							"name": "INode"
 						}
 					}
 				}
@@ -381,8 +426,7 @@
 			"kind": 64,
 			"kindString": "Function",
 			"flags": {
-				"isExported": true,
-				"isExternal": true
+				"isExported": true
 			},
 			"signatures": [
 				{
@@ -404,7 +448,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"name": "Node"
+										"name": "INode"
 									}
 								]
 							}
