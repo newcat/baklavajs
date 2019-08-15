@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Provide } from "vue-property-decorator";
+import { Component, Vue, Prop, Provide, Watch } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
 import { IEditor, INode, ITransferConnection, INodeInterface,
@@ -112,18 +112,25 @@ export default class EditorView extends Vue {
         this.history = new History(this.plugin);
     }
 
+    @Watch("plugin.nodeTypeAliases")
     updateContextMenu() {
 
         const categories = Array.from(this.plugin.editor.nodeCategories.keys())
             .filter((c) => c !== "default")
             .map((c) => {
                 const nodes = Array.from(this.plugin.editor.nodeCategories.get(c)!)
-                    .map((n) => ({ value: "addNode:" + n, label: n }));
+                    .map((n) => ({
+                        value: "addNode:" + n,
+                        label: this.plugin.nodeTypeAliases[n] || n
+                    }));
                 return { label: c, submenu: nodes };
             });
 
         const defaultNodes = this.plugin.editor.nodeCategories.get("default")!
-            .map((n) => ({ value: "addNode:" + n, label: n }));
+            .map((n) => ({
+                value: "addNode:" + n,
+                label: this.plugin.nodeTypeAliases[n] || n
+            }));
 
         const addNodeSubmenu: IMenuItem[] = [...categories];
         if (categories.length > 0 && defaultNodes.length > 0) {

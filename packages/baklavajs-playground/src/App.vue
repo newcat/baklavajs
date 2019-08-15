@@ -92,6 +92,7 @@ export default class App extends Vue {
             .addConversion("string", "number", (v) => parseInt(v, 10))
             .addConversion("number", "string", (v) => v !== null && v !== undefined && v.toString() || "0")
             .addConversion("boolean", "string", (v) => typeof(v) === "boolean" ? v.toString() : "null");
+        this.viewPlugin.setNodeTypeAlias("TestNode", "TestNode (with alias)");
     }
 
     calculate() {

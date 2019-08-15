@@ -21,6 +21,7 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
     public sidebar = { visible: false, nodeId: "", optionName: "" };
 
     public options: Record<string, VueConstructor> = {};
+    public nodeTypeAliases: Record<string, string> = {};
 
     public hooks = {
         /** Called whenever a node is rendered */
@@ -86,6 +87,20 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
      */
     public registerOption(name: string, component: VueConstructor) {
         Vue.set(this.options, name, component);
+    }
+
+    /**
+     * Add an alias for a node type that is displayed in the "Add Node" context menu instead of
+     * the raw node type name
+     * @param nodeType Node type
+     * @param alias Alias that will be displayed in the context menu. When this value is `null`, an existing alias is removed
+     */
+    public setNodeTypeAlias(nodeType: string, alias: string|null) {
+        if (alias) {
+            Vue.set(this.nodeTypeAliases, nodeType, alias);
+        } else if (this.nodeTypeAliases[nodeType]) {
+            Vue.delete(this.nodeTypeAliases, nodeType);
+        }
     }
 
 }
