@@ -72,9 +72,10 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
                 return state;
             });
             node.hooks.load.tap(this, (state) => {
-                n.position = state.position;
-                n.width = state.width;
-                n.twoColumn = state.twoColumn;
+                // default values for savefiles from older versions
+                n.position = state.position || { x: 0, y: 0 };
+                n.width = state.width || 200;
+                n.twoColumn = state.twoColumn || false;
                 return state;
             });
         });
