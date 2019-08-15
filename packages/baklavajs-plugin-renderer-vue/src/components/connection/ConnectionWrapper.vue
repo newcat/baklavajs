@@ -4,6 +4,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import ResizeObserver from "@juggle/resize-observer";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom from "../../utility/domResolver";
 import { ITransferConnection, TemporaryConnectionState } from "../../../../baklavajs-core/types";
@@ -20,6 +21,8 @@ export default class ConnectionWrapper extends Vue {
 
     d = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
+    private resizeObserver!: ResizeObserver;
+
     get state() {
         return this.connection.isInDanger ?
             TemporaryConnectionState.FORBIDDEN :
@@ -31,11 +34,23 @@ export default class ConnectionWrapper extends Vue {
         this.updateCoords();
     }
 
-    @Watch("connection", { deep: true })
+    beforeDestroy() {
+        this.resizeObserver.disconnect();
+    }
+
+    @Watch("connection.from.parent.position", { deep: true })
+    @Watch("connection.to.parent.position", { deep: true })
     updateCoords() {
         const from = resolveDom(this.connection.from);
         const to = resolveDom(this.connection.to);
         if (from.node && from.interface && to.node && to.interface) {
+
+            if (!this.resizeObserver) {
+                this.resizeObserver = new ResizeObserver(() => { this.updateCoords(); });
+                this.resizeObserver.observe(from.node);
+                this.resizeObserver.observe(to.node);
+            }
+
             const x1 = from.node.offsetLeft + from.node.clientWidth;
             const y1 = from.node.offsetTop + from.interface.offsetTop + from.interface.clientHeight / 2;
             const x2 = to.node.offsetLeft;

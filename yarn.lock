@@ -11,6 +11,11 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+"@juggle/resize-observer@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-2.3.0.tgz#c528b369a2959e49aa6aaace5640c8e4748e9084"
+  integrity sha512-vCS2dz1HAG760+vADa7Fol/NhrmdyDa58Nvq39TpdwYjCqTEDFmIFCDGRiKGSw4GPoDRcx/+xwOYlJdMeNUKRw==
+
 "@lerna/add@3.13.1":
   version "3.13.1"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.13.1.tgz#2cd7838857edb3b43ed73e3c21f69a20beb9b702"

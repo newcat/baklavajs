@@ -44,5 +44,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "723bf8b6249e6b67d9a7a5a9c84cf1ee0ca33739"
+  "gitHead": "723bf8b6249e6b67d9a7a5a9c84cf1ee0ca33739",
+  "dependencies": {
+    "@juggle/resize-observer": "^2.3.0"
+  }
 }
