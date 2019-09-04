@@ -121,12 +121,6 @@ export class Editor implements IEditor {
 
         if (this.events.beforeAddConnection.emit({ from, to })) { return; }
 
-        // Delete all other connections to the target interface
-        // as only one connection to an input interface is allowed
-        this.connections
-            .filter((conn) => conn.to === dc.to)
-            .forEach((conn) => this.removeConnection(conn));
-
         const c = new Connection(dc.from, dc.to);
         this._connections.push(c);
 
@@ -173,6 +167,11 @@ export class Editor implements IEditor {
 
         if (from.isInput || !to.isInput) {
             // connections are only allowed from input to output interface
+            return false;
+        }
+
+        // prevent duplicate connections
+        if (this.connections.some((c) => c.from === from && c.to === to)) {
             return false;
         }
 

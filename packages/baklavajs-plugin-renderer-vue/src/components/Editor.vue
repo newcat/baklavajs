@@ -105,6 +105,13 @@ export default class EditorView extends Vue {
         return this.plugin.editor ? this.plugin.editor.connections : [];
     }
 
+    get hasEnginePlugin() {
+        for (const p of this.plugin.editor.plugins.values()) {
+            if (p.type === "EnginePlugin") { return true; }
+        }
+        return false;
+    }
+
     mounted() {
         this.updateContextMenu();
         this.plugin.editor.events.registerNodeType.addListener(this, () => this.updateContextMenu());
@@ -165,9 +172,11 @@ export default class EditorView extends Vue {
                 this.plugin.editor.checkConnection(this.temporaryConnection.from, this.temporaryConnection.to) ?
                 TemporaryConnectionState.ALLOWED :
                 TemporaryConnectionState.FORBIDDEN;
-            this.connections
-                .filter((c) => c.to === ni)
-                .forEach((c) => { (c as ITransferConnection).isInDanger = true; });
+            if (this.hasEnginePlugin) {
+                this.connections
+                    .filter((c) => c.to === ni)
+                    .forEach((c) => { (c as ITransferConnection).isInDanger = true; });
+            }
         } else if (!ni && this.temporaryConnection) {
             this.$set(this.temporaryConnection, "to", undefined);
             this.temporaryConnection.status = TemporaryConnectionState.NONE;
