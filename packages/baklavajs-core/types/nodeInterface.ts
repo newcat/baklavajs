@@ -4,6 +4,9 @@ import { IInterfaceState } from "./state";
 
 export interface INodeInterface {
 
+    /** Additional Properties */
+    [k: string]: any;
+
     id: string;
     isInput: boolean;
     parent: INode;

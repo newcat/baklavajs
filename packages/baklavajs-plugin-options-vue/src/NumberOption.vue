@@ -1,5 +1,5 @@
 <template>
-    <div class="dark-num-input">
+    <div class="dark-num-input" :class="{ '--invalid': invalid }">
         <div @click="decrement" class="__button --dec">
             <i-arrow></i-arrow>
         </div>
@@ -28,6 +28,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import Arrow from "./Arrow.vue";
+import { INodeOption } from "../../baklavajs-core/types";
 
 @Component({
     components: {
@@ -44,7 +45,11 @@ export default class NumberOption extends Vue {
     @Prop({ type: String })
     name!: string;
 
+    @Prop({ type: Object })
+    option!: INodeOption;
+
     editMode = false;
+    invalid = false;
     tempValue = "0";
 
     get v() {
@@ -65,11 +70,17 @@ export default class NumberOption extends Vue {
     }
 
     increment() {
-        this.$emit("input", this.v + 0.1);
+        const newValue = this.v + 0.1;
+        if (this.validate(newValue)) {
+            this.$emit("input", newValue);
+        }
     }
 
     decrement() {
-        this.$emit("input", this.v - 0.1);
+        const newValue = this.v - 0.1;
+        if (this.validate(newValue)) {
+            this.$emit("input", newValue);
+        }
     }
 
     async enterEditMode() {
@@ -80,8 +91,30 @@ export default class NumberOption extends Vue {
     }
 
     leaveEditMode() {
-        this.$emit("input", parseFloat(this.tempValue));
-        this.editMode = false;
+        const v = parseFloat(this.tempValue);
+        if (!this.validate(v)) {
+            this.invalid = true;
+        } else {
+            this.$emit("input", v);
+            this.editMode = false;
+        }
+    }
+
+    @Watch("tempValue")
+    resetInvalid() {
+        this.invalid = false;
+    }
+
+    validate(v: number) {
+        if (Number.isNaN(v)) {
+            return false;
+        } else if (typeof(this.option.min) === "number" && v < this.option.min) {
+            return false;
+        } else if (typeof(this.option.max) === "number" && v > this.option.max) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
