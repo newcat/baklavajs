@@ -3,10 +3,10 @@
     color: $color-control-dark-foreground;
     border-radius: $border-radius-control;
     position: relative;
+    cursor: pointer;
 
     & > .__content {
         display: flex;
-        cursor: pointer;
         position: relative;
         z-index: 1;
 
@@ -36,7 +36,7 @@
         top: 0;
         bottom: 0;
         left: 0;
-        background-color: $color-control-dark-hover;
+        background-color: $color-primary;
         border-radius: $border-radius-control;
     }
 

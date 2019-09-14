@@ -1,5 +1,5 @@
 <template>
-    <div class="dark-num-input" :class="{ '--invalid': invalid }">
+    <div class="dark-num-input">
         <div @click="decrement" class="__button --dec">
             <i-arrow></i-arrow>
         </div>
@@ -15,8 +15,12 @@
             <input
                 type="number"
                 v-model="tempValue"
+                class="dark-input"
+                :class="{ '--invalid': invalid }"
                 ref="input"
                 @blur="leaveEditMode"
+                @keydown.enter="leaveEditMode"
+                style="text-align: right;"
             >
         </div>
         <div @click="increment" class="__button --inc">

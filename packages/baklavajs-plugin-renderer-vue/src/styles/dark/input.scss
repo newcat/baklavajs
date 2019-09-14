@@ -8,12 +8,23 @@
     width: 100%;
     transition: background-color $visual-transition;
     font-size: inherit;
+    font: inherit;
 
     &:hover {
         background-color: $color-control-dark-hover;
     }
     &:active {
         background-color: $color-control-dark-active;
+    }
+
+    &[type=number]::-webkit-inner-spin-button, 
+    &[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+
+    &.--invalid {
+        box-shadow: 0 0 2px 2px $color-error;
     }
 
 }
