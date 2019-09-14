@@ -22,45 +22,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
-import { INodeOption } from "../../baklavajs-core/types";
+import { Component } from "vue-property-decorator";
+import { BaseNumericOption } from "./BaseNumericOption";
 
 @Component
-export default class SliderOption extends Vue {
+export default class SliderOption extends BaseNumericOption {
 
-    MAX_STRING_LENGTH = 9;
-
-    editMode = false;
     didSlide = false;
     isMouseDown = false;
-    tempValue = "0";
-    invalid = false;
-
-    @Prop({ type: String })
-    name!: string;
-
-    @Prop({ type: Number })
-    value!: any;
-
-    @Prop({ type: Object })
-    option!: INodeOption;
-
-    get v() {
-        if (typeof(this.value) === "string") {
-            return parseFloat(this.value);
-        } else if (typeof(this.value) === "number") {
-            return this.value;
-        } else {
-            return 0;
-        }
-    }
-
-    get stringRepresentation() {
-        const s = this.v.toFixed(3);
-        return s.length > this.MAX_STRING_LENGTH ?
-            this.v.toExponential(this.MAX_STRING_LENGTH - 5) :
-            s;
-    }
 
     get min() {
         return this.option.min || 0;
@@ -107,35 +76,6 @@ export default class SliderOption extends Vue {
         if (this.isMouseDown) {
             this.$emit("input", v);
             this.didSlide = true;
-        }
-    }
-
-    async enterEditMode() {
-        this.tempValue = this.value.toFixed(3);
-        this.editMode = true;
-        await this.$nextTick();
-        (this.$refs.input as HTMLElement).focus();
-    }
-
-    leaveEditMode() {
-        const v = parseFloat(this.tempValue);
-        if (!this.validate(v)) {
-            this.invalid = true;
-        } else {
-            this.$emit("input", v);
-            this.editMode = false;
-        }
-    }
-
-    validate(v: number) {
-        if (Number.isNaN(v)) {
-            return false;
-        } else if (typeof(this.option.min) === "number" && v < this.option.min) {
-            return false;
-        } else if (typeof(this.option.max) === "number" && v > this.option.max) {
-            return false;
-        } else {
-            return true;
         }
     }
 
