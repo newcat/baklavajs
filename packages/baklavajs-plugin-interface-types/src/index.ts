@@ -90,10 +90,10 @@ export class InterfaceTypePlugin implements IPlugin {
         vp.hooks.renderInterface.tap(this, (intf) => {
             if (this.types.has(intf.data.type)) {
                 const color = this.types.get(intf.data.type)!.color;
-                const res = intf.$el.getElementsByClassName("__port");
+                const res = intf.$el.getElementsByClassName("__port") as HTMLElement[];
                 Array.from(res).forEach((el) => {
-                    (el as HTMLElement).className += " __port-" + intf.data.type;
-                    (el as HTMLElement).style.backgroundColor = color;
+                    el.classList.add(" __port-" + intf.data.type);
+                    el.style.backgroundColor = color;
                 });
             }
             return intf;
