@@ -92,7 +92,7 @@ export class InterfaceTypePlugin implements IPlugin {
                 const color = this.types.get(intf.data.type)!.color;
                 const res = intf.$el.getElementsByClassName("__port") as HTMLElement[];
                 Array.from(res).forEach((el) => {
-                    el.classList.add(" __port-" + intf.data.type);
+                    el.classList.add("__port-" + intf.data.type);
                     el.style.backgroundColor = color;
                 });
             }
