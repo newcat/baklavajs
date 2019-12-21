@@ -70,4 +70,4 @@ yarn add @baklavajs/core
 yarn add @baklavajs/plugin-engine @baklavajs/plugin-interface-types @baklavajs/plugin-options-vue @baklavajs/plugin-renderer-vue
 ```
 
-To display the editor in the browser follow the steps described [here](/plugins/view.md)
+To display the editor in the browser follow the steps described [here](https://newcat.github.io/baklavajs/#/plugins/view)
