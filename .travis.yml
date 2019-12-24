@@ -11,7 +11,6 @@ cache: yarn
 jobs:
   include:
     - stage: test
-      if: tag IS blank
       script:
         - lerna run build
         - lerna run test
@@ -28,7 +27,7 @@ jobs:
         on:
           all_branches: true
     - stage: build and deploy
-      if: branch = master AND commit_message =~ /Publish/
+      if: branch = master AND tag IS present
       script:
         - lerna run build
       before_deploy:
