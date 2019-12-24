@@ -1,17 +1,19 @@
 # BaklavaJS
 
 [![Build Status](https://travis-ci.org/newcat/baklavajs.svg?branch=master)](https://travis-ci.org/newcat/baklavajs)
+![npm](https://img.shields.io/npm/v/baklavajs.svg)
 
-Graph / node editor in the browser using VueJS
+Graph / node editor in the browser using VueJS, less than 60kb gzipped
 ![example](docs/img/example.png)
 
 | Package | Version |
 | --- | --- |
-| @baklavajs/core | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/core.svg) |
-| @baklavajs/plugin-engine | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-engine.svg) |
-| @baklavajs/plugin-interface-types | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-interface-types.svg) |
-| @baklavajs/plugin-options-vue | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-options-vue.svg) |
-| @baklavajs/plugin-renderer-vue | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-renderer-vue.svg) |
+| baklavajs | ![npm](https://img.shields.io/npm/v/baklavajs.svg?style=flat-square) |
+| @baklavajs/core | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/core.svg?style=flat-square) |
+| @baklavajs/plugin-engine | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-engine.svg?style=flat-square) |
+| @baklavajs/plugin-interface-types | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-interface-types.svg?style=flat-square) |
+| @baklavajs/plugin-options-vue | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-options-vue.svg?style=flat-square) |
+| @baklavajs/plugin-renderer-vue | ![npm (scoped)](https://img.shields.io/npm/v/@baklavajs/plugin-renderer-vue.svg?style=flat-square) |
 
 ## Introduction
 BaklavaJS is a graph/node editor for the web. It provides an easy-to-use editor together with the ability to create custom nodes. Aditionally, it puts a strong emphasis on extensibility, which lead to an versatile plugin system.
@@ -23,6 +25,8 @@ The core functionality is shipped in the `@baklavajs/core` package. Any other fu
 * **Vue Renderer**: Displays the editor in the browser using VueJS
 * **Vue Options**: Adds predefined node options in Baklava style
 
+There is also the `baklavajs` package, which contains the core package as well as all plugins.
+
 ## Getting Started
 For a more extensive documentation, have a look here: https://newcat.github.io/baklavajs
 
@@ -30,15 +34,11 @@ For a more extensive documentation, have a look here: https://newcat.github.io/b
 Add these lines in your HTML file:
 ```html
 <!-- in your <head> -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/baklavajs/dist/styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/baklavajs/dist/index.css">
 
 <!-- in your <body> -->
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="https://cdn.jsdelivr.net/npm/@baklavajs/core/dist/index.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@baklavajs/plugin-engine/dist/index.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@baklavajs/plugin-interface-types/dist/index.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@baklavajs/plugin-options-vue/dist/index.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@baklavajs/plugin-renderer-vue/dist/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/baklavajs/dist/index.js"></script>
 ```
 
 Now you can use the factory function `createBaklava`:
@@ -48,7 +48,7 @@ Now you can use the factory function `createBaklava`:
 </div>
 
 <script>
-const plugin = BaklavaJSRendererVue.createBaklava(document.getElementById("editor"));
+const plugin = BaklavaJS.createBaklava(document.getElementById("editor"));
 const editor = plugin.editor;
 </script>
 ```
@@ -60,14 +60,10 @@ The function will return a `ViewPlugin` instance which in turn contains a refere
 First, you need to install the library:
 ```bash
 # npm
-npm i @baklavajs/core
-# plugins
-npm i @baklavajs/plugin-engine @baklavajs/plugin-interface-types @baklavajs/plugin-options-vue @baklavajs/plugin-renderer-vue
+npm i baklavajs
 
 # yarn
-yarn add @baklavajs/core
-# plugins
-yarn add @baklavajs/plugin-engine @baklavajs/plugin-interface-types @baklavajs/plugin-options-vue @baklavajs/plugin-renderer-vue
+yarn add baklavajs
 ```
 
 To display the editor in the browser follow the steps described [here](https://newcat.github.io/baklavajs/#/plugins/view)

@@ -8,6 +8,6 @@ module.exports = merge(base, {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        library: 'BaklavaJSFull'
+        library: 'BaklavaJS'
     }
 });

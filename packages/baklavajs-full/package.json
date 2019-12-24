@@ -6,12 +6,13 @@
     "homepage": "https://newcat.github.io/baklavajs",
     "license": "MIT",
     "files": [
-        "dist/**/!(report.html)"
+        "dist/**/!(report.html)",
+        "lib/**/*"
     ],
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "scripts": {
-        "build": "tsc",
+        "build": "webpack && tsc",
         "version": "node updateDependencies.js"
     },
     "repository": {
