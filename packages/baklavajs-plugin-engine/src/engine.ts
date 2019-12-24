@@ -67,7 +67,18 @@ export class Engine implements IPlugin {
             if (!this.checkConnection(c.from, c.to)) { return false; }
         });
 
-        this.editor.events.addConnection.addListener(this, (c) => { this.onChange(true); });
+        this.editor.events.addConnection.addListener(this, (c) => {
+
+            // as only one connection to an input interface is allowed
+            // Delete all other connections to the target interface
+            this.editor.connections
+                .filter((conn) => conn !== c && conn.to === c.to)
+                .forEach((conn) => this.editor.removeConnection(conn));
+
+            this.onChange(true);
+
+        });
+
         this.editor.events.removeConnection.addListener(this, () => { this.onChange(true); });
 
     }

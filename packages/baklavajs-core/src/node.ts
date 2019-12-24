@@ -25,12 +25,12 @@ export abstract class Node implements INode {
     public id: string = "node_" + generateId();
     /** A map of all interfaces of the node.
      * | Key = Name of the interface
-     * | Value = [[NodeInterface]] instance
+     * | Value = NodeInterface instance
      */
     public interfaces: Map<string, NodeInterface> = new Map();
     /** A map of all options of the node.
      * | Key = Name of the option
-     * | Value = [[NodeOption]] instance
+     * | Value = NodeOption instance
      */
     public options: Map<string, NodeOption> = new Map();
 
@@ -125,7 +125,7 @@ export abstract class Node implements INode {
         const intf = this.addInterface(true, name, option);
         intf.events.setValue.addListener(this, () => this.events.update.emit({ name, interface: intf }));
         intf.value = defaultValue;
-        Object.entries(additionalProperties || {}).forEach(([k, v]) => { (intf as any)[k] = v; });
+        Object.entries(additionalProperties || {}).forEach(([k, v]) => { intf[k] = v; });
         this.events.addInterface.emit(intf);
         return intf;
     }
@@ -139,7 +139,7 @@ export abstract class Node implements INode {
     protected addOutputInterface(name: string, additionalProperties?: Record<string, any>) {
         if (this.events.beforeAddInterface.emit({ name, isInput: false })) { return; }
         const intf = this.addInterface(false, name);
-        Object.entries(additionalProperties || {}).forEach(([k, v]) => { (intf as any)[k] = v; });
+        Object.entries(additionalProperties || {}).forEach(([k, v]) => { intf[k] = v; });
         this.events.addInterface.emit(intf);
         return intf;
     }
@@ -188,7 +188,7 @@ export abstract class Node implements INode {
                         sidebarComponent?: string, additionalProperties?: Record<string, any>) {
         if (this.events.beforeAddOption.emit({ name, component, defaultValue, sidebarComponent })) { return; }
         const opt = new NodeOption(component, defaultValue, sidebarComponent);
-        Object.entries(additionalProperties || {}).forEach(([k, v]) => { (opt as any)[k] = v; });
+        Object.entries(additionalProperties || {}).forEach(([k, v]) => { opt[k] = v; });
         opt.events.setValue.addListener(this, () => { this.events.update.emit({ name, option: opt }); });
         this.options.set(name, opt);
         this.events.addOption.emit({ name, option: opt });

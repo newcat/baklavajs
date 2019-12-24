@@ -13,6 +13,9 @@ export class NodeOption implements INodeOption {
         setValue: new BaklavaEvent<any>()
     };
 
+    /** Additional Properties */
+    [k: string]: any;
+
     private _value: any;
 
     public constructor(optionComponent: string, value?: any, sidebarComponent?: any) {

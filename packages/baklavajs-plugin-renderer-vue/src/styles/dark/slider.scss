@@ -1,0 +1,43 @@
+.dark-slider {
+    background: $color-control-dark-background;
+    color: $color-control-dark-foreground;
+    border-radius: $border-radius-control;
+    position: relative;
+    cursor: pointer;
+
+    & > .__content {
+        display: flex;
+        position: relative;
+        z-index: 1;
+
+        & > .__label, & > .__value {
+            flex: 1 1 auto;
+            margin: 0.35em 0;
+            padding: 0 0.5em;
+            text-overflow: ellipsis;
+        }
+
+        & > .__value {
+            text-align: right;
+        }
+
+        & > input {
+            background-color: $color-control-dark-background;
+            color: $color-control-dark-foreground;
+            caret-color: $color-primary;
+            padding: 0.35em;
+            width: 100%;
+        }
+
+    }
+
+    & > .__slider {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        background-color: $color-primary;
+        border-radius: $border-radius-control;
+    }
+
+}

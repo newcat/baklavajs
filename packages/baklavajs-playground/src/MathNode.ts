@@ -1,12 +1,9 @@
 import { NodeBuilder } from "../../baklavajs-core/src";
 
 export default new NodeBuilder("MathNode")
-    .addInputInterface("Number 1", "NumberOption", 1)
-    .addInputInterface("Number 2", "NumberOption", 10)
-    .addOption("Operation", "SelectOption", () => ({
-        selected: "Add",
-        items: [ "Add", "Subtract" ]
-    }))
+    .addInputInterface("Number 1", "NumberOption", 1, { displayName: "Number" })
+    .addInputInterface("Number 2", "NumberOption", 10, { displayName: "Number" })
+    .addOption("Operation", "SelectOption", "Add", undefined, { items: [ "Add", "Subtract" ] })
     .addOutputInterface("Output")
     .onCalculate((n) => {
         const n1 = n.getInterface("Number 1").value;

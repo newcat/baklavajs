@@ -28,24 +28,14 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import Arrow from "./Arrow.vue";
+import { BaseNumericOption } from "./BaseNumericOption";
 
 @Component({
     components: {
         "i-arrow": Arrow
     }
 })
-export default class IntegerOption extends Vue {
-
-    MAX_STRING_LENGTH = 9;
-
-    @Prop()
-    value!: any;
-
-    @Prop({ type: String })
-    name!: string;
-
-    editMode = false;
-    tempValue = "0";
+export default class IntegerOption extends BaseNumericOption {
 
     get v() {
         if (typeof(this.value) === "string") {
@@ -65,23 +55,21 @@ export default class IntegerOption extends Vue {
     }
 
     increment() {
-        this.$emit("input", this.v + 1);
+        this.setValue(this.v + 1);
     }
 
     decrement() {
-        this.$emit("input", this.v - 1);
-    }
-
-    async enterEditMode() {
-        this.tempValue = this.v.toString();
-        this.editMode = true;
-        await this.$nextTick();
-        (this.$refs.input as HTMLElement).focus();
+        this.setValue(this.v - 1);
     }
 
     leaveEditMode() {
-        this.$emit("input", parseInt(this.tempValue, 10));
-        this.editMode = false;
+        const v = parseInt(this.tempValue, 10);
+        if (!this.validate(v)) {
+            this.invalid = true;
+        } else {
+            this.$emit("input", v);
+            this.editMode = false;
+        }
     }
 
 }

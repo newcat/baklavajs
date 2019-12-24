@@ -1,4 +1,3 @@
-import { Node } from "./node";
 import generateId from "./idGenerator";
 import { IInterfaceState } from "../types/state";
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "./events";
@@ -10,6 +9,8 @@ export class NodeInterface implements INodeInterface {
     public isInput: boolean;
     public parent: INode;
     public option?: string;
+
+    [k: string]: any;
 
     public events = {
         setConnectionCount: new BaklavaEvent<number>(),

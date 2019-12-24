@@ -1,10 +1,11 @@
 <template>
     <component
         :is="component"
-        :name="name"
+        :name="displayName"
         class="node-option"
         :node="node"
         :value="value"
+        :option="option"
         @input="updateValue"
         @openSidebar="$emit('openSidebar')"
     ></component>
@@ -39,6 +40,10 @@ export default class NodeOptionView extends Vue {
     get component() {
         if (!this.plugin.options || !this.componentName) { return; }
         return this.plugin.options[this.componentName];
+    }
+
+    get displayName() {
+        return this.option.displayName || this.name;
     }
 
     beforeMount() {

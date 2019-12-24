@@ -15,8 +15,12 @@
             <input
                 type="number"
                 v-model="tempValue"
+                class="dark-input"
+                :class="{ '--invalid': invalid }"
                 ref="input"
                 @blur="leaveEditMode"
+                @keydown.enter="leaveEditMode"
+                style="text-align: right;"
             >
         </div>
         <div @click="increment" class="__button --inc">
@@ -28,60 +32,22 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import Arrow from "./Arrow.vue";
+import { INodeOption } from "../../baklavajs-core/types";
+import { BaseNumericOption } from "./BaseNumericOption";
 
 @Component({
     components: {
         "i-arrow": Arrow
     }
 })
-export default class NumberOption extends Vue {
-
-    MAX_STRING_LENGTH = 9;
-
-    @Prop()
-    value!: any;
-
-    @Prop({ type: String })
-    name!: string;
-
-    editMode = false;
-    tempValue = "0";
-
-    get v() {
-        if (typeof(this.value) === "string") {
-            return parseFloat(this.value);
-        } else if (typeof(this.value) === "number") {
-            return this.value;
-        } else {
-            return 0;
-        }
-    }
-
-    get stringRepresentation() {
-        const s = this.v.toFixed(3);
-        return s.length > this.MAX_STRING_LENGTH ?
-            this.v.toExponential(this.MAX_STRING_LENGTH - 5) :
-            s;
-    }
+export default class NumberOption extends BaseNumericOption {
 
     increment() {
-        this.$emit("input", this.v + 0.1);
+        this.setValue(this.v + 0.1);
     }
 
     decrement() {
-        this.$emit("input", this.v - 0.1);
-    }
-
-    async enterEditMode() {
-        this.tempValue = this.v.toFixed(3);
-        this.editMode = true;
-        await this.$nextTick();
-        (this.$refs.input as HTMLElement).focus();
-    }
-
-    leaveEditMode() {
-        this.$emit("input", parseFloat(this.tempValue));
-        this.editMode = false;
+        this.setValue(this.v - 0.1);
     }
 
 }

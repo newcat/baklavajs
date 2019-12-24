@@ -2,14 +2,15 @@
     <div :id="data.id" :class="classes">
         <div class="__port" @mouseover="startHover" @mouseout="endHover"></div>
         <span v-if="data.connectionCount > 0 || !data.option || !getOptionComponent(data.option)" class="align-middle">
-            {{ name }}
+            {{ displayName }}
         </span>
         <component
             v-else
             :is="getOptionComponent(data.option)"
+            :option="data"
             :value="value"
             @input="data.value = $event"
-            :name="name"
+            :name="displayName"
         ></component>
     </div>
 </template>
@@ -46,6 +47,10 @@ export default class NodeInterfaceView extends Vue {
             "--output": !this.data.isInput,
             "--connected": this.isConnected
         };
+    }
+
+    get displayName() {
+        return this.data.displayName || this.name;
     }
 
     beforeMount() {

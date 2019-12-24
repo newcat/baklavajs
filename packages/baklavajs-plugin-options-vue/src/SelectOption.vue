@@ -27,6 +27,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import Arrow from "./Arrow.vue";
+import { INodeOption } from "../../baklavajs-core/types";
 
 // @ts-ignore
 import ClickOutside from "v-click-outside";
@@ -46,19 +47,22 @@ export default class SelectOption extends Vue {
     @Prop({ type: String })
     name!: string;
 
-    @Prop({ type: Object })
+    @Prop({ type: String })
     value!: any;
 
+    @Prop({ type: Object })
+    option!: INodeOption;
+
     get selected() {
-        return this.value ? this.value.selected : "";
+        return this.value || "";
     }
 
     get items() {
-        return this.value ? this.value.items : [];
+        return this.option.items || [];
     }
 
     setSelected(item: string) {
-        this.$emit("input", { selected: item, items: this.items });
+        this.$emit("input", item);
     }
 
 }
