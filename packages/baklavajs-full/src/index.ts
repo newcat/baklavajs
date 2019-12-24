@@ -16,11 +16,7 @@ function createBaklava(element: Element): PluginRendererVue.ViewPlugin {
     editor.use(plugin);
 
     new Vue({
-        render: (h) => h("baklava-editor", {
-            props: {
-                model: editor
-            }
-        }),
+        render: (h) => h("baklava-editor", { props: { plugin } }),
     }).$mount(element);
 
     return plugin;
