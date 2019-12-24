@@ -4,10 +4,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import ResizeObserver from "@juggle/resize-observer";
+import ResizeObserverPolyfill from "@juggle/resize-observer";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom from "../../utility/domResolver";
 import { ITransferConnection, TemporaryConnectionState } from "../../../../baklavajs-core/types";
+
+const ResizeObserver = (window as any).ResizeObserver || ResizeObserverPolyfill;
 
 @Component({
     components: {
@@ -21,7 +23,7 @@ export default class ConnectionWrapper extends Vue {
 
     d = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
-    private resizeObserver!: ResizeObserver;
+    private resizeObserver!: ResizeObserverPolyfill;
 
     get state() {
         return this.connection.isInDanger ?
