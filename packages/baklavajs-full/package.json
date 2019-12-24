@@ -1,5 +1,5 @@
 {
-    "name": "@baklavajs/full",
+    "name": "baklavajs",
     "version": "1.4.0",
     "description": "Full installation of BaklavaJS including the core and all plugins",
     "author": "newcat <freddy.wagner@web.de>",
