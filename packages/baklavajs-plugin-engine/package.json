@@ -1,6 +1,6 @@
 {
   "name": "@baklavajs/plugin-engine",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Execute BaklavaJS graphs",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
