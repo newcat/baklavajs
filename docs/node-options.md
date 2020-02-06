@@ -2,15 +2,17 @@
 
 Node Options can be used to give users the ability to change more advanced settings of a node than node interfaces would allow. They can display arbitrary HTML in the form of Vue components.
 
-Every option is just a Vue component, that supports the `v-model` directive.
-This means, they receive the option's value through the `value` prop and can write updates
-to the value using the `input` event.
-Additionally, each option can emit the `openSidebar` event, which will open the [sidebar](#sidebar)
-to display a more advanced UI for the option.
-For more advanced use-cases, every option will also receive the node instance through the `node` prop.
-This can be used to call functions in your node model.
+Every option (the same goes for sidebar options) is just a Vue component. It receives these props:
+* **`value`**: `any` The value of the option
+* **`name`**: `string` Name of the option
+* **`option`**: !!API%{ "module": "@baklavajs/core", "type": "class", "name": "nodeoption" }% The option instance
+* **`node`**: !!API%{ "module": "@baklavajs/core", "type": "class", "name": "node" }% The node instance. It can be used to call functions in your node model.
 
-Their value can be written or read programatically by using the
+Additionally, it can emit these events:
+* **`input`**: Update the value
+* **`openSidebar`**: Opens the sidebar
+
+The node option's value can be written or read programatically by using the
 [setOptionValue](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "node", "field": "setoptionvalue" }%) and
 [getOptionValue](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "node", "field": "getoptionvalue" }%) methods.
 
