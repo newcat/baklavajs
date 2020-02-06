@@ -6,7 +6,7 @@ Every option (the same goes for sidebar options) is just a Vue component. It rec
 * **`value`**: `any` The value of the option
 * **`name`**: `string` Name of the option
 * **`option`**: [`NodeOption`](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "nodeoption" }%) The option instance
-* **`node`**: ![`Node`](!API%{ "module": "@baklavajs/core", "type": "class", "name": "node" }%) The node instance. It can be used to call functions in your node model.
+* **`node`**: [`Node`](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "node" }%) The node instance. It can be used to call functions in your node model.
 
 Additionally, it can emit these events:
 * **`input`**: Update the value
