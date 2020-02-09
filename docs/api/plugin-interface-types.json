@@ -50,7 +50,9 @@
 							"name": "addConversion",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"comment": {
 								"shortText": "A conversion makes it possible to connect two node interfaces altough they have different types."
 							},
@@ -60,7 +62,9 @@
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"comment": {
 										"text": "Type to convert from"
 									},
@@ -74,7 +78,9 @@
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"comment": {
 										"text": "Type to convert to"
 									},
@@ -89,6 +95,7 @@
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {
+										"isExported": true,
 										"isOptional": true
 									},
 									"comment": {
@@ -108,21 +115,27 @@
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
-													"flags": {},
+													"flags": {
+														"isExported": true
+													},
 													"signatures": [
 														{
 															"id": 16,
 															"name": "__call",
 															"kind": 4096,
 															"kindString": "Call signature",
-															"flags": {},
+															"flags": {
+																"isExported": true
+															},
 															"parameters": [
 																{
 																	"id": 17,
 																	"name": "value",
 																	"kind": 32768,
 																	"kindString": "Parameter",
-																	"flags": {},
+																	"flags": {
+																		"isExported": true
+																	},
 																	"type": {
 																		"type": "intrinsic",
 																		"name": "any"
@@ -170,7 +183,9 @@
 							"name": "addType",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"comment": {
 								"shortText": "Add a new node interface type"
 							},
@@ -180,7 +195,9 @@
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"comment": {
 										"text": "Name of the type"
 									},
@@ -194,7 +211,9 @@
 									"name": "color",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"comment": {
 										"text": "Color of the type. Will be used to color the ports of the node interfaces.\n"
 									},
@@ -233,14 +252,18 @@
 							"name": "canConvert",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
 									"id": 24,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "intrinsic",
 										"name": "string"
@@ -251,7 +274,9 @@
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "intrinsic",
 										"name": "string"
@@ -287,14 +312,18 @@
 							"name": "convert",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
 									"id": 28,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "intrinsic",
 										"name": "string"
@@ -305,7 +334,9 @@
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "intrinsic",
 										"name": "string"
@@ -316,7 +347,9 @@
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "intrinsic",
 										"name": "any"
@@ -352,14 +385,18 @@
 							"name": "getConversion",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
 									"id": 20,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "intrinsic",
 										"name": "string"
@@ -370,7 +407,9 @@
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "intrinsic",
 										"name": "string"
@@ -419,14 +458,18 @@
 							"name": "register",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
 									"id": 5,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "reference",
 										"name": "IEditor"

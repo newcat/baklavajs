@@ -12,7 +12,7 @@
         "chai": "^4.2.0",
         "clean-webpack-plugin": "^2.0.1",
         "lerna": "^3.13.1",
-        "typedoc": "^0.14.2",
+        "typedoc": "^0.16.9",
         "webpack-bundle-analyzer": "^3.3.2"
     },
     "postcss": {

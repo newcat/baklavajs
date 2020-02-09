@@ -5,7 +5,7 @@
 	"flags": {},
 	"children": [
 		{
-			"id": 3,
+			"id": 12,
 			"name": "Clipboard",
 			"kind": 128,
 			"kindString": "Class",
@@ -14,7 +14,7 @@
 			},
 			"children": [
 				{
-					"id": 6,
+					"id": 15,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -24,18 +24,22 @@
 					},
 					"signatures": [
 						{
-							"id": 7,
+							"id": 16,
 							"name": "new Clipboard",
 							"kind": 16384,
 							"kindString": "Constructor signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 8,
+									"id": 17,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "reference",
 										"name": "IEditor"
@@ -44,8 +48,8 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "Clipboard",
-								"id": 3
+								"id": 12,
+								"name": "Clipboard"
 							}
 						}
 					],
@@ -58,7 +62,7 @@
 					]
 				},
 				{
-					"id": 4,
+					"id": 13,
 					"name": "isEmpty",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -68,11 +72,13 @@
 					},
 					"getSignature": [
 						{
-							"id": 5,
+							"id": 14,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"type": {
 								"type": "intrinsic",
 								"name": "boolean"
@@ -88,7 +94,7 @@
 					]
 				},
 				{
-					"id": 9,
+					"id": 18,
 					"name": "clear",
 					"kind": 2048,
 					"kindString": "Method",
@@ -98,11 +104,13 @@
 					},
 					"signatures": [
 						{
-							"id": 10,
+							"id": 19,
 							"name": "clear",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"type": {
 								"type": "intrinsic",
 								"name": "void"
@@ -118,7 +126,7 @@
 					]
 				},
 				{
-					"id": 11,
+					"id": 20,
 					"name": "copy",
 					"kind": 2048,
 					"kindString": "Method",
@@ -128,18 +136,22 @@
 					},
 					"signatures": [
 						{
-							"id": 12,
+							"id": 21,
 							"name": "copy",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 13,
+									"id": 22,
 									"name": "selectedNodes",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "array",
 										"elementType": {
@@ -164,7 +176,7 @@
 					]
 				},
 				{
-					"id": 14,
+					"id": 23,
 					"name": "paste",
 					"kind": 2048,
 					"kindString": "Method",
@@ -174,11 +186,13 @@
 					},
 					"signatures": [
 						{
-							"id": 15,
+							"id": 24,
 							"name": "paste",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"type": {
 								"type": "intrinsic",
 								"name": "void"
@@ -199,23 +213,23 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						6
+						15
 					]
 				},
 				{
 					"title": "Accessors",
 					"kind": 262144,
 					"children": [
-						4
+						13
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						9,
-						11,
-						14
+						18,
+						20,
+						23
 					]
 				}
 			],
@@ -228,7 +242,7 @@
 			]
 		},
 		{
-			"id": 70,
+			"id": 79,
 			"name": "ConnectionStep",
 			"kind": 128,
 			"kindString": "Class",
@@ -237,7 +251,7 @@
 			},
 			"children": [
 				{
-					"id": 72,
+					"id": 81,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -247,18 +261,22 @@
 					},
 					"signatures": [
 						{
-							"id": 73,
+							"id": 82,
 							"name": "new ConnectionStep",
 							"kind": 16384,
 							"kindString": "Constructor signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 74,
+									"id": 83,
 									"name": "type",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "union",
 										"types": [
@@ -274,11 +292,13 @@
 									}
 								},
 								{
-									"id": 75,
+									"id": 84,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "union",
 										"types": [
@@ -296,8 +316,8 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "ConnectionStep",
-								"id": 70
+								"id": 79,
+								"name": "ConnectionStep"
 							}
 						}
 					],
@@ -310,7 +330,7 @@
 					]
 				},
 				{
-					"id": 71,
+					"id": 80,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -340,12 +360,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"name": "IStep.type",
-						"id": 63
+						"id": 72,
+						"name": "IStep.type"
 					}
 				},
 				{
-					"id": 79,
+					"id": 88,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -355,18 +375,22 @@
 					},
 					"signatures": [
 						{
-							"id": 80,
+							"id": 89,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 81,
+									"id": 90,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "reference",
 										"name": "IEditor"
@@ -379,8 +403,8 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"name": "IStep.redo",
-								"id": 68
+								"id": 77,
+								"name": "IStep.redo"
 							}
 						}
 					],
@@ -393,12 +417,12 @@
 					],
 					"implementationOf": {
 						"type": "reference",
-						"name": "IStep.redo",
-						"id": 67
+						"id": 76,
+						"name": "IStep.redo"
 					}
 				},
 				{
-					"id": 76,
+					"id": 85,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -408,18 +432,22 @@
 					},
 					"signatures": [
 						{
-							"id": 77,
+							"id": 86,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 78,
+									"id": 87,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "reference",
 										"name": "IEditor"
@@ -432,8 +460,8 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"name": "IStep.undo",
-								"id": 65
+								"id": 74,
+								"name": "IStep.undo"
 							}
 						}
 					],
@@ -446,8 +474,8 @@
 					],
 					"implementationOf": {
 						"type": "reference",
-						"name": "IStep.undo",
-						"id": 64
+						"id": 73,
+						"name": "IStep.undo"
 					}
 				}
 			],
@@ -456,22 +484,22 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						72
+						81
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						71
+						80
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						79,
-						76
+						88,
+						85
 					]
 				}
 			],
@@ -485,13 +513,13 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"name": "IStep",
-					"id": 62
+					"id": 71,
+					"name": "IStep"
 				}
 			]
 		},
 		{
-			"id": 94,
+			"id": 103,
 			"name": "History",
 			"kind": 128,
 			"kindString": "Class",
@@ -500,7 +528,7 @@
 			},
 			"children": [
 				{
-					"id": 96,
+					"id": 105,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -510,29 +538,33 @@
 					},
 					"signatures": [
 						{
-							"id": 97,
+							"id": 106,
 							"name": "new History",
 							"kind": 16384,
 							"kindString": "Constructor signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 98,
+									"id": 107,
 									"name": "viewPlugin",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "reference",
-										"name": "ViewPlugin",
-										"id": 16
+										"id": 25,
+										"name": "ViewPlugin"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"name": "History",
-								"id": 94
+								"id": 103,
+								"name": "History"
 							}
 						}
 					],
@@ -545,7 +577,7 @@
 					]
 				},
 				{
-					"id": 95,
+					"id": 104,
 					"name": "maxSteps",
 					"kind": 1024,
 					"kindString": "Property",
@@ -567,7 +599,7 @@
 					"defaultValue": "200"
 				},
 				{
-					"id": 101,
+					"id": 110,
 					"name": "commitTransaction",
 					"kind": 2048,
 					"kindString": "Method",
@@ -577,11 +609,13 @@
 					},
 					"signatures": [
 						{
-							"id": 102,
+							"id": 111,
 							"name": "commitTransaction",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"type": {
 								"type": "intrinsic",
 								"name": "void"
@@ -597,7 +631,7 @@
 					]
 				},
 				{
-					"id": 105,
+					"id": 114,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -607,11 +641,13 @@
 					},
 					"signatures": [
 						{
-							"id": 106,
+							"id": 115,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"type": {
 								"type": "intrinsic",
 								"name": "void"
@@ -627,7 +663,7 @@
 					]
 				},
 				{
-					"id": 99,
+					"id": 108,
 					"name": "startTransaction",
 					"kind": 2048,
 					"kindString": "Method",
@@ -637,11 +673,13 @@
 					},
 					"signatures": [
 						{
-							"id": 100,
+							"id": 109,
 							"name": "startTransaction",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"type": {
 								"type": "intrinsic",
 								"name": "void"
@@ -657,7 +695,7 @@
 					]
 				},
 				{
-					"id": 103,
+					"id": 112,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -667,11 +705,13 @@
 					},
 					"signatures": [
 						{
-							"id": 104,
+							"id": 113,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"type": {
 								"type": "intrinsic",
 								"name": "void"
@@ -692,24 +732,24 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						96
+						105
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						95
+						104
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						101,
-						105,
-						99,
-						103
+						110,
+						114,
+						108,
+						112
 					]
 				}
 			],
@@ -722,7 +762,7 @@
 			]
 		},
 		{
-			"id": 82,
+			"id": 91,
 			"name": "NodeStep",
 			"kind": 128,
 			"kindString": "Class",
@@ -731,7 +771,7 @@
 			},
 			"children": [
 				{
-					"id": 84,
+					"id": 93,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -741,18 +781,22 @@
 					},
 					"signatures": [
 						{
-							"id": 85,
+							"id": 94,
 							"name": "new NodeStep",
 							"kind": 16384,
 							"kindString": "Constructor signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 86,
+									"id": 95,
 									"name": "type",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "union",
 										"types": [
@@ -768,11 +812,13 @@
 									}
 								},
 								{
-									"id": 87,
+									"id": 96,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "intrinsic",
 										"name": "any"
@@ -781,8 +827,8 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "NodeStep",
-								"id": 82
+								"id": 91,
+								"name": "NodeStep"
 							}
 						}
 					],
@@ -795,7 +841,7 @@
 					]
 				},
 				{
-					"id": 83,
+					"id": 92,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -825,12 +871,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"name": "IStep.type",
-						"id": 63
+						"id": 72,
+						"name": "IStep.type"
 					}
 				},
 				{
-					"id": 91,
+					"id": 100,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -840,18 +886,22 @@
 					},
 					"signatures": [
 						{
-							"id": 92,
+							"id": 101,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 93,
+									"id": 102,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "reference",
 										"name": "IEditor"
@@ -864,8 +914,8 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"name": "IStep.redo",
-								"id": 68
+								"id": 77,
+								"name": "IStep.redo"
 							}
 						}
 					],
@@ -878,12 +928,12 @@
 					],
 					"implementationOf": {
 						"type": "reference",
-						"name": "IStep.redo",
-						"id": 67
+						"id": 76,
+						"name": "IStep.redo"
 					}
 				},
 				{
-					"id": 88,
+					"id": 97,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -893,18 +943,22 @@
 					},
 					"signatures": [
 						{
-							"id": 89,
+							"id": 98,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 90,
+									"id": 99,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "reference",
 										"name": "IEditor"
@@ -917,8 +971,8 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"name": "IStep.undo",
-								"id": 65
+								"id": 74,
+								"name": "IStep.undo"
 							}
 						}
 					],
@@ -931,8 +985,8 @@
 					],
 					"implementationOf": {
 						"type": "reference",
-						"name": "IStep.undo",
-						"id": 64
+						"id": 73,
+						"name": "IStep.undo"
 					}
 				}
 			],
@@ -941,22 +995,22 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						84
+						93
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						83
+						92
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						91,
-						88
+						100,
+						97
 					]
 				}
 			],
@@ -970,13 +1024,13 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"name": "IStep",
-					"id": 62
+					"id": 71,
+					"name": "IStep"
 				}
 			]
 		},
 		{
-			"id": 16,
+			"id": 25,
 			"name": "ViewPlugin",
 			"kind": 128,
 			"kindString": "Class",
@@ -985,7 +1039,7 @@
 			},
 			"children": [
 				{
-					"id": 18,
+					"id": 27,
 					"name": "editor",
 					"kind": 1024,
 					"kindString": "Property",
@@ -1006,7 +1060,7 @@
 					}
 				},
 				{
-					"id": 28,
+					"id": 37,
 					"name": "nodeTypeAliases",
 					"kind": 1024,
 					"kindString": "Property",
@@ -1023,7 +1077,6 @@
 					],
 					"type": {
 						"type": "reference",
-						"name": "Record",
 						"typeArguments": [
 							{
 								"type": "intrinsic",
@@ -1033,11 +1086,12 @@
 								"type": "intrinsic",
 								"name": "string"
 							}
-						]
+						],
+						"name": "Record"
 					}
 				},
 				{
-					"id": 27,
+					"id": 36,
 					"name": "options",
 					"kind": 1024,
 					"kindString": "Property",
@@ -1054,7 +1108,6 @@
 					],
 					"type": {
 						"type": "reference",
-						"name": "Record",
 						"typeArguments": [
 							{
 								"type": "intrinsic",
@@ -1064,11 +1117,12 @@
 								"type": "reference",
 								"name": "VueConstructor"
 							}
-						]
+						],
+						"name": "Record"
 					}
 				},
 				{
-					"id": 22,
+					"id": 31,
 					"name": "scaling",
 					"kind": 1024,
 					"kindString": "Property",
@@ -1090,7 +1144,7 @@
 					"defaultValue": "1"
 				},
 				{
-					"id": 17,
+					"id": 26,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -1112,7 +1166,7 @@
 					"defaultValue": "\"ViewPlugin\""
 				},
 				{
-					"id": 42,
+					"id": 51,
 					"name": "register",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1122,18 +1176,22 @@
 					},
 					"signatures": [
 						{
-							"id": 43,
+							"id": 52,
 							"name": "register",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 44,
+									"id": 53,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "reference",
 										"name": "IEditor"
@@ -1155,7 +1213,7 @@
 					]
 				},
 				{
-					"id": 45,
+					"id": 54,
 					"name": "registerOption",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1165,21 +1223,25 @@
 					},
 					"signatures": [
 						{
-							"id": 46,
+							"id": 55,
 							"name": "registerOption",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"comment": {
 								"shortText": "Register a node option"
 							},
 							"parameters": [
 								{
-									"id": 47,
+									"id": 56,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"comment": {
 										"text": "Name of the node option as used when defining nodes"
 									},
@@ -1189,11 +1251,13 @@
 									}
 								},
 								{
-									"id": 48,
+									"id": 57,
 									"name": "component",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"comment": {
 										"text": "Component that will be rendered for the option\n"
 									},
@@ -1212,13 +1276,13 @@
 					"sources": [
 						{
 							"fileName": "viewPlugin.ts",
-							"line": 88,
+							"line": 89,
 							"character": 25
 						}
 					]
 				},
 				{
-					"id": 49,
+					"id": 58,
 					"name": "setNodeTypeAlias",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1228,21 +1292,25 @@
 					},
 					"signatures": [
 						{
-							"id": 50,
+							"id": 59,
 							"name": "setNodeTypeAlias",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"comment": {
 								"shortText": "Add an alias for a node type that is displayed in the \"Add Node\" context menu instead of\nthe raw node type name"
 							},
 							"parameters": [
 								{
-									"id": 51,
+									"id": 60,
 									"name": "nodeType",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"comment": {
 										"text": "Node type"
 									},
@@ -1252,11 +1320,13 @@
 									}
 								},
 								{
-									"id": 52,
+									"id": 61,
 									"name": "alias",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"comment": {
 										"text": "Alias that will be displayed in the context menu. When this value is `null`, an existing alias is removed\n"
 									},
@@ -1284,13 +1354,13 @@
 					"sources": [
 						{
 							"fileName": "viewPlugin.ts",
-							"line": 98,
+							"line": 99,
 							"character": 27
 						}
 					]
 				},
 				{
-					"id": 34,
+					"id": 43,
 					"name": "components",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -1303,7 +1373,7 @@
 					},
 					"children": [
 						{
-							"id": 38,
+							"id": 47,
 							"name": "connection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1319,18 +1389,18 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "VueConstructor",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "VueConstructor"
 							},
-							"defaultValue": " ConnectionWrapper"
+							"defaultValue": "ConnectionWrapper"
 						},
 						{
-							"id": 40,
+							"id": 49,
 							"name": "contextMenu",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1346,18 +1416,18 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "VueConstructor",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "VueConstructor"
 							},
-							"defaultValue": " ContextMenu"
+							"defaultValue": "ContextMenu"
 						},
 						{
-							"id": 35,
+							"id": 44,
 							"name": "node",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1373,18 +1443,18 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "VueConstructor",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "VueConstructor"
 							},
-							"defaultValue": " NodeView"
+							"defaultValue": "NodeView"
 						},
 						{
-							"id": 37,
+							"id": 46,
 							"name": "nodeInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1400,18 +1470,18 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "VueConstructor",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "VueConstructor"
 							},
-							"defaultValue": " NodeInterfaceView"
+							"defaultValue": "NodeInterfaceView"
 						},
 						{
-							"id": 36,
+							"id": 45,
 							"name": "nodeOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1427,18 +1497,18 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "VueConstructor",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "VueConstructor"
 							},
-							"defaultValue": " NodeOptionView"
+							"defaultValue": "NodeOptionView"
 						},
 						{
-							"id": 41,
+							"id": 50,
 							"name": "sidebar",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1454,18 +1524,18 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "VueConstructor",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "VueConstructor"
 							},
-							"defaultValue": " Sidebar"
+							"defaultValue": "Sidebar"
 						},
 						{
-							"id": 39,
+							"id": 48,
 							"name": "tempConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1481,15 +1551,15 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "VueConstructor",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "VueConstructor"
 							},
-							"defaultValue": " TempConnectionView"
+							"defaultValue": "TempConnectionView"
 						}
 					],
 					"groups": [
@@ -1497,13 +1567,13 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								38,
-								40,
-								35,
-								37,
-								36,
-								41,
-								39
+								47,
+								49,
+								44,
+								46,
+								45,
+								50,
+								48
 							]
 						}
 					],
@@ -1520,7 +1590,7 @@
 					}
 				},
 				{
-					"id": 29,
+					"id": 38,
 					"name": "hooks",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -1530,7 +1600,7 @@
 					},
 					"children": [
 						{
-							"id": 33,
+							"id": 42,
 							"name": "renderConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1549,18 +1619,18 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "SequentialHook",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "SequentialHook"
 							},
-							"defaultValue": " new SequentialHook<ConnectionView>()"
+							"defaultValue": "new SequentialHook<ConnectionView>()"
 						},
 						{
-							"id": 32,
+							"id": 41,
 							"name": "renderInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1579,18 +1649,18 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "SequentialHook",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "SequentialHook"
 							},
-							"defaultValue": " new SequentialHook<NodeInterfaceView>()"
+							"defaultValue": "new SequentialHook<NodeInterfaceView>()"
 						},
 						{
-							"id": 30,
+							"id": 39,
 							"name": "renderNode",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1609,18 +1679,18 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "SequentialHook",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "SequentialHook"
 							},
-							"defaultValue": " new SequentialHook<NodeView>()"
+							"defaultValue": "new SequentialHook<NodeView>()"
 						},
 						{
-							"id": 31,
+							"id": 40,
 							"name": "renderOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1639,15 +1709,15 @@
 							],
 							"type": {
 								"type": "reference",
-								"name": "SequentialHook",
 								"typeArguments": [
 									{
 										"type": "reference",
 										"name": "Vue"
 									}
-								]
+								],
+								"name": "SequentialHook"
 							},
-							"defaultValue": " new SequentialHook<NodeOptionView>()"
+							"defaultValue": "new SequentialHook<NodeOptionView>()"
 						}
 					],
 					"groups": [
@@ -1655,10 +1725,10 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								33,
-								32,
-								30,
-								31
+								42,
+								41,
+								39,
+								40
 							]
 						}
 					],
@@ -1675,7 +1745,7 @@
 					}
 				},
 				{
-					"id": 19,
+					"id": 28,
 					"name": "panning",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -1685,7 +1755,7 @@
 					},
 					"children": [
 						{
-							"id": 20,
+							"id": 29,
 							"name": "x",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1706,7 +1776,7 @@
 							"defaultValue": "0"
 						},
 						{
-							"id": 21,
+							"id": 30,
 							"name": "y",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1732,8 +1802,8 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								20,
-								21
+								29,
+								30
 							]
 						}
 					],
@@ -1750,7 +1820,7 @@
 					}
 				},
 				{
-					"id": 23,
+					"id": 32,
 					"name": "sidebar",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -1760,7 +1830,7 @@
 					},
 					"children": [
 						{
-							"id": 25,
+							"id": 34,
 							"name": "nodeId",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1781,7 +1851,7 @@
 							"defaultValue": "\"\""
 						},
 						{
-							"id": 26,
+							"id": 35,
 							"name": "optionName",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1802,7 +1872,7 @@
 							"defaultValue": "\"\""
 						},
 						{
-							"id": 24,
+							"id": 33,
 							"name": "visible",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1828,9 +1898,9 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								25,
-								26,
-								24
+								34,
+								35,
+								33
 							]
 						}
 					],
@@ -1852,30 +1922,30 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						18,
-						28,
 						27,
-						22,
-						17
+						37,
+						36,
+						31,
+						26
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						42,
-						45,
-						49
+						51,
+						54,
+						58
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						34,
-						29,
-						19,
-						23
+						43,
+						38,
+						28,
+						32
 					]
 				}
 			],
@@ -1898,7 +1968,7 @@
 			]
 		},
 		{
-			"id": 62,
+			"id": 71,
 			"name": "IStep",
 			"kind": 256,
 			"kindString": "Interface",
@@ -1907,7 +1977,7 @@
 			},
 			"children": [
 				{
-					"id": 63,
+					"id": 72,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -1927,7 +1997,7 @@
 					}
 				},
 				{
-					"id": 67,
+					"id": 76,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1936,18 +2006,22 @@
 					},
 					"signatures": [
 						{
-							"id": 68,
+							"id": 77,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 69,
+									"id": 78,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "reference",
 										"name": "IEditor"
@@ -1969,7 +2043,7 @@
 					]
 				},
 				{
-					"id": 64,
+					"id": 73,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1978,18 +2052,22 @@
 					},
 					"signatures": [
 						{
-							"id": 65,
+							"id": 74,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"parameters": [
 								{
-									"id": 66,
+									"id": 75,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
-									"flags": {},
+									"flags": {
+										"isExported": true
+									},
 									"type": {
 										"type": "reference",
 										"name": "IEditor"
@@ -2016,15 +2094,15 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						63
+						72
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						67,
-						64
+						76,
+						73
 					]
 				}
 			],
@@ -2038,18 +2116,18 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"name": "ConnectionStep",
-					"id": 70
+					"id": 79,
+					"name": "ConnectionStep"
 				},
 				{
 					"type": "reference",
-					"name": "NodeStep",
-					"id": 82
+					"id": 91,
+					"name": "NodeStep"
 				}
 			]
 		},
 		{
-			"id": 1,
+			"id": 6,
 			"name": "BaklavaVuePlugin",
 			"kind": 32,
 			"kindString": "Variable",
@@ -2067,17 +2145,90 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 2,
+					"id": 7,
 					"name": "__type",
 					"kind": 65536,
 					"kindString": "Type literal",
-					"flags": {}
+					"flags": {
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 8,
+							"name": "install",
+							"kind": 64,
+							"kindString": "Function",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 9,
+									"name": "install",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExported": true
+									},
+									"parameters": [
+										{
+											"id": 10,
+											"name": "Vue",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExported": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "VueConstructor"
+											}
+										},
+										{
+											"id": 11,
+											"name": "args",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExported": true,
+												"isOptional": true
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "baklavaVuePlugin.ts",
+									"line": 8,
+									"character": 11
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Functions",
+							"kind": 64,
+							"children": [
+								8
+							]
+						}
+					]
 				}
 			},
-			"defaultValue": " Baklava"
+			"defaultValue": "Baklava"
 		},
 		{
-			"id": 110,
+			"id": 119,
 			"name": "getDomElements",
 			"kind": 64,
 			"kindString": "Function",
@@ -2086,18 +2237,22 @@
 			},
 			"signatures": [
 				{
-					"id": 111,
+					"id": 120,
 					"name": "getDomElements",
 					"kind": 4096,
 					"kindString": "Call signature",
-					"flags": {},
+					"flags": {
+						"isExported": true
+					},
 					"parameters": [
 						{
-							"id": 112,
+							"id": 121,
 							"name": "ni",
 							"kind": 32768,
 							"kindString": "Parameter",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"type": {
 								"type": "reference",
 								"name": "INodeInterface"
@@ -2107,11 +2262,85 @@
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 113,
+							"id": 122,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
-							"flags": {}
+							"flags": {
+								"isExported": true
+							},
+							"children": [
+								{
+									"id": 124,
+									"name": "interface",
+									"kind": 32,
+									"kindString": "Variable",
+									"flags": {
+										"isExported": true
+									},
+									"sources": [
+										{
+											"fileName": "utility/domResolver.ts",
+											"line": 10,
+											"character": 17
+										}
+									],
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "null"
+											},
+											{
+												"type": "reference",
+												"name": "HTMLElement"
+											}
+										]
+									},
+									"defaultValue": "interfaceDOM"
+								},
+								{
+									"id": 123,
+									"name": "node",
+									"kind": 32,
+									"kindString": "Variable",
+									"flags": {
+										"isExported": true
+									},
+									"sources": [
+										{
+											"fileName": "utility/domResolver.ts",
+											"line": 9,
+											"character": 12
+										}
+									],
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "null"
+											},
+											{
+												"type": "reference",
+												"name": "HTMLElement"
+											}
+										]
+									},
+									"defaultValue": "nodeDOM"
+								}
+							],
+							"groups": [
+								{
+									"title": "Variables",
+									"kind": 32,
+									"children": [
+										124,
+										123
+									]
+								}
+							]
 						}
 					}
 				}
@@ -2125,7 +2354,7 @@
 			]
 		},
 		{
-			"id": 107,
+			"id": 116,
 			"name": "sanitizeName",
 			"kind": 64,
 			"kindString": "Function",
@@ -2134,18 +2363,22 @@
 			},
 			"signatures": [
 				{
-					"id": 108,
+					"id": 117,
 					"name": "sanitizeName",
 					"kind": 4096,
 					"kindString": "Call signature",
-					"flags": {},
+					"flags": {
+						"isExported": true
+					},
 					"parameters": [
 						{
-							"id": 109,
+							"id": 118,
 							"name": "name",
 							"kind": 32768,
 							"kindString": "Parameter",
-							"flags": {},
+							"flags": {
+								"isExported": true
+							},
 							"type": {
 								"type": "intrinsic",
 								"name": "string"
@@ -2167,7 +2400,99 @@
 			]
 		},
 		{
-			"id": 53,
+			"id": 1,
+			"name": "Baklava",
+			"kind": 2097152,
+			"kindString": "Object literal",
+			"flags": {
+				"isExported": true,
+				"isConst": true
+			},
+			"children": [
+				{
+					"id": 2,
+					"name": "install",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 3,
+							"name": "install",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {
+								"isExported": true
+							},
+							"parameters": [
+								{
+									"id": 4,
+									"name": "Vue",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true
+									},
+									"type": {
+										"type": "reference",
+										"name": "VueConstructor"
+									}
+								},
+								{
+									"id": 5,
+									"name": "args",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "baklavaVuePlugin.ts",
+							"line": 8,
+							"character": 11
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						2
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "baklavaVuePlugin.ts",
+					"line": 7,
+					"character": 13
+				}
+			],
+			"type": {
+				"type": "intrinsic",
+				"name": "object"
+			}
+		},
+		{
+			"id": 62,
 			"name": "Components",
 			"kind": 2097152,
 			"kindString": "Object literal",
@@ -2177,7 +2502,7 @@
 			},
 			"children": [
 				{
-					"id": 54,
+					"id": 63,
 					"name": "Connection",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2193,17 +2518,17 @@
 					],
 					"type": {
 						"type": "reference",
-						"name": "VueConstructor",
 						"typeArguments": [
 							{
 								"type": "reference",
 								"name": "Vue"
 							}
-						]
+						],
+						"name": "VueConstructor"
 					}
 				},
 				{
-					"id": 55,
+					"id": 64,
 					"name": "ConnectionWrapper",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2219,17 +2544,17 @@
 					],
 					"type": {
 						"type": "reference",
-						"name": "VueConstructor",
 						"typeArguments": [
 							{
 								"type": "reference",
 								"name": "Vue"
 							}
-						]
+						],
+						"name": "VueConstructor"
 					}
 				},
 				{
-					"id": 60,
+					"id": 69,
 					"name": "ContextMenu",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2245,17 +2570,17 @@
 					],
 					"type": {
 						"type": "reference",
-						"name": "VueConstructor",
 						"typeArguments": [
 							{
 								"type": "reference",
 								"name": "Vue"
 							}
-						]
+						],
+						"name": "VueConstructor"
 					}
 				},
 				{
-					"id": 57,
+					"id": 66,
 					"name": "Node",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2271,17 +2596,17 @@
 					],
 					"type": {
 						"type": "reference",
-						"name": "VueConstructor",
 						"typeArguments": [
 							{
 								"type": "reference",
 								"name": "Vue"
 							}
-						]
+						],
+						"name": "VueConstructor"
 					}
 				},
 				{
-					"id": 58,
+					"id": 67,
 					"name": "NodeInterface",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2297,17 +2622,17 @@
 					],
 					"type": {
 						"type": "reference",
-						"name": "VueConstructor",
 						"typeArguments": [
 							{
 								"type": "reference",
 								"name": "Vue"
 							}
-						]
+						],
+						"name": "VueConstructor"
 					}
 				},
 				{
-					"id": 59,
+					"id": 68,
 					"name": "NodeOption",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2323,17 +2648,17 @@
 					],
 					"type": {
 						"type": "reference",
-						"name": "VueConstructor",
 						"typeArguments": [
 							{
 								"type": "reference",
 								"name": "Vue"
 							}
-						]
+						],
+						"name": "VueConstructor"
 					}
 				},
 				{
-					"id": 61,
+					"id": 70,
 					"name": "Sidebar",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2349,17 +2674,17 @@
 					],
 					"type": {
 						"type": "reference",
-						"name": "VueConstructor",
 						"typeArguments": [
 							{
 								"type": "reference",
 								"name": "Vue"
 							}
-						]
+						],
+						"name": "VueConstructor"
 					}
 				},
 				{
-					"id": 56,
+					"id": 65,
 					"name": "TemporaryConnection",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2375,13 +2700,13 @@
 					],
 					"type": {
 						"type": "reference",
-						"name": "VueConstructor",
 						"typeArguments": [
 							{
 								"type": "reference",
 								"name": "Vue"
 							}
-						]
+						],
+						"name": "VueConstructor"
 					}
 				}
 			],
@@ -2390,14 +2715,14 @@
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						54,
-						55,
-						60,
-						57,
-						58,
-						59,
-						61,
-						56
+						63,
+						64,
+						69,
+						66,
+						67,
+						68,
+						70,
+						65
 					]
 				}
 			],
@@ -2419,40 +2744,41 @@
 			"title": "Classes",
 			"kind": 128,
 			"children": [
-				3,
-				70,
-				94,
-				82,
-				16
+				12,
+				79,
+				103,
+				91,
+				25
 			]
 		},
 		{
 			"title": "Interfaces",
 			"kind": 256,
 			"children": [
-				62
+				71
 			]
 		},
 		{
 			"title": "Variables",
 			"kind": 32,
 			"children": [
-				1
+				6
 			]
 		},
 		{
 			"title": "Functions",
 			"kind": 64,
 			"children": [
-				110,
-				107
+				119,
+				116
 			]
 		},
 		{
 			"title": "Object literals",
 			"kind": 2097152,
 			"children": [
-				53
+				1,
+				62
 			]
 		}
 	]
