@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import ResizeObserverPolyfill from "@juggle/resize-observer";
+import { ResizeObserver as ResizeObserverPolyfill } from "@juggle/resize-observer";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom from "../../utility/domResolver";
 import { ITransferConnection, TemporaryConnectionState } from "../../../../baklavajs-core/types";
