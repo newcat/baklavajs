@@ -1,4 +1,3 @@
-export * from "./events";
 export * from "./connection";
 export * from "./editor";
 export * from "./idGenerator";

@@ -1,5 +1,4 @@
 import { Node } from "./node";
-import { NodeConstructor } from "../types";
 
 interface IInterfaceOptions {
     isInput: boolean;
@@ -16,7 +15,7 @@ interface INodeOptionParameters {
     additionalProperties?: Record<string, any>;
 }
 
-type CalculationFunction = (this: Node, n: Node) => any;
+type CalculationFunction = (this: Node, n: Node, calculationData?: any) => any;
 type NodeConstructorImpl = new () => Node;
 
 function getDefaultValue(v: any) {
@@ -53,9 +52,9 @@ function generateNode(
             });
         }
 
-        public calculate(): any {
+        public calculate(calculationData?: any): any {
             if (calcFunction) {
-                return calcFunction.call(this, this);
+                return calcFunction.call(this, this, calculationData);
             }
         }
 

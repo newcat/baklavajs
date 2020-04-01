@@ -22,6 +22,7 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "devDependencies": {
+    "@baklavajs/events": "^1.4.5",
     "@juggle/resize-observer": "^2.3.0",
     "clean-webpack-plugin": "^2.0.1",
     "copy-webpack-plugin": "^5.0.2",

@@ -5,7 +5,7 @@
 	"flags": {},
 	"children": [
 		{
-			"id": 21,
+			"id": 24,
 			"name": "Engine",
 			"kind": 128,
 			"kindString": "Class",
@@ -14,7 +14,7 @@
 			},
 			"children": [
 				{
-					"id": 27,
+					"id": 35,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -27,7 +27,7 @@
 					},
 					"signatures": [
 						{
-							"id": 28,
+							"id": 36,
 							"name": "new Engine",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -39,7 +39,7 @@
 							},
 							"parameters": [
 								{
-									"id": 29,
+									"id": 37,
 									"name": "calculateOnChange",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -58,7 +58,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 21,
+								"id": 24,
 								"name": "Engine"
 							}
 						}
@@ -66,13 +66,13 @@
 					"sources": [
 						{
 							"fileName": "engine.ts",
-							"line": 25,
+							"line": 39,
 							"character": 62
 						}
 					]
 				},
 				{
-					"id": 22,
+					"id": 25,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -83,7 +83,7 @@
 					"sources": [
 						{
 							"fileName": "engine.ts",
-							"line": 7,
+							"line": 8,
 							"character": 15
 						}
 					],
@@ -94,7 +94,7 @@
 					"defaultValue": "\"EnginePlugin\""
 				},
 				{
-					"id": 23,
+					"id": 26,
 					"name": "rootNodes",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -104,7 +104,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 24,
+							"id": 27,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -131,7 +131,7 @@
 					],
 					"setSignature": [
 						{
-							"id": 25,
+							"id": 28,
 							"name": "__set",
 							"kind": 1048576,
 							"kindString": "Set signature",
@@ -140,7 +140,7 @@
 							},
 							"parameters": [
 								{
-									"id": 26,
+									"id": 29,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -174,18 +174,18 @@
 					"sources": [
 						{
 							"fileName": "engine.ts",
-							"line": 9,
+							"line": 10,
 							"character": 24
 						},
 						{
 							"fileName": "engine.ts",
-							"line": 13,
+							"line": 14,
 							"character": 24
 						}
 					]
 				},
 				{
-					"id": 33,
+					"id": 41,
 					"name": "calculate",
 					"kind": 2048,
 					"kindString": "Method",
@@ -195,7 +195,7 @@
 					},
 					"signatures": [
 						{
-							"id": 34,
+							"id": 42,
 							"name": "calculate",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -203,14 +203,50 @@
 								"isExported": true
 							},
 							"comment": {
-								"shortText": "Calculate all nodes.\nThis will automatically calculate the node calculation order if necessary and\ntransfer values between connected node interfaces."
+								"shortText": "Calculate all nodes.\nThis will automatically calculate the node calculation order if necessary and\ntransfer values between connected node interfaces.",
+								"returns": "A promise that resolves to either\n- a map that maps rootNodes to their calculated value (what the calculation function of the node returned)\n- null if the calculation was prevented from the beforeCalculate event\n"
 							},
+							"parameters": [
+								{
+									"id": 43,
+									"name": "calculationData",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
 							"type": {
 								"type": "reference",
 								"typeArguments": [
 									{
-										"type": "intrinsic",
-										"name": "void"
+										"type": "union",
+										"types": [
+											{
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "reference",
+														"name": "INode"
+													},
+													{
+														"type": "intrinsic",
+														"name": "any"
+													}
+												],
+												"name": "Map"
+											},
+											{
+												"type": "intrinsic",
+												"name": "null"
+											}
+										]
 									}
 								],
 								"name": "Promise"
@@ -220,13 +256,13 @@
 					"sources": [
 						{
 							"fileName": "engine.ts",
-							"line": 91,
+							"line": 108,
 							"character": 26
 						}
 					]
 				},
 				{
-					"id": 35,
+					"id": 44,
 					"name": "calculateOrder",
 					"kind": 2048,
 					"kindString": "Method",
@@ -236,7 +272,7 @@
 					},
 					"signatures": [
 						{
-							"id": 36,
+							"id": 45,
 							"name": "calculateOrder",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -255,13 +291,13 @@
 					"sources": [
 						{
 							"fileName": "engine.ts",
-							"line": 118,
+							"line": 147,
 							"character": 25
 						}
 					]
 				},
 				{
-					"id": 30,
+					"id": 38,
 					"name": "register",
 					"kind": 2048,
 					"kindString": "Method",
@@ -271,7 +307,7 @@
 					},
 					"signatures": [
 						{
-							"id": 31,
+							"id": 39,
 							"name": "register",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -280,7 +316,7 @@
 							},
 							"parameters": [
 								{
-									"id": 32,
+									"id": 40,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -302,10 +338,169 @@
 					"sources": [
 						{
 							"fileName": "engine.ts",
-							"line": 35,
+							"line": 49,
 							"character": 19
 						}
 					]
+				},
+				{
+					"id": 30,
+					"name": "events",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 31,
+							"name": "beforeCalculate",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": "This event will be called before all the nodes `calculate` functions are called.\nThe argument is the calculationData that the nodes will receive"
+							},
+							"sources": [
+								{
+									"fileName": "engine.ts",
+									"line": 23,
+									"character": 23
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								],
+								"name": "PreventableBaklavaEvent"
+							},
+							"defaultValue": "new PreventableBaklavaEvent<any>()"
+						},
+						{
+							"id": 32,
+							"name": "calculated",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "engine.ts",
+									"line": 24,
+									"character": 18
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "reference",
+												"name": "INode"
+											},
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										],
+										"name": "Map"
+									}
+								],
+								"name": "BaklavaEvent"
+							},
+							"defaultValue": "new BaklavaEvent<Map<INode, any>>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								31,
+								32
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "engine.ts",
+							"line": 19,
+							"character": 17
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				},
+				{
+					"id": 33,
+					"name": "hooks",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isPublic": true,
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 34,
+							"name": "gatherCalculationData",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "engine.ts",
+									"line": 28,
+									"character": 29
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								],
+								"name": "SequentialHook"
+							},
+							"defaultValue": "new SequentialHook<any>()"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								34
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "engine.ts",
+							"line": 27,
+							"character": 16
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
 				}
 			],
 			"groups": [
@@ -313,37 +508,45 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						27
+						35
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						22
+						25
 					]
 				},
 				{
 					"title": "Accessors",
 					"kind": 262144,
 					"children": [
-						23
+						26
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						33,
-						35,
-						30
+						41,
+						44,
+						38
+					]
+				},
+				{
+					"title": "Object literals",
+					"kind": 2097152,
+					"children": [
+						30,
+						33
 					]
 				}
 			],
 			"sources": [
 				{
 					"fileName": "engine.ts",
-					"line": 5,
+					"line": 6,
 					"character": 19
 				}
 			],
@@ -351,6 +554,80 @@
 				{
 					"type": "reference",
 					"name": "IPlugin"
+				}
+			]
+		},
+		{
+			"id": 4,
+			"name": "IOrderCalculationResult",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {
+				"isExported": true
+			},
+			"children": [
+				{
+					"id": 5,
+					"name": "calculationOrder",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "nodeTreeBuilder.ts",
+							"line": 9,
+							"character": 20
+						}
+					],
+					"type": {
+						"type": "array",
+						"elementType": {
+							"type": "reference",
+							"name": "INode"
+						}
+					}
+				},
+				{
+					"id": 6,
+					"name": "rootNodes",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "nodeTreeBuilder.ts",
+							"line": 10,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "array",
+						"elementType": {
+							"type": "reference",
+							"name": "INode"
+						}
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						5,
+						6
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "nodeTreeBuilder.ts",
+					"line": 8,
+					"character": 33
 				}
 			]
 		},
@@ -428,7 +705,7 @@
 			]
 		},
 		{
-			"id": 7,
+			"id": 10,
 			"name": "calculateOrder",
 			"kind": 64,
 			"kindString": "Function",
@@ -437,7 +714,7 @@
 			},
 			"signatures": [
 				{
-					"id": 8,
+					"id": 11,
 					"name": "calculateOrder",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -446,7 +723,7 @@
 					},
 					"parameters": [
 						{
-							"id": 9,
+							"id": 12,
 							"name": "nodes",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -465,7 +742,7 @@
 							}
 						},
 						{
-							"id": 10,
+							"id": 13,
 							"name": "connections",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -484,7 +761,7 @@
 							}
 						},
 						{
-							"id": 11,
+							"id": 14,
 							"name": "roots",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -502,24 +779,22 @@
 						}
 					],
 					"type": {
-						"type": "array",
-						"elementType": {
-							"type": "reference",
-							"name": "INode"
-						}
+						"type": "reference",
+						"id": 4,
+						"name": "IOrderCalculationResult"
 					}
 				}
 			],
 			"sources": [
 				{
 					"fileName": "nodeTreeBuilder.ts",
-					"line": 11,
+					"line": 16,
 					"character": 30
 				}
 			]
 		},
 		{
-			"id": 17,
+			"id": 20,
 			"name": "containsCycle",
 			"kind": 64,
 			"kindString": "Function",
@@ -528,7 +803,7 @@
 			},
 			"signatures": [
 				{
-					"id": 18,
+					"id": 21,
 					"name": "containsCycle",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -537,7 +812,7 @@
 					},
 					"parameters": [
 						{
-							"id": 19,
+							"id": 22,
 							"name": "nodes",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -556,7 +831,7 @@
 							}
 						},
 						{
-							"id": 20,
+							"id": 23,
 							"name": "connections",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -584,13 +859,13 @@
 			"sources": [
 				{
 					"fileName": "nodeTreeBuilder.ts",
-					"line": 74,
+					"line": 80,
 					"character": 29
 				}
 			]
 		},
 		{
-			"id": 12,
+			"id": 15,
 			"name": "findDescendants",
 			"kind": 64,
 			"kindString": "Function",
@@ -599,7 +874,7 @@
 			},
 			"signatures": [
 				{
-					"id": 13,
+					"id": 16,
 					"name": "findDescendants",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -608,7 +883,7 @@
 					},
 					"parameters": [
 						{
-							"id": 14,
+							"id": 17,
 							"name": "tn",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -622,7 +897,7 @@
 							}
 						},
 						{
-							"id": 15,
+							"id": 18,
 							"name": "ancestors",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -638,7 +913,7 @@
 							}
 						},
 						{
-							"id": 16,
+							"id": 19,
 							"name": "adjacency",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -673,13 +948,13 @@
 			"sources": [
 				{
 					"fileName": "nodeTreeBuilder.ts",
-					"line": 57,
+					"line": 63,
 					"character": 24
 				}
 			]
 		},
 		{
-			"id": 4,
+			"id": 7,
 			"name": "isEmpty",
 			"kind": 64,
 			"kindString": "Function",
@@ -689,7 +964,7 @@
 			},
 			"signatures": [
 				{
-					"id": 5,
+					"id": 8,
 					"name": "isEmpty",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -698,7 +973,7 @@
 					},
 					"parameters": [
 						{
-							"id": 6,
+							"id": 9,
 							"name": "obj",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -720,7 +995,7 @@
 			"sources": [
 				{
 					"fileName": "nodeTreeBuilder.ts",
-					"line": 8,
+					"line": 13,
 					"character": 13
 				}
 			]
@@ -731,13 +1006,14 @@
 			"title": "Classes",
 			"kind": 128,
 			"children": [
-				21
+				24
 			]
 		},
 		{
 			"title": "Interfaces",
 			"kind": 256,
 			"children": [
+				4,
 				1
 			]
 		},
@@ -745,10 +1021,10 @@
 			"title": "Functions",
 			"kind": 64,
 			"children": [
-				7,
-				17,
-				12,
-				4
+				10,
+				20,
+				15,
+				7
 			]
 		}
 	]

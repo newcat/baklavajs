@@ -2,7 +2,7 @@ import generateId from "./idGenerator";
 import { NodeInterface } from "./nodeInterface";
 import { INodeState } from "../types/state";
 import { Editor } from "./editor";
-import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "./events";
+import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { NodeOption } from "./nodeOption";
 import { INode, IAddInterfaceEventData, IAddOptionEventData, IOptionEventData, INodeUpdateEventData } from "../types";
 
@@ -107,8 +107,10 @@ export abstract class Node implements INode {
      * The default implementation does nothing.
      * Overwrite this method to do calculation.
      * @return This method can return a promise.
+     * Additionally, when using the engine plugin and this node is a rootNode,
+     * the data is returned from the engines calculate function or the calculated event.
      */
-    public calculate(): any {
+    public calculate(calculationData?: any): any {
         // Empty
     }
 

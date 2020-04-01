@@ -1,4 +1,5 @@
-import { IPlugin, IEditor, IHook, INode } from "../../baklavajs-core/types";
+import { IPlugin, IEditor, INode } from "../../baklavajs-core/types";
+import { IHook } from "../../baklavajs-events/types";
 
 export interface IViewNode extends INode {
     position: { x: number, y: number };

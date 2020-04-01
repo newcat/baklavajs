@@ -1,10 +1,10 @@
-import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "./events";
 import { IAddConnectionEventData, IAddNodeTypeEventData } from "./eventDataTypes";
 import { IConnection } from "./connection";
 import { IPlugin } from "./plugin";
 import { IState } from "./state";
 import { INode } from "./node";
 import { INodeInterface } from "./nodeInterface";
+import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "../../baklavajs-events/types";
 
 export type NodeConstructor = new () => INode;
 

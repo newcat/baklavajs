@@ -9,7 +9,7 @@
     "dist/**/!(report.html)"
   ],
   "main": "dist/index.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/baklavajs-core/src/index.d.ts",
   "scripts": {
     "build": "webpack",
     "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\"",
@@ -23,6 +23,7 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "devDependencies": {
+    "@baklavajs/events": "^1.4.5",
     "@ts-tools/node": "^0.9.3",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",

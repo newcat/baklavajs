@@ -31,3 +31,61 @@ After building the tree, all nodes are calculated from the bottom of the tree to
 By default, root nodes are all nodes that only have input interfaces but no output interfaces.
 This also means, that if you do not have such a node in your editor, nothing will be calculated as the tree will be empty.
 To change this behaviour, you can set the [rootNodes](!!API%{ "module": "@baklavajs/plugin-engine", "type": "class", "name": "engine", "field": "rootNodes" }%) property of the `Engine` plugin to a custom array, which will be used as the root of the tree.
+
+### Providing Data for Calculation and Getting the Results
+In this example, we will pass an object to the sample nodes. The object contains a key `foo` with a string value.
+The sample nodes have an input interface and will concatenate the text from this interface with the value provided by the calculation data.
+They will return the concatenated value and we will print it to the console.
+
+**Sample Nodes**
+```js
+// Sample node with node builder
+new NodeBuilder("SampleNode")
+    .addInputInterface("text", "InputOption", "", { displayName: "Enter your text" })
+    .onCalculate((n, d) => {
+        const t = n.getInterface("text").value;
+        return t + d.foo;
+    })
+    .build();
+
+// Sample node with class
+class SampleNode extends Node {
+
+    type = "SampleNode";
+    name = this.type;
+
+    constructor() {
+        super();
+        this.addInputInterface("text", "InputOption", "", { displayName: "Enter your text" });
+    }
+
+    calculate(data) {
+        const t = this.getInterface("text").value;
+        return t + d.foo;
+    }
+
+}
+```
+
+**WITH Automatic Execution**
+```js
+engine.hooks.gatherCalculationData.tap(this, () => {
+    // return the data you want to pass to all nodes
+    // you can return whatever you want and all nodes will receive this value as a parameter in their calculate function
+    return { foo: "bar" };
+});
+engine.events.calculated.addListener(this, (r) => {
+    // r is a Map<Node, any> with the key being a node instance and the value being what the node's calculate function returned
+    for (const v of r.values()) {
+        console.log(v);
+    }
+});
+```
+
+**WITHOUT Automatic Execution**
+```js
+const r = await engine.calculate({ foo: "bar" });
+for (const v of r.values()) {
+    console.log(v);
+}
+```

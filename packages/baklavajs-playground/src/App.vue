@@ -13,7 +13,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
-import { Editor, Node, BaklavaEvent, NodeInterface } from "../../baklavajs-core/src";
+import { Editor, Node, NodeInterface } from "../../baklavajs-core/src";
 import { ViewPlugin } from "../../baklavajs-plugin-renderer-vue/src";
 import { Engine } from "../../baklavajs-plugin-engine/src";
 import { InterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/src";
@@ -51,6 +51,12 @@ export default class App extends Vue {
         this.editor.use(this.viewPlugin);
 
         this.engine = new Engine(true);
+        this.engine.events.calculated.addListener(this, (r) => {
+            for (const v of r.values()) {
+                console.log(v);
+            }
+        });
+        this.engine.hooks.gatherCalculationData.tap(this, () => "def");
         this.editor.use(this.engine);
 
         this.nodeInterfaceTypes = new InterfaceTypePlugin();
@@ -96,8 +102,8 @@ export default class App extends Vue {
         this.viewPlugin.setNodeTypeAlias("TestNode", "TestNode (with alias)");
     }
 
-    calculate() {
-        // this.editor.calculate();
+    async calculate() {
+        // console.log(await this.engine.calculate("def"));
     }
 
     save() {

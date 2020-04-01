@@ -1,6 +1,6 @@
 import { NodeInterface } from "./nodeInterface";
 import generateId from "./idGenerator";
-import { BaklavaEvent } from "./events";
+import { BaklavaEvent } from "@baklavajs/events";
 import { IConnection, ITransferConnection } from "../types/connection";
 
 export class Connection implements ITransferConnection {

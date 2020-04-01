@@ -1,4 +1,4 @@
-import { IBaklavaEvent, IHook } from "../../types";
+import { IBaklavaEvent, IHook } from "../types";
 
 export type TokenType = object|symbol;
 export type Listener<T> = (ev: T) => any;

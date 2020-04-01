@@ -1,5 +1,5 @@
 import { INode } from "./node";
-import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "./events";
+import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "../../baklavajs-events/types";
 import { IInterfaceState } from "./state";
 
 export interface INodeInterface {

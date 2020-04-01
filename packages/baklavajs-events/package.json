@@ -1,0 +1,30 @@
+{
+  "name": "@baklavajs/events",
+  "version": "1.4.5",
+  "description": "Implementation of the Baklava event system. Mainly intended for internal use in the Baklava ecosystem",
+  "author": "newcat <freddy.wagner@web.de>",
+  "homepage": "https://github.com/newcat/baklavajs#readme",
+  "license": "MIT",
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "docs": "typedoc --json ../../docs/api/events.json --options ../../typedoc.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newcat/baklavajs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/newcat/baklavajs/issues"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
+}

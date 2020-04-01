@@ -1,6 +1,6 @@
 import Vue, { VueConstructor } from "vue";
 import { IPlugin, IEditor } from "../../baklavajs-core/types";
-import { SequentialHook } from "../../baklavajs-core/src/events";
+import { SequentialHook } from "@baklavajs/events";
 import { IViewNode, IViewPlugin } from "../types";
 
 import NodeView from "./components/node/Node.vue";

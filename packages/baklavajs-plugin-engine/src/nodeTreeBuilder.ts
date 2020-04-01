@@ -5,10 +5,16 @@ interface ITreeNode {
     children: ITreeNode[];
 }
 
+interface IOrderCalculationResult {
+    calculationOrder: INode[];
+    rootNodes: INode[];
+}
+
 const isEmpty = (obj: any) =>
     [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
 
-export function calculateOrder(nodes: ReadonlyArray<INode>, connections: ReadonlyArray<IConnection>, roots?: INode[]): INode[] {
+export function calculateOrder(nodes: ReadonlyArray<INode>, connections: ReadonlyArray<IConnection>, roots?: INode[]):
+    IOrderCalculationResult {
 
     const adjacency = new Map<INode, INode[]>();
 
@@ -50,7 +56,7 @@ export function calculateOrder(nodes: ReadonlyArray<INode>, connections: Readonl
             calculationOrder.push(n);
         }
     }
-    return calculationOrder;
+    return { calculationOrder, rootNodes: outputs };
 
 }
 

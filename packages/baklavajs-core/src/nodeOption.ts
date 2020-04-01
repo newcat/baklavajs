@@ -1,5 +1,5 @@
 import { INodeOption } from "../types/nodeOption";
-import { PreventableBaklavaEvent, BaklavaEvent } from "./events";
+import { PreventableBaklavaEvent, BaklavaEvent } from "@baklavajs/events";
 
 export class NodeOption implements INodeOption {
 

@@ -5,7 +5,7 @@ export default new NodeBuilder("MathNode")
     .addInputInterface("Number 2", "NumberOption", 10, { displayName: "Number" })
     .addOption("Operation", "SelectOption", "Add", undefined, { items: [ "Add", "Subtract" ] })
     .addOutputInterface("Output")
-    .onCalculate((n) => {
+    .onCalculate((n, d) => {
         const n1 = n.getInterface("Number 1").value;
         const n2 = n.getInterface("Number 2").value;
         const operation = n.getOptionValue("Operation").selected;

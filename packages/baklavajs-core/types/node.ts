@@ -1,4 +1,4 @@
-import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "./events";
+import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "../../baklavajs-events/types";
 import { IAddInterfaceEventData, IAddOptionEventData, IOptionEventData, INodeUpdateEventData } from "./eventDataTypes";
 import { INodeInterface } from "./nodeInterface";
 import { INodeOption } from "./nodeOption";
@@ -36,7 +36,7 @@ export interface INode {
 
     load(state: INodeState): void;
     save(): INodeState;
-    calculate(): any;
+    calculate(calculationData?: any): any;
     getInterface(name: string): INodeInterface;
     getOptionValue(name: string): any;
     setOptionValue(name: string, value: any): void;

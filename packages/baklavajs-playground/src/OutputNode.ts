@@ -10,10 +10,13 @@ export default class OutputNode extends Node {
         this.addInputInterface("Input", "InputOption");
         this.addInputInterface("BooleanInput", "CheckboxOption");
         this.addOption("output", "TextOption");
+        this.addOption("data", "TextOption");
     }
 
-    public calculate() {
+    public calculate(data: any) {
         this.setOptionValue("output", this.getInterface("Input").value);
+        this.setOptionValue("data", data);
+        return { test: true };
     }
 
 }

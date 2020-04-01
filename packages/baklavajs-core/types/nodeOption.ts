@@ -1,4 +1,4 @@
-import { IBaklavaEvent, IPreventableBaklavaEvent } from "./events";
+import { IBaklavaEvent, IPreventableBaklavaEvent } from "../../baklavajs-events/types";
 
 export interface INodeOption {
 

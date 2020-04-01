@@ -1,6 +1,6 @@
 import generateId from "./idGenerator";
 import { IInterfaceState } from "../types/state";
-import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "./events";
+import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { INodeInterface, INode } from "../types";
 
 export class NodeInterface implements INodeInterface {

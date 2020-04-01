@@ -2,7 +2,7 @@ import { Node } from "./node";
 import { NodeInterface } from "./nodeInterface";
 import { Connection, DummyConnection } from "./connection";
 import { IState } from "../types/state";
-import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "./events";
+import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { IEditor, IPlugin, IConnection, NodeConstructor, INode, IAddConnectionEventData, IAddNodeTypeEventData } from "../types";
 import generateId from "./idGenerator";
 

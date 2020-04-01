@@ -1,3 +1,4 @@
+import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { IEditor, INode, IPlugin, INodeInterface, IConnection } from "../../baklavajs-core/types";
 import { IInterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/types";
 import { calculateOrder, containsCycle } from "./nodeTreeBuilder";
@@ -15,8 +16,21 @@ export class Engine implements IPlugin {
         this.recalculateOrder = true;
     }
 
+    public events = {
+        /** This event will be called before all the nodes `calculate` functions are called.
+         * The argument is the calculationData that the nodes will receive
+         */
+        beforeCalculate: new PreventableBaklavaEvent<any>(),
+        calculated: new BaklavaEvent<Map<INode, any>>()
+    };
+
+    public hooks = {
+        gatherCalculationData: new SequentialHook<any>()
+    };
+
     private editor!: IEditor;
     private nodeCalculationOrder: INode[] = [];
+    private actualRootNodes: INode[] = [];
     private connectionsPerNode = new Map<INode, IConnection[]>();
     private recalculateOrder = false;
     private calculateOnChange = false;
@@ -87,14 +101,27 @@ export class Engine implements IPlugin {
      * Calculate all nodes.
      * This will automatically calculate the node calculation order if necessary and
      * transfer values between connected node interfaces.
+     * @returns A promise that resolves to either
+     * - a map that maps rootNodes to their calculated value (what the calculation function of the node returned)
+     * - null if the calculation was prevented from the beforeCalculate event
      */
-    public async calculate() {
+    public async calculate(calculationData?: any): Promise<Map<INode, any>|null> {
+
+        if (this.events.beforeCalculate.emit(calculationData)) {
+            return null;
+        }
+        calculationData = this.hooks.gatherCalculationData.execute(calculationData);
+
         this.calculationInProgress = true;
         if (this.recalculateOrder) {
             this.calculateOrder();
         }
+        const results: Map<INode, any> = new Map();
         for (const n of this.nodeCalculationOrder) {
-            await n.calculate();
+            const r = await n.calculate(calculationData);
+            if (this.actualRootNodes.includes(n)) {
+                results.set(n, r);
+            }
             if (this.connectionsPerNode.has(n)) {
                 this.connectionsPerNode.get(n)!.forEach((c) => {
                     const conversion = this.interfaceTypePlugins.find(
@@ -108,6 +135,8 @@ export class Engine implements IPlugin {
             }
         }
         this.calculationInProgress = false;
+        this.events.calculated.emit(results);
+        return results;
     }
 
     /**
@@ -135,7 +164,9 @@ export class Engine implements IPlugin {
     }
 
     private calculateNodeTree() {
-        this.nodeCalculationOrder = calculateOrder(this.editor.nodes, this.editor.connections, this.rootNodes);
+        const { calculationOrder, rootNodes } = calculateOrder(this.editor.nodes, this.editor.connections, this.rootNodes);
+        this.nodeCalculationOrder = calculationOrder;
+        this.actualRootNodes = rootNodes;
         this.connectionsPerNode.clear();
         this.editor.nodes.forEach((n) => {
             this.connectionsPerNode.set(n, this.editor.connections.filter((c) => c.from.parent === n));
