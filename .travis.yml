@@ -1,5 +1,5 @@
 language: node_js
-node_js: "10.8"
+node_js: "12.16"
 
 notifications:
   email:
@@ -12,11 +12,13 @@ jobs:
   include:
     - stage: test
       script:
+        - lerna bootsrap
         - lerna run build
         - lerna run test
     - stage: dev build and deploy
       if: branch = dev
       script:
+        - lerna bootsrap
         - lerna run build
       before_deploy:
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
@@ -29,6 +31,7 @@ jobs:
     - stage: build and deploy
       if: tag IS present
       script:
+        - lerna bootsrap
         - lerna run build
       before_deploy:
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
