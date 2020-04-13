@@ -21,8 +21,10 @@
   "bugs": {
     "url": "https://github.com/newcat/baklavajs/issues"
   },
+  "dependencies": {
+    "@baklavajs/events": "^1.5.2"
+  },
   "devDependencies": {
-    "@baklavajs/events": "^1.5.2",
     "clean-webpack-plugin": "^3.0.0",
     "ts-loader": "^6.2.2",
     "typescript": "^3.3.4000",
