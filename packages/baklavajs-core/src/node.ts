@@ -122,7 +122,7 @@ export abstract class Node implements INode {
      * @param additionalProperties Additional properties of the interface that can be used by plugins
      * @returns The created interface or undefined, if the interface was not created
      */
-    protected addInputInterface(name: string, option?: string, defaultValue?: any, additionalProperties?: Record<string, any>) {
+    protected addInputInterface(name: string, option?: string, defaultValue: any = null, additionalProperties?: Record<string, any>) {
         if (this.events.beforeAddInterface.emit({ name, isInput: true, option, defaultValue })) { return; }
         const intf = this.addInterface(true, name, option);
         intf.events.setValue.addListener(this, () => this.events.update.emit({ name, interface: intf }));

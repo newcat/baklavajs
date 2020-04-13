@@ -113,7 +113,8 @@ export class NodeBuilder {
      * @param additionalProperties Additional properties of the interface that can be used by plugins
      * @returns Current node builder instance for chaining
      */
-    public addInputInterface(name: string, option?: string, defaultValue?: any, additionalProperties?: Record<string, any>): NodeBuilder {
+    public addInputInterface(name: string, option?: string, defaultValue: any = null,
+                             additionalProperties?: Record<string, any>): NodeBuilder {
         this.checkDefaultValue(defaultValue);
         this.intfs.push({ isInput: true, name, option, defaultValue, additionalProperties });
         return this;
@@ -142,7 +143,7 @@ export class NodeBuilder {
      * @param additionalProperties Additional properties of the option that can be used by plugins
      * @returns Current node builder instance for chaining
      */
-    public addOption(name: string, optionComponent: string, defaultValue?: any,
+    public addOption(name: string, optionComponent: string, defaultValue: any = null,
                      sidebarComponent?: string, additionalProperties?: Record<string, any>): NodeBuilder {
         this.checkDefaultValue(defaultValue);
         this.options.set(name, {
@@ -168,7 +169,7 @@ export class NodeBuilder {
     }
 
     private checkDefaultValue(v: any) {
-        if (typeof(v) === "object") {
+        if (typeof(v) === "object" && v !== null) {
             throw new Error("If the default value is an object, provide a generator function instead of the object");
         }
     }
