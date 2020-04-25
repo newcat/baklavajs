@@ -6,6 +6,7 @@
         <button @click="calculate">Calculate</button>
         <button @click="save">Save</button>
         <button @click="load">Load</button>
+        <button @focus="focusState = 'focus'" @blur="focusState = 'blur'">{{ focusState }}</button>
     </div>
 </template>
 
@@ -40,6 +41,8 @@ export default class App extends Vue {
     viewPlugin: ViewPlugin;
     engine: Engine;
     nodeInterfaceTypes: InterfaceTypePlugin;
+
+    focusState = "blur";
 
     constructor() {
         super();

@@ -3,7 +3,7 @@
 
         <div
             class="__title"
-            @mousedown.self.prevent.stop="startDrag"
+            @mousedown.self.stop="startDrag"
             @contextmenu.self.prevent="openContextMenu"
         >
 
