@@ -27,43 +27,5 @@ The core functionality is shipped in the `@baklavajs/core` package. Any other fu
 
 There is also the `baklavajs` package, which contains the core package as well as all plugins.
 
-## Getting Started
-For a more extensive documentation, have a look here: https://newcat.github.io/baklavajs
-
-### Without Vue / NPM
-Add these lines in your HTML file:
-```html
-<!-- in your <head> -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/baklavajs/dist/index.css">
-
-<!-- in your <body> -->
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="https://cdn.jsdelivr.net/npm/baklavajs/dist/index.js"></script>
-```
-
-Now you can use the factory function `createBaklava`:
-```html
-<div style="width:90vw;height:90vh">
-    <div id="editor"></div>
-</div>
-
-<script>
-const plugin = BaklavaJS.createBaklava(document.getElementById("editor"));
-const editor = plugin.editor;
-</script>
-```
-
-The function will return a `ViewPlugin` instance which in turn contains a reference to the `Editor` instance.
-
-## With Vue / NPM
-
-First, you need to install the library:
-```bash
-# npm
-npm i baklavajs
-
-# yarn
-yarn add baklavajs
-```
-
-To display the editor in the browser follow the steps described [here](https://newcat.github.io/baklavajs/#/plugins/view)
+## Getting Started & Documentation
+You can find the documentation here: https://newcat.github.io/baklavajs

@@ -79,7 +79,7 @@ viewPlugin.setNodeTypeAlias("TestNode", "TestNode (with alias)");
 ```
 
 ## Electron
-If you want to use this plugin in Electron, you need to add it to the whitelisted externals.
+If you want to use this plugin in Electron, you might need to add it to the whitelisted externals.
 To do that, add the following code to your `package.json`:
 ```json
 {
