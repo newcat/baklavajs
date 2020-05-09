@@ -12,6 +12,39 @@ export interface IInterfaceCreateOptions {
     optionName?: string;
 }
 
+class TestOptionOrInterface<T> {
+    constructor(a: T) { this.value = a; }
+    public value: T;
+}
+
+interface ICreateNodeArguments<
+    I extends Record<string, TestOptionOrInterface<any>>,
+    O extends Record<string, TestOptionOrInterface<any>>> {
+    inputs: I;
+    outputs: O;
+    calculate?: (inputs: I) => { [K in keyof O]: O[K] extends TestOptionOrInterface<infer T> ? T : never };
+}
+
+function createNode<I extends Record<string, TestOptionOrInterface<any>>, O extends Record<string, TestOptionOrInterface<any>>>(
+    args: ICreateNodeArguments<I, O>) {
+    return null;
+}
+
+createNode({
+    inputs: {
+        a: new TestOptionOrInterface(3),
+        b: new TestOptionOrInterface("hello")
+    },
+    outputs: {
+        x: new TestOptionOrInterface("rgb"),
+        y: new TestOptionOrInterface(false)
+    },
+    calculate(v) {
+        const tmp = v.a.value;
+        return {  }
+    }
+})
+
 /**
  * Abstract base class for every node
  */
