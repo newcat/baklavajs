@@ -6,7 +6,7 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { ResizeObserver as ResizeObserverPolyfill } from "@juggle/resize-observer";
 import ConnectionView from "./ConnectionView.vue";
-import resolveDom from "../../utility/domResolver";
+import resolveDom, { IResolvedDomElements } from "./domResolver";
 import { ITransferConnection, TemporaryConnectionState } from "../../../../baklavajs-core/types";
 
 const ResizeObserver = (window as any).ResizeObserver || ResizeObserverPolyfill;
@@ -45,21 +45,26 @@ export default class ConnectionWrapper extends Vue {
     updateCoords() {
         const from = resolveDom(this.connection.from);
         const to = resolveDom(this.connection.to);
-        if (from.node && from.interface && to.node && to.interface) {
-
+        if (from.node && to.node) {
             if (!this.resizeObserver) {
                 this.resizeObserver = new ResizeObserver(() => { this.updateCoords(); });
                 this.resizeObserver.observe(from.node);
                 this.resizeObserver.observe(to.node);
             }
+        }
+        const [x1, y1] = this.getPortCoordinates(from);
+        const [x2, y2] = this.getPortCoordinates(to);
+        this.d = { x1, y1, x2, y2 };
+    }
 
-            const x1 = from.node.offsetLeft + from.node.clientWidth;
-            const y1 = from.node.offsetTop + from.interface.offsetTop + from.interface.clientHeight / 2;
-            const x2 = to.node.offsetLeft;
-            const y2 = to.node.offsetTop + to.interface.offsetTop + to.interface.clientHeight / 2;
-            this.d = { x1, y1, x2, y2 };
+    private getPortCoordinates(resolved: IResolvedDomElements): [number, number] {
+        if (resolved.node && resolved.interface && resolved.port) {
+            return [
+                resolved.node.offsetLeft + resolved.interface.offsetLeft + resolved.port.offsetLeft + resolved.port.clientWidth / 2,
+                resolved.node.offsetTop + resolved.interface.offsetTop + resolved.port.offsetTop + resolved.port.clientHeight / 2
+            ];
         } else {
-            this.d = { x1: 0, y1: 0, x2: 0, y2: 0 };
+            return [0, 0];
         }
     }
 
