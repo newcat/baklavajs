@@ -20,6 +20,9 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
     public scaling = 1;
     public sidebar = { visible: false, nodeId: "", optionName: "" };
 
+    /** Use straight connections instead of bezier curves */
+    public useStraightConnections = false;
+
     public options: Record<string, VueConstructor> = {};
     public nodeTypeAliases: Record<string, string> = {};
 
