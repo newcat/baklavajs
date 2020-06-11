@@ -1,20 +1,20 @@
 export interface IState extends Record<string, any> {
-    nodes: INodeState[];
+    nodes: Array<INodeState<unknown, unknown>>;
     connections: IConnectionState[];
 }
 
-export interface INodeState extends Record<string, any> {
+export interface INodeState<I, O> {
     type: string;
-    name: string;
+    title: string;
     id: string;
-    interfaces: Array<[string, IInterfaceState]>;
-    options: Array<[string, any]>;
+    inputs: { [K in keyof I]: I[K] extends INodeIOState<infer T> ? T : never };
+    outputs: { [K in keyof O]: O[K] extends INodeIOState<infer T> ? T : never };
     state: any;
 }
 
-export interface IInterfaceState extends Record<string, any> {
+export interface INodeIOState<T> extends Record<string, any> {
     id: string;
-    value: any;
+    value: T;
 }
 
 export interface IConnectionState extends Record<string, any> {

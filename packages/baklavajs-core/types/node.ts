@@ -1,45 +1,40 @@
 import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "../../baklavajs-events/types";
-import { IAddInterfaceEventData, IAddOptionEventData, IOptionEventData, INodeUpdateEventData } from "./eventDataTypes";
-import { INodeInterface } from "./nodeInterface";
-import { INodeOption } from "./nodeOption";
 import { INodeState } from "./state";
 import { IEditor } from "./editor";
+import { INodeIO, IODefinition } from "./nodeIO";
 
-export interface INode {
+export interface INodeType<I extends IODefinition, O extends IODefinition> {
+    
+}
+
+export interface INode<I extends IODefinition, O extends IODefinition> {
 
     type: string;
-    name: string;
+    title: string;
     id: string;
-    interfaces: Map<string, INodeInterface>;
-    options: Map<string, INodeOption>;
+    inputs: I;
+    outputs: O;
     state: Record<string, any>;
 
     events: {
-        beforeAddInterface: IPreventableBaklavaEvent<IAddInterfaceEventData>,
-        addInterface: IBaklavaEvent<INodeInterface>,
-        beforeRemoveInterface: IPreventableBaklavaEvent<INodeInterface>,
-        removeInterface: IBaklavaEvent<INodeInterface>,
-        beforeAddOption: IPreventableBaklavaEvent<IAddOptionEventData>,
-        addOption: IBaklavaEvent<IOptionEventData>,
-        beforeRemoveOption: IPreventableBaklavaEvent<IOptionEventData>,
-        removeOption: IBaklavaEvent<IOptionEventData>,
-        update: IBaklavaEvent<INodeUpdateEventData>
+        beforeAddInput: IPreventableBaklavaEvent<INodeIO<unknown>>,
+        addInput: IBaklavaEvent<INodeIO<unknown>>,
+        beforeRemoveInput: IPreventableBaklavaEvent<INodeIO<unknown>>,
+        removeInput: IBaklavaEvent<INodeIO<unknown>>,
+        beforeAddOutput: IPreventableBaklavaEvent<INodeIO<unknown>>,
+        addOutput: IBaklavaEvent<INodeIO<unknown>>,
+        beforeRemoveOutput: IPreventableBaklavaEvent<INodeIO<unknown>>,
+        removeOutput: IBaklavaEvent<INodeIO<unknown>>
     };
 
     hooks: {
-        load: IHook<INodeState>,
-        save: IHook<INodeState>
+        load: IHook<INodeState<I, O>>,
+        save: IHook<INodeState<I, O>>
     };
 
-    inputInterfaces: Record<string, INodeInterface>;
-    outputInterfaces: Record<string, INodeInterface>;
-
-    load(state: INodeState): void;
-    save(): INodeState;
-    calculate(calculationData?: any): any;
-    getInterface(name: string): INodeInterface;
-    getOptionValue(name: string): any;
-    setOptionValue(name: string, value: any): void;
+    load(state: INodeState<I, O>): void;
+    save(): INodeState<I, O>;
+    calculate?: (inputs: I) => { [K in keyof O]: O[K] extends INodeIO<infer T> ? T : never };
     registerEditor(editor: IEditor): void;
 
 }

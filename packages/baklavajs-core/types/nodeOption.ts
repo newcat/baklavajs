@@ -1,17 +1,5 @@
-import { IBaklavaEvent, IPreventableBaklavaEvent } from "../../baklavajs-events/types";
+import { INodeIO } from "./nodeIO";
 
-export interface INodeOption {
-
-    /** Additional Properties */
-    [k: string]: any;
-
-    optionComponent: string;
-    value: any;
-    sidebarComponent?: string;
-
-    events: {
-        beforeSetValue: IPreventableBaklavaEvent<any>,
-        setValue: IBaklavaEvent<any>
-    };
-
+export interface INodeOption<T> extends INodeIO<T> {
+    component: string;
 }

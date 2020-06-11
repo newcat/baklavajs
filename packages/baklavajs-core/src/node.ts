@@ -5,50 +5,26 @@ import { Editor } from "./editor";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { NodeOption } from "./nodeOption";
 import { INode, IAddInterfaceEventData, IAddOptionEventData, IOptionEventData, INodeUpdateEventData } from "../types";
+import { IODefinition } from "../types/nodeIO";
 
-export interface IInterfaceCreateOptions {
-    type?: string;
-    name?: string;
-    optionName?: string;
-}
-
-class TestOptionOrInterface<T> {
-    constructor(a: T) { this.value = a; }
-    public value: T;
-}
-
-interface ICreateNodeArguments<
-    I extends Record<string, TestOptionOrInterface<any>>,
-    O extends Record<string, TestOptionOrInterface<any>>> {
+interface ICreateNodeTypeArguments<I extends IODefinition, O extends IODefinition> {
     inputs: I;
     outputs: O;
-    calculate?: (inputs: I) => { [K in keyof O]: O[K] extends TestOptionOrInterface<infer T> ? T : never };
+    calculate?: INode<I, O>["calculate"];
 }
 
-function createNode<I extends Record<string, TestOptionOrInterface<any>>, O extends Record<string, TestOptionOrInterface<any>>>(
-    args: ICreateNodeArguments<I, O>) {
-    return null;
-}
+function createNodeType<I extends IODefinition, O extends IODefinition>(
+    args: ICreateNodeTypeArguments<I, O>) {
+    const node: INode<I, O> = {
 
-createNode({
-    inputs: {
-        a: new TestOptionOrInterface(3),
-        b: new TestOptionOrInterface("hello")
-    },
-    outputs: {
-        x: new TestOptionOrInterface("rgb"),
-        y: new TestOptionOrInterface(false)
-    },
-    calculate(v) {
-        const tmp = v.a.value;
-        return {  }
     }
-})
+    return 
+}
 
 /**
  * Abstract base class for every node
  */
-export abstract class Node implements INode {
+export abstract class Node<I extends IODefinition, O extends IODefinition> implements INode<I, O> {
 
     /** Type of the node */
     public abstract type: string;

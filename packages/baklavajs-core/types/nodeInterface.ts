@@ -1,32 +1,15 @@
 import { INode } from "./node";
-import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "../../baklavajs-events/types";
-import { IInterfaceState } from "./state";
+import { INodeIO } from "./nodeIO";
 
-export interface INodeInterface {
+export interface INodeInterface<T> extends INodeIO<T> {
 
     /** Additional Properties */
     [k: string]: any;
 
-    id: string;
+    type: "interface";
     isInput: boolean;
-    parent: INode;
-    option?: string;
-
-    events: {
-        setConnectionCount: IBaklavaEvent<number>,
-        beforeSetValue: IPreventableBaklavaEvent<any>,
-        setValue: IBaklavaEvent<any>
-    };
-
-    hooks: {
-        load: IHook<IInterfaceState>,
-        save: IHook<IInterfaceState>
-    };
-
+    parent: INode<any, any>;
+    component?: string;
     connectionCount: number;
-    value: any;
-
-    load(state: IInterfaceState): void;
-    save(): IInterfaceState;
 
 }
