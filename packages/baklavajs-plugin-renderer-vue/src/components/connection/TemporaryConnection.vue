@@ -1,7 +1,7 @@
 <template>
     <connection-view
-        :x1="d.input.x" :y1="d.input.y"
-        :x2="d.output.x" :y2="d.output.y"
+        :x1="d.input[0]" :y1="d.input[1]"
+        :x2="d.output[0]" :y2="d.output[1]"
         :state="status"
         :connection="connection"
         is-temporary
@@ -13,7 +13,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 import ConnectionView from "./ConnectionView.vue";
 import { ITemporaryConnection, TemporaryConnectionState, INodeInterface } from "../../../../baklavajs-core/types";
-import resolveDom from "../../utility/domResolver";
+import resolveDom from "./domResolver";
+import { getPortCoordinates } from "./portCoordinates";
 
 @Component({
     components: {
@@ -32,15 +33,15 @@ export default class TemporaryConnection extends Vue {
     get d() {
         if (!this.connection) {
             return {
-                input: { x: 0, y: 0 },
-                output: { x: 0, y: 0 }
+                input: [0, 0],
+                output: [0, 0]
             };
         }
 
-        const start = this.getCoords(this.connection.from);
+        const start = getPortCoordinates(resolveDom(this.connection.from));
         const end = this.connection.to ?
-                this.getCoords(this.connection.to) :
-                { x: this.connection.mx || start.x, y: this.connection.my || start.y };
+                getPortCoordinates(resolveDom(this.connection.to)) :
+                [this.connection.mx || start[0], this.connection.my || start[1] ];
 
         if (this.connection.from.isInput) {
             return {
@@ -54,17 +55,6 @@ export default class TemporaryConnection extends Vue {
             };
         }
 
-    }
-
-    getCoords(ni: INodeInterface) {
-        const d = resolveDom(ni);
-        if (d.node && d.interface) {
-            const x = ni.isInput ? d.node.offsetLeft : d.node.offsetLeft + d.node.clientWidth;
-            const y = d.node.offsetTop + d.interface.offsetTop + d.interface.clientHeight / 2 + 2;
-            return { x, y };
-        } else {
-            return { x: 0, y: 0 };
-        }
     }
 
 }

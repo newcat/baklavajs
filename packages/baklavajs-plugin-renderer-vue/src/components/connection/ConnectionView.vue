@@ -43,8 +43,12 @@ export default class Connection extends Vue {
     get d() {
         const [tx1, ty1] = this.transform(this.x1, this.y1);
         const [tx2, ty2] = this.transform(this.x2, this.y2);
-        const dx = 0.3 * Math.abs(tx1 - tx2);
-        return `M ${tx1} ${ty1} C ${tx1 + dx} ${ty1}, ${tx2 - dx} ${ty2}, ${tx2} ${ty2}`;
+        if (this.plugin.useStraightConnections) {
+            return `M ${tx1} ${ty1} L ${tx2} ${ty2}`;
+        } else {
+            const dx = 0.3 * Math.abs(tx1 - tx2);
+            return `M ${tx1} ${ty1} C ${tx1 + dx} ${ty1}, ${tx2 - dx} ${ty2}, ${tx2} ${ty2}`;
+        }
     }
 
     get classes() {
