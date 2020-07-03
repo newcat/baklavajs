@@ -1,7 +1,7 @@
 import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "../../baklavajs-events/types";
 import { INodeState } from "./state";
 import { IEditor } from "./editor";
-import { INodeIO, IODefinition } from "./nodeIO";
+import { INodeIO, IODefinition, IODefinitionValues } from "./nodeIO";
 
 export interface INodeType<I extends IODefinition, O extends IODefinition> {
     
@@ -14,7 +14,6 @@ export interface INode<I extends IODefinition, O extends IODefinition> {
     id: string;
     inputs: I;
     outputs: O;
-    state: Record<string, any>;
 
     events: {
         beforeAddInput: IPreventableBaklavaEvent<INodeIO<unknown>>,
@@ -34,7 +33,7 @@ export interface INode<I extends IODefinition, O extends IODefinition> {
 
     load(state: INodeState<I, O>): void;
     save(): INodeState<I, O>;
-    calculate?: (inputs: I) => { [K in keyof O]: O[K] extends INodeIO<infer T> ? T : never };
+    calculate?: (inputs: IODefinitionValues<I>, globalValues?: any) => IODefinitionValues<O>|Promise<IODefinitionValues<O>>|void;
     registerEditor(editor: IEditor): void;
 
 }

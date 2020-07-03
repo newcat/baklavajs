@@ -5,21 +5,7 @@ import { Editor } from "./editor";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { NodeOption } from "./nodeOption";
 import { INode, IAddInterfaceEventData, IAddOptionEventData, IOptionEventData, INodeUpdateEventData } from "../types";
-import { IODefinition } from "../types/nodeIO";
-
-interface ICreateNodeTypeArguments<I extends IODefinition, O extends IODefinition> {
-    inputs: I;
-    outputs: O;
-    calculate?: INode<I, O>["calculate"];
-}
-
-function createNodeType<I extends IODefinition, O extends IODefinition>(
-    args: ICreateNodeTypeArguments<I, O>) {
-    const node: INode<I, O> = {
-
-    }
-    return 
-}
+import { IODefinition, IODefinitionValues, INodeIO } from "../types/nodeIO";
 
 /**
  * Abstract base class for every node
@@ -29,38 +15,27 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> imple
     /** Type of the node */
     public abstract type: string;
     /** Customizable display name of the node. */
-    public abstract name: string;
+    public abstract title: string;
     /** Unique identifier of the node */
     public id: string = "node_" + generateId();
-    /** A map of all interfaces of the node.
-     * | Key = Name of the interface
-     * | Value = NodeInterface instance
-     */
-    public interfaces: Map<string, NodeInterface> = new Map();
-    /** A map of all options of the node.
-     * | Key = Name of the option
-     * | Value = NodeOption instance
-     */
-    public options: Map<string, NodeOption> = new Map();
 
-    /** Use this property to save additional state of the node */
-    public state: Record<string, any> = {};
+    public abstract inputs: I;
+    public abstract outputs: O;
 
     public events = {
-        beforeAddInterface: new PreventableBaklavaEvent<IAddInterfaceEventData>(),
-        addInterface: new BaklavaEvent<NodeInterface>(),
-        beforeRemoveInterface: new PreventableBaklavaEvent<NodeInterface>(),
-        removeInterface: new BaklavaEvent<NodeInterface>(),
-        beforeAddOption: new PreventableBaklavaEvent<IAddOptionEventData>(),
-        addOption: new BaklavaEvent<IOptionEventData>(),
-        beforeRemoveOption: new PreventableBaklavaEvent<IOptionEventData>(),
-        removeOption: new BaklavaEvent<IOptionEventData>(),
-        update: new BaklavaEvent<INodeUpdateEventData>()
+        beforeAddInput: new PreventableBaklavaEvent<INodeIO<unknown>>(),
+        addInput: new BaklavaEvent<INodeIO<unknown>>(),
+        beforeRemoveInput: new PreventableBaklavaEvent<INodeIO<unknown>>(),
+        removeInput: new BaklavaEvent<INodeIO<unknown>>(),
+        beforeAddOutput: new PreventableBaklavaEvent<INodeIO<unknown>>(),
+        addOutput: new BaklavaEvent<INodeIO<unknown>>(),
+        beforeRemoveOutput: new PreventableBaklavaEvent<INodeIO<unknown>>(),
+        removeOutput: new BaklavaEvent<INodeIO<unknown>>(),
     };
 
     public hooks = {
-        load: new SequentialHook<INodeState>(),
-        save: new SequentialHook<INodeState>()
+        load: new SequentialHook<INodeState<I, O>>(),
+        save: new SequentialHook<INodeState<I, O>>()
     };
 
     private editorInstance?: Editor;
@@ -119,7 +94,7 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> imple
      * Additionally, when using the engine plugin and this node is a rootNode,
      * the data is returned from the engines calculate function or the calculated event.
      */
-    public calculate(calculationData?: any): any {
+    public calculate(inputs: IODefinitionValues<I>, globalValues?: any): IODefinitionValues<O>|Promise<IODefinitionValues<O>>|void {
         // Empty
     }
 
@@ -269,4 +244,21 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> imple
         return intf;
     }
 
+}
+
+interface ICreateNodeTypeArguments<I extends IODefinition, O extends IODefinition> {
+    inputs: I;
+    outputs: O;
+    calculate?: INode<I, O>["calculate"];
+}
+
+function createNodeType<I extends IODefinition, O extends IODefinition>(
+    args: ICreateNodeTypeArguments<I, O>) {
+
+    return class extends Node
+
+    const node: INode<I, O> = {
+
+    }
+    return 
 }

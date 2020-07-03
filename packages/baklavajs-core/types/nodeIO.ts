@@ -24,3 +24,4 @@ export interface INodeIO<T> {
 }
 
 export type IODefinition = Record<string, INodeIO<any>>;
+export type IODefinitionValues<D extends IODefinition> = { [K in keyof D]: D[K] extends INodeIO<infer T> ? T : never };
