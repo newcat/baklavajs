@@ -43,7 +43,7 @@
 
             <!-- Options -->
             <div class="__options">
-                <template v-for="[name, option] in options">
+                <template v-for="[name, option] in data.options">
 
                     <component
                         :is="plugin.components.nodeOption"
