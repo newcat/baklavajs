@@ -148,10 +148,6 @@ export default class NodeView extends Vue {
         };
     }
 
-    get options() {
-        return Array.from(this.data.options.entries());
-    }
-
     mounted() {
         this.data.events.addInterface.addListener(this, () => this.update());
         this.data.events.removeInterface.addListener(this, () => this.update());
