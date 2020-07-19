@@ -56,6 +56,7 @@ export default class App extends Vue {
         this.engine = new Engine(true);
         this.engine.events.calculated.addListener(this, (r) => {
             for (const v of r.values()) {
+                // tslint:disable-next-line:no-console
                 console.log(v);
             }
         });
