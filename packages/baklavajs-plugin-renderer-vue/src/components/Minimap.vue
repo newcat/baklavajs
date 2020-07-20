@@ -3,7 +3,10 @@
         ref="cv"
         class="minimap"
         @mouseenter="showViewBounds = true"
-        @mouseleave="showViewBounds = false"
+        @mouseleave="() => { this.showViewBounds = false; this.mouseup() }"
+        @mousedown.self="mousedown"
+        @mousemove.self="mousemove"
+        @mouseup="mouseup"
     ></canvas>
 </template>
 
@@ -28,6 +31,8 @@ export default class Minimap extends Vue {
     ctx?: CanvasRenderingContext2D;
     intervalHandle = 0;
     showViewBounds = false;
+    dragging = false;
+    bounds: IRect = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
     @Prop()
     nodes!: IViewNode[];
@@ -42,7 +47,7 @@ export default class Minimap extends Vue {
         const canvas = (this.$refs.cv as HTMLCanvasElement);
         this.ctx = canvas.getContext("2d") ?? undefined;
         if (this.ctx) { this.ctx.imageSmoothingQuality = "high"; }
-        this.intervalHandle = setInterval(() => this.updateCanvas(), 1000) as unknown as number;
+        this.intervalHandle = setInterval(() => this.updateCanvas(), 250) as unknown as number;
     }
 
     beforeDestroy() {
@@ -50,6 +55,9 @@ export default class Minimap extends Vue {
     }
 
     @Watch("showViewBounds")
+    @Watch("plugin.panning.x")
+    @Watch("plugin.panning.y")
+    @Watch("plugin.scaling")
     updateCanvas() {
         if (!this.ctx) { return; }
 
@@ -89,6 +97,7 @@ export default class Minimap extends Vue {
         bounds.y1 -= padding;
         bounds.x2 += padding;
         bounds.y2 += padding;
+        this.bounds = bounds;
 
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
@@ -98,8 +107,8 @@ export default class Minimap extends Vue {
             const toDom = getDomElements(c.to);
             const [origX1, origY1] = getPortCoordinates(getDomElements(c.from));
             const [origX2, origY2] = getPortCoordinates(getDomElements(c.to));
-            const [x1, y1] = this.transformCoordinates(origX1, origY1, bounds);
-            const [x2, y2] = this.transformCoordinates(origX2, origY2, bounds);
+            const [x1, y1] = this.transformCoordinates(origX1, origY1);
+            const [x2, y2] = this.transformCoordinates(origX2, origY2);
             this.ctx.beginPath();
             this.ctx.moveTo(x1, y1);
             if (this.plugin.useStraightConnections) {
@@ -114,8 +123,8 @@ export default class Minimap extends Vue {
         // draw nodes
         this.ctx.strokeStyle = "lightgray";
         for (const [n, nc] of nodeCoords.entries()) {
-            const [x1, y1] = this.transformCoordinates(nc.x1, nc.y1, bounds);
-            const [x2, y2] = this.transformCoordinates(nc.x2, nc.y2, bounds);
+            const [x1, y1] = this.transformCoordinates(nc.x1, nc.y1);
+            const [x2, y2] = this.transformCoordinates(nc.x2, nc.y2);
             this.ctx.fillStyle = this.getNodeColor(nodeDomElements.get(n));
             this.ctx.beginPath();
             this.ctx.rect(x1, y1, x2 - x1, y2 - y1);
@@ -124,23 +133,28 @@ export default class Minimap extends Vue {
         }
 
         if (this.showViewBounds) {
-            // TODO: This isn't working yet
-            const parentWidth = (this.$parent.$el as HTMLElement).offsetWidth / this.plugin.scaling;
-            const parentHeight = (this.$parent.$el as HTMLElement).offsetHeight / this.plugin.scaling;
-            const px = -this.plugin.panning.x / this.plugin.scaling;
-            const py = -this.plugin.panning.y / this.plugin.scaling;
-            const [x1, y1] = this.transformCoordinates(px, py, bounds);
-            const [x2, y2] = this.transformCoordinates(px + parentWidth, py + parentHeight, bounds);
+            const viewBounds = this.getViewBounds();
+            const [x1, y1] = this.transformCoordinates(viewBounds.x1, viewBounds.y1);
+            const [x2, y2] = this.transformCoordinates(viewBounds.x2, viewBounds.y2);
             this.ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
-            this.ctx.fillRect(x1, y1, x2, y2);
+            this.ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
         }
 
     }
 
-    transformCoordinates(origX: number, origY: number, bounds: IRect): [number, number] {
+    /** Transforms coordinates from editor space to minimap space */
+    transformCoordinates(origX: number, origY: number): [number, number] {
         return [
-            ((origX - bounds.x1) / (bounds.x2 - bounds.x1)) * this.ctx!.canvas.clientWidth,
-            ((origY - bounds.y1) / (bounds.y2 - bounds.y1)) * this.ctx!.canvas.clientHeight
+            ((origX - this.bounds.x1) / (this.bounds.x2 - this.bounds.x1)) * this.ctx!.canvas.clientWidth,
+            ((origY - this.bounds.y1) / (this.bounds.y2 - this.bounds.y1)) * this.ctx!.canvas.clientHeight
+        ];
+    }
+
+    /** Transforms coordinates from minimap space to editor space */
+    reverseTransform(thisX: number, thisY: number): [number, number] {
+        return [
+            (thisX * (this.bounds.x2 - this.bounds.x1)) / this.ctx!.canvas.clientWidth + this.bounds.x1,
+            (thisY * (this.bounds.y2 - this.bounds.y1)) / this.ctx!.canvas.clientHeight + this.bounds.y1,
         ];
     }
 
@@ -162,6 +176,38 @@ export default class Minimap extends Vue {
         if (c && c !== "rgba(0, 0, 0, 0)") {
             return c;
         }
+    }
+
+    /** Returns view bounds in editor space */
+    getViewBounds(): IRect {
+        const parentWidth = (this.$parent.$el as HTMLElement).offsetWidth;
+        const parentHeight = (this.$parent.$el as HTMLElement).offsetHeight;
+        const x2 = (parentWidth / this.plugin.scaling) - this.plugin.panning.x;
+        const y2 = (parentHeight / this.plugin.scaling) - this.plugin.panning.y;
+        return { x1: -this.plugin.panning.x, y1: -this.plugin.panning.y, x2, y2 };
+    }
+
+    mousedown(ev: MouseEvent) {
+        if (ev.button === 0) {
+            this.dragging = true;
+            this.mousemove(ev);
+        }
+    }
+
+    mousemove(ev: MouseEvent) {
+        if (this.dragging) {
+            // still slightly off when zoomed
+            const [cx, cy] = this.reverseTransform(ev.offsetX, ev.offsetY);
+            const viewBounds = this.getViewBounds();
+            const dx = (viewBounds.x1 - viewBounds.x2) / 2;
+            const dy = (viewBounds.y1 - viewBounds.y2) / 2;
+            this.plugin.panning.x = -(cx + dx);
+            this.plugin.panning.y = -(cy + dy);
+        }
+    }
+
+    mouseup(ev: MouseEvent) {
+        this.dragging = false;
     }
 
 }
