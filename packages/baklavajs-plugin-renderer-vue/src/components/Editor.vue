@@ -49,7 +49,7 @@
         <component :is="plugin.components.sidebar"></component>
 
         <component
-            v-if="plugin.showMinimap"
+            v-if="plugin.enableMinimap"
             :is="plugin.components.minimap"
             :nodes="nodes"
             :connections="connections"

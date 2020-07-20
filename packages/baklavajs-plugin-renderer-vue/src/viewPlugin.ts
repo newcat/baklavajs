@@ -25,7 +25,7 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
     public useStraightConnections = false;
 
     /** Show a minimap */
-    public showMinimap = false;
+    public enableMinimap = false;
 
     public options: Record<string, VueConstructor> = {};
     public nodeTypeAliases: Record<string, string> = {};

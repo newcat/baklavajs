@@ -112,11 +112,11 @@ export default class Minimap extends Vue {
         }
 
         // draw nodes
-        this.ctx.fillStyle = "gray";
         this.ctx.strokeStyle = "lightgray";
         for (const [n, nc] of nodeCoords.entries()) {
             const [x1, y1] = this.transformCoordinates(nc.x1, nc.y1, bounds);
             const [x2, y2] = this.transformCoordinates(nc.x2, nc.y2, bounds);
+            this.ctx.fillStyle = this.getNodeColor(nodeDomElements.get(n));
             this.ctx.beginPath();
             this.ctx.rect(x1, y1, x2 - x1, y2 - y1);
             this.ctx.fill();
@@ -142,6 +142,26 @@ export default class Minimap extends Vue {
             ((origX - bounds.x1) / (bounds.x2 - bounds.x1)) * this.ctx!.canvas.clientWidth,
             ((origY - bounds.y1) / (bounds.y2 - bounds.y1)) * this.ctx!.canvas.clientHeight
         ];
+    }
+
+    getNodeColor(domElement?: HTMLElement|null) {
+        if (domElement) {
+            const content = domElement.querySelector(".__content");
+            if (content) {
+                const contentColor = this.getComputedColor(content);
+                if (contentColor) { return contentColor; }
+            }
+            const nodeColor = this.getComputedColor(domElement);
+            if (nodeColor) { return nodeColor; }
+        }
+        return "gray";
+    }
+
+    getComputedColor(domElement: Element): string|undefined {
+        const c = getComputedStyle(domElement).backgroundColor;
+        if (c && c !== "rgba(0, 0, 0, 0)") {
+            return c;
+        }
     }
 
 }
