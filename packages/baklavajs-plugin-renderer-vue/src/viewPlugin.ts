@@ -11,6 +11,7 @@ import ConnectionWrapper from "./components/connection/ConnectionWrapper.vue";
 import TempConnectionView from "./components/connection/TemporaryConnection.vue";
 import ContextMenu from "./components/ContextMenu.vue";
 import Sidebar from "./components/Sidebar.vue";
+import Minimap from "./components/Minimap.vue";
 
 export class ViewPlugin implements IPlugin, IViewPlugin {
 
@@ -22,6 +23,9 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
 
     /** Use straight connections instead of bezier curves */
     public useStraightConnections = false;
+
+    /** Show a minimap */
+    public enableMinimap = false;
 
     public options: Record<string, VueConstructor> = {};
     public nodeTypeAliases: Record<string, string> = {};
@@ -47,7 +51,8 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
         connection: ConnectionWrapper,
         tempConnection: TempConnectionView,
         contextMenu: ContextMenu,
-        sidebar: Sidebar
+        sidebar: Sidebar,
+        minimap: Minimap
     };
 
     public register(editor: IEditor): void {

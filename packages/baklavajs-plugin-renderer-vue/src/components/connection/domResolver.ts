@@ -1,9 +1,13 @@
-import { INodeInterface } from "../../../../baklavajs-core/types";
+import { INode, INodeInterface } from "../../../../baklavajs-core/types";
 
 export interface IResolvedDomElements {
     node: HTMLElement|null;
     interface: HTMLElement|null;
     port: HTMLElement|null;
+}
+
+export function getDomElementOfNode(node: INode): HTMLElement|null {
+    return document.getElementById(node.id);
 }
 
 export default function getDomElements(ni: INodeInterface): IResolvedDomElements {

@@ -48,6 +48,13 @@
 
         <component :is="plugin.components.sidebar"></component>
 
+        <component
+            v-if="plugin.enableMinimap"
+            :is="plugin.components.minimap"
+            :nodes="nodes"
+            :connections="connections"
+        ></component>
+
     </div>
 </template>
 
