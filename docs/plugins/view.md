@@ -78,6 +78,12 @@ You can customize the names displayed in the "Add Node" context menu.
 viewPlugin.setNodeTypeAlias("TestNode", "TestNode (with alias)");
 ```
 
+## Minimap
+You can optionally enable the minimap:
+```js
+viewPlugin.enableMinimap = true;
+```
+
 ## Electron
 If you want to use this plugin in Electron, you might need to add it to the whitelisted externals.
 To do that, add the following code to your `package.json`:
