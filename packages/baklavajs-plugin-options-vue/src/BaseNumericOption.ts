@@ -1,9 +1,8 @@
 import { Prop, Vue, Watch, Component } from "vue-property-decorator";
-import { INodeOption } from "../../baklavajs-core/types";
+import { INodeInterface, INodeOption } from "../../baklavajs-core/types";
 
 @Component
 export class BaseNumericOption extends Vue {
-
     MAX_STRING_LENGTH = 9;
 
     @Prop()
@@ -13,16 +12,16 @@ export class BaseNumericOption extends Vue {
     name!: string;
 
     @Prop({ type: Object })
-    option!: INodeOption;
+    option!: INodeOption | INodeInterface;
 
     editMode = false;
     invalid = false;
     tempValue = "0";
 
     get v() {
-        if (typeof(this.value) === "string") {
+        if (typeof this.value === "string") {
             return parseFloat(this.value);
-        } else if (typeof(this.value) === "number") {
+        } else if (typeof this.value === "number") {
             return this.value;
         } else {
             return 0;
@@ -31,9 +30,7 @@ export class BaseNumericOption extends Vue {
 
     get stringRepresentation() {
         const s = this.v.toFixed(3);
-        return s.length > this.MAX_STRING_LENGTH ?
-            this.v.toExponential(this.MAX_STRING_LENGTH - 5) :
-            s;
+        return s.length > this.MAX_STRING_LENGTH ? this.v.toExponential(this.MAX_STRING_LENGTH - 5) : s;
     }
 
     setValue(newValue: number) {
@@ -67,13 +64,12 @@ export class BaseNumericOption extends Vue {
     validate(v: number) {
         if (Number.isNaN(v)) {
             return false;
-        } else if (typeof(this.option.min) === "number" && v < this.option.min) {
+        } else if (typeof this.option.min === "number" && v < this.option.min) {
             return false;
-        } else if (typeof(this.option.max) === "number" && v > this.option.max) {
+        } else if (typeof this.option.max === "number" && v > this.option.max) {
             return false;
         } else {
             return true;
         }
     }
-
 }

@@ -2,7 +2,6 @@ import { INodeOption } from "../types/nodeOption";
 import { PreventableBaklavaEvent, BaklavaEvent } from "@baklavajs/events";
 
 export class NodeOption implements INodeOption {
-
     /** Name of the component that should be displayed for the option */
     public optionComponent: string;
     /** Name of the component that should be displayed in the sidebar */
@@ -10,7 +9,8 @@ export class NodeOption implements INodeOption {
 
     public events = {
         beforeSetValue: new PreventableBaklavaEvent<any>(),
-        setValue: new BaklavaEvent<any>()
+        setValue: new BaklavaEvent<any>(),
+        updated: new BaklavaEvent<void>()
     };
 
     /** Additional Properties */
@@ -29,9 +29,10 @@ export class NodeOption implements INodeOption {
     }
 
     public set value(v: any) {
-        if (this.events.beforeSetValue.emit(v)) { return; }
+        if (this.events.beforeSetValue.emit(v)) {
+            return;
+        }
         this._value = v;
         this.events.setValue.emit(v);
     }
-
 }

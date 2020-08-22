@@ -27,7 +27,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import Arrow from "./Arrow.vue";
-import { INodeOption } from "../../baklavajs-core/types";
+import { INodeOption, INodeInterface } from "../../baklavajs-core/types";
 
 // @ts-ignore
 import ClickOutside from "v-click-outside";
@@ -49,6 +49,7 @@ type ItemType = string|IAdvancedItem;
 export default class SelectOption extends Vue {
 
     open = false;
+    items = [];
 
     @Prop({ type: String })
     name!: string;
@@ -57,7 +58,7 @@ export default class SelectOption extends Vue {
     value!: any;
 
     @Prop({ type: Object })
-    option!: INodeOption;
+    option!: INodeOption|INodeInterface;
 
     get isAdvancedMode() {
         return !this.items.every((i) => typeof(i) === "string");
@@ -73,8 +74,16 @@ export default class SelectOption extends Vue {
         }
     }
 
-    get items(): ItemType[] {
-        return this.option.items || [];
+    mounted() {
+        // computed property won't work here due to missing reactivity
+        this.items = this.option.items || [];
+        this.option.events.updated.addListener(this, () => {
+            this.items = this.option.items || [];
+        });
+    }
+
+    beforeDestroy() {
+        this.option.events.updated.removeListener(this);
     }
 
     isSelected(item: ItemType) {

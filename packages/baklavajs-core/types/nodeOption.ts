@@ -1,7 +1,6 @@
 import { IBaklavaEvent, IPreventableBaklavaEvent } from "../../baklavajs-events/types";
 
 export interface INodeOption {
-
     /** Additional Properties */
     [k: string]: any;
 
@@ -10,8 +9,8 @@ export interface INodeOption {
     sidebarComponent?: string;
 
     events: {
-        beforeSetValue: IPreventableBaklavaEvent<any>,
-        setValue: IBaklavaEvent<any>
+        beforeSetValue: IPreventableBaklavaEvent<any>;
+        setValue: IBaklavaEvent<any>;
+        updated: IBaklavaEvent<void>;
     };
-
 }

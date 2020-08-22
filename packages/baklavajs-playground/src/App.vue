@@ -1,12 +1,11 @@
 <template>
     <div id="app">
-        <baklava-editor
-            :plugin="viewPlugin"
-        ></baklava-editor>
+        <baklava-editor :plugin="viewPlugin"></baklava-editor>
         <button @click="calculate">Calculate</button>
         <button @click="save">Save</button>
         <button @click="load">Load</button>
         <button @focus="focusState = 'focus'" @blur="focusState = 'blur'">{{ focusState }}</button>
+        <button @click="setSelectItems">Set Select Items</button>
     </div>
 </template>
 
@@ -37,13 +36,13 @@ import SidebarOption from "./SidebarOption.vue";
 
 @Component
 export default class App extends Vue {
-
     editor: Editor;
     viewPlugin: ViewPlugin;
     engine: Engine;
     nodeInterfaceTypes: InterfaceTypePlugin;
 
     focusState = "blur";
+    counter = 1;
 
     constructor() {
         super();
@@ -80,11 +79,9 @@ export default class App extends Vue {
         this.viewPlugin.registerOption("AddOption", AddOption);
         this.viewPlugin.registerOption("TriggerOption", TriggerOption);
         this.viewPlugin.registerOption("SidebarOption", SidebarOption);
-
     }
 
     mounted() {
-
         this.editor.registerNodeType("TestNode", TestNode, "Tests");
         this.editor.registerNodeType("OutputNode", OutputNode, "Outputs");
         this.editor.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");
@@ -104,8 +101,8 @@ export default class App extends Vue {
             .addType("number", "red")
             .addType("boolean", "purple")
             .addConversion("string", "number", (v) => parseInt(v, 10))
-            .addConversion("number", "string", (v) => v !== null && v !== undefined && v.toString() || "0")
-            .addConversion("boolean", "string", (v) => typeof(v) === "boolean" ? v.toString() : "null");
+            .addConversion("number", "string", (v) => (v !== null && v !== undefined && v.toString()) || "0")
+            .addConversion("boolean", "string", (v) => (typeof v === "boolean" ? v.toString() : "null"));
         this.viewPlugin.setNodeTypeAlias("TestNode", "TestNode (with alias)");
     }
 
@@ -120,9 +117,23 @@ export default class App extends Vue {
 
     load() {
         const s = prompt();
-        if (s) { this.editor.load(JSON.parse(s)); }
+        if (s) {
+            this.editor.load(JSON.parse(s));
+        }
     }
 
+    setSelectItems() {
+        for (const node of this.editor.nodes) {
+            if (node.type === "SelectTestNode") {
+                const sel = node.options.get("Advanced");
+                sel!.items = [
+                    { text: "X", value: 1 },
+                    { text: node.id, value: 2 }
+                ];
+                sel!.events.updated.emit();
+            }
+        }
+    }
 }
 </script>
 
@@ -132,4 +143,3 @@ export default class App extends Vue {
     height: 700px;
 }
 </style>
-

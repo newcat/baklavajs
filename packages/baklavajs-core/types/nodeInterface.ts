@@ -3,7 +3,6 @@ import { IBaklavaEvent, IPreventableBaklavaEvent, IHook } from "../../baklavajs-
 import { IInterfaceState } from "./state";
 
 export interface INodeInterface {
-
     /** Additional Properties */
     [k: string]: any;
 
@@ -13,14 +12,15 @@ export interface INodeInterface {
     option?: string;
 
     events: {
-        setConnectionCount: IBaklavaEvent<number>,
-        beforeSetValue: IPreventableBaklavaEvent<any>,
-        setValue: IBaklavaEvent<any>
+        setConnectionCount: IBaklavaEvent<number>;
+        beforeSetValue: IPreventableBaklavaEvent<any>;
+        setValue: IBaklavaEvent<any>;
+        updated: IBaklavaEvent<void>;
     };
 
     hooks: {
-        load: IHook<IInterfaceState>,
-        save: IHook<IInterfaceState>
+        load: IHook<IInterfaceState>;
+        save: IHook<IInterfaceState>;
     };
 
     connectionCount: number;
@@ -28,5 +28,4 @@ export interface INodeInterface {
 
     load(state: IInterfaceState): void;
     save(): IInterfaceState;
-
 }

@@ -4,7 +4,6 @@ import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavaj
 import { INodeInterface, INode } from "../types";
 
 export class NodeInterface implements INodeInterface {
-
     public id: string;
     public isInput: boolean;
     public parent: INode;
@@ -15,7 +14,8 @@ export class NodeInterface implements INodeInterface {
     public events = {
         setConnectionCount: new BaklavaEvent<number>(),
         beforeSetValue: new PreventableBaklavaEvent<any>(),
-        setValue: new BaklavaEvent<any>()
+        setValue: new BaklavaEvent<any>(),
+        updated: new BaklavaEvent<void>()
     };
 
     public hooks = {
@@ -34,7 +34,9 @@ export class NodeInterface implements INodeInterface {
 
     private _value: any = null;
     public set value(v: any) {
-        if (this.events.beforeSetValue.emit(v)) { return; }
+        if (this.events.beforeSetValue.emit(v)) {
+            return;
+        }
         this._value = v;
         this.events.setValue.emit(v);
     }
@@ -61,5 +63,4 @@ export class NodeInterface implements INodeInterface {
         };
         return this.hooks.save.execute(state);
     }
-
 }
