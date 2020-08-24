@@ -20,6 +20,11 @@
         -moz-user-select: none;
     }
 
+    .input-user-select {
+      user-select: auto;
+      -moz-user-select: auto;
+    }
+
     & *, & *::after, & *::before {
         box-sizing: border-box;
     }
