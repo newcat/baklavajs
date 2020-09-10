@@ -15,7 +15,7 @@
     font-size: 13px;
     @include backgroundpattern();
 
-    & *:not(input) {
+    & *:not(input):not(textarea) {
         user-select: none;
         -moz-user-select: none;
     }
