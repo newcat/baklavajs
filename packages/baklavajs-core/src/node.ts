@@ -1,6 +1,7 @@
+import mapValues from "lodash/mapValues";
 import generateId from "./idGenerator";
 import { NodeInterface } from "./nodeInterface";
-import { INodeState } from "../types/state";
+import { INodeIOState, INodeState, IODefinitionStates } from "../types/state";
 import { Editor } from "./editor";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { NodeOption } from "./nodeOption";
@@ -23,6 +24,7 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> imple
     public abstract outputs: O;
 
     public events = {
+        loaded: new BaklavaEvent<Node<I, O>>(),
         beforeAddInput: new PreventableBaklavaEvent<INodeIO<unknown>>(),
         addInput: new BaklavaEvent<INodeIO<unknown>>(),
         beforeRemoveInput: new PreventableBaklavaEvent<INodeIO<unknown>>(),
@@ -34,57 +36,42 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> imple
     };
 
     public hooks = {
-        load: new SequentialHook<INodeState<I, O>>(),
-        save: new SequentialHook<INodeState<I, O>>()
+        beforeLoad: new SequentialHook<INodeState<I, O>>(),
+        afterSave: new SequentialHook<INodeState<I, O>>()
     };
 
     private editorInstance?: Editor;
 
-    /** All input interfaces of the node */
-    public get inputInterfaces(): Record<string, NodeInterface> {
-        const intf: Record<string, NodeInterface> = {};
-        this.interfaces.forEach((v, k) => {
-            if (v.isInput) { intf[k] = v; }
-        });
-        return intf;
-    }
-
-    /** All output interfaces of the node */
-    public get outputInterfaces(): Record<string, NodeInterface> {
-        const intf: Record<string, NodeInterface> = {};
-        this.interfaces.forEach((v, k) => {
-            if (!v.isInput) { intf[k] = v; }
-        });
-        return intf;
-    }
-
-    public load(state: INodeState) {
+    public load(state: INodeState<I, O>) {
+        this.hooks.beforeLoad.execute(state);
         this.id = state.id;
-        this.name = state.name;
-        this.state = state.state;
-        state.options.forEach(([k, v]) => {
-            if (this.options.has(k)) {
-                this.options.get(k)!.value = v;
+        this.title = state.title;
+        Object.entries(state.inputs).forEach(([k, v]) => {
+            if (this.inputs[k]) {
+                this.inputs[k].load(v);
             }
         });
-        state.interfaces.forEach(([k, v]) => {
-            if (this.interfaces.has(k)) {
-                this.interfaces.get(k)!.load(v);
+        Object.entries(state.outputs).forEach(([k, v]) => {
+            if (this.outputs[k]) {
+                this.outputs[k].load(v);
             }
         });
-        this.hooks.load.execute(state);
+        this.events.loaded.emit(this);
     }
 
-    public save(): INodeState {
-        const state: INodeState = {
+    public save(): INodeState<I, O> {
+
+        const inputStates = mapValues(this.inputs, (v) => v.save()) as IODefinitionStates<I>;
+        const outputStates = mapValues(this.outputs, (v) => v.save()) as IODefinitionStates<O>;
+
+        const state: INodeState<I, O> = {
             type: this.type,
             id: this.id,
-            name: this.name,
-            options: Array.from(this.options.entries()).map(([k, o]) => [k, o.value]) as any,
-            state: this.state,
-            interfaces: Array.from(this.interfaces.entries()).map(([k, i]) => [k, i.save()]) as any
+            title: this.title,
+            inputs: inputStates,
+            outputs: outputStates
         };
-        return this.hooks.save.execute(state);
+        return this.hooks.afterSave.execute(state);
     }
 
     /**

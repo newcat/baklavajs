@@ -16,6 +16,7 @@ export interface INode<I extends IODefinition, O extends IODefinition> {
     outputs: O;
 
     events: {
+        loaded: IBaklavaEvent<INode<I, O>>,
         beforeAddInput: IPreventableBaklavaEvent<INodeIO<unknown>>,
         addInput: IBaklavaEvent<INodeIO<unknown>>,
         beforeRemoveInput: IPreventableBaklavaEvent<INodeIO<unknown>>,
@@ -27,8 +28,8 @@ export interface INode<I extends IODefinition, O extends IODefinition> {
     };
 
     hooks: {
-        load: IHook<INodeState<I, O>>,
-        save: IHook<INodeState<I, O>>
+        beforeLoad: IHook<INodeState<I, O>>,
+        afterSave: IHook<INodeState<I, O>>
     };
 
     load(state: INodeState<I, O>): void;

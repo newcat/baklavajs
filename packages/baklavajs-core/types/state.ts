@@ -1,15 +1,18 @@
+import { INodeIO } from './nodeIO';
+
 export interface IState extends Record<string, any> {
     nodes: Array<INodeState<unknown, unknown>>;
     connections: IConnectionState[];
 }
 
+export type IODefinitionStates<D> = { [K in keyof D]: D[K] extends INodeIO<infer T> ? INodeIOState<T> : never }
+
 export interface INodeState<I, O> {
     type: string;
     title: string;
     id: string;
-    inputs: { [K in keyof I]: I[K] extends INodeIOState<infer T> ? T : never };
-    outputs: { [K in keyof O]: O[K] extends INodeIOState<infer T> ? T : never };
-    state: any;
+    inputs: IODefinitionStates<I>;
+    outputs: IODefinitionStates<O>;
 }
 
 export interface INodeIOState<T> extends Record<string, any> {
