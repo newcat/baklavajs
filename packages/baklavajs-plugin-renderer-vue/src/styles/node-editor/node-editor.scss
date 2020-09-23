@@ -3,6 +3,7 @@
 @import "./node-interface";
 @import "./connection";
 @import "./sidebar";
+@import "./minimap";
 
 .node-editor {
     width: 100%;
@@ -14,9 +15,14 @@
     font-size: 13px;
     @include backgroundpattern();
 
-    & *:not(input) {
+    & *:not(input):not(textarea) {
         user-select: none;
         -moz-user-select: none;
+    }
+
+    .input-user-select {
+      user-select: auto;
+      -moz-user-select: auto;
     }
 
     & *, & *::after, & *::before {

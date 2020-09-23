@@ -62,7 +62,7 @@ A dropdown select which allows the user to choose one of predefined values.
 **Value Type**: `string`
 
 **Additional Properties**
-* `items`: `string[]` (required) An array of items the user can choose from
+* `items`: `string[]|Array<{ text: string, value: any }>` (required) An array of items the user can choose from
 
 
 ### `SliderOption`

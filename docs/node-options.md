@@ -63,3 +63,6 @@ new NodeBuilder("MyNode")
         return { a: 1, b: "Hello World!" };
     })
 ```
+
+### User Select
+By default, all child DOM elements of a `.node` element have `user-select: none;` set. This can lead to issues with text input fields in certain browser, so by default `input` and `textarea` elements are exempt. If you have other elements that you want to be selectable, apply the `.input-user-select` class to them.

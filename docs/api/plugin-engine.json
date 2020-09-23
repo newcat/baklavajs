@@ -14,7 +14,7 @@
 			},
 			"children": [
 				{
-					"id": 35,
+					"id": 44,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -27,7 +27,7 @@
 					},
 					"signatures": [
 						{
-							"id": 36,
+							"id": 45,
 							"name": "new Engine",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -39,7 +39,7 @@
 							},
 							"parameters": [
 								{
-									"id": 37,
+									"id": 46,
 									"name": "calculateOnChange",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -185,7 +185,7 @@
 					]
 				},
 				{
-					"id": 41,
+					"id": 50,
 					"name": "calculate",
 					"kind": 2048,
 					"kindString": "Method",
@@ -195,7 +195,7 @@
 					},
 					"signatures": [
 						{
-							"id": 42,
+							"id": 51,
 							"name": "calculate",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -208,7 +208,7 @@
 							},
 							"parameters": [
 								{
-									"id": 43,
+									"id": 52,
 									"name": "calculationData",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -262,7 +262,7 @@
 					]
 				},
 				{
-					"id": 44,
+					"id": 53,
 					"name": "calculateOrder",
 					"kind": 2048,
 					"kindString": "Method",
@@ -272,7 +272,7 @@
 					},
 					"signatures": [
 						{
-							"id": 45,
+							"id": 54,
 							"name": "calculateOrder",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -297,7 +297,7 @@
 					]
 				},
 				{
-					"id": 38,
+					"id": 47,
 					"name": "register",
 					"kind": 2048,
 					"kindString": "Method",
@@ -307,7 +307,7 @@
 					},
 					"signatures": [
 						{
-							"id": 39,
+							"id": 48,
 							"name": "register",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -316,7 +316,7 @@
 							},
 							"parameters": [
 								{
-									"id": 40,
+									"id": 49,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -508,7 +508,7 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						35
+						44
 					]
 				},
 				{
@@ -529,9 +529,9 @@
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						41,
-						44,
-						38
+						50,
+						53,
+						47
 					]
 				},
 				{

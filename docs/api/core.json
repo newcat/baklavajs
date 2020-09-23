@@ -82,7 +82,7 @@
 			]
 		},
 		{
-			"id": 246,
+			"id": 248,
 			"name": "Connection",
 			"kind": 128,
 			"kindString": "Class",
@@ -91,7 +91,7 @@
 			},
 			"children": [
 				{
-					"id": 254,
+					"id": 256,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -101,7 +101,7 @@
 					},
 					"signatures": [
 						{
-							"id": 255,
+							"id": 257,
 							"name": "new Connection",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -110,7 +110,7 @@
 							},
 							"parameters": [
 								{
-									"id": 256,
+									"id": 258,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -124,7 +124,7 @@
 									}
 								},
 								{
-									"id": 257,
+									"id": 259,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -140,7 +140,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 246,
+								"id": 248,
 								"name": "Connection"
 							}
 						}
@@ -154,7 +154,7 @@
 					]
 				},
 				{
-					"id": 251,
+					"id": 253,
 					"name": "destructed",
 					"kind": 1024,
 					"kindString": "Property",
@@ -181,7 +181,7 @@
 					}
 				},
 				{
-					"id": 248,
+					"id": 250,
 					"name": "from",
 					"kind": 1024,
 					"kindString": "Property",
@@ -208,7 +208,7 @@
 					}
 				},
 				{
-					"id": 247,
+					"id": 249,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -234,7 +234,7 @@
 					}
 				},
 				{
-					"id": 250,
+					"id": 252,
 					"name": "isInDanger",
 					"kind": 1024,
 					"kindString": "Property",
@@ -261,7 +261,7 @@
 					}
 				},
 				{
-					"id": 249,
+					"id": 251,
 					"name": "to",
 					"kind": 1024,
 					"kindString": "Property",
@@ -288,7 +288,7 @@
 					}
 				},
 				{
-					"id": 258,
+					"id": 260,
 					"name": "destruct",
 					"kind": 2048,
 					"kindString": "Method",
@@ -298,7 +298,7 @@
 					},
 					"signatures": [
 						{
-							"id": 259,
+							"id": 261,
 							"name": "destruct",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -320,7 +320,7 @@
 					]
 				},
 				{
-					"id": 252,
+					"id": 254,
 					"name": "events",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -330,7 +330,7 @@
 					},
 					"children": [
 						{
-							"id": 253,
+							"id": 255,
 							"name": "destruct",
 							"kind": 32,
 							"kindString": "Variable",
@@ -362,7 +362,7 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								253
+								255
 							]
 						}
 					],
@@ -384,32 +384,32 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						254
+						256
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						251,
-						248,
-						247,
+						253,
 						250,
-						249
+						249,
+						252,
+						251
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						258
+						260
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						252
+						254
 					]
 				}
 			],
@@ -429,7 +429,7 @@
 			]
 		},
 		{
-			"id": 260,
+			"id": 262,
 			"name": "DummyConnection",
 			"kind": 128,
 			"kindString": "Class",
@@ -441,7 +441,7 @@
 			},
 			"children": [
 				{
-					"id": 264,
+					"id": 266,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -451,7 +451,7 @@
 					},
 					"signatures": [
 						{
-							"id": 265,
+							"id": 267,
 							"name": "new DummyConnection",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -460,7 +460,7 @@
 							},
 							"parameters": [
 								{
-									"id": 266,
+									"id": 268,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -474,7 +474,7 @@
 									}
 								},
 								{
-									"id": 267,
+									"id": 269,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -490,7 +490,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 260,
+								"id": 262,
 								"name": "DummyConnection"
 							}
 						}
@@ -504,7 +504,7 @@
 					]
 				},
 				{
-					"id": 262,
+					"id": 264,
 					"name": "from",
 					"kind": 1024,
 					"kindString": "Property",
@@ -531,7 +531,7 @@
 					}
 				},
 				{
-					"id": 261,
+					"id": 263,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -557,7 +557,7 @@
 					}
 				},
 				{
-					"id": 263,
+					"id": 265,
 					"name": "to",
 					"kind": 1024,
 					"kindString": "Property",
@@ -589,16 +589,16 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						264
+						266
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						262,
-						261,
-						263
+						264,
+						263,
+						265
 					]
 				}
 			],
@@ -618,7 +618,7 @@
 			]
 		},
 		{
-			"id": 357,
+			"id": 366,
 			"name": "Editor",
 			"kind": 128,
 			"kindString": "Class",
@@ -630,7 +630,7 @@
 			},
 			"children": [
 				{
-					"id": 377,
+					"id": 391,
 					"name": "connections",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -643,7 +643,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 378,
+							"id": 392,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -658,7 +658,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 246,
+										"id": 248,
 										"name": "Connection"
 									}
 								],
@@ -680,7 +680,7 @@
 					}
 				},
 				{
-					"id": 382,
+					"id": 396,
 					"name": "nodeCategories",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -693,7 +693,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 383,
+							"id": 397,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -736,7 +736,7 @@
 					}
 				},
 				{
-					"id": 379,
+					"id": 393,
 					"name": "nodeTypes",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -749,7 +749,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 380,
+							"id": 394,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -769,7 +769,7 @@
 									{
 										"type": "reflection",
 										"declaration": {
-											"id": 381,
+											"id": 395,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
@@ -797,7 +797,7 @@
 					}
 				},
 				{
-					"id": 375,
+					"id": 389,
 					"name": "nodes",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -810,7 +810,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 376,
+							"id": 390,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -825,7 +825,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 289,
+										"id": 292,
 										"name": "Node"
 									}
 								],
@@ -847,7 +847,7 @@
 					}
 				},
 				{
-					"id": 384,
+					"id": 398,
 					"name": "plugins",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -860,7 +860,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 385,
+							"id": 399,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -897,7 +897,7 @@
 					}
 				},
 				{
-					"id": 397,
+					"id": 411,
 					"name": "addConnection",
 					"kind": 2048,
 					"kindString": "Method",
@@ -907,7 +907,7 @@
 					},
 					"signatures": [
 						{
-							"id": 398,
+							"id": 412,
 							"name": "addConnection",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -920,7 +920,7 @@
 							},
 							"parameters": [
 								{
-									"id": 399,
+									"id": 413,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -937,7 +937,7 @@
 									}
 								},
 								{
-									"id": 400,
+									"id": 414,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -959,7 +959,7 @@
 								"types": [
 									{
 										"type": "reference",
-										"id": 246,
+										"id": 248,
 										"name": "Connection"
 									},
 									{
@@ -984,7 +984,7 @@
 					}
 				},
 				{
-					"id": 391,
+					"id": 405,
 					"name": "addNode",
 					"kind": 2048,
 					"kindString": "Method",
@@ -994,7 +994,7 @@
 					},
 					"signatures": [
 						{
-							"id": 392,
+							"id": 406,
 							"name": "addNode",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1007,7 +1007,7 @@
 							},
 							"parameters": [
 								{
-									"id": 393,
+									"id": 407,
 									"name": "node",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1019,7 +1019,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 289,
+										"id": 292,
 										"name": "Node"
 									}
 								}
@@ -1029,7 +1029,7 @@
 								"types": [
 									{
 										"type": "reference",
-										"id": 289,
+										"id": 292,
 										"name": "Node"
 									},
 									{
@@ -1054,7 +1054,7 @@
 					}
 				},
 				{
-					"id": 404,
+					"id": 418,
 					"name": "checkConnection",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1064,7 +1064,7 @@
 					},
 					"signatures": [
 						{
-							"id": 405,
+							"id": 419,
 							"name": "checkConnection",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1077,7 +1077,7 @@
 							},
 							"parameters": [
 								{
-									"id": 406,
+									"id": 420,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1094,7 +1094,7 @@
 									}
 								},
 								{
-									"id": 407,
+									"id": 421,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1120,7 +1120,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 260,
+										"id": 262,
 										"name": "DummyConnection"
 									}
 								]
@@ -1141,7 +1141,7 @@
 					}
 				},
 				{
-					"id": 419,
+					"id": 433,
 					"name": "findNodeInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1151,7 +1151,7 @@
 					},
 					"signatures": [
 						{
-							"id": 420,
+							"id": 434,
 							"name": "findNodeInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1160,7 +1160,7 @@
 							},
 							"parameters": [
 								{
-									"id": 421,
+									"id": 435,
 									"name": "id",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1208,7 +1208,7 @@
 					}
 				},
 				{
-					"id": 416,
+					"id": 430,
 					"name": "generateId",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1218,7 +1218,7 @@
 					},
 					"signatures": [
 						{
-							"id": 417,
+							"id": 431,
 							"name": "generateId",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1227,7 +1227,7 @@
 							},
 							"parameters": [
 								{
-									"id": 418,
+									"id": 432,
 									"name": "prefix",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1261,7 +1261,7 @@
 					}
 				},
 				{
-					"id": 408,
+					"id": 422,
 					"name": "load",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1271,7 +1271,7 @@
 					},
 					"signatures": [
 						{
-							"id": 409,
+							"id": 423,
 							"name": "load",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1283,7 +1283,7 @@
 							},
 							"parameters": [
 								{
-									"id": 410,
+									"id": 424,
 									"name": "state",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1325,7 +1325,7 @@
 					}
 				},
 				{
-					"id": 386,
+					"id": 400,
 					"name": "registerNodeType",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1335,7 +1335,7 @@
 					},
 					"signatures": [
 						{
-							"id": 387,
+							"id": 401,
 							"name": "registerNodeType",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1347,7 +1347,7 @@
 							},
 							"parameters": [
 								{
-									"id": 388,
+									"id": 402,
 									"name": "typeName",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1363,7 +1363,7 @@
 									}
 								},
 								{
-									"id": 389,
+									"id": 403,
 									"name": "type",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1380,7 +1380,7 @@
 									}
 								},
 								{
-									"id": 390,
+									"id": 404,
 									"name": "category",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1417,7 +1417,7 @@
 					}
 				},
 				{
-					"id": 401,
+					"id": 415,
 					"name": "removeConnection",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1427,7 +1427,7 @@
 					},
 					"signatures": [
 						{
-							"id": 402,
+							"id": 416,
 							"name": "removeConnection",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1439,7 +1439,7 @@
 							},
 							"parameters": [
 								{
-									"id": 403,
+									"id": 417,
 									"name": "connection",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1451,7 +1451,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 246,
+										"id": 248,
 										"name": "Connection"
 									}
 								}
@@ -1476,7 +1476,7 @@
 					}
 				},
 				{
-					"id": 394,
+					"id": 408,
 					"name": "removeNode",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1486,7 +1486,7 @@
 					},
 					"signatures": [
 						{
-							"id": 395,
+							"id": 409,
 							"name": "removeNode",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1498,7 +1498,7 @@
 							},
 							"parameters": [
 								{
-									"id": 396,
+									"id": 410,
 									"name": "node",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1510,7 +1510,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 289,
+										"id": 292,
 										"name": "Node"
 									}
 								}
@@ -1535,7 +1535,7 @@
 					}
 				},
 				{
-					"id": 411,
+					"id": 425,
 					"name": "save",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1545,7 +1545,7 @@
 					},
 					"signatures": [
 						{
-							"id": 412,
+							"id": 426,
 							"name": "save",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1582,7 +1582,7 @@
 					}
 				},
 				{
-					"id": 413,
+					"id": 427,
 					"name": "use",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1592,7 +1592,7 @@
 					},
 					"signatures": [
 						{
-							"id": 414,
+							"id": 428,
 							"name": "use",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1605,7 +1605,7 @@
 							},
 							"parameters": [
 								{
-									"id": 415,
+									"id": 429,
 									"name": "plugin",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1647,7 +1647,7 @@
 					}
 				},
 				{
-					"id": 358,
+					"id": 372,
 					"name": "events",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -1657,7 +1657,7 @@
 					},
 					"children": [
 						{
-							"id": 366,
+							"id": 380,
 							"name": "addConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1685,7 +1685,7 @@
 							"defaultValue": "new BaklavaEvent<IConnection>()"
 						},
 						{
-							"id": 362,
+							"id": 376,
 							"name": "addNode",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1713,7 +1713,7 @@
 							"defaultValue": "new BaklavaEvent<INode>()"
 						},
 						{
-							"id": 365,
+							"id": 379,
 							"name": "beforeAddConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1741,7 +1741,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IAddConnectionEventData>()"
 						},
 						{
-							"id": 361,
+							"id": 375,
 							"name": "beforeAddNode",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1769,7 +1769,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<INode>()"
 						},
 						{
-							"id": 359,
+							"id": 373,
 							"name": "beforeRegisterNodeType",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1797,7 +1797,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IAddNodeTypeEventData>()"
 						},
 						{
-							"id": 368,
+							"id": 382,
 							"name": "beforeRemoveConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1825,7 +1825,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IConnection>()"
 						},
 						{
-							"id": 363,
+							"id": 377,
 							"name": "beforeRemoveNode",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1853,7 +1853,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<INode>()"
 						},
 						{
-							"id": 370,
+							"id": 384,
 							"name": "beforeUsePlugin",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1881,7 +1881,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IPlugin>()"
 						},
 						{
-							"id": 367,
+							"id": 381,
 							"name": "checkConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1909,7 +1909,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IAddConnectionEventData>()"
 						},
 						{
-							"id": 360,
+							"id": 374,
 							"name": "registerNodeType",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1937,7 +1937,7 @@
 							"defaultValue": "new BaklavaEvent<IAddNodeTypeEventData>()"
 						},
 						{
-							"id": 369,
+							"id": 383,
 							"name": "removeConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1965,7 +1965,7 @@
 							"defaultValue": "new BaklavaEvent<IConnection>()"
 						},
 						{
-							"id": 364,
+							"id": 378,
 							"name": "removeNode",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1993,7 +1993,7 @@
 							"defaultValue": "new BaklavaEvent<INode>()"
 						},
 						{
-							"id": 371,
+							"id": 385,
 							"name": "usePlugin",
 							"kind": 32,
 							"kindString": "Variable",
@@ -2026,19 +2026,19 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								366,
-								362,
-								365,
-								361,
-								359,
-								368,
-								363,
-								370,
-								367,
-								360,
-								369,
-								364,
-								371
+								380,
+								376,
+								379,
+								375,
+								373,
+								382,
+								377,
+								384,
+								381,
+								374,
+								383,
+								378,
+								385
 							]
 						}
 					],
@@ -2060,7 +2060,7 @@
 					}
 				},
 				{
-					"id": 372,
+					"id": 386,
 					"name": "hooks",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -2070,7 +2070,7 @@
 					},
 					"children": [
 						{
-							"id": 374,
+							"id": 388,
 							"name": "load",
 							"kind": 32,
 							"kindString": "Variable",
@@ -2098,7 +2098,7 @@
 							"defaultValue": "new SequentialHook<IState>()"
 						},
 						{
-							"id": 373,
+							"id": 387,
 							"name": "save",
 							"kind": 32,
 							"kindString": "Variable",
@@ -2131,8 +2131,8 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								374,
-								373
+								388,
+								387
 							]
 						}
 					],
@@ -2159,36 +2159,36 @@
 					"title": "Accessors",
 					"kind": 262144,
 					"children": [
-						377,
-						382,
-						379,
-						375,
-						384
+						391,
+						396,
+						393,
+						389,
+						398
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						397,
-						391,
-						404,
-						419,
-						416,
-						408,
-						386,
-						401,
-						394,
 						411,
-						413
+						405,
+						418,
+						433,
+						430,
+						422,
+						400,
+						415,
+						408,
+						425,
+						427
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						358,
-						372
+						372,
+						386
 					]
 				}
 			],
@@ -2208,7 +2208,7 @@
 			]
 		},
 		{
-			"id": 289,
+			"id": 292,
 			"name": "Node",
 			"kind": 128,
 			"kindString": "Class",
@@ -2221,7 +2221,7 @@
 			},
 			"children": [
 				{
-					"id": 292,
+					"id": 295,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2251,7 +2251,7 @@
 					}
 				},
 				{
-					"id": 293,
+					"id": 296,
 					"name": "interfaces",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2292,7 +2292,7 @@
 					}
 				},
 				{
-					"id": 291,
+					"id": 294,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2322,7 +2322,7 @@
 					}
 				},
 				{
-					"id": 294,
+					"id": 297,
 					"name": "options",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2349,7 +2349,7 @@
 							},
 							{
 								"type": "reference",
-								"id": 268,
+								"id": 270,
 								"name": "NodeOption"
 							}
 						],
@@ -2363,7 +2363,7 @@
 					}
 				},
 				{
-					"id": 295,
+					"id": 298,
 					"name": "state",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2402,7 +2402,7 @@
 					}
 				},
 				{
-					"id": 290,
+					"id": 293,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2432,7 +2432,7 @@
 					}
 				},
 				{
-					"id": 309,
+					"id": 313,
 					"name": "inputInterfaces",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -2445,7 +2445,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 310,
+							"id": 314,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -2486,7 +2486,7 @@
 					}
 				},
 				{
-					"id": 311,
+					"id": 315,
 					"name": "outputInterfaces",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -2499,7 +2499,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 312,
+							"id": 316,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -2540,7 +2540,7 @@
 					}
 				},
 				{
-					"id": 321,
+					"id": 325,
 					"name": "addInputInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2550,7 +2550,7 @@
 					},
 					"signatures": [
 						{
-							"id": 322,
+							"id": 326,
 							"name": "addInputInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2563,7 +2563,7 @@
 							},
 							"parameters": [
 								{
-									"id": 323,
+									"id": 327,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2579,7 +2579,7 @@
 									}
 								},
 								{
-									"id": 324,
+									"id": 328,
 									"name": "option",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2605,13 +2605,12 @@
 									}
 								},
 								{
-									"id": 325,
+									"id": 329,
 									"name": "defaultValue",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {
-										"isExported": true,
-										"isOptional": true
+										"isExported": true
 									},
 									"comment": {
 										"text": "Optional default value for the interface/option"
@@ -2619,10 +2618,11 @@
 									"type": {
 										"type": "intrinsic",
 										"name": "any"
-									}
+									},
+									"defaultValue": "null"
 								},
 								{
-									"id": 326,
+									"id": 330,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2674,7 +2674,7 @@
 					]
 				},
 				{
-					"id": 334,
+					"id": 338,
 					"name": "addOption",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2684,7 +2684,7 @@
 					},
 					"signatures": [
 						{
-							"id": 335,
+							"id": 339,
 							"name": "addOption",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2697,7 +2697,7 @@
 							},
 							"parameters": [
 								{
-									"id": 336,
+									"id": 340,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2713,7 +2713,7 @@
 									}
 								},
 								{
-									"id": 337,
+									"id": 341,
 									"name": "component",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2729,7 +2729,7 @@
 									}
 								},
 								{
-									"id": 338,
+									"id": 342,
 									"name": "defaultValue",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2746,7 +2746,7 @@
 									"defaultValue": "null"
 								},
 								{
-									"id": 339,
+									"id": 343,
 									"name": "sidebarComponent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2772,7 +2772,7 @@
 									}
 								},
 								{
-									"id": 340,
+									"id": 344,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2808,7 +2808,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 268,
+										"id": 270,
 										"name": "NodeOption"
 									}
 								]
@@ -2824,7 +2824,7 @@
 					]
 				},
 				{
-					"id": 327,
+					"id": 331,
 					"name": "addOutputInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2834,7 +2834,7 @@
 					},
 					"signatures": [
 						{
-							"id": 328,
+							"id": 332,
 							"name": "addOutputInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2847,7 +2847,7 @@
 							},
 							"parameters": [
 								{
-									"id": 329,
+									"id": 333,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2863,7 +2863,7 @@
 									}
 								},
 								{
-									"id": 330,
+									"id": 334,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2915,7 +2915,7 @@
 					]
 				},
 				{
-					"id": 318,
+					"id": 322,
 					"name": "calculate",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2925,7 +2925,7 @@
 					},
 					"signatures": [
 						{
-							"id": 319,
+							"id": 323,
 							"name": "calculate",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2938,7 +2938,7 @@
 							},
 							"parameters": [
 								{
-									"id": 320,
+									"id": 324,
 									"name": "calculationData",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2977,7 +2977,7 @@
 					}
 				},
 				{
-					"id": 344,
+					"id": 348,
 					"name": "getInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2987,7 +2987,7 @@
 					},
 					"signatures": [
 						{
-							"id": 345,
+							"id": 349,
 							"name": "getInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2999,7 +2999,7 @@
 							},
 							"parameters": [
 								{
-									"id": 346,
+									"id": 350,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3041,7 +3041,7 @@
 					}
 				},
 				{
-					"id": 347,
+					"id": 351,
 					"name": "getOptionValue",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3051,7 +3051,7 @@
 					},
 					"signatures": [
 						{
-							"id": 348,
+							"id": 352,
 							"name": "getOptionValue",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3063,7 +3063,7 @@
 							},
 							"parameters": [
 								{
-									"id": 349,
+									"id": 353,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3104,7 +3104,7 @@
 					}
 				},
 				{
-					"id": 313,
+					"id": 317,
 					"name": "load",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3114,7 +3114,7 @@
 					},
 					"signatures": [
 						{
-							"id": 314,
+							"id": 318,
 							"name": "load",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3123,7 +3123,7 @@
 							},
 							"parameters": [
 								{
-									"id": 315,
+									"id": 319,
 									"name": "state",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3162,7 +3162,7 @@
 					}
 				},
 				{
-					"id": 354,
+					"id": 358,
 					"name": "registerEditor",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3172,7 +3172,7 @@
 					},
 					"signatures": [
 						{
-							"id": 355,
+							"id": 359,
 							"name": "registerEditor",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3184,7 +3184,7 @@
 							},
 							"parameters": [
 								{
-									"id": 356,
+									"id": 360,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3196,7 +3196,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 357,
+										"id": 366,
 										"name": "Editor"
 									}
 								}
@@ -3221,7 +3221,7 @@
 					}
 				},
 				{
-					"id": 331,
+					"id": 335,
 					"name": "removeInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3231,7 +3231,7 @@
 					},
 					"signatures": [
 						{
-							"id": 332,
+							"id": 336,
 							"name": "removeInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3243,7 +3243,7 @@
 							},
 							"parameters": [
 								{
-									"id": 333,
+									"id": 337,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3274,7 +3274,7 @@
 					]
 				},
 				{
-					"id": 341,
+					"id": 345,
 					"name": "removeOption",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3284,7 +3284,7 @@
 					},
 					"signatures": [
 						{
-							"id": 342,
+							"id": 346,
 							"name": "removeOption",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3296,7 +3296,7 @@
 							},
 							"parameters": [
 								{
-									"id": 343,
+									"id": 347,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3327,7 +3327,7 @@
 					]
 				},
 				{
-					"id": 316,
+					"id": 320,
 					"name": "save",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3337,7 +3337,7 @@
 					},
 					"signatures": [
 						{
-							"id": 317,
+							"id": 321,
 							"name": "save",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3370,7 +3370,7 @@
 					}
 				},
 				{
-					"id": 350,
+					"id": 354,
 					"name": "setOptionValue",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3380,7 +3380,7 @@
 					},
 					"signatures": [
 						{
-							"id": 351,
+							"id": 355,
 							"name": "setOptionValue",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3392,7 +3392,7 @@
 							},
 							"parameters": [
 								{
-									"id": 352,
+									"id": 356,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3408,7 +3408,7 @@
 									}
 								},
 								{
-									"id": 353,
+									"id": 357,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3449,7 +3449,7 @@
 					}
 				},
 				{
-					"id": 296,
+					"id": 299,
 					"name": "events",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -3459,7 +3459,7 @@
 					},
 					"children": [
 						{
-							"id": 298,
+							"id": 301,
 							"name": "addInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3487,7 +3487,7 @@
 							"defaultValue": "new BaklavaEvent<NodeInterface>()"
 						},
 						{
-							"id": 302,
+							"id": 305,
 							"name": "addOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3515,7 +3515,7 @@
 							"defaultValue": "new BaklavaEvent<IOptionEventData>()"
 						},
 						{
-							"id": 297,
+							"id": 300,
 							"name": "beforeAddInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3543,7 +3543,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IAddInterfaceEventData>()"
 						},
 						{
-							"id": 301,
+							"id": 304,
 							"name": "beforeAddOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3571,7 +3571,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IAddOptionEventData>()"
 						},
 						{
-							"id": 299,
+							"id": 302,
 							"name": "beforeRemoveInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3599,7 +3599,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<NodeInterface>()"
 						},
 						{
-							"id": 303,
+							"id": 306,
 							"name": "beforeRemoveOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3627,7 +3627,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IOptionEventData>()"
 						},
 						{
-							"id": 300,
+							"id": 303,
 							"name": "removeInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3655,7 +3655,7 @@
 							"defaultValue": "new BaklavaEvent<NodeInterface>()"
 						},
 						{
-							"id": 304,
+							"id": 307,
 							"name": "removeOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3683,7 +3683,7 @@
 							"defaultValue": "new BaklavaEvent<IOptionEventData>()"
 						},
 						{
-							"id": 305,
+							"id": 308,
 							"name": "update",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3716,15 +3716,15 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								298,
-								302,
-								297,
 								301,
-								299,
-								303,
+								305,
 								300,
 								304,
-								305
+								302,
+								306,
+								303,
+								307,
+								308
 							]
 						}
 					],
@@ -3746,7 +3746,7 @@
 					}
 				},
 				{
-					"id": 306,
+					"id": 309,
 					"name": "hooks",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -3756,7 +3756,7 @@
 					},
 					"children": [
 						{
-							"id": 307,
+							"id": 310,
 							"name": "load",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3784,7 +3784,7 @@
 							"defaultValue": "new SequentialHook<INodeState>()"
 						},
 						{
-							"id": 308,
+							"id": 311,
 							"name": "save",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3817,8 +3817,8 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								307,
-								308
+								310,
+								311
 							]
 						}
 					],
@@ -3845,46 +3845,46 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						292,
-						293,
-						291,
-						294,
 						295,
-						290
+						296,
+						294,
+						297,
+						298,
+						293
 					]
 				},
 				{
 					"title": "Accessors",
 					"kind": 262144,
 					"children": [
-						309,
-						311
+						313,
+						315
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						321,
-						334,
-						327,
-						318,
-						344,
-						347,
-						313,
-						354,
+						325,
+						338,
 						331,
-						341,
-						316,
-						350
+						322,
+						348,
+						351,
+						317,
+						358,
+						335,
+						345,
+						320,
+						354
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						296,
-						306
+						299,
+						309
 					]
 				}
 			],
@@ -3904,7 +3904,7 @@
 			]
 		},
 		{
-			"id": 433,
+			"id": 447,
 			"name": "NodeBuilder",
 			"kind": 128,
 			"kindString": "Class",
@@ -3916,7 +3916,7 @@
 			},
 			"children": [
 				{
-					"id": 434,
+					"id": 454,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -3929,7 +3929,7 @@
 					},
 					"signatures": [
 						{
-							"id": 435,
+							"id": 455,
 							"name": "new NodeBuilder",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -3941,7 +3941,7 @@
 							},
 							"parameters": [
 								{
-									"id": 436,
+									"id": 456,
 									"name": "type",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3957,7 +3957,7 @@
 									}
 								},
 								{
-									"id": 437,
+									"id": 457,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3986,7 +3986,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 433,
+								"id": 447,
 								"name": "NodeBuilder"
 							}
 						}
@@ -4000,7 +4000,7 @@
 					]
 				},
 				{
-					"id": 443,
+					"id": 463,
 					"name": "addInputInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4010,7 +4010,7 @@
 					},
 					"signatures": [
 						{
-							"id": 444,
+							"id": 464,
 							"name": "addInputInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4023,7 +4023,7 @@
 							},
 							"parameters": [
 								{
-									"id": 445,
+									"id": 465,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4039,7 +4039,7 @@
 									}
 								},
 								{
-									"id": 446,
+									"id": 466,
 									"name": "option",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4065,13 +4065,12 @@
 									}
 								},
 								{
-									"id": 447,
+									"id": 467,
 									"name": "defaultValue",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {
-										"isExported": true,
-										"isOptional": true
+										"isExported": true
 									},
 									"comment": {
 										"text": "\nDefault value for the interface.\nIf the default value is a primitive (e. g. string, number) then the value can be passed directly.\nFor objects provide a function that returns the default value."
@@ -4079,10 +4078,11 @@
 									"type": {
 										"type": "intrinsic",
 										"name": "any"
-									}
+									},
+									"defaultValue": "null"
 								},
 								{
-									"id": 448,
+									"id": 468,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4111,7 +4111,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 433,
+								"id": 447,
 								"name": "NodeBuilder"
 							}
 						}
@@ -4125,7 +4125,7 @@
 					]
 				},
 				{
-					"id": 453,
+					"id": 473,
 					"name": "addOption",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4135,7 +4135,7 @@
 					},
 					"signatures": [
 						{
-							"id": 454,
+							"id": 474,
 							"name": "addOption",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4148,7 +4148,7 @@
 							},
 							"parameters": [
 								{
-									"id": 455,
+									"id": 475,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4164,7 +4164,7 @@
 									}
 								},
 								{
-									"id": 456,
+									"id": 476,
 									"name": "optionComponent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4177,13 +4177,12 @@
 									}
 								},
 								{
-									"id": 457,
+									"id": 477,
 									"name": "defaultValue",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {
-										"isExported": true,
-										"isOptional": true
+										"isExported": true
 									},
 									"comment": {
 										"text": "\nDefault value for the option.\nIf the default value is a primitive (e. g. string, number) then the value can be passed directly.\nFor objects provide a function that returns the default value."
@@ -4191,10 +4190,11 @@
 									"type": {
 										"type": "intrinsic",
 										"name": "any"
-									}
+									},
+									"defaultValue": "null"
 								},
 								{
-									"id": 458,
+									"id": 478,
 									"name": "sidebarComponent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4220,7 +4220,7 @@
 									}
 								},
 								{
-									"id": 459,
+									"id": 479,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4249,7 +4249,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 433,
+								"id": 447,
 								"name": "NodeBuilder"
 							}
 						}
@@ -4257,13 +4257,13 @@
 					"sources": [
 						{
 							"fileName": "src/nodeBuilder.ts",
-							"line": 145,
+							"line": 146,
 							"character": 20
 						}
 					]
 				},
 				{
-					"id": 449,
+					"id": 469,
 					"name": "addOutputInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4273,7 +4273,7 @@
 					},
 					"signatures": [
 						{
-							"id": 450,
+							"id": 470,
 							"name": "addOutputInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4286,7 +4286,7 @@
 							},
 							"parameters": [
 								{
-									"id": 451,
+									"id": 471,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4302,7 +4302,7 @@
 									}
 								},
 								{
-									"id": 452,
+									"id": 472,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4331,7 +4331,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 433,
+								"id": 447,
 								"name": "NodeBuilder"
 							}
 						}
@@ -4339,13 +4339,13 @@
 					"sources": [
 						{
 							"fileName": "src/nodeBuilder.ts",
-							"line": 128,
+							"line": 129,
 							"character": 29
 						}
 					]
 				},
 				{
-					"id": 438,
+					"id": 458,
 					"name": "build",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4355,7 +4355,7 @@
 					},
 					"signatures": [
 						{
-							"id": 439,
+							"id": 459,
 							"name": "build",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4368,7 +4368,7 @@
 							},
 							"type": {
 								"type": "reference",
-								"id": 469,
+								"id": 492,
 								"name": "NodeConstructorImpl"
 							}
 						}
@@ -4382,7 +4382,7 @@
 					]
 				},
 				{
-					"id": 460,
+					"id": 480,
 					"name": "onCalculate",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4392,7 +4392,7 @@
 					},
 					"signatures": [
 						{
-							"id": 461,
+							"id": 481,
 							"name": "onCalculate",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4405,7 +4405,7 @@
 							},
 							"parameters": [
 								{
-									"id": 462,
+									"id": 482,
 									"name": "cb",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4417,14 +4417,14 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 463,
+										"id": 486,
 										"name": "CalculationFunction"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 433,
+								"id": 447,
 								"name": "NodeBuilder"
 							}
 						}
@@ -4432,13 +4432,13 @@
 					"sources": [
 						{
 							"fileName": "src/nodeBuilder.ts",
-							"line": 165,
+							"line": 166,
 							"character": 22
 						}
 					]
 				},
 				{
-					"id": 440,
+					"id": 460,
 					"name": "setName",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4448,7 +4448,7 @@
 					},
 					"signatures": [
 						{
-							"id": 441,
+							"id": 461,
 							"name": "setName",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4461,7 +4461,7 @@
 							},
 							"parameters": [
 								{
-									"id": 442,
+									"id": 462,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4479,7 +4479,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 433,
+								"id": 447,
 								"name": "NodeBuilder"
 							}
 						}
@@ -4498,19 +4498,19 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						434
+						454
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						443,
-						453,
-						449,
-						438,
-						460,
-						440
+						463,
+						473,
+						469,
+						458,
+						480,
+						460
 					]
 				}
 			],
@@ -4562,7 +4562,7 @@
 			],
 			"children": [
 				{
-					"id": 237,
+					"id": 239,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -4572,7 +4572,7 @@
 					},
 					"signatures": [
 						{
-							"id": 238,
+							"id": 240,
 							"name": "new NodeInterface",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -4581,7 +4581,7 @@
 							},
 							"parameters": [
 								{
-									"id": 239,
+									"id": 241,
 									"name": "parent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4595,7 +4595,7 @@
 									}
 								},
 								{
-									"id": 240,
+									"id": 242,
 									"name": "isInput",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4739,7 +4739,7 @@
 					}
 				},
 				{
-					"id": 229,
+					"id": 230,
 					"name": "connectionCount",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -4749,7 +4749,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 232,
+							"id": 233,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -4764,7 +4764,7 @@
 					],
 					"setSignature": [
 						{
-							"id": 230,
+							"id": 231,
 							"name": "__set",
 							"kind": 1048576,
 							"kindString": "Set signature",
@@ -4773,7 +4773,7 @@
 							},
 							"parameters": [
 								{
-									"id": 231,
+									"id": 232,
 									"name": "v",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4811,7 +4811,7 @@
 					}
 				},
 				{
-					"id": 233,
+					"id": 235,
 					"name": "value",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -4821,7 +4821,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 236,
+							"id": 238,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -4836,7 +4836,7 @@
 					],
 					"setSignature": [
 						{
-							"id": 234,
+							"id": 236,
 							"name": "__set",
 							"kind": 1048576,
 							"kindString": "Set signature",
@@ -4845,7 +4845,7 @@
 							},
 							"parameters": [
 								{
-									"id": 235,
+									"id": 237,
 									"name": "v",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4883,7 +4883,7 @@
 					}
 				},
 				{
-					"id": 241,
+					"id": 243,
 					"name": "load",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4893,7 +4893,7 @@
 					},
 					"signatures": [
 						{
-							"id": 242,
+							"id": 244,
 							"name": "load",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4902,7 +4902,7 @@
 							},
 							"parameters": [
 								{
-									"id": 243,
+									"id": 245,
 									"name": "state",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4941,7 +4941,7 @@
 					}
 				},
 				{
-					"id": 244,
+					"id": 246,
 					"name": "save",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4951,7 +4951,7 @@
 					},
 					"signatures": [
 						{
-							"id": 245,
+							"id": 247,
 							"name": "save",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -5203,7 +5203,7 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						237
+						239
 					]
 				},
 				{
@@ -5220,16 +5220,16 @@
 					"title": "Accessors",
 					"kind": 262144,
 					"children": [
-						229,
-						233
+						230,
+						235
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						241,
-						244
+						243,
+						246
 					]
 				},
 				{
@@ -5257,7 +5257,7 @@
 			]
 		},
 		{
-			"id": 268,
+			"id": 270,
 			"name": "NodeOption",
 			"kind": 128,
 			"kindString": "Class",
@@ -5266,7 +5266,7 @@
 			},
 			"indexSignature": [
 				{
-					"id": 274,
+					"id": 276,
 					"name": "__index",
 					"kind": 8192,
 					"kindString": "Index signature",
@@ -5278,7 +5278,7 @@
 					},
 					"parameters": [
 						{
-							"id": 275,
+							"id": 277,
 							"name": "k",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -5299,7 +5299,7 @@
 			],
 			"children": [
 				{
-					"id": 276,
+					"id": 279,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -5309,7 +5309,7 @@
 					},
 					"signatures": [
 						{
-							"id": 277,
+							"id": 280,
 							"name": "new NodeOption",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -5318,7 +5318,7 @@
 							},
 							"parameters": [
 								{
-									"id": 278,
+									"id": 281,
 									"name": "optionComponent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5331,7 +5331,7 @@
 									}
 								},
 								{
-									"id": 279,
+									"id": 282,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5345,7 +5345,7 @@
 									}
 								},
 								{
-									"id": 280,
+									"id": 283,
 									"name": "sidebarComponent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5361,7 +5361,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 268,
+								"id": 270,
 								"name": "NodeOption"
 							}
 						}
@@ -5375,7 +5375,7 @@
 					]
 				},
 				{
-					"id": 269,
+					"id": 271,
 					"name": "optionComponent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5404,7 +5404,7 @@
 					}
 				},
 				{
-					"id": 270,
+					"id": 272,
 					"name": "sidebarComponent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5443,7 +5443,7 @@
 					}
 				},
 				{
-					"id": 281,
+					"id": 284,
 					"name": "value",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -5453,7 +5453,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 282,
+							"id": 285,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -5468,7 +5468,7 @@
 					],
 					"setSignature": [
 						{
-							"id": 283,
+							"id": 286,
 							"name": "__set",
 							"kind": 1048576,
 							"kindString": "Set signature",
@@ -5477,7 +5477,7 @@
 							},
 							"parameters": [
 								{
-									"id": 284,
+									"id": 287,
 									"name": "v",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5515,7 +5515,7 @@
 					}
 				},
 				{
-					"id": 271,
+					"id": 273,
 					"name": "events",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -5525,7 +5525,7 @@
 					},
 					"children": [
 						{
-							"id": 272,
+							"id": 274,
 							"name": "beforeSetValue",
 							"kind": 32,
 							"kindString": "Variable",
@@ -5552,7 +5552,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<any>()"
 						},
 						{
-							"id": 273,
+							"id": 275,
 							"name": "setValue",
 							"kind": 32,
 							"kindString": "Variable",
@@ -5584,8 +5584,8 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								272,
-								273
+								274,
+								275
 							]
 						}
 					],
@@ -5612,29 +5612,29 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						276
+						279
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						269,
-						270
+						271,
+						272
 					]
 				},
 				{
 					"title": "Accessors",
 					"kind": 262144,
 					"children": [
-						281
+						284
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						271
+						273
 					]
 				}
 			],
@@ -6154,7 +6154,7 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 260,
+					"id": 262,
 					"name": "DummyConnection"
 				}
 			]
@@ -6284,7 +6284,8 @@
 					"kind": 1024,
 					"kindString": "Property",
 					"flags": {
-						"isExported": true
+						"isExported": true,
+						"isReadonly": true
 					},
 					"sources": [
 						{
@@ -6821,7 +6822,8 @@
 					"kind": 1024,
 					"kindString": "Property",
 					"flags": {
-						"isExported": true
+						"isExported": true,
+						"isReadonly": true
 					},
 					"sources": [
 						{
@@ -6854,7 +6856,8 @@
 					"kind": 1024,
 					"kindString": "Property",
 					"flags": {
-						"isExported": true
+						"isExported": true,
+						"isReadonly": true
 					},
 					"sources": [
 						{
@@ -6885,7 +6888,8 @@
 					"kind": 1024,
 					"kindString": "Property",
 					"flags": {
-						"isExported": true
+						"isExported": true,
+						"isReadonly": true
 					},
 					"sources": [
 						{
@@ -6912,7 +6916,8 @@
 					"kind": 1024,
 					"kindString": "Property",
 					"flags": {
-						"isExported": true
+						"isExported": true,
+						"isReadonly": true
 					},
 					"sources": [
 						{
@@ -7590,13 +7595,13 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 357,
+					"id": 366,
 					"name": "Editor"
 				}
 			]
 		},
 		{
-			"id": 285,
+			"id": 288,
 			"name": "IInterfaceCreateOptions",
 			"kind": 256,
 			"kindString": "Interface",
@@ -7605,7 +7610,7 @@
 			},
 			"children": [
 				{
-					"id": 287,
+					"id": 290,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7635,7 +7640,7 @@
 					}
 				},
 				{
-					"id": 288,
+					"id": 291,
 					"name": "optionName",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7665,7 +7670,7 @@
 					}
 				},
 				{
-					"id": 286,
+					"id": 289,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7700,9 +7705,9 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						287,
-						288,
-						286
+						290,
+						291,
+						289
 					]
 				}
 			],
@@ -7715,7 +7720,7 @@
 			]
 		},
 		{
-			"id": 422,
+			"id": 436,
 			"name": "IInterfaceOptions",
 			"kind": 256,
 			"kindString": "Interface",
@@ -7724,7 +7729,7 @@
 			},
 			"children": [
 				{
-					"id": 427,
+					"id": 441,
 					"name": "additionalProperties",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7755,7 +7760,7 @@
 					}
 				},
 				{
-					"id": 426,
+					"id": 440,
 					"name": "defaultValue",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7776,7 +7781,7 @@
 					}
 				},
 				{
-					"id": 423,
+					"id": 437,
 					"name": "isInput",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7796,7 +7801,7 @@
 					}
 				},
 				{
-					"id": 424,
+					"id": 438,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7816,7 +7821,7 @@
 					}
 				},
 				{
-					"id": 425,
+					"id": 439,
 					"name": "option",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7851,11 +7856,11 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						427,
-						426,
-						423,
-						424,
-						425
+						441,
+						440,
+						437,
+						438,
+						439
 					]
 				}
 			],
@@ -8944,7 +8949,7 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 289,
+					"id": 292,
 					"name": "Node"
 				}
 			]
@@ -9702,13 +9707,13 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 268,
+					"id": 270,
 					"name": "NodeOption"
 				}
 			]
 		},
 		{
-			"id": 428,
+			"id": 442,
 			"name": "INodeOptionParameters",
 			"kind": 256,
 			"kindString": "Interface",
@@ -9717,7 +9722,7 @@
 			},
 			"children": [
 				{
-					"id": 432,
+					"id": 446,
 					"name": "additionalProperties",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9748,7 +9753,7 @@
 					}
 				},
 				{
-					"id": 430,
+					"id": 444,
 					"name": "optionComponent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9768,7 +9773,7 @@
 					}
 				},
 				{
-					"id": 431,
+					"id": 445,
 					"name": "sidebarComponent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9798,7 +9803,7 @@
 					}
 				},
 				{
-					"id": 429,
+					"id": 443,
 					"name": "value",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9823,10 +9828,10 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						432,
-						430,
-						431,
-						429
+						446,
+						444,
+						445,
+						443
 					]
 				}
 			],
@@ -10714,13 +10719,13 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 246,
+					"id": 248,
 					"name": "Connection"
 				}
 			]
 		},
 		{
-			"id": 463,
+			"id": 486,
 			"name": "CalculationFunction",
 			"kind": 4194304,
 			"kindString": "Type alias",
@@ -10737,7 +10742,7 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 464,
+					"id": 487,
 					"name": "__type",
 					"kind": 65536,
 					"kindString": "Type literal",
@@ -10746,7 +10751,7 @@
 					},
 					"signatures": [
 						{
-							"id": 465,
+							"id": 488,
 							"name": "__call",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -10755,7 +10760,7 @@
 							},
 							"parameters": [
 								{
-									"id": 466,
+									"id": 489,
 									"name": "this",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10764,12 +10769,12 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 289,
+										"id": 292,
 										"name": "Node"
 									}
 								},
 								{
-									"id": 467,
+									"id": 490,
 									"name": "n",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10778,12 +10783,12 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 289,
+										"id": 292,
 										"name": "Node"
 									}
 								},
 								{
-									"id": 468,
+									"id": 491,
 									"name": "calculationData",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10849,7 +10854,7 @@
 			}
 		},
 		{
-			"id": 469,
+			"id": 492,
 			"name": "NodeConstructorImpl",
 			"kind": 4194304,
 			"kindString": "Type alias",
@@ -10866,7 +10871,7 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 470,
+					"id": 493,
 					"name": "__type",
 					"kind": 65536,
 					"kindString": "Type literal",
@@ -10937,7 +10942,7 @@
 			]
 		},
 		{
-			"id": 474,
+			"id": 497,
 			"name": "generateNode",
 			"kind": 64,
 			"kindString": "Function",
@@ -10946,7 +10951,7 @@
 			},
 			"signatures": [
 				{
-					"id": 475,
+					"id": 498,
 					"name": "generateNode",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -10955,7 +10960,7 @@
 					},
 					"parameters": [
 						{
-							"id": 476,
+							"id": 499,
 							"name": "type",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -10968,7 +10973,7 @@
 							}
 						},
 						{
-							"id": 477,
+							"id": 500,
 							"name": "name",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -10981,7 +10986,7 @@
 							}
 						},
 						{
-							"id": 478,
+							"id": 501,
 							"name": "additionalProperties",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -11013,7 +11018,7 @@
 							}
 						},
 						{
-							"id": 479,
+							"id": 502,
 							"name": "intfs",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -11024,13 +11029,13 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 422,
+									"id": 436,
 									"name": "IInterfaceOptions"
 								}
 							}
 						},
 						{
-							"id": 480,
+							"id": 503,
 							"name": "options",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -11046,7 +11051,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 428,
+										"id": 442,
 										"name": "INodeOptionParameters"
 									}
 								],
@@ -11054,7 +11059,7 @@
 							}
 						},
 						{
-							"id": 481,
+							"id": 504,
 							"name": "calcFunction",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -11064,7 +11069,7 @@
 							},
 							"type": {
 								"type": "reference",
-								"id": 463,
+								"id": 486,
 								"name": "CalculationFunction"
 							}
 						}
@@ -11084,7 +11089,7 @@
 			]
 		},
 		{
-			"id": 471,
+			"id": 494,
 			"name": "getDefaultValue",
 			"kind": 64,
 			"kindString": "Function",
@@ -11093,7 +11098,7 @@
 			},
 			"signatures": [
 				{
-					"id": 472,
+					"id": 495,
 					"name": "getDefaultValue",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -11102,7 +11107,7 @@
 					},
 					"parameters": [
 						{
-							"id": 473,
+							"id": 496,
 							"name": "v",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -11142,13 +11147,13 @@
 			"title": "Classes",
 			"kind": 128,
 			"children": [
-				246,
-				260,
-				357,
-				289,
-				433,
+				248,
+				262,
+				366,
+				292,
+				447,
 				215,
-				268
+				270
 			]
 		},
 		{
@@ -11162,13 +11167,13 @@
 				205,
 				20,
 				30,
-				285,
-				422,
+				288,
+				436,
 				16,
 				127,
 				172,
 				93,
-				428,
+				442,
 				8,
 				123,
 				120,
@@ -11182,9 +11187,9 @@
 			"title": "Type aliases",
 			"kind": 4194304,
 			"children": [
-				463,
+				486,
 				91,
-				469
+				492
 			]
 		},
 		{
@@ -11199,8 +11204,8 @@
 			"kind": 64,
 			"children": [
 				2,
-				474,
-				471
+				497,
+				494
 			]
 		}
 	]

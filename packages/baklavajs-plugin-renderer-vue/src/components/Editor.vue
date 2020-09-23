@@ -11,7 +11,7 @@
     >
 
         <svg class="connections-container">
-            <g v-for="connection in connections" :key="connection.id">
+            <g v-for="connection in connections" :key="connection.id + counter.toString()">
                 <slot name="connections" :connection="connection">
                     <component :is="plugin.components.connection" :connection="connection"></component>
                 </slot>
@@ -27,7 +27,7 @@
             <component
                 :is="plugin.components.node"
                 v-for="node in nodes"
-                :key="node.id"
+                :key="node.id + counter.toString()"
                 :data="node"
                 :selected="selectedNodes.includes(node)"
                 @select="selectNode(node)"
@@ -47,6 +47,13 @@
         ></component>
 
         <component :is="plugin.components.sidebar"></component>
+
+        <component
+            v-if="plugin.enableMinimap"
+            :is="plugin.components.minimap"
+            :nodes="nodes"
+            :connections="connections"
+        ></component>
 
     </div>
 </template>
@@ -83,6 +90,9 @@ export default class EditorView extends Vue {
     dragging = false;
     ctrlPressed = false;
 
+    // Reason: https://github.com/newcat/baklavajs/issues/54
+    counter = 0;
+
     contextMenu = {
         items: [] as IMenuItem[],
         show: false,
@@ -115,6 +125,10 @@ export default class EditorView extends Vue {
     mounted() {
         this.updateContextMenu();
         this.plugin.editor.events.registerNodeType.addListener(this, () => this.updateContextMenu());
+        this.plugin.editor.hooks.load.tap(this, (s) => {
+            this.counter++;
+            return s;
+        });
         this.clipboard = new Clipboard(this.plugin.editor);
         this.history = new History(this.plugin);
     }

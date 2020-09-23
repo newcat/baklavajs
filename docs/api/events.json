@@ -361,7 +361,7 @@
 			],
 			"children": [
 				{
-					"id": 79,
+					"id": 80,
 					"name": "taps",
 					"kind": 1024,
 					"kindString": "Property",
@@ -400,7 +400,7 @@
 					"defaultValue": "[]"
 				},
 				{
-					"id": 87,
+					"id": 88,
 					"name": "execute",
 					"kind": 2048,
 					"kindString": "Method",
@@ -411,7 +411,7 @@
 					},
 					"signatures": [
 						{
-							"id": 88,
+							"id": 89,
 							"name": "execute",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -420,7 +420,7 @@
 							},
 							"parameters": [
 								{
-									"id": 89,
+									"id": 90,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -458,7 +458,7 @@
 					}
 				},
 				{
-					"id": 80,
+					"id": 81,
 					"name": "tap",
 					"kind": 2048,
 					"kindString": "Method",
@@ -468,7 +468,7 @@
 					},
 					"signatures": [
 						{
-							"id": 81,
+							"id": 82,
 							"name": "tap",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -477,7 +477,7 @@
 							},
 							"parameters": [
 								{
-									"id": 82,
+									"id": 83,
 									"name": "token",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -491,7 +491,7 @@
 									}
 								},
 								{
-									"id": 83,
+									"id": 84,
 									"name": "tapFn",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -540,7 +540,7 @@
 					}
 				},
 				{
-					"id": 84,
+					"id": 85,
 					"name": "untap",
 					"kind": 2048,
 					"kindString": "Method",
@@ -550,7 +550,7 @@
 					},
 					"signatures": [
 						{
-							"id": 85,
+							"id": 86,
 							"name": "untap",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -559,7 +559,7 @@
 							},
 							"parameters": [
 								{
-									"id": 86,
+									"id": 87,
 									"name": "token",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -603,16 +603,16 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						79
+						80
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						87,
-						80,
-						84
+						88,
+						81,
+						85
 					]
 				}
 			],
@@ -626,7 +626,7 @@
 			"extendedBy": [
 				{
 					"type": "reference",
-					"id": 90,
+					"id": 91,
 					"name": "SequentialHook"
 				}
 			],
@@ -1025,7 +1025,7 @@
 			]
 		},
 		{
-			"id": 90,
+			"id": 91,
 			"name": "SequentialHook",
 			"kind": 128,
 			"kindString": "Class",
@@ -1037,7 +1037,7 @@
 			},
 			"typeParameter": [
 				{
-					"id": 91,
+					"id": 92,
 					"name": "T",
 					"kind": 131072,
 					"kindString": "Type parameter",
@@ -1046,7 +1046,7 @@
 					}
 				},
 				{
-					"id": 95,
+					"id": 96,
 					"name": "O",
 					"kind": 131072,
 					"kindString": "Type parameter",
@@ -1057,7 +1057,7 @@
 			],
 			"children": [
 				{
-					"id": 96,
+					"id": 97,
 					"name": "taps",
 					"kind": 1024,
 					"kindString": "Property",
@@ -1096,12 +1096,12 @@
 					"defaultValue": "[]",
 					"inheritedFrom": {
 						"type": "reference",
-						"id": 79,
+						"id": 80,
 						"name": "Hook.taps"
 					}
 				},
 				{
-					"id": 92,
+					"id": 93,
 					"name": "execute",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1111,7 +1111,7 @@
 					},
 					"signatures": [
 						{
-							"id": 93,
+							"id": 94,
 							"name": "execute",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1120,7 +1120,7 @@
 							},
 							"parameters": [
 								{
-									"id": 94,
+									"id": 95,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1139,7 +1139,7 @@
 							},
 							"overwrites": {
 								"type": "reference",
-								"id": 87,
+								"id": 88,
 								"name": "Hook.execute"
 							},
 							"implementationOf": {
@@ -1158,7 +1158,7 @@
 					],
 					"overwrites": {
 						"type": "reference",
-						"id": 87,
+						"id": 88,
 						"name": "Hook.execute"
 					},
 					"implementationOf": {
@@ -1168,7 +1168,7 @@
 					}
 				},
 				{
-					"id": 97,
+					"id": 98,
 					"name": "tap",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1178,7 +1178,7 @@
 					},
 					"signatures": [
 						{
-							"id": 98,
+							"id": 99,
 							"name": "tap",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1187,7 +1187,7 @@
 							},
 							"parameters": [
 								{
-									"id": 99,
+									"id": 100,
 									"name": "token",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1201,7 +1201,7 @@
 									}
 								},
 								{
-									"id": 100,
+									"id": 101,
 									"name": "tapFn",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1231,7 +1231,7 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 80,
+								"id": 81,
 								"name": "Hook.tap"
 							},
 							"implementationOf": {
@@ -1250,7 +1250,7 @@
 					],
 					"inheritedFrom": {
 						"type": "reference",
-						"id": 80,
+						"id": 81,
 						"name": "Hook.tap"
 					},
 					"implementationOf": {
@@ -1260,7 +1260,7 @@
 					}
 				},
 				{
-					"id": 101,
+					"id": 102,
 					"name": "untap",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1270,7 +1270,7 @@
 					},
 					"signatures": [
 						{
-							"id": 102,
+							"id": 103,
 							"name": "untap",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1279,7 +1279,7 @@
 							},
 							"parameters": [
 								{
-									"id": 103,
+									"id": 104,
 									"name": "token",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1299,7 +1299,7 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 84,
+								"id": 85,
 								"name": "Hook.untap"
 							},
 							"implementationOf": {
@@ -1318,7 +1318,7 @@
 					],
 					"inheritedFrom": {
 						"type": "reference",
-						"id": 84,
+						"id": 85,
 						"name": "Hook.untap"
 					},
 					"implementationOf": {
@@ -1333,16 +1333,16 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						96
+						97
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						92,
-						97,
-						101
+						93,
+						98,
+						102
 					]
 				}
 			],
@@ -1828,7 +1828,7 @@
 				},
 				{
 					"type": "reference",
-					"id": 90,
+					"id": 91,
 					"name": "SequentialHook"
 				}
 			]
@@ -2104,7 +2104,7 @@
 					}
 				},
 				{
-					"id": 108,
+					"id": 109,
 					"name": "I",
 					"kind": 131072,
 					"kindString": "Type parameter",
@@ -2113,7 +2113,7 @@
 					}
 				},
 				{
-					"id": 109,
+					"id": 110,
 					"name": "O",
 					"kind": 131072,
 					"kindString": "Type parameter",
@@ -2137,7 +2137,7 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 110,
+					"id": 111,
 					"name": "__type",
 					"kind": 65536,
 					"kindString": "Type literal",
@@ -2146,7 +2146,7 @@
 					},
 					"signatures": [
 						{
-							"id": 111,
+							"id": 112,
 							"name": "__call",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2155,7 +2155,7 @@
 							},
 							"parameters": [
 								{
-									"id": 112,
+									"id": 113,
 									"name": "i",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2203,7 +2203,7 @@
 					}
 				},
 				{
-					"id": 104,
+					"id": 105,
 					"name": "T",
 					"kind": 131072,
 					"kindString": "Type parameter",
@@ -2227,7 +2227,7 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 105,
+					"id": 106,
 					"name": "__type",
 					"kind": 65536,
 					"kindString": "Type literal",
@@ -2236,7 +2236,7 @@
 					},
 					"signatures": [
 						{
-							"id": 106,
+							"id": 107,
 							"name": "__call",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2245,7 +2245,7 @@
 							},
 							"parameters": [
 								{
-									"id": 107,
+									"id": 108,
 									"name": "ev",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2317,7 +2317,7 @@
 				50,
 				76,
 				63,
-				90
+				91
 			]
 		},
 		{

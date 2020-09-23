@@ -36,7 +36,7 @@
 					"defaultValue": "\"InterfaceTypePlugin\""
 				},
 				{
-					"id": 10,
+					"id": 12,
 					"name": "addConversion",
 					"kind": 2048,
 					"kindString": "Method",
@@ -46,7 +46,7 @@
 					},
 					"signatures": [
 						{
-							"id": 11,
+							"id": 13,
 							"name": "addConversion",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -58,7 +58,7 @@
 							},
 							"parameters": [
 								{
-									"id": 12,
+									"id": 14,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -74,7 +74,7 @@
 									}
 								},
 								{
-									"id": 13,
+									"id": 15,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -90,7 +90,7 @@
 									}
 								},
 								{
-									"id": 14,
+									"id": 16,
 									"name": "transformationFunction",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -111,7 +111,7 @@
 											{
 												"type": "reflection",
 												"declaration": {
-													"id": 15,
+													"id": 17,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
@@ -120,7 +120,7 @@
 													},
 													"signatures": [
 														{
-															"id": 16,
+															"id": 18,
 															"name": "__call",
 															"kind": 4096,
 															"kindString": "Call signature",
@@ -129,7 +129,7 @@
 															},
 															"parameters": [
 																{
-																	"id": 17,
+																	"id": 19,
 																	"name": "value",
 																	"kind": 32768,
 																	"kindString": "Parameter",
@@ -169,7 +169,7 @@
 					]
 				},
 				{
-					"id": 6,
+					"id": 8,
 					"name": "addType",
 					"kind": 2048,
 					"kindString": "Method",
@@ -179,7 +179,7 @@
 					},
 					"signatures": [
 						{
-							"id": 7,
+							"id": 9,
 							"name": "addType",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -191,7 +191,7 @@
 							},
 							"parameters": [
 								{
-									"id": 8,
+									"id": 10,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -207,7 +207,7 @@
 									}
 								},
 								{
-									"id": 9,
+									"id": 11,
 									"name": "color",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -238,7 +238,7 @@
 					]
 				},
 				{
-					"id": 22,
+					"id": 24,
 					"name": "canConvert",
 					"kind": 2048,
 					"kindString": "Method",
@@ -248,7 +248,7 @@
 					},
 					"signatures": [
 						{
-							"id": 23,
+							"id": 25,
 							"name": "canConvert",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -257,7 +257,7 @@
 							},
 							"parameters": [
 								{
-									"id": 24,
+									"id": 26,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -270,7 +270,7 @@
 									}
 								},
 								{
-									"id": 25,
+									"id": 27,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -298,7 +298,7 @@
 					]
 				},
 				{
-					"id": 26,
+					"id": 28,
 					"name": "convert",
 					"kind": 2048,
 					"kindString": "Method",
@@ -308,7 +308,7 @@
 					},
 					"signatures": [
 						{
-							"id": 27,
+							"id": 29,
 							"name": "convert",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -317,7 +317,7 @@
 							},
 							"parameters": [
 								{
-									"id": 28,
+									"id": 30,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -330,7 +330,7 @@
 									}
 								},
 								{
-									"id": 29,
+									"id": 31,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -343,7 +343,7 @@
 									}
 								},
 								{
-									"id": 30,
+									"id": 32,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -371,7 +371,7 @@
 					]
 				},
 				{
-					"id": 18,
+					"id": 20,
 					"name": "getConversion",
 					"kind": 2048,
 					"kindString": "Method",
@@ -381,7 +381,7 @@
 					},
 					"signatures": [
 						{
-							"id": 19,
+							"id": 21,
 							"name": "getConversion",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -390,7 +390,7 @@
 							},
 							"parameters": [
 								{
-									"id": 20,
+									"id": 22,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -403,7 +403,7 @@
 									}
 								},
 								{
-									"id": 21,
+									"id": 23,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -444,7 +444,7 @@
 					]
 				},
 				{
-					"id": 3,
+					"id": 5,
 					"name": "register",
 					"kind": 2048,
 					"kindString": "Method",
@@ -454,7 +454,7 @@
 					},
 					"signatures": [
 						{
-							"id": 4,
+							"id": 6,
 							"name": "register",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -463,7 +463,7 @@
 							},
 							"parameters": [
 								{
-									"id": 5,
+									"id": 7,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -503,12 +503,12 @@
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						10,
-						6,
-						22,
-						26,
-						18,
-						3
+						12,
+						8,
+						24,
+						28,
+						20,
+						5
 					]
 				}
 			],

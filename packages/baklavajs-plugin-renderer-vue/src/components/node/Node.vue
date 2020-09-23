@@ -43,7 +43,7 @@
 
             <!-- Options -->
             <div class="__options">
-                <template v-for="[name, option] in options">
+                <template v-for="[name, option] in data.options">
 
                     <component
                         :is="plugin.components.nodeOption"
@@ -146,10 +146,6 @@ export default class NodeView extends Vue {
             left: `${this.data.position.x}px`,
             width: `${this.data.width}px`,
         };
-    }
-
-    get options() {
-        return Array.from(this.data.options.entries());
     }
 
     mounted() {
