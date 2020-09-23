@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/*eslint-env node*/
+
 const packageJson = require("./package.json");
 const path = require("path");
 const fs = require("fs");
@@ -7,7 +10,7 @@ function packageNameToFolder(pkgName) {
     return path.resolve(__dirname, "..", pkgName.replace(pkgNameRegex, "baklavajs-$1"));
 }
 
-for (dep in packageJson.dependencies) {
+for (let dep in packageJson.dependencies) {
     if (dep.startsWith("@baklavajs")) {
         const folder = packageNameToFolder(dep);
         const depPackageJson = require(path.resolve(folder, "package.json"));

@@ -2,17 +2,24 @@
     "name": "baklavajs",
     "private": true,
     "scripts": {
-        "playground": "cd packages/baklavajs-playground && yarn run serve"
+        "playground": "cd packages/baklavajs-playground && yarn run serve",
+        "lint": "eslint packages --ext .js,.ts"
     },
     "workspaces": [
         "packages/*"
     ],
     "devDependencies": {
         "@types/chai": "^4.1.7",
+        "@typescript-eslint/eslint-plugin": "^4.2.0",
+        "@typescript-eslint/parser": "^4.2.0",
         "chai": "^4.2.0",
         "clean-webpack-plugin": "^3.0.0",
+        "eslint": "^7.9.0",
+        "eslint-config-prettier": "^6.11.0",
         "lerna": "^3.13.1",
+        "prettier": "^2.1.2",
         "typedoc": "^0.17.3",
+        "typescript": "^4.0.3",
         "webpack-bundle-analyzer": "^3.3.2"
     },
     "postcss": {

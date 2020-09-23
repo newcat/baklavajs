@@ -4,7 +4,6 @@ import { BaklavaEvent } from "@baklavajs/events";
 import { IConnection, ITransferConnection } from "../types/connection";
 
 export class Connection implements ITransferConnection {
-
     public id: string;
     public from: NodeInterface;
     public to: NodeInterface;
@@ -16,7 +15,6 @@ export class Connection implements ITransferConnection {
     };
 
     public constructor(from: NodeInterface, to: NodeInterface) {
-
         if (!from || !to) {
             throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
         }
@@ -27,16 +25,14 @@ export class Connection implements ITransferConnection {
 
         this.from.connectionCount++;
         this.to.connectionCount++;
-
     }
 
-    public destruct() {
+    public destruct(): void {
         this.events.destruct.emit();
         this.from.connectionCount--;
         this.to.connectionCount--;
         this.destructed = true;
     }
-
 }
 
 /**
@@ -44,13 +40,11 @@ export class Connection implements ITransferConnection {
  * It won't alter any state of the connected nodes
  */
 export class DummyConnection implements IConnection {
-
     public id: string;
     public from: NodeInterface;
     public to: NodeInterface;
 
     public constructor(from: NodeInterface, to: NodeInterface) {
-
         if (!from || !to) {
             throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
         }
@@ -58,7 +52,5 @@ export class DummyConnection implements IConnection {
         this.id = generateId();
         this.from = from;
         this.to = to;
-
     }
-
 }

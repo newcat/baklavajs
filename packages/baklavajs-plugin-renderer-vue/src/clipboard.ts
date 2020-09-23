@@ -44,7 +44,6 @@ export default class Clipboard {
         for (const n of parsedNodeBuffer) {
             const nodeType = this.editor.nodeTypes.get(n.type);
             if (!nodeType) {
-                // tslint:disable-next-line: no-console
                 console.warn(`Node type ${n.type} not registered`);
                 return;
             }

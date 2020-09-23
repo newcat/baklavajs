@@ -3,10 +3,6 @@ import { INodeState } from "./state";
 import { IEditor } from "./editor";
 import { INodeIO, IODefinition, IODefinitionValues } from "./nodeIO";
 
-export interface INodeType<I extends IODefinition, O extends IODefinition> {
-    
-}
-
 export interface INode<I extends IODefinition, O extends IODefinition> {
 
     type: string;
@@ -38,3 +34,5 @@ export interface INode<I extends IODefinition, O extends IODefinition> {
     registerEditor(editor: IEditor): void;
 
 }
+
+export type AbstractNode = INode<IODefinition, IODefinition>;

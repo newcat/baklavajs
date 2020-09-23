@@ -1,16 +1,24 @@
 import { Node } from "./node";
 import { NodeInterface } from "./nodeInterface";
 import { Connection, DummyConnection } from "./connection";
-import { IState } from "../types/state";
+import { IState, INodeIO } from "../types";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
-import { IEditor, IPlugin, IConnection, NodeConstructor, INode, IAddConnectionEventData, IAddNodeTypeEventData } from "../types";
+import {
+    IEditor,
+    IPlugin,
+    IConnection,
+    NodeConstructor,
+    INode,
+    IAddConnectionEventData,
+    IAddNodeTypeEventData
+} from "../types";
 import generateId from "./idGenerator";
+import { IODefinition } from '../types/nodeIO';
 
 /** The main model class for BaklavaJS */
 export class Editor implements IEditor {
-
     private _plugins: Set<IPlugin> = new Set();
-    private _nodes: Node[] = [];
+    private _nodes: Node<IODefinition, IODefinition>[] = [];
     private _connections: Connection[] = [];
     private _nodeTypes: Map<string, NodeConstructor> = new Map();
     private _nodeCategories: Map<string, string[]> = new Map([["default", []]]);
@@ -18,10 +26,10 @@ export class Editor implements IEditor {
     public events = {
         beforeRegisterNodeType: new PreventableBaklavaEvent<IAddNodeTypeEventData>(),
         registerNodeType: new BaklavaEvent<IAddNodeTypeEventData>(),
-        beforeAddNode: new PreventableBaklavaEvent<INode>(),
-        addNode: new BaklavaEvent<INode>(),
-        beforeRemoveNode: new PreventableBaklavaEvent<INode>(),
-        removeNode: new BaklavaEvent<INode>(),
+        beforeAddNode: new PreventableBaklavaEvent<INode<IODefinition, IODefinition>>(),
+        addNode: new BaklavaEvent<INode<IODefinition, IODefinition>>(),
+        beforeRemoveNode: new PreventableBaklavaEvent<INode<IODefinition, IODefinition>>(),
+        removeNode: new BaklavaEvent<INode<IODefinition, IODefinition>>(),
         beforeAddConnection: new PreventableBaklavaEvent<IAddConnectionEventData>(),
         addConnection: new BaklavaEvent<IConnection>(),
         checkConnection: new PreventableBaklavaEvent<IAddConnectionEventData>(),
@@ -37,28 +45,28 @@ export class Editor implements IEditor {
     };
 
     /** List of all nodes */
-    public get nodes() {
-        return this._nodes as ReadonlyArray<Node>;
+    public get nodes(): ReadonlyArray<Node<IODefinition, IODefinition>> {
+        return this._nodes;
     }
 
     /** List of all connections */
-    public get connections() {
-        return this._connections as ReadonlyArray<Connection>;
+    public get connections(): ReadonlyArray<Connection> {
+        return this._connections;
     }
 
     /** List of all registered node types */
-    public get nodeTypes() {
-        return this._nodeTypes as ReadonlyMap<string, NodeConstructor>;
+    public get nodeTypes(): ReadonlyMap<string, NodeConstructor> {
+        return this._nodeTypes;
     }
 
     /** Mapping of nodes to node categories */
-    public get nodeCategories() {
-        return this._nodeCategories as ReadonlyMap<string, string[]>;
+    public get nodeCategories(): ReadonlyMap<string, string[]> {
+        return this._nodeCategories;
     }
 
     /** List of all plugins in this editor */
-    public get plugins() {
-        return this._plugins as ReadonlySet<IPlugin>;
+    public get plugins(): ReadonlySet<IPlugin>{
+        return this._plugins;
     }
 
     /**
@@ -67,8 +75,10 @@ export class Editor implements IEditor {
      * @param type Actual type / constructor of the node
      * @param category Category of the node. Will be used in the view's context menu for adding nodes
      */
-    public registerNodeType(typeName: string, type: NodeConstructor, category = "default") {
-        if (this.events.beforeRegisterNodeType.emit({ typeName, type, category })) { return; }
+    public registerNodeType(typeName: string, type: NodeConstructor, category = "default"): void {
+        if (this.events.beforeRegisterNodeType.emit({ typeName, type, category })) {
+            return;
+        }
         this._nodeTypes.set(typeName, type);
         if (!this.nodeCategories.has(category)) {
             this._nodeCategories.set(category, []);
@@ -82,8 +92,10 @@ export class Editor implements IEditor {
      * @param node Instance of a node
      * @returns Instance of the node or undefined if the node was not added
      */
-    public addNode(node: Node): Node|undefined {
-        if (this.events.beforeAddNode.emit(node)) { return; }
+    public addNode(node: Node<IODefinition, IODefinition>): Node<IODefinition, IODefinition> | undefined {
+        if (this.events.beforeAddNode.emit(node)) {
+            return;
+        }
         node.registerEditor(this);
         this._nodes.push(node);
         this.events.addNode.emit(node);
@@ -95,9 +107,11 @@ export class Editor implements IEditor {
      * Will also remove all connections from and to the node.
      * @param node Reference to a node in the list.
      */
-    public removeNode(node: Node) {
+    public removeNode(node: Node<IODefinition, IODefinition>): void {
         if (this.nodes.includes(node)) {
-            if (this.events.beforeRemoveNode.emit(node)) { return; }
+            if (this.events.beforeRemoveNode.emit(node)) {
+                return;
+            }
             this.connections
                 .filter((c) => c.from.parent === node || c.to.parent === node)
                 .forEach((c) => this.removeConnection(c));
@@ -112,14 +126,15 @@ export class Editor implements IEditor {
      * @param to Target interface for the connection
      * @returns The created connection. If no connection could be created, returns `undefined`.
      */
-    public addConnection(from: NodeInterface, to: NodeInterface): Connection|undefined {
-
+    public addConnection(from: NodeInterface, to: NodeInterface): Connection | undefined {
         const dc = this.checkConnection(from, to);
         if (!dc) {
             return undefined;
         }
 
-        if (this.events.beforeAddConnection.emit({ from, to })) { return; }
+        if (this.events.beforeAddConnection.emit({ from, to })) {
+            return;
+        }
 
         const c = new Connection(dc.from, dc.to);
         this._connections.push(c);
@@ -127,16 +142,17 @@ export class Editor implements IEditor {
         this.events.addConnection.emit(c);
 
         return c;
-
     }
 
     /**
      * Remove a connection from the list of connections.
      * @param connection Connection instance that should be removed.
      */
-    public removeConnection(connection: Connection) {
+    public removeConnection(connection: Connection): void {
         if (this.connections.includes(connection)) {
-            if (this.events.beforeRemoveConnection.emit(connection)) { return; }
+            if (this.events.beforeRemoveConnection.emit(connection)) {
+                return;
+            }
             connection.destruct();
             this._connections.splice(this.connections.indexOf(connection), 1);
             this.events.removeConnection.emit(connection);
@@ -149,8 +165,7 @@ export class Editor implements IEditor {
      * @param to The target node interface (must be an input interface)
      * @returns Whether the connection is allowed or not.
      */
-    public checkConnection(from: NodeInterface, to: NodeInterface): false|DummyConnection {
-
+    public checkConnection(from: NodeInterface, to: NodeInterface): false | DummyConnection {
         if (!from || !to) {
             return false;
         } else if (from.parent === to.parent) {
@@ -175,18 +190,18 @@ export class Editor implements IEditor {
             return false;
         }
 
-        if (this.events.checkConnection.emit({ from, to })) { return false; }
+        if (this.events.checkConnection.emit({ from, to })) {
+            return false;
+        }
 
         return new DummyConnection(from, to);
-
     }
 
     /**
      * Load a state
      * @param state State to load
      */
-    public load(state: IState) {
-
+    public load(state: IState): void {
         // Clear current state
         for (let i = this.connections.length - 1; i >= 0; i--) {
             this.removeConnection(this.connections[i]);
@@ -197,11 +212,9 @@ export class Editor implements IEditor {
 
         // Load state
         for (const n of state.nodes) {
-
             // find node type
             const nt = this.nodeTypes.get(n.type);
             if (!nt) {
-                // tslint:disable-next-line:no-console
                 console.warn(`Node type ${n.type} is not registered`);
                 continue;
             }
@@ -209,18 +222,15 @@ export class Editor implements IEditor {
             const node = new nt() as Node;
             this.addNode(node);
             node.load(n);
-
         }
 
         for (const c of state.connections) {
             const fromIf = this.findNodeInterface(c.from);
             const toIf = this.findNodeInterface(c.to);
             if (!fromIf) {
-                // tslint:disable-next-line:no-console
                 console.warn(`Could not find interface with id ${c.from}`);
                 continue;
             } else if (!toIf) {
-                // tslint:disable-next-line:no-console
                 console.warn(`Could not find interface with id ${c.to}`);
                 continue;
             } else {
@@ -229,7 +239,6 @@ export class Editor implements IEditor {
         }
 
         this.hooks.load.execute(state);
-
     }
 
     /**
@@ -254,25 +263,31 @@ export class Editor implements IEditor {
      * @returns Whether the plugin was successfully registered
      */
     public use(plugin: IPlugin): boolean {
-        if (this.events.beforeUsePlugin.emit(plugin)) { return false; }
+        if (this.events.beforeUsePlugin.emit(plugin)) {
+            return false;
+        }
         this._plugins.add(plugin);
         plugin.register(this);
         this.events.usePlugin.emit(plugin);
         return true;
     }
 
-    public generateId(prefix: string = ""): string {
+    public generateId(prefix = ""): string {
         return prefix + generateId();
     }
 
-    public findNodeInterface(id: string) {
-        for (const n of this.nodes) {
-            for (const ik of n.interfaces.keys()) {
-                if (n.interfaces.get(ik)!.id === id) {
-                    return n.interfaces.get(ik)!;
+    public findNodeIO(id: string): INodeIO<unknown> | undefined {
+        for (const node of this.nodes) {
+            for (const k in node.inputs) {
+                if (node.inputs[k].id === id) {
+                    return node.inputs[k];
+                }
+            }
+            for (const k in node.outputs) {
+                if (node.outputs[k].id === id) {
+                    return node.outputs[k];
                 }
             }
         }
     }
-
 }
