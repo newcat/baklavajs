@@ -5,8 +5,8 @@ import { IConnection, ITransferConnection } from "../types/connection";
 
 export class Connection implements ITransferConnection {
     public id: string;
-    public from: NodeInterface;
-    public to: NodeInterface;
+    public from: NodeInterface<unknown>;
+    public to: NodeInterface<unknown>;
     public isInDanger = false;
     public destructed = false;
 
@@ -14,7 +14,7 @@ export class Connection implements ITransferConnection {
         destruct: new BaklavaEvent<void>()
     };
 
-    public constructor(from: NodeInterface, to: NodeInterface) {
+    public constructor(from: NodeInterface<unknown>, to: NodeInterface<unknown>) {
         if (!from || !to) {
             throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
         }
@@ -41,10 +41,10 @@ export class Connection implements ITransferConnection {
  */
 export class DummyConnection implements IConnection {
     public id: string;
-    public from: NodeInterface;
-    public to: NodeInterface;
+    public from: NodeInterface<unknown>;
+    public to: NodeInterface<unknown>;
 
-    public constructor(from: NodeInterface, to: NodeInterface) {
+    public constructor(from: NodeInterface<unknown>, to: NodeInterface<unknown>) {
         if (!from || !to) {
             throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
         }

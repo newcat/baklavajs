@@ -1,5 +1,5 @@
 import { INode } from "./node";
-import { INodeIO } from "./nodeIO";
+import { INodeIO, IODefinition } from "./nodeIO";
 
 export interface INodeInterface<T> extends INodeIO<T> {
 
@@ -7,8 +7,8 @@ export interface INodeInterface<T> extends INodeIO<T> {
     [k: string]: any;
 
     type: "interface";
-    isInput: boolean;
-    parent: INode<any, any>;
+    isInput?: boolean;
+    parent?: INode<IODefinition, IODefinition>;
     component?: string;
     connectionCount: number;
 

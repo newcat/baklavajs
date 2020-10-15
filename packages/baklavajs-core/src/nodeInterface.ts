@@ -1,13 +1,18 @@
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
 import generateId from "./idGenerator";
-import { INodeInterface, AbstractNode, INodeIOState } from "../types";
+import { INodeInterface, INodeIOState } from "../types";
+import { AbstractNode } from './node';
 
-export abstract class NodeInterface<T> implements INodeInterface<T> {
+export class NodeInterface<T> implements INodeInterface<T> {
     public readonly type = "interface";
 
-    public id: string;
-    public isInput: boolean;
-    public parent: AbstractNode;
+    public id = "ni_" + generateId();
+    
+    /** Will be set automatically after the node was created */
+    public isInput?: boolean;
+    /** Will be set automatically after the node was created */
+    public parent?: AbstractNode;
+    
     public component?: string | undefined;
 
     public events = {
@@ -43,10 +48,7 @@ export abstract class NodeInterface<T> implements INodeInterface<T> {
         return this._value;
     }
 
-    public constructor(parent: AbstractNode, isInput: boolean, value: T) {
-        this.parent = parent;
-        this.isInput = isInput;
-        this.id = "ni_" + generateId();
+    public constructor(value: T) {
         this._value = value;
     }
 

@@ -1,9 +1,18 @@
-import { Node } from "../src";
+import { Node, NodeInterface } from "../src";
+import { IODefinition } from "../types";
 
-export default class OutputNode extends Node {
+export default class OutputNode<I, O> extends Node<I, O> {
 
     public type = "OutputNode";
-    public name = this.type;
+    public title = this.type;
+
+    public inputs: I = {
+        test: new NodeInterface<number>(this, true, 3)
+    }
+
+    public outputs: O = {
+
+    }
 
     public constructor() {
         super();

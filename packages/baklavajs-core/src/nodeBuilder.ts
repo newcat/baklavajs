@@ -1,4 +1,5 @@
-import { Node } from "./node";
+import { IODefinition, IODefinitionValues } from "../types";
+import { AbstractNode, Node } from "./node";
 
 interface IInterfaceOptions {
     isInput: boolean;
@@ -15,41 +16,37 @@ interface INodeOptionParameters {
     additionalProperties?: Record<string, any>;
 }
 
-type CalculationFunction = (this: Node, n: Node, calculationData?: any) => any;
-type NodeConstructorImpl = new () => Node;
+type CalculationFunction<I extends IODefinition, O extends IODefinition> = (
+    this: Node<I, O>,
+    n: Node<I, O>,
+    inputs: IODefinitionValues<I>,
+    globalValues?: any
+) => IODefinitionValues<O> | Promise<IODefinitionValues<O>> | void;
+type NodeConstructorImpl = new () => AbstractNode;
 
 function getDefaultValue(v: any) {
-    if (typeof(v) === "function") {
+    if (typeof v === "function") {
         return v();
     } else {
         return v;
     }
 }
 
-function generateNode(
-    type: string, name: string, additionalProperties: Record<string, any>|undefined, intfs: IInterfaceOptions[],
-    options: Map<string, INodeOptionParameters>, calcFunction?: CalculationFunction
+function generateNode<I extends IODefinition, O extends IODefinition>(
+    type: string,
+    title: string,
+    inputs: I,
+    outputs: O,
+    calcFunction?: CalculationFunction<I, O>
 ) {
-    return class extends Node {
-
+    return class extends Node<I, O> {
         type = type;
-        name = name;
+        title = title;
+        inputs = inputs;
+        outputs = outputs;
 
         constructor() {
             super();
-            if (additionalProperties) {
-                Object.assign(this, additionalProperties);
-            }
-            for (const i of intfs) {
-                if (i.isInput) {
-                    this.addInputInterface(i.name, i.option, getDefaultValue(i.defaultValue), i.additionalProperties);
-                } else {
-                    this.addOutputInterface(i.name, i.additionalProperties);
-                }
-            }
-            Array.from(options.entries()).forEach(([k, v]) => {
-                this.addOption(k, v.optionComponent, getDefaultValue(v.value), v.sidebarComponent, v.additionalProperties);
-            });
         }
 
         public calculate(calculationData?: any): any {
@@ -57,16 +54,13 @@ function generateNode(
                 return calcFunction.call(this, this, calculationData);
             }
         }
-
     };
 }
 
 /** Utility class for creating custom nodes */
 export class NodeBuilder {
-
     private type = "";
-    private name = "";
-    private additionalProperties?: Record<string, any>;
+    private title = "";
     private intfs: IInterfaceOptions[] = [];
     private options: Map<string, INodeOptionParameters> = new Map();
     private calcFunction?: CalculationFunction;
@@ -88,7 +82,14 @@ export class NodeBuilder {
      * @returns The generated node class
      */
     public build(): NodeConstructorImpl {
-        return generateNode(this.type, this.name, this.additionalProperties, this.intfs, this.options, this.calcFunction);
+        return generateNode(
+            this.type,
+            this.name,
+            this.additionalProperties,
+            this.intfs,
+            this.options,
+            this.calcFunction
+        );
     }
 
     /**
@@ -113,8 +114,12 @@ export class NodeBuilder {
      * @param additionalProperties Additional properties of the interface that can be used by plugins
      * @returns Current node builder instance for chaining
      */
-    public addInputInterface(name: string, option?: string, defaultValue: any = null,
-                             additionalProperties?: Record<string, any>): NodeBuilder {
+    public addInputInterface(
+        name: string,
+        option?: string,
+        defaultValue: any = null,
+        additionalProperties?: Record<string, any>
+    ): NodeBuilder {
         this.checkDefaultValue(defaultValue);
         this.intfs.push({ isInput: true, name, option, defaultValue, additionalProperties });
         return this;
@@ -143,14 +148,19 @@ export class NodeBuilder {
      * @param additionalProperties Additional properties of the option that can be used by plugins
      * @returns Current node builder instance for chaining
      */
-    public addOption(name: string, optionComponent: string, defaultValue: any = null,
-                     sidebarComponent?: string, additionalProperties?: Record<string, any>): NodeBuilder {
+    public addOption(
+        name: string,
+        optionComponent: string,
+        defaultValue: any = null,
+        sidebarComponent?: string,
+        additionalProperties?: Record<string, any>
+    ): NodeBuilder {
         this.checkDefaultValue(defaultValue);
         this.options.set(name, {
             value: defaultValue,
             optionComponent,
             sidebarComponent,
-            additionalProperties
+            additionalProperties,
         });
         return this;
     }
@@ -169,9 +179,8 @@ export class NodeBuilder {
     }
 
     private checkDefaultValue(v: any) {
-        if (typeof(v) === "object" && v !== null) {
+        if (typeof v === "object" && v !== null) {
             throw new Error("If the default value is an object, provide a generator function instead of the object");
         }
     }
-
 }
