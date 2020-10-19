@@ -44,7 +44,7 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
     /** Use this property to provide custom components,
      * which will be used when rendering the respective entities
      */
-    public components = {
+    public components: Record<string, Vue.Component> = {
         node: NodeView,
         nodeOption: NodeOptionView,
         nodeInterface: NodeInterfaceView,

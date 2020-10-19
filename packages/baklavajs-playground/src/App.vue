@@ -50,7 +50,7 @@ export default class App extends Vue {
         this.editor = new Editor();
 
         this.viewPlugin = new ViewPlugin();
-        this.viewPlugin.components.node = CustomNodeRenderer as any;
+        this.viewPlugin.components.node = CustomNodeRenderer;
         this.viewPlugin.enableMinimap = true;
         this.editor.use(this.viewPlugin);
 
