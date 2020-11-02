@@ -1,6 +1,6 @@
 {
     "name": "baklavajs",
-    "version": "1.7.5",
+    "version": "1.7.6",
     "description": "Full installation of BaklavaJS including the core and all plugins",
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
@@ -30,6 +30,6 @@
         "@baklavajs/plugin-engine": "^1.6.1",
         "@baklavajs/plugin-interface-types": "^1.6.1",
         "@baklavajs/plugin-options-vue": "^1.7.2",
-        "@baklavajs/plugin-renderer-vue": "^1.7.5"
+        "@baklavajs/plugin-renderer-vue": "^1.7.6"
     }
 }
