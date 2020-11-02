@@ -60,6 +60,7 @@ export default class NodeInterfaceView extends Vue {
             this.$forceUpdate();
             this.isConnected = c > 0;
         });
+        this.data.events.updated.addListener(this, (v) => { this.$forceUpdate(); });
         this.isConnected = this.data.connectionCount > 0;
     }
 
@@ -74,6 +75,7 @@ export default class NodeInterfaceView extends Vue {
     beforeDestroy() {
         this.data.events.setValue.removeListener(this);
         this.data.events.setConnectionCount.removeListener(this);
+        this.data.events.updated.removeListener(this);
     }
 
     startHover() {
