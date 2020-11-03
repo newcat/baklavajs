@@ -13,13 +13,13 @@ jobs:
     - stage: test
       script:
         - lerna bootstrap
-        - lerna run build
-        - lerna run test
+        - yarn run build
+        - yarn run test
     - stage: dev build and deploy
       if: branch = dev
       script:
         - lerna bootstrap
-        - lerna run build
+        - yarn run build
       before_deploy:
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
       deploy:
@@ -32,7 +32,7 @@ jobs:
       if: tag IS present
       script:
         - lerna bootstrap
-        - lerna run build
+        - yarn run build
       before_deploy:
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
       deploy:

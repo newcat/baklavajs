@@ -2,7 +2,10 @@
     "name": "baklavajs",
     "private": true,
     "scripts": {
-        "playground": "cd packages/baklavajs-playground && yarn run serve"
+        "playground": "cd packages/baklavajs-playground && yarn run serve",
+        "build": "lerna run build --stream",
+        "test": "lerna run test",
+        "clean": "rimraf ./packages/*/dist && rimraf ./packages/baklavajs-full/lib"
     },
     "workspaces": [
         "packages/*"
@@ -12,6 +15,7 @@
         "chai": "^4.2.0",
         "clean-webpack-plugin": "^3.0.0",
         "lerna": "^3.22.1",
+        "rimraf": "^3.0.2",
         "typedoc": "^0.19.2",
         "webpack-bundle-analyzer": "^3.9.0"
     },
