@@ -38,7 +38,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 10,
 							"character": 23
 						}
@@ -143,7 +143,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 17,
 							"character": 22
 						}
@@ -205,7 +205,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 36,
 							"character": 8
 						}
@@ -269,7 +269,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 26,
 							"character": 25
 						}
@@ -301,7 +301,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "src/index.ts",
+					"fileName": "packages/baklavajs-events/src/index.ts",
 					"line": 8,
 					"character": 25
 				}
@@ -371,7 +371,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 67,
 							"character": 18
 						}
@@ -389,7 +389,11 @@
 									},
 									{
 										"type": "typeParameter",
-										"name": "O"
+										"name": "O",
+										"default": {
+											"type": "typeParameter",
+											"name": "I"
+										}
 									}
 								],
 								"name": "HookTap"
@@ -435,7 +439,11 @@
 							],
 							"type": {
 								"type": "typeParameter",
-								"name": "O"
+								"name": "O",
+								"default": {
+									"type": "typeParameter",
+									"name": "I"
+								}
 							},
 							"implementationOf": {
 								"type": "reference",
@@ -446,7 +454,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 86,
 							"character": 27
 						}
@@ -508,7 +516,11 @@
 											},
 											{
 												"type": "typeParameter",
-												"name": "O"
+												"name": "O",
+												"default": {
+													"type": "typeParameter",
+													"name": "I"
+												}
 											}
 										],
 										"name": "HookTap"
@@ -528,7 +540,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 69,
 							"character": 14
 						}
@@ -586,7 +598,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 77,
 							"character": 16
 						}
@@ -618,7 +630,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "src/index.ts",
+					"fileName": "packages/baklavajs-events/src/index.ts",
 					"line": 64,
 					"character": 26
 				}
@@ -641,7 +653,11 @@
 						},
 						{
 							"type": "typeParameter",
-							"name": "O"
+							"name": "O",
+							"default": {
+								"type": "typeParameter",
+								"name": "I"
+							}
 						}
 					],
 					"name": "IHook"
@@ -682,7 +698,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 10,
 							"character": 23
 						}
@@ -797,7 +813,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 17,
 							"character": 22
 						}
@@ -870,7 +886,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 52,
 							"character": 8
 						}
@@ -944,7 +960,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 26,
 							"character": 25
 						}
@@ -981,7 +997,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "src/index.ts",
+					"fileName": "packages/baklavajs-events/src/index.ts",
 					"line": 45,
 					"character": 36
 				}
@@ -1044,20 +1060,11 @@
 					"flags": {
 						"isExported": true
 					}
-				},
-				{
-					"id": 96,
-					"name": "O",
-					"kind": 131072,
-					"kindString": "Type parameter",
-					"flags": {
-						"isExported": true
-					}
 				}
 			],
 			"children": [
 				{
-					"id": 97,
+					"id": 96,
 					"name": "taps",
 					"kind": 1024,
 					"kindString": "Property",
@@ -1067,7 +1074,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 67,
 							"character": 18
 						}
@@ -1085,7 +1092,7 @@
 									},
 									{
 										"type": "typeParameter",
-										"name": "O"
+										"name": "I"
 									}
 								],
 								"name": "HookTap"
@@ -1151,7 +1158,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 93,
 							"character": 18
 						}
@@ -1168,7 +1175,7 @@
 					}
 				},
 				{
-					"id": 98,
+					"id": 97,
 					"name": "tap",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1178,7 +1185,7 @@
 					},
 					"signatures": [
 						{
-							"id": 99,
+							"id": 98,
 							"name": "tap",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1187,7 +1194,7 @@
 							},
 							"parameters": [
 								{
-									"id": 100,
+									"id": 99,
 									"name": "token",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1201,7 +1208,7 @@
 									}
 								},
 								{
-									"id": 101,
+									"id": 100,
 									"name": "tapFn",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1218,7 +1225,7 @@
 											},
 											{
 												"type": "typeParameter",
-												"name": "O"
+												"name": "I"
 											}
 										],
 										"name": "HookTap"
@@ -1243,7 +1250,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 69,
 							"character": 14
 						}
@@ -1260,7 +1267,7 @@
 					}
 				},
 				{
-					"id": 102,
+					"id": 101,
 					"name": "untap",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1270,7 +1277,7 @@
 					},
 					"signatures": [
 						{
-							"id": 103,
+							"id": 102,
 							"name": "untap",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1279,7 +1286,7 @@
 							},
 							"parameters": [
 								{
-									"id": 104,
+									"id": 103,
 									"name": "token",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1311,7 +1318,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 77,
 							"character": 16
 						}
@@ -1333,7 +1340,7 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						97
+						96
 					]
 				},
 				{
@@ -1341,14 +1348,14 @@
 					"kind": 2048,
 					"children": [
 						93,
-						98,
-						102
+						97,
+						101
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/index.ts",
+					"fileName": "packages/baklavajs-events/src/index.ts",
 					"line": 91,
 					"character": 27
 				}
@@ -1377,7 +1384,7 @@
 						},
 						{
 							"type": "typeParameter",
-							"name": "O"
+							"name": "I"
 						}
 					],
 					"name": "IHook"
@@ -1465,7 +1472,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "packages/baklavajs-events/types/index.ts",
 							"line": 6,
 							"character": 15
 						}
@@ -1511,7 +1518,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "packages/baklavajs-events/types/index.ts",
 							"line": 8,
 							"character": 8
 						}
@@ -1558,7 +1565,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "packages/baklavajs-events/types/index.ts",
 							"line": 7,
 							"character": 18
 						}
@@ -1578,7 +1585,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/index.ts",
+					"fileName": "packages/baklavajs-events/types/index.ts",
 					"line": 5,
 					"character": 30
 				}
@@ -1671,13 +1678,17 @@
 							],
 							"type": {
 								"type": "typeParameter",
-								"name": "O"
+								"name": "O",
+								"default": {
+									"type": "typeParameter",
+									"name": "I"
+								}
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "packages/baklavajs-events/types/index.ts",
 							"line": 18,
 							"character": 11
 						}
@@ -1733,7 +1744,11 @@
 											},
 											{
 												"type": "typeParameter",
-												"name": "O"
+												"name": "O",
+												"default": {
+													"type": "typeParameter",
+													"name": "I"
+												}
 											}
 										],
 										"name": "HookTap"
@@ -1748,7 +1763,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "packages/baklavajs-events/types/index.ts",
 							"line": 16,
 							"character": 7
 						}
@@ -1795,7 +1810,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "packages/baklavajs-events/types/index.ts",
 							"line": 17,
 							"character": 9
 						}
@@ -1815,7 +1830,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/index.ts",
+					"fileName": "packages/baklavajs-events/types/index.ts",
 					"line": 15,
 					"character": 22
 				}
@@ -1919,7 +1934,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "packages/baklavajs-events/types/index.ts",
 							"line": 6,
 							"character": 15
 						}
@@ -1975,7 +1990,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "packages/baklavajs-events/types/index.ts",
 							"line": 12,
 							"character": 8
 						}
@@ -2032,7 +2047,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "packages/baklavajs-events/types/index.ts",
 							"line": 7,
 							"character": 18
 						}
@@ -2057,7 +2072,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/index.ts",
+					"fileName": "packages/baklavajs-events/types/index.ts",
 					"line": 11,
 					"character": 41
 				}
@@ -2104,7 +2119,7 @@
 					}
 				},
 				{
-					"id": 109,
+					"id": 108,
 					"name": "I",
 					"kind": 131072,
 					"kindString": "Type parameter",
@@ -2113,7 +2128,7 @@
 					}
 				},
 				{
-					"id": 110,
+					"id": 109,
 					"name": "O",
 					"kind": 131072,
 					"kindString": "Type parameter",
@@ -2124,12 +2139,12 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/index.ts",
+					"fileName": "packages/baklavajs-events/types/index.ts",
 					"line": 3,
 					"character": 19
 				},
 				{
-					"fileName": "src/index.ts",
+					"fileName": "packages/baklavajs-events/src/index.ts",
 					"line": 5,
 					"character": 19
 				}
@@ -2137,7 +2152,7 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 111,
+					"id": 110,
 					"name": "__type",
 					"kind": 65536,
 					"kindString": "Type literal",
@@ -2146,7 +2161,7 @@
 					},
 					"signatures": [
 						{
-							"id": 112,
+							"id": 111,
 							"name": "__call",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2155,7 +2170,7 @@
 							},
 							"parameters": [
 								{
-									"id": 113,
+									"id": 112,
 									"name": "i",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2176,7 +2191,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 5,
 							"character": 27
 						}
@@ -2203,7 +2218,7 @@
 					}
 				},
 				{
-					"id": 105,
+					"id": 104,
 					"name": "T",
 					"kind": 131072,
 					"kindString": "Type parameter",
@@ -2214,12 +2229,12 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/index.ts",
+					"fileName": "packages/baklavajs-events/types/index.ts",
 					"line": 2,
 					"character": 20
 				},
 				{
-					"fileName": "src/index.ts",
+					"fileName": "packages/baklavajs-events/src/index.ts",
 					"line": 4,
 					"character": 20
 				}
@@ -2227,7 +2242,7 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 106,
+					"id": 105,
 					"name": "__type",
 					"kind": 65536,
 					"kindString": "Type literal",
@@ -2236,7 +2251,7 @@
 					},
 					"signatures": [
 						{
-							"id": 107,
+							"id": 106,
 							"name": "__call",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2245,7 +2260,7 @@
 							},
 							"parameters": [
 								{
-									"id": 108,
+									"id": 107,
 									"name": "ev",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2266,7 +2281,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/index.ts",
+							"fileName": "packages/baklavajs-events/src/index.ts",
 							"line": 4,
 							"character": 25
 						}
@@ -2284,12 +2299,12 @@
 			},
 			"sources": [
 				{
-					"fileName": "types/index.ts",
+					"fileName": "packages/baklavajs-events/types/index.ts",
 					"line": 1,
 					"character": 21
 				},
 				{
-					"fileName": "src/index.ts",
+					"fileName": "packages/baklavajs-events/src/index.ts",
 					"line": 3,
 					"character": 21
 				}

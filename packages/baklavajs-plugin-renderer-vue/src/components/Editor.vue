@@ -1,6 +1,10 @@
 <template>
-    <div tabindex="-1"
-        :class="['node-editor', { 'ignore-mouse': !!temporaryConnection, '--temporary-connection': !!temporaryConnection }]"
+    <div
+        tabindex="-1"
+        :class="[
+            'node-editor',
+            { 'ignore-mouse': !!temporaryConnection, '--temporary-connection': !!temporaryConnection }
+        ]"
         @mousemove.self="mouseMoveHandler"
         @mousedown="mouseDown"
         @mouseup="mouseUp"
@@ -9,8 +13,7 @@
         @keyup="keyUp"
         @contextmenu.self.prevent="openContextMenu"
     >
-        <div class="background" :style="backgroundStyle">
-        </div>
+        <div class="background" :style="backgroundStyle"></div>
 
         <svg class="connections-container">
             <g v-for="connection in connections" :key="connection.id + counter.toString()">
@@ -35,7 +38,6 @@
                 @select="selectNode(node)"
             >
             </component>
-
         </div>
 
         <component
@@ -56,7 +58,6 @@
             :nodes="nodes"
             :connections="connections"
         ></component>
-
     </div>
 </template>
 
@@ -64,8 +65,14 @@
 import { Component, Vue, Prop, Provide, Watch } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
-import { IEditor, INode, ITransferConnection, INodeInterface,
-    ITemporaryConnection, TemporaryConnectionState } from "../../../baklavajs-core/types";
+import {
+    IEditor,
+    INode,
+    ITransferConnection,
+    INodeInterface,
+    ITemporaryConnection,
+    TemporaryConnectionState
+} from "../../../baklavajs-core/types";
 import { ViewPlugin } from "../viewPlugin";
 import { IViewNode } from "../../types";
 import { IMenuItem } from "./ContextMenu.vue";
@@ -75,7 +82,6 @@ import History from "../history";
 
 @Component
 export default class EditorView extends Vue {
-
     @Prop({ type: Object, required: true })
     @Provide("plugin")
     plugin!: ViewPlugin;
@@ -86,8 +92,8 @@ export default class EditorView extends Vue {
     clipboard!: Clipboard;
     history!: History;
 
-    temporaryConnection: ITemporaryConnection|null = null;
-    hoveringOver?: INodeInterface|null = null;
+    temporaryConnection: ITemporaryConnection | null = null;
+    hoveringOver?: INodeInterface | null = null;
     selectedNodes: IViewNode[] = [];
     dragging = false;
     ctrlPressed = false;
@@ -102,12 +108,6 @@ export default class EditorView extends Vue {
         y: 0
     };
 
-    backgrounGrid = {
-        gridSize: 100,
-        gridDivision: 5,
-        subGridVisibleThreshold: 0.6,
-    };
-
     get styles() {
         return {
             "transform-origin": "0 0",
@@ -116,12 +116,18 @@ export default class EditorView extends Vue {
     }
 
     get backgroundStyle() {
-        const size = this.plugin.scaling * this.backgrounGrid.gridSize;
-        const subSize = size / this.backgrounGrid.gridDivision;
+        const positionLeft = this.plugin.panning.x * this.plugin.scaling;
+        const positionTop = this.plugin.panning.y * this.plugin.scaling;
+        const size = this.plugin.scaling * this.plugin.backgroundGrid.gridSize;
+        const subSize = size / this.plugin.backgroundGrid.gridDivision;
+        const backgroundSize = `${size}px ${size}px, ${size}px ${size}px`;
+        const subGridBackgroundSize =
+            this.plugin.scaling > this.plugin.backgroundGrid.subGridVisibleThreshold
+                ? `, ${subSize}px ${subSize}px, ${subSize}px ${subSize}px`
+                : "";
         return {
-            "background-position": `left ${this.plugin.panning.x * this.plugin.scaling}px top ${this.plugin.panning.y * this.plugin.scaling}px`,
-            "background-size": `${size}px ${size}px, ${size}px ${size}px`
-                + (this.plugin.scaling > this.backgrounGrid.subGridVisibleThreshold ? `, ${subSize}px ${subSize}px, ${subSize}px ${subSize}px` : '')
+            "background-position": `left ${positionLeft}px top ${positionTop}px`,
+            "background-size": `${backgroundSize} ${subGridBackgroundSize}`
         };
     }
 
@@ -135,7 +141,9 @@ export default class EditorView extends Vue {
 
     get hasEnginePlugin() {
         for (const p of this.plugin.editor.plugins.values()) {
-            if (p.type === "EnginePlugin") { return true; }
+            if (p.type === "EnginePlugin") {
+                return true;
+            }
         }
         return false;
     }
@@ -153,23 +161,20 @@ export default class EditorView extends Vue {
 
     @Watch("plugin.nodeTypeAliases")
     updateContextMenu() {
-
         const categories = Array.from(this.plugin.editor.nodeCategories.keys())
             .filter((c) => c !== "default")
             .map((c) => {
-                const nodes = Array.from(this.plugin.editor.nodeCategories.get(c)!)
-                    .map((n) => ({
-                        value: "addNode:" + n,
-                        label: this.plugin.nodeTypeAliases[n] || n
-                    }));
+                const nodes = Array.from(this.plugin.editor.nodeCategories.get(c)!).map((n) => ({
+                    value: "addNode:" + n,
+                    label: this.plugin.nodeTypeAliases[n] || n
+                }));
                 return { label: c, submenu: nodes };
             });
 
-        const defaultNodes = this.plugin.editor.nodeCategories.get("default")!
-            .map((n) => ({
-                value: "addNode:" + n,
-                label: this.plugin.nodeTypeAliases[n] || n
-            }));
+        const defaultNodes = this.plugin.editor.nodeCategories.get("default")!.map((n) => ({
+            value: "addNode:" + n,
+            label: this.plugin.nodeTypeAliases[n] || n
+        }));
 
         const addNodeSubmenu: IMenuItem[] = [...categories];
         if (categories.length > 0 && defaultNodes.length > 0) {
@@ -193,33 +198,38 @@ export default class EditorView extends Vue {
                 disabledFunction: () => this.clipboard.isEmpty
             }
         ] as IMenuItem[];
-
     }
 
-    hoveredOver(ni: INodeInterface|undefined) {
+    hoveredOver(ni: INodeInterface | undefined) {
         this.hoveringOver = ni;
         if (ni && this.temporaryConnection) {
             this.temporaryConnection.to = ni;
-            this.temporaryConnection.status =
-                this.plugin.editor.checkConnection(this.temporaryConnection.from, this.temporaryConnection.to) ?
-                TemporaryConnectionState.ALLOWED :
-                TemporaryConnectionState.FORBIDDEN;
+            this.temporaryConnection.status = this.plugin.editor.checkConnection(
+                this.temporaryConnection.from,
+                this.temporaryConnection.to
+            )
+                ? TemporaryConnectionState.ALLOWED
+                : TemporaryConnectionState.FORBIDDEN;
             if (this.hasEnginePlugin) {
                 this.connections
                     .filter((c) => c.to === ni)
-                    .forEach((c) => { (c as ITransferConnection).isInDanger = true; });
+                    .forEach((c) => {
+                        (c as ITransferConnection).isInDanger = true;
+                    });
             }
         } else if (!ni && this.temporaryConnection) {
             this.$set(this.temporaryConnection, "to", undefined);
             this.temporaryConnection.status = TemporaryConnectionState.NONE;
-            this.connections.forEach((c) => { (c as ITransferConnection).isInDanger = false; });
+            this.connections.forEach((c) => {
+                (c as ITransferConnection).isInDanger = false;
+            });
         }
     }
 
     mouseMoveHandler(ev: MouseEvent) {
         if (this.temporaryConnection) {
-            this.temporaryConnection.mx = (ev.offsetX / this.plugin.scaling) - this.plugin.panning.x;
-            this.temporaryConnection.my = (ev.offsetY / this.plugin.scaling) - this.plugin.panning.y;
+            this.temporaryConnection.mx = ev.offsetX / this.plugin.scaling - this.plugin.panning.x;
+            this.temporaryConnection.my = ev.offsetY / this.plugin.scaling - this.plugin.panning.y;
         } else if (this.dragging) {
             this.plugin.panning.x += ev.movementX / this.plugin.scaling;
             this.plugin.panning.y += ev.movementY / this.plugin.scaling;
@@ -229,7 +239,6 @@ export default class EditorView extends Vue {
     mouseDown(ev: MouseEvent) {
         if (ev.button === 0) {
             if (this.hoveringOver) {
-
                 // if this interface is an input and already has a connection
                 // to it, remove the connection and make it temporary
                 const connection = this.connections.find((c) => c.to === this.hoveringOver);
@@ -248,7 +257,6 @@ export default class EditorView extends Vue {
 
                 this.$set(this.temporaryConnection as any, "mx", null);
                 this.$set(this.temporaryConnection as any, "my", null);
-
             } else if (ev.target === this.$el) {
                 this.unselectAllNodes();
                 this.dragging = true;
@@ -273,17 +281,11 @@ export default class EditorView extends Vue {
         }
         const newScale = this.plugin.scaling * (1 - scrollAmount / 3000);
         const currentPoint = [
-            (ev.offsetX / this.plugin.scaling) - this.plugin.panning.x,
-            (ev.offsetY / this.plugin.scaling) - this.plugin.panning.y
+            ev.offsetX / this.plugin.scaling - this.plugin.panning.x,
+            ev.offsetY / this.plugin.scaling - this.plugin.panning.y
         ];
-        const newPoint = [
-            (ev.offsetX / newScale) - this.plugin.panning.x,
-            (ev.offsetY / newScale) - this.plugin.panning.y
-        ];
-        const diff = [
-            newPoint[0] - currentPoint[0],
-            newPoint[1] - currentPoint[1]
-        ];
+        const newPoint = [ev.offsetX / newScale - this.plugin.panning.x, ev.offsetY / newScale - this.plugin.panning.y];
+        const diff = [newPoint[0] - currentPoint[0], newPoint[1] - currentPoint[1]];
         this.plugin.panning.x += diff[0];
         this.plugin.panning.y += diff[1];
         this.plugin.scaling = newScale;
@@ -333,8 +335,8 @@ export default class EditorView extends Vue {
             if (nt) {
                 const node = this.plugin.editor.addNode(new nt()) as IViewNode;
                 if (node) {
-                    node.position.x = (this.contextMenu.x / this.plugin.scaling) - this.plugin.panning.x;
-                    node.position.y = (this.contextMenu.y / this.plugin.scaling) - this.plugin.panning.y;
+                    node.position.x = this.contextMenu.x / this.plugin.scaling - this.plugin.panning.x;
+                    node.position.y = this.contextMenu.y / this.plugin.scaling - this.plugin.panning.y;
                 }
             }
         } else if (action === "copy" && this.selectedNodes.length > 0) {
@@ -343,6 +345,5 @@ export default class EditorView extends Vue {
             this.clipboard.paste();
         }
     }
-
 }
 </script>

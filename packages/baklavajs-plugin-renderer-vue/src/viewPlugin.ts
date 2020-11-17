@@ -27,6 +27,13 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
     /** Show a minimap */
     public enableMinimap = false;
 
+    /** Background configuration */
+    backgroundGrid = {
+        gridSize: 100,
+        gridDivision: 5,
+        subGridVisibleThreshold: 0.6
+    };
+
     public options: Record<string, VueConstructor> = {};
     public nodeTypeAliases: Record<string, string> = {};
 
