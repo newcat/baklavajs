@@ -10,7 +10,7 @@ import { IODefinition, IODefinitionValues, INodeIO } from "../types/nodeIO";
 /**
  * Abstract base class for every node
  */
-export abstract class Node<I extends IODefinition, O extends IODefinition> implements INode<I, O> {
+export abstract class Node<I extends IODefinition<I>, O extends IODefinition<O>> implements INode<I, O> {
     /** Type of the node */
     public abstract type: string;
     /** Customizable display name of the node. */

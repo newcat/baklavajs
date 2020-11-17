@@ -7,10 +7,12 @@ export type CalculateFunctionReturnType<O extends IODefinition> =
     | IODefinitionValues<O>
     | Promise<IODefinitionValues<O>>
     | void;
+
 export type CalculateFunction<I extends IODefinition, O extends IODefinition> = (
     inputs: IODefinitionValues<I>,
     globalValues?: any
-) => CalculateFunctionReturnType<O>;
+// ) => CalculateFunctionReturnType<O>;
+) => IODefinitionValues<O>;
 
 export interface INode<I extends IODefinition, O extends IODefinition> {
     type: string;

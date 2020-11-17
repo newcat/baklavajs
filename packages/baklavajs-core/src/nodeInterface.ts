@@ -17,8 +17,8 @@ export class NodeInterface<T> implements INodeInterface<T> {
 
     public events = {
         setConnectionCount: new BaklavaEvent<number>(),
-        beforeSetValue: new PreventableBaklavaEvent<any>(),
-        setValue: new BaklavaEvent<any>(),
+        beforeSetValue: new PreventableBaklavaEvent<T>(),
+        setValue: new BaklavaEvent<T>(),
         updated: new BaklavaEvent<void>(),
     };
 
