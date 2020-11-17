@@ -9,6 +9,8 @@
         @keyup="keyUp"
         @contextmenu.self.prevent="openContextMenu"
     >
+        <div class="background" :style="backgroundStyle">
+        </div>
 
         <svg class="connections-container">
             <g v-for="connection in connections" :key="connection.id + counter.toString()">
@@ -100,10 +102,26 @@ export default class EditorView extends Vue {
         y: 0
     };
 
+    backgrounGrid = {
+        gridSize: 100,
+        gridDivision: 5,
+        subGridVisibleThreshold: 0.6,
+    };
+
     get styles() {
         return {
             "transform-origin": "0 0",
             "transform": `scale(${this.plugin.scaling}) translate(${this.plugin.panning.x}px, ${this.plugin.panning.y}px)`
+        };
+    }
+
+    get backgroundStyle() {
+        const size = this.plugin.scaling * this.backgrounGrid.gridSize;
+        const subSize = size / this.backgrounGrid.gridDivision;
+        return {
+            "background-position": `left ${this.plugin.panning.x * this.plugin.scaling}px top ${this.plugin.panning.y * this.plugin.scaling}px`,
+            "background-size": `${size}px ${size}px, ${size}px ${size}px`
+                + (this.plugin.scaling > this.backgrounGrid.subGridVisibleThreshold ? `, ${subSize}px ${subSize}px, ${subSize}px ${subSize}px` : '')
         };
     }
 

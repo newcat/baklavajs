@@ -8,6 +8,4 @@ $color-pattern-black: #00000022;
         linear-gradient(90deg, $color-pattern-black 2px, transparent 2px),
         linear-gradient($color-pattern-line 1px, transparent 1px),
         linear-gradient(90deg, $color-pattern-line 1px, transparent 1px);
-    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-    background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
