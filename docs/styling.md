@@ -21,7 +21,7 @@ To override values, create a scss file with the following contents:
 Now you can import the scss file in your main.js/index.js file.
 
 ## Background
-The grid background can be configured using the [`backgroundGrid`](!API%{ "module": "@baklavajs/plugin-renderer-vue", "type": "class", "name": "ViewPlugin", "field": "backgroundGrid"}%) property. You can configure these variables:
+The grid background can be configured using the [`backgroundGrid`](!!API%{ "module": "@baklavajs/plugin-renderer-vue", "type": "class", "name": "ViewPlugin", "field": "backgroundGrid"}%) property. You can configure these variables:
 * `gridSize`: The size of the main grid cells in pixels (default: `100`)
 * `gridDivision`: How many sub-cells the main grid should be divided into when zoomed above the `subGridVisibleThreshold` (default: `5`)
 * `subGridVisibleThreshold`: When the zoom factor is larger than this threshold, the sub grid appears (default `0.6`)
