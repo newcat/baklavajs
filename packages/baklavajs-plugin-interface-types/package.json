@@ -1,6 +1,6 @@
 {
   "name": "@baklavajs/plugin-interface-types",
-  "version": "1.6.1",
+  "version": "1.8.0",
   "description": "Add types to node interfaces for BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
@@ -23,16 +23,16 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "devDependencies": {
-    "@ts-tools/node": "^1.1.3",
-    "@types/chai": "^4.2.11",
-    "@types/mocha": "^7.0.2",
+    "@ts-tools/node": "^2.1.1",
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.0.4",
     "chai": "^4.2.0",
     "clean-webpack-plugin": "^3.0.0",
-    "mocha": "^7.1.1",
-    "ts-loader": "^6.2.2",
-    "typescript": "^3.8.3",
+    "mocha": "^8.2.1",
+    "ts-loader": "^8.0.11",
+    "typescript": "^4.1.2",
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
+    "webpack-cli": "^4.2.0",
     "webpack-merge": "^4.2.2"
   },
   "publishConfig": {

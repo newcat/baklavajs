@@ -6,6 +6,7 @@
         <button @click="load">Load</button>
         <button @focus="focusState = 'focus'" @blur="focusState = 'blur'">{{ focusState }}</button>
         <button @click="setSelectItems">Set Select Items</button>
+        <button @click="changeGridSize">Change Grid Size</button>
     </div>
 </template>
 
@@ -50,7 +51,7 @@ export default class App extends Vue {
         this.editor = new Editor();
 
         this.viewPlugin = new ViewPlugin();
-        this.viewPlugin.components.node = CustomNodeRenderer as any;
+        this.viewPlugin.components.node = CustomNodeRenderer;
         this.viewPlugin.enableMinimap = true;
         this.editor.use(this.viewPlugin);
 
@@ -131,6 +132,10 @@ export default class App extends Vue {
                 sel!.events.updated.emit();
             }
         }
+    }
+
+    changeGridSize() {
+        this.viewPlugin.backgroundGrid.gridSize = Math.round(Math.random() * 100) + 100;
     }
 }
 </script>

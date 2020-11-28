@@ -27,6 +27,13 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
     /** Show a minimap */
     public enableMinimap = false;
 
+    /** Background configuration */
+    backgroundGrid = {
+        gridSize: 100,
+        gridDivision: 5,
+        subGridVisibleThreshold: 0.6
+    };
+
     public options: Record<string, VueConstructor> = {};
     public nodeTypeAliases: Record<string, string> = {};
 
@@ -44,7 +51,7 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
     /** Use this property to provide custom components,
      * which will be used when rendering the respective entities
      */
-    public components = {
+    public components: Record<string, Vue.Component> = {
         node: NodeView,
         nodeOption: NodeOptionView,
         nodeInterface: NodeInterfaceView,

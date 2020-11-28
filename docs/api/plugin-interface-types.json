@@ -24,7 +24,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-interface-types/src/index.ts",
 							"line": 7,
 							"character": 15
 						}
@@ -162,7 +162,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-interface-types/src/index.ts",
 							"line": 49,
 							"character": 24
 						}
@@ -231,7 +231,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-interface-types/src/index.ts",
 							"line": 36,
 							"character": 18
 						}
@@ -291,7 +291,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-interface-types/src/index.ts",
 							"line": 72,
 							"character": 21
 						}
@@ -364,7 +364,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-interface-types/src/index.ts",
 							"line": 76,
 							"character": 18
 						}
@@ -437,7 +437,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-interface-types/src/index.ts",
 							"line": 68,
 							"character": 24
 						}
@@ -484,7 +484,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-interface-types/src/index.ts",
 							"line": 12,
 							"character": 19
 						}
@@ -514,7 +514,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "index.ts",
+					"fileName": "packages/baklavajs-plugin-interface-types/src/index.ts",
 					"line": 5,
 					"character": 32
 				}

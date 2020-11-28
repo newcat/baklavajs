@@ -22,9 +22,25 @@ For adding conversions and coloring the ports, you need to register the type.
 intfTypePlugin.addType("string", "#00FF00");
 ```
 
-The [addType](!!API%{ "module": "@baklavajs/plugin-interface-types", "type": "class", "name": "interfacetypeplugin", "field": "addtype" }%) method takes two parameters:
+The [addType](!!API%{ "module": "@baklavajs/plugin-interface-types", "type": "class", "name": "InterfaceTypePlugin", "field": "addType" }%) method takes two parameters:
 * `name`: Name of the interface.
 * `color`: Color for the port. The color can be any valid CSS color.
+
+You can now use the type when creating interfaces like this:
+```js
+// NodeBuilder
+new NodeBuilder("MyNode")
+    .addInputInterface("My Interface", "InputOption", "", { type: "string" })
+    .build();
+
+// Class
+class MyNode extends Node {
+    constructor() {
+        super();
+        this.addInputInterface("My Interface", "InputOption", "", { type: "string" })
+    }
+}
+```
 
 ## Conversions
 

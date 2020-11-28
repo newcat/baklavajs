@@ -5,16 +5,16 @@ Node Options can be used to give users the ability to change more advanced setti
 Every option (the same goes for sidebar options) is just a Vue component. It receives these props:
 * **`value`**: `any` The value of the option
 * **`name`**: `string` Name of the option
-* **`option`**: [`NodeOption`](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "nodeoption" }%) The option instance
-* **`node`**: [`Node`](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "node" }%) The node instance. It can be used to call functions in your node model.
+* **`option`**: [`NodeOption`](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "NodeOption" }%) The option instance
+* **`node`**: [`Node`](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Node" }%) The node instance. It can be used to call functions in your node model.
 
 Additionally, it can emit these events:
 * **`input`**: Update the value
 * **`openSidebar`**: Opens the sidebar
 
 The node option's value can be written or read programatically by using the
-[setOptionValue](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "node", "field": "setoptionvalue" }%) and
-[getOptionValue](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "node", "field": "getoptionvalue" }%) methods.
+[setOptionValue](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Node", "field": "setOptionValue" }%) and
+[getOptionValue](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Node", "field": "getOptionValue" }%) methods.
 
 ### Options in the ViewPlugin
 When adding an option to a node, you only specify the type of the option as a string. This is done to separate logic and view.
@@ -49,7 +49,7 @@ They can be used through the [option plugin](/plugins/options.md).
 
 ### Default Values
 > When providing complex default values like arrays or objects as default values using the NodeBuilder's
-> [addOption](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "nodebuilder", "field": "addoption"}%) method,
+> [addOption](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "NodeBuilder", "field": "addOption"}%) method,
 > you need to provide a function that returns the default array or object.
 > This ensures that multiple instances of the node option all have their own data objects.
 

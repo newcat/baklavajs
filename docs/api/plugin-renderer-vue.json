@@ -55,7 +55,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "clipboard.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/clipboard.ts",
 							"line": 12,
 							"character": 5
 						}
@@ -87,7 +87,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "clipboard.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/clipboard.ts",
 							"line": 10,
 							"character": 22
 						}
@@ -119,7 +119,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "clipboard.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/clipboard.ts",
 							"line": 18,
 							"character": 16
 						}
@@ -169,7 +169,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "clipboard.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/clipboard.ts",
 							"line": 23,
 							"character": 15
 						}
@@ -201,7 +201,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "clipboard.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/clipboard.ts",
 							"line": 33,
 							"character": 16
 						}
@@ -235,14 +235,14 @@
 			],
 			"sources": [
 				{
-					"fileName": "clipboard.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/clipboard.ts",
 					"line": 3,
 					"character": 30
 				}
 			]
 		},
 		{
-			"id": 98,
+			"id": 102,
 			"name": "ConnectionStep",
 			"kind": 128,
 			"kindString": "Class",
@@ -251,7 +251,7 @@
 			},
 			"children": [
 				{
-					"id": 102,
+					"id": 106,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -261,7 +261,7 @@
 					},
 					"signatures": [
 						{
-							"id": 103,
+							"id": 107,
 							"name": "new ConnectionStep",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -270,7 +270,7 @@
 							},
 							"parameters": [
 								{
-									"id": 104,
+									"id": 108,
 									"name": "type",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -292,7 +292,7 @@
 									}
 								},
 								{
-									"id": 105,
+									"id": 109,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -316,21 +316,21 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 98,
+								"id": 102,
 								"name": "ConnectionStep"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "history/connectionStep.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/connectionStep.ts",
 							"line": 9,
 							"character": 47
 						}
 					]
 				},
 				{
-					"id": 99,
+					"id": 103,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -340,7 +340,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "history/connectionStep.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/connectionStep.ts",
 							"line": 6,
 							"character": 15
 						}
@@ -360,12 +360,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 91,
+						"id": 95,
 						"name": "IStep.type"
 					}
 				},
 				{
-					"id": 109,
+					"id": 113,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -375,7 +375,7 @@
 					},
 					"signatures": [
 						{
-							"id": 110,
+							"id": 114,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -384,7 +384,7 @@
 							},
 							"parameters": [
 								{
-									"id": 111,
+									"id": 115,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -403,26 +403,26 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 96,
+								"id": 100,
 								"name": "IStep.redo"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "history/connectionStep.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/connectionStep.ts",
 							"line": 33,
 							"character": 15
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 95,
+						"id": 99,
 						"name": "IStep.redo"
 					}
 				},
 				{
-					"id": 106,
+					"id": 110,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -432,7 +432,7 @@
 					},
 					"signatures": [
 						{
-							"id": 107,
+							"id": 111,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -441,7 +441,7 @@
 							},
 							"parameters": [
 								{
-									"id": 108,
+									"id": 112,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -460,21 +460,21 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 93,
+								"id": 97,
 								"name": "IStep.undo"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "history/connectionStep.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/connectionStep.ts",
 							"line": 25,
 							"character": 15
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 92,
+						"id": 96,
 						"name": "IStep.undo"
 					}
 				}
@@ -484,28 +484,28 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						102
+						106
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						99
+						103
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						109,
-						106
+						113,
+						110
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "history/connectionStep.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/connectionStep.ts",
 					"line": 4,
 					"character": 35
 				}
@@ -513,13 +513,13 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"id": 90,
+					"id": 94,
 					"name": "IStep"
 				}
 			]
 		},
 		{
-			"id": 138,
+			"id": 142,
 			"name": "History",
 			"kind": 128,
 			"kindString": "Class",
@@ -528,7 +528,7 @@
 			},
 			"children": [
 				{
-					"id": 146,
+					"id": 150,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -538,7 +538,7 @@
 					},
 					"signatures": [
 						{
-							"id": 147,
+							"id": 151,
 							"name": "new History",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -547,7 +547,7 @@
 							},
 							"parameters": [
 								{
-									"id": 148,
+									"id": 152,
 									"name": "viewPlugin",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -563,21 +563,21 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 138,
+								"id": 142,
 								"name": "History"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "history/index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/index.ts",
 							"line": 17,
 							"character": 43
 						}
 					]
 				},
 				{
-					"id": 139,
+					"id": 143,
 					"name": "maxSteps",
 					"kind": 1024,
 					"kindString": "Property",
@@ -587,7 +587,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "history/index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/index.ts",
 							"line": 9,
 							"character": 19
 						}
@@ -599,7 +599,7 @@
 					"defaultValue": "200"
 				},
 				{
-					"id": 151,
+					"id": 155,
 					"name": "commitTransaction",
 					"kind": 2048,
 					"kindString": "Method",
@@ -609,7 +609,7 @@
 					},
 					"signatures": [
 						{
-							"id": 152,
+							"id": 156,
 							"name": "commitTransaction",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -624,14 +624,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "history/index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/index.ts",
 							"line": 39,
 							"character": 28
 						}
 					]
 				},
 				{
-					"id": 155,
+					"id": 159,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -641,7 +641,7 @@
 					},
 					"signatures": [
 						{
-							"id": 156,
+							"id": 160,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -656,14 +656,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "history/index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/index.ts",
 							"line": 50,
 							"character": 15
 						}
 					]
 				},
 				{
-					"id": 149,
+					"id": 153,
 					"name": "startTransaction",
 					"kind": 2048,
 					"kindString": "Method",
@@ -673,7 +673,7 @@
 					},
 					"signatures": [
 						{
-							"id": 150,
+							"id": 154,
 							"name": "startTransaction",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -688,14 +688,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "history/index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/index.ts",
 							"line": 35,
 							"character": 27
 						}
 					]
 				},
 				{
-					"id": 153,
+					"id": 157,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -705,7 +705,7 @@
 					},
 					"signatures": [
 						{
-							"id": 154,
+							"id": 158,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -720,7 +720,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "history/index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/index.ts",
 							"line": 43,
 							"character": 15
 						}
@@ -732,37 +732,37 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						146
+						150
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						139
+						143
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						151,
 						155,
-						149,
-						153
+						159,
+						153,
+						157
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "history/index.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/index.ts",
 					"line": 7,
 					"character": 28
 				}
 			]
 		},
 		{
-			"id": 118,
+			"id": 122,
 			"name": "NodeStep",
 			"kind": 128,
 			"kindString": "Class",
@@ -771,7 +771,7 @@
 			},
 			"children": [
 				{
-					"id": 122,
+					"id": 126,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -781,7 +781,7 @@
 					},
 					"signatures": [
 						{
-							"id": 123,
+							"id": 127,
 							"name": "new NodeStep",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -790,7 +790,7 @@
 							},
 							"parameters": [
 								{
-									"id": 124,
+									"id": 128,
 									"name": "type",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -812,7 +812,7 @@
 									}
 								},
 								{
-									"id": 125,
+									"id": 129,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -827,21 +827,21 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 118,
+								"id": 122,
 								"name": "NodeStep"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "history/nodeStep.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/nodeStep.ts",
 							"line": 9,
 							"character": 35
 						}
 					]
 				},
 				{
-					"id": 119,
+					"id": 123,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -851,7 +851,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "history/nodeStep.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/nodeStep.ts",
 							"line": 6,
 							"character": 15
 						}
@@ -871,12 +871,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 91,
+						"id": 95,
 						"name": "IStep.type"
 					}
 				},
 				{
-					"id": 129,
+					"id": 133,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -886,7 +886,7 @@
 					},
 					"signatures": [
 						{
-							"id": 130,
+							"id": 134,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -895,7 +895,7 @@
 							},
 							"parameters": [
 								{
-									"id": 131,
+									"id": 135,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -914,26 +914,26 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 96,
+								"id": 100,
 								"name": "IStep.redo"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "history/nodeStep.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/nodeStep.ts",
 							"line": 28,
 							"character": 15
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 95,
+						"id": 99,
 						"name": "IStep.redo"
 					}
 				},
 				{
-					"id": 126,
+					"id": 130,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -943,7 +943,7 @@
 					},
 					"signatures": [
 						{
-							"id": 127,
+							"id": 131,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -952,7 +952,7 @@
 							},
 							"parameters": [
 								{
-									"id": 128,
+									"id": 132,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -971,21 +971,21 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 93,
+								"id": 97,
 								"name": "IStep.undo"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "history/nodeStep.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/nodeStep.ts",
 							"line": 20,
 							"character": 15
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 92,
+						"id": 96,
 						"name": "IStep.undo"
 					}
 				}
@@ -995,28 +995,28 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						122
+						126
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						119
+						123
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						129,
-						126
+						133,
+						130
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "history/nodeStep.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/nodeStep.ts",
 					"line": 4,
 					"character": 29
 				}
@@ -1024,7 +1024,7 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"id": 90,
+					"id": 94,
 					"name": "IStep"
 				}
 			]
@@ -1049,7 +1049,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 							"line": 19,
 							"character": 17
 						}
@@ -1073,7 +1073,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 							"line": 28,
 							"character": 24
 						}
@@ -1085,7 +1085,7 @@
 					"defaultValue": "false"
 				},
 				{
-					"id": 42,
+					"id": 46,
 					"name": "nodeTypeAliases",
 					"kind": 1024,
 					"kindString": "Property",
@@ -1095,8 +1095,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
-							"line": 31,
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+							"line": 38,
 							"character": 26
 						}
 					],
@@ -1116,7 +1116,7 @@
 					}
 				},
 				{
-					"id": 41,
+					"id": 45,
 					"name": "options",
 					"kind": 1024,
 					"kindString": "Property",
@@ -1126,8 +1126,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
-							"line": 30,
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+							"line": 37,
 							"character": 18
 						}
 					],
@@ -1157,7 +1157,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 							"line": 21,
 							"character": 18
 						}
@@ -1179,7 +1179,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 							"line": 18,
 							"character": 15
 						}
@@ -1204,7 +1204,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 							"line": 25,
 							"character": 33
 						}
@@ -1216,7 +1216,7 @@
 					"defaultValue": "false"
 				},
 				{
-					"id": 57,
+					"id": 61,
 					"name": "register",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1226,7 +1226,7 @@
 					},
 					"signatures": [
 						{
-							"id": 58,
+							"id": 62,
 							"name": "register",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1235,7 +1235,7 @@
 							},
 							"parameters": [
 								{
-									"id": 59,
+									"id": 63,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1256,14 +1256,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
-							"line": 58,
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+							"line": 65,
 							"character": 19
 						}
 					]
 				},
 				{
-					"id": 60,
+					"id": 64,
 					"name": "registerOption",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1273,7 +1273,7 @@
 					},
 					"signatures": [
 						{
-							"id": 61,
+							"id": 65,
 							"name": "registerOption",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1285,7 +1285,7 @@
 							},
 							"parameters": [
 								{
-									"id": 62,
+									"id": 66,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1301,7 +1301,7 @@
 									}
 								},
 								{
-									"id": 63,
+									"id": 67,
 									"name": "component",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1325,14 +1325,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
-							"line": 97,
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+							"line": 104,
 							"character": 25
 						}
 					]
 				},
 				{
-					"id": 64,
+					"id": 68,
 					"name": "setNodeTypeAlias",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1342,7 +1342,7 @@
 					},
 					"signatures": [
 						{
-							"id": 65,
+							"id": 69,
 							"name": "setNodeTypeAlias",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1354,7 +1354,7 @@
 							},
 							"parameters": [
 								{
-									"id": 66,
+									"id": 70,
 									"name": "nodeType",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1370,7 +1370,7 @@
 									}
 								},
 								{
-									"id": 67,
+									"id": 71,
 									"name": "alias",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1403,14 +1403,113 @@
 					],
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
-							"line": 107,
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+							"line": 114,
 							"character": 27
 						}
 					]
 				},
 				{
-					"id": 48,
+					"id": 41,
+					"name": "backgroundGrid",
+					"kind": 2097152,
+					"kindString": "Object literal",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "Background configuration"
+					},
+					"children": [
+						{
+							"id": 43,
+							"name": "gridDivision",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 33,
+									"character": 20
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "5"
+						},
+						{
+							"id": 42,
+							"name": "gridSize",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 32,
+									"character": 16
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "100"
+						},
+						{
+							"id": 44,
+							"name": "subGridVisibleThreshold",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 34,
+									"character": 31
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0.6"
+						}
+					],
+					"groups": [
+						{
+							"title": "Variables",
+							"kind": 32,
+							"children": [
+								43,
+								42,
+								44
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+							"line": 31,
+							"character": 18
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "object"
+					}
+				},
+				{
+					"id": 52,
 					"name": "components",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -1423,7 +1522,7 @@
 					},
 					"children": [
 						{
-							"id": 52,
+							"id": 56,
 							"name": "connection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1432,8 +1531,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 51,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 58,
 									"character": 18
 								}
 							],
@@ -1450,7 +1549,7 @@
 							"defaultValue": "ConnectionWrapper"
 						},
 						{
-							"id": 54,
+							"id": 58,
 							"name": "contextMenu",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1459,8 +1558,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 53,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 60,
 									"character": 19
 								}
 							],
@@ -1477,7 +1576,7 @@
 							"defaultValue": "ContextMenu"
 						},
 						{
-							"id": 56,
+							"id": 60,
 							"name": "minimap",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1486,8 +1585,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 55,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 62,
 									"character": 15
 								}
 							],
@@ -1504,7 +1603,7 @@
 							"defaultValue": "Minimap"
 						},
 						{
-							"id": 49,
+							"id": 53,
 							"name": "node",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1513,8 +1612,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 48,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 55,
 									"character": 12
 								}
 							],
@@ -1531,7 +1630,7 @@
 							"defaultValue": "NodeView"
 						},
 						{
-							"id": 51,
+							"id": 55,
 							"name": "nodeInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1540,8 +1639,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 50,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 57,
 									"character": 21
 								}
 							],
@@ -1558,7 +1657,7 @@
 							"defaultValue": "NodeInterfaceView"
 						},
 						{
-							"id": 50,
+							"id": 54,
 							"name": "nodeOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1567,8 +1666,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 49,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 56,
 									"character": 18
 								}
 							],
@@ -1585,7 +1684,7 @@
 							"defaultValue": "NodeOptionView"
 						},
 						{
-							"id": 55,
+							"id": 59,
 							"name": "sidebar",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1594,8 +1693,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 54,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 61,
 									"character": 15
 								}
 							],
@@ -1612,7 +1711,7 @@
 							"defaultValue": "Sidebar"
 						},
 						{
-							"id": 53,
+							"id": 57,
 							"name": "tempConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1621,8 +1720,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 52,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 59,
 									"character": 22
 								}
 							],
@@ -1644,21 +1743,21 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								52,
-								54,
 								56,
-								49,
-								51,
-								50,
+								58,
+								60,
+								53,
 								55,
-								53
+								54,
+								59,
+								57
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
-							"line": 47,
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+							"line": 54,
 							"character": 21
 						}
 					],
@@ -1668,7 +1767,7 @@
 					}
 				},
 				{
-					"id": 43,
+					"id": 47,
 					"name": "hooks",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -1678,7 +1777,7 @@
 					},
 					"children": [
 						{
-							"id": 47,
+							"id": 51,
 							"name": "renderConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1690,8 +1789,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 41,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 48,
 									"character": 24
 								}
 							],
@@ -1708,7 +1807,7 @@
 							"defaultValue": "new SequentialHook<ConnectionView>()"
 						},
 						{
-							"id": 46,
+							"id": 50,
 							"name": "renderInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1720,8 +1819,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 39,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 46,
 									"character": 23
 								}
 							],
@@ -1738,7 +1837,7 @@
 							"defaultValue": "new SequentialHook<NodeInterfaceView>()"
 						},
 						{
-							"id": 44,
+							"id": 48,
 							"name": "renderNode",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1750,8 +1849,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 35,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 42,
 									"character": 18
 								}
 							],
@@ -1768,7 +1867,7 @@
 							"defaultValue": "new SequentialHook<NodeView>()"
 						},
 						{
-							"id": 45,
+							"id": 49,
 							"name": "renderOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1780,8 +1879,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
-									"line": 37,
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+									"line": 44,
 									"character": 20
 								}
 							],
@@ -1803,17 +1902,17 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								47,
-								46,
-								44,
-								45
+								51,
+								50,
+								48,
+								49
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
-							"line": 33,
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
+							"line": 40,
 							"character": 16
 						}
 					],
@@ -1842,7 +1941,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 									"line": 20,
 									"character": 24
 								}
@@ -1863,7 +1962,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 									"line": 20,
 									"character": 30
 								}
@@ -1887,7 +1986,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 							"line": 20,
 							"character": 18
 						}
@@ -1917,7 +2016,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 									"line": 22,
 									"character": 45
 								}
@@ -1938,7 +2037,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 									"line": 22,
 									"character": 61
 								}
@@ -1959,7 +2058,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "viewPlugin.ts",
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 									"line": 22,
 									"character": 30
 								}
@@ -1984,7 +2083,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "viewPlugin.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 							"line": 22,
 							"character": 18
 						}
@@ -2002,8 +2101,8 @@
 					"children": [
 						30,
 						40,
-						42,
-						41,
+						46,
+						45,
 						34,
 						29,
 						39
@@ -2013,17 +2112,18 @@
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						57,
-						60,
-						64
+						61,
+						64,
+						68
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						48,
-						43,
+						41,
+						52,
+						47,
 						31,
 						35
 					]
@@ -2031,7 +2131,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "viewPlugin.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
 					"line": 16,
 					"character": 23
 				}
@@ -2048,7 +2148,7 @@
 			]
 		},
 		{
-			"id": 77,
+			"id": 81,
 			"name": "IResolvedDomElements",
 			"kind": 256,
 			"kindString": "Interface",
@@ -2057,7 +2157,7 @@
 			},
 			"children": [
 				{
-					"id": 79,
+					"id": 83,
 					"name": "interface",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2066,7 +2166,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "components/connection/domResolver.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/components/connection/domResolver.ts",
 							"line": 5,
 							"character": 13
 						}
@@ -2086,7 +2186,7 @@
 					}
 				},
 				{
-					"id": 78,
+					"id": 82,
 					"name": "node",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2095,7 +2195,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "components/connection/domResolver.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/components/connection/domResolver.ts",
 							"line": 4,
 							"character": 8
 						}
@@ -2115,7 +2215,7 @@
 					}
 				},
 				{
-					"id": 80,
+					"id": 84,
 					"name": "port",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2124,7 +2224,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "components/connection/domResolver.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/components/connection/domResolver.ts",
 							"line": 6,
 							"character": 8
 						}
@@ -2149,22 +2249,22 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						79,
-						78,
-						80
+						83,
+						82,
+						84
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "components/connection/domResolver.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/components/connection/domResolver.ts",
 					"line": 3,
 					"character": 37
 				}
 			]
 		},
 		{
-			"id": 90,
+			"id": 94,
 			"name": "IStep",
 			"kind": 256,
 			"kindString": "Interface",
@@ -2173,7 +2273,7 @@
 			},
 			"children": [
 				{
-					"id": 91,
+					"id": 95,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2182,7 +2282,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "history/step.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/step.ts",
 							"line": 4,
 							"character": 8
 						}
@@ -2193,7 +2293,7 @@
 					}
 				},
 				{
-					"id": 95,
+					"id": 99,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2202,7 +2302,7 @@
 					},
 					"signatures": [
 						{
-							"id": 96,
+							"id": 100,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2211,7 +2311,7 @@
 							},
 							"parameters": [
 								{
-									"id": 97,
+									"id": 101,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2232,14 +2332,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "history/step.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/step.ts",
 							"line": 6,
 							"character": 8
 						}
 					]
 				},
 				{
-					"id": 92,
+					"id": 96,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2248,7 +2348,7 @@
 					},
 					"signatures": [
 						{
-							"id": 93,
+							"id": 97,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2257,7 +2357,7 @@
 							},
 							"parameters": [
 								{
-									"id": 94,
+									"id": 98,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2278,7 +2378,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "history/step.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/step.ts",
 							"line": 5,
 							"character": 8
 						}
@@ -2290,21 +2390,21 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						91
+						95
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						95,
-						92
+						99,
+						96
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "history/step.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/history/step.ts",
 					"line": 3,
 					"character": 22
 				}
@@ -2312,12 +2412,12 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 98,
+					"id": 102,
 					"name": "ConnectionStep"
 				},
 				{
 					"type": "reference",
-					"id": 118,
+					"id": 122,
 					"name": "NodeStep"
 				}
 			]
@@ -2333,7 +2433,7 @@
 			},
 			"sources": [
 				{
-					"fileName": "baklavaVuePlugin.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/baklavaVuePlugin.ts",
 					"line": 20,
 					"character": 29
 				}
@@ -2403,7 +2503,7 @@
 							],
 							"sources": [
 								{
-									"fileName": "baklavaVuePlugin.ts",
+									"fileName": "packages/baklavajs-plugin-renderer-vue/src/baklavaVuePlugin.ts",
 									"line": 8,
 									"character": 11
 								}
@@ -2424,7 +2524,7 @@
 			"defaultValue": "Baklava"
 		},
 		{
-			"id": 81,
+			"id": 85,
 			"name": "getDomElementOfNode",
 			"kind": 64,
 			"kindString": "Function",
@@ -2433,7 +2533,7 @@
 			},
 			"signatures": [
 				{
-					"id": 82,
+					"id": 86,
 					"name": "getDomElementOfNode",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -2442,7 +2542,7 @@
 					},
 					"parameters": [
 						{
-							"id": 83,
+							"id": 87,
 							"name": "node",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -2472,14 +2572,14 @@
 			],
 			"sources": [
 				{
-					"fileName": "components/connection/domResolver.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/components/connection/domResolver.ts",
 					"line": 9,
 					"character": 35
 				}
 			]
 		},
 		{
-			"id": 84,
+			"id": 88,
 			"name": "getDomElements",
 			"kind": 64,
 			"kindString": "Function",
@@ -2488,7 +2588,7 @@
 			},
 			"signatures": [
 				{
-					"id": 85,
+					"id": 89,
 					"name": "getDomElements",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -2497,7 +2597,7 @@
 					},
 					"parameters": [
 						{
-							"id": 86,
+							"id": 90,
 							"name": "ni",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -2512,21 +2612,21 @@
 					],
 					"type": {
 						"type": "reference",
-						"id": 77,
+						"id": 81,
 						"name": "IResolvedDomElements"
 					}
 				}
 			],
 			"sources": [
 				{
-					"fileName": "components/connection/domResolver.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/components/connection/domResolver.ts",
 					"line": 13,
 					"character": 38
 				}
 			]
 		},
 		{
-			"id": 87,
+			"id": 91,
 			"name": "getPortCoordinates",
 			"kind": 64,
 			"kindString": "Function",
@@ -2535,7 +2635,7 @@
 			},
 			"signatures": [
 				{
-					"id": 88,
+					"id": 92,
 					"name": "getPortCoordinates",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -2544,7 +2644,7 @@
 					},
 					"parameters": [
 						{
-							"id": 89,
+							"id": 93,
 							"name": "resolved",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -2553,7 +2653,7 @@
 							},
 							"type": {
 								"type": "reference",
-								"id": 77,
+								"id": 81,
 								"name": "IResolvedDomElements"
 							}
 						}
@@ -2575,14 +2675,14 @@
 			],
 			"sources": [
 				{
-					"fileName": "components/connection/portCoordinates.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/components/connection/portCoordinates.ts",
 					"line": 3,
 					"character": 34
 				}
 			]
 		},
 		{
-			"id": 160,
+			"id": 164,
 			"name": "sanitizeName",
 			"kind": 64,
 			"kindString": "Function",
@@ -2591,7 +2691,7 @@
 			},
 			"signatures": [
 				{
-					"id": 161,
+					"id": 165,
 					"name": "sanitizeName",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -2600,7 +2700,7 @@
 					},
 					"parameters": [
 						{
-							"id": 162,
+							"id": 166,
 							"name": "name",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -2621,7 +2721,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "utility/cssNames.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/utility/cssNames.ts",
 					"line": 1,
 					"character": 28
 				}
@@ -2691,7 +2791,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "baklavaVuePlugin.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/baklavaVuePlugin.ts",
 							"line": 8,
 							"character": 11
 						}
@@ -2709,7 +2809,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "baklavaVuePlugin.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/baklavaVuePlugin.ts",
 					"line": 7,
 					"character": 13
 				}
@@ -2720,7 +2820,7 @@
 			}
 		},
 		{
-			"id": 68,
+			"id": 72,
 			"name": "Components",
 			"kind": 2097152,
 			"kindString": "Object literal",
@@ -2730,7 +2830,7 @@
 			},
 			"children": [
 				{
-					"id": 69,
+					"id": 73,
 					"name": "Connection",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2739,7 +2839,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
 							"line": 13,
 							"character": 14
 						}
@@ -2756,7 +2856,7 @@
 					}
 				},
 				{
-					"id": 70,
+					"id": 74,
 					"name": "ConnectionWrapper",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2765,7 +2865,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
 							"line": 13,
 							"character": 33
 						}
@@ -2782,7 +2882,7 @@
 					}
 				},
 				{
-					"id": 75,
+					"id": 79,
 					"name": "ContextMenu",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2791,7 +2891,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
 							"line": 15,
 							"character": 15
 						}
@@ -2808,7 +2908,7 @@
 					}
 				},
 				{
-					"id": 72,
+					"id": 76,
 					"name": "Node",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2817,7 +2917,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
 							"line": 14,
 							"character": 8
 						}
@@ -2834,7 +2934,7 @@
 					}
 				},
 				{
-					"id": 73,
+					"id": 77,
 					"name": "NodeInterface",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2843,7 +2943,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
 							"line": 14,
 							"character": 23
 						}
@@ -2860,7 +2960,7 @@
 					}
 				},
 				{
-					"id": 74,
+					"id": 78,
 					"name": "NodeOption",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2869,7 +2969,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
 							"line": 14,
 							"character": 35
 						}
@@ -2886,7 +2986,7 @@
 					}
 				},
 				{
-					"id": 76,
+					"id": 80,
 					"name": "Sidebar",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2895,7 +2995,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
 							"line": 15,
 							"character": 24
 						}
@@ -2912,7 +3012,7 @@
 					}
 				},
 				{
-					"id": 71,
+					"id": 75,
 					"name": "TemporaryConnection",
 					"kind": 32,
 					"kindString": "Variable",
@@ -2921,7 +3021,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "index.ts",
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
 							"line": 13,
 							"character": 54
 						}
@@ -2943,20 +3043,20 @@
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						69,
-						70,
-						75,
-						72,
 						73,
 						74,
+						79,
 						76,
-						71
+						77,
+						78,
+						80,
+						75
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "index.ts",
+					"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
 					"line": 12,
 					"character": 23
 				}
@@ -2973,9 +3073,9 @@
 			"kind": 128,
 			"children": [
 				12,
-				98,
-				138,
-				118,
+				102,
+				142,
+				122,
 				28
 			]
 		},
@@ -2983,8 +3083,8 @@
 			"title": "Interfaces",
 			"kind": 256,
 			"children": [
-				77,
-				90
+				81,
+				94
 			]
 		},
 		{
@@ -2998,10 +3098,10 @@
 			"title": "Functions",
 			"kind": 64,
 			"children": [
-				81,
-				84,
-				87,
-				160
+				85,
+				88,
+				91,
+				164
 			]
 		},
 		{
@@ -3009,7 +3109,7 @@
 			"kind": 2097152,
 			"children": [
 				1,
-				68
+				72
 			]
 		}
 	]

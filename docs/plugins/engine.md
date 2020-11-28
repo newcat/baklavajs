@@ -1,6 +1,6 @@
 # Engine
 
-[API reference](!!API%{ "module": "@baklavajs/plugin-engine", "type": "class", "name": "engine" }%)
+[API reference](!!API%{ "module": "@baklavajs/plugin-engine", "type": "class", "name": "Engine" }%)
 
 By default, the node editor just "looks good". But it doesn't do anything. This is, where the engine plugin comes into play.
 The engine does multiple things:
@@ -30,7 +30,7 @@ After building the tree, all nodes are calculated from the bottom of the tree to
 ### Root Nodes
 By default, root nodes are all nodes that only have input interfaces but no output interfaces.
 This also means, that if you do not have such a node in your editor, nothing will be calculated as the tree will be empty.
-To change this behaviour, you can set the [rootNodes](!!API%{ "module": "@baklavajs/plugin-engine", "type": "class", "name": "engine", "field": "rootNodes" }%) property of the `Engine` plugin to a custom array, which will be used as the root of the tree.
+To change this behaviour, you can set the [rootNodes](!!API%{ "module": "@baklavajs/plugin-engine", "type": "class", "name": "Engine", "field": "rootNodes" }%) property of the `Engine` plugin to a custom array, which will be used as the root of the tree.
 
 ### Providing Data for Calculation and Getting the Results
 In this example, we will pass an object to the sample nodes. The object contains a key `foo` with a string value.

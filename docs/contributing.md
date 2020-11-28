@@ -23,7 +23,13 @@ cd baklavajs
 lerna bootstrap
 ```
 
-4. Run the playground:
+4. Build the packages:
+
+```bash
+lerna run build
+```
+
+5. Run the playground:
 
 ```bash
 yarn run playground

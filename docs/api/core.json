@@ -5,7 +5,7 @@
 	"flags": {},
 	"children": [
 		{
-			"id": 195,
+			"id": 197,
 			"name": "TemporaryConnectionState",
 			"kind": 4,
 			"kindString": "Enumeration",
@@ -14,7 +14,7 @@
 			},
 			"children": [
 				{
-					"id": 197,
+					"id": 199,
 					"name": "ALLOWED",
 					"kind": 16,
 					"kindString": "Enumeration member",
@@ -23,14 +23,14 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 5,
 							"character": 11
 						}
 					]
 				},
 				{
-					"id": 198,
+					"id": 200,
 					"name": "FORBIDDEN",
 					"kind": 16,
 					"kindString": "Enumeration member",
@@ -39,14 +39,14 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 6,
 							"character": 13
 						}
 					]
 				},
 				{
-					"id": 196,
+					"id": 198,
 					"name": "NONE",
 					"kind": 16,
 					"kindString": "Enumeration member",
@@ -55,7 +55,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 4,
 							"character": 8
 						}
@@ -67,22 +67,22 @@
 					"title": "Enumeration members",
 					"kind": 16,
 					"children": [
-						197,
-						198,
-						196
+						199,
+						200,
+						198
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/connection.ts",
+					"fileName": "packages/baklavajs-core/types/connection.ts",
 					"line": 3,
 					"character": 36
 				}
 			]
 		},
 		{
-			"id": 248,
+			"id": 251,
 			"name": "Connection",
 			"kind": 128,
 			"kindString": "Class",
@@ -91,7 +91,7 @@
 			},
 			"children": [
 				{
-					"id": 256,
+					"id": 259,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -101,7 +101,7 @@
 					},
 					"signatures": [
 						{
-							"id": 257,
+							"id": 260,
 							"name": "new Connection",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -110,7 +110,7 @@
 							},
 							"parameters": [
 								{
-									"id": 258,
+									"id": 261,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -119,12 +119,12 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								},
 								{
-									"id": 259,
+									"id": 262,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -133,28 +133,28 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 248,
+								"id": 251,
 								"name": "Connection"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 16,
 							"character": 6
 						}
 					]
 				},
 				{
-					"id": 253,
+					"id": 256,
 					"name": "destructed",
 					"kind": 1024,
 					"kindString": "Property",
@@ -164,7 +164,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 12,
 							"character": 21
 						}
@@ -176,12 +176,12 @@
 					"defaultValue": "false",
 					"implementationOf": {
 						"type": "reference",
-						"id": 211,
+						"id": 213,
 						"name": "ITransferConnection.destructed"
 					}
 				},
 				{
-					"id": 250,
+					"id": 253,
 					"name": "from",
 					"kind": 1024,
 					"kindString": "Property",
@@ -191,24 +191,24 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 9,
 							"character": 15
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 215,
+						"id": 217,
 						"name": "NodeInterface"
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 213,
+						"id": 215,
 						"name": "ITransferConnection.from"
 					}
 				},
 				{
-					"id": 249,
+					"id": 252,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -218,7 +218,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 8,
 							"character": 13
 						}
@@ -229,12 +229,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 212,
+						"id": 214,
 						"name": "ITransferConnection.id"
 					}
 				},
 				{
-					"id": 252,
+					"id": 255,
 					"name": "isInDanger",
 					"kind": 1024,
 					"kindString": "Property",
@@ -244,7 +244,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 11,
 							"character": 21
 						}
@@ -256,12 +256,12 @@
 					"defaultValue": "false",
 					"implementationOf": {
 						"type": "reference",
-						"id": 210,
+						"id": 212,
 						"name": "ITransferConnection.isInDanger"
 					}
 				},
 				{
-					"id": 251,
+					"id": 254,
 					"name": "to",
 					"kind": 1024,
 					"kindString": "Property",
@@ -271,24 +271,24 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 10,
 							"character": 13
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 215,
+						"id": 217,
 						"name": "NodeInterface"
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 214,
+						"id": 216,
 						"name": "ITransferConnection.to"
 					}
 				},
 				{
-					"id": 260,
+					"id": 263,
 					"name": "destruct",
 					"kind": 2048,
 					"kindString": "Method",
@@ -298,7 +298,7 @@
 					},
 					"signatures": [
 						{
-							"id": 261,
+							"id": 264,
 							"name": "destruct",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -313,14 +313,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 33,
 							"character": 19
 						}
 					]
 				},
 				{
-					"id": 254,
+					"id": 257,
 					"name": "events",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -330,7 +330,7 @@
 					},
 					"children": [
 						{
-							"id": 255,
+							"id": 258,
 							"name": "destruct",
 							"kind": 32,
 							"kindString": "Variable",
@@ -339,7 +339,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/connection.ts",
+									"fileName": "packages/baklavajs-core/src/connection.ts",
 									"line": 15,
 									"character": 16
 								}
@@ -362,13 +362,13 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								255
+								258
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 14,
 							"character": 17
 						}
@@ -384,38 +384,38 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						256
+						259
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
+						256,
 						253,
-						250,
-						249,
 						252,
-						251
+						255,
+						254
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						260
+						263
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						254
+						257
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/connection.ts",
+					"fileName": "packages/baklavajs-core/src/connection.ts",
 					"line": 6,
 					"character": 23
 				}
@@ -423,13 +423,13 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"id": 209,
+					"id": 211,
 					"name": "ITransferConnection"
 				}
 			]
 		},
 		{
-			"id": 262,
+			"id": 265,
 			"name": "DummyConnection",
 			"kind": 128,
 			"kindString": "Class",
@@ -441,7 +441,7 @@
 			},
 			"children": [
 				{
-					"id": 266,
+					"id": 269,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -451,7 +451,7 @@
 					},
 					"signatures": [
 						{
-							"id": 267,
+							"id": 270,
 							"name": "new DummyConnection",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -460,7 +460,7 @@
 							},
 							"parameters": [
 								{
-									"id": 268,
+									"id": 271,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -469,12 +469,12 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								},
 								{
-									"id": 269,
+									"id": 272,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -483,28 +483,28 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 262,
+								"id": 265,
 								"name": "DummyConnection"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 50,
 							"character": 29
 						}
 					]
 				},
 				{
-					"id": 264,
+					"id": 267,
 					"name": "from",
 					"kind": 1024,
 					"kindString": "Property",
@@ -514,24 +514,24 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 49,
 							"character": 15
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 215,
+						"id": 217,
 						"name": "NodeInterface"
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 207,
+						"id": 209,
 						"name": "IConnection.from"
 					}
 				},
 				{
-					"id": 263,
+					"id": 266,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -541,7 +541,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 48,
 							"character": 13
 						}
@@ -552,12 +552,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 206,
+						"id": 208,
 						"name": "IConnection.id"
 					}
 				},
 				{
-					"id": 265,
+					"id": 268,
 					"name": "to",
 					"kind": 1024,
 					"kindString": "Property",
@@ -567,19 +567,19 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/connection.ts",
+							"fileName": "packages/baklavajs-core/src/connection.ts",
 							"line": 50,
 							"character": 13
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 215,
+						"id": 217,
 						"name": "NodeInterface"
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 208,
+						"id": 210,
 						"name": "IConnection.to"
 					}
 				}
@@ -589,22 +589,22 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						266
+						269
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						264,
-						263,
-						265
+						267,
+						266,
+						268
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/connection.ts",
+					"fileName": "packages/baklavajs-core/src/connection.ts",
 					"line": 46,
 					"character": 28
 				}
@@ -612,13 +612,13 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"id": 205,
+					"id": 207,
 					"name": "IConnection"
 				}
 			]
 		},
 		{
-			"id": 366,
+			"id": 370,
 			"name": "Editor",
 			"kind": 128,
 			"kindString": "Class",
@@ -630,7 +630,7 @@
 			},
 			"children": [
 				{
-					"id": 391,
+					"id": 395,
 					"name": "connections",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -643,7 +643,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 392,
+							"id": 396,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -658,7 +658,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 248,
+										"id": 251,
 										"name": "Connection"
 									}
 								],
@@ -668,7 +668,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 45,
 							"character": 26
 						}
@@ -680,7 +680,7 @@
 					}
 				},
 				{
-					"id": 396,
+					"id": 399,
 					"name": "nodeCategories",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -693,7 +693,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 397,
+							"id": 400,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -724,7 +724,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 55,
 							"character": 29
 						}
@@ -736,7 +736,7 @@
 					}
 				},
 				{
-					"id": 393,
+					"id": 397,
 					"name": "nodeTypes",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -749,7 +749,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 394,
+							"id": 398,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -767,16 +767,9 @@
 										"name": "string"
 									},
 									{
-										"type": "reflection",
-										"declaration": {
-											"id": 395,
-											"name": "__type",
-											"kind": 65536,
-											"kindString": "Type literal",
-											"flags": {
-												"isExported": true
-											}
-										}
+										"type": "reference",
+										"id": 91,
+										"name": "NodeConstructor"
 									}
 								],
 								"name": "ReadonlyMap"
@@ -785,7 +778,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 50,
 							"character": 24
 						}
@@ -797,7 +790,7 @@
 					}
 				},
 				{
-					"id": 389,
+					"id": 393,
 					"name": "nodes",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -810,7 +803,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 390,
+							"id": 394,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -825,7 +818,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 292,
+										"id": 296,
 										"name": "Node"
 									}
 								],
@@ -835,7 +828,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 40,
 							"character": 20
 						}
@@ -847,7 +840,7 @@
 					}
 				},
 				{
-					"id": 398,
+					"id": 401,
 					"name": "plugins",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -860,7 +853,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 399,
+							"id": 402,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -885,7 +878,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 60,
 							"character": 22
 						}
@@ -897,7 +890,7 @@
 					}
 				},
 				{
-					"id": 411,
+					"id": 414,
 					"name": "addConnection",
 					"kind": 2048,
 					"kindString": "Method",
@@ -907,7 +900,7 @@
 					},
 					"signatures": [
 						{
-							"id": 412,
+							"id": 415,
 							"name": "addConnection",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -920,7 +913,7 @@
 							},
 							"parameters": [
 								{
-									"id": 413,
+									"id": 416,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -932,12 +925,12 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								},
 								{
-									"id": 414,
+									"id": 417,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -949,7 +942,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								}
@@ -959,7 +952,7 @@
 								"types": [
 									{
 										"type": "reference",
-										"id": 248,
+										"id": 251,
 										"name": "Connection"
 									},
 									{
@@ -972,7 +965,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 115,
 							"character": 24
 						}
@@ -984,7 +977,7 @@
 					}
 				},
 				{
-					"id": 405,
+					"id": 408,
 					"name": "addNode",
 					"kind": 2048,
 					"kindString": "Method",
@@ -994,7 +987,7 @@
 					},
 					"signatures": [
 						{
-							"id": 406,
+							"id": 409,
 							"name": "addNode",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1007,7 +1000,7 @@
 							},
 							"parameters": [
 								{
-									"id": 407,
+									"id": 410,
 									"name": "node",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1019,7 +1012,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 292,
+										"id": 296,
 										"name": "Node"
 									}
 								}
@@ -1029,7 +1022,7 @@
 								"types": [
 									{
 										"type": "reference",
-										"id": 292,
+										"id": 296,
 										"name": "Node"
 									},
 									{
@@ -1042,7 +1035,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 85,
 							"character": 18
 						}
@@ -1054,7 +1047,7 @@
 					}
 				},
 				{
-					"id": 418,
+					"id": 421,
 					"name": "checkConnection",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1064,7 +1057,7 @@
 					},
 					"signatures": [
 						{
-							"id": 419,
+							"id": 422,
 							"name": "checkConnection",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1077,7 +1070,7 @@
 							},
 							"parameters": [
 								{
-									"id": 420,
+									"id": 423,
 									"name": "from",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1089,12 +1082,12 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								},
 								{
-									"id": 421,
+									"id": 424,
 									"name": "to",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1106,7 +1099,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								}
@@ -1120,7 +1113,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 262,
+										"id": 265,
 										"name": "DummyConnection"
 									}
 								]
@@ -1129,7 +1122,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 152,
 							"character": 26
 						}
@@ -1141,7 +1134,7 @@
 					}
 				},
 				{
-					"id": 433,
+					"id": 436,
 					"name": "findNodeInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1151,7 +1144,7 @@
 					},
 					"signatures": [
 						{
-							"id": 434,
+							"id": 437,
 							"name": "findNodeInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1160,7 +1153,7 @@
 							},
 							"parameters": [
 								{
-									"id": 435,
+									"id": 438,
 									"name": "id",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1182,7 +1175,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								]
@@ -1196,7 +1189,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 268,
 							"character": 28
 						}
@@ -1208,7 +1201,7 @@
 					}
 				},
 				{
-					"id": 430,
+					"id": 433,
 					"name": "generateId",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1218,7 +1211,7 @@
 					},
 					"signatures": [
 						{
-							"id": 431,
+							"id": 434,
 							"name": "generateId",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1227,7 +1220,7 @@
 							},
 							"parameters": [
 								{
-									"id": 432,
+									"id": 435,
 									"name": "prefix",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1249,7 +1242,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 264,
 							"character": 21
 						}
@@ -1261,7 +1254,7 @@
 					}
 				},
 				{
-					"id": 422,
+					"id": 425,
 					"name": "load",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1271,7 +1264,7 @@
 					},
 					"signatures": [
 						{
-							"id": 423,
+							"id": 426,
 							"name": "load",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1283,7 +1276,7 @@
 							},
 							"parameters": [
 								{
-									"id": 424,
+									"id": 427,
 									"name": "state",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1313,7 +1306,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 188,
 							"character": 15
 						}
@@ -1325,7 +1318,7 @@
 					}
 				},
 				{
-					"id": 400,
+					"id": 403,
 					"name": "registerNodeType",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1335,7 +1328,7 @@
 					},
 					"signatures": [
 						{
-							"id": 401,
+							"id": 404,
 							"name": "registerNodeType",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1347,7 +1340,7 @@
 							},
 							"parameters": [
 								{
-									"id": 402,
+									"id": 405,
 									"name": "typeName",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1363,7 +1356,7 @@
 									}
 								},
 								{
-									"id": 403,
+									"id": 406,
 									"name": "type",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1380,7 +1373,7 @@
 									}
 								},
 								{
-									"id": 404,
+									"id": 407,
 									"name": "category",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1405,7 +1398,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 70,
 							"character": 27
 						}
@@ -1417,7 +1410,7 @@
 					}
 				},
 				{
-					"id": 415,
+					"id": 418,
 					"name": "removeConnection",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1427,7 +1420,7 @@
 					},
 					"signatures": [
 						{
-							"id": 416,
+							"id": 419,
 							"name": "removeConnection",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1439,7 +1432,7 @@
 							},
 							"parameters": [
 								{
-									"id": 417,
+									"id": 420,
 									"name": "connection",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1451,7 +1444,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 248,
+										"id": 251,
 										"name": "Connection"
 									}
 								}
@@ -1464,7 +1457,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 137,
 							"character": 27
 						}
@@ -1476,7 +1469,7 @@
 					}
 				},
 				{
-					"id": 408,
+					"id": 411,
 					"name": "removeNode",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1486,7 +1479,7 @@
 					},
 					"signatures": [
 						{
-							"id": 409,
+							"id": 412,
 							"name": "removeNode",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1498,7 +1491,7 @@
 							},
 							"parameters": [
 								{
-									"id": 410,
+									"id": 413,
 									"name": "node",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1510,7 +1503,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 292,
+										"id": 296,
 										"name": "Node"
 									}
 								}
@@ -1523,7 +1516,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 98,
 							"character": 21
 						}
@@ -1535,7 +1528,7 @@
 					}
 				},
 				{
-					"id": 425,
+					"id": 428,
 					"name": "save",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1545,7 +1538,7 @@
 					},
 					"signatures": [
 						{
-							"id": 426,
+							"id": 429,
 							"name": "save",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1570,7 +1563,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 239,
 							"character": 15
 						}
@@ -1582,7 +1575,7 @@
 					}
 				},
 				{
-					"id": 427,
+					"id": 430,
 					"name": "use",
 					"kind": 2048,
 					"kindString": "Method",
@@ -1592,7 +1585,7 @@
 					},
 					"signatures": [
 						{
-							"id": 428,
+							"id": 431,
 							"name": "use",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1605,7 +1598,7 @@
 							},
 							"parameters": [
 								{
-									"id": 429,
+									"id": 432,
 									"name": "plugin",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1635,7 +1628,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 256,
 							"character": 14
 						}
@@ -1647,7 +1640,7 @@
 					}
 				},
 				{
-					"id": 372,
+					"id": 376,
 					"name": "events",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -1657,7 +1650,7 @@
 					},
 					"children": [
 						{
-							"id": 380,
+							"id": 384,
 							"name": "addConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1666,7 +1659,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 26,
 									"character": 21
 								}
@@ -1676,7 +1669,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 205,
+										"id": 207,
 										"name": "IConnection"
 									}
 								],
@@ -1685,7 +1678,7 @@
 							"defaultValue": "new BaklavaEvent<IConnection>()"
 						},
 						{
-							"id": 376,
+							"id": 380,
 							"name": "addNode",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1694,7 +1687,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 22,
 									"character": 15
 								}
@@ -1704,7 +1697,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 127,
+										"id": 128,
 										"name": "INode"
 									}
 								],
@@ -1713,7 +1706,7 @@
 							"defaultValue": "new BaklavaEvent<INode>()"
 						},
 						{
-							"id": 379,
+							"id": 383,
 							"name": "beforeAddConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1722,7 +1715,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 25,
 									"character": 27
 								}
@@ -1732,7 +1725,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 103,
+										"id": 104,
 										"name": "IAddConnectionEventData"
 									}
 								],
@@ -1741,7 +1734,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IAddConnectionEventData>()"
 						},
 						{
-							"id": 375,
+							"id": 379,
 							"name": "beforeAddNode",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1750,7 +1743,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 21,
 									"character": 21
 								}
@@ -1760,7 +1753,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 127,
+										"id": 128,
 										"name": "INode"
 									}
 								],
@@ -1769,7 +1762,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<INode>()"
 						},
 						{
-							"id": 373,
+							"id": 377,
 							"name": "beforeRegisterNodeType",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1778,7 +1771,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 19,
 									"character": 30
 								}
@@ -1788,7 +1781,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 106,
+										"id": 107,
 										"name": "IAddNodeTypeEventData"
 									}
 								],
@@ -1797,7 +1790,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IAddNodeTypeEventData>()"
 						},
 						{
-							"id": 382,
+							"id": 386,
 							"name": "beforeRemoveConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1806,7 +1799,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 28,
 									"character": 30
 								}
@@ -1816,7 +1809,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 205,
+										"id": 207,
 										"name": "IConnection"
 									}
 								],
@@ -1825,7 +1818,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IConnection>()"
 						},
 						{
-							"id": 377,
+							"id": 381,
 							"name": "beforeRemoveNode",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1834,7 +1827,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 23,
 									"character": 24
 								}
@@ -1844,7 +1837,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 127,
+										"id": 128,
 										"name": "INode"
 									}
 								],
@@ -1853,7 +1846,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<INode>()"
 						},
 						{
-							"id": 384,
+							"id": 388,
 							"name": "beforeUsePlugin",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1862,7 +1855,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 30,
 									"character": 23
 								}
@@ -1881,7 +1874,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IPlugin>()"
 						},
 						{
-							"id": 381,
+							"id": 385,
 							"name": "checkConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1890,7 +1883,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 27,
 									"character": 23
 								}
@@ -1900,7 +1893,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 103,
+										"id": 104,
 										"name": "IAddConnectionEventData"
 									}
 								],
@@ -1909,7 +1902,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IAddConnectionEventData>()"
 						},
 						{
-							"id": 374,
+							"id": 378,
 							"name": "registerNodeType",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1918,7 +1911,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 20,
 									"character": 24
 								}
@@ -1928,7 +1921,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 106,
+										"id": 107,
 										"name": "IAddNodeTypeEventData"
 									}
 								],
@@ -1937,7 +1930,7 @@
 							"defaultValue": "new BaklavaEvent<IAddNodeTypeEventData>()"
 						},
 						{
-							"id": 383,
+							"id": 387,
 							"name": "removeConnection",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1946,7 +1939,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 29,
 									"character": 24
 								}
@@ -1956,7 +1949,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 205,
+										"id": 207,
 										"name": "IConnection"
 									}
 								],
@@ -1965,7 +1958,7 @@
 							"defaultValue": "new BaklavaEvent<IConnection>()"
 						},
 						{
-							"id": 378,
+							"id": 382,
 							"name": "removeNode",
 							"kind": 32,
 							"kindString": "Variable",
@@ -1974,7 +1967,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 24,
 									"character": 18
 								}
@@ -1984,7 +1977,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 127,
+										"id": 128,
 										"name": "INode"
 									}
 								],
@@ -1993,7 +1986,7 @@
 							"defaultValue": "new BaklavaEvent<INode>()"
 						},
 						{
-							"id": 385,
+							"id": 389,
 							"name": "usePlugin",
 							"kind": 32,
 							"kindString": "Variable",
@@ -2002,7 +1995,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 31,
 									"character": 17
 								}
@@ -2026,25 +2019,25 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								380,
-								376,
-								379,
-								375,
-								373,
-								382,
-								377,
 								384,
-								381,
-								374,
+								380,
 								383,
+								379,
+								377,
+								386,
+								381,
+								388,
+								385,
 								378,
-								385
+								387,
+								382,
+								389
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 18,
 							"character": 17
 						}
@@ -2060,7 +2053,7 @@
 					}
 				},
 				{
-					"id": 386,
+					"id": 390,
 					"name": "hooks",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -2070,7 +2063,7 @@
 					},
 					"children": [
 						{
-							"id": 388,
+							"id": 392,
 							"name": "load",
 							"kind": 32,
 							"kindString": "Variable",
@@ -2079,7 +2072,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 36,
 									"character": 12
 								}
@@ -2098,7 +2091,7 @@
 							"defaultValue": "new SequentialHook<IState>()"
 						},
 						{
-							"id": 387,
+							"id": 391,
 							"name": "save",
 							"kind": 32,
 							"kindString": "Variable",
@@ -2107,7 +2100,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/editor.ts",
+									"fileName": "packages/baklavajs-core/src/editor.ts",
 									"line": 35,
 									"character": 12
 								}
@@ -2131,14 +2124,14 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								388,
-								387
+								392,
+								391
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/editor.ts",
+							"fileName": "packages/baklavajs-core/src/editor.ts",
 							"line": 34,
 							"character": 16
 						}
@@ -2159,42 +2152,42 @@
 					"title": "Accessors",
 					"kind": 262144,
 					"children": [
-						391,
-						396,
+						395,
+						399,
+						397,
 						393,
-						389,
-						398
+						401
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						411,
-						405,
-						418,
-						433,
-						430,
-						422,
-						400,
-						415,
+						414,
 						408,
+						421,
+						436,
+						433,
 						425,
-						427
+						403,
+						418,
+						411,
+						428,
+						430
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						372,
-						386
+						376,
+						390
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/editor.ts",
+					"fileName": "packages/baklavajs-core/src/editor.ts",
 					"line": 10,
 					"character": 19
 				}
@@ -2208,7 +2201,7 @@
 			]
 		},
 		{
-			"id": 292,
+			"id": 296,
 			"name": "Node",
 			"kind": 128,
 			"kindString": "Class",
@@ -2221,7 +2214,7 @@
 			},
 			"children": [
 				{
-					"id": 295,
+					"id": 299,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2234,7 +2227,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 25,
 							"character": 13
 						}
@@ -2246,12 +2239,12 @@
 					"defaultValue": "\"node_\" + generateId()",
 					"implementationOf": {
 						"type": "reference",
-						"id": 130,
+						"id": 131,
 						"name": "INode.id"
 					}
 				},
 				{
-					"id": 296,
+					"id": 300,
 					"name": "interfaces",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2264,7 +2257,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 30,
 							"character": 21
 						}
@@ -2278,7 +2271,7 @@
 							},
 							{
 								"type": "reference",
-								"id": 215,
+								"id": 217,
 								"name": "NodeInterface"
 							}
 						],
@@ -2287,12 +2280,12 @@
 					"defaultValue": "new Map()",
 					"implementationOf": {
 						"type": "reference",
-						"id": 131,
+						"id": 132,
 						"name": "INode.interfaces"
 					}
 				},
 				{
-					"id": 294,
+					"id": 298,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2306,7 +2299,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 23,
 							"character": 24
 						}
@@ -2317,12 +2310,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 129,
+						"id": 130,
 						"name": "INode.name"
 					}
 				},
 				{
-					"id": 297,
+					"id": 301,
 					"name": "options",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2335,7 +2328,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 35,
 							"character": 18
 						}
@@ -2349,7 +2342,7 @@
 							},
 							{
 								"type": "reference",
-								"id": 270,
+								"id": 273,
 								"name": "NodeOption"
 							}
 						],
@@ -2358,12 +2351,12 @@
 					"defaultValue": "new Map()",
 					"implementationOf": {
 						"type": "reference",
-						"id": 132,
+						"id": 133,
 						"name": "INode.options"
 					}
 				},
 				{
-					"id": 298,
+					"id": 302,
 					"name": "state",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2376,7 +2369,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 38,
 							"character": 16
 						}
@@ -2397,12 +2390,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 133,
+						"id": 134,
 						"name": "INode.state"
 					}
 				},
 				{
-					"id": 293,
+					"id": 297,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2416,7 +2409,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 21,
 							"character": 24
 						}
@@ -2427,12 +2420,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 128,
+						"id": 129,
 						"name": "INode.type"
 					}
 				},
 				{
-					"id": 313,
+					"id": 317,
 					"name": "inputInterfaces",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -2445,7 +2438,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 314,
+							"id": 318,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -2464,7 +2457,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								],
@@ -2474,19 +2467,19 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 60,
 							"character": 30
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 149,
+						"id": 150,
 						"name": "INode.inputInterfaces"
 					}
 				},
 				{
-					"id": 315,
+					"id": 319,
 					"name": "outputInterfaces",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -2499,7 +2492,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 316,
+							"id": 320,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -2518,7 +2511,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								],
@@ -2528,19 +2521,19 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 69,
 							"character": 31
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 150,
+						"id": 151,
 						"name": "INode.outputInterfaces"
 					}
 				},
 				{
-					"id": 325,
+					"id": 329,
 					"name": "addInputInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2550,7 +2543,7 @@
 					},
 					"signatures": [
 						{
-							"id": 326,
+							"id": 330,
 							"name": "addInputInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2563,7 +2556,7 @@
 							},
 							"parameters": [
 								{
-									"id": 327,
+									"id": 331,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2579,7 +2572,7 @@
 									}
 								},
 								{
-									"id": 328,
+									"id": 332,
 									"name": "option",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2605,7 +2598,7 @@
 									}
 								},
 								{
-									"id": 329,
+									"id": 333,
 									"name": "defaultValue",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2620,247 +2613,6 @@
 										"name": "any"
 									},
 									"defaultValue": "null"
-								},
-								{
-									"id": 330,
-									"name": "additionalProperties",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {
-										"isExported": true,
-										"isOptional": true
-									},
-									"comment": {
-										"text": "Additional properties of the interface that can be used by plugins"
-									},
-									"type": {
-										"type": "reference",
-										"typeArguments": [
-											{
-												"type": "intrinsic",
-												"name": "string"
-											},
-											{
-												"type": "intrinsic",
-												"name": "any"
-											}
-										],
-										"name": "Record"
-									}
-								}
-							],
-							"type": {
-								"type": "union",
-								"types": [
-									{
-										"type": "intrinsic",
-										"name": "undefined"
-									},
-									{
-										"type": "reference",
-										"id": 215,
-										"name": "NodeInterface"
-									}
-								]
-							}
-						}
-					],
-					"sources": [
-						{
-							"fileName": "src/node.ts",
-							"line": 125,
-							"character": 31
-						}
-					]
-				},
-				{
-					"id": 338,
-					"name": "addOption",
-					"kind": 2048,
-					"kindString": "Method",
-					"flags": {
-						"isProtected": true,
-						"isExported": true
-					},
-					"signatures": [
-						{
-							"id": 339,
-							"name": "addOption",
-							"kind": 4096,
-							"kindString": "Call signature",
-							"flags": {
-								"isExported": true
-							},
-							"comment": {
-								"shortText": "Add a node option to the node",
-								"returns": "The created option or undefined, if the option was not created\n"
-							},
-							"parameters": [
-								{
-									"id": 340,
-									"name": "name",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {
-										"isExported": true
-									},
-									"comment": {
-										"text": "Name of the option"
-									},
-									"type": {
-										"type": "intrinsic",
-										"name": "string"
-									}
-								},
-								{
-									"id": 341,
-									"name": "component",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {
-										"isExported": true
-									},
-									"comment": {
-										"text": "Name of the option component"
-									},
-									"type": {
-										"type": "intrinsic",
-										"name": "string"
-									}
-								},
-								{
-									"id": 342,
-									"name": "defaultValue",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {
-										"isExported": true
-									},
-									"comment": {
-										"text": "Default value for the option"
-									},
-									"type": {
-										"type": "intrinsic",
-										"name": "any"
-									},
-									"defaultValue": "null"
-								},
-								{
-									"id": 343,
-									"name": "sidebarComponent",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {
-										"isExported": true,
-										"isOptional": true
-									},
-									"comment": {
-										"text": "Optional name of the component to display in the sidebar"
-									},
-									"type": {
-										"type": "union",
-										"types": [
-											{
-												"type": "intrinsic",
-												"name": "undefined"
-											},
-											{
-												"type": "intrinsic",
-												"name": "string"
-											}
-										]
-									}
-								},
-								{
-									"id": 344,
-									"name": "additionalProperties",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {
-										"isExported": true,
-										"isOptional": true
-									},
-									"comment": {
-										"text": "Additional properties of the option that can be used by plugins"
-									},
-									"type": {
-										"type": "reference",
-										"typeArguments": [
-											{
-												"type": "intrinsic",
-												"name": "string"
-											},
-											{
-												"type": "intrinsic",
-												"name": "any"
-											}
-										],
-										"name": "Record"
-									}
-								}
-							],
-							"type": {
-								"type": "union",
-								"types": [
-									{
-										"type": "intrinsic",
-										"name": "undefined"
-									},
-									{
-										"type": "reference",
-										"id": 270,
-										"name": "NodeOption"
-									}
-								]
-							}
-						}
-					],
-					"sources": [
-						{
-							"fileName": "src/node.ts",
-							"line": 189,
-							"character": 23
-						}
-					]
-				},
-				{
-					"id": 331,
-					"name": "addOutputInterface",
-					"kind": 2048,
-					"kindString": "Method",
-					"flags": {
-						"isProtected": true,
-						"isExported": true
-					},
-					"signatures": [
-						{
-							"id": 332,
-							"name": "addOutputInterface",
-							"kind": 4096,
-							"kindString": "Call signature",
-							"flags": {
-								"isExported": true
-							},
-							"comment": {
-								"shortText": "Add an output interface to the node",
-								"returns": "The created interface or undefined, if the interface was not created\n"
-							},
-							"parameters": [
-								{
-									"id": 333,
-									"name": "name",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {
-										"isExported": true
-									},
-									"comment": {
-										"text": "Name of the interface"
-									},
-									"type": {
-										"type": "intrinsic",
-										"name": "string"
-									}
 								},
 								{
 									"id": 334,
@@ -2899,7 +2651,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								]
@@ -2908,14 +2660,255 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
+							"line": 125,
+							"character": 31
+						}
+					]
+				},
+				{
+					"id": 342,
+					"name": "addOption",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isProtected": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 343,
+							"name": "addOption",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": "Add a node option to the node",
+								"returns": "The created option or undefined, if the option was not created\n"
+							},
+							"parameters": [
+								{
+									"id": 344,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true
+									},
+									"comment": {
+										"text": "Name of the option"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 345,
+									"name": "component",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true
+									},
+									"comment": {
+										"text": "Name of the option component"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 346,
+									"name": "defaultValue",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true
+									},
+									"comment": {
+										"text": "Default value for the option"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									},
+									"defaultValue": "null"
+								},
+								{
+									"id": 347,
+									"name": "sidebarComponent",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true,
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Optional name of the component to display in the sidebar"
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											},
+											{
+												"type": "intrinsic",
+												"name": "string"
+											}
+										]
+									}
+								},
+								{
+									"id": 348,
+									"name": "additionalProperties",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true,
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Additional properties of the option that can be used by plugins"
+									},
+									"type": {
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										],
+										"name": "Record"
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "reference",
+										"id": 273,
+										"name": "NodeOption"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "packages/baklavajs-core/src/node.ts",
+							"line": 189,
+							"character": 23
+						}
+					]
+				},
+				{
+					"id": 335,
+					"name": "addOutputInterface",
+					"kind": 2048,
+					"kindString": "Method",
+					"flags": {
+						"isProtected": true,
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 336,
+							"name": "addOutputInterface",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": "Add an output interface to the node",
+								"returns": "The created interface or undefined, if the interface was not created\n"
+							},
+							"parameters": [
+								{
+									"id": 337,
+									"name": "name",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true
+									},
+									"comment": {
+										"text": "Name of the interface"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 338,
+									"name": "additionalProperties",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true,
+										"isOptional": true
+									},
+									"comment": {
+										"text": "Additional properties of the interface that can be used by plugins"
+									},
+									"type": {
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										],
+										"name": "Record"
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "reference",
+										"id": 217,
+										"name": "NodeInterface"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 141,
 							"character": 32
 						}
 					]
 				},
 				{
-					"id": 322,
+					"id": 326,
 					"name": "calculate",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2925,7 +2918,7 @@
 					},
 					"signatures": [
 						{
-							"id": 323,
+							"id": 327,
 							"name": "calculate",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2938,7 +2931,7 @@
 							},
 							"parameters": [
 								{
-									"id": 324,
+									"id": 328,
 									"name": "calculationData",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2958,26 +2951,26 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 157,
+								"id": 158,
 								"name": "INode.calculate"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 113,
 							"character": 20
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 156,
+						"id": 157,
 						"name": "INode.calculate"
 					}
 				},
 				{
-					"id": 348,
+					"id": 352,
 					"name": "getInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2987,7 +2980,7 @@
 					},
 					"signatures": [
 						{
-							"id": 349,
+							"id": 353,
 							"name": "getInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2999,7 +2992,7 @@
 							},
 							"parameters": [
 								{
-									"id": 350,
+									"id": 354,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3017,31 +3010,31 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 215,
+								"id": 217,
 								"name": "NodeInterface"
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 160,
+								"id": 161,
 								"name": "INode.getInterface"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 218,
 							"character": 23
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 159,
+						"id": 160,
 						"name": "INode.getInterface"
 					}
 				},
 				{
-					"id": 351,
+					"id": 355,
 					"name": "getOptionValue",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3051,7 +3044,7 @@
 					},
 					"signatures": [
 						{
-							"id": 352,
+							"id": 356,
 							"name": "getOptionValue",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3063,7 +3056,7 @@
 							},
 							"parameters": [
 								{
-									"id": 353,
+									"id": 357,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3085,26 +3078,26 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 163,
+								"id": 164,
 								"name": "INode.getOptionValue"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 229,
 							"character": 25
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 162,
+						"id": 163,
 						"name": "INode.getOptionValue"
 					}
 				},
 				{
-					"id": 317,
+					"id": 321,
 					"name": "load",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3114,7 +3107,7 @@
 					},
 					"signatures": [
 						{
-							"id": 318,
+							"id": 322,
 							"name": "load",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3123,7 +3116,7 @@
 							},
 							"parameters": [
 								{
-									"id": 319,
+									"id": 323,
 									"name": "state",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3143,26 +3136,26 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 152,
+								"id": 153,
 								"name": "INode.load"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 77,
 							"character": 15
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 151,
+						"id": 152,
 						"name": "INode.load"
 					}
 				},
 				{
-					"id": 358,
+					"id": 362,
 					"name": "registerEditor",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3172,7 +3165,7 @@
 					},
 					"signatures": [
 						{
-							"id": 359,
+							"id": 363,
 							"name": "registerEditor",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3184,7 +3177,7 @@
 							},
 							"parameters": [
 								{
-									"id": 360,
+									"id": 364,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3196,7 +3189,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 366,
+										"id": 370,
 										"name": "Editor"
 									}
 								}
@@ -3209,19 +3202,19 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 252,
 							"character": 25
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 169,
+						"id": 170,
 						"name": "INode.registerEditor"
 					}
 				},
 				{
-					"id": 335,
+					"id": 339,
 					"name": "removeInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3231,7 +3224,7 @@
 					},
 					"signatures": [
 						{
-							"id": 336,
+							"id": 340,
 							"name": "removeInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3243,7 +3236,7 @@
 							},
 							"parameters": [
 								{
-									"id": 337,
+									"id": 341,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3267,14 +3260,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 153,
 							"character": 29
 						}
 					]
 				},
 				{
-					"id": 345,
+					"id": 349,
 					"name": "removeOption",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3284,7 +3277,7 @@
 					},
 					"signatures": [
 						{
-							"id": 346,
+							"id": 350,
 							"name": "removeOption",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3296,7 +3289,7 @@
 							},
 							"parameters": [
 								{
-									"id": 347,
+									"id": 351,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3320,14 +3313,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 204,
 							"character": 26
 						}
 					]
 				},
 				{
-					"id": 320,
+					"id": 324,
 					"name": "save",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3337,7 +3330,7 @@
 					},
 					"signatures": [
 						{
-							"id": 321,
+							"id": 325,
 							"name": "save",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3351,26 +3344,26 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 155,
+								"id": 156,
 								"name": "INode.save"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 94,
 							"character": 15
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 154,
+						"id": 155,
 						"name": "INode.save"
 					}
 				},
 				{
-					"id": 354,
+					"id": 358,
 					"name": "setOptionValue",
 					"kind": 2048,
 					"kindString": "Method",
@@ -3380,7 +3373,7 @@
 					},
 					"signatures": [
 						{
-							"id": 355,
+							"id": 359,
 							"name": "setOptionValue",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3392,7 +3385,7 @@
 							},
 							"parameters": [
 								{
-									"id": 356,
+									"id": 360,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3408,7 +3401,7 @@
 									}
 								},
 								{
-									"id": 357,
+									"id": 361,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3430,26 +3423,26 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 166,
+								"id": 167,
 								"name": "INode.setOptionValue"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 241,
 							"character": 25
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 165,
+						"id": 166,
 						"name": "INode.setOptionValue"
 					}
 				},
 				{
-					"id": 299,
+					"id": 303,
 					"name": "events",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -3459,7 +3452,7 @@
 					},
 					"children": [
 						{
-							"id": 301,
+							"id": 305,
 							"name": "addInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3468,7 +3461,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 42,
 									"character": 20
 								}
@@ -3478,7 +3471,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								],
@@ -3487,7 +3480,7 @@
 							"defaultValue": "new BaklavaEvent<NodeInterface>()"
 						},
 						{
-							"id": 305,
+							"id": 309,
 							"name": "addOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3496,7 +3489,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 46,
 									"character": 17
 								}
@@ -3506,7 +3499,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 120,
+										"id": 121,
 										"name": "IOptionEventData"
 									}
 								],
@@ -3515,7 +3508,7 @@
 							"defaultValue": "new BaklavaEvent<IOptionEventData>()"
 						},
 						{
-							"id": 300,
+							"id": 304,
 							"name": "beforeAddInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3524,7 +3517,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 41,
 									"character": 26
 								}
@@ -3534,7 +3527,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 110,
+										"id": 111,
 										"name": "IAddInterfaceEventData"
 									}
 								],
@@ -3543,7 +3536,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IAddInterfaceEventData>()"
 						},
 						{
-							"id": 304,
+							"id": 308,
 							"name": "beforeAddOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3552,7 +3545,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 45,
 									"character": 23
 								}
@@ -3562,7 +3555,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 115,
+										"id": 116,
 										"name": "IAddOptionEventData"
 									}
 								],
@@ -3571,7 +3564,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IAddOptionEventData>()"
 						},
 						{
-							"id": 302,
+							"id": 306,
 							"name": "beforeRemoveInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3580,7 +3573,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 43,
 									"character": 29
 								}
@@ -3590,7 +3583,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								],
@@ -3599,7 +3592,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<NodeInterface>()"
 						},
 						{
-							"id": 306,
+							"id": 310,
 							"name": "beforeRemoveOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3608,7 +3601,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 47,
 									"character": 26
 								}
@@ -3618,7 +3611,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 120,
+										"id": 121,
 										"name": "IOptionEventData"
 									}
 								],
@@ -3627,7 +3620,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<IOptionEventData>()"
 						},
 						{
-							"id": 303,
+							"id": 307,
 							"name": "removeInterface",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3636,7 +3629,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 44,
 									"character": 23
 								}
@@ -3646,7 +3639,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 215,
+										"id": 217,
 										"name": "NodeInterface"
 									}
 								],
@@ -3655,7 +3648,7 @@
 							"defaultValue": "new BaklavaEvent<NodeInterface>()"
 						},
 						{
-							"id": 307,
+							"id": 311,
 							"name": "removeOption",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3664,7 +3657,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 48,
 									"character": 20
 								}
@@ -3674,7 +3667,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 120,
+										"id": 121,
 										"name": "IOptionEventData"
 									}
 								],
@@ -3683,7 +3676,7 @@
 							"defaultValue": "new BaklavaEvent<IOptionEventData>()"
 						},
 						{
-							"id": 308,
+							"id": 312,
 							"name": "update",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3692,7 +3685,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 49,
 									"character": 14
 								}
@@ -3702,7 +3695,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 123,
+										"id": 124,
 										"name": "INodeUpdateEventData"
 									}
 								],
@@ -3716,21 +3709,21 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								301,
 								305,
-								300,
+								309,
 								304,
-								302,
+								308,
 								306,
-								303,
+								310,
 								307,
-								308
+								311,
+								312
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 40,
 							"character": 17
 						}
@@ -3741,12 +3734,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 134,
+						"id": 135,
 						"name": "INode.events"
 					}
 				},
 				{
-					"id": 309,
+					"id": 313,
 					"name": "hooks",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -3756,7 +3749,7 @@
 					},
 					"children": [
 						{
-							"id": 310,
+							"id": 314,
 							"name": "load",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3765,7 +3758,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 53,
 									"character": 12
 								}
@@ -3784,7 +3777,7 @@
 							"defaultValue": "new SequentialHook<INodeState>()"
 						},
 						{
-							"id": 311,
+							"id": 315,
 							"name": "save",
 							"kind": 32,
 							"kindString": "Variable",
@@ -3793,7 +3786,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/node.ts",
+									"fileName": "packages/baklavajs-core/src/node.ts",
 									"line": 54,
 									"character": 12
 								}
@@ -3817,14 +3810,14 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								310,
-								311
+								314,
+								315
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 52,
 							"character": 16
 						}
@@ -3835,7 +3828,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 145,
+						"id": 146,
 						"name": "INode.hooks"
 					}
 				}
@@ -3845,52 +3838,52 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						295,
-						296,
-						294,
-						297,
+						299,
+						300,
 						298,
-						293
+						301,
+						302,
+						297
 					]
 				},
 				{
 					"title": "Accessors",
 					"kind": 262144,
 					"children": [
-						313,
-						315
+						317,
+						319
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						325,
-						338,
-						331,
-						322,
-						348,
-						351,
-						317,
-						358,
+						329,
+						342,
 						335,
-						345,
-						320,
-						354
+						326,
+						352,
+						355,
+						321,
+						362,
+						339,
+						349,
+						324,
+						358
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						299,
-						309
+						303,
+						313
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/node.ts",
+					"fileName": "packages/baklavajs-core/src/node.ts",
 					"line": 18,
 					"character": 26
 				}
@@ -3898,13 +3891,13 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"id": 127,
+					"id": 128,
 					"name": "INode"
 				}
 			]
 		},
 		{
-			"id": 447,
+			"id": 450,
 			"name": "NodeBuilder",
 			"kind": 128,
 			"kindString": "Class",
@@ -3916,7 +3909,7 @@
 			},
 			"children": [
 				{
-					"id": 454,
+					"id": 457,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -3929,7 +3922,7 @@
 					},
 					"signatures": [
 						{
-							"id": 455,
+							"id": 458,
 							"name": "new NodeBuilder",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -3941,7 +3934,7 @@
 							},
 							"parameters": [
 								{
-									"id": 456,
+									"id": 459,
 									"name": "type",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3957,7 +3950,7 @@
 									}
 								},
 								{
-									"id": 457,
+									"id": 460,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3986,21 +3979,21 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 447,
+								"id": 450,
 								"name": "NodeBuilder"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 72,
 							"character": 47
 						}
 					]
 				},
 				{
-					"id": 463,
+					"id": 466,
 					"name": "addInputInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4010,7 +4003,7 @@
 					},
 					"signatures": [
 						{
-							"id": 464,
+							"id": 467,
 							"name": "addInputInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4023,7 +4016,7 @@
 							},
 							"parameters": [
 								{
-									"id": 465,
+									"id": 468,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4039,7 +4032,7 @@
 									}
 								},
 								{
-									"id": 466,
+									"id": 469,
 									"name": "option",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4065,7 +4058,7 @@
 									}
 								},
 								{
-									"id": 467,
+									"id": 470,
 									"name": "defaultValue",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4082,7 +4075,7 @@
 									"defaultValue": "null"
 								},
 								{
-									"id": 468,
+									"id": 471,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4111,21 +4104,21 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 447,
+								"id": 450,
 								"name": "NodeBuilder"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 116,
 							"character": 28
 						}
 					]
 				},
 				{
-					"id": 473,
+					"id": 476,
 					"name": "addOption",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4135,7 +4128,7 @@
 					},
 					"signatures": [
 						{
-							"id": 474,
+							"id": 477,
 							"name": "addOption",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4148,7 +4141,7 @@
 							},
 							"parameters": [
 								{
-									"id": 475,
+									"id": 478,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4164,7 +4157,7 @@
 									}
 								},
 								{
-									"id": 476,
+									"id": 479,
 									"name": "optionComponent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4177,7 +4170,7 @@
 									}
 								},
 								{
-									"id": 477,
+									"id": 480,
 									"name": "defaultValue",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4194,7 +4187,7 @@
 									"defaultValue": "null"
 								},
 								{
-									"id": 478,
+									"id": 481,
 									"name": "sidebarComponent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4220,7 +4213,7 @@
 									}
 								},
 								{
-									"id": 479,
+									"id": 482,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4249,21 +4242,21 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 447,
+								"id": 450,
 								"name": "NodeBuilder"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 146,
 							"character": 20
 						}
 					]
 				},
 				{
-					"id": 469,
+					"id": 472,
 					"name": "addOutputInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4273,7 +4266,7 @@
 					},
 					"signatures": [
 						{
-							"id": 470,
+							"id": 473,
 							"name": "addOutputInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4286,7 +4279,7 @@
 							},
 							"parameters": [
 								{
-									"id": 471,
+									"id": 474,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4302,7 +4295,7 @@
 									}
 								},
 								{
-									"id": 472,
+									"id": 475,
 									"name": "additionalProperties",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4331,21 +4324,21 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 447,
+								"id": 450,
 								"name": "NodeBuilder"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 129,
 							"character": 29
 						}
 					]
 				},
 				{
-					"id": 458,
+					"id": 461,
 					"name": "build",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4355,7 +4348,7 @@
 					},
 					"signatures": [
 						{
-							"id": 459,
+							"id": 462,
 							"name": "build",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4368,21 +4361,21 @@
 							},
 							"type": {
 								"type": "reference",
-								"id": 492,
+								"id": 495,
 								"name": "NodeConstructorImpl"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 90,
 							"character": 16
 						}
 					]
 				},
 				{
-					"id": 480,
+					"id": 483,
 					"name": "onCalculate",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4392,7 +4385,7 @@
 					},
 					"signatures": [
 						{
-							"id": 481,
+							"id": 484,
 							"name": "onCalculate",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4405,7 +4398,7 @@
 							},
 							"parameters": [
 								{
-									"id": 482,
+									"id": 485,
 									"name": "cb",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4417,28 +4410,28 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 486,
+										"id": 489,
 										"name": "CalculationFunction"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 447,
+								"id": 450,
 								"name": "NodeBuilder"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 166,
 							"character": 22
 						}
 					]
 				},
 				{
-					"id": 460,
+					"id": 463,
 					"name": "setName",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4448,7 +4441,7 @@
 					},
 					"signatures": [
 						{
-							"id": 461,
+							"id": 464,
 							"name": "setName",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4461,7 +4454,7 @@
 							},
 							"parameters": [
 								{
-									"id": 462,
+									"id": 465,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4479,14 +4472,14 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 447,
+								"id": 450,
 								"name": "NodeBuilder"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 99,
 							"character": 18
 						}
@@ -4498,32 +4491,32 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						454
+						457
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						463,
-						473,
-						469,
-						458,
-						480,
-						460
+						466,
+						476,
+						472,
+						461,
+						483,
+						463
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/nodeBuilder.ts",
+					"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 					"line": 65,
 					"character": 24
 				}
 			]
 		},
 		{
-			"id": 215,
+			"id": 217,
 			"name": "NodeInterface",
 			"kind": 128,
 			"kindString": "Class",
@@ -4532,7 +4525,7 @@
 			},
 			"indexSignature": [
 				{
-					"id": 220,
+					"id": 222,
 					"name": "__index",
 					"kind": 8192,
 					"kindString": "Index signature",
@@ -4541,7 +4534,7 @@
 					},
 					"parameters": [
 						{
-							"id": 221,
+							"id": 223,
 							"name": "k",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -4562,7 +4555,7 @@
 			],
 			"children": [
 				{
-					"id": 239,
+					"id": 242,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -4572,7 +4565,7 @@
 					},
 					"signatures": [
 						{
-							"id": 240,
+							"id": 243,
 							"name": "new NodeInterface",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -4581,7 +4574,7 @@
 							},
 							"parameters": [
 								{
-									"id": 241,
+									"id": 244,
 									"name": "parent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4590,12 +4583,12 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 127,
+										"id": 128,
 										"name": "INode"
 									}
 								},
 								{
-									"id": 242,
+									"id": 245,
 									"name": "isInput",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4610,21 +4603,21 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 215,
+								"id": 217,
 								"name": "NodeInterface"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
-							"line": 43,
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+							"line": 45,
 							"character": 5
 						}
 					]
 				},
 				{
-					"id": 216,
+					"id": 218,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -4634,8 +4627,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
-							"line": 8,
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+							"line": 7,
 							"character": 13
 						}
 					],
@@ -4645,12 +4638,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 175,
+						"id": 176,
 						"name": "INodeInterface.id"
 					}
 				},
 				{
-					"id": 217,
+					"id": 219,
 					"name": "isInput",
 					"kind": 1024,
 					"kindString": "Property",
@@ -4660,8 +4653,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
-							"line": 9,
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+							"line": 8,
 							"character": 18
 						}
 					],
@@ -4671,12 +4664,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 176,
+						"id": 177,
 						"name": "INodeInterface.isInput"
 					}
 				},
 				{
-					"id": 219,
+					"id": 221,
 					"name": "option",
 					"kind": 1024,
 					"kindString": "Property",
@@ -4687,8 +4680,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
-							"line": 11,
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+							"line": 10,
 							"character": 17
 						}
 					],
@@ -4707,12 +4700,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 178,
+						"id": 179,
 						"name": "INodeInterface.option"
 					}
 				},
 				{
-					"id": 218,
+					"id": 220,
 					"name": "parent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -4722,24 +4715,24 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
-							"line": 10,
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+							"line": 9,
 							"character": 17
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 127,
+						"id": 128,
 						"name": "INode"
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 177,
+						"id": 178,
 						"name": "INodeInterface.parent"
 					}
 				},
 				{
-					"id": 230,
+					"id": 233,
 					"name": "connectionCount",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -4749,7 +4742,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 233,
+							"id": 236,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -4764,7 +4757,7 @@
 					],
 					"setSignature": [
 						{
-							"id": 231,
+							"id": 234,
 							"name": "__set",
 							"kind": 1048576,
 							"kindString": "Set signature",
@@ -4773,7 +4766,7 @@
 							},
 							"parameters": [
 								{
-									"id": 232,
+									"id": 235,
 									"name": "v",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4794,24 +4787,24 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
 							"line": 27,
 							"character": 30
 						},
 						{
-							"fileName": "src/nodeInterface.ts",
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
 							"line": 31,
 							"character": 30
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 188,
+						"id": 190,
 						"name": "INodeInterface.connectionCount"
 					}
 				},
 				{
-					"id": 235,
+					"id": 238,
 					"name": "value",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -4821,7 +4814,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 238,
+							"id": 241,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -4836,7 +4829,7 @@
 					],
 					"setSignature": [
 						{
-							"id": 236,
+							"id": 239,
 							"name": "__set",
 							"kind": 1048576,
 							"kindString": "Set signature",
@@ -4845,7 +4838,7 @@
 							},
 							"parameters": [
 								{
-									"id": 237,
+									"id": 240,
 									"name": "v",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4866,24 +4859,24 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
 							"line": 36,
 							"character": 20
 						},
 						{
-							"fileName": "src/nodeInterface.ts",
-							"line": 41,
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+							"line": 43,
 							"character": 20
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 189,
+						"id": 191,
 						"name": "INodeInterface.value"
 					}
 				},
 				{
-					"id": 243,
+					"id": 246,
 					"name": "load",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4893,7 +4886,7 @@
 					},
 					"signatures": [
 						{
-							"id": 244,
+							"id": 247,
 							"name": "load",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4902,7 +4895,7 @@
 							},
 							"parameters": [
 								{
-									"id": 245,
+									"id": 248,
 									"name": "state",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4922,26 +4915,26 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 191,
+								"id": 193,
 								"name": "INodeInterface.load"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
-							"line": 51,
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+							"line": 53,
 							"character": 15
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 190,
+						"id": 192,
 						"name": "INodeInterface.load"
 					}
 				},
 				{
-					"id": 246,
+					"id": 249,
 					"name": "save",
 					"kind": 2048,
 					"kindString": "Method",
@@ -4951,7 +4944,7 @@
 					},
 					"signatures": [
 						{
-							"id": 247,
+							"id": 250,
 							"name": "save",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4965,26 +4958,26 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 194,
+								"id": 196,
 								"name": "INodeInterface.save"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
-							"line": 57,
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+							"line": 59,
 							"character": 15
 						}
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 193,
+						"id": 195,
 						"name": "INodeInterface.save"
 					}
 				},
 				{
-					"id": 222,
+					"id": 224,
 					"name": "events",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -4994,7 +4987,7 @@
 					},
 					"children": [
 						{
-							"id": 224,
+							"id": 226,
 							"name": "beforeSetValue",
 							"kind": 32,
 							"kindString": "Variable",
@@ -5003,8 +4996,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/nodeInterface.ts",
-									"line": 17,
+									"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+									"line": 16,
 									"character": 22
 								}
 							],
@@ -5021,7 +5014,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<any>()"
 						},
 						{
-							"id": 223,
+							"id": 225,
 							"name": "setConnectionCount",
 							"kind": 32,
 							"kindString": "Variable",
@@ -5030,8 +5023,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/nodeInterface.ts",
-									"line": 16,
+									"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+									"line": 15,
 									"character": 26
 								}
 							],
@@ -5048,7 +5041,7 @@
 							"defaultValue": "new BaklavaEvent<number>()"
 						},
 						{
-							"id": 225,
+							"id": 227,
 							"name": "setValue",
 							"kind": 32,
 							"kindString": "Variable",
@@ -5057,8 +5050,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/nodeInterface.ts",
-									"line": 18,
+									"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+									"line": 17,
 									"character": 16
 								}
 							],
@@ -5073,6 +5066,33 @@
 								"name": "BaklavaEvent"
 							},
 							"defaultValue": "new BaklavaEvent<any>()"
+						},
+						{
+							"id": 228,
+							"name": "updated",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+									"line": 18,
+									"character": 15
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								],
+								"name": "BaklavaEvent"
+							},
+							"defaultValue": "new BaklavaEvent<void>()"
 						}
 					],
 					"groups": [
@@ -5080,16 +5100,17 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								224,
-								223,
-								225
+								226,
+								225,
+								227,
+								228
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
-							"line": 15,
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
+							"line": 14,
 							"character": 17
 						}
 					],
@@ -5099,12 +5120,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 179,
+						"id": 180,
 						"name": "INodeInterface.events"
 					}
 				},
 				{
-					"id": 226,
+					"id": 229,
 					"name": "hooks",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -5114,7 +5135,7 @@
 					},
 					"children": [
 						{
-							"id": 227,
+							"id": 230,
 							"name": "load",
 							"kind": 32,
 							"kindString": "Variable",
@@ -5123,7 +5144,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/nodeInterface.ts",
+									"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
 									"line": 22,
 									"character": 12
 								}
@@ -5142,7 +5163,7 @@
 							"defaultValue": "new SequentialHook<IInterfaceState>()"
 						},
 						{
-							"id": 228,
+							"id": 231,
 							"name": "save",
 							"kind": 32,
 							"kindString": "Variable",
@@ -5151,7 +5172,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/nodeInterface.ts",
+									"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
 									"line": 23,
 									"character": 12
 								}
@@ -5175,14 +5196,14 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								227,
-								228
+								230,
+								231
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeInterface.ts",
+							"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
 							"line": 21,
 							"character": 16
 						}
@@ -5193,7 +5214,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 184,
+						"id": 186,
 						"name": "INodeInterface.hooks"
 					}
 				}
@@ -5203,47 +5224,47 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						239
+						242
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						216,
-						217,
+						218,
 						219,
-						218
+						221,
+						220
 					]
 				},
 				{
 					"title": "Accessors",
 					"kind": 262144,
 					"children": [
-						230,
-						235
+						233,
+						238
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						243,
-						246
+						246,
+						249
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						222,
-						226
+						224,
+						229
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/nodeInterface.ts",
+					"fileName": "packages/baklavajs-core/src/nodeInterface.ts",
 					"line": 6,
 					"character": 26
 				}
@@ -5251,13 +5272,13 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"id": 172,
+					"id": 173,
 					"name": "INodeInterface"
 				}
 			]
 		},
 		{
-			"id": 270,
+			"id": 273,
 			"name": "NodeOption",
 			"kind": 128,
 			"kindString": "Class",
@@ -5266,7 +5287,7 @@
 			},
 			"indexSignature": [
 				{
-					"id": 276,
+					"id": 280,
 					"name": "__index",
 					"kind": 8192,
 					"kindString": "Index signature",
@@ -5278,7 +5299,7 @@
 					},
 					"parameters": [
 						{
-							"id": 277,
+							"id": 281,
 							"name": "k",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -5299,7 +5320,7 @@
 			],
 			"children": [
 				{
-					"id": 279,
+					"id": 283,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -5309,7 +5330,7 @@
 					},
 					"signatures": [
 						{
-							"id": 280,
+							"id": 284,
 							"name": "new NodeOption",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -5318,7 +5339,7 @@
 							},
 							"parameters": [
 								{
-									"id": 281,
+									"id": 285,
 									"name": "optionComponent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5331,7 +5352,7 @@
 									}
 								},
 								{
-									"id": 282,
+									"id": 286,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5345,7 +5366,7 @@
 									}
 								},
 								{
-									"id": 283,
+									"id": 287,
 									"name": "sidebarComponent",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5361,21 +5382,21 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 270,
+								"id": 273,
 								"name": "NodeOption"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeOption.ts",
+							"fileName": "packages/baklavajs-core/src/nodeOption.ts",
 							"line": 19,
 							"character": 24
 						}
 					]
 				},
 				{
-					"id": 271,
+					"id": 274,
 					"name": "optionComponent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5388,8 +5409,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeOption.ts",
-							"line": 7,
+							"fileName": "packages/baklavajs-core/src/nodeOption.ts",
+							"line": 6,
 							"character": 26
 						}
 					],
@@ -5404,7 +5425,7 @@
 					}
 				},
 				{
-					"id": 272,
+					"id": 275,
 					"name": "sidebarComponent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5418,8 +5439,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeOption.ts",
-							"line": 9,
+							"fileName": "packages/baklavajs-core/src/nodeOption.ts",
+							"line": 8,
 							"character": 27
 						}
 					],
@@ -5443,7 +5464,7 @@
 					}
 				},
 				{
-					"id": 284,
+					"id": 288,
 					"name": "value",
 					"kind": 262144,
 					"kindString": "Accessor",
@@ -5453,7 +5474,7 @@
 					},
 					"getSignature": [
 						{
-							"id": 285,
+							"id": 289,
 							"name": "__get",
 							"kind": 524288,
 							"kindString": "Get signature",
@@ -5468,7 +5489,7 @@
 					],
 					"setSignature": [
 						{
-							"id": 286,
+							"id": 290,
 							"name": "__set",
 							"kind": 1048576,
 							"kindString": "Set signature",
@@ -5477,7 +5498,7 @@
 							},
 							"parameters": [
 								{
-									"id": 287,
+									"id": 291,
 									"name": "v",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5498,12 +5519,12 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeOption.ts",
+							"fileName": "packages/baklavajs-core/src/nodeOption.ts",
 							"line": 27,
 							"character": 20
 						},
 						{
-							"fileName": "src/nodeOption.ts",
+							"fileName": "packages/baklavajs-core/src/nodeOption.ts",
 							"line": 31,
 							"character": 20
 						}
@@ -5515,7 +5536,7 @@
 					}
 				},
 				{
-					"id": 273,
+					"id": 276,
 					"name": "events",
 					"kind": 2097152,
 					"kindString": "Object literal",
@@ -5525,7 +5546,7 @@
 					},
 					"children": [
 						{
-							"id": 274,
+							"id": 277,
 							"name": "beforeSetValue",
 							"kind": 32,
 							"kindString": "Variable",
@@ -5534,8 +5555,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/nodeOption.ts",
-									"line": 12,
+									"fileName": "packages/baklavajs-core/src/nodeOption.ts",
+									"line": 11,
 									"character": 22
 								}
 							],
@@ -5552,7 +5573,7 @@
 							"defaultValue": "new PreventableBaklavaEvent<any>()"
 						},
 						{
-							"id": 275,
+							"id": 278,
 							"name": "setValue",
 							"kind": 32,
 							"kindString": "Variable",
@@ -5561,8 +5582,8 @@
 							},
 							"sources": [
 								{
-									"fileName": "src/nodeOption.ts",
-									"line": 13,
+									"fileName": "packages/baklavajs-core/src/nodeOption.ts",
+									"line": 12,
 									"character": 16
 								}
 							],
@@ -5577,6 +5598,33 @@
 								"name": "BaklavaEvent"
 							},
 							"defaultValue": "new BaklavaEvent<any>()"
+						},
+						{
+							"id": 279,
+							"name": "updated",
+							"kind": 32,
+							"kindString": "Variable",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "packages/baklavajs-core/src/nodeOption.ts",
+									"line": 13,
+									"character": 15
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								],
+								"name": "BaklavaEvent"
+							},
+							"defaultValue": "new BaklavaEvent<void>()"
 						}
 					],
 					"groups": [
@@ -5584,15 +5632,16 @@
 							"title": "Variables",
 							"kind": 32,
 							"children": [
-								274,
-								275
+								277,
+								278,
+								279
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeOption.ts",
-							"line": 11,
+							"fileName": "packages/baklavajs-core/src/nodeOption.ts",
+							"line": 10,
 							"character": 17
 						}
 					],
@@ -5612,35 +5661,35 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						279
+						283
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						271,
-						272
+						274,
+						275
 					]
 				},
 				{
 					"title": "Accessors",
 					"kind": 262144,
 					"children": [
-						284
+						288
 					]
 				},
 				{
 					"title": "Object literals",
 					"kind": 2097152,
 					"children": [
-						273
+						276
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/nodeOption.ts",
+					"fileName": "packages/baklavajs-core/src/nodeOption.ts",
 					"line": 4,
 					"character": 23
 				}
@@ -5654,7 +5703,7 @@
 			]
 		},
 		{
-			"id": 103,
+			"id": 104,
 			"name": "IAddConnectionEventData",
 			"kind": 256,
 			"kindString": "Interface",
@@ -5663,7 +5712,7 @@
 			},
 			"children": [
 				{
-					"id": 104,
+					"id": 105,
 					"name": "from",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5672,19 +5721,19 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 7,
 							"character": 8
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 172,
+						"id": 173,
 						"name": "INodeInterface"
 					}
 				},
 				{
-					"id": 105,
+					"id": 106,
 					"name": "to",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5693,14 +5742,14 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 8,
 							"character": 6
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 172,
+						"id": 173,
 						"name": "INodeInterface"
 					}
 				}
@@ -5710,21 +5759,21 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						104,
-						105
+						105,
+						106
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/eventDataTypes.ts",
+					"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 					"line": 6,
 					"character": 40
 				}
 			]
 		},
 		{
-			"id": 110,
+			"id": 111,
 			"name": "IAddInterfaceEventData",
 			"kind": 256,
 			"kindString": "Interface",
@@ -5733,7 +5782,7 @@
 			},
 			"children": [
 				{
-					"id": 114,
+					"id": 115,
 					"name": "defaultValue",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5743,7 +5792,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 22,
 							"character": 16
 						}
@@ -5754,7 +5803,7 @@
 					}
 				},
 				{
-					"id": 112,
+					"id": 113,
 					"name": "isInput",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5763,7 +5812,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 20,
 							"character": 11
 						}
@@ -5774,7 +5823,7 @@
 					}
 				},
 				{
-					"id": 111,
+					"id": 112,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5783,7 +5832,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 19,
 							"character": 8
 						}
@@ -5794,7 +5843,7 @@
 					}
 				},
 				{
-					"id": 113,
+					"id": 114,
 					"name": "option",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5804,7 +5853,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 21,
 							"character": 10
 						}
@@ -5829,23 +5878,23 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						114,
+						115,
+						113,
 						112,
-						111,
-						113
+						114
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/eventDataTypes.ts",
+					"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 					"line": 18,
 					"character": 39
 				}
 			]
 		},
 		{
-			"id": 106,
+			"id": 107,
 			"name": "IAddNodeTypeEventData",
 			"kind": 256,
 			"kindString": "Interface",
@@ -5854,7 +5903,7 @@
 			},
 			"children": [
 				{
-					"id": 109,
+					"id": 110,
 					"name": "category",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5863,7 +5912,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 14,
 							"character": 12
 						}
@@ -5874,7 +5923,7 @@
 					}
 				},
 				{
-					"id": 108,
+					"id": 109,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5883,7 +5932,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 13,
 							"character": 8
 						}
@@ -5895,7 +5944,7 @@
 					}
 				},
 				{
-					"id": 107,
+					"id": 108,
 					"name": "typeName",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5904,7 +5953,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 12,
 							"character": 12
 						}
@@ -5920,22 +5969,22 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
+						110,
 						109,
-						108,
-						107
+						108
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/eventDataTypes.ts",
+					"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 					"line": 11,
 					"character": 38
 				}
 			]
 		},
 		{
-			"id": 115,
+			"id": 116,
 			"name": "IAddOptionEventData",
 			"kind": 256,
 			"kindString": "Interface",
@@ -5944,7 +5993,7 @@
 			},
 			"children": [
 				{
-					"id": 117,
+					"id": 118,
 					"name": "component",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5953,7 +6002,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 27,
 							"character": 13
 						}
@@ -5964,7 +6013,7 @@
 					}
 				},
 				{
-					"id": 118,
+					"id": 119,
 					"name": "defaultValue",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5973,7 +6022,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 28,
 							"character": 16
 						}
@@ -5984,7 +6033,7 @@
 					}
 				},
 				{
-					"id": 116,
+					"id": 117,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -5993,7 +6042,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 26,
 							"character": 8
 						}
@@ -6004,7 +6053,7 @@
 					}
 				},
 				{
-					"id": 119,
+					"id": 120,
 					"name": "sidebarComponent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -6014,7 +6063,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 29,
 							"character": 20
 						}
@@ -6039,23 +6088,23 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						117,
 						118,
-						116,
-						119
+						119,
+						117,
+						120
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/eventDataTypes.ts",
+					"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 					"line": 25,
 					"character": 36
 				}
 			]
 		},
 		{
-			"id": 205,
+			"id": 207,
 			"name": "IConnection",
 			"kind": 256,
 			"kindString": "Interface",
@@ -6064,7 +6113,7 @@
 			},
 			"children": [
 				{
-					"id": 207,
+					"id": 209,
 					"name": "from",
 					"kind": 1024,
 					"kindString": "Property",
@@ -6073,19 +6122,19 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 19,
 							"character": 8
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 172,
+						"id": 173,
 						"name": "INodeInterface"
 					}
 				},
 				{
-					"id": 206,
+					"id": 208,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -6094,7 +6143,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 18,
 							"character": 6
 						}
@@ -6105,7 +6154,7 @@
 					}
 				},
 				{
-					"id": 208,
+					"id": 210,
 					"name": "to",
 					"kind": 1024,
 					"kindString": "Property",
@@ -6114,14 +6163,14 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 20,
 							"character": 6
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 172,
+						"id": 173,
 						"name": "INodeInterface"
 					}
 				}
@@ -6131,15 +6180,15 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						207,
-						206,
-						208
+						209,
+						208,
+						210
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/connection.ts",
+					"fileName": "packages/baklavajs-core/types/connection.ts",
 					"line": 17,
 					"character": 28
 				}
@@ -6147,14 +6196,14 @@
 			"extendedBy": [
 				{
 					"type": "reference",
-					"id": 209,
+					"id": 211,
 					"name": "ITransferConnection"
 				}
 			],
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 262,
+					"id": 265,
 					"name": "DummyConnection"
 				}
 			]
@@ -6178,7 +6227,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 22,
 							"character": 8
 						}
@@ -6198,7 +6247,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 21,
 							"character": 6
 						}
@@ -6218,7 +6267,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 23,
 							"character": 6
 						}
@@ -6242,7 +6291,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/state.ts",
+					"fileName": "packages/baklavajs-core/types/state.ts",
 					"line": 20,
 					"character": 33
 				}
@@ -6260,7 +6309,7 @@
 						},
 						"sources": [
 							{
-								"fileName": "types/state.ts",
+								"fileName": "packages/baklavajs-core/types/state.ts",
 								"line": 20,
 								"character": 41
 							}
@@ -6289,7 +6338,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 35,
 							"character": 24
 						}
@@ -6299,7 +6348,7 @@
 						"typeArguments": [
 							{
 								"type": "reference",
-								"id": 205,
+								"id": 207,
 								"name": "IConnection"
 							}
 						],
@@ -6316,7 +6365,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 13,
 							"character": 10
 						}
@@ -6342,7 +6391,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 21,
 											"character": 21
 										}
@@ -6352,7 +6401,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 205,
+												"id": 207,
 												"name": "IConnection"
 											}
 										],
@@ -6369,7 +6418,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 17,
 											"character": 15
 										}
@@ -6379,7 +6428,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 127,
+												"id": 128,
 												"name": "INode"
 											}
 										],
@@ -6396,7 +6445,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 20,
 											"character": 27
 										}
@@ -6406,7 +6455,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 103,
+												"id": 104,
 												"name": "IAddConnectionEventData"
 											}
 										],
@@ -6423,7 +6472,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 16,
 											"character": 21
 										}
@@ -6433,7 +6482,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 127,
+												"id": 128,
 												"name": "INode"
 											}
 										],
@@ -6450,7 +6499,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 14,
 											"character": 30
 										}
@@ -6460,7 +6509,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 106,
+												"id": 107,
 												"name": "IAddNodeTypeEventData"
 											}
 										],
@@ -6477,7 +6526,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 23,
 											"character": 30
 										}
@@ -6487,7 +6536,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 205,
+												"id": 207,
 												"name": "IConnection"
 											}
 										],
@@ -6504,7 +6553,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 18,
 											"character": 24
 										}
@@ -6514,7 +6563,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 127,
+												"id": 128,
 												"name": "INode"
 											}
 										],
@@ -6531,7 +6580,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 25,
 											"character": 23
 										}
@@ -6558,7 +6607,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 22,
 											"character": 23
 										}
@@ -6568,7 +6617,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 103,
+												"id": 104,
 												"name": "IAddConnectionEventData"
 											}
 										],
@@ -6585,7 +6634,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 15,
 											"character": 24
 										}
@@ -6595,7 +6644,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 106,
+												"id": 107,
 												"name": "IAddNodeTypeEventData"
 											}
 										],
@@ -6612,7 +6661,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 24,
 											"character": 24
 										}
@@ -6622,7 +6671,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 205,
+												"id": 207,
 												"name": "IConnection"
 											}
 										],
@@ -6639,7 +6688,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 19,
 											"character": 18
 										}
@@ -6649,7 +6698,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 127,
+												"id": 128,
 												"name": "INode"
 											}
 										],
@@ -6666,7 +6715,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 26,
 											"character": 17
 										}
@@ -6707,7 +6756,7 @@
 							],
 							"sources": [
 								{
-									"fileName": "types/editor.ts",
+									"fileName": "packages/baklavajs-core/types/editor.ts",
 									"line": 13,
 									"character": 11
 								}
@@ -6725,7 +6774,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 29,
 							"character": 9
 						}
@@ -6751,7 +6800,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 31,
 											"character": 12
 										}
@@ -6778,7 +6827,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/editor.ts",
+											"fileName": "packages/baklavajs-core/types/editor.ts",
 											"line": 30,
 											"character": 12
 										}
@@ -6808,7 +6857,7 @@
 							],
 							"sources": [
 								{
-									"fileName": "types/editor.ts",
+									"fileName": "packages/baklavajs-core/types/editor.ts",
 									"line": 29,
 									"character": 10
 								}
@@ -6827,7 +6876,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 37,
 							"character": 27
 						}
@@ -6861,7 +6910,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 36,
 							"character": 22
 						}
@@ -6893,7 +6942,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 34,
 							"character": 18
 						}
@@ -6903,7 +6952,7 @@
 						"typeArguments": [
 							{
 								"type": "reference",
-								"id": 127,
+								"id": 128,
 								"name": "INode"
 							}
 						],
@@ -6921,7 +6970,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 38,
 							"character": 20
 						}
@@ -6966,7 +7015,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 172,
+										"id": 173,
 										"name": "INodeInterface"
 									}
 								},
@@ -6980,7 +7029,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 172,
+										"id": 173,
 										"name": "INodeInterface"
 									}
 								}
@@ -6990,7 +7039,7 @@
 								"types": [
 									{
 										"type": "reference",
-										"id": 205,
+										"id": 207,
 										"name": "IConnection"
 									},
 									{
@@ -7003,7 +7052,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 43,
 							"character": 17
 						}
@@ -7037,7 +7086,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 127,
+										"id": 128,
 										"name": "INode"
 									}
 								}
@@ -7047,7 +7096,7 @@
 								"types": [
 									{
 										"type": "reference",
-										"id": 127,
+										"id": 128,
 										"name": "INode"
 									},
 									{
@@ -7060,7 +7109,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 41,
 							"character": 11
 						}
@@ -7094,7 +7143,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 172,
+										"id": 173,
 										"name": "INodeInterface"
 									}
 								},
@@ -7108,7 +7157,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 172,
+										"id": 173,
 										"name": "INodeInterface"
 									}
 								}
@@ -7122,7 +7171,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 205,
+										"id": 207,
 										"name": "IConnection"
 									}
 								]
@@ -7131,7 +7180,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 45,
 							"character": 19
 						}
@@ -7174,7 +7223,7 @@
 								"types": [
 									{
 										"type": "reference",
-										"id": 172,
+										"id": 173,
 										"name": "INodeInterface"
 									},
 									{
@@ -7187,7 +7236,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 50,
 							"character": 21
 						}
@@ -7243,7 +7292,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 49,
 							"character": 14
 						}
@@ -7290,7 +7339,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 46,
 							"character": 8
 						}
@@ -7373,7 +7422,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 40,
 							"character": 20
 						}
@@ -7407,7 +7456,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 205,
+										"id": 207,
 										"name": "IConnection"
 									}
 								}
@@ -7420,7 +7469,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 44,
 							"character": 20
 						}
@@ -7454,7 +7503,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 127,
+										"id": 128,
 										"name": "INode"
 									}
 								}
@@ -7467,7 +7516,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 42,
 							"character": 14
 						}
@@ -7499,7 +7548,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 47,
 							"character": 8
 						}
@@ -7546,7 +7595,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 48,
 							"character": 7
 						}
@@ -7587,7 +7636,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/editor.ts",
+					"fileName": "packages/baklavajs-core/types/editor.ts",
 					"line": 11,
 					"character": 24
 				}
@@ -7595,13 +7644,13 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 366,
+					"id": 370,
 					"name": "Editor"
 				}
 			]
 		},
 		{
-			"id": 288,
+			"id": 292,
 			"name": "IInterfaceCreateOptions",
 			"kind": 256,
 			"kindString": "Interface",
@@ -7610,7 +7659,7 @@
 			},
 			"children": [
 				{
-					"id": 290,
+					"id": 294,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7620,7 +7669,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 11,
 							"character": 8
 						}
@@ -7640,7 +7689,7 @@
 					}
 				},
 				{
-					"id": 291,
+					"id": 295,
 					"name": "optionName",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7650,7 +7699,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 12,
 							"character": 14
 						}
@@ -7670,7 +7719,7 @@
 					}
 				},
 				{
-					"id": 289,
+					"id": 293,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7680,7 +7729,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/node.ts",
+							"fileName": "packages/baklavajs-core/src/node.ts",
 							"line": 10,
 							"character": 8
 						}
@@ -7705,22 +7754,22 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						290,
-						291,
-						289
+						294,
+						295,
+						293
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/node.ts",
+					"fileName": "packages/baklavajs-core/src/node.ts",
 					"line": 9,
 					"character": 40
 				}
 			]
 		},
 		{
-			"id": 436,
+			"id": 439,
 			"name": "IInterfaceOptions",
 			"kind": 256,
 			"kindString": "Interface",
@@ -7729,7 +7778,7 @@
 			},
 			"children": [
 				{
-					"id": 441,
+					"id": 444,
 					"name": "additionalProperties",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7739,7 +7788,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 8,
 							"character": 24
 						}
@@ -7760,7 +7809,7 @@
 					}
 				},
 				{
-					"id": 440,
+					"id": 443,
 					"name": "defaultValue",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7770,7 +7819,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 7,
 							"character": 16
 						}
@@ -7781,7 +7830,7 @@
 					}
 				},
 				{
-					"id": 437,
+					"id": 440,
 					"name": "isInput",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7790,7 +7839,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 4,
 							"character": 11
 						}
@@ -7801,7 +7850,7 @@
 					}
 				},
 				{
-					"id": 438,
+					"id": 441,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7810,7 +7859,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 5,
 							"character": 8
 						}
@@ -7821,7 +7870,7 @@
 					}
 				},
 				{
-					"id": 439,
+					"id": 442,
 					"name": "option",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7831,7 +7880,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 6,
 							"character": 10
 						}
@@ -7856,17 +7905,17 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						441,
+						444,
+						443,
 						440,
-						437,
-						438,
-						439
+						441,
+						442
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/nodeBuilder.ts",
+					"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 					"line": 3,
 					"character": 27
 				}
@@ -7891,7 +7940,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 16,
 							"character": 6
 						}
@@ -7911,7 +7960,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 17,
 							"character": 9
 						}
@@ -7934,7 +7983,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/state.ts",
+					"fileName": "packages/baklavajs-core/types/state.ts",
 					"line": 15,
 					"character": 32
 				}
@@ -7952,7 +8001,7 @@
 						},
 						"sources": [
 							{
-								"fileName": "types/state.ts",
+								"fileName": "packages/baklavajs-core/types/state.ts",
 								"line": 15,
 								"character": 40
 							}
@@ -7962,7 +8011,7 @@
 			]
 		},
 		{
-			"id": 127,
+			"id": 128,
 			"name": "INode",
 			"kind": 256,
 			"kindString": "Interface",
@@ -7971,7 +8020,7 @@
 			},
 			"children": [
 				{
-					"id": 134,
+					"id": 135,
 					"name": "events",
 					"kind": 1024,
 					"kindString": "Property",
@@ -7980,7 +8029,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 17,
 							"character": 10
 						}
@@ -7988,7 +8037,7 @@
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 135,
+							"id": 136,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
@@ -7997,7 +8046,7 @@
 							},
 							"children": [
 								{
-									"id": 137,
+									"id": 138,
 									"name": "addInterface",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8006,7 +8055,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 19,
 											"character": 20
 										}
@@ -8016,7 +8065,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 172,
+												"id": 173,
 												"name": "INodeInterface"
 											}
 										],
@@ -8024,7 +8073,7 @@
 									}
 								},
 								{
-									"id": 141,
+									"id": 142,
 									"name": "addOption",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8033,7 +8082,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 23,
 											"character": 17
 										}
@@ -8043,7 +8092,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 120,
+												"id": 121,
 												"name": "IOptionEventData"
 											}
 										],
@@ -8051,7 +8100,7 @@
 									}
 								},
 								{
-									"id": 136,
+									"id": 137,
 									"name": "beforeAddInterface",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8060,7 +8109,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 18,
 											"character": 26
 										}
@@ -8070,7 +8119,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 110,
+												"id": 111,
 												"name": "IAddInterfaceEventData"
 											}
 										],
@@ -8078,7 +8127,7 @@
 									}
 								},
 								{
-									"id": 140,
+									"id": 141,
 									"name": "beforeAddOption",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8087,7 +8136,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 22,
 											"character": 23
 										}
@@ -8097,7 +8146,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 115,
+												"id": 116,
 												"name": "IAddOptionEventData"
 											}
 										],
@@ -8105,7 +8154,7 @@
 									}
 								},
 								{
-									"id": 138,
+									"id": 139,
 									"name": "beforeRemoveInterface",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8114,7 +8163,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 20,
 											"character": 29
 										}
@@ -8124,7 +8173,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 172,
+												"id": 173,
 												"name": "INodeInterface"
 											}
 										],
@@ -8132,7 +8181,7 @@
 									}
 								},
 								{
-									"id": 142,
+									"id": 143,
 									"name": "beforeRemoveOption",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8141,7 +8190,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 24,
 											"character": 26
 										}
@@ -8151,7 +8200,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 120,
+												"id": 121,
 												"name": "IOptionEventData"
 											}
 										],
@@ -8159,7 +8208,7 @@
 									}
 								},
 								{
-									"id": 139,
+									"id": 140,
 									"name": "removeInterface",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8168,7 +8217,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 21,
 											"character": 23
 										}
@@ -8178,7 +8227,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 172,
+												"id": 173,
 												"name": "INodeInterface"
 											}
 										],
@@ -8186,7 +8235,7 @@
 									}
 								},
 								{
-									"id": 143,
+									"id": 144,
 									"name": "removeOption",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8195,7 +8244,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 25,
 											"character": 20
 										}
@@ -8205,7 +8254,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 120,
+												"id": 121,
 												"name": "IOptionEventData"
 											}
 										],
@@ -8213,7 +8262,7 @@
 									}
 								},
 								{
-									"id": 144,
+									"id": 145,
 									"name": "update",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8222,7 +8271,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 26,
 											"character": 14
 										}
@@ -8232,7 +8281,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 123,
+												"id": 124,
 												"name": "INodeUpdateEventData"
 											}
 										],
@@ -8245,21 +8294,21 @@
 									"title": "Variables",
 									"kind": 32,
 									"children": [
-										137,
-										141,
-										136,
-										140,
 										138,
 										142,
+										137,
+										141,
 										139,
 										143,
-										144
+										140,
+										144,
+										145
 									]
 								}
 							],
 							"sources": [
 								{
-									"fileName": "types/node.ts",
+									"fileName": "packages/baklavajs-core/types/node.ts",
 									"line": 17,
 									"character": 11
 								}
@@ -8268,7 +8317,7 @@
 					}
 				},
 				{
-					"id": 145,
+					"id": 146,
 					"name": "hooks",
 					"kind": 1024,
 					"kindString": "Property",
@@ -8277,7 +8326,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 29,
 							"character": 9
 						}
@@ -8285,7 +8334,7 @@
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 146,
+							"id": 147,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
@@ -8294,7 +8343,7 @@
 							},
 							"children": [
 								{
-									"id": 147,
+									"id": 148,
 									"name": "load",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8303,7 +8352,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 30,
 											"character": 12
 										}
@@ -8321,7 +8370,7 @@
 									}
 								},
 								{
-									"id": 148,
+									"id": 149,
 									"name": "save",
 									"kind": 32,
 									"kindString": "Variable",
@@ -8330,7 +8379,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/node.ts",
+											"fileName": "packages/baklavajs-core/types/node.ts",
 											"line": 31,
 											"character": 12
 										}
@@ -8353,14 +8402,14 @@
 									"title": "Variables",
 									"kind": 32,
 									"children": [
-										147,
-										148
+										148,
+										149
 									]
 								}
 							],
 							"sources": [
 								{
-									"fileName": "types/node.ts",
+									"fileName": "packages/baklavajs-core/types/node.ts",
 									"line": 29,
 									"character": 10
 								}
@@ -8369,7 +8418,7 @@
 					}
 				},
 				{
-					"id": 130,
+					"id": 131,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -8378,7 +8427,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 12,
 							"character": 6
 						}
@@ -8389,7 +8438,7 @@
 					}
 				},
 				{
-					"id": 149,
+					"id": 150,
 					"name": "inputInterfaces",
 					"kind": 1024,
 					"kindString": "Property",
@@ -8398,7 +8447,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 34,
 							"character": 19
 						}
@@ -8412,7 +8461,7 @@
 							},
 							{
 								"type": "reference",
-								"id": 172,
+								"id": 173,
 								"name": "INodeInterface"
 							}
 						],
@@ -8420,7 +8469,7 @@
 					}
 				},
 				{
-					"id": 131,
+					"id": 132,
 					"name": "interfaces",
 					"kind": 1024,
 					"kindString": "Property",
@@ -8429,7 +8478,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 13,
 							"character": 14
 						}
@@ -8443,7 +8492,7 @@
 							},
 							{
 								"type": "reference",
-								"id": 172,
+								"id": 173,
 								"name": "INodeInterface"
 							}
 						],
@@ -8451,7 +8500,7 @@
 					}
 				},
 				{
-					"id": 129,
+					"id": 130,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -8460,7 +8509,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 11,
 							"character": 8
 						}
@@ -8471,7 +8520,7 @@
 					}
 				},
 				{
-					"id": 132,
+					"id": 133,
 					"name": "options",
 					"kind": 1024,
 					"kindString": "Property",
@@ -8480,7 +8529,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 14,
 							"character": 11
 						}
@@ -8502,7 +8551,7 @@
 					}
 				},
 				{
-					"id": 150,
+					"id": 151,
 					"name": "outputInterfaces",
 					"kind": 1024,
 					"kindString": "Property",
@@ -8511,7 +8560,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 35,
 							"character": 20
 						}
@@ -8525,7 +8574,7 @@
 							},
 							{
 								"type": "reference",
-								"id": 172,
+								"id": 173,
 								"name": "INodeInterface"
 							}
 						],
@@ -8533,7 +8582,7 @@
 					}
 				},
 				{
-					"id": 133,
+					"id": 134,
 					"name": "state",
 					"kind": 1024,
 					"kindString": "Property",
@@ -8542,7 +8591,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 15,
 							"character": 9
 						}
@@ -8563,7 +8612,7 @@
 					}
 				},
 				{
-					"id": 128,
+					"id": 129,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -8572,7 +8621,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 10,
 							"character": 8
 						}
@@ -8583,7 +8632,7 @@
 					}
 				},
 				{
-					"id": 156,
+					"id": 157,
 					"name": "calculate",
 					"kind": 2048,
 					"kindString": "Method",
@@ -8592,7 +8641,7 @@
 					},
 					"signatures": [
 						{
-							"id": 157,
+							"id": 158,
 							"name": "calculate",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -8601,7 +8650,7 @@
 							},
 							"parameters": [
 								{
-									"id": 158,
+									"id": 159,
 									"name": "calculationData",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -8623,14 +8672,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 39,
 							"character": 13
 						}
 					]
 				},
 				{
-					"id": 159,
+					"id": 160,
 					"name": "getInterface",
 					"kind": 2048,
 					"kindString": "Method",
@@ -8639,7 +8688,7 @@
 					},
 					"signatures": [
 						{
-							"id": 160,
+							"id": 161,
 							"name": "getInterface",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -8648,7 +8697,7 @@
 							},
 							"parameters": [
 								{
-									"id": 161,
+									"id": 162,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -8663,21 +8712,21 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 172,
+								"id": 173,
 								"name": "INodeInterface"
 							}
 						}
 					],
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 40,
 							"character": 16
 						}
 					]
 				},
 				{
-					"id": 162,
+					"id": 163,
 					"name": "getOptionValue",
 					"kind": 2048,
 					"kindString": "Method",
@@ -8686,7 +8735,7 @@
 					},
 					"signatures": [
 						{
-							"id": 163,
+							"id": 164,
 							"name": "getOptionValue",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -8695,7 +8744,7 @@
 							},
 							"parameters": [
 								{
-									"id": 164,
+									"id": 165,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -8716,14 +8765,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 41,
 							"character": 18
 						}
 					]
 				},
 				{
-					"id": 151,
+					"id": 152,
 					"name": "load",
 					"kind": 2048,
 					"kindString": "Method",
@@ -8732,7 +8781,7 @@
 					},
 					"signatures": [
 						{
-							"id": 152,
+							"id": 153,
 							"name": "load",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -8741,7 +8790,7 @@
 							},
 							"parameters": [
 								{
-									"id": 153,
+									"id": 154,
 									"name": "state",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -8763,14 +8812,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 37,
 							"character": 8
 						}
 					]
 				},
 				{
-					"id": 169,
+					"id": 170,
 					"name": "registerEditor",
 					"kind": 2048,
 					"kindString": "Method",
@@ -8779,7 +8828,7 @@
 					},
 					"signatures": [
 						{
-							"id": 170,
+							"id": 171,
 							"name": "registerEditor",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -8788,7 +8837,7 @@
 							},
 							"parameters": [
 								{
-									"id": 171,
+									"id": 172,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -8810,14 +8859,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 43,
 							"character": 18
 						}
 					]
 				},
 				{
-					"id": 154,
+					"id": 155,
 					"name": "save",
 					"kind": 2048,
 					"kindString": "Method",
@@ -8826,7 +8875,7 @@
 					},
 					"signatures": [
 						{
-							"id": 155,
+							"id": 156,
 							"name": "save",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -8842,14 +8891,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 38,
 							"character": 8
 						}
 					]
 				},
 				{
-					"id": 165,
+					"id": 166,
 					"name": "setOptionValue",
 					"kind": 2048,
 					"kindString": "Method",
@@ -8858,7 +8907,7 @@
 					},
 					"signatures": [
 						{
-							"id": 166,
+							"id": 167,
 							"name": "setOptionValue",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -8867,7 +8916,7 @@
 							},
 							"parameters": [
 								{
-									"id": 167,
+									"id": 168,
 									"name": "name",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -8880,7 +8929,7 @@
 									}
 								},
 								{
-									"id": 168,
+									"id": 169,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -8901,7 +8950,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/node.ts",
+							"fileName": "packages/baklavajs-core/types/node.ts",
 							"line": 42,
 							"character": 18
 						}
@@ -8913,35 +8962,35 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						134,
-						145,
-						130,
-						149,
+						135,
+						146,
 						131,
-						129,
-						132,
 						150,
+						132,
+						130,
 						133,
-						128
+						151,
+						134,
+						129
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						156,
-						159,
-						162,
-						151,
-						169,
-						154,
-						165
+						157,
+						160,
+						163,
+						152,
+						170,
+						155,
+						166
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/node.ts",
+					"fileName": "packages/baklavajs-core/types/node.ts",
 					"line": 8,
 					"character": 22
 				}
@@ -8949,13 +8998,13 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 292,
+					"id": 296,
 					"name": "Node"
 				}
 			]
 		},
 		{
-			"id": 172,
+			"id": 173,
 			"name": "INodeInterface",
 			"kind": 256,
 			"kindString": "Interface",
@@ -8964,7 +9013,7 @@
 			},
 			"indexSignature": [
 				{
-					"id": 173,
+					"id": 174,
 					"name": "__index",
 					"kind": 8192,
 					"kindString": "Index signature",
@@ -8976,7 +9025,7 @@
 					},
 					"parameters": [
 						{
-							"id": 174,
+							"id": 175,
 							"name": "k",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -8997,7 +9046,7 @@
 			],
 			"children": [
 				{
-					"id": 188,
+					"id": 190,
 					"name": "connectionCount",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9006,7 +9055,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeInterface.ts",
+							"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
 							"line": 26,
 							"character": 19
 						}
@@ -9017,7 +9066,7 @@
 					}
 				},
 				{
-					"id": 179,
+					"id": 180,
 					"name": "events",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9026,15 +9075,15 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeInterface.ts",
-							"line": 15,
+							"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
+							"line": 14,
 							"character": 10
 						}
 					],
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 180,
+							"id": 181,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
@@ -9043,7 +9092,7 @@
 							},
 							"children": [
 								{
-									"id": 182,
+									"id": 183,
 									"name": "beforeSetValue",
 									"kind": 32,
 									"kindString": "Variable",
@@ -9052,8 +9101,8 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/nodeInterface.ts",
-											"line": 17,
+											"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
+											"line": 16,
 											"character": 22
 										}
 									],
@@ -9069,7 +9118,7 @@
 									}
 								},
 								{
-									"id": 181,
+									"id": 182,
 									"name": "setConnectionCount",
 									"kind": 32,
 									"kindString": "Variable",
@@ -9078,8 +9127,8 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/nodeInterface.ts",
-											"line": 16,
+											"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
+											"line": 15,
 											"character": 26
 										}
 									],
@@ -9095,7 +9144,7 @@
 									}
 								},
 								{
-									"id": 183,
+									"id": 184,
 									"name": "setValue",
 									"kind": 32,
 									"kindString": "Variable",
@@ -9104,8 +9153,8 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/nodeInterface.ts",
-											"line": 18,
+											"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
+											"line": 17,
 											"character": 16
 										}
 									],
@@ -9119,6 +9168,32 @@
 										],
 										"name": "IBaklavaEvent"
 									}
+								},
+								{
+									"id": 185,
+									"name": "updated",
+									"kind": 32,
+									"kindString": "Variable",
+									"flags": {
+										"isExported": true
+									},
+									"sources": [
+										{
+											"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
+											"line": 18,
+											"character": 15
+										}
+									],
+									"type": {
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "void"
+											}
+										],
+										"name": "IBaklavaEvent"
+									}
 								}
 							],
 							"groups": [
@@ -9126,16 +9201,17 @@
 									"title": "Variables",
 									"kind": 32,
 									"children": [
+										183,
 										182,
-										181,
-										183
+										184,
+										185
 									]
 								}
 							],
 							"sources": [
 								{
-									"fileName": "types/nodeInterface.ts",
-									"line": 15,
+									"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
+									"line": 14,
 									"character": 11
 								}
 							]
@@ -9143,7 +9219,7 @@
 					}
 				},
 				{
-					"id": 184,
+					"id": 186,
 					"name": "hooks",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9152,7 +9228,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeInterface.ts",
+							"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
 							"line": 21,
 							"character": 9
 						}
@@ -9160,7 +9236,7 @@
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 185,
+							"id": 187,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
@@ -9169,7 +9245,7 @@
 							},
 							"children": [
 								{
-									"id": 186,
+									"id": 188,
 									"name": "load",
 									"kind": 32,
 									"kindString": "Variable",
@@ -9178,7 +9254,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/nodeInterface.ts",
+											"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
 											"line": 22,
 											"character": 12
 										}
@@ -9196,7 +9272,7 @@
 									}
 								},
 								{
-									"id": 187,
+									"id": 189,
 									"name": "save",
 									"kind": 32,
 									"kindString": "Variable",
@@ -9205,7 +9281,7 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/nodeInterface.ts",
+											"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
 											"line": 23,
 											"character": 12
 										}
@@ -9228,14 +9304,14 @@
 									"title": "Variables",
 									"kind": 32,
 									"children": [
-										186,
-										187
+										188,
+										189
 									]
 								}
 							],
 							"sources": [
 								{
-									"fileName": "types/nodeInterface.ts",
+									"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
 									"line": 21,
 									"character": 10
 								}
@@ -9244,7 +9320,7 @@
 					}
 				},
 				{
-					"id": 175,
+					"id": 176,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9253,8 +9329,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeInterface.ts",
-							"line": 10,
+							"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
+							"line": 9,
 							"character": 6
 						}
 					],
@@ -9264,7 +9340,7 @@
 					}
 				},
 				{
-					"id": 176,
+					"id": 177,
 					"name": "isInput",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9273,8 +9349,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeInterface.ts",
-							"line": 11,
+							"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
+							"line": 10,
 							"character": 11
 						}
 					],
@@ -9284,7 +9360,7 @@
 					}
 				},
 				{
-					"id": 178,
+					"id": 179,
 					"name": "option",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9294,8 +9370,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeInterface.ts",
-							"line": 13,
+							"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
+							"line": 12,
 							"character": 10
 						}
 					],
@@ -9314,7 +9390,7 @@
 					}
 				},
 				{
-					"id": 177,
+					"id": 178,
 					"name": "parent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9323,19 +9399,19 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeInterface.ts",
-							"line": 12,
+							"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
+							"line": 11,
 							"character": 10
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 127,
+						"id": 128,
 						"name": "INode"
 					}
 				},
 				{
-					"id": 189,
+					"id": 191,
 					"name": "value",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9344,7 +9420,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeInterface.ts",
+							"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
 							"line": 27,
 							"character": 9
 						}
@@ -9355,7 +9431,7 @@
 					}
 				},
 				{
-					"id": 190,
+					"id": 192,
 					"name": "load",
 					"kind": 2048,
 					"kindString": "Method",
@@ -9364,7 +9440,7 @@
 					},
 					"signatures": [
 						{
-							"id": 191,
+							"id": 193,
 							"name": "load",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -9373,7 +9449,7 @@
 							},
 							"parameters": [
 								{
-									"id": 192,
+									"id": 194,
 									"name": "state",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -9395,14 +9471,14 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/nodeInterface.ts",
+							"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
 							"line": 29,
 							"character": 8
 						}
 					]
 				},
 				{
-					"id": 193,
+					"id": 195,
 					"name": "save",
 					"kind": 2048,
 					"kindString": "Method",
@@ -9411,7 +9487,7 @@
 					},
 					"signatures": [
 						{
-							"id": 194,
+							"id": 196,
 							"name": "save",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -9427,7 +9503,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/nodeInterface.ts",
+							"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
 							"line": 30,
 							"character": 8
 						}
@@ -9439,28 +9515,28 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						188,
-						179,
-						184,
-						175,
+						190,
+						180,
+						186,
 						176,
-						178,
 						177,
-						189
+						179,
+						178,
+						191
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						190,
-						193
+						192,
+						195
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/nodeInterface.ts",
+					"fileName": "packages/baklavajs-core/types/nodeInterface.ts",
 					"line": 5,
 					"character": 31
 				}
@@ -9468,7 +9544,7 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 215,
+					"id": 217,
 					"name": "NodeInterface"
 				}
 			]
@@ -9525,8 +9601,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeOption.ts",
-							"line": 12,
+							"fileName": "packages/baklavajs-core/types/nodeOption.ts",
+							"line": 11,
 							"character": 10
 						}
 					],
@@ -9551,8 +9627,8 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/nodeOption.ts",
-											"line": 13,
+											"fileName": "packages/baklavajs-core/types/nodeOption.ts",
+											"line": 12,
 											"character": 22
 										}
 									],
@@ -9577,8 +9653,8 @@
 									},
 									"sources": [
 										{
-											"fileName": "types/nodeOption.ts",
-											"line": 14,
+											"fileName": "packages/baklavajs-core/types/nodeOption.ts",
+											"line": 13,
 											"character": 16
 										}
 									],
@@ -9592,6 +9668,32 @@
 										],
 										"name": "IBaklavaEvent"
 									}
+								},
+								{
+									"id": 103,
+									"name": "updated",
+									"kind": 32,
+									"kindString": "Variable",
+									"flags": {
+										"isExported": true
+									},
+									"sources": [
+										{
+											"fileName": "packages/baklavajs-core/types/nodeOption.ts",
+											"line": 14,
+											"character": 15
+										}
+									],
+									"type": {
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "void"
+											}
+										],
+										"name": "IBaklavaEvent"
+									}
 								}
 							],
 							"groups": [
@@ -9600,14 +9702,15 @@
 									"kind": 32,
 									"children": [
 										101,
-										102
+										102,
+										103
 									]
 								}
 							],
 							"sources": [
 								{
-									"fileName": "types/nodeOption.ts",
-									"line": 12,
+									"fileName": "packages/baklavajs-core/types/nodeOption.ts",
+									"line": 11,
 									"character": 11
 								}
 							]
@@ -9624,8 +9727,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeOption.ts",
-							"line": 8,
+							"fileName": "packages/baklavajs-core/types/nodeOption.ts",
+							"line": 7,
 							"character": 19
 						}
 					],
@@ -9645,8 +9748,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeOption.ts",
-							"line": 10,
+							"fileName": "packages/baklavajs-core/types/nodeOption.ts",
+							"line": 9,
 							"character": 20
 						}
 					],
@@ -9674,8 +9777,8 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/nodeOption.ts",
-							"line": 9,
+							"fileName": "packages/baklavajs-core/types/nodeOption.ts",
+							"line": 8,
 							"character": 9
 						}
 					],
@@ -9699,7 +9802,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/nodeOption.ts",
+					"fileName": "packages/baklavajs-core/types/nodeOption.ts",
 					"line": 3,
 					"character": 28
 				}
@@ -9707,13 +9810,13 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 270,
+					"id": 273,
 					"name": "NodeOption"
 				}
 			]
 		},
 		{
-			"id": 442,
+			"id": 445,
 			"name": "INodeOptionParameters",
 			"kind": 256,
 			"kindString": "Interface",
@@ -9722,7 +9825,7 @@
 			},
 			"children": [
 				{
-					"id": 446,
+					"id": 449,
 					"name": "additionalProperties",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9732,7 +9835,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 15,
 							"character": 24
 						}
@@ -9753,7 +9856,7 @@
 					}
 				},
 				{
-					"id": 444,
+					"id": 447,
 					"name": "optionComponent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9762,7 +9865,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 13,
 							"character": 19
 						}
@@ -9773,7 +9876,7 @@
 					}
 				},
 				{
-					"id": 445,
+					"id": 448,
 					"name": "sidebarComponent",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9783,7 +9886,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 14,
 							"character": 20
 						}
@@ -9803,7 +9906,7 @@
 					}
 				},
 				{
-					"id": 443,
+					"id": 446,
 					"name": "value",
 					"kind": 1024,
 					"kindString": "Property",
@@ -9812,7 +9915,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 12,
 							"character": 9
 						}
@@ -9828,16 +9931,16 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						446,
-						444,
-						445,
-						443
+						449,
+						447,
+						448,
+						446
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "src/nodeBuilder.ts",
+					"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 					"line": 11,
 					"character": 31
 				}
@@ -9862,7 +9965,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 9,
 							"character": 6
 						}
@@ -9882,7 +9985,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 10,
 							"character": 14
 						}
@@ -9918,7 +10021,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 8,
 							"character": 8
 						}
@@ -9938,7 +10041,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 11,
 							"character": 11
 						}
@@ -9973,7 +10076,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 12,
 							"character": 9
 						}
@@ -9993,7 +10096,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 7,
 							"character": 8
 						}
@@ -10020,7 +10123,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/state.ts",
+					"fileName": "packages/baklavajs-core/types/state.ts",
 					"line": 6,
 					"character": 27
 				}
@@ -10038,7 +10141,7 @@
 						},
 						"sources": [
 							{
-								"fileName": "types/state.ts",
+								"fileName": "packages/baklavajs-core/types/state.ts",
 								"line": 6,
 								"character": 35
 							}
@@ -10048,7 +10151,7 @@
 			]
 		},
 		{
-			"id": 123,
+			"id": 124,
 			"name": "INodeUpdateEventData",
 			"kind": 256,
 			"kindString": "Interface",
@@ -10057,7 +10160,7 @@
 			},
 			"children": [
 				{
-					"id": 126,
+					"id": 127,
 					"name": "interface",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10067,19 +10170,19 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 40,
 							"character": 13
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 172,
+						"id": 173,
 						"name": "INodeInterface"
 					}
 				},
 				{
-					"id": 124,
+					"id": 125,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10088,7 +10191,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 38,
 							"character": 8
 						}
@@ -10099,7 +10202,7 @@
 					}
 				},
 				{
-					"id": 125,
+					"id": 126,
 					"name": "option",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10109,7 +10212,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 39,
 							"character": 10
 						}
@@ -10126,22 +10229,22 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						126,
-						124,
-						125
+						127,
+						125,
+						126
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/eventDataTypes.ts",
+					"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 					"line": 37,
 					"character": 37
 				}
 			]
 		},
 		{
-			"id": 120,
+			"id": 121,
 			"name": "IOptionEventData",
 			"kind": 256,
 			"kindString": "Interface",
@@ -10150,7 +10253,7 @@
 			},
 			"children": [
 				{
-					"id": 121,
+					"id": 122,
 					"name": "name",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10159,7 +10262,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 33,
 							"character": 8
 						}
@@ -10170,7 +10273,7 @@
 					}
 				},
 				{
-					"id": 122,
+					"id": 123,
 					"name": "option",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10179,7 +10282,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/eventDataTypes.ts",
+							"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 							"line": 34,
 							"character": 10
 						}
@@ -10196,14 +10299,14 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						121,
-						122
+						122,
+						123
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/eventDataTypes.ts",
+					"fileName": "packages/baklavajs-core/types/eventDataTypes.ts",
 					"line": 32,
 					"character": 33
 				}
@@ -10228,7 +10331,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/plugin.ts",
+							"fileName": "packages/baklavajs-core/types/plugin.ts",
 							"line": 4,
 							"character": 8
 						}
@@ -10279,7 +10382,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "types/plugin.ts",
+							"fileName": "packages/baklavajs-core/types/plugin.ts",
 							"line": 5,
 							"character": 12
 						}
@@ -10304,7 +10407,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/plugin.ts",
+					"fileName": "packages/baklavajs-core/types/plugin.ts",
 					"line": 3,
 					"character": 24
 				}
@@ -10329,7 +10432,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 3,
 							"character": 15
 						}
@@ -10353,7 +10456,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/state.ts",
+							"fileName": "packages/baklavajs-core/types/state.ts",
 							"line": 2,
 							"character": 9
 						}
@@ -10380,7 +10483,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "types/state.ts",
+					"fileName": "packages/baklavajs-core/types/state.ts",
 					"line": 1,
 					"character": 23
 				}
@@ -10398,7 +10501,7 @@
 						},
 						"sources": [
 							{
-								"fileName": "types/state.ts",
+								"fileName": "packages/baklavajs-core/types/state.ts",
 								"line": 1,
 								"character": 31
 							}
@@ -10408,7 +10511,7 @@
 			]
 		},
 		{
-			"id": 199,
+			"id": 201,
 			"name": "ITemporaryConnection",
 			"kind": 256,
 			"kindString": "Interface",
@@ -10417,7 +10520,7 @@
 			},
 			"children": [
 				{
-					"id": 201,
+					"id": 203,
 					"name": "from",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10426,19 +10529,19 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 11,
 							"character": 8
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 172,
+						"id": 173,
 						"name": "INodeInterface"
 					}
 				},
 				{
-					"id": 203,
+					"id": 205,
 					"name": "mx",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10448,7 +10551,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 13,
 							"character": 6
 						}
@@ -10468,7 +10571,7 @@
 					}
 				},
 				{
-					"id": 204,
+					"id": 206,
 					"name": "my",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10478,7 +10581,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 14,
 							"character": 6
 						}
@@ -10498,7 +10601,7 @@
 					}
 				},
 				{
-					"id": 200,
+					"id": 202,
 					"name": "status",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10507,19 +10610,19 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 10,
 							"character": 10
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 195,
+						"id": 197,
 						"name": "TemporaryConnectionState"
 					}
 				},
 				{
-					"id": 202,
+					"id": 204,
 					"name": "to",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10529,14 +10632,14 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 12,
 							"character": 6
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 172,
+						"id": 173,
 						"name": "INodeInterface"
 					}
 				}
@@ -10546,24 +10649,24 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						201,
 						203,
-						204,
-						200,
-						202
+						205,
+						206,
+						202,
+						204
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/connection.ts",
+					"fileName": "packages/baklavajs-core/types/connection.ts",
 					"line": 9,
 					"character": 37
 				}
 			]
 		},
 		{
-			"id": 209,
+			"id": 211,
 			"name": "ITransferConnection",
 			"kind": 256,
 			"kindString": "Interface",
@@ -10572,7 +10675,7 @@
 			},
 			"children": [
 				{
-					"id": 211,
+					"id": 213,
 					"name": "destructed",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10581,7 +10684,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 25,
 							"character": 14
 						}
@@ -10592,7 +10695,7 @@
 					}
 				},
 				{
-					"id": 213,
+					"id": 215,
 					"name": "from",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10601,24 +10704,24 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 19,
 							"character": 8
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 172,
+						"id": 173,
 						"name": "INodeInterface"
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"id": 207,
+						"id": 209,
 						"name": "IConnection.from"
 					}
 				},
 				{
-					"id": 212,
+					"id": 214,
 					"name": "id",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10627,7 +10730,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 18,
 							"character": 6
 						}
@@ -10638,12 +10741,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"id": 206,
+						"id": 208,
 						"name": "IConnection.id"
 					}
 				},
 				{
-					"id": 210,
+					"id": 212,
 					"name": "isInDanger",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10652,7 +10755,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 24,
 							"character": 14
 						}
@@ -10663,7 +10766,7 @@
 					}
 				},
 				{
-					"id": 214,
+					"id": 216,
 					"name": "to",
 					"kind": 1024,
 					"kindString": "Property",
@@ -10672,19 +10775,19 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/connection.ts",
+							"fileName": "packages/baklavajs-core/types/connection.ts",
 							"line": 20,
 							"character": 6
 						}
 					],
 					"type": {
 						"type": "reference",
-						"id": 172,
+						"id": 173,
 						"name": "INodeInterface"
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"id": 208,
+						"id": 210,
 						"name": "IConnection.to"
 					}
 				}
@@ -10694,17 +10797,17 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						211,
 						213,
+						215,
+						214,
 						212,
-						210,
-						214
+						216
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/connection.ts",
+					"fileName": "packages/baklavajs-core/types/connection.ts",
 					"line": 23,
 					"character": 36
 				}
@@ -10712,20 +10815,20 @@
 			"extendedTypes": [
 				{
 					"type": "reference",
-					"id": 205,
+					"id": 207,
 					"name": "IConnection"
 				}
 			],
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 248,
+					"id": 251,
 					"name": "Connection"
 				}
 			]
 		},
 		{
-			"id": 486,
+			"id": 489,
 			"name": "CalculationFunction",
 			"kind": 4194304,
 			"kindString": "Type alias",
@@ -10734,7 +10837,7 @@
 			},
 			"sources": [
 				{
-					"fileName": "src/nodeBuilder.ts",
+					"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 					"line": 18,
 					"character": 24
 				}
@@ -10742,7 +10845,7 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 487,
+					"id": 490,
 					"name": "__type",
 					"kind": 65536,
 					"kindString": "Type literal",
@@ -10751,7 +10854,7 @@
 					},
 					"signatures": [
 						{
-							"id": 488,
+							"id": 491,
 							"name": "__call",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -10760,7 +10863,7 @@
 							},
 							"parameters": [
 								{
-									"id": 489,
+									"id": 492,
 									"name": "this",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10769,12 +10872,12 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 292,
+										"id": 296,
 										"name": "Node"
 									}
 								},
 								{
-									"id": 490,
+									"id": 493,
 									"name": "n",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10783,12 +10886,12 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 292,
+										"id": 296,
 										"name": "Node"
 									}
 								},
 								{
-									"id": 491,
+									"id": 494,
 									"name": "calculationData",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10810,7 +10913,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 18,
 							"character": 26
 						}
@@ -10828,7 +10931,7 @@
 			},
 			"sources": [
 				{
-					"fileName": "types/editor.ts",
+					"fileName": "packages/baklavajs-core/types/editor.ts",
 					"line": 9,
 					"character": 27
 				}
@@ -10845,7 +10948,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/editor.ts",
+							"fileName": "packages/baklavajs-core/types/editor.ts",
 							"line": 9,
 							"character": 29
 						}
@@ -10854,7 +10957,7 @@
 			}
 		},
 		{
-			"id": 492,
+			"id": 495,
 			"name": "NodeConstructorImpl",
 			"kind": 4194304,
 			"kindString": "Type alias",
@@ -10863,7 +10966,7 @@
 			},
 			"sources": [
 				{
-					"fileName": "src/nodeBuilder.ts",
+					"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 					"line": 19,
 					"character": 24
 				}
@@ -10871,7 +10974,7 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 493,
+					"id": 496,
 					"name": "__type",
 					"kind": 65536,
 					"kindString": "Type literal",
@@ -10880,7 +10983,7 @@
 					},
 					"sources": [
 						{
-							"fileName": "src/nodeBuilder.ts",
+							"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 							"line": 19,
 							"character": 26
 						}
@@ -10899,7 +11002,7 @@
 			},
 			"sources": [
 				{
-					"fileName": "src/idGenerator.ts",
+					"fileName": "packages/baklavajs-core/src/idGenerator.ts",
 					"line": 1,
 					"character": 11
 				}
@@ -10935,14 +11038,14 @@
 			],
 			"sources": [
 				{
-					"fileName": "src/idGenerator.ts",
+					"fileName": "packages/baklavajs-core/src/idGenerator.ts",
 					"line": 3,
 					"character": 34
 				}
 			]
 		},
 		{
-			"id": 497,
+			"id": 500,
 			"name": "generateNode",
 			"kind": 64,
 			"kindString": "Function",
@@ -10951,7 +11054,7 @@
 			},
 			"signatures": [
 				{
-					"id": 498,
+					"id": 501,
 					"name": "generateNode",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -10960,7 +11063,7 @@
 					},
 					"parameters": [
 						{
-							"id": 499,
+							"id": 502,
 							"name": "type",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -10973,7 +11076,7 @@
 							}
 						},
 						{
-							"id": 500,
+							"id": 503,
 							"name": "name",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -10986,7 +11089,7 @@
 							}
 						},
 						{
-							"id": 501,
+							"id": 504,
 							"name": "additionalProperties",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -11018,7 +11121,7 @@
 							}
 						},
 						{
-							"id": 502,
+							"id": 505,
 							"name": "intfs",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -11029,13 +11132,13 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 436,
+									"id": 439,
 									"name": "IInterfaceOptions"
 								}
 							}
 						},
 						{
-							"id": 503,
+							"id": 506,
 							"name": "options",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -11051,7 +11154,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 442,
+										"id": 445,
 										"name": "INodeOptionParameters"
 									}
 								],
@@ -11059,7 +11162,7 @@
 							}
 						},
 						{
-							"id": 504,
+							"id": 507,
 							"name": "calcFunction",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -11069,7 +11172,7 @@
 							},
 							"type": {
 								"type": "reference",
-								"id": 486,
+								"id": 489,
 								"name": "CalculationFunction"
 							}
 						}
@@ -11082,14 +11185,14 @@
 			],
 			"sources": [
 				{
-					"fileName": "src/nodeBuilder.ts",
+					"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 					"line": 29,
 					"character": 21
 				}
 			]
 		},
 		{
-			"id": 494,
+			"id": 497,
 			"name": "getDefaultValue",
 			"kind": 64,
 			"kindString": "Function",
@@ -11098,7 +11201,7 @@
 			},
 			"signatures": [
 				{
-					"id": 495,
+					"id": 498,
 					"name": "getDefaultValue",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -11107,7 +11210,7 @@
 					},
 					"parameters": [
 						{
-							"id": 496,
+							"id": 499,
 							"name": "v",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -11128,7 +11231,7 @@
 			],
 			"sources": [
 				{
-					"fileName": "src/nodeBuilder.ts",
+					"fileName": "packages/baklavajs-core/src/nodeBuilder.ts",
 					"line": 21,
 					"character": 24
 				}
@@ -11140,56 +11243,56 @@
 			"title": "Enumerations",
 			"kind": 4,
 			"children": [
-				195
+				197
 			]
 		},
 		{
 			"title": "Classes",
 			"kind": 128,
 			"children": [
-				248,
-				262,
-				366,
-				292,
-				447,
-				215,
-				270
+				251,
+				265,
+				370,
+				296,
+				450,
+				217,
+				273
 			]
 		},
 		{
 			"title": "Interfaces",
 			"kind": 256,
 			"children": [
-				103,
-				110,
-				106,
-				115,
-				205,
+				104,
+				111,
+				107,
+				116,
+				207,
 				20,
 				30,
-				288,
-				436,
+				292,
+				439,
 				16,
-				127,
-				172,
+				128,
+				173,
 				93,
-				442,
+				445,
 				8,
-				123,
-				120,
+				124,
+				121,
 				25,
 				4,
-				199,
-				209
+				201,
+				211
 			]
 		},
 		{
 			"title": "Type aliases",
 			"kind": 4194304,
 			"children": [
-				486,
+				489,
 				91,
-				492
+				495
 			]
 		},
 		{
@@ -11204,8 +11307,8 @@
 			"kind": 64,
 			"children": [
 				2,
-				497,
-				494
+				500,
+				497
 			]
 		}
 	]

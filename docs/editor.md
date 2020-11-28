@@ -15,13 +15,13 @@ The editor class is the main class of Baklava's core. You can do most things lik
 > You should register all [custom node types](nodes.md) in the editor.
 > It will work without, however, loading will not be possible.
 
-To register your node types call the [registerNodeType](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "editor", "field": "registernodetype" }%) function. The first argument is the name of the node type. This is the string you set in your class as `type`. The other argument is the constructor itself (just pass the class in here).
+To register your node types call the [registerNodeType](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Editor", "field": "registerNodeType" }%) function. The first argument is the name of the node type. This is the string you set in your class as `type`. The other argument is the constructor itself (just pass the class in here).
 
 ### Adding / removing nodes
-[addNode](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "editor", "field": "addnode" }%)  
+[addNode](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Editor", "field": "addNode" }%)  
 This function takes a node instance and adds it to the list of nodes.
 
-[removeNode](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "editor", "field": "removenode" }%)  
+[removeNode](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Editor", "field": "removeNode" }%)  
 Pass an instance of a node in the `nodes` list as argument to remove the node from the list. This will also remove all connections from and to the node.
 
 
@@ -38,7 +38,7 @@ By default, every connection is allowed. However, there are certain exceptions:
 Additionally, plugins can prevent connections from being created. For example, the [Interface Types](/plugins/interface-types.md) plugin will prevent connections between interfaces of different types unless a conversion exists. Similarly, the [Engine](/plugins/engine.md) plugin will prevent connections that would result in a cycle in the graph.
 
 ### Adding / removing connections
-Use the [addConnection](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "editor", "field": "addconnection" }%) and [removeConnection()](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "editor", "field": "removeconnection" }%) methods
+Use the [addConnection](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Editor", "field": "addConnection" }%) and [removeConnection()](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Editor", "field": "removeConnection" }%) methods
 for adding or removing connections.
 
 > Never remove a connection from the list yourself! This will result in the connection not being GCed.
@@ -46,10 +46,10 @@ for adding or removing connections.
 
 
 ## Saving / Export
-You can export the whole state to a JS Object using the [save](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "editor", "field": "save" }%) method. The returned object is serializable, so you can store the JSON somewhere else and restore the state later using the [load](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "editor", "field": "load" }%) method.
+You can export the whole state to a JS Object using the [save](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Editor", "field": "save" }%) method. The returned object is serializable, so you can store the JSON somewhere else and restore the state later using the [load](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Editor", "field": "load" }%) method.
 
 
 ## Loading / Import
 > Before loading a state, make sure you have registered all node types!
 
-Use the [load](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "editor", "field": "load" }%) method with a previously saved state.
+Use the [load](!!API%{ "module": "@baklavajs/core", "type": "class", "name": "Editor", "field": "load" }%) method with a previously saved state.
