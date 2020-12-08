@@ -1,6 +1,6 @@
 {
   "name": "@baklavajs/core",
-  "version": "1.8.0",
+  "version": "1.8.2",
   "description": "Core logic of BaklavaJS, a graph editor / node editor for the web",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
@@ -23,7 +23,7 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "dependencies": {
-    "@baklavajs/events": "^1.8.0"
+    "@baklavajs/events": "^1.8.2"
   },
   "devDependencies": {
     "@ts-tools/node": "^2.1.1",

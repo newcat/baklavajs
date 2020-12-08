@@ -1,6 +1,6 @@
 {
   "name": "@baklavajs/plugin-interface-types",
-  "version": "1.8.0",
+  "version": "1.8.2",
   "description": "Add types to node interfaces for BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
