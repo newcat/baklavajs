@@ -30,6 +30,10 @@
 
         & > .__text {
             flex: 1 0 auto;
+            flex-basis: 0;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         & > .__icon {
