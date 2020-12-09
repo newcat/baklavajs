@@ -1,25 +1,39 @@
-import { NodeInterface } from "./nodeInterface";
-import generateId from "./idGenerator";
+import { v4 as uuidv4 } from "uuid";
 import { BaklavaEvent } from "@baklavajs/events";
-import { IConnection, ITransferConnection } from "../types/connection";
+import type { NodeInterface } from "./nodeInterface";
 
-export class Connection implements ITransferConnection {
+export interface IConnection {
+    id: string;
+    from: NodeInterface;
+    to: NodeInterface;
+}
+
+export interface IConnectionState extends Record<string, any> {
+    /** id of the connection */
+    id: string;
+    /** id of the source interface */
+    from: string;
+    /** id of the target interface */
+    to: string;
+}
+
+export class Connection implements IConnection {
     public id: string;
-    public from: NodeInterface<unknown>;
-    public to: NodeInterface<unknown>;
+    public from: NodeInterface;
+    public to: NodeInterface;
     public isInDanger = false;
     public destructed = false;
 
     public events = {
-        destruct: new BaklavaEvent<void>()
+        destruct: new BaklavaEvent<void>(),
     };
 
-    public constructor(from: NodeInterface<unknown>, to: NodeInterface<unknown>) {
+    public constructor(from: NodeInterface, to: NodeInterface) {
         if (!from || !to) {
             throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
         }
 
-        this.id = generateId();
+        this.id = uuidv4();
         this.from = from;
         this.to = to;
 
@@ -49,7 +63,7 @@ export class DummyConnection implements IConnection {
             throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
         }
 
-        this.id = generateId();
+        this.id = uuidv4();
         this.from = from;
         this.to = to;
     }

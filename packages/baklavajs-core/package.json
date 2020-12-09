@@ -23,13 +23,17 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "dependencies": {
-    "@baklavajs/events": "^1.8.0"
+    "@baklavajs/events": "^1.8.0",
+    "lodash.mapvalues": "^4.6.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@ts-tools/node": "^2.1.1",
     "@types/chai": "^4.2.14",
+    "@types/lodash.mapvalues": "^4.6.6",
     "@types/mocha": "^8.0.4",
     "@types/sinon": "^9.0.9",
+    "@types/uuid": "^8.3.0",
     "chai": "^4.2.0",
     "clean-webpack-plugin": "^3.0.0",
     "mocha": "^8.2.1",

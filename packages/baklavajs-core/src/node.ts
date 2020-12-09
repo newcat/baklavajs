@@ -1,22 +1,39 @@
-import mapValues from "lodash/mapValues";
-import generateId from "./idGenerator";
-import { NodeInterface } from "./nodeInterface";
-import { INodeState, IODefinitionStates } from "../types/state";
-import { Editor } from "./editor";
+import mapValues from "lodash.mapvalues";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
-import { INode } from "../types";
-import { IODefinition, IODefinitionValues, INodeIO } from "../types/nodeIO";
+import { v4 as uuidv4 } from "uuid";
+import { NodeInterface } from "./nodeInterface";
+import { Editor } from "./editor";
+import { IODefinition, IODefinitionValues, INodeIO, IODefinitionStates } from "./nodeIO";
+
+export type CalculateFunctionReturnType<O extends IODefinition> =
+    | IODefinitionValues<O>
+    | Promise<IODefinitionValues<O>>
+    | void;
+
+export type CalculateFunction<I extends IODefinition, O extends IODefinition> = (
+    inputs: IODefinitionValues<I>,
+    globalValues?: any
+// ) => CalculateFunctionReturnType<O>;
+) => IODefinitionValues<O>;
+
+export interface INodeState<I, O> {
+    type: string;
+    title: string;
+    id: string;
+    inputs: IODefinitionStates<I>;
+    outputs: IODefinitionStates<O>;
+}
 
 /**
  * Abstract base class for every node
  */
-export abstract class Node<I extends IODefinition<I>, O extends IODefinition<O>> implements INode<I, O> {
+export abstract class Node<I extends IODefinition, O extends IODefinition> {
     /** Type of the node */
     public abstract type: string;
     /** Customizable display name of the node. */
     public abstract title: string;
     /** Unique identifier of the node */
-    public id: string = "node_" + generateId();
+    public id: string = uuidv4();
 
     public abstract inputs: I;
     public abstract outputs: O;
@@ -78,14 +95,7 @@ export abstract class Node<I extends IODefinition<I>, O extends IODefinition<O>>
      * @param globalValues Set of values passed to every node by the engine plugin
      * @return Values for output interfaces / output plugins
      */
-    public calculate(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        inputs: IODefinitionValues<I>,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        globalValues?: Record<string, any>
-    ): IODefinitionValues<O> | Promise<IODefinitionValues<O>> | void {
-        // Empty
-    }
+    public calculate?: CalculateFunction<I, O>;
 
     /**
      * Add an input interface or option to the node
@@ -175,3 +185,4 @@ export abstract class Node<I extends IODefinition<I>, O extends IODefinition<O>>
 }
 
 export type AbstractNode = Node<IODefinition, IODefinition>;
+export type NodeConstructor = new () => AbstractNode;

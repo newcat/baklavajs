@@ -1,38 +1,55 @@
-import { INodeOption } from "../types/nodeOption";
-import { PreventableBaklavaEvent, BaklavaEvent } from "@baklavajs/events";
+import { v4 as uuidv4 } from "uuid";
+import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
+import { INodeIO, INodeIOState } from "./nodeIO";
 
-export class NodeOption implements INodeOption {
+export class NodeOption<T = unknown> implements INodeIO<T> {
+    public readonly type = "option";
+    public id = uuidv4();
+
     /** Name of the component that should be displayed for the option */
     public optionComponent: string;
-    /** Name of the component that should be displayed in the sidebar */
-    public sidebarComponent?: string;
 
     public events = {
         beforeSetValue: new PreventableBaklavaEvent<any>(),
         setValue: new BaklavaEvent<any>(),
-        updated: new BaklavaEvent<void>()
+        updated: new BaklavaEvent<void>(),
     };
 
-    /** Additional Properties */
-    [k: string]: any;
+    public hooks = {
+        load: new SequentialHook<INodeIOState<T>>(),
+        save: new SequentialHook<INodeIOState<T>>(),
+    };
 
-    private _value: any;
+    private _value: T;
 
-    public constructor(optionComponent: string, value?: any, sidebarComponent?: any) {
-        this.optionComponent = optionComponent;
-        this.sidebarComponent = sidebarComponent;
-        this._value = value;
-    }
-
-    public get value() {
+    public get value(): T {
         return this._value;
     }
 
-    public set value(v: any) {
+    public set value(v: T) {
         if (this.events.beforeSetValue.emit(v)) {
             return;
         }
         this._value = v;
         this.events.setValue.emit(v);
+    }
+
+    public constructor(optionComponent: string, value: T) {
+        this.optionComponent = optionComponent;
+        this._value = value;
+    }
+
+    public load(state: INodeIOState<T>): void {
+        this.id = state.id;
+        this.value = state.value;
+        this.hooks.load.execute(state);
+    }
+
+    public save(): INodeIOState<T> {
+        const state = {
+            id: this.id,
+            value: this.value,
+        };
+        return this.hooks.save.execute(state);
     }
 }

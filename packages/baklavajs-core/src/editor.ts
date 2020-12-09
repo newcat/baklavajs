@@ -1,20 +1,21 @@
-import { NodeInterface } from "./nodeInterface";
-import { Connection, DummyConnection } from "./connection";
-import { IState } from "../types";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
-import {
-    IEditor,
-    IPlugin,
-    IConnection,
-    NodeConstructor,
-    IAddConnectionEventData,
-    IAddNodeTypeEventData,
-} from "../types";
-import generateId from "./idGenerator";
-import { AbstractNode } from './node';
+import type { NodeInterface } from "./nodeInterface";
+import { Connection, DummyConnection, IConnection, IConnectionState } from "./connection";
+import { AbstractNode, INodeState, NodeConstructor } from './node';
+import { IAddConnectionEventData, IAddNodeTypeEventData } from "./eventDataTypes";
+
+export interface IPlugin {
+    type: string;
+    register(editor: Editor): void;
+}
+
+export interface IState extends Record<string, any> {
+    nodes: Array<INodeState<unknown, unknown>>;
+    connections: IConnectionState[];
+}
 
 /** The main model class for BaklavaJS */
-export class Editor implements IEditor {
+export class Editor {
     private _plugins: Set<IPlugin> = new Set();
     private _nodes: AbstractNode[] = [];
     private _connections: Connection[] = [];
@@ -268,10 +269,6 @@ export class Editor implements IEditor {
         plugin.register(this);
         this.events.usePlugin.emit(plugin);
         return true;
-    }
-
-    public generateId(prefix = ""): string {
-        return prefix + generateId();
     }
 
     public findNodeInterface(id: string): NodeInterface<unknown> | undefined {

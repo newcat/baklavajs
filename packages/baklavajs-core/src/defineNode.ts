@@ -1,38 +1,43 @@
-import { CalculateFunction, CalculateFunctionReturnType, INodeInterface, INodeIO, IODefinition, IODefinitionValues } from "../types";
-import { Node } from "./node";
-import { NodeInterface } from "./nodeInterface";
+import { CalculateFunction, Node } from "./node";
+import { INodeIO } from "./nodeIO";
 
-type SetupReturn<I extends IODefinition, O extends IODefinition> = {
-    inputs: I;
-    outputs: O;
-}
+export type NodeIOFactory<T> = () => INodeIO<T>;
+export type IOFactory = Record<string, NodeIOFactory<unknown>>;
 
-interface INodeDefinition<I extends IODefinition, O extends IODefinition> {
+type FactoryToDefinition<D extends IOFactory> = {
+    [K in keyof D]: D[K] extends NodeIOFactory<infer T> ? INodeIO<T> : never;
+};
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+interface INodeDefinition<I extends IOFactory = {}, O extends IOFactory = {}> {
     type: string;
     title?: string;
-    setup(): SetupReturn<I, O>;
-    calculate?: CalculateFunction<I, O>;
-    // onCreate?: (this: Node<I, O>) => void;
+    inputs?: I;
+    outputs?: O;
+    calculate?: CalculateFunction<FactoryToDefinition<I>, FactoryToDefinition<O>>;
+    onCreate?: (this: Node<FactoryToDefinition<I>, FactoryToDefinition<O>>) => void;
 }
 
-function defineNode<I extends IODefinition, O extends IODefinition>(definition: INodeDefinition<I, O>) {
-    
+function executeFactory<T extends IOFactory>(factory?: T): FactoryToDefinition<T> {
+    const res: Record<string, INodeIO<unknown>> = {};
+    Object.keys(factory || {}).forEach((k) => {
+        res[k] = factory![k]();
+    });
+    return res as FactoryToDefinition<T>;
 }
 
-defineNode({
-    type: "MyNode",
-    setup() {
-        return {
-            inputs: {
-                hello: new NodeInterface(3),
-                old: new NodeInterface(false)
-            },
-            outputs: {
-                y: new NodeInterface("test"),
-                z: new NodeInterface(2)
-            }
+export function defineNode<I extends IOFactory, O extends IOFactory>(
+    definition: INodeDefinition<I, O>
+): new () => Node<FactoryToDefinition<I>, FactoryToDefinition<O>> {
+    return class extends Node<FactoryToDefinition<I>, FactoryToDefinition<O>> {
+        public type = definition.type;
+        public title = definition.title ?? definition.type;
+        public inputs: FactoryToDefinition<I> = executeFactory(definition.inputs);
+        public outputs: FactoryToDefinition<O> = executeFactory(definition.outputs);
+
+        constructor() {
+            super();
+            definition.onCreate?.call(this);
         }
-    },
-    calculate(inputs, test) {
-    },
-});
+    };
+}

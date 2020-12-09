@@ -1,30 +1,30 @@
+import { v4 as uuidv4 } from "uuid";
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
-import generateId from "./idGenerator";
-import { INodeInterface, INodeIOState } from "../types";
-import { AbstractNode } from './node';
+import { AbstractNode } from "./node";
+import { INodeIO, INodeIOState } from "./nodeIO";
 
-export class NodeInterface<T> implements INodeInterface<T> {
+export class NodeInterface<T = unknown> implements INodeIO<T> {
     public readonly type = "interface";
 
-    public id = "ni_" + generateId();
-    
+    public id = uuidv4();
+
     /** Will be set automatically after the node was created */
     public isInput?: boolean;
     /** Will be set automatically after the node was created */
     public parent?: AbstractNode;
-    
+
     public component?: string | undefined;
 
     public events = {
         setConnectionCount: new BaklavaEvent<number>(),
         beforeSetValue: new PreventableBaklavaEvent<T>(),
         setValue: new BaklavaEvent<T>(),
-        updated: new BaklavaEvent<void>(),
+        updated: new BaklavaEvent<void>()
     };
 
     public hooks = {
         load: new SequentialHook<INodeIOState<T>>(),
-        save: new SequentialHook<INodeIOState<T>>(),
+        save: new SequentialHook<INodeIOState<T>>()
     };
 
     private _connectionCount = 0;
@@ -61,7 +61,7 @@ export class NodeInterface<T> implements INodeInterface<T> {
     public save(): INodeIOState<T> {
         const state = {
             id: this.id,
-            value: this.value,
+            value: this.value
         };
         return this.hooks.save.execute(state);
     }
