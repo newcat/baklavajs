@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { BaklavaEvent } from "@baklavajs/events";
+import { BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import type { NodeInterface } from "./nodeInterface";
 
 export interface IConnection {
@@ -26,6 +26,10 @@ export class Connection implements IConnection {
 
     public events = {
         destruct: new BaklavaEvent<void>(),
+    };
+
+    public hooks = {
+        transfer: new SequentialHook<any>(),
     };
 
     public constructor(from: NodeInterface, to: NodeInterface) {

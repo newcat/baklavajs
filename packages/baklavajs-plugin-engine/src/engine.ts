@@ -1,17 +1,16 @@
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
-import { IEditor, INode, IPlugin, INodeInterface, IConnection } from "../../baklavajs-core/types";
+import type { Editor, IPlugin, NodeInterface, Connection, AbstractNode } from "@baklavajs/core";
 import { IInterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/types";
 import { calculateOrder, containsCycle } from "./nodeTreeBuilder";
 
 export class Engine implements IPlugin {
-
     public type = "EnginePlugin";
 
-    public get rootNodes() {
+    public get rootNodes(): AbstractNode[] | undefined {
         return this._rootNodes;
     }
 
-    public set rootNodes(value: INode[]|undefined) {
+    public set rootNodes(value: AbstractNode[] | undefined) {
         this._rootNodes = value;
         this.recalculateOrder = true;
     }
@@ -21,21 +20,21 @@ export class Engine implements IPlugin {
          * The argument is the calculationData that the nodes will receive
          */
         beforeCalculate: new PreventableBaklavaEvent<any>(),
-        calculated: new BaklavaEvent<Map<INode, any>>()
+        calculated: new BaklavaEvent<Map<AbstractNode, any>>(),
     };
 
     public hooks = {
-        gatherCalculationData: new SequentialHook<any>()
+        gatherCalculationData: new SequentialHook<any>(),
     };
 
-    private editor!: IEditor;
-    private nodeCalculationOrder: INode[] = [];
-    private actualRootNodes: INode[] = [];
-    private connectionsPerNode = new Map<INode, IConnection[]>();
+    private editor!: Editor;
+    private nodeCalculationOrder: AbstractNode[] = [];
+    private actualRootNodes: AbstractNode[] = [];
+    private connectionsPerNode = new Map<AbstractNode, Connection[]>();
     private recalculateOrder = false;
     private calculateOnChange = false;
     private calculationInProgress = false;
-    private _rootNodes: INode[]|undefined = undefined;
+    private _rootNodes: AbstractNode[] | undefined = undefined;
     private interfaceTypePlugins: IInterfaceTypePlugin[] = [];
 
     /**
@@ -46,21 +45,8 @@ export class Engine implements IPlugin {
         this.calculateOnChange = calculateOnChange;
     }
 
-    public register(editor: IEditor) {
+    public register(editor: Editor): void {
         this.editor = editor;
-
-        // Search for previously registered interface type plugins
-        this.editor.plugins.forEach((p) => {
-            if (p.type === "InterfaceTypePlugin") {
-                this.interfaceTypePlugins.push(p as IInterfaceTypePlugin);
-            }
-        });
-        // Watch for newly registered interface type plugins
-        this.editor.events.usePlugin.addListener(this, (p) => {
-            if (p.type === "InterfaceTypePlugin") {
-                this.interfaceTypePlugins.push(p as IInterfaceTypePlugin);
-            }
-        });
 
         this.editor.events.addNode.addListener(this, (node) => {
             node.events.update.addListener(this, (ev) => {
@@ -78,11 +64,12 @@ export class Engine implements IPlugin {
         });
 
         this.editor.events.checkConnection.addListener(this, (c) => {
-            if (!this.checkConnection(c.from, c.to)) { return false; }
+            if (!this.checkConnection(c.from, c.to)) {
+                return false;
+            }
         });
 
         this.editor.events.addConnection.addListener(this, (c) => {
-
             // as only one connection to an input interface is allowed
             // Delete all other connections to the target interface
             this.editor.connections
@@ -90,11 +77,11 @@ export class Engine implements IPlugin {
                 .forEach((conn) => this.editor.removeConnection(conn));
 
             this.onChange(true);
-
         });
 
-        this.editor.events.removeConnection.addListener(this, () => { this.onChange(true); });
-
+        this.editor.events.removeConnection.addListener(this, () => {
+            this.onChange(true);
+        });
     }
 
     /**
@@ -105,8 +92,7 @@ export class Engine implements IPlugin {
      * - a map that maps rootNodes to their calculated value (what the calculation function of the node returned)
      * - null if the calculation was prevented from the beforeCalculate event
      */
-    public async calculate(calculationData?: any): Promise<Map<INode, any>|null> {
-
+    public async calculate(calculationData?: any): Promise<Map<INode, any> | null> {
         if (this.events.beforeCalculate.emit(calculationData)) {
             return null;
         }
@@ -124,8 +110,9 @@ export class Engine implements IPlugin {
             }
             if (this.connectionsPerNode.has(n)) {
                 this.connectionsPerNode.get(n)!.forEach((c) => {
-                    const conversion = this.interfaceTypePlugins.find(
-                        (p) => p.canConvert((c.from as any).type, (c.to as any).type));
+                    const conversion = this.interfaceTypePlugins.find((p) =>
+                        p.canConvert((c.from as any).type, (c.to as any).type)
+                    );
                     if (conversion) {
                         c.to.value = conversion.convert((c.from as any).type, (c.to as any).type, c.from.value);
                     } else {
@@ -164,13 +151,19 @@ export class Engine implements IPlugin {
     }
 
     private calculateNodeTree() {
-        const { calculationOrder, rootNodes } = calculateOrder(this.editor.nodes, this.editor.connections, this.rootNodes);
+        const { calculationOrder, rootNodes } = calculateOrder(
+            this.editor.nodes,
+            this.editor.connections,
+            this.rootNodes
+        );
         this.nodeCalculationOrder = calculationOrder;
         this.actualRootNodes = rootNodes;
         this.connectionsPerNode.clear();
         this.editor.nodes.forEach((n) => {
-            this.connectionsPerNode.set(n, this.editor.connections.filter((c) => c.from.parent === n));
+            this.connectionsPerNode.set(
+                n,
+                this.editor.connections.filter((c) => c.from.parent === n)
+            );
         });
     }
-
 }

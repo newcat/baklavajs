@@ -2,9 +2,7 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "declarationDir": "dist",
+        "lib": ["ESNext", "DOM", "DOM.Iterable"]
     },
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.vue",
-    ]
+    "include": ["src/**/*.ts", "src/**/*.vue"]
 }

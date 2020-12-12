@@ -6,13 +6,13 @@
   "homepage": "https://newcat.github.io/baklavajs",
   "license": "MIT",
   "files": [
-    "dist/**/!(report.html)"
+    "dist/*"
   ],
   "main": "dist/index.js",
-  "types": "dist/baklavajs-core/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "webpack",
-    "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\"",
+    "build": "rimraf dist && tsc",
+    "test": "mocha -r ts-node/register --extensions ts \"test/**/*.spec.ts\"",
     "docs": "typedoc --json ../../docs/api/core.json --options ../../typedoc.json"
   },
   "repository": {
@@ -28,23 +28,18 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@ts-tools/node": "^2.1.1",
     "@types/chai": "^4.2.14",
     "@types/lodash.mapvalues": "^4.6.6",
     "@types/mocha": "^8.0.4",
     "@types/sinon": "^9.0.9",
     "@types/uuid": "^8.3.0",
     "chai": "^4.2.0",
-    "clean-webpack-plugin": "^3.0.0",
     "mocha": "^8.2.1",
+    "rimraf": "^3.0.2",
     "sinon": "^9.2.1",
-    "ts-loader": "^8.0.11",
+    "ts-node": "^9.1.1",
     "typedoc": "^0.19.2",
-    "typescript": "^4.1.2",
-    "webpack": "^4.42.1",
-    "webpack-bundle-analyzer": "^4.1.0",
-    "webpack-cli": "^4.2.0",
-    "webpack-merge": "^4.2.2"
+    "typescript": "^4.1.2"
   },
   "publishConfig": {
     "access": "public"

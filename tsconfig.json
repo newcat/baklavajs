@@ -1,24 +1,15 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "esnext",
+        "target": "ES2019",
+        "module": "ESNext",
         "strict": true,
-        "importHelpers": true,
         "moduleResolution": "node",
         "experimentalDecorators": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "downlevelIteration": true,
         "declaration": true,
         "baseUrl": ".",
-        "lib": [
-            "esnext",
-            "dom",
-            "dom.iterable",
-            "scripthost"
-        ]
+        "lib": ["esnext"]
     },
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": ["node_modules"]
 }

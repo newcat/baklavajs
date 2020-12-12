@@ -38,5 +38,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ac12fc9a34736475d40dd391b27162be5b73378f"
+  "gitHead": "ac12fc9a34736475d40dd391b27162be5b73378f",
+  "dependencies": {
+    "@baklavajs/core": "^1.8.0"
+  }
 }
