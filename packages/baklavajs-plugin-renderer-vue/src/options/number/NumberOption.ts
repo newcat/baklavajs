@@ -1,6 +1,6 @@
-import { IValidator, BaseNumericOption } from "../baseNumericOption";
+import { BaseNumericOption } from "../baseNumericOption";
 import NumberOptionComponent from "./NumberOption.vue";
 
-export class NumberOption extends BaseNumericOption implements IValidator {
+export class NumberOption extends BaseNumericOption {
     component = NumberOptionComponent;
 }

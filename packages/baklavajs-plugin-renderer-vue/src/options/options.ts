@@ -1,19 +1,8 @@
-import ButtonOption from "./ButtonOption.vue";
-import CheckboxOption from "./CheckboxOption.vue";
-import InputOption from "./InputOption.vue";
-import IntegerOption from "./IntegerOption.vue";
-import NumberOption from "./NumberOption.vue";
-import SelectOption from "./SelectOption.vue";
-import SliderOption from "./SliderOption.vue";
-import TextOption from "./TextOption.vue";
-
-export {
-    ButtonOption,
-    CheckboxOption,
-    InputOption,
-    IntegerOption,
-    NumberOption,
-    SelectOption,
-    SliderOption,
-    TextOption
-};
+export * from "./button/ButtonOption";
+export * from "./checkbox/CheckboxOption";
+export * from "./input/InputOption";
+export * from "./integer/IntegerOption";
+export * from "./number/NumberOption";
+export * from "./select/SelectOption";
+export * from "./slider/SliderOption";
+export * from "./text/TextOption";
