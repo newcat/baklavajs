@@ -1,7 +1,6 @@
-import Vue, { VueConstructor } from "vue";
-import { IPlugin, IEditor } from "../../baklavajs-core/types";
+import { ComputedRef, ComponentOptions } from "vue";
+import { IPlugin, Editor } from "@baklavajs/core";
 import { SequentialHook } from "@baklavajs/events";
-import { IViewNode, IViewPlugin } from "../types";
 
 import NodeView from "./components/node/Node.vue";
 import NodeOptionView from "./components/node/NodeOption.vue";
@@ -9,33 +8,29 @@ import NodeInterfaceView from "./components/node/NodeInterface.vue";
 import ConnectionView from "./components/connection/ConnectionView.vue";
 import ConnectionWrapper from "./components/connection/ConnectionWrapper.vue";
 import TempConnectionView from "./components/connection/TemporaryConnection.vue";
-import ContextMenu from "./components/ContextMenu.vue";
 import Sidebar from "./components/Sidebar.vue";
 import Minimap from "./components/Minimap.vue";
+import { gridBackgroundProvider } from "./editor/backgroundProvider";
+import { IViewNode, IViewNodeState } from "./node/viewNode";
 
-export class ViewPlugin implements IPlugin, IViewPlugin {
-
+export class ViewPlugin implements IPlugin {
     public type = "ViewPlugin";
-    public editor!: IEditor;
+    public editor!: Editor;
     public panning = { x: 0, y: 0 };
     public scaling = 1;
     public sidebar = { visible: false, nodeId: "", optionName: "" };
+
+    public backgroundStyles: ComputedRef<Record<string, any>> = gridBackgroundProvider(this, {
+        gridSize: 100,
+        gridDivision: 5,
+        subGridVisibleThreshold: 0.6,
+    });
 
     /** Use straight connections instead of bezier curves */
     public useStraightConnections = false;
 
     /** Show a minimap */
     public enableMinimap = false;
-
-    /** Background configuration */
-    backgroundGrid = {
-        gridSize: 100,
-        gridDivision: 5,
-        subGridVisibleThreshold: 0.6
-    };
-
-    public options: Record<string, VueConstructor> = {};
-    public nodeTypeAliases: Record<string, string> = {};
 
     public hooks = {
         /** Called whenever a node is rendered */
@@ -45,24 +40,23 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
         /** Called whenever an interface is rendered */
         renderInterface: new SequentialHook<NodeInterfaceView>(),
         /** Called whenever a connection is rendered */
-        renderConnection: new SequentialHook<ConnectionView>()
+        renderConnection: new SequentialHook<ConnectionView>(),
     };
 
     /** Use this property to provide custom components,
      * which will be used when rendering the respective entities
      */
-    public components: Record<string, Vue.Component> = {
+    public components: Record<string, ComponentOptions> = {
         node: NodeView,
         nodeOption: NodeOptionView,
         nodeInterface: NodeInterfaceView,
         connection: ConnectionWrapper,
         tempConnection: TempConnectionView,
-        contextMenu: ContextMenu,
         sidebar: Sidebar,
-        minimap: Minimap
+        minimap: Minimap,
     };
 
-    public register(editor: IEditor): void {
+    public register(editor: Editor): void {
         this.editor = editor;
         this.editor.hooks.load.tap(this, (d) => {
             this.panning = d.panning;
@@ -80,43 +74,19 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
             n.disablePointerEvents = false;
             n.twoColumn = n.twoColumn || false;
             n.width = n.width || 200;
-            node.hooks.save.tap(this, (state) => {
-                state.position = n.position;
-                state.width = n.width;
-                state.twoColumn = n.twoColumn;
+            node.hooks.afterSave.tap(this, (state) => {
+                (state as IViewNodeState).position = n.position;
+                (state as IViewNodeState).width = n.width;
+                (state as IViewNodeState).twoColumn = n.twoColumn;
                 return state;
             });
-            node.hooks.load.tap(this, (state) => {
+            node.hooks.beforeLoad.tap(this, (state) => {
                 // default values for savefiles from older versions
-                n.position = state.position || { x: 0, y: 0 };
-                n.width = state.width || 200;
-                n.twoColumn = state.twoColumn || false;
+                n.position = (state as IViewNodeState).position || { x: 0, y: 0 };
+                n.width = (state as IViewNodeState).width || 200;
+                n.twoColumn = (state as IViewNodeState).twoColumn || false;
                 return state;
             });
         });
     }
-
-    /**
-     * Register a node option
-     * @param name Name of the node option as used when defining nodes
-     * @param component Component that will be rendered for the option
-     */
-    public registerOption(name: string, component: VueConstructor) {
-        Vue.set(this.options, name, component);
-    }
-
-    /**
-     * Add an alias for a node type that is displayed in the "Add Node" context menu instead of
-     * the raw node type name
-     * @param nodeType Node type
-     * @param alias Alias that will be displayed in the context menu. When this value is `null`, an existing alias is removed
-     */
-    public setNodeTypeAlias(nodeType: string, alias: string|null) {
-        if (alias) {
-            Vue.set(this.nodeTypeAliases, nodeType, alias);
-        } else if (this.nodeTypeAliases[nodeType]) {
-            Vue.delete(this.nodeTypeAliases, nodeType);
-        }
-    }
-
 }

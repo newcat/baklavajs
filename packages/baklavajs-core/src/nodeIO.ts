@@ -5,9 +5,12 @@ export interface INodeIOState<T> extends Record<string, any> {
     value: T;
 }
 
-export interface INodeIO<T> {
+export interface INodeIO<T, C = unknown> {
     id: string;
     type: "interface" | "option";
+    name: string;
+
+    component?: C;
 
     events: {
         beforeSetValue: PreventableBaklavaEvent<T>;

@@ -3,68 +3,70 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Inject } from "vue-property-decorator";
-import { TemporaryConnectionState, ITransferConnection, ITemporaryConnection } from "../../../../baklavajs-core/types";
-import { ViewPlugin } from "../../viewPlugin";
+import { computed, defineComponent, inject, onMounted } from "vue";
+import { IConnection } from "@baklavajs/core";
+import { TemporaryConnectionState, ITemporaryConnection } from "./connection";
+import { ViewPlugin } from "../viewPlugin";
 
-@Component
-export default class Connection extends Vue {
+export default defineComponent({
+    props: {
+        x1: {
+            type: Number,
+            required: true,
+        },
+        y1: {
+            type: Number,
+            required: true,
+        },
+        x2: {
+            type: Number,
+            required: true,
+        },
+        y2: {
+            type: Number,
+            required: true,
+        },
+        state: {
+            type: Number as () => TemporaryConnectionState,
+            default: TemporaryConnectionState.NONE,
+        },
+        isTemporary: {
+            type: Boolean,
+            default: false,
+        },
+        connection: {
+            type: Object as () => IConnection | ITemporaryConnection,
+            required: true,
+        },
+    },
+    setup(props) {
+        const plugin = inject<ViewPlugin>("plugin")!;
 
-    @Prop({ type: Number })
-    x1!: number;
-    @Prop({ type: Number })
-    y1!: number;
-
-    @Prop({ type: Number })
-    x2!: number;
-    @Prop({ type: Number })
-    y2!: number;
-
-    @Prop({ type: Number, default: TemporaryConnectionState.NONE })
-    state!: TemporaryConnectionState;
-
-    @Prop({ type: Boolean, default: false })
-    isTemporary!: boolean;
-
-    @Prop({ type: Object })
-    connection!: ITransferConnection|ITemporaryConnection;
-
-    @Inject("plugin")
-    plugin!: ViewPlugin;
-
-    mounted() {
-        this.plugin.hooks.renderConnection.execute(this);
-    }
-
-    updated() {
-        this.plugin.hooks.renderConnection.execute(this);
-    }
-
-    get d() {
-        const [tx1, ty1] = this.transform(this.x1, this.y1);
-        const [tx2, ty2] = this.transform(this.x2, this.y2);
-        if (this.plugin.useStraightConnections) {
-            return `M ${tx1} ${ty1} L ${tx2} ${ty2}`;
-        } else {
-            const dx = 0.3 * Math.abs(tx1 - tx2);
-            return `M ${tx1} ${ty1} C ${tx1 + dx} ${ty1}, ${tx2 - dx} ${ty2}, ${tx2} ${ty2}`;
-        }
-    }
-
-    get classes() {
-        return {
-            "connection": true,
-            "--temporary": this.isTemporary,
-            "--allowed": this.state === TemporaryConnectionState.ALLOWED,
-            "--forbidden": this.state === TemporaryConnectionState.FORBIDDEN
+        const transform = (x: number, y: number) => {
+            const tx = (x + plugin.panning.x) * plugin.scaling;
+            const ty = (y + plugin.panning.y) * plugin.scaling;
+            return [tx, ty];
         };
-    }
 
-    transform(x: number, y: number) {
-        const tx = (x + this.plugin.panning.x) * this.plugin.scaling;
-        const ty = (y + this.plugin.panning.y) * this.plugin.scaling;
-        return [tx, ty];
-    }
+        const d = computed(() => {
+            const [tx1, ty1] = transform(props.x1, props.y1);
+            const [tx2, ty2] = transform(props.x2, props.y2);
+            if (plugin.useStraightConnections) {
+                return `M ${tx1} ${ty1} L ${tx2} ${ty2}`;
+            } else {
+                const dx = 0.3 * Math.abs(tx1 - tx2);
+                return `M ${tx1} ${ty1} C ${tx1 + dx} ${ty1}, ${tx2 - dx} ${ty2}, ${tx2} ${ty2}`;
+            }
+        });
 
-}
+        const classes = computed(() => ({
+            "connection": true,
+            "--temporary": props.isTemporary,
+            "--allowed": props.state === TemporaryConnectionState.ALLOWED,
+            "--forbidden": props.state === TemporaryConnectionState.FORBIDDEN,
+        }));
+
+        return { d, classes };
+    },
+});
 </script>

@@ -3,28 +3,29 @@ import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavaj
 import { AbstractNode } from "./node";
 import { INodeIO, INodeIOState } from "./nodeIO";
 
-export class NodeInterface<T = unknown> implements INodeIO<T> {
+export class NodeInterface<T = unknown, C = unknown> implements INodeIO<T, C> {
     public readonly type = "interface";
 
     public id = uuidv4();
+    public name: string;
 
     /** Will be set automatically after the node was created */
     public isInput?: boolean;
     /** Will be set automatically after the node was created */
     public parent?: AbstractNode;
 
-    public component?: string | undefined;
+    public component?: C;
 
     public events = {
         setConnectionCount: new BaklavaEvent<number>(),
         beforeSetValue: new PreventableBaklavaEvent<T>(),
         setValue: new BaklavaEvent<T>(),
-        updated: new BaklavaEvent<void>()
+        updated: new BaklavaEvent<void>(),
     };
 
     public hooks = {
         load: new SequentialHook<INodeIOState<T>>(),
-        save: new SequentialHook<INodeIOState<T>>()
+        save: new SequentialHook<INodeIOState<T>>(),
     };
 
     private _connectionCount = 0;
@@ -48,7 +49,8 @@ export class NodeInterface<T = unknown> implements INodeIO<T> {
         return this._value;
     }
 
-    public constructor(value: T) {
+    public constructor(name: string, value: T) {
+        this.name = name;
         this._value = value;
     }
 
@@ -61,7 +63,7 @@ export class NodeInterface<T = unknown> implements INodeIO<T> {
     public save(): INodeIOState<T> {
         const state = {
             id: this.id,
-            value: this.value
+            value: this.value,
         };
         return this.hooks.save.execute(state);
     }

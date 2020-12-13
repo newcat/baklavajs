@@ -2,12 +2,12 @@ import { v4 as uuidv4 } from "uuid";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { INodeIO, INodeIOState } from "./nodeIO";
 
-export class NodeOption<T = unknown> implements INodeIO<T> {
+export class NodeOption<T = unknown, C = unknown> implements INodeIO<T, C> {
     public readonly type = "option";
     public id = uuidv4();
+    public name: string;
 
-    /** Name of the component that should be displayed for the option */
-    public optionComponent: string;
+    public component?: C;
 
     public events = {
         beforeSetValue: new PreventableBaklavaEvent<any>(),
@@ -34,8 +34,8 @@ export class NodeOption<T = unknown> implements INodeIO<T> {
         this.events.setValue.emit(v);
     }
 
-    public constructor(optionComponent: string, value: T) {
-        this.optionComponent = optionComponent;
+    public constructor(name: string, value: T) {
+        this.name = name;
         this._value = value;
     }
 

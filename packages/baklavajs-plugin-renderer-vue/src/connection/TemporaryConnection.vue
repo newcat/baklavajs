@@ -1,7 +1,9 @@
 <template>
     <connection-view
-        :x1="d.input[0]" :y1="d.input[1]"
-        :x2="d.output[0]" :y2="d.output[1]"
+        :x1="d.input[0]"
+        :y1="d.input[1]"
+        :x2="d.output[0]"
+        :y2="d.output[1]"
         :state="status"
         :connection="connection"
         is-temporary
@@ -9,53 +11,53 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { computed, defineComponent } from "vue";
 
 import ConnectionView from "./ConnectionView.vue";
-import { ITemporaryConnection, TemporaryConnectionState, INodeInterface } from "../../../../baklavajs-core/types";
+import { NodeInterface } from "@baklavajs/core";
+import { ITemporaryConnection, TemporaryConnectionState } from "./connection";
 import resolveDom from "./domResolver";
 import { getPortCoordinates } from "./portCoordinates";
 
-@Component({
+export default defineComponent({
     components: {
-        "connection-view": ConnectionView
-    }
-})
-export default class TemporaryConnection extends Vue {
+        "connection-view": ConnectionView,
+    },
+    props: {
+        connection: {
+            type: Object as () => ITemporaryConnection,
+        },
+    },
+    setup(props) {
+        const status = computed(() => (props.connection ? props.connection.status : TemporaryConnectionState.NONE));
 
-    @Prop({ type: Object })
-    connection!: ITemporaryConnection;
+        const d = computed(() => {
+            if (!props.connection) {
+                return {
+                    input: [0, 0],
+                    output: [0, 0],
+                };
+            }
 
-    get status() {
-        return this.connection ? this.connection.status : TemporaryConnectionState.NONE;
-    }
+            const start = getPortCoordinates(resolveDom(props.connection.from));
+            const end = props.connection.to
+                ? getPortCoordinates(resolveDom(props.connection.to))
+                : [props.connection.mx || start[0], props.connection.my || start[1]];
 
-    get d() {
-        if (!this.connection) {
-            return {
-                input: [0, 0],
-                output: [0, 0]
-            };
-        }
+            if (props.connection.from.isInput) {
+                return {
+                    input: end,
+                    output: start,
+                };
+            } else {
+                return {
+                    input: start,
+                    output: end,
+                };
+            }
+        });
 
-        const start = getPortCoordinates(resolveDom(this.connection.from));
-        const end = this.connection.to ?
-                getPortCoordinates(resolveDom(this.connection.to)) :
-                [this.connection.mx || start[0], this.connection.my || start[1] ];
-
-        if (this.connection.from.isInput) {
-            return {
-                input: end,
-                output: start
-            };
-        } else {
-            return {
-                input: start,
-                output: end
-            };
-        }
-
-    }
-
-}
+        return { d, status };
+    },
+});
 </script>

@@ -1,72 +1,90 @@
 <template>
-    <connection-view :x1="d.x1" :y1="d.y1" :x2="d.x2" :y2="d.y2" :state="state" :connection="connection"></connection-view>
+    <connection-view
+        :x1="d.x1"
+        :y1="d.y1"
+        :x2="d.x2"
+        :y2="d.y2"
+        :state="state"
+        :connection="connection"
+    ></connection-view>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { computed, defineComponent, ref, onBeforeUnmount, onMounted, nextTick, watchEffect } from "vue";
 import { ResizeObserver as ResizeObserverPolyfill } from "@juggle/resize-observer";
+import { Connection } from "@baklavajs/core";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom, { IResolvedDomElements } from "./domResolver";
-import { ITransferConnection, TemporaryConnectionState } from "../../../../baklavajs-core/types";
+import { TemporaryConnectionState } from "./connection";
 
 const ResizeObserver = (window as any).ResizeObserver || ResizeObserverPolyfill;
 
-@Component({
+export default defineComponent({
     components: {
-        "connection-view": ConnectionView
-    }
-})
-export default class ConnectionWrapper extends Vue {
+        "connection-view": ConnectionView,
+    },
+    props: {
+        connection: {
+            type: Object as () => Connection,
+            required: true,
+        },
+    },
+    setup(props) {
+        let resizeObserver: ResizeObserverPolyfill;
+        const d = ref({ x1: 0, y1: 0, x2: 0, y2: 0 });
 
-    @Prop({ type: Object })
-    connection!: ITransferConnection;
+        const state = computed(() =>
+            props.connection.isInDanger ? TemporaryConnectionState.FORBIDDEN : TemporaryConnectionState.NONE
+        );
 
-    d = { x1: 0, y1: 0, x2: 0, y2: 0 };
-
-    private resizeObserver!: ResizeObserverPolyfill;
-
-    get state() {
-        return this.connection.isInDanger ?
-            TemporaryConnectionState.FORBIDDEN :
-            TemporaryConnectionState.NONE;
-    }
-
-    async mounted() {
-        await this.$nextTick();
-        this.updateCoords();
-    }
-
-    beforeDestroy() {
-        this.resizeObserver.disconnect();
-    }
-
-    @Watch("connection.from.parent.position", { deep: true })
-    @Watch("connection.to.parent.position", { deep: true })
-    updateCoords() {
-        const from = resolveDom(this.connection.from);
-        const to = resolveDom(this.connection.to);
-        if (from.node && to.node) {
-            if (!this.resizeObserver) {
-                this.resizeObserver = new ResizeObserver(() => { this.updateCoords(); });
-                this.resizeObserver.observe(from.node);
-                this.resizeObserver.observe(to.node);
+        const getPortCoordinates = (resolved: IResolvedDomElements): [number, number] => {
+            if (resolved.node && resolved.interface && resolved.port) {
+                return [
+                    resolved.node.offsetLeft +
+                        resolved.interface.offsetLeft +
+                        resolved.port.offsetLeft +
+                        resolved.port.clientWidth / 2,
+                    resolved.node.offsetTop +
+                        resolved.interface.offsetTop +
+                        resolved.port.offsetTop +
+                        resolved.port.clientHeight / 2,
+                ];
+            } else {
+                return [0, 0];
             }
-        }
-        const [x1, y1] = this.getPortCoordinates(from);
-        const [x2, y2] = this.getPortCoordinates(to);
-        this.d = { x1, y1, x2, y2 };
-    }
+        };
 
-    private getPortCoordinates(resolved: IResolvedDomElements): [number, number] {
-        if (resolved.node && resolved.interface && resolved.port) {
-            return [
-                resolved.node.offsetLeft + resolved.interface.offsetLeft + resolved.port.offsetLeft + resolved.port.clientWidth / 2,
-                resolved.node.offsetTop + resolved.interface.offsetTop + resolved.port.offsetTop + resolved.port.clientHeight / 2
-            ];
-        } else {
-            return [0, 0];
-        }
-    }
+        const updateCoords = () => {
+            const from = resolveDom(props.connection.from);
+            const to = resolveDom(props.connection.to);
+            if (from.node && to.node) {
+                if (!resizeObserver) {
+                    resizeObserver = new ResizeObserver(() => {
+                        updateCoords();
+                    });
+                    resizeObserver.observe(from.node);
+                    resizeObserver.observe(to.node);
+                }
+            }
+            const [x1, y1] = getPortCoordinates(from);
+            const [x2, y2] = getPortCoordinates(to);
+            d.value = { x1, y1, x2, y2 };
+        };
 
-}
+        onMounted(async () => {
+            await nextTick();
+            updateCoords();
+        });
+
+        onBeforeUnmount(() => {
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+            }
+        });
+
+        watchEffect(() => updateCoords());
+
+        return { d, state, connection: props.connection };
+    },
+});
 </script>
