@@ -63,8 +63,9 @@ export default class CommentNode extends Vue {
 
     handleMove(ev: MouseEvent) {
         if (this.dragging) {
-            this.data.position.x += ev.movementX / this.plugin.scaling;
-            this.data.position.y += ev.movementY / this.plugin.scaling;
+            const scaleFactor = this.plugin.scaling * window.devicePixelRatio;
+            this.data.position.x += ev.movementX / scaleFactor;
+            this.data.position.y += ev.movementY / scaleFactor;
         }
     }
 
