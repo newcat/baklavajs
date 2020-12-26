@@ -1,18 +1,19 @@
-import { IPlugin, IEditor } from "../../baklavajs-core/types";
-import { IViewPlugin } from "../../baklavajs-plugin-renderer-vue/types";
+import type { IPlugin, Editor } from "@baklavajs/core";
+// import type { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
 import { INodeInterfaceType } from "../types";
 
 export class InterfaceTypePlugin implements IPlugin {
-
     public type = "InterfaceTypePlugin";
 
-    private editor!: IEditor;
+    private editor!: Editor;
     private types: Map<string, INodeInterfaceType> = new Map();
 
-    public register(editor: IEditor) {
+    public register(editor: Editor) {
         this.editor = editor;
         this.editor.plugins.forEach((p) => {
-            if (p.type === "ViewPlugin") { this.registerView(p as IViewPlugin); }
+            if (p.type === "ViewPlugin") {
+                // this.registerView((p as unknown) as ViewPlugin);
+            }
         });
         this.editor.events.checkConnection.addListener(this, ({ from, to }) => {
             const fromType = (from as any).type;
@@ -24,7 +25,9 @@ export class InterfaceTypePlugin implements IPlugin {
             }
         });
         this.editor.events.usePlugin.addListener(this, (plugin) => {
-            if (plugin.type === "ViewPlugin") { this.registerView(plugin as IViewPlugin); }
+            if (plugin.type === "ViewPlugin") {
+                // this.registerView((plugin as unknown) as ViewPlugin);
+            }
         });
     }
 
@@ -47,7 +50,6 @@ export class InterfaceTypePlugin implements IPlugin {
      * A transformation to convert the type `string` to `number` could be `parseInt`.
      */
     public addConversion(from: string, to: string, transformationFunction?: (value: any) => any): this {
-
         if (!this.types.has(from)) {
             throw new Error(`Can not add conversion for unknown type "${from}"`);
         }
@@ -58,11 +60,10 @@ export class InterfaceTypePlugin implements IPlugin {
 
         this.types.get(from)!.conversions.push({
             targetType: to,
-            transformationFunction
+            transformationFunction,
         });
 
         return this;
-
     }
 
     public getConversion(from: string, to: string) {
@@ -70,7 +71,9 @@ export class InterfaceTypePlugin implements IPlugin {
     }
 
     public canConvert(from: string, to: string): boolean {
-        return from === to || this.types.has(from) && this.types.get(from)!.conversions.some((c) => c.targetType === to);
+        return (
+            from === to || (this.types.has(from) && this.types.get(from)!.conversions.some((c) => c.targetType === to))
+        );
     }
 
     public convert(from: string, to: string, value: any): any {
@@ -86,8 +89,9 @@ export class InterfaceTypePlugin implements IPlugin {
         }
     }
 
-    private registerView(vp: IViewPlugin) {
-        vp.hooks.renderInterface.tap(this, (intf) => {
+    private registerView(/*vp: ViewPlugin*/) {
+        // TODO: How do we do this?
+        /*vp.hooks.renderInterface.tap(this, (intf) => {
             if (this.types.has(intf.data.type)) {
                 const color = this.types.get(intf.data.type)!.color;
                 const res = intf.$el.getElementsByClassName("__port") as HTMLElement[];
@@ -97,7 +101,6 @@ export class InterfaceTypePlugin implements IPlugin {
                 });
             }
             return intf;
-        });
+        });*/
     }
-
 }

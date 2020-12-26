@@ -11,14 +11,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { VueConstructor } from "vue";
+import { defineComponent, Ref, ref } from "vue";
 
 import { Editor, Node, NodeInterface } from "../../baklavajs-core/src";
 import { ViewPlugin } from "../../baklavajs-plugin-renderer-vue/src";
 import { Engine } from "../../baklavajs-plugin-engine/src";
 import { InterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/src";
-import { OptionPlugin } from "../../baklavajs-plugin-options-vue/src";
 
 import CustomNodeRenderer from "./CustomNodeRenderer";
 
@@ -34,108 +32,92 @@ import SelectTestNode from "./SelectTestNode";
 import AddOption from "./AddOption";
 import TriggerOption from "./TriggerOption.vue";
 import SidebarOption from "./SidebarOption.vue";
+import { SelectOption } from "packages/baklavajs-plugin-renderer-vue/src/options";
 
-@Component
-export default class App extends Vue {
-    editor: Editor;
-    viewPlugin: ViewPlugin;
-    engine: Engine;
-    nodeInterfaceTypes: InterfaceTypePlugin;
+export default defineComponent({
+    setup() {
+        const token = Symbol("token");
+        const editor = ref(new Editor()) as Ref<Editor>;
+        const focusState = ref("blur");
+        const counter = ref(1);
 
-    focusState = "blur";
-    counter = 1;
+        const viewPlugin = new ViewPlugin();
+        viewPlugin.components.node = CustomNodeRenderer;
+        viewPlugin.enableMinimap = true;
+        editor.value.use(viewPlugin);
 
-    constructor() {
-        super();
-
-        this.editor = new Editor();
-
-        this.viewPlugin = new ViewPlugin();
-        this.viewPlugin.components.node = CustomNodeRenderer;
-        this.viewPlugin.enableMinimap = true;
-        this.editor.use(this.viewPlugin);
-
-        this.engine = new Engine(true);
-        this.engine.events.calculated.addListener(this, (r) => {
+        const engine = new Engine(true);
+        engine.events.calculated.addListener(token, (r) => {
             for (const v of r.values()) {
                 console.log(v);
             }
         });
-        this.engine.hooks.gatherCalculationData.tap(this, () => "def");
-        this.editor.use(this.engine);
+        engine.hooks.gatherCalculationData.tap(token, () => "def");
+        editor.value.use(engine);
 
-        this.nodeInterfaceTypes = new InterfaceTypePlugin();
-        this.editor.use(this.nodeInterfaceTypes);
+        const nodeInterfaceTypes = new InterfaceTypePlugin();
+        editor.value.use(nodeInterfaceTypes);
 
-        this.editor.use(new OptionPlugin());
-
-        this.viewPlugin.hooks.renderNode.tap(this, (node) => {
-            if (node.data.type === "TestNode") {
-                (node.$el as HTMLElement).style.backgroundColor = "red";
-            }
-            return node;
-        });
-
-        this.viewPlugin.registerOption("AddOption", AddOption);
-        this.viewPlugin.registerOption("TriggerOption", TriggerOption);
-        this.viewPlugin.registerOption("SidebarOption", SidebarOption);
-    }
-
-    mounted() {
-        this.editor.registerNodeType("TestNode", TestNode, "Tests");
-        this.editor.registerNodeType("OutputNode", OutputNode, "Outputs");
-        this.editor.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");
-        this.editor.registerNodeType("MathNode", MathNode);
-        this.editor.registerNodeType("AdvancedNode", AdvancedNode);
-        this.editor.registerNodeType("CommentNode", CommentNode);
-        this.editor.registerNodeType("OptionTestNode", OptionTestNode);
-        this.editor.registerNodeType("SelectTestNode", SelectTestNode);
-        this.editor.addNode(new TestNode());
-        this.editor.addNode(new TestNode());
-        this.editor.addNode(new TestNode());
-        this.editor.addNode(new OutputNode());
-        this.editor.addNode(new BuilderTestNode());
-        this.editor.addNode(new AdvancedNode());
-        this.nodeInterfaceTypes
+        editor.value.registerNodeType("TestNode", TestNode, "Tests");
+        editor.value.registerNodeType("OutputNode", OutputNode, "Outputs");
+        editor.value.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");
+        editor.value.registerNodeType("MathNode", MathNode);
+        editor.value.registerNodeType("AdvancedNode", AdvancedNode);
+        editor.value.registerNodeType("CommentNode", CommentNode);
+        editor.value.registerNodeType("OptionTestNode", OptionTestNode);
+        editor.value.registerNodeType("SelectTestNode", SelectTestNode);
+        editor.value.addNode(new TestNode());
+        editor.value.addNode(new TestNode());
+        editor.value.addNode(new TestNode());
+        editor.value.addNode(new OutputNode());
+        editor.value.addNode(new BuilderTestNode());
+        editor.value.addNode(new AdvancedNode());
+        nodeInterfaceTypes
             .addType("string", "#00FF00")
             .addType("number", "red")
             .addType("boolean", "purple")
             .addConversion("string", "number", (v) => parseInt(v, 10))
             .addConversion("number", "string", (v) => (v !== null && v !== undefined && v.toString()) || "0")
             .addConversion("boolean", "string", (v) => (typeof v === "boolean" ? v.toString() : "null"));
-        this.viewPlugin.setNodeTypeAlias("TestNode", "TestNode (with alias)");
-    }
 
+        const calculate = async () => {
+            // console.log(await this.engine.calculate("def"));
+        };
+
+        const save = () => {
+            console.log(JSON.stringify(editor.value.save()));
+        };
+
+        const load = () => {
+            const s = prompt();
+            if (s) {
+                editor.value.load(JSON.parse(s));
+            }
+        };
+
+        const setSelectItems = () => {
+            for (const node of editor.value.nodes) {
+                if (node.type === "SelectTestNode") {
+                    const sel = node.inputs["Advanced"] as SelectOption;
+                    sel!.items = [
+                        { text: "X", value: 1 },
+                        { text: node.id, value: 2 },
+                    ];
+                    sel!.events.updated.emit();
+                }
+            }
+        };
+
+        const changeGridSize = () => {
+            this.viewPlugin.backgroundGrid.gridSize = Math.round(Math.random() * 100) + 100;
+        };
+    },
+});
+
+@Component
+class App extends Vue {
     async calculate() {
         // console.log(await this.engine.calculate("def"));
-    }
-
-    save() {
-        console.log(JSON.stringify(this.editor.save()));
-    }
-
-    load() {
-        const s = prompt();
-        if (s) {
-            this.editor.load(JSON.parse(s));
-        }
-    }
-
-    setSelectItems() {
-        for (const node of this.editor.nodes) {
-            if (node.type === "SelectTestNode") {
-                const sel = node.options.get("Advanced");
-                sel!.items = [
-                    { text: "X", value: 1 },
-                    { text: node.id, value: 2 }
-                ];
-                sel!.events.updated.emit();
-            }
-        }
-    }
-
-    changeGridSize() {
-        this.viewPlugin.backgroundGrid.gridSize = Math.round(Math.random() * 100) + 100;
     }
 }
 </script>

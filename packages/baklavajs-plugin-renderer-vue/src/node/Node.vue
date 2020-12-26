@@ -8,7 +8,6 @@
                 class="dark-input"
                 v-model="tempName"
                 placeholder="Node Name"
-                v-click-outside="doneRenaming"
                 @keydown.enter="doneRenaming"
             />
         </div>
@@ -27,10 +26,9 @@
 
             <!-- Options -->
             <div class="__options">
-                <template v-for="[name, option] in node.options">
+                <template v-for="[name, option] in node.options" :key="name">
                     <component
                         :is="plugin.components.nodeOption"
-                        :key="name"
                         :name="name"
                         :option="option"
                         :componentName="option.optionComponent"
@@ -76,17 +74,14 @@
 <script lang="ts">
 import { defineComponent, ComponentOptions, inject, ref, computed, onMounted } from "vue";
 
-// @ts-ignore
-import ClickOutside from "v-click-outside";
+// TODO: Make custom implementation
+// import ClickOutside from "v-click-outside";
 
 import { ViewPlugin } from "../viewPlugin";
 import { IViewNode } from "./viewNode";
 import { sanitizeName } from "../utility/cssNames";
 
 export default defineComponent({
-    directives: {
-        ClickOutside: ClickOutside.directive,
-    },
     props: {
         node: {
             type: Object as () => IViewNode,

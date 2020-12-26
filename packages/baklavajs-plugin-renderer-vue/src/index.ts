@@ -1,19 +1,21 @@
-export { default as Editor } from "./components/Editor.vue";
+export { default as Editor } from "./editor/Editor.vue";
 
-import Connection from "./components/connection/ConnectionView.vue";
-import ConnectionWrapper from "./components/connection/ConnectionWrapper.vue";
-import TemporaryConnection from "./components/connection/TemporaryConnection.vue";
-import Node from "./components/node/Node.vue";
-import NodeInterface from "./components/node/NodeInterface.vue";
-import NodeOption from "./components/node/NodeOption.vue";
-import ContextMenu from "./components/ContextMenu.vue";
+import Connection from "./connection/ConnectionView.vue";
+import ConnectionWrapper from "./connection/ConnectionWrapper.vue";
+import TemporaryConnection from "./connection/TemporaryConnection.vue";
+import Node from "./node/Node.vue";
+import NodeInterface from "./node/NodeInterface.vue";
+import NodeOption from "./node/NodeOption.vue";
 import Sidebar from "./components/Sidebar.vue";
 
 export const Components = {
-    Connection, ConnectionWrapper, TemporaryConnection,
-    Node, NodeInterface, NodeOption,
-    ContextMenu, Sidebar
+    Connection,
+    ConnectionWrapper,
+    TemporaryConnection,
+    Node,
+    NodeInterface,
+    NodeOption,
+    Sidebar,
 };
 
-export * from "./baklavaVuePlugin";
 export * from "./viewPlugin";

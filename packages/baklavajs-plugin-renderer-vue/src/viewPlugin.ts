@@ -1,17 +1,16 @@
 import { ComputedRef, ComponentOptions } from "vue";
 import { IPlugin, Editor } from "@baklavajs/core";
-import { SequentialHook } from "@baklavajs/events";
 
-import NodeView from "./components/node/Node.vue";
-import NodeOptionView from "./components/node/NodeOption.vue";
-import NodeInterfaceView from "./components/node/NodeInterface.vue";
-import ConnectionView from "./components/connection/ConnectionView.vue";
-import ConnectionWrapper from "./components/connection/ConnectionWrapper.vue";
-import TempConnectionView from "./components/connection/TemporaryConnection.vue";
-import Sidebar from "./components/Sidebar.vue";
-import Minimap from "./components/Minimap.vue";
 import { gridBackgroundProvider } from "./editor/backgroundProvider";
 import { IViewNode, IViewNodeState } from "./node/viewNode";
+
+import NodeView from "./node/Node.vue";
+import NodeOptionView from "./node/NodeOption.vue";
+import NodeInterfaceView from "./node/NodeInterface.vue";
+import ConnectionWrapper from "./connection/ConnectionWrapper.vue";
+import TempConnectionView from "./connection/TemporaryConnection.vue";
+import Sidebar from "./components/Sidebar.vue";
+import Minimap from "./components/Minimap.vue";
 
 export class ViewPlugin implements IPlugin {
     public type = "ViewPlugin";
@@ -32,21 +31,10 @@ export class ViewPlugin implements IPlugin {
     /** Show a minimap */
     public enableMinimap = false;
 
-    public hooks = {
-        /** Called whenever a node is rendered */
-        renderNode: new SequentialHook<NodeView>(),
-        /** Called whenever an option is rendered */
-        renderOption: new SequentialHook<NodeOptionView>(),
-        /** Called whenever an interface is rendered */
-        renderInterface: new SequentialHook<NodeInterfaceView>(),
-        /** Called whenever a connection is rendered */
-        renderConnection: new SequentialHook<ConnectionView>(),
-    };
-
     /** Use this property to provide custom components,
      * which will be used when rendering the respective entities
      */
-    public components: Record<string, ComponentOptions> = {
+    public components: Record<string, ComponentOptions<any>> = {
         node: NodeView,
         nodeOption: NodeOptionView,
         nodeInterface: NodeInterfaceView,

@@ -3,14 +3,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { ComponentOptions, defineComponent } from "vue";
 import { AbstractNode, INodeIO } from "@baklavajs/core";
 import { ViewPlugin } from "../viewPlugin";
 
 export default defineComponent({
     props: {
         option: {
-            type: Object as () => INodeIO,
+            type: Object as () => INodeIO<unknown, ComponentOptions>,
             required: true,
         },
         node: {

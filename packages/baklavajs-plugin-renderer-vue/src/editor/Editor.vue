@@ -61,8 +61,8 @@ import { ITemporaryConnection, TemporaryConnectionState } from "../connection/co
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
 
-import Clipboard from "../clipboard";
-import History from "../history";
+// import Clipboard from "./clipboard";
+import History from "./history";
 
 export default defineComponent({
     props: {

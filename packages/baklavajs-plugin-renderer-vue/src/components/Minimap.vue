@@ -1,9 +1,14 @@
 <template>
     <canvas
-        ref="cv"
+        ref="canvas"
         class="minimap"
         @mouseenter="showViewBounds = true"
-        @mouseleave="() => { this.showViewBounds = false; this.mouseup() }"
+        @mouseleave="
+            () => {
+                this.showViewBounds = false;
+                this.mouseup();
+            }
+        "
         @mousedown.self="mousedown"
         @mousemove.self="mousemove"
         @mouseup="mouseup"
@@ -11,12 +16,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Inject, Watch } from "vue-property-decorator";
-import { IConnection } from "../../../baklavajs-core/types";
-import { IViewNode } from "../../types";
-import getDomElements, { getDomElementOfNode } from "./connection/domResolver";
-import { getPortCoordinates } from "./connection/portCoordinates";
+import { defineComponent, inject, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { IConnection } from "@baklavajs/core";
+import getDomElements, { getDomElementOfNode } from "../connection/domResolver";
+import { getPortCoordinates } from "../connection/portCoordinates";
 import { ViewPlugin } from "../viewPlugin";
+import { IViewNode } from "../node/viewNode";
 
 interface IRect {
     x1: number;
@@ -25,190 +30,210 @@ interface IRect {
     y2: number;
 }
 
-@Component
-export default class Minimap extends Vue {
+export default defineComponent({
+    props: {
+        nodes: {
+            type: Array as () => IViewNode[],
+            required: true,
+        },
+        connections: {
+            type: Array as () => IConnection[],
+            required: true,
+        },
+    },
+    setup(props) {
+        const canvas = ref<HTMLCanvasElement | null>(null);
+        const showViewBounds = ref(false);
 
-    ctx?: CanvasRenderingContext2D;
-    intervalHandle = 0;
-    showViewBounds = false;
-    dragging = false;
-    bounds: IRect = { x1: 0, y1: 0, x2: 0, y2: 0 };
+        const plugin = inject<ViewPlugin>("plugin")!;
 
-    @Prop()
-    nodes!: IViewNode[];
+        let ctx: CanvasRenderingContext2D | undefined;
+        let intervalHandle: ReturnType<typeof setInterval> | undefined;
+        let dragging = false;
+        let bounds: IRect = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
-    @Prop()
-    connections!: IConnection[];
+        onMounted(() => {
+            ctx = canvas.value!.getContext("2d")!;
+            ctx.imageSmoothingQuality = "high";
+            intervalHandle = setInterval(() => updateCanvas(), 250);
+        });
 
-    @Inject("plugin")
-    plugin!: ViewPlugin;
+        onBeforeUnmount(() => {
+            if (intervalHandle) {
+                clearInterval(intervalHandle);
+                intervalHandle = undefined;
+            }
+        });
 
-    mounted() {
-        const canvas = (this.$refs.cv as HTMLCanvasElement);
-        this.ctx = canvas.getContext("2d") ?? undefined;
-        if (this.ctx) { this.ctx.imageSmoothingQuality = "high"; }
-        this.intervalHandle = setInterval(() => this.updateCanvas(), 250) as unknown as number;
-    }
+        const updateCanvas = () => {
+            if (!ctx) {
+                return;
+            }
 
-    beforeDestroy() {
-        clearInterval(this.intervalHandle);
-    }
+            const nodeCoords = new Map<IViewNode, IRect>();
+            const nodeDomElements = new Map<IViewNode, HTMLElement | null>();
+            for (const n of props.nodes) {
+                const domElement = getDomElementOfNode(n);
+                const width = domElement?.clientWidth ?? 0;
+                const height = domElement?.clientHeight ?? 0;
+                nodeCoords.set(n, {
+                    x1: n.position.x,
+                    y1: n.position.y,
+                    x2: n.position.x + width,
+                    y2: n.position.y + height,
+                });
+                nodeDomElements.set(n, domElement);
+            }
 
-    @Watch("showViewBounds")
-    @Watch("plugin.panning.x")
-    @Watch("plugin.panning.y")
-    @Watch("plugin.scaling")
-    updateCanvas() {
-        if (!this.ctx) { return; }
+            // get bound rectangle
+            const newBounds: IRect = {
+                x1: Number.MAX_SAFE_INTEGER,
+                y1: Number.MAX_SAFE_INTEGER,
+                x2: Number.MIN_SAFE_INTEGER,
+                y2: Number.MIN_SAFE_INTEGER,
+            };
+            for (const nc of nodeCoords.values()) {
+                if (nc.x1 < bounds.x1) {
+                    newBounds.x1 = nc.x1;
+                }
+                if (nc.y1 < bounds.y1) {
+                    newBounds.y1 = nc.y1;
+                }
+                if (nc.x2 > bounds.x2) {
+                    newBounds.x2 = nc.x2;
+                }
+                if (nc.y2 > bounds.y2) {
+                    newBounds.y2 = nc.y2;
+                }
+            }
 
-        const nodeCoords = new Map<IViewNode, IRect>();
-        const nodeDomElements = new Map<IViewNode, HTMLElement|null>();
-        for (const n of this.nodes) {
-            const domElement = getDomElementOfNode(n);
-            const width = domElement?.clientWidth ?? 0;
-            const height = domElement?.clientHeight ?? 0;
-            nodeCoords.set(n, { x1: n.position.x, y1: n.position.y, x2: n.position.x + width, y2: n.position.y + height });
-            nodeDomElements.set(n, domElement);
-        }
+            // add some padding
+            const padding = 50;
+            newBounds.x1 -= padding;
+            newBounds.y1 -= padding;
+            newBounds.x2 += padding;
+            newBounds.y2 += padding;
+            bounds = newBounds;
 
-        // get bound rectangle
-        const bounds: IRect = {
-            x1: Number.MAX_SAFE_INTEGER, y1: Number.MAX_SAFE_INTEGER,
-            x2: Number.MIN_SAFE_INTEGER, y2: Number.MIN_SAFE_INTEGER
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+            // draw connections
+            ctx.strokeStyle = "white";
+            for (const c of props.connections) {
+                const toDom = getDomElements(c.to);
+                const [origX1, origY1] = getPortCoordinates(getDomElements(c.from));
+                const [origX2, origY2] = getPortCoordinates(getDomElements(c.to));
+                const [x1, y1] = transformCoordinates(origX1, origY1);
+                const [x2, y2] = transformCoordinates(origX2, origY2);
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                if (plugin.useStraightConnections) {
+                    ctx.lineTo(x2, y2);
+                } else {
+                    const dx = 0.3 * Math.abs(x1 - x2);
+                    ctx.bezierCurveTo(x1 + dx, y1, x2 - dx, y2, x2, y2);
+                }
+                ctx.stroke();
+            }
+
+            // draw nodes
+            ctx.strokeStyle = "lightgray";
+            for (const [n, nc] of nodeCoords.entries()) {
+                const [x1, y1] = transformCoordinates(nc.x1, nc.y1);
+                const [x2, y2] = transformCoordinates(nc.x2, nc.y2);
+                ctx.fillStyle = getNodeColor(nodeDomElements.get(n));
+                ctx.beginPath();
+                ctx.rect(x1, y1, x2 - x1, y2 - y1);
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            if (showViewBounds) {
+                const viewBounds = getViewBounds();
+                const [x1, y1] = transformCoordinates(viewBounds.x1, viewBounds.y1);
+                const [x2, y2] = transformCoordinates(viewBounds.x2, viewBounds.y2);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+                ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
+            }
         };
-        for (const nc of nodeCoords.values()) {
-            if (nc.x1 < bounds.x1) {
-                bounds.x1 = nc.x1;
+
+        /** Transforms coordinates from editor space to minimap space */
+        const transformCoordinates = (origX: number, origY: number): [number, number] => {
+            return [
+                ((origX - bounds.x1) / (bounds.x2 - bounds.x1)) * ctx!.canvas.clientWidth,
+                ((origY - bounds.y1) / (bounds.y2 - bounds.y1)) * ctx!.canvas.clientHeight,
+            ];
+        };
+
+        /** Transforms coordinates from minimap space to editor space */
+        const reverseTransform = (thisX: number, thisY: number): [number, number] => {
+            return [
+                (thisX * (bounds.x2 - bounds.x1)) / ctx!.canvas.clientWidth + bounds.x1,
+                (thisY * (bounds.y2 - bounds.y1)) / ctx!.canvas.clientHeight + bounds.y1,
+            ];
+        };
+
+        const getNodeColor = (domElement?: HTMLElement | null) => {
+            if (domElement) {
+                const content = domElement.querySelector(".__content");
+                if (content) {
+                    const contentColor = getComputedColor(content);
+                    if (contentColor) {
+                        return contentColor;
+                    }
+                }
+                const nodeColor = getComputedColor(domElement);
+                if (nodeColor) {
+                    return nodeColor;
+                }
             }
-            if (nc.y1 < bounds.y1) {
-                bounds.y1 = nc.y1;
+            return "gray";
+        };
+
+        const getComputedColor = (domElement: Element): string | undefined => {
+            const c = getComputedStyle(domElement).backgroundColor;
+            if (c && c !== "rgba(0, 0, 0, 0)") {
+                return c;
             }
-            if (nc.x2 > bounds.x2) {
-                bounds.x2 = nc.x2;
+        };
+
+        /** Returns view bounds in editor space */
+        const getViewBounds = (): IRect => {
+            const parentWidth = canvas.value!.parentElement!.offsetWidth;
+            const parentHeight = canvas.value!.parentElement!.offsetHeight;
+            const x2 = parentWidth / plugin.scaling - plugin.panning.x;
+            const y2 = parentHeight / plugin.scaling - plugin.panning.y;
+            return { x1: -plugin.panning.x, y1: -plugin.panning.y, x2, y2 };
+        };
+
+        const mousedown = (ev: MouseEvent) => {
+            if (ev.button === 0) {
+                dragging = true;
+                mousemove(ev);
             }
-            if (nc.y2 > bounds.y2) {
-                bounds.y2 = nc.y2;
+        };
+
+        const mousemove = (ev: MouseEvent) => {
+            if (dragging) {
+                // still slightly off when zoomed
+                const [cx, cy] = reverseTransform(ev.offsetX, ev.offsetY);
+                const viewBounds = getViewBounds();
+                const dx = (viewBounds.x1 - viewBounds.x2) / 2;
+                const dy = (viewBounds.y1 - viewBounds.y2) / 2;
+                plugin.panning.x = -(cx + dx);
+                plugin.panning.y = -(cy + dy);
             }
-        }
+        };
 
-        // add some padding
-        const padding = 50;
-        bounds.x1 -= padding;
-        bounds.y1 -= padding;
-        bounds.x2 += padding;
-        bounds.y2 += padding;
-        this.bounds = bounds;
+        const mouseup = (ev: MouseEvent) => {
+            dragging = false;
+        };
 
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+        watch([showViewBounds, plugin.panning.x, plugin.panning.y, plugin.scaling], () => {
+            updateCanvas();
+        });
 
-        // draw connections
-        this.ctx.strokeStyle = "white";
-        for (const c of this.connections) {
-            const toDom = getDomElements(c.to);
-            const [origX1, origY1] = getPortCoordinates(getDomElements(c.from));
-            const [origX2, origY2] = getPortCoordinates(getDomElements(c.to));
-            const [x1, y1] = this.transformCoordinates(origX1, origY1);
-            const [x2, y2] = this.transformCoordinates(origX2, origY2);
-            this.ctx.beginPath();
-            this.ctx.moveTo(x1, y1);
-            if (this.plugin.useStraightConnections) {
-                this.ctx.lineTo(x2, y2);
-            } else {
-                const dx = 0.3 * Math.abs(x1 - x2);
-                this.ctx.bezierCurveTo(x1 + dx, y1, x2 - dx, y2, x2, y2);
-            }
-            this.ctx.stroke();
-        }
-
-        // draw nodes
-        this.ctx.strokeStyle = "lightgray";
-        for (const [n, nc] of nodeCoords.entries()) {
-            const [x1, y1] = this.transformCoordinates(nc.x1, nc.y1);
-            const [x2, y2] = this.transformCoordinates(nc.x2, nc.y2);
-            this.ctx.fillStyle = this.getNodeColor(nodeDomElements.get(n));
-            this.ctx.beginPath();
-            this.ctx.rect(x1, y1, x2 - x1, y2 - y1);
-            this.ctx.fill();
-            this.ctx.stroke();
-        }
-
-        if (this.showViewBounds) {
-            const viewBounds = this.getViewBounds();
-            const [x1, y1] = this.transformCoordinates(viewBounds.x1, viewBounds.y1);
-            const [x2, y2] = this.transformCoordinates(viewBounds.x2, viewBounds.y2);
-            this.ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
-            this.ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
-        }
-
-    }
-
-    /** Transforms coordinates from editor space to minimap space */
-    transformCoordinates(origX: number, origY: number): [number, number] {
-        return [
-            ((origX - this.bounds.x1) / (this.bounds.x2 - this.bounds.x1)) * this.ctx!.canvas.clientWidth,
-            ((origY - this.bounds.y1) / (this.bounds.y2 - this.bounds.y1)) * this.ctx!.canvas.clientHeight
-        ];
-    }
-
-    /** Transforms coordinates from minimap space to editor space */
-    reverseTransform(thisX: number, thisY: number): [number, number] {
-        return [
-            (thisX * (this.bounds.x2 - this.bounds.x1)) / this.ctx!.canvas.clientWidth + this.bounds.x1,
-            (thisY * (this.bounds.y2 - this.bounds.y1)) / this.ctx!.canvas.clientHeight + this.bounds.y1,
-        ];
-    }
-
-    getNodeColor(domElement?: HTMLElement|null) {
-        if (domElement) {
-            const content = domElement.querySelector(".__content");
-            if (content) {
-                const contentColor = this.getComputedColor(content);
-                if (contentColor) { return contentColor; }
-            }
-            const nodeColor = this.getComputedColor(domElement);
-            if (nodeColor) { return nodeColor; }
-        }
-        return "gray";
-    }
-
-    getComputedColor(domElement: Element): string|undefined {
-        const c = getComputedStyle(domElement).backgroundColor;
-        if (c && c !== "rgba(0, 0, 0, 0)") {
-            return c;
-        }
-    }
-
-    /** Returns view bounds in editor space */
-    getViewBounds(): IRect {
-        const parentWidth = (this.$parent.$el as HTMLElement).offsetWidth;
-        const parentHeight = (this.$parent.$el as HTMLElement).offsetHeight;
-        const x2 = (parentWidth / this.plugin.scaling) - this.plugin.panning.x;
-        const y2 = (parentHeight / this.plugin.scaling) - this.plugin.panning.y;
-        return { x1: -this.plugin.panning.x, y1: -this.plugin.panning.y, x2, y2 };
-    }
-
-    mousedown(ev: MouseEvent) {
-        if (ev.button === 0) {
-            this.dragging = true;
-            this.mousemove(ev);
-        }
-    }
-
-    mousemove(ev: MouseEvent) {
-        if (this.dragging) {
-            // still slightly off when zoomed
-            const [cx, cy] = this.reverseTransform(ev.offsetX, ev.offsetY);
-            const viewBounds = this.getViewBounds();
-            const dx = (viewBounds.x1 - viewBounds.x2) / 2;
-            const dy = (viewBounds.y1 - viewBounds.y2) / 2;
-            this.plugin.panning.x = -(cx + dx);
-            this.plugin.panning.y = -(cy + dy);
-        }
-    }
-
-    mouseup(ev: MouseEvent) {
-        this.dragging = false;
-    }
-
-}
+        return { canvas, showViewBounds };
+    },
+});
 </script>

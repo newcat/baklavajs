@@ -11,13 +11,10 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, onBeforeUnmount, onMounted, nextTick, watchEffect } from "vue";
-import { ResizeObserver as ResizeObserverPolyfill } from "@juggle/resize-observer";
 import { Connection } from "@baklavajs/core";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom, { IResolvedDomElements } from "./domResolver";
 import { TemporaryConnectionState } from "./connection";
-
-const ResizeObserver = (window as any).ResizeObserver || ResizeObserverPolyfill;
 
 export default defineComponent({
     components: {
@@ -30,7 +27,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        let resizeObserver: ResizeObserverPolyfill;
+        let resizeObserver: ResizeObserver;
         const d = ref({ x1: 0, y1: 0, x2: 0, y2: 0 });
 
         const state = computed(() =>
