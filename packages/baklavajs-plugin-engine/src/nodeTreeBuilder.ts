@@ -1,43 +1,43 @@
-import { INode, IConnection } from "../../baklavajs-core/types";
+import { AbstractNode, IConnection, NodeInterface } from "@baklavajs/core";
 
 interface ITreeNode {
-    n?: INode;
+    n?: AbstractNode;
     children: ITreeNode[];
 }
 
 interface IOrderCalculationResult {
-    calculationOrder: INode[];
-    rootNodes: INode[];
+    calculationOrder: AbstractNode[];
+    rootNodes: AbstractNode[];
 }
 
-const isEmpty = (obj: any) =>
-    [Object, Array].includes((obj || {}).constructor) && !Object.entries((obj || {})).length;
+const isEmpty = (obj: any) => [Object, Array].includes((obj || {}).constructor) && !Object.entries(obj || {}).length;
 
-export function calculateOrder(nodes: ReadonlyArray<INode>, connections: ReadonlyArray<IConnection>, roots?: INode[]):
-    IOrderCalculationResult {
-
-    const adjacency = new Map<INode, INode[]>();
+export function calculateOrder(
+    nodes: ReadonlyArray<AbstractNode>,
+    connections: ReadonlyArray<IConnection>,
+    roots?: AbstractNode[]
+): IOrderCalculationResult {
+    const adjacency = new Map<AbstractNode, AbstractNode[]>();
 
     // build adjacency list
     nodes.forEach((n) => {
-        adjacency.set(n,
-            connections
-                .filter((c) => c.to && c.to.parent === n)
-                .map((c) => c.from.parent)
+        adjacency.set(
+            n,
+            connections.filter((c) => c.to && c.to.parent === n).map((c) => c.from.parent!)
         );
     });
 
     // DFS for initial tree building and cycle detection
-    const outputs: INode[] = roots || nodes.filter((n) => isEmpty(n.outputInterfaces));
+    const outputs: AbstractNode[] = roots || nodes.filter((n) => isEmpty(getOutputInterfaces(n)));
     const root: ITreeNode = {
-        children: outputs.map((o) => ({ n: o, children: [] }))
+        children: outputs.map((o) => ({ n: o, children: [] })),
     };
 
     findDescendants(root, [], adjacency);
 
     // BFS with stack to find calculation order
     const queue: ITreeNode[] = [];
-    const stack: INode[] = [];
+    const stack: AbstractNode[] = [];
     queue.push(root);
 
     while (queue.length > 0) {
@@ -49,7 +49,7 @@ export function calculateOrder(nodes: ReadonlyArray<INode>, connections: Readonl
     }
 
     // Pop stack to reverse the order
-    const calculationOrder: INode[] = [];
+    const calculationOrder: AbstractNode[] = [];
     while (stack.length > 0) {
         const n = stack.pop()!;
         if (!calculationOrder.includes(n)) {
@@ -57,27 +57,26 @@ export function calculateOrder(nodes: ReadonlyArray<INode>, connections: Readonl
         }
     }
     return { calculationOrder, rootNodes: outputs };
-
 }
 
-function findDescendants(tn: ITreeNode, ancestors: INode[], adjacency: Map<INode, INode[]>) {
+function findDescendants(tn: ITreeNode, ancestors: AbstractNode[], adjacency: Map<AbstractNode, AbstractNode[]>) {
     for (const c of tn.children) {
-
         if (ancestors.includes(c.n!)) {
             throw new Error("Cycle detected");
         }
 
         ancestors.unshift(c.n!);
-        c.children = c.children.concat(adjacency.get(c.n!)!
-            .map((n) => ({ n, children: new Array<ITreeNode>() }))
-        );
+        c.children = c.children.concat(adjacency.get(c.n!)!.map((n) => ({ n, children: new Array<ITreeNode>() })));
         findDescendants(c, ancestors, adjacency);
         ancestors.shift();
-
     }
 }
 
-export function containsCycle(nodes: ReadonlyArray<INode>, connections: ReadonlyArray<IConnection>): boolean {
+function getOutputInterfaces(node: AbstractNode): NodeInterface[] {
+    return Object.values(node.outputs).filter((output) => output.type === "interface") as NodeInterface[];
+}
+
+export function containsCycle(nodes: ReadonlyArray<AbstractNode>, connections: ReadonlyArray<IConnection>): boolean {
     try {
         calculateOrder(nodes, connections);
         return true;

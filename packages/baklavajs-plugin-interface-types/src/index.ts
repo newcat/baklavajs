@@ -1,6 +1,15 @@
 import type { IPlugin, Editor } from "@baklavajs/core";
 // import type { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
-import { INodeInterfaceType } from "../types";
+
+export interface IConversion {
+    targetType: string;
+    transformationFunction(value: any): any;
+}
+
+export interface INodeInterfaceType {
+    color: string;
+    conversions: IConversion[];
+}
 
 export class InterfaceTypePlugin implements IPlugin {
     public type = "InterfaceTypePlugin";

@@ -11,7 +11,7 @@
   "main": "dist/index.js",
   "types": "dist/baklavajs-plugin-engine/src/index.d.ts",
   "scripts": {
-    "build": "webpack",
+    "build": "rimraf dist && tsc",
     "docs": "typedoc --json ../../docs/api/plugin-engine.json --options ../../typedoc.json"
   },
   "repository": {
@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "@baklavajs/core": "^1.8.0",
-    "@baklavajs/events": "^1.8.0"
+    "@baklavajs/events": "^1.8.0",
+    "@baklavajs/plugin-interface-types": "^1.8.0"
   },
   "devDependencies": {
     "typescript": "^4.1.2"

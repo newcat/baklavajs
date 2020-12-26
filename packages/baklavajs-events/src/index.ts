@@ -1,12 +1,9 @@
-import { IBaklavaEvent, IHook } from "../types";
-
-export type TokenType = object|symbol;
+export type TokenType = any;
 export type Listener<T> = (ev: T) => any;
 export type HookTap<I, O> = (i: I) => O;
 
 /** Main event class for Baklava */
-export class BaklavaEvent<T> implements IBaklavaEvent<T> {
-
+export class BaklavaEvent<T> {
     protected listeners: Map<TokenType, Listener<T>> = new Map();
 
     /**
@@ -36,14 +33,12 @@ export class BaklavaEvent<T> implements IBaklavaEvent<T> {
     emit(data: T) {
         this.listeners.forEach((l) => l(data));
     }
-
 }
 
 /** Extension for the [[BaklavaEvent]] class. A listener can return `false` to prevent
  * this event from happening.
  */
-export class PreventableBaklavaEvent<T> extends BaklavaEvent<T> implements IBaklavaEvent<T> {
-
+export class PreventableBaklavaEvent<T> extends BaklavaEvent<T> {
     /**
      * Invoke all listeners.
      * @param data The data to invoke all listeners with
@@ -57,12 +52,10 @@ export class PreventableBaklavaEvent<T> extends BaklavaEvent<T> implements IBakl
         }
         return false;
     }
-
 }
 
 /** Base class for hooks in Baklava */
-export abstract class Hook<I, O = I> implements IHook<I, O> {
-
+export abstract class Hook<I, O = I> {
     private tapMap: Map<TokenType, HookTap<I, O>> = new Map();
     protected taps: Array<HookTap<I, O>> = [];
 
@@ -79,17 +72,17 @@ export abstract class Hook<I, O = I> implements IHook<I, O> {
             const tapFn = this.tapMap.get(token)!;
             this.tapMap.delete(token);
             const i = this.taps.indexOf(tapFn);
-            if (i >= 0) { this.taps.splice(i, 1); }
+            if (i >= 0) {
+                this.taps.splice(i, 1);
+            }
         }
     }
 
     public abstract execute(data: I): O;
-
 }
 
 /** This class will run the taps one after each other and pass the data from every tap to another. */
 export class SequentialHook<T> extends Hook<T> {
-
     public execute(data: T): T {
         let currentValue = data;
         for (const tapFn of this.taps) {
@@ -97,5 +90,4 @@ export class SequentialHook<T> extends Hook<T> {
         }
         return currentValue;
     }
-
 }

@@ -9,7 +9,8 @@
         "allowSyntheticDefaultImports": true,
         "declaration": true,
         "baseUrl": ".",
-        "lib": ["esnext", "DOM"]
+        "lib": ["esnext", "DOM"],
+        "skipLibCheck": true
     },
     "exclude": ["node_modules"]
 }

@@ -12,7 +12,7 @@
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "scripts": {
-        "build": "webpack && tsc",
+        "build": "rimraf dist && rimraf lib && webpack && tsc",
         "version": "node updateDependencies.js"
     },
     "repository": {

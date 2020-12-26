@@ -1,6 +1,6 @@
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
-import type { Editor, IPlugin, NodeInterface, Connection, AbstractNode } from "@baklavajs/core";
-import { IInterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/types";
+import type { Editor, IPlugin, Connection, AbstractNode, NodeInterface, IConnection } from "@baklavajs/core";
+import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
 import { calculateOrder, containsCycle } from "./nodeTreeBuilder";
 
 export class Engine implements IPlugin {
@@ -35,7 +35,7 @@ export class Engine implements IPlugin {
     private calculateOnChange = false;
     private calculationInProgress = false;
     private _rootNodes: AbstractNode[] | undefined = undefined;
-    private interfaceTypePlugins: IInterfaceTypePlugin[] = [];
+    private interfaceTypePlugins: InterfaceTypePlugin[] = [];
 
     /**
      * Construct a new Engine plugin
@@ -48,7 +48,7 @@ export class Engine implements IPlugin {
     public register(editor: Editor): void {
         this.editor = editor;
 
-        this.editor.events.addNode.addListener(this, (node) => {
+        /*this.editor.events.addNode.addListener(this, (node) => {
             node.events.update.addListener(this, (ev) => {
                 if (ev.interface && ev.interface.connectionCount === 0) {
                     this.onChange(false);
@@ -61,10 +61,10 @@ export class Engine implements IPlugin {
 
         this.editor.events.removeNode.addListener(this, (node) => {
             node.events.update.removeListener(this);
-        });
+        });*/
 
         this.editor.events.checkConnection.addListener(this, (c) => {
-            if (!this.checkConnection(c.from, c.to)) {
+            if (!this.checkConnection(c.from as NodeInterface, c.to as NodeInterface)) {
                 return false;
             }
         });
@@ -92,7 +92,7 @@ export class Engine implements IPlugin {
      * - a map that maps rootNodes to their calculated value (what the calculation function of the node returned)
      * - null if the calculation was prevented from the beforeCalculate event
      */
-    public async calculate(calculationData?: any): Promise<Map<INode, any> | null> {
+    public async calculate(calculationData?: any): Promise<Map<AbstractNode, any> | null> {
         if (this.events.beforeCalculate.emit(calculationData)) {
             return null;
         }
@@ -102,9 +102,9 @@ export class Engine implements IPlugin {
         if (this.recalculateOrder) {
             this.calculateOrder();
         }
-        const results: Map<INode, any> = new Map();
+        const results: Map<AbstractNode, any> = new Map();
         for (const n of this.nodeCalculationOrder) {
-            const r = await n.calculate(calculationData);
+            const r = await n.calculate!(calculationData);
             if (this.actualRootNodes.includes(n)) {
                 results.set(n, r);
             }
@@ -136,7 +136,7 @@ export class Engine implements IPlugin {
         this.recalculateOrder = false;
     }
 
-    private checkConnection(from: INodeInterface, to: INodeInterface) {
+    private checkConnection(from: NodeInterface, to: NodeInterface) {
         const dc = { from, to, id: "dc", destructed: false, isInDanger: false } as IConnection;
         const copy = (this.editor.connections as ReadonlyArray<IConnection>).concat([dc]);
         copy.filter((conn) => conn.to !== to);
