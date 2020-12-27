@@ -5,7 +5,6 @@ import { gridBackgroundProvider } from "./editor/backgroundProvider";
 import { IViewNode, IViewNodeState } from "./node/viewNode";
 
 import NodeView from "./node/Node.vue";
-import NodeOptionView from "./node/NodeOption.vue";
 import NodeInterfaceView from "./node/NodeInterface.vue";
 import ConnectionWrapper from "./connection/ConnectionWrapper.vue";
 import TempConnectionView from "./connection/TemporaryConnection.vue";
@@ -36,7 +35,6 @@ export class ViewPlugin implements IPlugin {
      */
     public components: Record<string, ComponentOptions<any>> = {
         node: NodeView,
-        nodeOption: NodeOptionView,
         nodeInterface: NodeInterfaceView,
         connection: ConnectionWrapper,
         tempConnection: TempConnectionView,

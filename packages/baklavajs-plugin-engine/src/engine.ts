@@ -39,7 +39,7 @@ export class Engine implements IPlugin {
 
     /**
      * Construct a new Engine plugin
-     * @param calculateOnChange Whether to automatically calculate all nodes when any node interface or node option is changed.
+     * @param calculateOnChange Whether to automatically calculate all nodes when any node interface is changed.
      */
     public constructor(calculateOnChange = false) {
         this.calculateOnChange = calculateOnChange;

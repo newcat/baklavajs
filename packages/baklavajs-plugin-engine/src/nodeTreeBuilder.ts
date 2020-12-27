@@ -28,7 +28,7 @@ export function calculateOrder(
     });
 
     // DFS for initial tree building and cycle detection
-    const outputs: AbstractNode[] = roots || nodes.filter((n) => isEmpty(getOutputInterfaces(n)));
+    const outputs: AbstractNode[] = roots || nodes.filter((n) => isEmpty(getOutputInterfacesWithPort(n)));
     const root: ITreeNode = {
         children: outputs.map((o) => ({ n: o, children: [] })),
     };
@@ -72,8 +72,8 @@ function findDescendants(tn: ITreeNode, ancestors: AbstractNode[], adjacency: Ma
     }
 }
 
-function getOutputInterfaces(node: AbstractNode): NodeInterface[] {
-    return Object.values(node.outputs).filter((output) => output.type === "interface") as NodeInterface[];
+function getOutputInterfacesWithPort(node: AbstractNode): NodeInterface[] {
+    return Object.values(node.outputs).filter((output) => output.port) as NodeInterface[];
 }
 
 export function containsCycle(nodes: ReadonlyArray<AbstractNode>, connections: ReadonlyArray<IConnection>): boolean {

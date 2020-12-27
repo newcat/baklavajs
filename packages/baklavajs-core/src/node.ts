@@ -1,33 +1,37 @@
 import mapValues from "lodash.mapvalues";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { v4 as uuidv4 } from "uuid";
-import { NodeInterface } from "./nodeInterface";
 import { Editor } from "./editor";
-import { IODefinition, IODefinitionValues, INodeIO, IODefinitionStates } from "./nodeIO";
+import {
+    NodeInterfaceDefinition,
+    NodeInterfaceDefinitionValues,
+    NodeInterface,
+    NodeInterfaceDefinitionStates,
+} from "./nodeInterface";
 
-export type CalculateFunctionReturnType<O extends IODefinition> =
-    | IODefinitionValues<O>
-    | Promise<IODefinitionValues<O>>
+export type CalculateFunctionReturnType<O extends NodeInterfaceDefinition> =
+    | NodeInterfaceDefinitionValues<O>
+    | Promise<NodeInterfaceDefinitionValues<O>>
     | void;
 
-export type CalculateFunction<I extends IODefinition, O extends IODefinition> = (
-    inputs: IODefinitionValues<I>,
+export type CalculateFunction<I extends NodeInterfaceDefinition, O extends NodeInterfaceDefinition> = (
+    inputs: NodeInterfaceDefinitionValues<I>,
     globalValues?: any
-// ) => CalculateFunctionReturnType<O>;
-) => IODefinitionValues<O>;
+    // ) => CalculateFunctionReturnType<O>;
+) => NodeInterfaceDefinitionValues<O>;
 
 export interface INodeState<I, O> {
     type: string;
     title: string;
     id: string;
-    inputs: IODefinitionStates<I>;
-    outputs: IODefinitionStates<O>;
+    inputs: NodeInterfaceDefinitionStates<I>;
+    outputs: NodeInterfaceDefinitionStates<O>;
 }
 
 /**
  * Abstract base class for every node
  */
-export abstract class Node<I extends IODefinition, O extends IODefinition> {
+export abstract class Node<I extends NodeInterfaceDefinition, O extends NodeInterfaceDefinition> {
     /** Type of the node */
     public abstract type: string;
     /** Customizable display name of the node. */
@@ -40,14 +44,14 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> {
 
     public events = {
         loaded: new BaklavaEvent<Node<I, O>>(),
-        beforeAddInput: new PreventableBaklavaEvent<INodeIO<unknown>>(),
-        addInput: new BaklavaEvent<INodeIO<unknown>>(),
-        beforeRemoveInput: new PreventableBaklavaEvent<INodeIO<unknown>>(),
-        removeInput: new BaklavaEvent<INodeIO<unknown>>(),
-        beforeAddOutput: new PreventableBaklavaEvent<INodeIO<unknown>>(),
-        addOutput: new BaklavaEvent<INodeIO<unknown>>(),
-        beforeRemoveOutput: new PreventableBaklavaEvent<INodeIO<unknown>>(),
-        removeOutput: new BaklavaEvent<INodeIO<unknown>>(),
+        beforeAddInput: new PreventableBaklavaEvent<NodeInterface>(),
+        addInput: new BaklavaEvent<NodeInterface>(),
+        beforeRemoveInput: new PreventableBaklavaEvent<NodeInterface>(),
+        removeInput: new BaklavaEvent<NodeInterface>(),
+        beforeAddOutput: new PreventableBaklavaEvent<NodeInterface>(),
+        addOutput: new BaklavaEvent<NodeInterface>(),
+        beforeRemoveOutput: new PreventableBaklavaEvent<NodeInterface>(),
+        removeOutput: new BaklavaEvent<NodeInterface>(),
     };
 
     public hooks = {
@@ -75,8 +79,8 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> {
     }
 
     public save(): INodeState<I, O> {
-        const inputStates = mapValues(this.inputs, (v) => v.save()) as IODefinitionStates<I>;
-        const outputStates = mapValues(this.outputs, (v) => v.save()) as IODefinitionStates<O>;
+        const inputStates = mapValues(this.inputs, (v) => v.save()) as NodeInterfaceDefinitionStates<I>;
+        const outputStates = mapValues(this.outputs, (v) => v.save()) as NodeInterfaceDefinitionStates<O>;
 
         const state: INodeState<I, O> = {
             type: this.type,
@@ -91,30 +95,30 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> {
     /**
      * The default implementation does nothing.
      * Overwrite this method to do calculation.
-     * @param inputs Values of all input interfaces / input options
+     * @param inputs Values of all input interfaces
      * @param globalValues Set of values passed to every node by the engine plugin
-     * @return Values for output interfaces / output plugins
+     * @return Values for output interfaces
      */
     public calculate?: CalculateFunction<I, O>;
 
     /**
-     * Add an input interface or option to the node
+     * Add an input interface to the node
      * @param key Key of the input
      * @param input The input instance
      * @returns True when the input was added, otherwise false (prevented by an event handler)
      */
-    protected addInput(key: string, input: INodeIO<unknown>): boolean {
-        return this.addIO("input", key, input);
+    protected addInput(key: string, input: NodeInterface): boolean {
+        return this.addInterface("input", key, input);
     }
 
     /**
-     * Add an output interface or option to the node
+     * Add an output interface to the node
      * @param key Key of the output
      * @param output The output instance
      * @returns True when the output was added, otherwise false (prevented by an event handler)
      */
-    protected addOutput(key: string, output: INodeIO<unknown>): boolean {
-        return this.addIO("output", key, output);
+    protected addOutput(key: string, output: NodeInterface): boolean {
+        return this.addInterface("output", key, output);
     }
 
     /**
@@ -122,7 +126,7 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> {
      * @param key Key of the input.
      */
     protected removeInput(key: string): boolean {
-        return this.removeIO("input", key);
+        return this.removeInterface("input", key);
     }
 
     /**
@@ -130,7 +134,7 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> {
      * @param key Key of the output.
      */
     protected removeOutput(key: string): boolean {
-        return this.removeIO("output", key);
+        return this.removeInterface("output", key);
     }
 
     /**
@@ -141,19 +145,19 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> {
         this.editorInstance = editor;
     }
 
-    private addIO(type: "input" | "output", key: string, io: INodeIO<unknown>): boolean {
+    private addInterface(type: "input" | "output", key: string, io: NodeInterface): boolean {
         const beforeEvent = type === "input" ? this.events.beforeAddInput : this.events.beforeAddOutput;
         const afterEvent = type === "input" ? this.events.addInput : this.events.addOutput;
         const ioObject = type === "input" ? this.inputs : this.outputs;
         if (beforeEvent.emit(io)) {
             return false;
         }
-        (ioObject as Record<string, INodeIO<unknown>>)[key] = io;
+        (ioObject as Record<string, NodeInterface>)[key] = io;
         afterEvent.emit(io);
         return true;
     }
 
-    private removeIO(type: "input" | "output", key: string): boolean {
+    private removeInterface(type: "input" | "output", key: string): boolean {
         const beforeEvent = type === "input" ? this.events.beforeRemoveInput : this.events.beforeRemoveOutput;
         const afterEvent = type === "input" ? this.events.removeInput : this.events.removeOutput;
         const io = type === "input" ? this.inputs[key] : this.outputs[key];
@@ -161,7 +165,7 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> {
             return false;
         }
 
-        if (io.type === "interface" && (io as NodeInterface<unknown>).connectionCount > 0) {
+        if (io.connectionCount > 0) {
             if (this.editorInstance) {
                 const connections = this.editorInstance.connections.filter((c) => c.from === io || c.to === io);
                 connections.forEach((c) => {
@@ -184,5 +188,5 @@ export abstract class Node<I extends IODefinition, O extends IODefinition> {
     }
 }
 
-export type AbstractNode = Node<IODefinition, IODefinition>;
+export type AbstractNode = Node<NodeInterfaceDefinition, NodeInterfaceDefinition>;
 export type NodeConstructor = new () => AbstractNode;

@@ -1,15 +1,15 @@
 import { CalculateFunction, Node } from "./node";
-import { INodeIO } from "./nodeIO";
+import { NodeInterface } from "./nodeInterface";
 
-export type NodeIOFactory<T> = () => INodeIO<T>;
-export type IOFactory = Record<string, NodeIOFactory<unknown>>;
+export type NodeInterfaceFactory<T> = () => NodeInterface<T>;
+export type InterfaceFactory = Record<string, NodeInterfaceFactory<unknown>>;
 
-type FactoryToDefinition<D extends IOFactory> = {
-    [K in keyof D]: D[K] extends NodeIOFactory<infer T> ? INodeIO<T> : never;
+type FactoryToDefinition<D extends InterfaceFactory> = {
+    [K in keyof D]: D[K] extends NodeInterfaceFactory<infer T> ? NodeInterface<T> : never;
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-interface INodeDefinition<I extends IOFactory = {}, O extends IOFactory = {}> {
+interface INodeDefinition<I extends InterfaceFactory = {}, O extends InterfaceFactory = {}> {
     type: string;
     title?: string;
     inputs?: I;
@@ -18,15 +18,15 @@ interface INodeDefinition<I extends IOFactory = {}, O extends IOFactory = {}> {
     onCreate?: (this: Node<FactoryToDefinition<I>, FactoryToDefinition<O>>) => void;
 }
 
-function executeFactory<T extends IOFactory>(factory?: T): FactoryToDefinition<T> {
-    const res: Record<string, INodeIO<unknown>> = {};
+function executeFactory<T extends InterfaceFactory>(factory?: T): FactoryToDefinition<T> {
+    const res: Record<string, NodeInterface> = {};
     Object.keys(factory || {}).forEach((k) => {
         res[k] = factory![k]();
     });
     return res as FactoryToDefinition<T>;
 }
 
-export function defineNode<I extends IOFactory, O extends IOFactory>(
+export function defineNode<I extends InterfaceFactory, O extends InterfaceFactory>(
     definition: INodeDefinition<I, O>
 ): new () => Node<FactoryToDefinition<I>, FactoryToDefinition<O>> {
     return class extends Node<FactoryToDefinition<I>, FactoryToDefinition<O>> {

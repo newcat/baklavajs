@@ -14,7 +14,7 @@
 import { defineComponent, Ref, ref } from "vue";
 
 import { Editor, Node, NodeInterface } from "../../baklavajs-core/src";
-import { ViewPlugin } from "../../baklavajs-plugin-renderer-vue/src";
+import { ViewPlugin, EditorComponent } from "../../baklavajs-plugin-renderer-vue/src";
 import { Engine } from "../../baklavajs-plugin-engine/src";
 import { InterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/src";
 
@@ -35,6 +35,9 @@ import SidebarOption from "./SidebarOption.vue";
 import { SelectOption } from "packages/baklavajs-plugin-renderer-vue/src/options";
 
 export default defineComponent({
+    components: {
+        "baklava-editor": EditorComponent,
+    },
     setup() {
         const token = Symbol("token");
         const editor = ref(new Editor()) as Ref<Editor>;
@@ -113,13 +116,6 @@ export default defineComponent({
         };
     },
 });
-
-@Component
-class App extends Vue {
-    async calculate() {
-        // console.log(await this.engine.calculate("def"));
-    }
-}
 </script>
 
 <style>

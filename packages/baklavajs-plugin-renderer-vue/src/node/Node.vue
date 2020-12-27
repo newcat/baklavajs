@@ -17,54 +17,21 @@
             <div class="__outputs">
                 <component
                     :is="plugin.components.nodeInterface"
-                    v-for="(output, name) in node.outputInterfaces"
+                    v-for="output in node.outputInterfaces"
                     :key="output.id"
-                    :name="name"
-                    :data="output"
+                    :node="node"
+                    :intf="output"
                 ></component>
-            </div>
-
-            <!-- Options -->
-            <div class="__options">
-                <template v-for="[name, option] in node.options" :key="name">
-                    <component
-                        :is="plugin.components.nodeOption"
-                        :name="name"
-                        :option="option"
-                        :componentName="option.optionComponent"
-                        :node="node"
-                        @openSidebar="openSidebar(name)"
-                    ></component>
-
-                    <portal
-                        :key="'sb_' + name"
-                        to="sidebar"
-                        v-if="
-                            plugin.sidebar.nodeId === node.id &&
-                            plugin.sidebar.optionName === name &&
-                            option.sidebarComponent
-                        "
-                    >
-                        <component
-                            :is="plugin.components.nodeOption"
-                            :key="node.id + name"
-                            :name="name"
-                            :option="option"
-                            :componentName="option.sidebarComponent"
-                            :node="node"
-                        ></component>
-                    </portal>
-                </template>
             </div>
 
             <!-- Inputs -->
             <div class="__inputs">
                 <component
                     :is="plugin.components.nodeInterface"
-                    v-for="(input, name) in node.inputInterfaces"
+                    v-for="input in node.inputInterfaces"
                     :key="input.id"
-                    :name="name"
-                    :data="input"
+                    :node="node"
+                    :intf="input"
                 ></component>
             </div>
         </div>

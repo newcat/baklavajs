@@ -1,0 +1,107 @@
+<template>
+    <div
+        ref="el"
+        class="dark-slider"
+        :class="{ 'ignore-mouse': !editMode }"
+        @mousedown="mousedown"
+        @mouseup="mouseup"
+        @mousemove="mousemove"
+        @mouseleave="mouseleave"
+    >
+        <div class="__slider" :style="{ width: percentage + '%' }"></div>
+        <div v-if="!editMode" class="__content">
+            <div class="__label">{{ intf.name }}</div>
+            <div class="__value">{{ stringRepresentation }}</div>
+        </div>
+        <div v-else class="__content">
+            <input
+                type="number"
+                v-model="tempValue"
+                class="dark-input"
+                :class="{ '--invalid': invalid }"
+                ref="inputEl"
+                @blur="leaveEditMode"
+                @keydown.enter="leaveEditMode"
+                style="text-align: right"
+            />
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import { computed, defineComponent, Ref, ref, toRef } from "vue";
+import { useBaseNumericInterface } from "../baseNumericInterface";
+import type { SliderInterface } from "./SliderInterface";
+
+export default defineComponent({
+    props: {
+        intf: {
+            type: Object as () => SliderInterface,
+            required: true,
+        },
+    },
+    setup(props) {
+        const el = ref<HTMLElement | null>(null);
+        const inputEl = ref<HTMLElement | null>(null);
+        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf") as Ref<SliderInterface>, inputEl);
+        const didSlide = ref(false);
+        const isMouseDown = ref(false);
+
+        const percentage = computed(() =>
+            Math.min(100, Math.max(0, (props.intf.value * 100) / (props.intf.min - props.intf.max)))
+        );
+
+        const mousedown = () => {
+            if (baseNumericInterface.editMode.value) {
+                return;
+            }
+            isMouseDown.value = true;
+        };
+
+        const mouseup = () => {
+            if (baseNumericInterface.editMode.value) {
+                return;
+            }
+            if (!didSlide.value) {
+                baseNumericInterface.enterEditMode();
+            }
+            isMouseDown.value = false;
+            didSlide.value = false;
+        };
+
+        const mouseleave = (ev: MouseEvent) => {
+            if (baseNumericInterface.editMode.value) {
+                return;
+            }
+            if (isMouseDown.value) {
+                if (ev.offsetX >= el.value!.clientWidth) {
+                    baseNumericInterface.setValue(props.intf.max);
+                } else if (ev.offsetX <= 0) {
+                    baseNumericInterface.setValue(props.intf.min);
+                }
+            }
+            isMouseDown.value = false;
+            didSlide.value = false;
+        };
+
+        const mousemove = (ev: MouseEvent) => {
+            if (baseNumericInterface.editMode.value) {
+                return;
+            }
+            const v = Math.max(
+                props.intf.min,
+                Math.min(
+                    props.intf.max,
+                    (props.intf.max - props.intf.min) * (ev.offsetX / el.value!.clientWidth) + props.intf.min
+                )
+            );
+            if (isMouseDown.value) {
+                baseNumericInterface.setValue(v);
+                didSlide.value = true;
+            }
+        };
+
+        return { ...baseNumericInterface, el, inputEl, percentage, mousedown, mouseup, mousemove, mouseleave };
+    },
+});
+</script>

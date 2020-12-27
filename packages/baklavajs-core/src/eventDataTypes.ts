@@ -1,10 +1,9 @@
 import { NodeConstructor } from "./node";
-import { INodeIO } from "./nodeIO";
+import { NodeInterface } from "./nodeInterface";
 
-// Editor
 export interface IAddConnectionEventData {
-    from: INodeIO<unknown>;
-    to: INodeIO<unknown>;
+    from: NodeInterface;
+    to: NodeInterface;
 }
 
 export interface IAddNodeTypeEventData {

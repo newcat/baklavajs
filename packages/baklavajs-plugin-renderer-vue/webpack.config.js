@@ -1,6 +1,5 @@
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const { VueLoaderPlugin } = require("vue-loader");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -36,7 +35,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: [".ts", ".vue"],
+        extensions: [".js", ".ts", ".vue"],
     },
     externals: {
         vue: {
@@ -53,7 +52,6 @@ module.exports = {
         globalObject: `(typeof self !== 'undefined' ? self : this)`,
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new BundleAnalyzerPlugin({
             analyzerMode: "static",
             openAnalyzer: false,

@@ -1,13 +1,14 @@
 <template>
-    <div :id="data.id" :class="classes">
-        <div class="__port" @mouseover="startHover" @mouseout="endHover"></div>
-        <span v-if="data.connectionCount > 0 || !intf.option || !getOptionComponent(intf.option)" class="align-middle">
+    <div :id="intf.id" :class="classes">
+        <div v-if="intf.port" class="__port" @mouseover="startHover" @mouseout="endHover"></div>
+        <span v-if="intf.connectionCount > 0 || !intf.component" class="align-middle">
             {{ intf.name }}
         </span>
         <component
             v-else
-            :is="getOptionComponent(intf.option)"
-            :option="intf"
+            :is="intf.component"
+            :node="node"
+            :interface="intf"
             :value="value"
             @input="intf.value = $event"
         ></component>
@@ -16,12 +17,16 @@
 
 <script lang="ts">
 import { ComponentOptions, computed, defineComponent, inject } from "vue";
-import { NodeInterface } from "@baklavajs/core";
+import { AbstractNode, NodeInterface } from "@baklavajs/core";
 import EditorView from "../Editor.vue";
 import { ViewPlugin } from "../viewPlugin";
 
 export default defineComponent({
     props: {
+        node: {
+            type: Object as () => AbstractNode,
+            required: true,
+        },
         intf: {
             type: Object as () => NodeInterface,
             required: true,

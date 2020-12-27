@@ -1,13 +1,45 @@
-const path = require('path');
-const merge = require('webpack-merge');
-const base = require('../../build/webpack.vue.config');
+const path = require("path");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = merge(base, {
+module.exports = {
+    mode: "production",
     entry: {
-        index: path.resolve(__dirname, 'src', 'index.ts')
+        bundle: "./src/bundle.ts",
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        library: 'BaklavaJS'
-    }
-});
+        path: path.resolve(__dirname, "dist"),
+        library: "BaklavaJS",
+    },
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                loader: "ts-loader",
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.(sa|sc|c)ss$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
+            },
+        ],
+    },
+    resolve: {
+        extensions: [".js", ".ts"],
+    },
+    output: {
+        filename: "[name].js",
+        libraryTarget: "umd",
+        umdNamedDefine: true,
+        globalObject: `(typeof self !== 'undefined' ? self : this)`,
+    },
+    plugins: [
+        new BundleAnalyzerPlugin({
+            analyzerMode: "static",
+            openAnalyzer: false,
+        }),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+        }),
+    ],
+};

@@ -1,10 +1,8 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "declarationDir": "lib",
-        "outDir": "lib"
+        "declarationDir": "dist",
+        "outDir": "dist"
     },
-    "include": [
-        "src/**/*.ts",
-    ]
+    "include": ["src/index.ts"]
 }

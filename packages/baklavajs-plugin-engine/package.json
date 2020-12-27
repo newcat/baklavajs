@@ -9,7 +9,7 @@
     "dist/*"
   ],
   "main": "dist/index.js",
-  "types": "dist/baklavajs-plugin-engine/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "rimraf dist && tsc",
     "docs": "typedoc --json ../../docs/api/plugin-engine.json --options ../../typedoc.json"

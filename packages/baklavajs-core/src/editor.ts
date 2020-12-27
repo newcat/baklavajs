@@ -1,7 +1,7 @@
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import type { NodeInterface } from "./nodeInterface";
 import { Connection, DummyConnection, IConnection, IConnectionState } from "./connection";
-import { AbstractNode, INodeState, NodeConstructor } from './node';
+import { AbstractNode, INodeState, NodeConstructor } from "./node";
 import { IAddConnectionEventData, IAddNodeTypeEventData } from "./eventDataTypes";
 
 export interface IPlugin {
@@ -275,13 +275,13 @@ export class Editor {
         for (const node of this.nodes) {
             for (const k in node.inputs) {
                 const nodeInput = node.inputs[k];
-                if (nodeInput.type === "interface" && nodeInput.id === id) {
+                if (nodeInput.id === id) {
                     return nodeInput as NodeInterface<unknown>;
                 }
             }
             for (const k in node.outputs) {
                 const nodeOutput = node.outputs[k];
-                if (nodeOutput.type === "interface" && nodeOutput.id === id) {
+                if (nodeOutput.id === id) {
                     return nodeOutput as NodeInterface<unknown>;
                 }
             }
