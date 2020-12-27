@@ -1,3 +1,5 @@
-import { NodeBuilder } from "@baklavajs/core/src";
+import { defineNode } from "@baklavajs/core";
 
-export default new NodeBuilder("CommentNode").build();
+export default defineNode({
+    type: "CommentNode",
+});

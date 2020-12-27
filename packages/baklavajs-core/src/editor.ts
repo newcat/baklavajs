@@ -1,7 +1,7 @@
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import type { NodeInterface } from "./nodeInterface";
 import { Connection, DummyConnection, IConnection, IConnectionState } from "./connection";
-import { AbstractNode, INodeState, NodeConstructor } from "./node";
+import { AbstractNode, INodeState, AbstractNodeConstructor } from "./node";
 import { IAddConnectionEventData, IAddNodeTypeEventData } from "./eventDataTypes";
 
 export interface IPlugin {
@@ -19,7 +19,7 @@ export class Editor {
     private _plugins: Set<IPlugin> = new Set();
     private _nodes: AbstractNode[] = [];
     private _connections: Connection[] = [];
-    private _nodeTypes: Map<string, NodeConstructor> = new Map();
+    private _nodeTypes: Map<string, AbstractNodeConstructor> = new Map();
     private _nodeCategories: Map<string, string[]> = new Map([["default", []]]);
 
     public events = {
@@ -54,7 +54,7 @@ export class Editor {
     }
 
     /** List of all registered node types */
-    public get nodeTypes(): ReadonlyMap<string, NodeConstructor> {
+    public get nodeTypes(): ReadonlyMap<string, AbstractNodeConstructor> {
         return this._nodeTypes;
     }
 
@@ -74,7 +74,7 @@ export class Editor {
      * @param type Actual type / constructor of the node
      * @param category Category of the node. Will be used in the view's context menu for adding nodes
      */
-    public registerNodeType(typeName: string, type: NodeConstructor, category = "default"): void {
+    public registerNodeType(typeName: string, type: AbstractNodeConstructor, category = "default"): void {
         if (this.events.beforeRegisterNodeType.emit({ typeName, type, category })) {
             return;
         }

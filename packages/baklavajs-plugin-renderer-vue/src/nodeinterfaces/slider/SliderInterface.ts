@@ -6,7 +6,7 @@ export class SliderInterface extends BaseNumericInterface {
     min: number;
     max: number;
 
-    constructor(name: string, value: number, min = 0, max = 1) {
+    constructor(name: string, value: number, min: number, max: number) {
         super(name, value, min, max);
         this.min = min;
         this.max = max;

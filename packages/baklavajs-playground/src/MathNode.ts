@@ -1,20 +1,25 @@
-import { NodeBuilder } from "@baklavajs/core/src";
+import { defineNode, NodeInterface } from "@baklavajs/core";
+import { NumberInterface, SelectInterface } from "@baklavajs/plugin-renderer-vue";
 
-export default new NodeBuilder("MathNode")
-    .addInputInterface("Number 1", "NumberOption", 1, { displayName: "Number" })
-    .addInputInterface("Number 2", "NumberOption", 10, { displayName: "Number" })
-    .addOption("Operation", "SelectOption", "Add", undefined, { items: ["Add", "Subtract"] })
-    .addOutputInterface("Output")
-    .onCalculate((n, d) => {
-        const n1 = n.getInterface("Number 1").value;
-        const n2 = n.getInterface("Number 2").value;
-        const operation = n.getOptionValue("Operation").selected;
-        let result;
+export default defineNode({
+    type: "MathNode",
+    inputs: {
+        number1: () => new NumberInterface("Number", 1),
+        number2: () => new NumberInterface("Number", 10),
+        operation: () => new SelectInterface("Operation", "Add", ["Add", "Subtract"]).setPort(false),
+    },
+    outputs: {
+        output: () => new NodeInterface("Output", 0),
+    },
+    calculate({ number1, number2, operation }) {
+        let output: number;
         if (operation === "Add") {
-            result = n1 + n2;
+            output = number1 + number2;
         } else if (operation === "Subtract") {
-            result = n1 - n2;
+            output = number1 - number2;
+        } else {
+            throw new Error("Unknown operation: " + operation);
         }
-        n.getInterface("Output").value = result;
-    })
-    .build();
+        return { output };
+    },
+});

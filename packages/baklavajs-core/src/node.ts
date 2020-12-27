@@ -31,7 +31,10 @@ export interface INodeState<I, O> {
 /**
  * Abstract base class for every node
  */
-export abstract class Node<I extends NodeInterfaceDefinition, O extends NodeInterfaceDefinition> {
+export abstract class Node<
+    I extends NodeInterfaceDefinition = NodeInterfaceDefinition,
+    O extends NodeInterfaceDefinition = NodeInterfaceDefinition
+> {
     /** Type of the node */
     public abstract type: string;
     /** Customizable display name of the node. */
@@ -75,7 +78,7 @@ export abstract class Node<I extends NodeInterfaceDefinition, O extends NodeInte
                 this.outputs[k].load(v);
             }
         });
-        this.events.loaded.emit(this);
+        this.events.loaded.emit(this as any);
     }
 
     public save(): INodeState<I, O> {
@@ -189,4 +192,4 @@ export abstract class Node<I extends NodeInterfaceDefinition, O extends NodeInte
 }
 
 export type AbstractNode = Node<NodeInterfaceDefinition, NodeInterfaceDefinition>;
-export type NodeConstructor = new () => AbstractNode;
+export type AbstractNodeConstructor = new () => AbstractNode;

@@ -54,9 +54,8 @@
 <script lang="ts">
 import { computed, defineComponent, provide, Ref, ref, toRef } from "vue";
 
-import { Editor, Node, Connection, NodeInterface } from "@baklavajs/core";
+import { Editor, AbstractNode, Connection, NodeInterface } from "@baklavajs/core";
 import { ViewPlugin } from "../viewPlugin";
-import { IViewNode } from "../node/viewNode";
 import { ITemporaryConnection, TemporaryConnectionState } from "../connection/connection";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
@@ -75,7 +74,7 @@ export default defineComponent({
         const token = Symbol("EditorToken");
 
         const el = ref<HTMLElement | null>(null);
-        const selectedNodes = ref<IViewNode[]>([]) as Ref<IViewNode[]>;
+        const selectedNodes = ref<AbstractNode[]>([]) as Ref<AbstractNode[]>;
         const ctrlPressed = ref(false);
 
         // Reason: https://github.com/newcat/baklavajs/issues/54
@@ -138,7 +137,7 @@ export default defineComponent({
             }
         };
 
-        const selectNode = (node: IViewNode) => {
+        const selectNode = (node: AbstractNode) => {
             if (!ctrlPressed.value) {
                 unselectAllNodes();
             }

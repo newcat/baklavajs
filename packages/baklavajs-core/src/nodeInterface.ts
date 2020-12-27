@@ -7,7 +7,7 @@ export interface INodeInterfaceState<T> extends Record<string, any> {
     value: T;
 }
 
-export class NodeInterface<T = unknown, C = unknown> {
+export class NodeInterface<T = any, C = unknown> {
     public id = uuidv4();
     public name: string;
 

@@ -1,18 +1,22 @@
-import { NodeBuilder } from "@baklavajs/core/src";
+import { defineNode, NodeInterface } from "@baklavajs/core";
+import { SelectInterface } from "@baklavajs/plugin-renderer-vue";
 
-export default new NodeBuilder("SelectTestNode")
-    .addOption("Simple", "SelectOption", "A", undefined, { items: ["A", "B", "C"] })
-    .addOption("Advanced", "SelectOption", 3, undefined, {
-        items: [
-            { text: "X", value: 1 },
-            { text: "Y", value: 2 },
-            { text: "Z", value: 3 },
-        ],
-    })
-    .addOutputInterface("Simple")
-    .addOutputInterface("Advanced")
-    .onCalculate((n) => {
-        n.getInterface("Simple").value = n.getOptionValue("Simple");
-        n.getInterface("Advanced").value = n.getOptionValue("Advanced");
-    })
-    .build();
+export default defineNode({
+    type: "SelectTestNode",
+    inputs: {
+        simple: () => new SelectInterface("Simple", "A", ["A", "B", "C"]),
+        advanced: () =>
+            new SelectInterface("Advanced", 3, [
+                { text: "X", value: 1 },
+                { text: "Y", value: 2 },
+                { text: "Z", value: 3 },
+            ]),
+    },
+    outputs: {
+        simple: () => new NodeInterface("Simple", ""),
+        advanced: () => new NodeInterface("Advanced", 0),
+    },
+    calculate({ simple, advanced }) {
+        return { simple: simple!, advanced: advanced! };
+    },
+});

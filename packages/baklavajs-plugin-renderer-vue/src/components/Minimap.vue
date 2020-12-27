@@ -17,11 +17,10 @@
 
 <script lang="ts">
 import { defineComponent, inject, onBeforeUnmount, onMounted, ref, watch } from "vue";
-import { IConnection } from "@baklavajs/core";
+import { IConnection, AbstractNode } from "@baklavajs/core";
 import getDomElements, { getDomElementOfNode } from "../connection/domResolver";
 import { getPortCoordinates } from "../connection/portCoordinates";
 import { ViewPlugin } from "../viewPlugin";
-import { IViewNode } from "../node/viewNode";
 
 interface IRect {
     x1: number;
@@ -33,7 +32,7 @@ interface IRect {
 export default defineComponent({
     props: {
         nodes: {
-            type: Array as () => IViewNode[],
+            type: Array as () => AbstractNode[],
             required: true,
         },
         connections: {
@@ -70,8 +69,8 @@ export default defineComponent({
                 return;
             }
 
-            const nodeCoords = new Map<IViewNode, IRect>();
-            const nodeDomElements = new Map<IViewNode, HTMLElement | null>();
+            const nodeCoords = new Map<AbstractNode, IRect>();
+            const nodeDomElements = new Map<AbstractNode, HTMLElement | null>();
             for (const n of props.nodes) {
                 const domElement = getDomElementOfNode(n);
                 const width = domElement?.clientWidth ?? 0;

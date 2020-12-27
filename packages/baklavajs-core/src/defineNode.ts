@@ -1,10 +1,15 @@
 import { CalculateFunction, Node } from "./node";
-import { NodeInterface } from "./nodeInterface";
+import { NodeInterface, NodeInterfaceDefinition } from "./nodeInterface";
 
+export type NodeConstructor<I extends NodeInterfaceDefinition, O extends NodeInterfaceDefinition> = new () => Node<
+    I,
+    O
+>;
+export type NodeInstanceOf<T> = T extends new () => Node<infer A, infer B> ? Node<A, B> : never;
 export type NodeInterfaceFactory<T> = () => NodeInterface<T>;
-export type InterfaceFactory = Record<string, NodeInterfaceFactory<unknown>>;
+export type InterfaceFactory = Record<string, NodeInterfaceFactory<any>>;
 
-type FactoryToDefinition<D extends InterfaceFactory> = {
+export type FactoryToDefinition<D extends InterfaceFactory> = {
     [K in keyof D]: D[K] extends NodeInterfaceFactory<infer T> ? NodeInterface<T> : never;
 };
 

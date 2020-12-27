@@ -1,4 +1,4 @@
-import { NodeConstructor } from "./node";
+import { AbstractNodeConstructor } from "./node";
 import { NodeInterface } from "./nodeInterface";
 
 export interface IAddConnectionEventData {
@@ -8,6 +8,6 @@ export interface IAddConnectionEventData {
 
 export interface IAddNodeTypeEventData {
     typeName: string;
-    type: NodeConstructor;
+    type: AbstractNodeConstructor;
     category: string;
 }

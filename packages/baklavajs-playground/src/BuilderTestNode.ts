@@ -1,15 +1,23 @@
-import { NodeBuilder } from "@baklavajs/core/src";
+import { defineNode, NodeInterface } from "@baklavajs/core";
+import { TextInputInterface } from "@baklavajs/plugin-renderer-vue";
 
-export default new NodeBuilder("BuilderTestNode", { twoColumn: true, width: 400 })
-    .addInputInterface("Input 1", "InputOption", "default1")
-    .addInputInterface("Input 2", "InputOption", "default2")
-    .addOption("Separator", "InputOption", ",")
-    .addOption("SidebarTest", "TriggerOption", () => ({ testtext: "this is a test" }), "SidebarOption")
-    .addOutputInterface("Output")
-    .onCalculate((n) => {
-        const s1 = n.getInterface("Input 1").value;
-        const s2 = n.getInterface("Input 2").value;
-        const sep = n.getOptionValue("Separator");
-        n.getInterface("Output").value = s1 + sep + s2;
-    })
-    .build();
+export default defineNode({
+    type: "BuilderTestNode",
+    inputs: {
+        input1: () => new TextInputInterface("Input 1", "default1"),
+        input2: () => new TextInputInterface("Input 2", "default2"),
+        separator: () => new TextInputInterface("Separator", ","),
+    },
+    outputs: {
+        output: () => new NodeInterface("Output", ""),
+    },
+    onCreate() {
+        this.width = 400;
+        this.twoColumn = true;
+    },
+    calculate({ input1, input2, separator }) {
+        return {
+            output: input1 + separator + input2,
+        };
+    },
+});

@@ -6,12 +6,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import type { InputInterface } from "./InputInterface";
+import type { TextInputInterface } from "./TextInputInterface";
 
 export default defineComponent({
     props: {
         intf: {
-            type: Object as () => InputInterface,
+            type: Object as () => TextInputInterface,
             required: true,
         },
     },

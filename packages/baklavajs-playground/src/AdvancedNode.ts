@@ -1,32 +1,39 @@
-import { Node } from "@baklavajs/core/src";
-import { INodeState } from "../../baklavajs-core/types";
+import { Node, INodeState, NodeInterfaceDefinition, NodeInterface } from "@baklavajs/core";
+import { ButtonInterface } from "@baklavajs/plugin-renderer-vue";
 
-export default class AdvancedNode extends Node {
+export default class AdvancedNode extends Node<NodeInterfaceDefinition, NodeInterfaceDefinition> {
     public type = "AdvancedNode";
-    public name = this.type;
+    public title = this.type;
+
+    public inputs: NodeInterfaceDefinition = {};
+    public outputs: NodeInterfaceDefinition = {};
 
     private counter = 0;
 
     public constructor() {
         super();
-        this.addOption("Add Input", "AddOption");
-        this.addOption("Remove Input", "AddOption");
+        this.addInput(
+            "addInput",
+            new ButtonInterface("Add Input", () => {
+                const name = "Input " + ++this.counter;
+                this.addInput(name, new NodeInterface<any>(name, undefined));
+            })
+        );
+        this.addInput(
+            "addInput",
+            new ButtonInterface("Add Input", () => {
+                this.removeInput("Input " + this.counter--);
+            })
+        );
     }
 
-    public load(state: INodeState) {
-        state.interfaces.forEach(([name, intfState]) => {
-            const intf = this.addInputInterface(name);
-            intf!.id = intfState.id;
+    public load(state: INodeState<NodeInterfaceDefinition, NodeInterfaceDefinition>) {
+        Object.entries(state.inputs).forEach(([name, intfState]) => {
+            const intf = new NodeInterface<any>(name, intfState.value);
+            intf.load(intfState);
+            this.addInput(name, intf);
         });
-        this.counter = state.interfaces.length;
+        this.counter = Object.keys(state.inputs).length - 2;
         super.load(state);
-    }
-
-    public action(action: string) {
-        if (action === "Add Input") {
-            this.addInputInterface("Input " + ++this.counter);
-        } else if (action === "Remove Input" && this.counter > 0) {
-            this.removeInterface("Input " + this.counter--);
-        }
     }
 }

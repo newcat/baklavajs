@@ -44,14 +44,14 @@ import { defineComponent, ComponentOptions, inject, ref, computed, onMounted } f
 // TODO: Make custom implementation
 // import ClickOutside from "v-click-outside";
 
+import { AbstractNode } from "@baklavajs/core";
 import { ViewPlugin } from "../viewPlugin";
-import { IViewNode } from "./viewNode";
 import { sanitizeName } from "../utility/cssNames";
 
 export default defineComponent({
     props: {
         node: {
-            type: Object as () => IViewNode,
+            type: Object as () => AbstractNode,
             required: true,
         },
         selected: {

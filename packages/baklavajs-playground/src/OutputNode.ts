@@ -1,20 +1,17 @@
-import { Node } from "@baklavajs/core/src";
+import { defineNode } from "@baklavajs/core";
+import { TextInputInterface, CheckboxInterface, TextInterface } from "@baklavajs/plugin-renderer-vue";
 
-export default class OutputNode extends Node {
-    public type = "OutputNode";
-    public name = this.type;
-
-    public constructor() {
-        super();
-        this.addInputInterface("Input", "InputOption");
-        this.addInputInterface("BooleanInput", "CheckboxOption");
-        this.addOption("output", "TextOption");
-        this.addOption("data", "TextOption");
-    }
-
-    public calculate(data: any) {
-        this.setOptionValue("output", this.getInterface("Input").value);
-        this.setOptionValue("data", data);
-        return { test: true };
-    }
-}
+export default defineNode({
+    type: "OutputNode",
+    inputs: {
+        text: () => new TextInputInterface("Text", ""),
+        boolean: () => new CheckboxInterface("Boolean", false),
+    },
+    outputs: {
+        text: () => new TextInterface("output", "").setPort(false),
+        data: () => new TextInterface("data", "").setPort(false),
+    },
+    calculate({ text }, data) {
+        return { text, data: String(data) };
+    },
+});

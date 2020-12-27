@@ -13,10 +13,18 @@
 <script lang="ts">
 import { defineComponent, Ref, ref } from "vue";
 
-import { Editor, Node, NodeInterface } from "../../baklavajs-core/src";
-import { ViewPlugin, EditorComponent } from "../../baklavajs-plugin-renderer-vue/src";
-import { Engine } from "../../baklavajs-plugin-engine/src";
-import { InterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/src";
+import {
+    Editor,
+    Node,
+    NodeInterface,
+    NodeInstanceOf,
+    AbstractNodeConstructor,
+    NodeInterfaceDefinition,
+    NodeInterfaceFactory,
+} from "@baklavajs/core";
+import { ViewPlugin, EditorComponent, SelectInterface } from "@baklavajs/plugin-renderer-vue";
+import { Engine } from "@baklavajs/plugin-engine";
+import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
 
 import CustomNodeRenderer from "./CustomNodeRenderer";
 
@@ -26,13 +34,8 @@ import BuilderTestNode from "./BuilderTestNode";
 import MathNode from "./MathNode";
 import AdvancedNode from "./AdvancedNode";
 import CommentNode from "./CommentNode";
-import OptionTestNode from "./OptionTestNode";
+import InterfaceTestNode from "./InterfaceTestNode";
 import SelectTestNode from "./SelectTestNode";
-
-import AddOption from "./AddOption";
-import TriggerOption from "./TriggerOption.vue";
-import SidebarOption from "./SidebarOption.vue";
-import { SelectOption } from "packages/baklavajs-plugin-renderer-vue/src/options";
 
 export default defineComponent({
     components: {
@@ -67,7 +70,7 @@ export default defineComponent({
         editor.value.registerNodeType("MathNode", MathNode);
         editor.value.registerNodeType("AdvancedNode", AdvancedNode);
         editor.value.registerNodeType("CommentNode", CommentNode);
-        editor.value.registerNodeType("OptionTestNode", OptionTestNode);
+        editor.value.registerNodeType("OptionTestNode", InterfaceTestNode);
         editor.value.registerNodeType("SelectTestNode", SelectTestNode);
         editor.value.addNode(new TestNode());
         editor.value.addNode(new TestNode());
@@ -101,18 +104,19 @@ export default defineComponent({
         const setSelectItems = () => {
             for (const node of editor.value.nodes) {
                 if (node.type === "SelectTestNode") {
-                    const sel = node.inputs["Advanced"] as SelectOption;
-                    sel!.items = [
+                    const n = (node as unknown) as NodeInstanceOf<typeof SelectTestNode>;
+                    const sel = n.inputs.advanced as SelectInterface<number | undefined>;
+                    sel.items = [
                         { text: "X", value: 1 },
                         { text: node.id, value: 2 },
                     ];
-                    sel!.events.updated.emit();
                 }
             }
         };
 
         const changeGridSize = () => {
-            this.viewPlugin.backgroundGrid.gridSize = Math.round(Math.random() * 100) + 100;
+            // TODO: Make this possible again
+            // viewPlugin.backgroundGrid.gridSize = Math.round(Math.random() * 100) + 100;
         };
     },
 });

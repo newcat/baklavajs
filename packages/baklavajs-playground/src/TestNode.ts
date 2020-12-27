@@ -1,37 +1,27 @@
-import { NodeInterface } from "packages/baklavajs-full/src";
-import { Editor, Node, defineNode } from "../../baklavajs-core/src";
-import { CheckboxOption, InputOption, NumberOption, SliderOption } from "../../baklavajs-plugin-renderer-vue/src";
+import { NodeInterface, defineNode } from "@baklavajs/core";
+import {
+    CheckboxInterface,
+    NumberInterface,
+    TextInputInterface,
+    SelectInterface,
+    SliderInterface,
+} from "@baklavajs/plugin-renderer-vue";
 
-defineNode({
+export default defineNode({
     type: "TestNode",
     inputs: {
-        input: () => new NodeInterface(),
+        input: () => new CheckboxInterface("Input", false),
+        test: () => new NumberInterface("Test", 5),
+        test2: () => new TextInputInterface("test", "").setPort(false),
+        select: () => new SelectInterface("Select", "Test1", ["Test1", "Test2", "Test3"]).setPort(false),
+        checkbox: () => new CheckboxInterface("This is a checkbox", true).setPort(false),
+        number: () => new NumberInterface("Number", 5, 0, 10).setPort(false),
+        slider: () => new SliderInterface("Slider", 0.5, 0, 1).setPort(false),
+    },
+    outputs: {
+        output: () => new NodeInterface("Output", false),
+    },
+    calculate({ input }) {
+        return { output: input };
     },
 });
-
-export default class TestNode extends Node {
-    public type = "TestNode";
-    public name = this.type;
-    public registerCalled = false;
-
-    constructor() {
-        super();
-        this.addInputInterface("Input", "CheckboxOption", false, { type: "boolean" });
-        this.addInputInterface("Test", "NumberOption", 5, { type: "number" });
-        this.addOutputInterface("Output", { type: "boolean" });
-        this.addOption("test", "InputOption");
-        this.addOption("Select", "SelectOption", "Test1", undefined, { items: ["Test1", "Test2", "Test3"] });
-        this.addOption("This is a checkbox", "CheckboxOption", true);
-        this.addOption("Number", "NumberOption", 5, undefined, { min: 0, max: 10 });
-        this.addOption("Slider", "SliderOption", 0.5, undefined, { min: 0, max: 1 });
-    }
-
-    public registerEditor(editor: Editor) {
-        super.registerEditor(editor);
-        this.registerCalled = true;
-    }
-
-    public calculate() {
-        this.getInterface("Output").value = this.getInterface("Input").value;
-    }
-}

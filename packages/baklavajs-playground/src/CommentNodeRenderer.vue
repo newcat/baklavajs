@@ -1,72 +1,63 @@
 <template>
-    <div :id="data.id" :style="styles" @mousedown="startDrag">
+    <div :id="node.id" :style="styles" @mousedown="startDrag">
         <textarea rows="6" cols="20"></textarea>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Inject, Watch } from "vue-property-decorator";
-import { VueConstructor } from "vue";
+import { computed, defineComponent, inject, ref } from "vue";
+import { AbstractNode } from "@baklavajs/core";
+import { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
 
-// @ts-ignore
-import ClickOutside from "v-click-outside";
+export default defineComponent({
+    props: {
+        node: {
+            type: Object as () => AbstractNode,
+            required: true,
+        },
+        selected: {
+            type: Boolean,
+            required: true,
+        },
+    },
+    setup(props, { emit }) {
+        const plugin = inject<ViewPlugin>("plugin")!;
+        const dragging = ref(false);
 
-import { ViewPlugin } from "../../baklavajs-plugin-renderer-vue/src";
-import { IViewNode } from "../../baklavajs-plugin-renderer-vue/types";
-
-@Component
-export default class CommentNode extends Vue {
-
-    @Prop({ type: Object })
-    data!: IViewNode;
-
-    @Prop({ type: Boolean, default: false })
-    selected!: boolean;
-
-    @Inject("plugin")
-    plugin!: ViewPlugin;
-
-    dragging = false;
-    width = 200;
-
-    get styles() {
-        return {
+        const styles = computed(() => ({
             "position": "absolute",
-            "top": `${this.data.position.y}px`,
-            "left": `${this.data.position.x}px`,
-            "width": `${this.width}px`,
+            "top": `${props.node.position.y}px`,
+            "left": `${props.node.position.x}px`,
+            "width": `${props.node.width}px`,
             "height": "200px",
-            "background-color": "yellow"
+            "background-color": "yellow",
+        }));
+
+        const startDrag = () => {
+            dragging.value = true;
+            document.addEventListener("mousemove", handleMove);
+            document.addEventListener("mouseup", stopDrag);
+            select();
         };
-    }
 
-    update() {
-        this.$forceUpdate();
-    }
+        const select = () => {
+            emit("select", props.node);
+        };
 
-    startDrag() {
-        this.dragging = true;
-        document.addEventListener("mousemove", this.handleMove);
-        document.addEventListener("mouseup", this.stopDrag);
-        this.select();
-    }
+        const stopDrag = () => {
+            dragging.value = false;
+            document.removeEventListener("mousemove", handleMove);
+            document.removeEventListener("mouseup", stopDrag);
+        };
 
-    select() {
-        this.$emit("select", this);
-    }
+        const handleMove = (ev: MouseEvent) => {
+            if (dragging.value) {
+                props.node.position.x += ev.movementX / plugin.scaling;
+                props.node.position.y += ev.movementY / plugin.scaling;
+            }
+        };
 
-    stopDrag() {
-        this.dragging = false;
-        document.removeEventListener("mousemove", this.handleMove);
-        document.removeEventListener("mouseup", this.stopDrag);
-    }
-
-    handleMove(ev: MouseEvent) {
-        if (this.dragging) {
-            this.data.position.x += ev.movementX / this.plugin.scaling;
-            this.data.position.y += ev.movementY / this.plugin.scaling;
-        }
-    }
-
-}
+        return { startDrag, styles };
+    },
+});
 </script>
