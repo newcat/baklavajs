@@ -42,9 +42,9 @@ They will return the concatenated value and we will print it to the console.
 // Sample node with node builder
 new NodeBuilder("SampleNode")
     .addInputInterface("text", "InputOption", "", { displayName: "Enter your text" })
-    .onCalculate((n, d) => {
-        const t = n.getInterface("text").value;
-        return t + d.foo;
+    .onCalculate((node, data) => {
+        const t = node.getInterface("text").value;
+        return t + data.foo;
     })
     .build();
 
@@ -61,7 +61,7 @@ class SampleNode extends Node {
 
     calculate(data) {
         const t = this.getInterface("text").value;
-        return t + d.foo;
+        return t + data.foo;
     }
 
 }
@@ -74,9 +74,9 @@ engine.hooks.gatherCalculationData.tap(this, () => {
     // you can return whatever you want and all nodes will receive this value as a parameter in their calculate function
     return { foo: "bar" };
 });
-engine.events.calculated.addListener(this, (r) => {
-    // r is a Map<Node, any> with the key being a node instance and the value being what the node's calculate function returned
-    for (const v of r.values()) {
+engine.events.calculated.addListener(this, (result) => {
+    // result is a Map<Node, any> with the key being a node instance and the value being what the node's calculate function returned
+    for (const v of result.values()) {
         console.log(v);
     }
 });
@@ -84,8 +84,8 @@ engine.events.calculated.addListener(this, (r) => {
 
 **WITHOUT Automatic Execution**
 ```js
-const r = await engine.calculate({ foo: "bar" });
-for (const v of r.values()) {
+const result = await engine.calculate({ foo: "bar" });
+for (const v of result.values()) {
     console.log(v);
 }
 ```
