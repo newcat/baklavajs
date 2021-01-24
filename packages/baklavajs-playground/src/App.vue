@@ -44,13 +44,13 @@ export default defineComponent({
     setup() {
         const token = Symbol("token");
         const editor = ref(new Editor()) as Ref<Editor>;
+        const viewPlugin = ref(new ViewPlugin()) as Ref<ViewPlugin>;
         const focusState = ref("blur");
         const counter = ref(1);
 
-        const viewPlugin = new ViewPlugin();
-        viewPlugin.components.node = CustomNodeRenderer;
-        viewPlugin.enableMinimap = true;
-        editor.value.use(viewPlugin);
+        viewPlugin.value.components.node = CustomNodeRenderer;
+        viewPlugin.value.enableMinimap = true;
+        editor.value.use(viewPlugin.value);
 
         const engine = new Engine(true);
         engine.events.calculated.addListener(token, (r) => {
@@ -118,6 +118,8 @@ export default defineComponent({
             // TODO: Make this possible again
             // viewPlugin.backgroundGrid.gridSize = Math.round(Math.random() * 100) + 100;
         };
+
+        return { viewPlugin, focusState, calculate, save, load, setSelectItems, changeGridSize };
     },
 });
 </script>

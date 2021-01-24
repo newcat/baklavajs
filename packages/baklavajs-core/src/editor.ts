@@ -1,8 +1,8 @@
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import type { NodeInterface } from "./nodeInterface";
+import type { AbstractNode, INodeState, AbstractNodeConstructor } from "./node";
+import type { IAddConnectionEventData, IAddNodeTypeEventData } from "./eventDataTypes";
 import { Connection, DummyConnection, IConnection, IConnectionState } from "./connection";
-import { AbstractNode, INodeState, AbstractNodeConstructor } from "./node";
-import { IAddConnectionEventData, IAddNodeTypeEventData } from "./eventDataTypes";
 
 export interface IPlugin {
     type: string;

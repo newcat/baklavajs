@@ -1,5 +1,5 @@
+import type { NodeInterface, NodeInterfaceDefinition } from "./nodeInterface";
 import { CalculateFunction, Node } from "./node";
-import { NodeInterface, NodeInterfaceDefinition } from "./nodeInterface";
 
 export type NodeConstructor<I extends NodeInterfaceDefinition, O extends NodeInterfaceDefinition> = new () => Node<
     I,

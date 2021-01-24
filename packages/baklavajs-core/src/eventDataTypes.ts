@@ -1,5 +1,5 @@
-import { AbstractNodeConstructor } from "./node";
-import { NodeInterface } from "./nodeInterface";
+import type { AbstractNodeConstructor } from "./node";
+import type { NodeInterface } from "./nodeInterface";
 
 export interface IAddConnectionEventData {
     from: NodeInterface;

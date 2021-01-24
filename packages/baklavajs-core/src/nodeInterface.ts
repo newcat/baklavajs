@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import { SequentialHook, BaklavaEvent, PreventableBaklavaEvent } from "@baklavajs/events";
-import { AbstractNode } from "./node";
+import type { AbstractNode } from "./node";
 
 export interface INodeInterfaceState<T> extends Record<string, any> {
     id: string;
     value: T;
 }
 
-export class NodeInterface<T = any, C = unknown> {
+export class NodeInterface<T = any> {
     public id = uuidv4();
     public name: string;
 
@@ -20,7 +20,7 @@ export class NodeInterface<T = any, C = unknown> {
     public port = true;
 
     /** The component which will be displayed when the interface is not connected or port === false */
-    public component?: C;
+    public component?: any;
 
     public events = {
         setConnectionCount: new BaklavaEvent<number>(),
@@ -74,7 +74,7 @@ export class NodeInterface<T = any, C = unknown> {
         return this.hooks.save.execute(state);
     }
 
-    public setComponent(value: C): this {
+    public setComponent(value: any): this {
         this.component = value;
         return this;
     }

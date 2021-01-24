@@ -1,8 +1,8 @@
 import mapValues from "lodash.mapvalues";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { v4 as uuidv4 } from "uuid";
-import { Editor } from "./editor";
-import {
+import type { Editor } from "./editor";
+import type {
     NodeInterfaceDefinition,
     NodeInterfaceDefinitionValues,
     NodeInterface,
@@ -18,7 +18,7 @@ export type CalculateFunction<I extends NodeInterfaceDefinition, O extends NodeI
     inputs: NodeInterfaceDefinitionValues<I>,
     globalValues?: any
     // ) => CalculateFunctionReturnType<O>;
-) => NodeInterfaceDefinitionValues<O>;
+) => CalculateFunctionReturnType<O>;
 
 export interface INodeState<I, O> {
     type: string;
