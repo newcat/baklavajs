@@ -11,7 +11,7 @@ for (dep in packageJson.dependencies) {
     if (dep.startsWith("@baklavajs")) {
         const folder = packageNameToFolder(dep);
         const depPackageJson = require(path.resolve(folder, "package.json"));
-        packageJson.dependencies[dep] = "^" + depPackageJson.version;
+        packageJson.dependencies[dep] = depPackageJson.version;
     }
 }
 
