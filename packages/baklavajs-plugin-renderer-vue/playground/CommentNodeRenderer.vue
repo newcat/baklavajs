@@ -7,7 +7,7 @@
 <script lang="ts">
 import { computed, defineComponent, inject, ref } from "vue";
 import { AbstractNode } from "@baklavajs/core";
-import { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
+import { ViewPlugin } from "../src";
 
 export default defineComponent({
     props: {

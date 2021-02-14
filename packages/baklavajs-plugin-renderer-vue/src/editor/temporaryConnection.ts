@@ -73,5 +73,5 @@ export function useTemporaryConnection(pluginRef: Ref<ViewPlugin>) {
 
     provide("hoveredOver", hoveredOver);
 
-    return { onMouseMove, onMouseDown, onMouseUp };
+    return { temporaryConnection, onMouseMove, onMouseDown, onMouseUp };
 }

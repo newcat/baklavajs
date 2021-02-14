@@ -17,3 +17,5 @@ export const Components = {
 export { default as EditorComponent } from "./editor/Editor.vue";
 export * from "./nodeinterfaces";
 export * from "./viewPlugin";
+
+import "./styles/all.scss";

@@ -1,5 +1,5 @@
 <template>
-    <div :class="['dark-select', { '--open': open }]" @click="open = !open" v-click-outside="(open = false)">
+    <div :class="['dark-select', { '--open': open }]" @click="open = !open" @click-outside="open = false">
         <div class="__selected">
             <div class="__text">{{ selectedText }}</div>
             <div class="__icon">
@@ -10,7 +10,7 @@
             <div class="__dropdown" v-show="open">
                 <div class="item --header">{{ intf.name }}</div>
                 <div
-                    v-for="(item, i) in items"
+                    v-for="(item, i) in intf.items"
                     :key="i"
                     :class="['item', { '--active': item === selectedItem }]"
                     @click="setSelected(item)"
@@ -54,7 +54,7 @@ export default defineComponent({
 
         const selectedText = computed(() => {
             if (selectedItem.value) {
-                return typeof selectedItem.value === "string" ? selectedItem : selectedItem.value.text;
+                return typeof selectedItem.value === "string" ? selectedItem.value : selectedItem.value.text;
             } else {
                 return "";
             }

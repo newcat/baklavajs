@@ -1,4 +1,4 @@
-import { ComputedRef, ComponentOptions } from "vue";
+import { ComputedRef, ComponentOptions, markRaw } from "vue";
 import { IPlugin, Editor } from "@baklavajs/core";
 
 import { gridBackgroundProvider } from "./editor/backgroundProvider";
@@ -33,14 +33,14 @@ export class ViewPlugin implements IPlugin {
     /** Use this property to provide custom components,
      * which will be used when rendering the respective entities
      */
-    public components: Record<string, ComponentOptions<any>> = {
+    public components: Record<string, ComponentOptions<any>> = markRaw({
         node: NodeView,
         nodeInterface: NodeInterfaceView,
         connection: ConnectionWrapper,
         tempConnection: TempConnectionView,
         sidebar: Sidebar,
         minimap: Minimap,
-    };
+    });
 
     public register(editor: Editor): void {
         this.editor = editor;

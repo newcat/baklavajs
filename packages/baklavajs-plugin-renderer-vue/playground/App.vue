@@ -22,7 +22,7 @@ import {
     NodeInterfaceDefinition,
     NodeInterfaceFactory,
 } from "@baklavajs/core";
-import { ViewPlugin, EditorComponent, SelectInterface } from "@baklavajs/plugin-renderer-vue";
+import { ViewPlugin, EditorComponent, SelectInterface } from "../src";
 import { Engine } from "@baklavajs/plugin-engine";
 import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
 
@@ -77,7 +77,7 @@ export default defineComponent({
         editor.value.addNode(new TestNode());
         editor.value.addNode(new OutputNode());
         editor.value.addNode(new BuilderTestNode());
-        editor.value.addNode(new AdvancedNode());
+        // editor.value.addNode(new AdvancedNode());
         nodeInterfaceTypes
             .addType("string", "#00FF00")
             .addType("number", "red")

@@ -1,5 +1,5 @@
 import { defineNode, NodeInterface } from "@baklavajs/core";
-import { SelectInterface } from "@baklavajs/plugin-renderer-vue";
+import { SelectInterface } from "../src";
 
 export default defineNode({
     type: "SelectTestNode",

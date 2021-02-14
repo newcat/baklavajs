@@ -1,11 +1,5 @@
 import { NodeInterface, defineNode } from "@baklavajs/core";
-import {
-    CheckboxInterface,
-    NumberInterface,
-    TextInputInterface,
-    SelectInterface,
-    SliderInterface,
-} from "@baklavajs/plugin-renderer-vue";
+import { CheckboxInterface, NumberInterface, TextInputInterface, SelectInterface, SliderInterface } from "../src";
 
 export default defineNode({
     type: "TestNode",

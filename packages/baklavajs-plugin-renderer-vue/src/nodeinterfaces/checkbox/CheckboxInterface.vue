@@ -5,7 +5,7 @@
                 <path class="__checkmark" d="M 6 5 L 6 10 L 16 10" transform="rotate(-45 10 10)"></path>
             </svg>
         </div>
-        <div class="ml-2">{{ io.name }}</div>
+        <div class="ml-2">{{ intf.name }}</div>
     </div>
 </template>
 

@@ -1,5 +1,5 @@
 import { defineNode } from "@baklavajs/core";
-import { TextInputInterface, CheckboxInterface, TextInterface } from "@baklavajs/plugin-renderer-vue";
+import { TextInputInterface, CheckboxInterface, TextInterface } from "../src";
 
 export default defineNode({
     type: "OutputNode",

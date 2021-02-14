@@ -8,7 +8,7 @@ import {
     SliderInterface,
     TextInputInterface,
     TextInterface,
-} from "@baklavajs/plugin-renderer-vue";
+} from "../src";
 
 export default defineNode({
     type: "InterfaceTestNode",

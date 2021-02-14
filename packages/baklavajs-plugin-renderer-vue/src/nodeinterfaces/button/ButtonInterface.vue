@@ -1,5 +1,5 @@
 <template>
-    <button @click="onClick" class="dark-button --block">{{ io.name }}</button>
+    <button @click="onClick" class="dark-button --block">{{ intf.name }}</button>
 </template>
 
 <script lang="ts">

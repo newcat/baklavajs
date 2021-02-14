@@ -28,16 +28,15 @@
             ></component>
         </svg>
 
-        <div class="node-container" :style="styles">
-            <component
-                :is="plugin.components.node"
+        <div class="node-container" :style="nodeContainerStyle">
+            <Node
                 v-for="node in nodes"
                 :key="node.id + counter.toString()"
-                :data="node"
+                :node="node"
                 :selected="selectedNodes.includes(node)"
                 @select="selectNode(node)"
             >
-            </component>
+            </Node>
         </div>
 
         <component :is="plugin.components.sidebar"></component>
@@ -52,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, Ref, ref, toRef } from "vue";
+import { computed, defineComponent, provide, Ref, ref, toRef, watchEffect } from "vue";
 
 import { Editor, AbstractNode, Connection, NodeInterface } from "@baklavajs/core";
 import { ViewPlugin } from "../viewPlugin";
@@ -60,10 +59,13 @@ import { ITemporaryConnection, TemporaryConnectionState } from "../connection/co
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
 
+import Node from "../node/Node.vue";
+
 // import Clipboard from "./clipboard";
 import History from "./history";
 
 export default defineComponent({
+    components: { Node },
     props: {
         plugin: {
             type: Object as () => ViewPlugin,
@@ -87,8 +89,8 @@ export default defineComponent({
         const panZoom = usePanZoom(pluginRef);
         const temporaryConnection = useTemporaryConnection(pluginRef);
 
-        const backgroundStyles = props.plugin.backgroundStyles;
-        const style = computed(() => ({
+        const backgroundStyle = props.plugin.backgroundStyles;
+        const nodeContainerStyle = computed(() => ({
             ...panZoom.styles.value,
         }));
 
@@ -148,8 +150,28 @@ export default defineComponent({
             selectedNodes.value = [];
         };
 
+        watchEffect(() => {
+            console.log(props.plugin.editor.nodes);
+        });
+
         provide("plugin", props.plugin);
-        return { el, backgroundStyles, style, onMouseWheel: panZoom.onMouseWheel };
+        return {
+            el,
+            selectedNodes,
+            counter,
+            nodes: props.plugin.editor.nodes,
+            connections: props.plugin.editor.connections,
+            backgroundStyle,
+            nodeContainerStyle,
+            mouseMoveHandler,
+            mouseDown,
+            mouseUp,
+            keyDown,
+            keyUp,
+            selectNode,
+            temporaryConnection: temporaryConnection.temporaryConnection,
+            mouseWheel: panZoom.onMouseWheel,
+        };
     },
 });
 </script>

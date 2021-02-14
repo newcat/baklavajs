@@ -7,8 +7,8 @@ export interface IValidator {
     validate: (v: number) => boolean;
 }
 
-function isValidator(io: any): io is IValidator {
-    return "validate" in io;
+function isValidator(intf: any): intf is IValidator {
+    return "validate" in intf;
 }
 
 export class BaseNumericInterface extends NodeInterface<number> implements IValidator {
@@ -26,21 +26,21 @@ export class BaseNumericInterface extends NodeInterface<number> implements IVali
     }
 }
 
-export const useBaseNumericInterface = (io: Ref<NodeInterface<number>>, inputRef: Ref<HTMLElement | null>) => {
+export const useBaseNumericInterface = (intf: Ref<NodeInterface<number>>, inputRef: Ref<HTMLElement | null>) => {
     const editMode = ref(false);
     const invalid = ref(false);
     const tempValue = ref("0");
 
     const stringRepresentation = computed(() => {
-        const s = io.value.value.toFixed(3);
-        return s.length > MAX_STRING_LENGTH ? io.value.value.toExponential(MAX_STRING_LENGTH - 5) : s;
+        const s = intf.value.value.toFixed(3);
+        return s.length > MAX_STRING_LENGTH ? intf.value.value.toExponential(MAX_STRING_LENGTH - 5) : s;
     });
 
     const validate = (v: number) => {
         if (Number.isNaN(v)) {
             return false;
-        } else if (isValidator(io.value)) {
-            return io.value.validate(v);
+        } else if (isValidator(intf.value)) {
+            return intf.value.validate(v);
         } else {
             return true;
         }
@@ -48,7 +48,7 @@ export const useBaseNumericInterface = (io: Ref<NodeInterface<number>>, inputRef
 
     const setValue = (newValue: number) => {
         if (validate(newValue)) {
-            io.value.value = newValue;
+            intf.value.value = newValue;
         }
     };
 
@@ -57,7 +57,7 @@ export const useBaseNumericInterface = (io: Ref<NodeInterface<number>>, inputRef
     });
 
     const enterEditMode = async () => {
-        tempValue.value = io.value.value.toFixed(3);
+        tempValue.value = intf.value.value.toFixed(3);
         editMode.value = true;
         await nextTick();
         if (inputRef.value) {

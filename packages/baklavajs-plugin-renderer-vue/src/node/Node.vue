@@ -1,7 +1,7 @@
 <template>
     <div :id="node.id" :class="classes" :style="styles">
-        <div class="__title" @mousedown.self.stop="startDrag" @contextmenu.self.prevent="openContextMenu">
-            <span v-if="!renaming">{{ node.name }}</span>
+        <div class="__title" @mousedown.self.stop="startDrag">
+            <span v-if="!renaming">{{ node.title }}</span>
             <input
                 v-else
                 type="text"
@@ -15,24 +15,17 @@
         <div class="__content">
             <!-- Outputs -->
             <div class="__outputs">
-                <component
-                    :is="plugin.components.nodeInterface"
-                    v-for="output in node.outputInterfaces"
+                <NodeInterface
+                    v-for="output in node.outputs"
                     :key="output.id"
                     :node="node"
                     :intf="output"
-                ></component>
+                ></NodeInterface>
             </div>
 
             <!-- Inputs -->
             <div class="__inputs">
-                <component
-                    :is="plugin.components.nodeInterface"
-                    v-for="input in node.inputInterfaces"
-                    :key="input.id"
-                    :node="node"
-                    :intf="input"
-                ></component>
+                <NodeInterface v-for="input in node.inputs" :key="input.id" :node="node" :intf="input"></NodeInterface>
             </div>
         </div>
     </div>
@@ -48,7 +41,10 @@ import { AbstractNode } from "@baklavajs/core";
 import { ViewPlugin } from "../viewPlugin";
 import { sanitizeName } from "../utility/cssNames";
 
+import NodeInterface from "./NodeInterface.vue";
+
 export default defineComponent({
+    components: { NodeInterface },
     props: {
         node: {
             type: Object as () => AbstractNode,
@@ -60,9 +56,13 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
+        console.log("NODE", props);
         const plugin = inject<ViewPlugin>("plugin")!;
 
         const dragging = ref(false);
+
+        const renaming = ref(false);
+        const tempName = ref("");
 
         const classes = computed(() => ({
             "node": true,
@@ -98,7 +98,12 @@ export default defineComponent({
             }
         };
 
-        return { classes, styles, startDrag, stopDrag, handleMove };
+        const doneRenaming = () => {
+            props.node.title = tempName.value;
+            renaming.value = false;
+        };
+
+        return { plugin, renaming, tempName, doneRenaming, classes, styles, startDrag, stopDrag, handleMove };
     },
 });
 </script>

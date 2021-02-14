@@ -1,5 +1,5 @@
 import { defineNode, NodeInterface } from "@baklavajs/core";
-import { NumberInterface, SelectInterface } from "@baklavajs/plugin-renderer-vue";
+import { NumberInterface, SelectInterface } from "../src";
 
 export default defineNode({
     type: "MathNode",

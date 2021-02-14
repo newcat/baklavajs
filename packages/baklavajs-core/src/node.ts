@@ -46,7 +46,7 @@ export abstract class Node<
     public abstract outputs: O;
 
     public events = {
-        loaded: new BaklavaEvent<Node<I, O>>(),
+        loaded: new BaklavaEvent<AbstractNode>(),
         beforeAddInput: new PreventableBaklavaEvent<NodeInterface>(),
         addInput: new BaklavaEvent<NodeInterface>(),
         beforeRemoveInput: new PreventableBaklavaEvent<NodeInterface>(),
@@ -58,8 +58,8 @@ export abstract class Node<
     };
 
     public hooks = {
-        beforeLoad: new SequentialHook<INodeState<I, O>>(),
-        afterSave: new SequentialHook<INodeState<I, O>>(),
+        beforeLoad: new SequentialHook<INodeState<NodeInterfaceDefinition, NodeInterfaceDefinition>>(),
+        afterSave: new SequentialHook<INodeState<NodeInterfaceDefinition, NodeInterfaceDefinition>>(),
     };
 
     private editorInstance?: Editor;
@@ -92,7 +92,7 @@ export abstract class Node<
             inputs: inputStates,
             outputs: outputStates,
         };
-        return this.hooks.afterSave.execute(state);
+        return this.hooks.afterSave.execute(state) as INodeState<I, O>;
     }
 
     /**

@@ -1,5 +1,5 @@
 import { ComponentOptions, defineComponent, h } from "vue";
-import { Components } from "@baklavajs/plugin-renderer-vue";
+import { Components } from "../src";
 import { AbstractNode } from "@baklavajs/core";
 import CommentNode from "./CommentNodeRenderer.vue";
 

@@ -8,8 +8,8 @@
             v-else
             :is="intf.component"
             :node="node"
-            :interface="intf"
-            :value="value"
+            :intf="intf"
+            :value="intf.value"
             @input="intf.value = $event"
         ></component>
     </div>

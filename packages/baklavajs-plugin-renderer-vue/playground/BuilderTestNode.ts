@@ -1,5 +1,5 @@
 import { defineNode, NodeInterface } from "@baklavajs/core";
-import { TextInputInterface } from "@baklavajs/plugin-renderer-vue";
+import { TextInputInterface } from "../src";
 
 export default defineNode({
     type: "BuilderTestNode",

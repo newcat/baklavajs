@@ -36,21 +36,21 @@ export default defineComponent({
         "i-arrow": Arrow,
     },
     props: {
-        io: {
+        intf: {
             type: Object as () => NumberInterface,
             required: true,
         },
     },
     setup(props) {
         const inputEl = ref<HTMLElement | null>(null);
-        const baseNumericInterface = useBaseNumericInterface(toRef(props, "io") as Ref<NumberInterface>, inputEl);
+        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf") as Ref<NumberInterface>, inputEl);
 
         const increment = () => {
-            baseNumericInterface.setValue(props.io.value + 0.1);
+            baseNumericInterface.setValue(props.intf.value + 0.1);
         };
 
         const decrement = () => {
-            baseNumericInterface.setValue(props.io.value - 0.1);
+            baseNumericInterface.setValue(props.intf.value - 0.1);
         };
 
         return { ...baseNumericInterface, inputEl, increment, decrement };

@@ -1,0 +1,1 @@
+import "./styles/all.scss";
