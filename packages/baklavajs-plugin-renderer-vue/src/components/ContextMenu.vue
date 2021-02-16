@@ -1,12 +1,6 @@
 <template>
-    <div
-        :class="classes"
-        :style="styles"
-        v-show="value"
-        v-click-outside="onClickOutside"
-    >
+    <div :class="classes" :style="styles" v-show="value" v-click-outside="onClickOutside">
         <template v-for="(item, index) in _items">
-
             <div v-if="item.isDivider" :key="index" class="divider"></div>
 
             <div
@@ -19,7 +13,15 @@
                 class="d-flex align-items-center"
             >
                 <div class="flex-fill">{{ item.label }}</div>
-                <div v-if="item.submenu" class="ml-3" style="line-height:1em;">&#9205;</div>
+                <div v-if="item.submenu" class="ml-3" style="line-height: 1em">
+                    <svg width="13" height="13" viewBox="-60 120 250 250">
+                        <path
+                            d="M160.875 279.5625 L70.875 369.5625 L70.875 189.5625 L160.875 279.5625 Z"
+                            stroke="none"
+                            fill="white"
+                        />
+                    </svg>
+                </div>
                 <context-menu
                     v-if="item.submenu"
                     :value="activeMenu === index"
@@ -30,7 +32,6 @@
                     @click="onChildClick"
                 ></context-menu>
             </div>
-
         </template>
     </div>
 </template>
@@ -47,18 +48,17 @@ export interface IMenuItem {
     isDivider?: boolean;
     submenu?: IMenuItem[];
     disabled?: boolean;
-    disabledFunction?: (() => boolean);
+    disabledFunction?: () => boolean;
 }
 
 @Component({
     directives: {
-        ClickOutside: ClickOutside.directive
-    }
+        ClickOutside: ClickOutside.directive,
+    },
 })
 export default class ContextMenu extends Vue {
-
     activeMenu = -1;
-    activeMenuResetTimeout: number|null = null;
+    activeMenuResetTimeout: number | null = null;
 
     height = 0;
     rootIsFlipped = { x: false, y: false };
@@ -79,7 +79,7 @@ export default class ContextMenu extends Vue {
     isNested!: boolean;
 
     @Prop({ type: Object, default: () => ({ x: false, y: false }) })
-    isFlipped!: { x: boolean, y: boolean };
+    isFlipped!: { x: boolean; y: boolean };
 
     @Prop({ type: Boolean, default: false })
     flippable!: boolean;
@@ -98,7 +98,7 @@ export default class ContextMenu extends Vue {
             "dark-context-menu": true,
             "--flipped-x": this.flippedX,
             "--flipped-y": this.flippedY,
-            "--nested": this.isNested
+            "--nested": this.isNested,
         };
     }
 
@@ -169,7 +169,7 @@ export default class ContextMenu extends Vue {
         this.height = this.items.length * 30;
         const parentWidth = (this.$parent.$el as HTMLElement).offsetWidth;
         const parentHeight = (this.$parent.$el as HTMLElement).offsetHeight;
-        this.rootIsFlipped.x = !this.isNested && this.x > (parentWidth * 0.75);
+        this.rootIsFlipped.x = !this.isNested && this.x > parentWidth * 0.75;
         this.rootIsFlipped.y = !this.isNested && this.y + this.height > parentHeight - 20;
     }
 
@@ -183,6 +183,5 @@ export default class ContextMenu extends Vue {
             });
         }
     }
-
 }
 </script>
