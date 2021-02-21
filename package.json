@@ -1,5 +1,5 @@
 {
-    "name": "baklavajs",
+    "name": "baklavajs-monorepo",
     "private": true,
     "scripts": {
         "playground": "cd packages/baklavajs-playground && yarn run serve",
