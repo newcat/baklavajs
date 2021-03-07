@@ -20,7 +20,7 @@
         filter: drop-shadow(0 0 7px #000000cc);
 
         & > .__title {
-            cursor: move;
+            cursor: grabbing;
         }
     }
 
@@ -29,6 +29,7 @@
         color: $color-node-title-foreground;
         padding: 0.4em 0.75em;
         border-radius: $border-radius-node $border-radius-node 0 0;
+        cursor: grab;
 
         & > span {
             pointer-events: none;
