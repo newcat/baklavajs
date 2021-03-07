@@ -7,8 +7,8 @@
   },
   "dependencies": {
     "vue": "^2.6.12",
-    "vue-class-component": "^7.2.6",
-    "vue-property-decorator": "^9.1.2"
+    "vue-class-component": "7.2.3",
+    "vue-property-decorator": "9.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-typescript": "^4.5.11",

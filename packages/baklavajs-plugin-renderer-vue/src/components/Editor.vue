@@ -3,7 +3,7 @@
         tabindex="-1"
         :class="[
             'node-editor',
-            { 'ignore-mouse': !!temporaryConnection, '--temporary-connection': !!temporaryConnection }
+            { 'ignore-mouse': !!temporaryConnection, '--temporary-connection': !!temporaryConnection },
         ]"
         @mousemove.self="mouseMoveHandler"
         @mousedown="mouseDown"
@@ -63,15 +63,12 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Provide, Watch } from "vue-property-decorator";
-import { VueConstructor } from "vue";
 
 import {
-    IEditor,
-    INode,
     ITransferConnection,
     INodeInterface,
     ITemporaryConnection,
-    TemporaryConnectionState
+    TemporaryConnectionState,
 } from "../../../baklavajs-core/types";
 import { ViewPlugin } from "../viewPlugin";
 import { IViewNode } from "../../types";
@@ -105,13 +102,13 @@ export default class EditorView extends Vue {
         items: [] as IMenuItem[],
         show: false,
         x: 0,
-        y: 0
+        y: 0,
     };
 
     get styles() {
         return {
             "transform-origin": "0 0",
-            "transform": `scale(${this.plugin.scaling}) translate(${this.plugin.panning.x}px, ${this.plugin.panning.y}px)`
+            "transform": `scale(${this.plugin.scaling}) translate(${this.plugin.panning.x}px, ${this.plugin.panning.y}px)`,
         };
     }
 
@@ -127,7 +124,7 @@ export default class EditorView extends Vue {
                 : "";
         return {
             "background-position": `left ${positionLeft}px top ${positionTop}px`,
-            "background-size": `${backgroundSize} ${subGridBackgroundSize}`
+            "background-size": `${backgroundSize} ${subGridBackgroundSize}`,
         };
     }
 
@@ -166,14 +163,14 @@ export default class EditorView extends Vue {
             .map((c) => {
                 const nodes = Array.from(this.plugin.editor.nodeCategories.get(c)!).map((n) => ({
                     value: "addNode:" + n,
-                    label: this.plugin.nodeTypeAliases[n] || n
+                    label: this.plugin.nodeTypeAliases[n] || n,
                 }));
                 return { label: c, submenu: nodes };
             });
 
         const defaultNodes = this.plugin.editor.nodeCategories.get("default")!.map((n) => ({
             value: "addNode:" + n,
-            label: this.plugin.nodeTypeAliases[n] || n
+            label: this.plugin.nodeTypeAliases[n] || n,
         }));
 
         const addNodeSubmenu: IMenuItem[] = [...categories];
@@ -185,18 +182,18 @@ export default class EditorView extends Vue {
         this.contextMenu.items = [
             {
                 label: "Add Node",
-                submenu: addNodeSubmenu
+                submenu: addNodeSubmenu,
             },
             {
                 label: "Copy Nodes",
                 value: "copy",
-                disabledFunction: () => this.selectedNodes.length === 0
+                disabledFunction: () => this.selectedNodes.length === 0,
             },
             {
                 label: "Paste Nodes",
                 value: "paste",
-                disabledFunction: () => this.clipboard.isEmpty
-            }
+                disabledFunction: () => this.clipboard.isEmpty,
+            },
         ] as IMenuItem[];
     }
 
@@ -245,13 +242,13 @@ export default class EditorView extends Vue {
                 if (this.hoveringOver.isInput && connection) {
                     this.temporaryConnection = {
                         status: TemporaryConnectionState.NONE,
-                        from: connection.from
+                        from: connection.from,
                     };
                     this.plugin.editor.removeConnection(connection);
                 } else {
                     this.temporaryConnection = {
                         status: TemporaryConnectionState.NONE,
-                        from: this.hoveringOver
+                        from: this.hoveringOver,
                     };
                 }
 
@@ -282,7 +279,7 @@ export default class EditorView extends Vue {
         const newScale = this.plugin.scaling * (1 - scrollAmount / 3000);
         const currentPoint = [
             ev.offsetX / this.plugin.scaling - this.plugin.panning.x,
-            ev.offsetY / this.plugin.scaling - this.plugin.panning.y
+            ev.offsetY / this.plugin.scaling - this.plugin.panning.y,
         ];
         const newPoint = [ev.offsetX / newScale - this.plugin.panning.x, ev.offsetY / newScale - this.plugin.panning.y];
         const diff = [newPoint[0] - currentPoint[0], newPoint[1] - currentPoint[1]];
