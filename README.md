@@ -4,6 +4,9 @@
 ![npm](https://img.shields.io/npm/v/baklavajs.svg)
 
 Graph / node editor in the browser using VueJS, less than 60kb gzipped
+
+**[Online Demo](https://codesandbox.io/s/baklavajs-example-jyc6f?file=/src/App.vue)**
+
 ![example](docs/img/example.png)
 
 | Package | Version |
