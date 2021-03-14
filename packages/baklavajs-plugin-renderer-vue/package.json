@@ -1,6 +1,6 @@
 {
   "name": "@baklavajs/plugin-renderer-vue",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "description": "Add types to node interfaces for BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
