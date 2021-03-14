@@ -1,12 +1,6 @@
 <template>
     <div :id="data.id" :class="classes" :style="styles">
-
-        <div
-            class="__title"
-            @mousedown.self.stop="startDrag"
-            @contextmenu.self.prevent="openContextMenu"
-        >
-
+        <div class="__title" @mousedown.self.stop="startDrag" @contextmenu.self.prevent="openContextMenu">
             <span v-if="!renaming">{{ data.name }}</span>
             <input
                 v-else
@@ -16,20 +10,19 @@
                 placeholder="Node Name"
                 v-click-outside="doneRenaming"
                 @keydown.enter="doneRenaming"
-            >
+            />
 
             <component
                 :is="plugin.components.contextMenu"
                 v-model="contextMenu.show"
-                :x="contextMenu.x" :y="contextMenu.y"
+                :x="contextMenu.x"
+                :y="contextMenu.y"
                 :items="contextMenu.items"
                 @click="onContextMenu"
             ></component>
-
         </div>
 
         <div class="__content">
-            
             <!-- Outputs -->
             <div class="__outputs">
                 <component
@@ -44,7 +37,6 @@
             <!-- Options -->
             <div class="__options">
                 <template v-for="[name, option] in data.options">
-
                     <component
                         :is="plugin.components.nodeOption"
                         :key="name"
@@ -55,8 +47,14 @@
                         @openSidebar="openSidebar(name)"
                     ></component>
 
-                    <portal :key="'sb_' + name" to="sidebar"
-                        v-if="plugin.sidebar.nodeId === data.id && plugin.sidebar.optionName === name && option.sidebarComponent"
+                    <portal
+                        :key="'sb_' + name"
+                        to="sidebar"
+                        v-if="
+                            plugin.sidebar.nodeId === data.id &&
+                            plugin.sidebar.optionName === name &&
+                            option.sidebarComponent
+                        "
                     >
                         <component
                             :is="plugin.components.nodeOption"
@@ -67,7 +65,6 @@
                             :node="data"
                         ></component>
                     </portal>
-
                 </template>
             </div>
 
@@ -81,15 +78,12 @@
                     :data="input"
                 ></component>
             </div>
-
         </div>
-
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Inject, Watch } from "vue-property-decorator";
-import { VueConstructor } from "vue";
+import { Component, Vue, Prop, Inject } from "vue-property-decorator";
 
 // @ts-ignore
 import ClickOutside from "v-click-outside";
@@ -98,13 +92,17 @@ import { ViewPlugin } from "../../viewPlugin";
 import { IViewNode } from "../../../types";
 import { sanitizeName } from "../../utility/cssNames";
 
+interface IPosition {
+    x: number;
+    y: number;
+}
+
 @Component({
     directives: {
-        ClickOutside: ClickOutside.directive
-    }
+        ClickOutside: ClickOutside.directive,
+    },
 })
 export default class NodeView extends Vue {
-
     @Prop({ type: Object })
     data!: IViewNode;
 
@@ -114,7 +112,8 @@ export default class NodeView extends Vue {
     @Inject("plugin")
     plugin!: ViewPlugin;
 
-    dragging = false;
+    draggingStartPosition: IPosition | null = null;
+    draggingStartPoint: IPosition | null = null;
     renaming = false;
     tempName = "";
 
@@ -124,19 +123,17 @@ export default class NodeView extends Vue {
         y: 0,
         items: [
             { value: "rename", label: "Rename" },
-            { value: "delete", label: "Delete" }
-        ]
+            { value: "delete", label: "Delete" },
+        ],
     };
-
-    private unsubscribe: (() => void)|null = null;
 
     get classes() {
         return {
             "node": true,
             "--selected": this.selected,
-            "--dragging": this.dragging,
+            "--dragging": !!this.draggingStartPoint,
             "--two-column": !!this.data.twoColumn,
-            [`--type-${sanitizeName(this.data.type)}`]: true
+            [`--type-${sanitizeName(this.data.type)}`]: true,
         };
     }
 
@@ -171,8 +168,15 @@ export default class NodeView extends Vue {
         this.$forceUpdate();
     }
 
-    startDrag() {
-        this.dragging = true;
+    startDrag(ev: MouseEvent) {
+        this.draggingStartPoint = {
+            x: ev.screenX,
+            y: ev.screenY,
+        };
+        this.draggingStartPosition = {
+            x: this.data.position.x,
+            y: this.data.position.y,
+        };
         document.addEventListener("mousemove", this.handleMove);
         document.addEventListener("mouseup", this.stopDrag);
         this.select();
@@ -183,16 +187,18 @@ export default class NodeView extends Vue {
     }
 
     stopDrag() {
-        this.dragging = false;
+        this.draggingStartPoint = null;
+        this.draggingStartPosition = null;
         document.removeEventListener("mousemove", this.handleMove);
         document.removeEventListener("mouseup", this.stopDrag);
     }
 
     handleMove(ev: MouseEvent) {
-        if (this.dragging) {
-            const scaleFactor = this.plugin.scaling * window.devicePixelRatio;
-            this.data.position.x += ev.movementX / scaleFactor;
-            this.data.position.y += ev.movementY / scaleFactor;
+        if (this.draggingStartPoint) {
+            const dx = ev.screenX - this.draggingStartPoint.x;
+            const dy = ev.screenY - this.draggingStartPoint.y;
+            this.data.position.x = this.draggingStartPosition!.x + dx / this.plugin.scaling;
+            this.data.position.y = this.draggingStartPosition!.y + dy / this.plugin.scaling;
         }
     }
 
@@ -223,6 +229,5 @@ export default class NodeView extends Vue {
         this.plugin.sidebar.optionName = optionName;
         this.plugin.sidebar.visible = true;
     }
-
 }
 </script>

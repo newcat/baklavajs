@@ -77,6 +77,11 @@ import { IMenuItem } from "./ContextMenu.vue";
 import Clipboard from "../clipboard";
 import History from "../history";
 
+interface IPosition {
+    x: number;
+    y: number;
+}
+
 @Component
 export default class EditorView extends Vue {
     @Prop({ type: Object, required: true })
@@ -92,8 +97,10 @@ export default class EditorView extends Vue {
     temporaryConnection: ITemporaryConnection | null = null;
     hoveringOver?: INodeInterface | null = null;
     selectedNodes: IViewNode[] = [];
-    dragging = false;
     ctrlPressed = false;
+
+    draggingStartPoint: IPosition | null = null;
+    draggingStartPanning: IPosition | null = null;
 
     // Reason: https://github.com/newcat/baklavajs/issues/54
     counter = 0;
@@ -227,9 +234,11 @@ export default class EditorView extends Vue {
         if (this.temporaryConnection) {
             this.temporaryConnection.mx = ev.offsetX / this.plugin.scaling - this.plugin.panning.x;
             this.temporaryConnection.my = ev.offsetY / this.plugin.scaling - this.plugin.panning.y;
-        } else if (this.dragging) {
-            this.plugin.panning.x += ev.movementX / this.plugin.scaling;
-            this.plugin.panning.y += ev.movementY / this.plugin.scaling;
+        } else if (this.draggingStartPoint) {
+            const dx = ev.screenX - this.draggingStartPoint.x;
+            const dy = ev.screenY - this.draggingStartPoint.y;
+            this.plugin.panning.x = this.draggingStartPanning!.x + dx / this.plugin.scaling;
+            this.plugin.panning.y = this.draggingStartPanning!.y + dy / this.plugin.scaling;
         }
     }
 
@@ -256,13 +265,21 @@ export default class EditorView extends Vue {
                 this.$set(this.temporaryConnection as any, "my", null);
             } else if (ev.target === this.$el) {
                 this.unselectAllNodes();
-                this.dragging = true;
+                this.draggingStartPoint = {
+                    x: ev.screenX,
+                    y: ev.screenY,
+                };
+                this.draggingStartPanning = {
+                    x: this.plugin.panning.x,
+                    y: this.plugin.panning.y,
+                };
             }
         }
     }
 
-    mouseUp(ev: MouseEvent) {
-        this.dragging = false;
+    mouseUp() {
+        this.draggingStartPoint = null;
+        this.draggingStartPanning = null;
         const tc = this.temporaryConnection;
         if (tc && this.hoveringOver) {
             this.plugin.editor.addConnection(tc.from, tc.to!);
@@ -270,7 +287,7 @@ export default class EditorView extends Vue {
         this.temporaryConnection = null;
     }
 
-    mouseWheel(ev: MouseWheelEvent) {
+    mouseWheel(ev: WheelEvent) {
         ev.preventDefault();
         let scrollAmount = ev.deltaY;
         if (ev.deltaMode === 1) {
