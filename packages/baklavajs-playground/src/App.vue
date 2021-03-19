@@ -30,6 +30,7 @@ import AdvancedNode from "./AdvancedNode";
 import CommentNode from "./CommentNode";
 import OptionTestNode from "./OptionTestNode";
 import SelectTestNode from "./SelectTestNode";
+import SplitterNode from "./SplitterNode";
 
 import AddOption from "./AddOption";
 import TriggerOption from "./TriggerOption.vue";
@@ -91,6 +92,7 @@ export default class App extends Vue {
         this.editor.registerNodeType("CommentNode", CommentNode);
         this.editor.registerNodeType("OptionTestNode", OptionTestNode);
         this.editor.registerNodeType("SelectTestNode", SelectTestNode);
+        this.editor.registerNodeType("SplitterNode", SplitterNode);
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
         this.editor.addNode(new TestNode());
