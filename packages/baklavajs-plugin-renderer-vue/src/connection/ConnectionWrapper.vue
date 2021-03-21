@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, onBeforeUnmount, onMounted, nextTick, watchEffect } from "vue";
+import { computed, defineComponent, ref, onBeforeUnmount, onMounted, nextTick, watchEffect, watch } from "vue";
 import { Connection } from "@baklavajs/core";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom, { IResolvedDomElements } from "./domResolver";
@@ -79,7 +79,7 @@ export default defineComponent({
             }
         });
 
-        watchEffect(() => updateCoords());
+        watch([props.connection.from.parent!.position, props.connection.to.parent!.position], () => updateCoords());
 
         return { d, state, connection: props.connection };
     },

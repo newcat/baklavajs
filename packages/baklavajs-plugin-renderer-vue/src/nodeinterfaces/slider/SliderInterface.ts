@@ -1,8 +1,9 @@
+import { markRaw } from "vue";
 import { BaseNumericInterface } from "../baseNumericInterface";
 import SliderInterfaceComponent from "./SliderInterface.vue";
 
 export class SliderInterface extends BaseNumericInterface {
-    component = SliderInterfaceComponent;
+    component = markRaw(SliderInterfaceComponent);
     min: number;
     max: number;
 

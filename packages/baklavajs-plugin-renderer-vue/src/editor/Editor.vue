@@ -150,10 +150,6 @@ export default defineComponent({
             selectedNodes.value = [];
         };
 
-        watchEffect(() => {
-            console.log(props.plugin.editor.nodes);
-        });
-
         provide("plugin", props.plugin);
         return {
             el,

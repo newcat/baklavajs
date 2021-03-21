@@ -1,5 +1,5 @@
 <template>
-    <div :id="node.id" :class="classes" :style="styles">
+    <div :id="node.id" :class="classes" :style="styles" @mousedown="select">
         <div class="__title" @mousedown.self.stop="startDrag">
             <span v-if="!renaming">{{ node.title }}</span>
             <input
@@ -56,7 +56,6 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
-        console.log("NODE", props);
         const plugin = inject<ViewPlugin>("plugin")!;
 
         const dragging = ref(false);
@@ -78,11 +77,15 @@ export default defineComponent({
             width: `${props.node.width}px`,
         }));
 
+        const select = () => {
+            emit("select", props.node);
+        }
+
         const startDrag = () => {
             dragging.value = true;
             document.addEventListener("mousemove", handleMove);
             document.addEventListener("mouseup", stopDrag);
-            emit("select", props.node);
+            select();
         };
 
         const stopDrag = () => {
@@ -103,7 +106,7 @@ export default defineComponent({
             renaming.value = false;
         };
 
-        return { plugin, renaming, tempName, doneRenaming, classes, styles, startDrag, stopDrag, handleMove };
+        return { plugin, renaming, tempName, doneRenaming, classes, styles, select, startDrag, stopDrag, handleMove };
     },
 });
 </script>

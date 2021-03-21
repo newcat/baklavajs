@@ -7,10 +7,9 @@
         <component
             v-else
             :is="intf.component"
+            v-model="intf.value"
             :node="node"
             :intf="intf"
-            :value="intf.value"
-            @input="intf.value = $event"
         ></component>
     </div>
 </template>

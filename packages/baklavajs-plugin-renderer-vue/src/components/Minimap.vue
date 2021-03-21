@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { defineComponent, inject, onBeforeUnmount, onMounted, ref, toRef, watch } from "vue";
 import { IConnection, AbstractNode } from "@baklavajs/core";
 import getDomElements, { getDomElementOfNode } from "../connection/domResolver";
 import { getPortCoordinates } from "../connection/portCoordinates";
@@ -92,16 +92,16 @@ export default defineComponent({
                 y2: Number.MIN_SAFE_INTEGER,
             };
             for (const nc of nodeCoords.values()) {
-                if (nc.x1 < bounds.x1) {
+                if (nc.x1 < newBounds.x1) {
                     newBounds.x1 = nc.x1;
                 }
-                if (nc.y1 < bounds.y1) {
+                if (nc.y1 < newBounds.y1) {
                     newBounds.y1 = nc.y1;
                 }
-                if (nc.x2 > bounds.x2) {
+                if (nc.x2 > newBounds.x2) {
                     newBounds.x2 = nc.x2;
                 }
-                if (nc.y2 > bounds.y2) {
+                if (nc.y2 > newBounds.y2) {
                     newBounds.y2 = nc.y2;
                 }
             }
@@ -119,7 +119,6 @@ export default defineComponent({
             // draw connections
             ctx.strokeStyle = "white";
             for (const c of props.connections) {
-                const toDom = getDomElements(c.to);
                 const [origX1, origY1] = getPortCoordinates(getDomElements(c.from));
                 const [origX2, origY2] = getPortCoordinates(getDomElements(c.to));
                 const [x1, y1] = transformCoordinates(origX1, origY1);
@@ -228,11 +227,11 @@ export default defineComponent({
             dragging = false;
         };
 
-        watch([showViewBounds, plugin.panning.x, plugin.panning.y, plugin.scaling], () => {
+        watch([showViewBounds, plugin.panning, toRef(plugin, "scaling")], () => {
             updateCanvas();
         });
 
-        return { canvas, showViewBounds };
+        return { canvas, showViewBounds, mousedown, mousemove, mouseup };
     },
 });
 </script>

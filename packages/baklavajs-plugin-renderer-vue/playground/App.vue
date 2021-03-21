@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref } from "vue";
+import { defineComponent, Ref, ref, shallowRef } from "vue";
 
 import {
     Editor,
@@ -52,14 +52,14 @@ export default defineComponent({
         viewPlugin.value.enableMinimap = true;
         editor.value.use(viewPlugin.value);
 
-        const engine = new Engine(true);
+        /*const engine = new Engine(true);
         engine.events.calculated.addListener(token, (r) => {
             for (const v of r.values()) {
                 console.log(v);
             }
         });
         engine.hooks.gatherCalculationData.tap(token, () => "def");
-        editor.value.use(engine);
+        editor.value.use(engine);*/
 
         const nodeInterfaceTypes = new InterfaceTypePlugin();
         editor.value.use(nodeInterfaceTypes);

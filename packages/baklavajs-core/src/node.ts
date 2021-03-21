@@ -156,6 +156,8 @@ export abstract class Node<
             return false;
         }
         (ioObject as Record<string, NodeInterface>)[key] = io;
+        io.parent = this as AbstractNode;
+        io.isInput = type === "input";
         afterEvent.emit(io);
         return true;
     }

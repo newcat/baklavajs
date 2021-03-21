@@ -48,7 +48,7 @@ export default defineComponent({
         const isMouseDown = ref(false);
 
         const percentage = computed(() =>
-            Math.min(100, Math.max(0, (props.intf.value * 100) / (props.intf.min - props.intf.max)))
+            Math.min(100, Math.max(0, (props.intf.value * 100) / (props.intf.max - props.intf.min)))
         );
 
         const mousedown = () => {

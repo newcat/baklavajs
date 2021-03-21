@@ -23,26 +23,31 @@ interface INodeDefinition<I extends InterfaceFactory = {}, O extends InterfaceFa
     onCreate?: (this: Node<FactoryToDefinition<I>, FactoryToDefinition<O>>) => void;
 }
 
-function executeFactory<T extends InterfaceFactory>(factory?: T): FactoryToDefinition<T> {
-    const res: Record<string, NodeInterface> = {};
-    Object.keys(factory || {}).forEach((k) => {
-        res[k] = factory![k]();
-    });
-    return res as FactoryToDefinition<T>;
-}
-
 export function defineNode<I extends InterfaceFactory, O extends InterfaceFactory>(
     definition: INodeDefinition<I, O>
 ): new () => Node<FactoryToDefinition<I>, FactoryToDefinition<O>> {
     return class extends Node<FactoryToDefinition<I>, FactoryToDefinition<O>> {
         public type = definition.type;
         public title = definition.title ?? definition.type;
-        public inputs: FactoryToDefinition<I> = executeFactory(definition.inputs);
-        public outputs: FactoryToDefinition<O> = executeFactory(definition.outputs);
+        public inputs: FactoryToDefinition<I> = {} as any;
+        public outputs: FactoryToDefinition<O> = {} as any;
 
         constructor() {
             super();
+            this.executeFactory("input", definition.inputs);
+            this.executeFactory("output", definition.outputs);
             definition.onCreate?.call(this);
+        }
+
+        private executeFactory<T extends InterfaceFactory>(type: "input" | "output", factory?: T): void {
+            Object.keys(factory || {}).forEach((k) => {
+                const intf = factory![k]();
+                if (type === "input") {
+                    this.addInput(k, intf);
+                } else {
+                    this.addOutput(k, intf);
+                }
+            });
         }
     };
 }

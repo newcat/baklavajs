@@ -9,7 +9,8 @@
             </div>
         </div>
 
-        <portal-target name="sidebar"></portal-target>
+        <!-- TODO: Make unique so it works with multiple Baklava instances on the same page -->
+        <div id="sidebar-container"></div>
     </div>
 </template>
 
