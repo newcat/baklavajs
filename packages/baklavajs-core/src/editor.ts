@@ -218,7 +218,7 @@ export class Editor {
                 continue;
             }
 
-            const node = new nt() as AbstractNode;
+            const node = new nt();
             this.addNode(node);
             node.load(n);
         }

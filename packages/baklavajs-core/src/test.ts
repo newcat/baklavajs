@@ -1,4 +1,4 @@
-import { defineNode, FactoryToDefinition, InterfaceFactory } from "./defineNode";
+import { defineNode, InterfaceFactory } from "./defineNode";
 import { AbstractNode, Node } from "./node";
 import { NodeInterface, NodeInterfaceDefinition } from "./nodeInterface";
 
@@ -8,10 +8,6 @@ const x = {
     simple: () => new CheckboxInterface("A", false),
     advanced: () => new CheckboxInterface("A", true),
 };
-
-declare function ftonormal<F extends InterfaceFactory>(v: F): FactoryToDefinition<F>;
-
-const y: Record<string, NodeInterface<any>> = ftonormal(x);
 
 const TestNode = defineNode({
     type: "TestNode",
@@ -30,6 +26,6 @@ const TestNode = defineNode({
 });
 
 // const n: Node<NodeInterfaceDefinition, NodeInterfaceDefinition> = new TestNode();
-const n = new TestNode() as Node<NodeInterfaceDefinition, NodeInterfaceDefinition>;
+const n = new TestNode();
 
 n.inputs.g.save();

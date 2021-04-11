@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "@baklavajs/events": "^1.8.0",
-    "lodash.mapvalues": "^4.6.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

@@ -1,40 +1,21 @@
-import mapValues from "lodash.mapvalues";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { v4 as uuidv4 } from "uuid";
 import type { Editor } from "./editor";
-import type {
-    NodeInterfaceDefinition,
-    NodeInterfaceDefinitionValues,
-    NodeInterface,
-    NodeInterfaceDefinitionStates,
-} from "./nodeInterface";
+import type { NodeInterfaceDefinition, NodeInterface, NodeInterfaceDefinitionStates } from "./nodeInterface";
 
-export type CalculateFunctionReturnType<O extends NodeInterfaceDefinition> =
-    | NodeInterfaceDefinitionValues<O>
-    | Promise<NodeInterfaceDefinitionValues<O>>
-    | void;
+export type CalculateFunctionReturnType<O> = O | Promise<O> | void;
 
-export type CalculateFunction<I extends NodeInterfaceDefinition, O extends NodeInterfaceDefinition> = (
-    inputs: NodeInterfaceDefinitionValues<I>,
-    globalValues?: any
-    // ) => CalculateFunctionReturnType<O>;
-) => CalculateFunctionReturnType<O>;
+export type CalculateFunction<I, O> = (inputs: I, globalValues?: any) => CalculateFunctionReturnType<O>;
 
 export interface INodeState<I, O> {
     type: string;
     title: string;
     id: string;
-    inputs: NodeInterfaceDefinitionStates<I>;
-    outputs: NodeInterfaceDefinitionStates<O>;
+    inputs: NodeInterfaceDefinitionStates<I> & NodeInterfaceDefinitionStates<Record<string, NodeInterface<any>>>;
+    outputs: NodeInterfaceDefinitionStates<O> & NodeInterfaceDefinitionStates<Record<string, NodeInterface<any>>>;
 }
 
-/**
- * Abstract base class for every node
- */
-export abstract class Node<
-    I extends NodeInterfaceDefinition = NodeInterfaceDefinition,
-    O extends NodeInterfaceDefinition = NodeInterfaceDefinition
-> {
+export abstract class AbstractNode {
     /** Type of the node */
     public abstract type: string;
     /** Customizable display name of the node. */
@@ -42,8 +23,8 @@ export abstract class Node<
     /** Unique identifier of the node */
     public id: string = uuidv4();
 
-    public abstract inputs: I;
-    public abstract outputs: O;
+    public abstract inputs: Record<string, NodeInterface<any>>;
+    public abstract outputs: Record<string, NodeInterface<any>>;
 
     public events = {
         loaded: new BaklavaEvent<AbstractNode>(),
@@ -58,51 +39,15 @@ export abstract class Node<
     };
 
     public hooks = {
-        beforeLoad: new SequentialHook<INodeState<NodeInterfaceDefinition, NodeInterfaceDefinition>>(),
-        afterSave: new SequentialHook<INodeState<NodeInterfaceDefinition, NodeInterfaceDefinition>>(),
+        beforeLoad: new SequentialHook<INodeState<any, any>>(),
+        afterSave: new SequentialHook<INodeState<any, any>>(),
     };
 
-    private editorInstance?: Editor;
+    protected editorInstance?: Editor;
 
-    public load(state: INodeState<I, O>): void {
-        this.hooks.beforeLoad.execute(state);
-        this.id = state.id;
-        this.title = state.title;
-        Object.entries(state.inputs).forEach(([k, v]) => {
-            if (this.inputs[k]) {
-                this.inputs[k].load(v);
-            }
-        });
-        Object.entries(state.outputs).forEach(([k, v]) => {
-            if (this.outputs[k]) {
-                this.outputs[k].load(v);
-            }
-        });
-        this.events.loaded.emit(this as any);
-    }
-
-    public save(): INodeState<I, O> {
-        const inputStates = mapValues(this.inputs, (v) => v.save()) as NodeInterfaceDefinitionStates<I>;
-        const outputStates = mapValues(this.outputs, (v) => v.save()) as NodeInterfaceDefinitionStates<O>;
-
-        const state: INodeState<I, O> = {
-            type: this.type,
-            id: this.id,
-            title: this.title,
-            inputs: inputStates,
-            outputs: outputStates,
-        };
-        return this.hooks.afterSave.execute(state) as INodeState<I, O>;
-    }
-
-    /**
-     * The default implementation does nothing.
-     * Overwrite this method to do calculation.
-     * @param inputs Values of all input interfaces
-     * @param globalValues Set of values passed to every node by the engine plugin
-     * @return Values for output interfaces
-     */
-    public calculate?: CalculateFunction<I, O>;
+    public abstract load(state: INodeState<any, any>): void;
+    public abstract save(): INodeState<any, any>;
+    public abstract calculate?: CalculateFunction<any, any>;
 
     /**
      * Add an input interface to the node
@@ -155,8 +100,8 @@ export abstract class Node<
         if (beforeEvent.emit(io)) {
             return false;
         }
-        (ioObject as Record<string, NodeInterface>)[key] = io;
-        io.parent = this as AbstractNode;
+        ioObject[key] = io;
+        io.parent = this;
         io.isInput = type === "input";
         afterEvent.emit(io);
         return true;
@@ -193,5 +138,56 @@ export abstract class Node<
     }
 }
 
-export type AbstractNode = Node<NodeInterfaceDefinition, NodeInterfaceDefinition>;
+/**
+ * Abstract base class for every node
+ */
+export abstract class Node<I, O> extends AbstractNode {
+    public abstract inputs: NodeInterfaceDefinition<I> & Record<string, NodeInterface<any>>;
+    public abstract outputs: NodeInterfaceDefinition<O> & Record<string, NodeInterface<any>>;
+
+    public load(state: INodeState<I, O>): void {
+        this.hooks.beforeLoad.execute(state);
+        this.id = state.id;
+        this.title = state.title;
+        Object.entries(state.inputs).forEach(([k, v]) => {
+            if (this.inputs[k]) {
+                this.inputs[k].load(v);
+            }
+        });
+        Object.entries(state.outputs).forEach(([k, v]) => {
+            if (this.outputs[k]) {
+                this.outputs[k].load(v);
+            }
+        });
+        this.events.loaded.emit(this as any);
+    }
+
+    public save(): INodeState<I, O> {
+        const inputStates = Object.fromEntries(
+            Object.entries(this.inputs).map(([k, v]) => [k, v.save()])
+        ) as NodeInterfaceDefinitionStates<I>;
+        const outputStates = Object.fromEntries(
+            Object.entries(this.outputs).map(([k, v]) => [k, v.save()])
+        ) as NodeInterfaceDefinitionStates<O>;
+
+        const state: INodeState<I, O> = {
+            type: this.type,
+            id: this.id,
+            title: this.title,
+            inputs: inputStates as any,
+            outputs: outputStates as any,
+        };
+        return this.hooks.afterSave.execute(state) as INodeState<I, O>;
+    }
+
+    /**
+     * The default implementation does nothing.
+     * Overwrite this method to do calculation.
+     * @param inputs Values of all input interfaces
+     * @param globalValues Set of values passed to every node by the engine plugin
+     * @return Values for output interfaces
+     */
+    public calculate?: CalculateFunction<I, O>;
+}
+
 export type AbstractNodeConstructor = new () => AbstractNode;

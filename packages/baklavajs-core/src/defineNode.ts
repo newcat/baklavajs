@@ -1,36 +1,30 @@
 import type { NodeInterface, NodeInterfaceDefinition } from "./nodeInterface";
 import { CalculateFunction, Node } from "./node";
 
-export type NodeConstructor<I extends NodeInterfaceDefinition, O extends NodeInterfaceDefinition> = new () => Node<
-    I,
-    O
->;
+export type NodeConstructor<I, O> = new () => Node<I, O>;
 export type NodeInstanceOf<T> = T extends new () => Node<infer A, infer B> ? Node<A, B> : never;
-export type NodeInterfaceFactory<T> = () => NodeInterface<T>;
-export type InterfaceFactory = Record<string, NodeInterfaceFactory<any>>;
 
-export type FactoryToDefinition<D extends InterfaceFactory> = {
-    [K in keyof D]: D[K] extends NodeInterfaceFactory<infer T> ? NodeInterface<T> : never;
+export type NodeInterfaceFactory<T> = () => NodeInterface<T>;
+export type InterfaceFactory<T> = {
+    [K in keyof T]: NodeInterfaceFactory<T[K]>;
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-interface INodeDefinition<I extends InterfaceFactory = {}, O extends InterfaceFactory = {}> {
+interface INodeDefinition<I, O> {
     type: string;
     title?: string;
-    inputs?: I;
-    outputs?: O;
-    calculate?: CalculateFunction<FactoryToDefinition<I>, FactoryToDefinition<O>>;
-    onCreate?: (this: Node<FactoryToDefinition<I>, FactoryToDefinition<O>>) => void;
+    inputs?: InterfaceFactory<I>;
+    outputs?: InterfaceFactory<O>;
+    calculate?: CalculateFunction<I, O>;
+    onCreate?: (this: Node<I, O>) => void;
 }
 
-export function defineNode<I extends InterfaceFactory, O extends InterfaceFactory>(
-    definition: INodeDefinition<I, O>
-): new () => Node<FactoryToDefinition<I>, FactoryToDefinition<O>> {
-    return class extends Node<FactoryToDefinition<I>, FactoryToDefinition<O>> {
+export function defineNode<I, O>(definition: INodeDefinition<I, O>): new () => Node<I, O> {
+    return class extends Node<I, O> {
         public type = definition.type;
         public title = definition.title ?? definition.type;
-        public inputs: FactoryToDefinition<I> = {} as any;
-        public outputs: FactoryToDefinition<O> = {} as any;
+        public inputs: NodeInterfaceDefinition<I> = {} as any;
+        public outputs: NodeInterfaceDefinition<O> = {} as any;
 
         constructor() {
             super();
@@ -39,13 +33,13 @@ export function defineNode<I extends InterfaceFactory, O extends InterfaceFactor
             definition.onCreate?.call(this);
         }
 
-        private executeFactory<T extends InterfaceFactory>(type: "input" | "output", factory?: T): void {
-            Object.keys(factory || {}).forEach((k) => {
+        private executeFactory<V, T extends InterfaceFactory<V>>(type: "input" | "output", factory?: T): void {
+            (Object.keys(factory || {}) as (keyof V)[]).forEach((k) => {
                 const intf = factory![k]();
                 if (type === "input") {
-                    this.addInput(k, intf);
+                    this.addInput(k as string, intf);
                 } else {
-                    this.addOutput(k, intf);
+                    this.addOutput(k as string, intf);
                 }
             });
         }

@@ -85,10 +85,9 @@ export class NodeInterface<T = any> {
     }
 }
 
-export type NodeInterfaceDefinition = Record<string, NodeInterface>;
-export type NodeInterfaceDefinitionValues<D extends NodeInterfaceDefinition> = {
-    [K in keyof D]: D[K] extends NodeInterface<infer T> ? T : never;
+export type NodeInterfaceDefinition<T> = {
+    [K in keyof T]: NodeInterface<T[K]>;
 };
-export type NodeInterfaceDefinitionStates<D> = {
-    [K in keyof D]: D[K] extends NodeInterface<infer T> ? INodeInterfaceState<T> : never;
+export type NodeInterfaceDefinitionStates<T> = {
+    [K in keyof T]: INodeInterfaceState<T[K]>;
 };
