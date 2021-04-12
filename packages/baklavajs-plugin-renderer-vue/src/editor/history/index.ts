@@ -3,6 +3,7 @@ import { ViewPlugin } from "../../viewPlugin";
 import { IStep } from "./step";
 import NodeStep from "./nodeStep";
 import ConnectionStep from "./connectionStep";
+import TransactionStep from "./transactionStep";
 
 export default class History {
     public maxSteps = 200;
@@ -29,6 +30,7 @@ export default class History {
         this.viewPlugin.editor.events.removeConnection.addListener(this, (conn) => {
             this.addStep(new ConnectionStep("removeConnection", conn));
         });
+        // TODO: Also add moving nodes to the history
     }
 
     public startTransaction() {
@@ -37,6 +39,10 @@ export default class History {
 
     public commitTransaction() {
         this.activeTransaction = false;
+        if (this.transactionSteps.length > 0) {
+            this.addStep(new TransactionStep(this.transactionSteps));
+            this.transactionSteps = [];
+        }
     }
 
     public undo() {

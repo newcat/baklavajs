@@ -1,5 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
-import { Editor, AbstractNode, INodeState, IConnectionState } from "@baklavajs/core";
+import {
+    Editor,
+    AbstractNode,
+    INodeState,
+    IConnectionState,
+    Connection,
+    NodeInterface,
+    NodeInterfaceFactory,
+} from "@baklavajs/core";
 
 export default class Clipboard {
     private editor: Editor;
@@ -34,11 +42,11 @@ export default class Clipboard {
         // Map old IDs to new IDs
         const idmap = new Map<string, string>();
 
-        // TODO: What is this?
-        const intfmap = new Map<string, string>();
-
         const parsedNodeBuffer = JSON.parse(this.nodeBuffer) as INodeState<any, any>[];
         const parsedConnectionBuffer = JSON.parse(this.connectionBuffer) as IConnectionState[];
+
+        const newNodes: AbstractNode[] = [];
+        const newConnections: Connection[] = [];
 
         for (const n of parsedNodeBuffer) {
             const nodeType = this.editor.nodeTypes.get(n.type);
@@ -48,21 +56,24 @@ export default class Clipboard {
             }
             const copiedNode = new nodeType();
             const generatedId = copiedNode.id;
+            newNodes.push(copiedNode);
 
-            // TODO: Refactor everything here
-
-            copiedNode.inputs.forEach((intf) => {
-                intf.hooks.load.tap(this, (intfState) => {
-                    const newIntfId = uuidv4();
-                    idmap.set(intfState.id, newIntfId);
-                    intfmap.set(intfState.id, generatedId);
-                    intf.id = newIntfId;
-                    intf.hooks.load.untap(this);
-                    return intfState;
+            const tapInterfaces = (intfs: Record<string, NodeInterface<any>>) => {
+                Object.values(intfs).forEach((intf) => {
+                    intf.hooks.load.tap(this, (intfState) => {
+                        const newIntfId = uuidv4();
+                        idmap.set(intfState.id, newIntfId);
+                        intf.id = newIntfId;
+                        intf.hooks.load.untap(this);
+                        return intfState;
+                    });
                 });
-            });
+            };
 
-            copiedNode.hooks.load.tap(this, (nodeState) => {
+            tapInterfaces(copiedNode.inputs);
+            tapInterfaces(copiedNode.outputs);
+
+            copiedNode.hooks.beforeLoad.tap(this, (nodeState) => {
                 const ns = nodeState as any;
                 if (ns.position) {
                     ns.position.x += 10;
@@ -78,17 +89,36 @@ export default class Clipboard {
         }
 
         for (const c of parsedConnectionBuffer) {
-            const fromNode = this.editor.nodes.find((n) => n.id === intfmap.get(c.from));
-            const toNode = this.editor.nodes.find((n) => n.id === intfmap.get(c.to));
-            if (!fromNode || !toNode) {
-                continue;
-            }
-            const fromIntf = Array.from(fromNode.interfaces.values()).find((intf) => intf.id === idmap.get(c.from));
-            const toIntf = Array.from(toNode.interfaces.values()).find((intf) => intf.id === idmap.get(c.to));
+            const fromIntf = this.findInterface(newNodes, idmap.get(c.from)!, "output");
+            const toIntf = this.findInterface(newNodes, idmap.get(c.to)!, "input");
             if (!fromIntf || !toIntf) {
                 continue;
             }
-            this.editor.addConnection(fromIntf, toIntf);
+            const newConnection = this.editor.addConnection(fromIntf, toIntf);
+            if (newConnection) {
+                newConnections.push(newConnection);
+            }
         }
+
+        return {
+            newNodes,
+            newConnections,
+        };
+    }
+
+    private findInterface(nodes: AbstractNode[], id: string, io?: "input" | "output"): NodeInterface<any> | undefined {
+        for (const n of nodes) {
+            let intf: NodeInterface<any> | undefined;
+            if (!io || io === "input") {
+                intf = Object.values(n.inputs).find((intf) => intf.id === id);
+            }
+            if (!intf && (!io || io === "output")) {
+                intf = Object.values(n.outputs).find((intf) => intf.id === id);
+            }
+            if (intf) {
+                return intf;
+            }
+        }
+        return undefined;
     }
 }

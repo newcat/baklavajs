@@ -51,17 +51,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, Ref, ref, toRef, watchEffect } from "vue";
+import { computed, defineComponent, provide, Ref, ref, toRef } from "vue";
 
-import { Editor, AbstractNode, Connection, NodeInterface } from "@baklavajs/core";
+import { AbstractNode } from "@baklavajs/core";
 import { ViewPlugin } from "../viewPlugin";
-import { ITemporaryConnection, TemporaryConnectionState } from "../connection/connection";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
 
 import Node from "../node/Node.vue";
 
-// import Clipboard from "./clipboard";
+import Clipboard from "./clipboard";
 import History from "./history";
 
 export default defineComponent({
@@ -82,7 +81,7 @@ export default defineComponent({
         // Reason: https://github.com/newcat/baklavajs/issues/54
         const counter = ref(0);
 
-        // const clipboard = new Clipboard(props.plugin.editor);
+        const clipboard = new Clipboard(props.plugin.editor);
         const history = new History(props.plugin);
 
         const pluginRef = toRef(props, "plugin") as Ref<ViewPlugin>;
@@ -130,6 +129,12 @@ export default defineComponent({
                 history.undo();
             } else if (ev.key === "y" && ev.ctrlKey) {
                 history.redo();
+            } else if (ev.key === "c" && ev.ctrlKey) {
+                clipboard.copy(selectedNodes.value);
+            } else if (ev.key === "v" && ev.ctrlKey && !clipboard.isEmpty) {
+                history.startTransaction();
+                clipboard.paste();
+                history.commitTransaction();
             }
         };
 

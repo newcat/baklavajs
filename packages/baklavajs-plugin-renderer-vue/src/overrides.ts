@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Node } from "@baklavajs/core/dist/node";
+import { AbstractNode } from "@baklavajs/core/dist/node";
 
 declare module "@baklavajs/core/dist/node" {
-    interface Node {
+    interface AbstractNode {
         position: { x: number; y: number };
         width: number;
         disablePointerEvents: boolean;

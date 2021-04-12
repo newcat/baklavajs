@@ -223,7 +223,7 @@ export default defineComponent({
             }
         };
 
-        const mouseup = (ev: MouseEvent) => {
+        const mouseup = () => {
             dragging = false;
         };
 
