@@ -1,6 +1,6 @@
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { v4 as uuidv4 } from "uuid";
-import type { Editor } from "./editor";
+import type { Graph } from "./graph";
 import type { NodeInterfaceDefinition, NodeInterface, NodeInterfaceDefinitionStates } from "./nodeInterface";
 
 export type CalculateFunctionReturnType<O> = O | Promise<O> | void;
@@ -43,7 +43,7 @@ export abstract class AbstractNode {
         afterSave: new SequentialHook<INodeState<any, any>>(),
     };
 
-    protected editorInstance?: Editor;
+    protected graphInstance?: Graph;
 
     public abstract load(state: INodeState<any, any>): void;
     public abstract save(): INodeState<any, any>;
@@ -86,11 +86,11 @@ export abstract class AbstractNode {
     }
 
     /**
-     * This function will automatically be called as soon as the node is added to an editor.
-     * @param editor Editor instance
+     * This function will automatically be called as soon as the node is added to a graph.
+     * @param editor Graph instance
      */
-    public registerEditor(editor: Editor): void {
-        this.editorInstance = editor;
+    public registerGraph(graph: Graph): void {
+        this.graphInstance = graph;
     }
 
     private addInterface(type: "input" | "output", key: string, io: NodeInterface): boolean {
@@ -116,10 +116,10 @@ export abstract class AbstractNode {
         }
 
         if (io.connectionCount > 0) {
-            if (this.editorInstance) {
-                const connections = this.editorInstance.connections.filter((c) => c.from === io || c.to === io);
+            if (this.graphInstance) {
+                const connections = this.graphInstance.connections.filter((c) => c.from === io || c.to === io);
                 connections.forEach((c) => {
-                    this.editorInstance!.removeConnection(c);
+                    this.graphInstance!.removeConnection(c);
                 });
             } else {
                 throw new Error(
