@@ -13,8 +13,6 @@ export class NodeInterface<T = any> {
 
     /** Will be set automatically after the node was created */
     public isInput?: boolean;
-    /** Will be set automatically after the node was created */
-    public parent?: AbstractNode;
 
     /** Whether to show the port (the thing connections connect to) */
     public port = true;

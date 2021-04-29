@@ -1,7 +1,8 @@
-import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { v4 as uuidv4 } from "uuid";
+import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import type { Graph } from "./graph";
 import type { NodeInterfaceDefinition, NodeInterface, NodeInterfaceDefinitionStates } from "./nodeInterface";
+import { mapValues } from "./utils";
 
 export type CalculateFunctionReturnType<O> = O | Promise<O> | void;
 
@@ -45,8 +46,6 @@ export abstract class AbstractNode {
 
     protected graphInstance?: Graph;
 
-    public abstract load(state: INodeState<any, any>): void;
-    public abstract save(): INodeState<any, any>;
     public abstract calculate?: CalculateFunction<any, any>;
 
     /**
@@ -93,6 +92,40 @@ export abstract class AbstractNode {
         this.graphInstance = graph;
     }
 
+    public load(state: INodeState<any, any>): void {
+        this.hooks.beforeLoad.execute(state);
+        this.id = state.id;
+        this.title = state.title;
+        Object.entries(state.inputs).forEach(([k, v]) => {
+            if (this.inputs[k]) {
+                this.inputs[k].load(v);
+            }
+        });
+        Object.entries(state.outputs).forEach(([k, v]) => {
+            if (this.outputs[k]) {
+                this.outputs[k].load(v);
+            }
+        });
+        this.events.loaded.emit(this as any);
+    }
+
+    public save(): INodeState<any, any> {
+        const inputStates = mapValues(this.inputs, (intf) => intf.save()) as NodeInterfaceDefinitionStates<any>;
+        const outputStates = mapValues(this.outputs, (intf) => intf.save()) as NodeInterfaceDefinitionStates<any>;
+
+        const state: INodeState<any, any> = {
+            type: this.type,
+            id: this.id,
+            title: this.title,
+            inputs: inputStates,
+            outputs: outputStates,
+        };
+        return this.hooks.afterSave.execute(state);
+    }
+
+    /** Override this method to perform cleanup when the node is deleted */
+    public destroy(): void {}
+
     private addInterface(type: "input" | "output", key: string, io: NodeInterface): boolean {
         const beforeEvent = type === "input" ? this.events.beforeAddInput : this.events.beforeAddOutput;
         const afterEvent = type === "input" ? this.events.addInput : this.events.addOutput;
@@ -101,7 +134,6 @@ export abstract class AbstractNode {
             return false;
         }
         ioObject[key] = io;
-        io.parent = this;
         io.isInput = type === "input";
         afterEvent.emit(io);
         return true;
@@ -146,38 +178,11 @@ export abstract class Node<I, O> extends AbstractNode {
     public abstract outputs: NodeInterfaceDefinition<O> & Record<string, NodeInterface<any>>;
 
     public load(state: INodeState<I, O>): void {
-        this.hooks.beforeLoad.execute(state);
-        this.id = state.id;
-        this.title = state.title;
-        Object.entries(state.inputs).forEach(([k, v]) => {
-            if (this.inputs[k]) {
-                this.inputs[k].load(v);
-            }
-        });
-        Object.entries(state.outputs).forEach(([k, v]) => {
-            if (this.outputs[k]) {
-                this.outputs[k].load(v);
-            }
-        });
-        this.events.loaded.emit(this as any);
+        super.load(state);
     }
 
     public save(): INodeState<I, O> {
-        const inputStates = Object.fromEntries(
-            Object.entries(this.inputs).map(([k, v]) => [k, v.save()])
-        ) as NodeInterfaceDefinitionStates<I>;
-        const outputStates = Object.fromEntries(
-            Object.entries(this.outputs).map(([k, v]) => [k, v.save()])
-        ) as NodeInterfaceDefinitionStates<O>;
-
-        const state: INodeState<I, O> = {
-            type: this.type,
-            id: this.id,
-            title: this.title,
-            inputs: inputStates as any,
-            outputs: outputStates as any,
-        };
-        return this.hooks.afterSave.execute(state) as INodeState<I, O>;
+        return super.save();
     }
 
     /**

@@ -1,21 +1,35 @@
-import { BaklavaEvent, PreventableBaklavaEvent } from "@baklavajs/events";
+import { v4 as uuidv4 } from "uuid";
+import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { Connection, DummyConnection, IConnection, IConnectionState } from "./connection";
-import { IAddConnectionEventData } from "./eventDataTypes";
-import { AbstractNode, INodeState } from "./node";
-import { NodeInterface } from "./nodeInterface";
+import { mapValues } from "./utils";
+import type { IAddConnectionEventData } from "./eventDataTypes";
+import type { AbstractNode, INodeState } from "./node";
+import type { INodeInterfaceState, NodeInterface } from "./nodeInterface";
+import type { Editor } from "./editor";
+
+export interface IGraphInterface {
+    nodeInterfaceId: string;
+    name: string;
+}
 
 export interface IGraphState extends Record<string, any> {
+    id: string;
     nodes: Array<INodeState<unknown, unknown>>;
     connections: IConnectionState[];
+    inputs: IGraphInterface[];
+    outputs: IGraphInterface[];
 }
 
 export class Graph {
-    public inputs: NodeInterface[] = [];
-    public outputs: NodeInterface[] = [];
+    public id = uuidv4();
+    public editor: Editor;
+    public template?: GraphTemplate;
 
-    private _graphs: Graph[] = [];
-    private _nodes: AbstractNode[] = [];
-    private _connections: Connection[] = [];
+    public inputs: IGraphInterface[] = [];
+    public outputs: IGraphInterface[] = [];
+
+    protected _nodes: AbstractNode[] = [];
+    protected _connections: Connection[] = [];
 
     public events = {
         beforeAddNode: new PreventableBaklavaEvent<AbstractNode>(),
@@ -29,6 +43,11 @@ export class Graph {
         removeConnection: new BaklavaEvent<IConnection>(),
     };
 
+    public hooks = {
+        save: new SequentialHook<IGraphState>(),
+        load: new SequentialHook<IGraphState>(),
+    };
+
     /** List of all nodes in this graph */
     public get nodes(): ReadonlyArray<AbstractNode> {
         return this._nodes;
@@ -39,9 +58,9 @@ export class Graph {
         return this._connections;
     }
 
-    /** List of all sub-graphs in this graph */
-    public get graphs(): ReadonlyArray<Graph> {
-        return this._graphs;
+    public constructor(editor: Editor, template?: GraphTemplate) {
+        this.editor = editor;
+        this.template = template;
     }
 
     /**
@@ -69,11 +88,13 @@ export class Graph {
             if (this.events.beforeRemoveNode.emit(node)) {
                 return;
             }
+            const interfaces = [...Object.values(node.inputs), ...Object.values(node.outputs)];
             this.connections
-                .filter((c) => c.from.parent === node || c.to.parent === node)
+                .filter((c) => interfaces.includes(c.from) || interfaces.includes(c.to))
                 .forEach((c) => this.removeConnection(c));
             this._nodes.splice(this.nodes.indexOf(node), 1);
             this.events.removeNode.emit(node);
+            node.destroy();
         }
     }
 
@@ -125,10 +146,14 @@ export class Graph {
     public checkConnection(from: NodeInterface<unknown>, to: NodeInterface<unknown>): false | DummyConnection {
         if (!from || !to) {
             return false;
-        } else if (from.parent === to.parent) {
+        }
+
+        /* TODO: Do we even need that? Or is that done by the engine plugin? Should we allow it?
+        if (from.parent === to.parent) {
             // connections must be between two separate nodes.
             return false;
         }
+        */
 
         if (from.isInput && !to.isInput) {
             // reverse connection
@@ -154,6 +179,11 @@ export class Graph {
         return new DummyConnection(from, to);
     }
 
+    /**
+     * Finds the NodeInterface with the provided id, as long as it exists in this graph
+     * @param id id of the NodeInterface to find
+     * @returns The NodeInterface if found, otherwise undefined
+     */
     public findNodeInterface(id: string): NodeInterface<unknown> | undefined {
         for (const node of this.nodes) {
             for (const k in node.inputs) {
@@ -169,5 +199,166 @@ export class Graph {
                 }
             }
         }
+    }
+
+    /**
+     * Load a state
+     * @param state State to load
+     */
+    public load(state: IGraphState): void {
+        // Clear current state
+        for (let i = this.connections.length - 1; i >= 0; i--) {
+            this.removeConnection(this.connections[i]);
+        }
+        for (let i = this.nodes.length - 1; i >= 0; i--) {
+            this.removeNode(this.nodes[i]);
+        }
+
+        // Load state
+        this.id = state.id;
+
+        for (const n of state.nodes) {
+            // find node type
+            const NodeType = this.editor.nodeTypes.get(n.type);
+            if (!NodeType) {
+                console.warn(`Node type ${n.type} is not registered`);
+                continue;
+            }
+
+            const node = new NodeType();
+            this.addNode(node);
+            node.load(n);
+        }
+
+        for (const c of state.connections) {
+            const fromIf = this.findNodeInterface(c.from);
+            const toIf = this.findNodeInterface(c.to);
+            if (!fromIf) {
+                console.warn(`Could not find interface with id ${c.from}`);
+                continue;
+            } else if (!toIf) {
+                console.warn(`Could not find interface with id ${c.to}`);
+                continue;
+            } else {
+                this.addConnection(fromIf, toIf);
+            }
+        }
+
+        this.hooks.load.execute(state);
+    }
+
+    /**
+     * Save a state
+     * @returns Current state
+     */
+    public save(): IGraphState {
+        const state: IGraphState = {
+            id: this.id,
+            nodes: this.nodes.map((n) => n.save()),
+            connections: this.connections.map((c) => ({
+                id: c.id,
+                from: c.from.id,
+                to: c.to.id,
+            })),
+            inputs: this.inputs,
+            outputs: this.outputs,
+        };
+        return this.hooks.save.execute(state);
+    }
+}
+
+export class GraphTemplate implements IGraphState {
+    public static fromGraph(graph: Graph, editor: Editor): GraphTemplate {
+        return new GraphTemplate(graph.save(), editor);
+    }
+
+    public id!: string;
+    public nodes!: Array<INodeState<unknown, unknown>>;
+    public connections!: IConnectionState[];
+    public inputs!: IGraphInterface[];
+    public outputs!: IGraphInterface[];
+
+    public editor: Editor;
+
+    constructor(state: IGraphState, editor: Editor) {
+        this.editor = editor;
+        this.update(state);
+    }
+
+    public events = {
+        updated: new BaklavaEvent<void>(),
+    };
+
+    public update(state: IGraphState) {
+        this.id = state.id;
+        this.nodes = state.nodes;
+        this.connections = state.connections;
+        this.inputs = state.inputs;
+        this.outputs = state.outputs;
+        this.events.updated.emit();
+    }
+
+    public createGraph(): Graph {
+        const idMap = new Map<string, string>();
+
+        const createNewId = (oldId: string): string => {
+            const newId = uuidv4();
+            idMap.set(oldId, newId);
+            return newId;
+        };
+
+        const getNewId = (oldId: string): string => {
+            const newId = idMap.get(oldId);
+            if (!newId) {
+                throw new Error(`Unable to create graph from template: Could not map old id ${oldId} to new id`);
+            }
+            return newId;
+        };
+
+        const mapNodeInterfaceIds = (interfaceStates: Record<string, INodeInterfaceState<any>>) => {
+            return mapValues(interfaceStates, (intf) => {
+                const clonedIntf: INodeInterfaceState<any> = {
+                    id: createNewId(intf.id),
+                    value: intf.value,
+                };
+                return clonedIntf;
+            });
+        };
+
+        const nodes: Array<INodeState<unknown, unknown>> = this.nodes.map((n) => ({
+            id: createNewId(n.id),
+            type: n.type,
+            title: n.title,
+            inputs: mapNodeInterfaceIds(n.inputs),
+            outputs: mapNodeInterfaceIds(n.outputs),
+        }));
+
+        const connections: IConnectionState[] = this.connections.map((c) => ({
+            id: createNewId(c.id),
+            from: getNewId(c.from),
+            to: getNewId(c.to),
+        }));
+
+        const inputs: IGraphInterface[] = this.inputs.map((i) => ({
+            name: i.name,
+            nodeInterfaceId: getNewId(i.nodeInterfaceId),
+        }));
+
+        const outputs: IGraphInterface[] = this.outputs.map((o) => ({
+            name: o.name,
+            nodeInterfaceId: getNewId(o.nodeInterfaceId),
+        }));
+
+        const clonedState: IGraphState = {
+            id: uuidv4(),
+            nodes,
+            connections,
+            inputs,
+            outputs,
+        };
+
+        const g = new Graph(this.editor);
+        g.load(clonedState);
+        return g;
     }
 }

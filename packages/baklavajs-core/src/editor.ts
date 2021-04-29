@@ -1,17 +1,15 @@
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
-import type { NodeInterface } from "./nodeInterface";
-import type { AbstractNode, INodeState, AbstractNodeConstructor } from "./node";
-import type { IAddConnectionEventData, IAddNodeTypeEventData } from "./eventDataTypes";
-import { Connection, DummyConnection, IConnection, IConnectionState } from "./connection";
+import type { AbstractNodeConstructor } from "./node";
+import type { IAddNodeTypeEventData } from "./eventDataTypes";
+import { Graph, IGraphState } from "./graph";
 
 export interface IPlugin {
     type: string;
     register(editor: Editor): void;
 }
 
-export interface IState extends Record<string, any> {
-    nodes: Array<INodeState<unknown, unknown>>;
-    connections: IConnectionState[];
+export interface EditorState extends Record<string, any> {
+    graph: IGraphState;
 }
 
 /** The main model class for BaklavaJS */
@@ -19,8 +17,12 @@ export class Editor {
     private _plugins: Set<IPlugin> = new Set();
     private _nodeTypes: Map<string, AbstractNodeConstructor> = new Map();
     private _nodeCategories: Map<string, string[]> = new Map([["default", []]]);
+    private _graph = new Graph(this);
+
+    public graphTemplates: IGraphState[] = [];
 
     public events = {
+        loaded: new BaklavaEvent<void>(),
         beforeRegisterNodeType: new PreventableBaklavaEvent<IAddNodeTypeEventData>(),
         registerNodeType: new BaklavaEvent<IAddNodeTypeEventData>(),
         beforeUsePlugin: new PreventableBaklavaEvent<IPlugin>(),
@@ -28,8 +30,8 @@ export class Editor {
     };
 
     public hooks = {
-        save: new SequentialHook<IState>(),
-        load: new SequentialHook<IState>(),
+        save: new SequentialHook<EditorState>(),
+        load: new SequentialHook<EditorState>(),
     };
 
     /** List of all registered node types */
@@ -45,6 +47,10 @@ export class Editor {
     /** List of all plugins in this editor */
     public get plugins(): ReadonlySet<IPlugin> {
         return this._plugins;
+    }
+
+    public get graph(): Graph {
+        return this._graph;
     }
 
     /**
@@ -69,60 +75,19 @@ export class Editor {
      * Load a state
      * @param state State to load
      */
-    public load(state: IState): void {
-        // Clear current state
-        // TODO: Is this even necessary?
-        /*
-        for (let i = this.connections.length - 1; i >= 0; i--) {
-            this.removeConnection(this.connections[i]);
-        }
-        for (let i = this.nodes.length - 1; i >= 0; i--) {
-            this.removeNode(this.nodes[i]);
-        }*/
-
-        // Load state
-        for (const n of state.nodes) {
-            // find node type
-            const nt = this.nodeTypes.get(n.type);
-            if (!nt) {
-                console.warn(`Node type ${n.type} is not registered`);
-                continue;
-            }
-
-            const node = new nt();
-            this.addNode(node);
-            node.load(n);
-        }
-
-        for (const c of state.connections) {
-            const fromIf = this.findNodeInterface(c.from);
-            const toIf = this.findNodeInterface(c.to);
-            if (!fromIf) {
-                console.warn(`Could not find interface with id ${c.from}`);
-                continue;
-            } else if (!toIf) {
-                console.warn(`Could not find interface with id ${c.to}`);
-                continue;
-            } else {
-                this.addConnection(fromIf, toIf);
-            }
-        }
-
-        this.hooks.load.execute(state);
+    public load(state: EditorState): void {
+        state = this.hooks.load.execute(state);
+        this._graph = new Graph(this);
+        this._graph.load(state.graph);
     }
 
     /**
      * Save a state
      * @returns Current state
      */
-    public save(): IState {
+    public save(): EditorState {
         const state = {
-            nodes: this.nodes.map((n) => n.save()),
-            connections: this.connections.map((c) => ({
-                id: c.id,
-                from: c.from.id,
-                to: c.to.id,
-            })),
+            graph: this.graph.save(),
         };
         return this.hooks.save.execute(state);
     }

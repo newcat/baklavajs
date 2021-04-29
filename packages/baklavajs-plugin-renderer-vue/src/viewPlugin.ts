@@ -1,15 +1,8 @@
-import { ComputedRef, ComponentOptions, markRaw } from "vue";
+import { ComputedRef } from "vue";
 import { IPlugin, Editor } from "@baklavajs/core";
 
 import { gridBackgroundProvider } from "./editor/backgroundProvider";
 import { IViewNodeState } from "./node/viewNode";
-
-import NodeView from "./node/Node.vue";
-import NodeInterfaceView from "./node/NodeInterface.vue";
-import ConnectionWrapper from "./connection/ConnectionWrapper.vue";
-import TempConnectionView from "./connection/TemporaryConnection.vue";
-import Sidebar from "./components/Sidebar.vue";
-import Minimap from "./components/Minimap.vue";
 
 export class ViewPlugin implements IPlugin {
     public type = "ViewPlugin";
@@ -29,18 +22,6 @@ export class ViewPlugin implements IPlugin {
 
     /** Show a minimap */
     public enableMinimap = false;
-
-    /** Use this property to provide custom components,
-     * which will be used when rendering the respective entities
-     */
-    public components: Record<string, ComponentOptions<any>> = markRaw({
-        node: NodeView,
-        nodeInterface: NodeInterfaceView,
-        connection: ConnectionWrapper,
-        tempConnection: TempConnectionView,
-        sidebar: Sidebar,
-        minimap: Minimap,
-    });
 
     public register(editor: Editor): void {
         this.editor = editor;

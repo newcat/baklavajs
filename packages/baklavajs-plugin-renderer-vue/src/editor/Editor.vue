@@ -18,35 +18,38 @@
         <svg class="connections-container">
             <g v-for="connection in connections" :key="connection.id + counter.toString()">
                 <slot name="connections" :connection="connection">
-                    <component :is="plugin.components.connection" :connection="connection"></component>
+                    <connection-wrapper :connection="connection"></connection-wrapper>
                 </slot>
             </g>
-            <component
-                :is="plugin.components.tempConnection"
-                v-if="temporaryConnection"
-                :connection="temporaryConnection"
-            ></component>
+            <slot name="temporaryConnection" :temporaryConnection="temporaryConnection">
+                <temporary-connection
+                    v-if="temporaryConnection"
+                    :connection="temporaryConnection"
+                ></temporary-connection>
+            </slot>
         </svg>
 
         <div class="node-container" :style="nodeContainerStyle">
-            <Node
-                v-for="node in nodes"
-                :key="node.id + counter.toString()"
-                :node="node"
-                :selected="selectedNodes.includes(node)"
-                @select="selectNode(node)"
-            >
-            </Node>
+            <template v-for="node in nodes">
+                <slot name="node" :node="node" :selected="selectedNodes.includes(node)" @select="selectNode(node)">
+                    <node
+                        :key="node.id + counter.toString()"
+                        :node="node"
+                        :selected="selectedNodes.includes(node)"
+                        @select="selectNode(node)"
+                    >
+                    </node>
+                </slot>
+            </template>
         </div>
 
-        <component :is="plugin.components.sidebar"></component>
+        <slot name="sidebar">
+            <sidebar></sidebar>
+        </slot>
 
-        <component
-            v-if="plugin.enableMinimap"
-            :is="plugin.components.minimap"
-            :nodes="nodes"
-            :connections="connections"
-        ></component>
+        <slot name="minimap" :nodes="nodes" :connections="connections">
+            <minimap v-if="plugin.enableMinimap" :nodes="nodes" :connections="connections"></minimap>
+        </slot>
     </div>
 </template>
 
@@ -59,12 +62,16 @@ import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
 
 import Node from "../node/Node.vue";
+import Connection from "./connection/ConnectionWrapper.vue";
+import TemporaryConnection from "./connection/TemporaryConnection.vue";
+import Sidebar from "./components/Sidebar.vue";
+import Minimap from "./components/Minimap.vue";
 
 import Clipboard from "./clipboard";
 import History from "./history";
 
 export default defineComponent({
-    components: { Node },
+    components: { Node, Connection, TemporaryConnection, Sidebar, Minimap },
     props: {
         plugin: {
             type: Object as () => ViewPlugin,
