@@ -1,6 +1,12 @@
-import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
+import {
+    PreventableBaklavaEvent,
+    BaklavaEvent,
+    SequentialHook,
+    IBaklavaEventEmitter,
+    IBaklavaTapable,
+} from "@baklavajs/events";
 import type { AbstractNodeConstructor } from "./node";
-import type { IAddNodeTypeEventData } from "./eventDataTypes";
+import type { IAddNodeTypeEventData, IRegisterNodeTypeOptions } from "./eventDataTypes";
 import { Graph, IGraphState } from "./graph";
 
 export interface IPlugin {
@@ -8,15 +14,18 @@ export interface IPlugin {
     register(editor: Editor): void;
 }
 
-export interface EditorState extends Record<string, any> {
+export interface IEditorState extends Record<string, any> {
     graph: IGraphState;
 }
 
+export interface INodeTypeInformation extends Required<IRegisterNodeTypeOptions> {
+    type: AbstractNodeConstructor;
+}
+
 /** The main model class for BaklavaJS */
-export class Editor {
+export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     private _plugins: Set<IPlugin> = new Set();
-    private _nodeTypes: Map<string, AbstractNodeConstructor> = new Map();
-    private _nodeCategories: Map<string, string[]> = new Map([["default", []]]);
+    private _nodeTypes: Map<string, INodeTypeInformation> = new Map();
     private _graph = new Graph(this);
 
     public graphTemplates: IGraphState[] = [];
@@ -30,18 +39,13 @@ export class Editor {
     };
 
     public hooks = {
-        save: new SequentialHook<EditorState>(),
-        load: new SequentialHook<EditorState>(),
+        save: new SequentialHook<IEditorState>(),
+        load: new SequentialHook<IEditorState>(),
     };
 
     /** List of all registered node types */
-    public get nodeTypes(): ReadonlyMap<string, AbstractNodeConstructor> {
+    public get nodeTypes(): ReadonlyMap<string, INodeTypeInformation> {
         return this._nodeTypes;
-    }
-
-    /** Mapping of nodes to node categories */
-    public get nodeCategories(): ReadonlyMap<string, string[]> {
-        return this._nodeCategories;
     }
 
     /** List of all plugins in this editor */
@@ -55,27 +59,27 @@ export class Editor {
 
     /**
      * Register a new node type
-     * @param typeName Name of the node (must be equal to the node's `type` field)
      * @param type Actual type / constructor of the node
      * @param category Category of the node. Will be used in the view's context menu for adding nodes
      */
-    public registerNodeType(typeName: string, type: AbstractNodeConstructor, category = "default"): void {
-        if (this.events.beforeRegisterNodeType.emit({ typeName, type, category })) {
+    public registerNodeType(type: AbstractNodeConstructor, options?: IRegisterNodeTypeOptions): void {
+        if (this.events.beforeRegisterNodeType.emit({ type, options })) {
             return;
         }
-        this._nodeTypes.set(typeName, type);
-        if (!this.nodeCategories.has(category)) {
-            this._nodeCategories.set(category, []);
-        }
-        this.nodeCategories.get(category)!.push(typeName);
-        this.events.registerNodeType.emit({ typeName, type, category });
+        const nodeInstance = new type();
+        this._nodeTypes.set(nodeInstance.type, {
+            type,
+            category: options?.category ?? "default",
+            title: options?.title ?? nodeInstance.title,
+        });
+        this.events.registerNodeType.emit({ type, options });
     }
 
     /**
      * Load a state
      * @param state State to load
      */
-    public load(state: EditorState): void {
+    public load(state: IEditorState): void {
         state = this.hooks.load.execute(state);
         this._graph = new Graph(this);
         this._graph.load(state.graph);
@@ -85,7 +89,7 @@ export class Editor {
      * Save a state
      * @returns Current state
      */
-    public save(): EditorState {
+    public save(): IEditorState {
         const state = {
             graph: this.graph.save(),
         };

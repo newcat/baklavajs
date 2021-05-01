@@ -1,4 +1,4 @@
-import { Editor, INodeState } from "@baklavajs/core";
+import { Graph, INodeState } from "@baklavajs/core";
 import { IStep } from "./step";
 
 export default class NodeStep implements IStep {
@@ -16,39 +16,39 @@ export default class NodeStep implements IStep {
         }
     }
 
-    public undo(editor: Editor) {
+    public undo(graph: Graph) {
         if (this.type === "addNode") {
-            this.removeNode(editor);
+            this.removeNode(graph);
         } else {
-            this.addNode(editor);
+            this.addNode(graph);
         }
     }
 
-    public redo(editor: Editor) {
+    public redo(graph: Graph) {
         if (this.type === "addNode" && this.nodeState) {
-            this.addNode(editor);
+            this.addNode(graph);
         } else if (this.type === "removeNode" && this.nodeId) {
-            this.removeNode(editor);
+            this.removeNode(graph);
         }
     }
 
-    private addNode(editor: Editor) {
-        const nodeType = editor.nodeTypes.get(this.nodeState!.type);
+    private addNode(graph: Graph) {
+        const nodeType = graph.editor.nodeTypes.get(this.nodeState!.type);
         if (!nodeType) {
             return;
         }
-        const n = new nodeType();
-        editor.addNode(n);
+        const n = new nodeType.type();
+        graph.addNode(n);
         n.load(this.nodeState!);
         this.nodeId = n.id;
     }
 
-    private removeNode(editor: Editor) {
-        const node = editor.nodes.find((n) => n.id === this.nodeId);
+    private removeNode(graph: Graph) {
+        const node = graph.nodes.find((n) => n.id === this.nodeId);
         if (!node) {
             return;
         }
         this.nodeState = node.save();
-        editor.removeNode(node);
+        graph.removeNode(node);
     }
 }

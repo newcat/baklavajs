@@ -16,17 +16,24 @@
 
 <script lang="ts">
 import { computed, defineComponent, inject, ref } from "vue";
+import { Graph } from "@baklavajs/core";
 import { ViewPlugin } from "../viewPlugin";
 
 export default defineComponent({
-    setup() {
+    props: {
+        graph: {
+            type: Object as () => Graph,
+            required: true,
+        },
+    },
+    setup(props) {
         const el = ref<HTMLElement | null>(null);
         const width = ref(300);
         const plugin = inject<ViewPlugin>("plugin")!;
 
         const nodeName = computed(() => {
             const id = plugin.sidebar.nodeId;
-            const n = plugin.editor.nodes.find((x) => x.id === id);
+            const n = props.graph.nodes.find((x) => x.id === id);
             return n ? n.title : "";
         });
 

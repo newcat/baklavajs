@@ -1,4 +1,4 @@
-import { Editor } from "@baklavajs/core";
+import { Graph } from "@baklavajs/core";
 import { IStep } from "./step";
 
 export default class TransactionStep implements IStep {
@@ -13,15 +13,15 @@ export default class TransactionStep implements IStep {
         this.steps = steps;
     }
 
-    public undo(editor: Editor) {
+    public undo(graph: Graph) {
         for (let i = this.steps.length - 1; i >= 0; i--) {
-            this.steps[i].undo(editor);
+            this.steps[i].undo(graph);
         }
     }
 
-    public redo(editor: Editor) {
+    public redo(graph: Graph) {
         for (let i = 0; i < this.steps.length; i++) {
-            this.steps[i].redo(editor);
+            this.steps[i].redo(graph);
         }
     }
 }

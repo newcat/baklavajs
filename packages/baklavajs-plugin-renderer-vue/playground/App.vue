@@ -48,7 +48,7 @@ export default defineComponent({
         const focusState = ref("blur");
         const counter = ref(1);
 
-        viewPlugin.value.components.node = CustomNodeRenderer;
+        // viewPlugin.value.components.node = CustomNodeRenderer;
         viewPlugin.value.enableMinimap = true;
         editor.value.use(viewPlugin.value);
 
@@ -61,30 +61,30 @@ export default defineComponent({
         engine.hooks.gatherCalculationData.tap(token, () => "def");
         editor.value.use(engine);*/
 
-        const nodeInterfaceTypes = new InterfaceTypePlugin();
-        editor.value.use(nodeInterfaceTypes);
+        /* const nodeInterfaceTypes = new InterfaceTypePlugin();
+        editor.value.use(nodeInterfaceTypes); */
 
-        editor.value.registerNodeType("TestNode", TestNode, "Tests");
-        editor.value.registerNodeType("OutputNode", OutputNode, "Outputs");
-        editor.value.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");
-        editor.value.registerNodeType("MathNode", MathNode);
-        editor.value.registerNodeType("AdvancedNode", AdvancedNode);
-        editor.value.registerNodeType("CommentNode", CommentNode);
-        editor.value.registerNodeType("OptionTestNode", InterfaceTestNode);
-        editor.value.registerNodeType("SelectTestNode", SelectTestNode);
-        editor.value.addNode(new TestNode());
-        editor.value.addNode(new TestNode());
-        editor.value.addNode(new TestNode());
-        editor.value.addNode(new OutputNode());
-        editor.value.addNode(new BuilderTestNode());
+        editor.value.registerNodeType(TestNode, { category: "Tests" });
+        editor.value.registerNodeType(OutputNode, { category: "Outputs" });
+        editor.value.registerNodeType(BuilderTestNode, { category: "Tests" });
+        editor.value.registerNodeType(MathNode);
+        editor.value.registerNodeType(AdvancedNode);
+        editor.value.registerNodeType(CommentNode, { title: "Comment" });
+        editor.value.registerNodeType(InterfaceTestNode);
+        editor.value.registerNodeType(SelectTestNode);
+        editor.value.graph.addNode(new TestNode());
+        editor.value.graph.addNode(new TestNode());
+        editor.value.graph.addNode(new TestNode());
+        editor.value.graph.addNode(new OutputNode());
+        editor.value.graph.addNode(new BuilderTestNode());
         // editor.value.addNode(new AdvancedNode());
-        nodeInterfaceTypes
+        /* nodeInterfaceTypes
             .addType("string", "#00FF00")
             .addType("number", "red")
             .addType("boolean", "purple")
             .addConversion("string", "number", (v) => parseInt(v, 10))
             .addConversion("number", "string", (v) => (v !== null && v !== undefined && v.toString()) || "0")
-            .addConversion("boolean", "string", (v) => (typeof v === "boolean" ? v.toString() : "null"));
+            .addConversion("boolean", "string", (v) => (typeof v === "boolean" ? v.toString() : "null")); */
 
         const calculate = async () => {
             // console.log(await this.engine.calculate("def"));
@@ -102,7 +102,7 @@ export default defineComponent({
         };
 
         const setSelectItems = () => {
-            for (const node of editor.value.nodes) {
+            for (const node of editor.value.graph.nodes) {
                 if (node.type === "SelectTestNode") {
                     const n = (node as unknown) as NodeInstanceOf<typeof SelectTestNode>;
                     const sel = n.inputs.advanced as SelectInterface<number | undefined>;

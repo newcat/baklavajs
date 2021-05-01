@@ -1,5 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
-import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
+import {
+    BaklavaEvent,
+    IBaklavaEventEmitter,
+    IBaklavaTapable,
+    PreventableBaklavaEvent,
+    SequentialHook,
+} from "@baklavajs/events";
 import { Connection, DummyConnection, IConnection, IConnectionState } from "./connection";
 import { mapValues } from "./utils";
 import type { IAddConnectionEventData } from "./eventDataTypes";
@@ -20,7 +26,7 @@ export interface IGraphState extends Record<string, any> {
     outputs: IGraphInterface[];
 }
 
-export class Graph {
+export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     public id = uuidv4();
     public editor: Editor;
     public template?: GraphTemplate;
@@ -75,6 +81,7 @@ export class Graph {
         node.registerGraph(this);
         this._nodes.push(node);
         this.events.addNode.emit(node);
+        node.onPlaced();
         return node;
     }
 
@@ -94,7 +101,7 @@ export class Graph {
                 .forEach((c) => this.removeConnection(c));
             this._nodes.splice(this.nodes.indexOf(node), 1);
             this.events.removeNode.emit(node);
-            node.destroy();
+            node.onDestroy();
         }
     }
 
@@ -219,13 +226,13 @@ export class Graph {
 
         for (const n of state.nodes) {
             // find node type
-            const NodeType = this.editor.nodeTypes.get(n.type);
-            if (!NodeType) {
+            const nodeInformation = this.editor.nodeTypes.get(n.type);
+            if (!nodeInformation) {
                 console.warn(`Node type ${n.type} is not registered`);
                 continue;
             }
 
-            const node = new NodeType();
+            const node = new nodeInformation.type();
             this.addNode(node);
             node.load(n);
         }

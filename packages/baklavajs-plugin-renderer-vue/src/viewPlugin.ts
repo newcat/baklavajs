@@ -35,7 +35,7 @@ export class ViewPlugin implements IPlugin {
             d.scaling = this.scaling;
             return d;
         });
-        this.editor.events.beforeAddNode.addListener(this, (node) => {
+        this.editor.graph.events.beforeAddNode.addListener(this, (node) => {
             node.position = { x: 0, y: 0 };
             node.disablePointerEvents = false;
             node.twoColumn = node.twoColumn || false;

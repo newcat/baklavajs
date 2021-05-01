@@ -1,7 +1,7 @@
-import { Editor } from "@baklavajs/core";
+import { Graph } from "@baklavajs/core";
 
 export interface IStep {
     type: string;
-    undo(editor: Editor): void;
-    redo(editor: Editor): void;
+    undo(graph: Graph): void;
+    redo(graph: Graph): void;
 }

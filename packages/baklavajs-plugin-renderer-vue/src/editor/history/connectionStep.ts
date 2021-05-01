@@ -1,4 +1,4 @@
-import { Editor, IConnectionState, IConnection } from "@baklavajs/core";
+import { Editor, IConnectionState, IConnection, Graph } from "@baklavajs/core";
 import { IStep } from "./step";
 
 export default class ConnectionStep implements IStep {
@@ -21,33 +21,33 @@ export default class ConnectionStep implements IStep {
         }
     }
 
-    public undo(editor: Editor) {
+    public undo(graph: Graph) {
         if (this.type === "addConnection") {
-            this.removeConnection(editor);
+            this.removeConnection(graph);
         } else {
-            this.addConnection(editor);
+            this.addConnection(graph);
         }
     }
 
-    public redo(editor: Editor) {
+    public redo(graph: Graph) {
         if (this.type === "addConnection" && this.connectionState) {
-            this.addConnection(editor);
+            this.addConnection(graph);
         } else if (this.type === "removeConnection" && this.connectionId) {
-            this.removeConnection(editor);
+            this.removeConnection(graph);
         }
     }
 
-    private addConnection(editor: Editor) {
-        const fromIntf = editor.findNodeInterface(this.connectionState!.from);
-        const toIntf = editor.findNodeInterface(this.connectionState!.to);
+    private addConnection(graph: Graph) {
+        const fromIntf = graph.findNodeInterface(this.connectionState!.from);
+        const toIntf = graph.findNodeInterface(this.connectionState!.to);
         if (!fromIntf || !toIntf) {
             return;
         }
-        editor.addConnection(fromIntf, toIntf);
+        graph.addConnection(fromIntf, toIntf);
     }
 
-    private removeConnection(editor: Editor) {
-        const connection = editor.connections.find((c) => c.id === this.connectionId);
+    private removeConnection(graph: Graph) {
+        const connection = graph.connections.find((c) => c.id === this.connectionId);
         if (!connection) {
             return;
         }
@@ -56,6 +56,6 @@ export default class ConnectionStep implements IStep {
             from: connection.from.id,
             to: connection.to.id,
         };
-        editor.removeConnection(connection);
+        graph.removeConnection(connection);
     }
 }

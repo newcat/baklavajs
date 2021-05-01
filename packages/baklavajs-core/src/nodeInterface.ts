@@ -1,13 +1,18 @@
 import { v4 as uuidv4 } from "uuid";
-import { SequentialHook, BaklavaEvent, PreventableBaklavaEvent } from "@baklavajs/events";
-import type { AbstractNode } from "./node";
+import {
+    SequentialHook,
+    BaklavaEvent,
+    PreventableBaklavaEvent,
+    IBaklavaEventEmitter,
+    IBaklavaTapable,
+} from "@baklavajs/events";
 
 export interface INodeInterfaceState<T> extends Record<string, any> {
     id: string;
     value: T;
 }
 
-export class NodeInterface<T = any> {
+export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTapable {
     public id = uuidv4();
     public name: string;
 

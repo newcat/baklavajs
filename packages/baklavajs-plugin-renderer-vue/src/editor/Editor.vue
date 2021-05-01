@@ -44,12 +44,14 @@
         </div>
 
         <slot name="sidebar">
-            <sidebar></sidebar>
+            <sidebar :graph="plugin.editor.graph"></sidebar>
         </slot>
 
         <slot name="minimap" :nodes="nodes" :connections="connections">
             <minimap v-if="plugin.enableMinimap" :nodes="nodes" :connections="connections"></minimap>
         </slot>
+
+        <NodePalette />
     </div>
 </template>
 
@@ -62,16 +64,17 @@ import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
 
 import Node from "../node/Node.vue";
-import Connection from "./connection/ConnectionWrapper.vue";
-import TemporaryConnection from "./connection/TemporaryConnection.vue";
-import Sidebar from "./components/Sidebar.vue";
-import Minimap from "./components/Minimap.vue";
+import ConnectionWrapper from "../connection/ConnectionWrapper.vue";
+import TemporaryConnection from "../connection/TemporaryConnection.vue";
+import Sidebar from "../components/Sidebar.vue";
+import Minimap from "../components/Minimap.vue";
+import NodePalette from "../nodepalette/NodePalette.vue";
 
 import Clipboard from "./clipboard";
 import History from "./history";
 
 export default defineComponent({
-    components: { Node, Connection, TemporaryConnection, Sidebar, Minimap },
+    components: { Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette },
     props: {
         plugin: {
             type: Object as () => ViewPlugin,
@@ -89,7 +92,7 @@ export default defineComponent({
         const counter = ref(0);
 
         const clipboard = new Clipboard(props.plugin.editor);
-        const history = new History(props.plugin);
+        const history = new History(props.plugin.editor.graph);
 
         const pluginRef = toRef(props, "plugin") as Ref<ViewPlugin>;
         const panZoom = usePanZoom(pluginRef);
@@ -127,7 +130,7 @@ export default defineComponent({
 
         const keyDown = (ev: KeyboardEvent) => {
             if (ev.key === "Delete" && selectedNodes.value.length > 0) {
-                selectedNodes.value.forEach((n) => props.plugin.editor.removeNode(n));
+                selectedNodes.value.forEach((n) => props.plugin.editor.graph.removeNode(n));
             } else if (ev.key === "Tab") {
                 ev.preventDefault();
             } else if (ev.key === "Control") {
@@ -167,8 +170,8 @@ export default defineComponent({
             el,
             selectedNodes,
             counter,
-            nodes: props.plugin.editor.nodes,
-            connections: props.plugin.editor.connections,
+            nodes: props.plugin.editor.graph.nodes,
+            connections: props.plugin.editor.graph.connections,
             backgroundStyle,
             nodeContainerStyle,
             mouseMoveHandler,

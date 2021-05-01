@@ -1,5 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
-import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
+import {
+    PreventableBaklavaEvent,
+    BaklavaEvent,
+    SequentialHook,
+    IBaklavaEventEmitter,
+    IBaklavaTapable,
+} from "@baklavajs/events";
 import type { Graph } from "./graph";
 import type { NodeInterfaceDefinition, NodeInterface, NodeInterfaceDefinitionStates } from "./nodeInterface";
 import { mapValues } from "./utils";
@@ -16,7 +22,7 @@ export interface INodeState<I, O> {
     outputs: NodeInterfaceDefinitionStates<O> & NodeInterfaceDefinitionStates<Record<string, NodeInterface<any>>>;
 }
 
-export abstract class AbstractNode {
+export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapable {
     /** Type of the node */
     public abstract type: string;
     /** Customizable display name of the node. */
@@ -123,8 +129,17 @@ export abstract class AbstractNode {
         return this.hooks.afterSave.execute(state);
     }
 
-    /** Override this method to perform cleanup when the node is deleted */
-    public destroy(): void {}
+    /**
+     * @virtual
+     * Override this method to execute logic when the node is placed inside a graph
+     */
+    public onPlaced(): void {}
+
+    /**
+     * @virtual
+     * Override this method to perform cleanup when the node is deleted
+     */
+    public onDestroy(): void {}
 
     private addInterface(type: "input" | "output", key: string, io: NodeInterface): boolean {
         const beforeEvent = type === "input" ? this.events.beforeAddInput : this.events.beforeAddOutput;

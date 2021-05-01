@@ -4,7 +4,6 @@ import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";
 
 describe("Editor", () => {
-
     it("can construct", () => {
         expect(new Editor()).to.not.be.null;
     });
@@ -81,6 +80,7 @@ describe("Editor", () => {
         expect(e.addConnection(if1, if2)).to.be.undefined;
     });
 
-    it("can save and load a state"); // TODO
+    it("calls destroy when removing nodes", () => {});
 
+    it("can save and load a state"); // TODO
 });

@@ -1,21 +1,21 @@
-import { Node, Editor } from "../src";
+import { AbstractNode, CalculateFunction, Graph, NodeInterface } from "../src";
 
-export default class TestNode extends Node {
-
+export default class TestNode extends AbstractNode {
     public type = "TestNode";
-    public name = "TestNode";
+    public title = this.type;
+    public inputs = {
+        a: new NodeInterface("A", 2),
+    };
+    public outputs = {
+        b: new NodeInterface("B", 2),
+    };
+
+    public calculate?: CalculateFunction<any, any>;
 
     public registerCalled = false;
 
-    constructor() {
-        super();
-        this.addInputInterface("Input", "CheckboxOption", false, { type: "boolean" });
-        this.addOutputInterface("Output", { type: "boolean" });
-    }
-
-    public registerEditor(editor: Editor) {
-        super.registerEditor(editor);
+    public registerGraph(graph: Graph) {
+        super.registerGraph(graph);
         this.registerCalled = true;
     }
-
 }
