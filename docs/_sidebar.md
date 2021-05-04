@@ -3,6 +3,7 @@
   * [Editor Instance](/editor.md)
   * [Event System](/event-system.md)
   * [Styling](/styling.md)
+  * [Nuxt (SSR)](https://medium.com/@mrambourg/use-baklavajs-with-nuxt-ba696c2a1602)
 * **Custom Nodes**
   * [Creating Custom Nodes](/custom-nodes.md)
   * [Node Options](/node-options.md)
