@@ -30,6 +30,10 @@
 
         & > .__text {
             flex: 1 0 auto;
+            flex-basis: 0;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         & > .__icon {
@@ -40,14 +44,12 @@
             transition: transform 0.25s ease;
             width: 18px;
             height: 18px;
-            
+
             & path {
                 stroke: $color-control-dark-foreground;
                 fill: $color-control-dark-foreground;
             }
-
         }
-
     }
 
     & > .__dropdown {
@@ -56,22 +58,22 @@
         left: 0;
         right: 0;
         z-index: 10;
-        background-color: #000000AA;
+        background-color: #000000aa;
         filter: drop-shadow(0 0 4px black);
         border-radius: 0 0 $border-radius-control $border-radius-control;
 
         max-height: 15em;
-        overflow-y: scroll; 
+        overflow-y: scroll;
         &::-webkit-scrollbar {
             width: 0px;
             background: transparent;
         }
-        
+
         & > .item {
             padding: 0.35em;
             padding-left: 1em;
             transition: background 0.05s linear;
-            
+
             &:not(.--header):not(.--active) {
                 cursor: pointer;
                 &:hover {
@@ -89,9 +91,6 @@
                 padding: 0.5em 0.35em;
                 padding-left: 1em;
             }
-
         }
-
     }
-
 }
