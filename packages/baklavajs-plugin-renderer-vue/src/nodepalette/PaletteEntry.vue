@@ -24,7 +24,7 @@ export default defineComponent({
     setup(props) {
         const classes = computed(() => ({
             "node": true,
-            "--preview": true,
+            "--palette": true,
             [`--type-${sanitizeName(props.type)}`]: true,
         }));
 
@@ -34,13 +34,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.node.--preview {
+.node.--palette {
     position: unset;
     margin: 1rem 0;
     cursor: grab;
 }
 
-.node.--preview .__title {
+.node.--palette .__title {
     padding: 0.5rem;
 }
 </style>

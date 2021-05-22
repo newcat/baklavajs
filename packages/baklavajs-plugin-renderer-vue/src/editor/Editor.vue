@@ -12,6 +12,8 @@
         @wheel.self="mouseWheel"
         @keydown="keyDown"
         @keyup="keyUp"
+        @dragover="dragOver"
+        @drop="drop"
     >
         <div class="background" :style="backgroundStyle"></div>
 
@@ -72,6 +74,7 @@ import NodePalette from "../nodepalette/NodePalette.vue";
 
 import Clipboard from "./clipboard";
 import History from "./history";
+import { useTransform } from "../utility/useTransform";
 
 export default defineComponent({
     components: { Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette },
@@ -97,6 +100,7 @@ export default defineComponent({
         const pluginRef = toRef(props, "plugin") as Ref<ViewPlugin>;
         const panZoom = usePanZoom(pluginRef);
         const temporaryConnection = useTemporaryConnection(pluginRef);
+        const { transform } = useTransform(props.plugin);
 
         const backgroundStyle = props.plugin.backgroundStyles;
         const nodeContainerStyle = computed(() => ({
@@ -154,6 +158,36 @@ export default defineComponent({
             }
         };
 
+        const dragOver = (ev: DragEvent) => {
+            ev.preventDefault();
+            if (ev.dataTransfer?.getData("text/plain")) {
+                const nodeTypeName = ev.dataTransfer.getData("text/plain");
+                if (props.plugin.editor.nodeTypes.has(nodeTypeName)) {
+                    ev.dataTransfer.dropEffect = "copy";
+                } else {
+                    ev.dataTransfer.dropEffect = "none";
+                }
+            }
+        };
+
+        const drop = (ev: DragEvent) => {
+            ev.preventDefault();
+            if (ev.dataTransfer?.getData("text/plain")) {
+                const nodeTypeName = ev.dataTransfer.getData("text/plain");
+                const nodeTypeInfo = props.plugin.editor.nodeTypes.get(nodeTypeName);
+                if (!nodeTypeInfo) {
+                    return;
+                }
+
+                const instance = new nodeTypeInfo.type();
+                props.plugin.editor.graph.addNode(instance);
+                const [x, y] = transform(ev.clientX, ev.clientY);
+                instance.position.x = x;
+                instance.position.y = y;
+                console.log(ev.clientX, ev.clientY, x, y);
+            }
+        };
+
         const selectNode = (node: AbstractNode) => {
             if (!ctrlPressed.value) {
                 unselectAllNodes();
@@ -179,6 +213,8 @@ export default defineComponent({
             mouseUp,
             keyDown,
             keyUp,
+            dragOver,
+            drop,
             selectNode,
             temporaryConnection: temporaryConnection.temporaryConnection,
             mouseWheel: panZoom.onMouseWheel,

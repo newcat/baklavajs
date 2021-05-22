@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, onMounted } from "vue";
+import { computed, defineComponent, inject } from "vue";
 import { IConnection } from "@baklavajs/core";
 import { TemporaryConnectionState, ITemporaryConnection } from "./connection";
+import { useTransform } from "../utility/useTransform";
 import { ViewPlugin } from "../viewPlugin";
 
 export default defineComponent({
@@ -41,12 +42,7 @@ export default defineComponent({
     },
     setup(props) {
         const plugin = inject<ViewPlugin>("plugin")!;
-
-        const transform = (x: number, y: number) => {
-            const tx = (x + plugin.panning.x) * plugin.scaling;
-            const ty = (y + plugin.panning.y) * plugin.scaling;
-            return [tx, ty];
-        };
+        const { transform } = useTransform();
 
         const d = computed(() => {
             const [tx1, ty1] = transform(props.x1, props.y1);

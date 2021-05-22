@@ -2,7 +2,14 @@
     <div class="node-palette">
         <section v-for="c in categories" :key="c.name">
             <h1 v-if="c.name !== 'default'">{{ c.name }}</h1>
-            <NodePreview v-for="(ni, nt) in c.nodeTypes" :key="nt" :type="nt" :title="ni.title" />
+            <PaletteEntry
+                v-for="(ni, nt) in c.nodeTypes"
+                :key="nt"
+                :type="nt"
+                :title="ni.title"
+                draggable="true"
+                @dragstart="onDragStart($event, nt)"
+            />
         </section>
     </div>
 </template>
@@ -11,12 +18,12 @@
 import { computed, defineComponent, inject } from "vue";
 import { INodeTypeInformation } from "@baklavajs/core";
 import { ViewPlugin } from "../viewPlugin";
-import NodePreview from "./NodePreview.vue";
+import PaletteEntry from "./PaletteEntry.vue";
 
 type NodeTypeInformations = Record<string, INodeTypeInformation>;
 
 export default defineComponent({
-    components: { NodePreview },
+    components: { PaletteEntry },
     setup() {
         const plugin = inject<ViewPlugin>("plugin")!;
 
@@ -50,7 +57,11 @@ export default defineComponent({
             return categories;
         });
 
-        return { categories };
+        const onDragStart = (ev: DragEvent, nodeType: string) => {
+            ev.dataTransfer?.setData("text/plain", nodeType);
+        };
+
+        return { categories, onDragStart };
     },
 });
 </script>
