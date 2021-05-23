@@ -15,20 +15,20 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from "vue";
+import { computed, defineComponent } from "vue";
 import { INodeTypeInformation } from "@baklavajs/core";
-import { ViewPlugin } from "../viewPlugin";
 import PaletteEntry from "./PaletteEntry.vue";
+import { usePlugin } from "../utility";
 
 type NodeTypeInformations = Record<string, INodeTypeInformation>;
 
 export default defineComponent({
     components: { PaletteEntry },
     setup() {
-        const plugin = inject<ViewPlugin>("plugin")!;
+        const { plugin } = usePlugin();
 
         const categories = computed<Array<{ name: string; nodeTypes: NodeTypeInformations }>>(() => {
-            const nodeTypeEntries = Array.from(plugin.editor.nodeTypes.entries());
+            const nodeTypeEntries = Array.from(plugin.value.editor.nodeTypes.entries());
 
             const categoryNames = new Set(nodeTypeEntries.map(([nt, ni]) => ni.category));
 

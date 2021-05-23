@@ -1,14 +1,11 @@
-import { inject } from "vue";
-import { ViewPlugin } from "../viewPlugin";
+import { usePlugin } from "./usePlugin";
 
-export function useTransform(plugin?: ViewPlugin) {
-    if (!plugin) {
-        plugin = inject<ViewPlugin>("plugin")!;
-    }
+export function useTransform() {
+    const { plugin } = usePlugin();
 
     const transform = (x: number, y: number) => {
-        const tx = x / plugin!.scaling - plugin!.panning.x;
-        const ty = y / plugin!.scaling - plugin!.panning.y;
+        const tx = x / plugin.value.scaling - plugin.value.panning.x;
+        const ty = y / plugin.value.scaling - plugin.value.panning.y;
         return [tx, ty] as [number, number];
     };
 

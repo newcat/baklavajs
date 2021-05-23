@@ -16,11 +16,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onBeforeUnmount, onMounted, ref, toRef, watch } from "vue";
+import { defineComponent, onBeforeUnmount, onMounted, ref, toRef, watch } from "vue";
 import { IConnection, AbstractNode } from "@baklavajs/core";
 import getDomElements, { getDomElementOfNode } from "../connection/domResolver";
 import { getPortCoordinates } from "../connection/portCoordinates";
-import { ViewPlugin } from "../viewPlugin";
+import { usePlugin } from "../utility";
 
 interface IRect {
     x1: number;
@@ -44,7 +44,7 @@ export default defineComponent({
         const canvas = ref<HTMLCanvasElement | null>(null);
         const showViewBounds = ref(false);
 
-        const plugin = inject<ViewPlugin>("plugin")!;
+        const { plugin } = usePlugin();
 
         let ctx: CanvasRenderingContext2D | undefined;
         let intervalHandle: ReturnType<typeof setInterval> | undefined;
@@ -125,7 +125,7 @@ export default defineComponent({
                 const [x2, y2] = transformCoordinates(origX2, origY2);
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
-                if (plugin.useStraightConnections) {
+                if (plugin.value.useStraightConnections) {
                     ctx.lineTo(x2, y2);
                 } else {
                     const dx = 0.3 * Math.abs(x1 - x2);
@@ -199,9 +199,9 @@ export default defineComponent({
         const getViewBounds = (): IRect => {
             const parentWidth = canvas.value!.parentElement!.offsetWidth;
             const parentHeight = canvas.value!.parentElement!.offsetHeight;
-            const x2 = parentWidth / plugin.scaling - plugin.panning.x;
-            const y2 = parentHeight / plugin.scaling - plugin.panning.y;
-            return { x1: -plugin.panning.x, y1: -plugin.panning.y, x2, y2 };
+            const x2 = parentWidth / plugin.value.scaling - plugin.value.panning.x;
+            const y2 = parentHeight / plugin.value.scaling - plugin.value.panning.y;
+            return { x1: -plugin.value.panning.x, y1: -plugin.value.panning.y, x2, y2 };
         };
 
         const mousedown = (ev: MouseEvent) => {
@@ -218,8 +218,8 @@ export default defineComponent({
                 const viewBounds = getViewBounds();
                 const dx = (viewBounds.x1 - viewBounds.x2) / 2;
                 const dy = (viewBounds.y1 - viewBounds.y2) / 2;
-                plugin.panning.x = -(cx + dx);
-                plugin.panning.y = -(cy + dy);
+                plugin.value.panning.x = -(cx + dx);
+                plugin.value.panning.y = -(cy + dy);
             }
         };
 
@@ -227,7 +227,7 @@ export default defineComponent({
             dragging = false;
         };
 
-        watch([showViewBounds, plugin.panning, toRef(plugin, "scaling")], () => {
+        watch([showViewBounds, plugin.value.panning, toRef(plugin.value, "scaling")], () => {
             updateCanvas();
         });
 

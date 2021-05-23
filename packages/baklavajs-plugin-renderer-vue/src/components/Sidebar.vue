@@ -18,6 +18,7 @@
 import { computed, defineComponent, inject, ref } from "vue";
 import { Graph } from "@baklavajs/core";
 import { ViewPlugin } from "../viewPlugin";
+import { usePlugin } from "../utility";
 
 export default defineComponent({
     props: {
@@ -29,10 +30,10 @@ export default defineComponent({
     setup(props) {
         const el = ref<HTMLElement | null>(null);
         const width = ref(300);
-        const plugin = inject<ViewPlugin>("plugin")!;
+        const { plugin } = usePlugin();
 
         const nodeName = computed(() => {
-            const id = plugin.sidebar.nodeId;
+            const id = plugin.value.sidebar.nodeId;
             const n = props.graph.nodes.find((x) => x.id === id);
             return n ? n.title : "";
         });
@@ -42,7 +43,7 @@ export default defineComponent({
         }));
 
         const close = () => {
-            plugin.sidebar.visible = false;
+            plugin.value.sidebar.visible = false;
         };
 
         const startResize = () => {

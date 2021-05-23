@@ -32,15 +32,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ComponentOptions, inject, ref, computed, onMounted } from "vue";
+import { defineComponent, ref, computed, toRef } from "vue";
 
 // TODO: Make custom implementation
 // import ClickOutside from "v-click-outside";
 
 import { AbstractNode } from "@baklavajs/core";
-import { ViewPlugin } from "../viewPlugin";
-import { sanitizeName } from "../utility/cssNames";
-
+import { sanitizeName, useDragMove, usePlugin } from "../utility";
 import NodeInterface from "./NodeInterface.vue";
 
 export default defineComponent({
@@ -56,9 +54,8 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
-        const plugin = inject<ViewPlugin>("plugin")!;
-
-        const dragging = ref(false);
+        const { plugin } = usePlugin();
+        const dragMove = useDragMove(toRef(props.node, "position"));
 
         const renaming = ref(false);
         const tempName = ref("");
@@ -66,7 +63,7 @@ export default defineComponent({
         const classes = computed(() => ({
             "node": true,
             "--selected": props.selected,
-            "--dragging": dragging.value,
+            "--dragging": dragMove.dragging.value,
             "--two-column": !!props.node.twoColumn,
             [`--type-${sanitizeName(props.node.type)}`]: true,
         }));
@@ -79,26 +76,19 @@ export default defineComponent({
 
         const select = () => {
             emit("select", props.node);
-        }
+        };
 
-        const startDrag = () => {
-            dragging.value = true;
-            document.addEventListener("mousemove", handleMove);
+        const startDrag = (ev: MouseEvent) => {
+            dragMove.onMouseDown(ev);
+            document.addEventListener("mousemove", dragMove.onMouseMove);
             document.addEventListener("mouseup", stopDrag);
             select();
         };
 
         const stopDrag = () => {
-            dragging.value = false;
-            document.removeEventListener("mousemove", handleMove);
+            dragMove.onMouseUp();
+            document.removeEventListener("mousemove", dragMove.onMouseMove);
             document.removeEventListener("mouseup", stopDrag);
-        };
-
-        const handleMove = (ev: MouseEvent) => {
-            if (dragging.value) {
-                props.node.position.x += ev.movementX / plugin.scaling;
-                props.node.position.y += ev.movementY / plugin.scaling;
-            }
         };
 
         const doneRenaming = () => {
@@ -106,7 +96,7 @@ export default defineComponent({
             renaming.value = false;
         };
 
-        return { plugin, renaming, tempName, doneRenaming, classes, styles, select, startDrag, stopDrag, handleMove };
+        return { plugin, renaming, tempName, doneRenaming, classes, styles, select, startDrag };
     },
 });
 </script>

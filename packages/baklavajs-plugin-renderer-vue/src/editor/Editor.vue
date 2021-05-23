@@ -74,7 +74,7 @@ import NodePalette from "../nodepalette/NodePalette.vue";
 
 import Clipboard from "./clipboard";
 import History from "./history";
-import { useTransform } from "../utility/useTransform";
+import { useTransform, providePlugin, useDragMove } from "../utility";
 
 export default defineComponent({
     components: { Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette },
@@ -87,6 +87,9 @@ export default defineComponent({
     setup(props) {
         const token = Symbol("EditorToken");
 
+        const pluginRef = toRef(props, "plugin") as Ref<ViewPlugin>;
+        providePlugin(pluginRef);
+
         const el = ref<HTMLElement | null>(null);
         const selectedNodes = ref<AbstractNode[]>([]) as Ref<AbstractNode[]>;
         const ctrlPressed = ref(false);
@@ -97,10 +100,9 @@ export default defineComponent({
         const clipboard = new Clipboard(props.plugin.editor);
         const history = new History(props.plugin.editor.graph);
 
-        const pluginRef = toRef(props, "plugin") as Ref<ViewPlugin>;
         const panZoom = usePanZoom(pluginRef);
         const temporaryConnection = useTemporaryConnection(pluginRef);
-        const { transform } = useTransform(props.plugin);
+        const { transform } = useTransform();
 
         const backgroundStyle = props.plugin.backgroundStyles;
         const nodeContainerStyle = computed(() => ({
@@ -121,14 +123,14 @@ export default defineComponent({
             if (ev.button === 0) {
                 if (ev.target === el.value) {
                     unselectAllNodes();
-                    panZoom.dragging.value = true;
+                    panZoom.onMouseDown(ev);
                 }
                 temporaryConnection.onMouseDown();
             }
         };
 
         const mouseUp = () => {
-            panZoom.dragging.value = false;
+            panZoom.onMouseUp();
             temporaryConnection.onMouseUp();
         };
 
@@ -199,7 +201,6 @@ export default defineComponent({
             selectedNodes.value = [];
         };
 
-        provide("plugin", props.plugin);
         return {
             el,
             selectedNodes,
@@ -222,3 +223,5 @@ export default defineComponent({
     },
 });
 </script>
+
+function useDragMove() { throw new Error("Function not implemented."); }
