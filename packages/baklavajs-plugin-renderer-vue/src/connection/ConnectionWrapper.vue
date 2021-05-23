@@ -15,6 +15,7 @@ import { Connection } from "@baklavajs/core";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom, { IResolvedDomElements } from "./domResolver";
 import { TemporaryConnectionState } from "./connection";
+import { usePlugin } from "../utility";
 
 export default defineComponent({
     components: {
@@ -27,12 +28,17 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const { plugin } = usePlugin();
+
         let resizeObserver: ResizeObserver;
         const d = ref({ x1: 0, y1: 0, x2: 0, y2: 0 });
 
         const state = computed(() =>
             props.connection.isInDanger ? TemporaryConnectionState.FORBIDDEN : TemporaryConnectionState.NONE
         );
+
+        const fromNode = computed(() => plugin.value.editor.graph.findNodeByInterface(props.connection.from.id));
+        const toNode = computed(() => plugin.value.editor.graph.findNodeByInterface(props.connection.to.id));
 
         const getPortCoordinates = (resolved: IResolvedDomElements): [number, number] => {
             if (resolved.node && resolved.interface && resolved.port) {
@@ -79,7 +85,7 @@ export default defineComponent({
             }
         });
 
-        watch([props.connection.from.parent!.position, props.connection.to.parent!.position], () => updateCoords());
+        watch([fromNode.value?.position, toNode.value?.position], () => updateCoords());
 
         return { d, state, connection: props.connection };
     },

@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeUnmount, onMounted, ref, toRef, watch } from "vue";
+import { computed, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, toRef, watch } from "vue";
 import { IConnection, AbstractNode } from "@baklavajs/core";
 import getDomElements, { getDomElementOfNode } from "../connection/domResolver";
 import { getPortCoordinates } from "../connection/portCoordinates";
@@ -47,22 +47,8 @@ export default defineComponent({
         const { plugin } = usePlugin();
 
         let ctx: CanvasRenderingContext2D | undefined;
-        let intervalHandle: ReturnType<typeof setInterval> | undefined;
         let dragging = false;
         let bounds: IRect = { x1: 0, y1: 0, x2: 0, y2: 0 };
-
-        onMounted(() => {
-            ctx = canvas.value!.getContext("2d")!;
-            ctx.imageSmoothingQuality = "high";
-            intervalHandle = setInterval(() => updateCanvas(), 250);
-        });
-
-        onBeforeUnmount(() => {
-            if (intervalHandle) {
-                clearInterval(intervalHandle);
-                intervalHandle = undefined;
-            }
-        });
 
         const updateCanvas = () => {
             if (!ctx) {
@@ -227,7 +213,26 @@ export default defineComponent({
             dragging = false;
         };
 
-        watch([showViewBounds, plugin.value.panning, toRef(plugin.value, "scaling")], () => {
+        watch(
+            [showViewBounds, plugin.value.panning, toRef(plugin.value, "scaling"), props.nodes, props.connections],
+            () => {
+                updateCanvas();
+            }
+        );
+
+        const nodePositions = computed(() => props.nodes.map((n) => n.position));
+        watch(
+            nodePositions,
+            async () => {
+                await nextTick();
+                updateCanvas();
+            },
+            { deep: true }
+        );
+
+        onMounted(() => {
+            ctx = canvas.value!.getContext("2d")!;
+            ctx.imageSmoothingQuality = "high";
             updateCanvas();
         });
 

@@ -208,6 +208,17 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         }
     }
 
+    public findNodeByInterface(id: string): AbstractNode | undefined {
+        for (const node of this.nodes) {
+            if (
+                Object.values(node.inputs).some((intf) => intf.id === id) ||
+                Object.values(node.outputs).some((intf) => intf.id === id)
+            ) {
+                return node;
+            }
+        }
+    }
+
     /**
      * Load a state
      * @param state State to load

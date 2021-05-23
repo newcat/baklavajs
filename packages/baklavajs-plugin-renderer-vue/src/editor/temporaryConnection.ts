@@ -18,13 +18,13 @@ export function useTemporaryConnection(pluginRef: Ref<ViewPlugin>) {
         if (hoveringOver.value) {
             // if this interface is an input and already has a connection
             // to it, remove the connection and make it temporary
-            const connection = pluginRef.value.editor.connections.find((c) => c.to === hoveringOver.value);
+            const connection = pluginRef.value.editor.graph.connections.find((c) => c.to === hoveringOver.value);
             if (hoveringOver.value.isInput && connection) {
                 temporaryConnection.value = {
                     status: TemporaryConnectionState.NONE,
                     from: connection.from,
                 };
-                pluginRef.value.editor.removeConnection(connection);
+                pluginRef.value.editor.graph.removeConnection(connection);
             } else {
                 temporaryConnection.value = {
                     status: TemporaryConnectionState.NONE,
@@ -39,7 +39,7 @@ export function useTemporaryConnection(pluginRef: Ref<ViewPlugin>) {
 
     const onMouseUp = () => {
         if (temporaryConnection.value && hoveringOver.value) {
-            pluginRef.value.editor.addConnection(temporaryConnection.value.from, temporaryConnection.value.to!);
+            pluginRef.value.editor.graph.addConnection(temporaryConnection.value.from, temporaryConnection.value.to!);
         }
         temporaryConnection.value = null;
     };
@@ -48,7 +48,7 @@ export function useTemporaryConnection(pluginRef: Ref<ViewPlugin>) {
         hoveringOver.value = ni ?? null;
         if (ni && temporaryConnection.value) {
             temporaryConnection.value.to = ni;
-            temporaryConnection.value.status = pluginRef.value.editor.checkConnection(
+            temporaryConnection.value.status = pluginRef.value.editor.graph.checkConnection(
                 temporaryConnection.value.from,
                 temporaryConnection.value.to
             )
@@ -65,7 +65,7 @@ export function useTemporaryConnection(pluginRef: Ref<ViewPlugin>) {
         } else if (!ni && temporaryConnection.value) {
             temporaryConnection.value.to = undefined;
             temporaryConnection.value.status = TemporaryConnectionState.NONE;
-            pluginRef.value.editor.connections.forEach((c) => {
+            pluginRef.value.editor.graph.connections.forEach((c) => {
                 c.isInDanger = false;
             });
         }

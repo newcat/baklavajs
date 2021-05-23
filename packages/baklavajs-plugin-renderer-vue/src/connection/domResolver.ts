@@ -11,12 +11,11 @@ export function getDomElementOfNode(node: AbstractNode): HTMLElement | null {
 }
 
 export default function getDomElements(ni: NodeInterface): IResolvedDomElements {
-    const nodeDOM = document.getElementById(ni.parent!.id);
     const interfaceDOM = document.getElementById(ni.id);
     const portDOM = interfaceDOM?.getElementsByClassName("__port");
 
     return {
-        node: nodeDOM,
+        node: interfaceDOM?.closest(".node") ?? null,
         interface: interfaceDOM,
         port: portDOM && portDOM.length > 0 ? (portDOM[0] as HTMLElement) : null,
     };

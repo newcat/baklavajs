@@ -3,11 +3,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from "vue";
+import { computed, defineComponent } from "vue";
 import { IConnection } from "@baklavajs/core";
 import { TemporaryConnectionState, ITemporaryConnection } from "./connection";
-import { useTransform } from "../utility/useTransform";
-import { ViewPlugin } from "../viewPlugin";
+import { usePlugin } from "../utility";
 
 export default defineComponent({
     props: {
@@ -41,13 +40,18 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const plugin = inject<ViewPlugin>("plugin")!;
-        const { transform } = useTransform();
+        const { plugin } = usePlugin();
+
+        const transform = (x: number, y: number) => {
+            const tx = (x + plugin.value.panning.x) * plugin.value.scaling;
+            const ty = (y + plugin.value.panning.y) * plugin.value.scaling;
+            return [tx, ty];
+        };
 
         const d = computed(() => {
             const [tx1, ty1] = transform(props.x1, props.y1);
             const [tx2, ty2] = transform(props.x2, props.y2);
-            if (plugin.useStraightConnections) {
+            if (plugin.value.useStraightConnections) {
                 return `M ${tx1} ${ty1} L ${tx2} ${ty2}`;
             } else {
                 const dx = 0.3 * Math.abs(tx1 - tx2);
