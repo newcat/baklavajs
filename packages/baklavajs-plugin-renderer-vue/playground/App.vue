@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref, shallowRef } from "vue";
+import { defineComponent, isReactive, Ref, ref, shallowRef } from "vue";
 
 import {
     Editor,
@@ -22,7 +22,7 @@ import {
     NodeInterfaceDefinition,
     NodeInterfaceFactory,
 } from "@baklavajs/core";
-import { ViewPlugin, EditorComponent, SelectInterface } from "../src";
+import { ViewPlugin, EditorComponent, SelectInterface, createViewPlugin } from "../src";
 import { Engine } from "@baklavajs/plugin-engine";
 import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
 
@@ -44,13 +44,15 @@ export default defineComponent({
     setup() {
         const token = Symbol("token");
         const editor = ref(new Editor()) as Ref<Editor>;
-        const viewPlugin = ref(new ViewPlugin()) as Ref<ViewPlugin>;
+        const viewPlugin = ref(createViewPlugin()) as Ref<ViewPlugin>;
         const focusState = ref("blur");
         const counter = ref(1);
 
         // viewPlugin.value.components.node = CustomNodeRenderer;
         viewPlugin.value.enableMinimap = true;
         editor.value.use(viewPlugin.value);
+
+        console.log("SI", isReactive(viewPlugin.value));
 
         /*const engine = new Engine(true);
         engine.events.calculated.addListener(token, (r) => {
@@ -130,3 +132,5 @@ export default defineComponent({
     height: 700px;
 }
 </style>
+
+function createViewPlugin(): any { throw new Error("Function not implemented."); }

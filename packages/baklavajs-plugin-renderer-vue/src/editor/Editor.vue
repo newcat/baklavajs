@@ -186,7 +186,7 @@ export default defineComponent({
                 }
 
                 const instance = new nodeTypeInfo.type();
-                props.plugin.editor.graph.addNode(instance);
+                props.plugin.displayedGraph.addNode(instance);
                 const [x, y] = transform(ev.clientX, ev.clientY);
                 instance.position.x = x;
                 instance.position.y = y;

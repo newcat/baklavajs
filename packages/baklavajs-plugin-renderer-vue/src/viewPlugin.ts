@@ -1,4 +1,4 @@
-import { ComputedRef, isRef, ref, Ref } from "vue";
+import { ComputedRef, isReactive, isRef, reactive, ref, Ref } from "vue";
 import { BaklavaEvent } from "@baklavajs/events";
 import { IPlugin, Editor, AbstractNode, Graph } from "@baklavajs/core";
 
@@ -7,6 +7,12 @@ import { IViewNodeState } from "./node/viewNode";
 import { HotkeyHandler, registerCommonCommands } from "./commands";
 import { Clipboard } from "./clipboard";
 import { History } from "./history";
+
+export function createViewPlugin(): ViewPlugin {
+    const vp = reactive(new ViewPlugin()) as ViewPlugin;
+    registerCommonCommands(vp);
+    return vp;
+}
 
 export class ViewPlugin implements IPlugin {
     public type = "ViewPlugin";
@@ -44,13 +50,10 @@ export class ViewPlugin implements IPlugin {
     public history = new History(this);
     public clipboard = new Clipboard(this);
 
-    public constructor() {
-        registerCommonCommands(this);
-    }
-
     public register(editor: Editor): void {
         console.log(this, isRef(this.editor));
-        this.editor = editor;
+        this.editor = reactive(editor) as Editor;
+        console.log(isReactive(editor), isReactive(this.editor), isReactive(this));
         this.editor.hooks.load.tap(this, (d) => {
             // TODO: Load & save other state like selected nodes, graph, ...
             this.panning = d.panning;
