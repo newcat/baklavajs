@@ -1,5 +1,5 @@
-import { ComputedRef, reactive, ref, Ref, toRaw, toRef, watch } from "vue";
-import { Editor, AbstractNode, Graph } from "@baklavajs/core";
+import { ComputedRef, reactive, ref, Ref, watch } from "vue";
+import { Editor, Graph } from "@baklavajs/core";
 
 import { gridBackgroundProvider } from "./editor/backgroundProvider";
 import { IViewNodeState } from "./node/viewNode";
@@ -64,7 +64,6 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
     watch(
         displayedGraph,
         (newGraph, oldGraph) => {
-            console.log("XX", oldGraph, newGraph);
             if (oldGraph) {
                 oldGraph.events.beforeAddNode.removeListener(token);
                 oldGraph.nodes.forEach((n) => {

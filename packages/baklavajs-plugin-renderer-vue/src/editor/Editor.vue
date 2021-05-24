@@ -32,17 +32,12 @@
         </svg>
 
         <div class="node-container" :style="nodeContainerStyle">
-            <template v-for="node in currentGraph.nodes">
-                <slot
-                    name="node"
-                    :node="node"
-                    :selected="currentGraph.selectedNodes.includes(node)"
-                    @select="selectNode(node)"
-                >
+            <template v-for="node in nodes">
+                <slot name="node" :node="node" :selected="selectedNodes.includes(node)" @select="selectNode(node)">
                     <node
                         :key="node.id + counter.toString()"
                         :node="node"
-                        :selected="currentGraph.selectedNodes.includes(node)"
+                        :selected="selectedNodes.includes(node)"
                         @select="selectNode(node)"
                     >
                     </node>
@@ -51,11 +46,11 @@
         </div>
 
         <slot name="sidebar">
-            <sidebar :graph="currentGraph"></sidebar>
+            <sidebar></sidebar>
         </slot>
 
-        <slot name="minimap" :nodes="nodes" :connections="connections">
-            <minimap v-if="plugin.settings.enableMinimap" :nodes="nodes" :connections="connections"></minimap>
+        <slot name="minimap">
+            <minimap v-if="plugin.settings.enableMinimap"></minimap>
         </slot>
 
         <NodePalette />
@@ -77,7 +72,7 @@ import Sidebar from "../components/Sidebar.vue";
 import Minimap from "../components/Minimap.vue";
 import NodePalette from "../nodepalette/NodePalette.vue";
 
-import { useTransform, providePlugin, provideGraph } from "../utility";
+import { useTransform, providePlugin } from "../utility";
 
 export default defineComponent({
     components: { Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette },
@@ -96,12 +91,9 @@ export default defineComponent({
         const el = ref<HTMLElement | null>(null);
 
         const currentGraph = props.plugin.displayedGraph;
-        provideGraph(currentGraph);
-        const nodes = computed(() => {
-            console.log("Recomputing nodes");
-            return currentGraph.value.nodes;
-        });
+        const nodes = computed(() => currentGraph.value.nodes);
         const connections = computed(() => currentGraph.value.connections);
+        const selectedNodes = computed(() => currentGraph.value.selectedNodes);
 
         /*watch(
             () => [...props.plugin.displayedGraph.nodes],
@@ -207,9 +199,9 @@ export default defineComponent({
         return {
             el,
             counter,
-            currentGraph,
             nodes,
             connections,
+            selectedNodes,
             backgroundStyle,
             nodeContainerStyle,
             mouseMoveHandler,

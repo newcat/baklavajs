@@ -16,22 +16,18 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
-import { Graph } from "@baklavajs/core";
+import { useGraph } from "../utility";
 
 export default defineComponent({
-    props: {
-        graph: {
-            type: Object as () => Graph,
-            required: true,
-        },
-    },
-    setup(props) {
+    setup() {
+        const { graph } = useGraph();
+
         const el = ref<HTMLElement | null>(null);
         const width = ref(300);
 
         const nodeName = computed(() => {
-            const id = props.graph.sidebar.nodeId;
-            const n = props.graph.nodes.find((x) => x.id === id);
+            const id = graph.value.sidebar.nodeId;
+            const n = graph.value.nodes.find((x) => x.id === id);
             return n ? n.title : "";
         });
 
@@ -40,7 +36,7 @@ export default defineComponent({
         }));
 
         const close = () => {
-            props.graph.sidebar.visible = false;
+            graph.value.sidebar.visible = false;
         };
 
         const startResize = () => {
@@ -64,7 +60,7 @@ export default defineComponent({
             }
         };
 
-        return { el, nodeName, styles, startResize, close };
+        return { el, graph, nodeName, styles, startResize, close };
     },
 });
 </script>
