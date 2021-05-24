@@ -3,25 +3,42 @@ import { IStep } from "./step";
 import NodeStep from "./nodeStep";
 import ConnectionStep from "./connectionStep";
 import TransactionStep from "./transactionStep";
+import { ViewPlugin } from "../viewPlugin";
 
-export default class History {
+export const UNDO_COMMAND = "UNDO";
+export const REDO_COMMAND = "REDO";
+export const START_TRANSACTION_COMMAND = "START_TRANSACTION";
+export const COMMIT_TRANSACTION_COMMAND = "COMMIT_TRANSACTION";
+
+export class History {
     public maxSteps = 200;
 
     private steps: IStep[] = [];
     private changeBySelf = false;
     private currentIndex = -1;
-    private activeGraph: Graph;
+    private activeGraph!: Graph;
 
     private activeTransaction = false;
     private transactionSteps: IStep[] = [];
 
-    constructor(graph: Graph) {
-        this.activeGraph = graph;
-        this.subscribe(graph);
+    constructor(plugin: ViewPlugin) {
+        plugin.events.displayedGraphChanged.addListener(this, (graph) => {
+            this.setActiveGraph(graph);
+        });
+
+        plugin.registerCommand(UNDO_COMMAND, () => this.undo());
+        plugin.registerCommand(REDO_COMMAND, () => this.redo());
+        plugin.registerCommand(START_TRANSACTION_COMMAND, () => this.startTransaction());
+        plugin.registerCommand(COMMIT_TRANSACTION_COMMAND, () => this.commitTransaction());
+
+        plugin.hotkeyHandler.registerCommand(["Control", "z"], UNDO_COMMAND);
+        plugin.hotkeyHandler.registerCommand(["Control", "y"], REDO_COMMAND);
     }
 
     public setActiveGraph(graph: Graph) {
-        this.unsubscribe(this.activeGraph);
+        if (this.activeGraph) {
+            this.unsubscribe(this.activeGraph);
+        }
         this.activeGraph = graph;
         this.subscribe(graph);
     }

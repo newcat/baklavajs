@@ -32,8 +32,6 @@ export default defineComponent({
 
             const categoryNames = new Set(nodeTypeEntries.map(([nt, ni]) => ni.category));
 
-            console.log(categoryNames);
-
             const categories: Array<{ name: string; nodeTypes: NodeTypeInformations }> = [];
             for (const c of categoryNames.values()) {
                 const nodeTypesInCategory = nodeTypeEntries.filter(([nt, ni]) => ni.category === c);

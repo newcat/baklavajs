@@ -1,17 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
-import {
-    Editor,
-    AbstractNode,
-    INodeState,
-    IConnectionState,
-    Connection,
-    NodeInterface,
-    NodeInterfaceFactory,
-} from "@baklavajs/core";
+import { AbstractNode, INodeState, IConnectionState, Connection, NodeInterface } from "@baklavajs/core";
+import { ViewPlugin } from "./viewPlugin";
+import { COMMIT_TRANSACTION_COMMAND, START_TRANSACTION_COMMAND } from "./history";
 
-export default class Clipboard {
-    private editor: Editor;
+export const COPY_COMMAND = "COPY";
+export const PASTE_COMMAND = "PASTE";
 
+export class Clipboard {
     private nodeBuffer = "";
     private connectionBuffer = "";
 
@@ -19,8 +14,12 @@ export default class Clipboard {
         return !this.nodeBuffer;
     }
 
-    public constructor(editor: Editor) {
-        this.editor = editor;
+    public constructor(private readonly plugin: ViewPlugin) {
+        plugin.registerCommand(COPY_COMMAND, () => this.copy());
+        plugin.hotkeyHandler.registerCommand(["Control", "c"], COPY_COMMAND);
+
+        plugin.registerCommand(PASTE_COMMAND, () => this.paste());
+        plugin.hotkeyHandler.registerCommand(["Control", "v"], PASTE_COMMAND);
     }
 
     public clear() {
@@ -28,17 +27,28 @@ export default class Clipboard {
         this.connectionBuffer = "";
     }
 
-    public copy(selectedNodes: AbstractNode[]) {
-        this.connectionBuffer = JSON.stringify(
-            this.editor.connections
-                .filter((conn) => selectedNodes.includes(conn.from.parent!) && selectedNodes.includes(conn.to.parent!))
-                .map((conn) => ({ from: conn.from.id, to: conn.to.id } as IConnectionState))
-        );
+    public copy() {
+        // find all connections from and to the selected nodes
+        const interfacesOfSelectedNodes = this.plugin.selectedNodes.flatMap((n) => [
+            ...Object.values(n.inputs),
+            ...Object.values(n.outputs),
+        ]);
 
-        this.nodeBuffer = JSON.stringify(selectedNodes.map((n) => n.save()));
+        const connections = this.plugin.displayedGraph.connections
+            .filter(
+                (conn) => interfacesOfSelectedNodes.includes(conn.from) || interfacesOfSelectedNodes.includes(conn.to)
+            )
+            .map((conn) => ({ from: conn.from.id, to: conn.to.id } as IConnectionState));
+
+        this.connectionBuffer = JSON.stringify(connections);
+        this.nodeBuffer = JSON.stringify(this.plugin.selectedNodes.map((n) => n.save()));
     }
 
     public paste() {
+        if (this.isEmpty) {
+            return;
+        }
+
         // Map old IDs to new IDs
         const idmap = new Map<string, string>();
 
@@ -48,13 +58,17 @@ export default class Clipboard {
         const newNodes: AbstractNode[] = [];
         const newConnections: Connection[] = [];
 
+        const graph = this.plugin.displayedGraph;
+
+        this.plugin.executeCommand(START_TRANSACTION_COMMAND);
+
         for (const n of parsedNodeBuffer) {
-            const nodeType = this.editor.nodeTypes.get(n.type);
+            const nodeType = this.plugin.editor.nodeTypes.get(n.type);
             if (!nodeType) {
                 console.warn(`Node type ${n.type} not registered`);
                 return;
             }
-            const copiedNode = new nodeType();
+            const copiedNode = new nodeType.type();
             const generatedId = copiedNode.id;
             newNodes.push(copiedNode);
 
@@ -82,7 +96,7 @@ export default class Clipboard {
                 return ns;
             });
 
-            this.editor.addNode(copiedNode);
+            graph.addNode(copiedNode);
             copiedNode.load(n);
             copiedNode.id = generatedId;
             idmap.set(n.id, generatedId);
@@ -94,11 +108,13 @@ export default class Clipboard {
             if (!fromIntf || !toIntf) {
                 continue;
             }
-            const newConnection = this.editor.addConnection(fromIntf, toIntf);
+            const newConnection = graph.addConnection(fromIntf, toIntf);
             if (newConnection) {
                 newConnections.push(newConnection);
             }
         }
+
+        this.plugin.executeCommand(COMMIT_TRANSACTION_COMMAND);
 
         return {
             newNodes,

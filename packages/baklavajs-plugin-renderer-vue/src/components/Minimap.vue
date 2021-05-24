@@ -220,7 +220,7 @@ export default defineComponent({
             }
         );
 
-        const nodePositions = computed(() => props.nodes.map((n) => n.position));
+        /*const nodePositions = computed(() => props.nodes.map((n) => n.position));
         watch(
             nodePositions,
             async () => {
@@ -228,7 +228,7 @@ export default defineComponent({
                 updateCanvas();
             },
             { deep: true }
-        );
+        );*/
 
         onMounted(() => {
             ctx = canvas.value!.getContext("2d")!;

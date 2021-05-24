@@ -32,12 +32,17 @@
         </svg>
 
         <div class="node-container" :style="nodeContainerStyle">
-            <template v-for="node in nodes">
-                <slot name="node" :node="node" :selected="selectedNodes.includes(node)" @select="selectNode(node)">
+            <template v-for="node in plugin.editor.graph.nodes">
+                <slot
+                    name="node"
+                    :node="node"
+                    :selected="plugin.selectedNodes.includes(node)"
+                    @select="selectNode(node)"
+                >
                     <node
                         :key="node.id + counter.toString()"
                         :node="node"
-                        :selected="selectedNodes.includes(node)"
+                        :selected="plugin.selectedNodes.includes(node)"
                         @select="selectNode(node)"
                     >
                     </node>
@@ -46,7 +51,7 @@
         </div>
 
         <slot name="sidebar">
-            <sidebar :graph="plugin.editor.graph"></sidebar>
+            <sidebar :graph="currentGraph"></sidebar>
         </slot>
 
         <slot name="minimap" :nodes="nodes" :connections="connections">
@@ -58,9 +63,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, Ref, ref, toRef } from "vue";
+import { computed, defineComponent, isReactive, isRef, reactive, Ref, ref, toRef, watch, watchEffect } from "vue";
 
-import { AbstractNode } from "@baklavajs/core";
+import { AbstractNode, Graph } from "@baklavajs/core";
 import { ViewPlugin } from "../viewPlugin";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
@@ -72,9 +77,7 @@ import Sidebar from "../components/Sidebar.vue";
 import Minimap from "../components/Minimap.vue";
 import NodePalette from "../nodepalette/NodePalette.vue";
 
-import Clipboard from "./clipboard";
-import History from "./history";
-import { useTransform, providePlugin, useDragMove } from "../utility";
+import { useTransform, providePlugin, provideGraph } from "../utility";
 
 export default defineComponent({
     components: { Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette },
@@ -91,14 +94,28 @@ export default defineComponent({
         providePlugin(pluginRef);
 
         const el = ref<HTMLElement | null>(null);
-        const selectedNodes = ref<AbstractNode[]>([]) as Ref<AbstractNode[]>;
-        const ctrlPressed = ref(false);
 
-        // Reason: https://github.com/newcat/baklavajs/issues/54
-        const counter = ref(0);
+        const currentGraph = toRef(pluginRef.value, "displayedGraph") as Ref<Graph>;
+        provideGraph(currentGraph);
+        const nodes = computed(() => {
+            console.log("Recomputing nodes");
+            return currentGraph.value.nodes;
+        });
+        const connections = computed(() => currentGraph.value.connections);
 
-        const clipboard = new Clipboard(props.plugin.editor);
-        const history = new History(props.plugin.editor.graph);
+        /*watch(
+            () => [...props.plugin.displayedGraph.nodes],
+            (c, p) => {
+                if (c.length !== p.length) {
+                    console.log(c.length, p.length);
+                }
+            },
+            { deep: true }
+        );
+
+        watchEffect(() => {
+            console.log("effect", props.plugin.editor.graph.nodes[0].position);
+        });*/
 
         const panZoom = usePanZoom(pluginRef);
         const temporaryConnection = useTemporaryConnection(pluginRef);
@@ -109,6 +126,8 @@ export default defineComponent({
             ...panZoom.styles.value,
         }));
 
+        // Reason: https://github.com/newcat/baklavajs/issues/54
+        const counter = ref(0);
         props.plugin.editor.hooks.load.tap(token, (s) => {
             counter.value++;
             return s;
@@ -135,29 +154,14 @@ export default defineComponent({
         };
 
         const keyDown = (ev: KeyboardEvent) => {
-            if (ev.key === "Delete" && selectedNodes.value.length > 0) {
-                selectedNodes.value.forEach((n) => props.plugin.editor.graph.removeNode(n));
-            } else if (ev.key === "Tab") {
+            if (ev.key === "Tab") {
                 ev.preventDefault();
-            } else if (ev.key === "Control") {
-                ctrlPressed.value = true;
-            } else if (ev.key === "z" && ev.ctrlKey) {
-                history.undo();
-            } else if (ev.key === "y" && ev.ctrlKey) {
-                history.redo();
-            } else if (ev.key === "c" && ev.ctrlKey) {
-                clipboard.copy(selectedNodes.value);
-            } else if (ev.key === "v" && ev.ctrlKey && !clipboard.isEmpty) {
-                history.startTransaction();
-                clipboard.paste();
-                history.commitTransaction();
             }
+            props.plugin.hotkeyHandler.onKeyDown(ev);
         };
 
         const keyUp = (ev: KeyboardEvent) => {
-            if (ev.key === "Control") {
-                ctrlPressed.value = false;
-            }
+            props.plugin.hotkeyHandler.onKeyUp(ev);
         };
 
         const dragOver = (ev: DragEvent) => {
@@ -186,27 +190,26 @@ export default defineComponent({
                 const [x, y] = transform(ev.clientX, ev.clientY);
                 instance.position.x = x;
                 instance.position.y = y;
-                console.log(ev.clientX, ev.clientY, x, y);
             }
         };
 
         const selectNode = (node: AbstractNode) => {
-            if (!ctrlPressed.value) {
+            if (!props.plugin.hotkeyHandler.pressedKeys.includes("Control")) {
                 unselectAllNodes();
             }
-            selectedNodes.value.push(node);
+            props.plugin.selectedNodes.push(node);
         };
 
         const unselectAllNodes = () => {
-            selectedNodes.value = [];
+            props.plugin.selectedNodes = [];
         };
 
         return {
             el,
-            selectedNodes,
             counter,
-            nodes: props.plugin.editor.graph.nodes,
-            connections: props.plugin.editor.graph.connections,
+            currentGraph,
+            nodes,
+            connections,
             backgroundStyle,
             nodeContainerStyle,
             mouseMoveHandler,
