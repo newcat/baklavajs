@@ -28,7 +28,7 @@ export default defineComponent({
         const { plugin } = usePlugin();
 
         const categories = computed<Array<{ name: string; nodeTypes: NodeTypeInformations }>>(() => {
-            const nodeTypeEntries = Array.from(plugin.value.editor.nodeTypes.entries());
+            const nodeTypeEntries = Array.from(plugin.value.editor.value.nodeTypes.entries());
 
             const categoryNames = new Set(nodeTypeEntries.map(([nt, ni]) => ni.category));
 

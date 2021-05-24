@@ -6,7 +6,7 @@
 import { computed, defineComponent } from "vue";
 import { IConnection } from "@baklavajs/core";
 import { TemporaryConnectionState, ITemporaryConnection } from "./connection";
-import { usePlugin } from "../utility";
+import { useGraph, usePlugin } from "../utility";
 
 export default defineComponent({
     props: {
@@ -41,17 +41,18 @@ export default defineComponent({
     },
     setup(props) {
         const { plugin } = usePlugin();
+        const { graph } = useGraph();
 
         const transform = (x: number, y: number) => {
-            const tx = (x + plugin.value.panning.x) * plugin.value.scaling;
-            const ty = (y + plugin.value.panning.y) * plugin.value.scaling;
+            const tx = (x + graph.value.panning.x) * graph.value.scaling;
+            const ty = (y + graph.value.panning.y) * graph.value.scaling;
             return [tx, ty];
         };
 
         const d = computed(() => {
             const [tx1, ty1] = transform(props.x1, props.y1);
             const [tx2, ty2] = transform(props.x2, props.y2);
-            if (plugin.value.useStraightConnections) {
+            if (plugin.value.settings.useStraightConnections) {
                 return `M ${tx1} ${ty1} L ${tx2} ${ty2}`;
             } else {
                 const dx = 0.3 * Math.abs(tx1 - tx2);

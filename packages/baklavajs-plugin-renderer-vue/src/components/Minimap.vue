@@ -16,11 +16,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, toRef, watch } from "vue";
-import { IConnection, AbstractNode } from "@baklavajs/core";
+import { computed, defineComponent, onMounted, ref, toRef, watch } from "vue";
+import { AbstractNode } from "@baklavajs/core";
 import getDomElements, { getDomElementOfNode } from "../connection/domResolver";
 import { getPortCoordinates } from "../connection/portCoordinates";
-import { usePlugin } from "../utility";
+import { useGraph, usePlugin } from "../utility";
 
 interface IRect {
     x1: number;
@@ -30,21 +30,12 @@ interface IRect {
 }
 
 export default defineComponent({
-    props: {
-        nodes: {
-            type: Array as () => AbstractNode[],
-            required: true,
-        },
-        connections: {
-            type: Array as () => IConnection[],
-            required: true,
-        },
-    },
-    setup(props) {
+    setup() {
+        const { plugin } = usePlugin();
+        const { graph } = useGraph();
+
         const canvas = ref<HTMLCanvasElement | null>(null);
         const showViewBounds = ref(false);
-
-        const { plugin } = usePlugin();
 
         let ctx: CanvasRenderingContext2D | undefined;
         let dragging = false;
@@ -57,15 +48,17 @@ export default defineComponent({
 
             const nodeCoords = new Map<AbstractNode, IRect>();
             const nodeDomElements = new Map<AbstractNode, HTMLElement | null>();
-            for (const n of props.nodes) {
+            for (const n of graph.value.nodes) {
                 const domElement = getDomElementOfNode(n);
                 const width = domElement?.clientWidth ?? 0;
                 const height = domElement?.clientHeight ?? 0;
+                const posX = n.position?.x ?? 0;
+                const posY = n.position?.y ?? 0;
                 nodeCoords.set(n, {
-                    x1: n.position.x,
-                    y1: n.position.y,
-                    x2: n.position.x + width,
-                    y2: n.position.y + height,
+                    x1: posX,
+                    y1: posY,
+                    x2: posX + width,
+                    y2: posY + height,
                 });
                 nodeDomElements.set(n, domElement);
             }
@@ -104,14 +97,14 @@ export default defineComponent({
 
             // draw connections
             ctx.strokeStyle = "white";
-            for (const c of props.connections) {
+            for (const c of graph.value.connections) {
                 const [origX1, origY1] = getPortCoordinates(getDomElements(c.from));
                 const [origX2, origY2] = getPortCoordinates(getDomElements(c.to));
                 const [x1, y1] = transformCoordinates(origX1, origY1);
                 const [x2, y2] = transformCoordinates(origX2, origY2);
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
-                if (plugin.value.useStraightConnections) {
+                if (plugin.value.settings.useStraightConnections) {
                     ctx.lineTo(x2, y2);
                 } else {
                     const dx = 0.3 * Math.abs(x1 - x2);
@@ -185,9 +178,9 @@ export default defineComponent({
         const getViewBounds = (): IRect => {
             const parentWidth = canvas.value!.parentElement!.offsetWidth;
             const parentHeight = canvas.value!.parentElement!.offsetHeight;
-            const x2 = parentWidth / plugin.value.scaling - plugin.value.panning.x;
-            const y2 = parentHeight / plugin.value.scaling - plugin.value.panning.y;
-            return { x1: -plugin.value.panning.x, y1: -plugin.value.panning.y, x2, y2 };
+            const x2 = parentWidth / graph.value.scaling - graph.value.panning.x;
+            const y2 = parentHeight / graph.value.scaling - graph.value.panning.y;
+            return { x1: -graph.value.panning.x, y1: -graph.value.panning.y, x2, y2 };
         };
 
         const mousedown = (ev: MouseEvent) => {
@@ -204,8 +197,8 @@ export default defineComponent({
                 const viewBounds = getViewBounds();
                 const dx = (viewBounds.x1 - viewBounds.x2) / 2;
                 const dy = (viewBounds.y1 - viewBounds.y2) / 2;
-                plugin.value.panning.x = -(cx + dx);
-                plugin.value.panning.y = -(cy + dy);
+                graph.value.panning.x = -(cx + dx);
+                graph.value.panning.y = -(cy + dy);
             }
         };
 
@@ -213,18 +206,24 @@ export default defineComponent({
             dragging = false;
         };
 
-        watch(
-            [showViewBounds, plugin.value.panning, toRef(plugin.value, "scaling"), props.nodes, props.connections],
+        // TODO: This destroys the performance
+        /*watch(
+            [
+                showViewBounds,
+                graph.value.panning,
+                () => graph.value.scaling,
+                graph.value.nodes,
+                graph.value.connections,
+            ],
             () => {
                 updateCanvas();
             }
         );
 
-        /*const nodePositions = computed(() => props.nodes.map((n) => n.position));
+        const nodePositions = computed(() => graph.value.nodes.map((n) => n.position));
         watch(
             nodePositions,
             async () => {
-                await nextTick();
                 updateCanvas();
             },
             { deep: true }

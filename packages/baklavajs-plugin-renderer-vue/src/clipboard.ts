@@ -1,69 +1,91 @@
+import { computed, ComputedRef, Ref, ref } from "vue";
 import { v4 as uuidv4 } from "uuid";
-import { AbstractNode, INodeState, IConnectionState, Connection, NodeInterface } from "@baklavajs/core";
-import { ViewPlugin } from "./viewPlugin";
+import { AbstractNode, INodeState, IConnectionState, Connection, NodeInterface, Editor, Graph } from "@baklavajs/core";
 import { COMMIT_TRANSACTION_COMMAND, START_TRANSACTION_COMMAND } from "./history";
+import { ICommandHandler } from "./commands";
 
 export const COPY_COMMAND = "COPY";
 export const PASTE_COMMAND = "PASTE";
+export const CLEAR_CLIPBOARD_COMMAND = "CLEAR_CLIPBOARD";
 
-export class Clipboard {
-    private nodeBuffer = "";
-    private connectionBuffer = "";
+export interface IClipboard {
+    isEmpty: ComputedRef<boolean>;
+}
 
-    public get isEmpty() {
-        return !this.nodeBuffer;
-    }
+export function useClipboard(
+    displayedGraph: Ref<Graph>,
+    editor: Ref<Editor>,
+    commandHandler: ICommandHandler
+): IClipboard {
+    const token = Symbol("ClipboardToken");
 
-    public constructor(private readonly plugin: ViewPlugin) {
-        plugin.registerCommand(COPY_COMMAND, () => this.copy());
-        plugin.hotkeyHandler.registerCommand(["Control", "c"], COPY_COMMAND);
+    const nodeBuffer = ref("");
+    const connectionBuffer = ref("");
 
-        plugin.registerCommand(PASTE_COMMAND, () => this.paste());
-        plugin.hotkeyHandler.registerCommand(["Control", "v"], PASTE_COMMAND);
-    }
+    const isEmpty = computed(() => !nodeBuffer.value);
 
-    public clear() {
-        this.nodeBuffer = "";
-        this.connectionBuffer = "";
-    }
+    const clear = () => {
+        nodeBuffer.value = "";
+        connectionBuffer.value = "";
+    };
 
-    public copy() {
+    const copy = () => {
         // find all connections from and to the selected nodes
-        const interfacesOfSelectedNodes = this.plugin.selectedNodes.flatMap((n) => [
+        const interfacesOfSelectedNodes = displayedGraph.value.selectedNodes.flatMap((n) => [
             ...Object.values(n.inputs),
             ...Object.values(n.outputs),
         ]);
 
-        const connections = this.plugin.displayedGraph.connections
+        const connections = displayedGraph.value.connections
             .filter(
                 (conn) => interfacesOfSelectedNodes.includes(conn.from) || interfacesOfSelectedNodes.includes(conn.to)
             )
             .map((conn) => ({ from: conn.from.id, to: conn.to.id } as IConnectionState));
 
-        this.connectionBuffer = JSON.stringify(connections);
-        this.nodeBuffer = JSON.stringify(this.plugin.selectedNodes.map((n) => n.save()));
-    }
+        connectionBuffer.value = JSON.stringify(connections);
+        nodeBuffer.value = JSON.stringify(displayedGraph.value.selectedNodes.map((n) => n.save()));
+    };
 
-    public paste() {
-        if (this.isEmpty) {
+    const findInterface = (
+        nodes: AbstractNode[],
+        id: string,
+        io?: "input" | "output"
+    ): NodeInterface<any> | undefined => {
+        for (const n of nodes) {
+            let intf: NodeInterface<any> | undefined;
+            if (!io || io === "input") {
+                intf = Object.values(n.inputs).find((intf) => intf.id === id);
+            }
+            if (!intf && (!io || io === "output")) {
+                intf = Object.values(n.outputs).find((intf) => intf.id === id);
+            }
+            if (intf) {
+                return intf;
+            }
+        }
+        return undefined;
+    };
+
+    const paste = () => {
+        if (isEmpty.value) {
             return;
         }
 
         // Map old IDs to new IDs
         const idmap = new Map<string, string>();
 
-        const parsedNodeBuffer = JSON.parse(this.nodeBuffer) as INodeState<any, any>[];
-        const parsedConnectionBuffer = JSON.parse(this.connectionBuffer) as IConnectionState[];
+        const parsedNodeBuffer = JSON.parse(nodeBuffer.value) as INodeState<any, any>[];
+        const parsedConnectionBuffer = JSON.parse(connectionBuffer.value) as IConnectionState[];
 
         const newNodes: AbstractNode[] = [];
         const newConnections: Connection[] = [];
 
-        const graph = this.plugin.displayedGraph;
+        const graph = displayedGraph.value;
 
-        this.plugin.executeCommand(START_TRANSACTION_COMMAND);
+        commandHandler.executeCommand(START_TRANSACTION_COMMAND);
 
         for (const n of parsedNodeBuffer) {
-            const nodeType = this.plugin.editor.nodeTypes.get(n.type);
+            const nodeType = editor.value.nodeTypes.get(n.type);
             if (!nodeType) {
                 console.warn(`Node type ${n.type} not registered`);
                 return;
@@ -74,11 +96,11 @@ export class Clipboard {
 
             const tapInterfaces = (intfs: Record<string, NodeInterface<any>>) => {
                 Object.values(intfs).forEach((intf) => {
-                    intf.hooks.load.tap(this, (intfState) => {
+                    intf.hooks.load.tap(token, (intfState) => {
                         const newIntfId = uuidv4();
                         idmap.set(intfState.id, newIntfId);
                         intf.id = newIntfId;
-                        intf.hooks.load.untap(this);
+                        intf.hooks.load.untap(token);
                         return intfState;
                     });
                 });
@@ -87,7 +109,7 @@ export class Clipboard {
             tapInterfaces(copiedNode.inputs);
             tapInterfaces(copiedNode.outputs);
 
-            copiedNode.hooks.beforeLoad.tap(this, (nodeState) => {
+            copiedNode.hooks.beforeLoad.tap(token, (nodeState) => {
                 const ns = nodeState as any;
                 if (ns.position) {
                     ns.position.x += 10;
@@ -103,8 +125,8 @@ export class Clipboard {
         }
 
         for (const c of parsedConnectionBuffer) {
-            const fromIntf = this.findInterface(newNodes, idmap.get(c.from)!, "output");
-            const toIntf = this.findInterface(newNodes, idmap.get(c.to)!, "input");
+            const fromIntf = findInterface(newNodes, idmap.get(c.from)!, "output");
+            const toIntf = findInterface(newNodes, idmap.get(c.to)!, "input");
             if (!fromIntf || !toIntf) {
                 continue;
             }
@@ -114,27 +136,19 @@ export class Clipboard {
             }
         }
 
-        this.plugin.executeCommand(COMMIT_TRANSACTION_COMMAND);
+        commandHandler.executeCommand(COMMIT_TRANSACTION_COMMAND);
 
         return {
             newNodes,
             newConnections,
         };
-    }
+    };
 
-    private findInterface(nodes: AbstractNode[], id: string, io?: "input" | "output"): NodeInterface<any> | undefined {
-        for (const n of nodes) {
-            let intf: NodeInterface<any> | undefined;
-            if (!io || io === "input") {
-                intf = Object.values(n.inputs).find((intf) => intf.id === id);
-            }
-            if (!intf && (!io || io === "output")) {
-                intf = Object.values(n.outputs).find((intf) => intf.id === id);
-            }
-            if (intf) {
-                return intf;
-            }
-        }
-        return undefined;
-    }
+    commandHandler.registerCommand(COPY_COMMAND, copy);
+    commandHandler.registerHotkey(["Control", "c"], COPY_COMMAND);
+    commandHandler.registerCommand(PASTE_COMMAND, paste);
+    commandHandler.registerHotkey(["Control", "v"], PASTE_COMMAND);
+    commandHandler.registerCommand(CLEAR_CLIPBOARD_COMMAND, clear);
+
+    return { isEmpty };
 }

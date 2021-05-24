@@ -32,17 +32,17 @@
         </svg>
 
         <div class="node-container" :style="nodeContainerStyle">
-            <template v-for="node in plugin.editor.graph.nodes">
+            <template v-for="node in currentGraph.nodes">
                 <slot
                     name="node"
                     :node="node"
-                    :selected="plugin.selectedNodes.includes(node)"
+                    :selected="currentGraph.selectedNodes.includes(node)"
                     @select="selectNode(node)"
                 >
                     <node
                         :key="node.id + counter.toString()"
                         :node="node"
-                        :selected="plugin.selectedNodes.includes(node)"
+                        :selected="currentGraph.selectedNodes.includes(node)"
                         @select="selectNode(node)"
                     >
                     </node>
@@ -55,7 +55,7 @@
         </slot>
 
         <slot name="minimap" :nodes="nodes" :connections="connections">
-            <minimap v-if="plugin.enableMinimap" :nodes="nodes" :connections="connections"></minimap>
+            <minimap v-if="plugin.settings.enableMinimap" :nodes="nodes" :connections="connections"></minimap>
         </slot>
 
         <NodePalette />
@@ -66,7 +66,7 @@
 import { computed, defineComponent, isReactive, isRef, reactive, Ref, ref, toRef, watch, watchEffect } from "vue";
 
 import { AbstractNode, Graph } from "@baklavajs/core";
-import { ViewPlugin } from "../viewPlugin";
+import { IBaklavaView } from "../useBaklava";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
 
@@ -83,19 +83,19 @@ export default defineComponent({
     components: { Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette },
     props: {
         plugin: {
-            type: Object as () => ViewPlugin,
+            type: Object as () => IBaklavaView,
             required: true,
         },
     },
     setup(props) {
         const token = Symbol("EditorToken");
 
-        const pluginRef = toRef(props, "plugin") as Ref<ViewPlugin>;
+        const pluginRef = (toRef(props, "plugin") as unknown) as Ref<IBaklavaView>;
         providePlugin(pluginRef);
 
         const el = ref<HTMLElement | null>(null);
 
-        const currentGraph = toRef(pluginRef.value, "displayedGraph") as Ref<Graph>;
+        const currentGraph = props.plugin.displayedGraph;
         provideGraph(currentGraph);
         const nodes = computed(() => {
             console.log("Recomputing nodes");
@@ -117,8 +117,8 @@ export default defineComponent({
             console.log("effect", props.plugin.editor.graph.nodes[0].position);
         });*/
 
-        const panZoom = usePanZoom(pluginRef);
-        const temporaryConnection = useTemporaryConnection(pluginRef);
+        const panZoom = usePanZoom();
+        const temporaryConnection = useTemporaryConnection();
         const { transform } = useTransform();
 
         const backgroundStyle = props.plugin.backgroundStyles;
@@ -128,7 +128,7 @@ export default defineComponent({
 
         // Reason: https://github.com/newcat/baklavajs/issues/54
         const counter = ref(0);
-        props.plugin.editor.hooks.load.tap(token, (s) => {
+        props.plugin.editor.value.hooks.load.tap(token, (s) => {
             counter.value++;
             return s;
         });
@@ -157,18 +157,18 @@ export default defineComponent({
             if (ev.key === "Tab") {
                 ev.preventDefault();
             }
-            props.plugin.hotkeyHandler.onKeyDown(ev);
+            props.plugin.commandHandler.handleKeyDown(ev);
         };
 
         const keyUp = (ev: KeyboardEvent) => {
-            props.plugin.hotkeyHandler.onKeyUp(ev);
+            props.plugin.commandHandler.handleKeyUp(ev);
         };
 
         const dragOver = (ev: DragEvent) => {
             ev.preventDefault();
             if (ev.dataTransfer?.getData("text/plain")) {
                 const nodeTypeName = ev.dataTransfer.getData("text/plain");
-                if (props.plugin.editor.nodeTypes.has(nodeTypeName)) {
+                if (props.plugin.editor.value.nodeTypes.has(nodeTypeName)) {
                     ev.dataTransfer.dropEffect = "copy";
                 } else {
                     ev.dataTransfer.dropEffect = "none";
@@ -180,13 +180,13 @@ export default defineComponent({
             ev.preventDefault();
             if (ev.dataTransfer?.getData("text/plain")) {
                 const nodeTypeName = ev.dataTransfer.getData("text/plain");
-                const nodeTypeInfo = props.plugin.editor.nodeTypes.get(nodeTypeName);
+                const nodeTypeInfo = props.plugin.editor.value.nodeTypes.get(nodeTypeName);
                 if (!nodeTypeInfo) {
                     return;
                 }
 
                 const instance = new nodeTypeInfo.type();
-                props.plugin.displayedGraph.addNode(instance);
+                currentGraph.value.addNode(instance);
                 const [x, y] = transform(ev.clientX, ev.clientY);
                 instance.position.x = x;
                 instance.position.y = y;
@@ -194,14 +194,14 @@ export default defineComponent({
         };
 
         const selectNode = (node: AbstractNode) => {
-            if (!props.plugin.hotkeyHandler.pressedKeys.includes("Control")) {
+            if (!props.plugin.commandHandler.pressedKeys.value.includes("Control")) {
                 unselectAllNodes();
             }
-            props.plugin.selectedNodes.push(node);
+            currentGraph.value.selectedNodes.push(node);
         };
 
         const unselectAllNodes = () => {
-            props.plugin.selectedNodes = [];
+            currentGraph.value.selectedNodes = [];
         };
 
         return {

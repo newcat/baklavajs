@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <baklava-editor :plugin="viewPlugin"></baklava-editor>
+        <baklava-editor :plugin="baklavaView"></baklava-editor>
         <button @click="calculate">Calculate</button>
         <button @click="save">Save</button>
         <button @click="load">Load</button>
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, isReactive, Ref, ref, shallowRef } from "vue";
+import { defineComponent, isReactive, Ref, ref } from "vue";
 
 import {
     Editor,
@@ -22,9 +22,9 @@ import {
     NodeInterfaceDefinition,
     NodeInterfaceFactory,
 } from "@baklavajs/core";
-import { ViewPlugin, EditorComponent, SelectInterface, createViewPlugin } from "../src";
-import { Engine } from "@baklavajs/plugin-engine";
-import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
+import { EditorComponent, SelectInterface, useBaklava } from "../src";
+// import { Engine } from "@baklavajs/plugin-engine";
+// import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
 
 import CustomNodeRenderer from "./CustomNodeRenderer";
 
@@ -44,15 +44,12 @@ export default defineComponent({
     setup() {
         const token = Symbol("token");
         const editor = ref(new Editor()) as Ref<Editor>;
-        const viewPlugin = ref(createViewPlugin()) as Ref<ViewPlugin>;
+        const baklavaView = useBaklava(editor);
         const focusState = ref("blur");
-        const counter = ref(1);
+
+        baklavaView.settings.enableMinimap = true;
 
         // viewPlugin.value.components.node = CustomNodeRenderer;
-        viewPlugin.value.enableMinimap = true;
-        editor.value.use(viewPlugin.value);
-
-        console.log("SI", isReactive(viewPlugin.value));
 
         /*const engine = new Engine(true);
         engine.events.calculated.addListener(token, (r) => {
@@ -121,7 +118,7 @@ export default defineComponent({
             // viewPlugin.backgroundGrid.gridSize = Math.round(Math.random() * 100) + 100;
         };
 
-        return { viewPlugin, focusState, calculate, save, load, setSelectItems, changeGridSize };
+        return { editor, baklavaView, focusState, calculate, save, load, setSelectItems, changeGridSize };
     },
 });
 </script>

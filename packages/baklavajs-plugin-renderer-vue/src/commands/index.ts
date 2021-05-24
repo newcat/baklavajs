@@ -1,18 +1,44 @@
-import { isReactive, isRef } from "vue";
-import { ViewPlugin } from "../viewPlugin";
+import { Ref, ref } from "vue";
+import { Graph } from "@baklavajs/core";
+import { useHotkeyHandler } from "./hotkeyHandler";
 
 export const DELETE_NODES_COMMAND = "DELETE_NODES";
 
-(window as any).vue = {
-    isReactive,
-    isRef,
-};
-
-export function registerCommonCommands(plugin: ViewPlugin) {
-    plugin.registerCommand(DELETE_NODES_COMMAND, () => {
-        plugin.selectedNodes.forEach((n) => plugin.displayedGraph.removeNode(n));
-    });
-    plugin.hotkeyHandler.registerCommand(["Delete"], DELETE_NODES_COMMAND);
+export interface ICommandHandler {
+    pressedKeys: Ref<string[]>;
+    registerCommand(name: string, executionFn: () => any): void;
+    executeCommand(name: string): boolean;
+    registerHotkey(keys: string[], commandName: string): void;
+    handleKeyUp(ev: KeyboardEvent): void;
+    handleKeyDown(ev: KeyboardEvent): void;
 }
 
-export * from "./hotkeyHandler";
+export const useCommandHandler: () => ICommandHandler = () => {
+    const commands = ref(new Map<string, () => any>());
+
+    const registerCommand = (name: string, executionFn: () => any): void => {
+        if (commands.value.has(name)) {
+            throw new Error(`Command "${name}" already exists`);
+        }
+        commands.value.set(name, executionFn);
+    };
+
+    const executeCommand = (name: string): boolean => {
+        if (!commands.value.has(name)) {
+            return false;
+        }
+        commands.value.get(name)!();
+        return true;
+    };
+
+    const hotkeyHandler = useHotkeyHandler(executeCommand);
+
+    return { registerCommand, executeCommand, ...hotkeyHandler };
+};
+
+export function registerCommonCommands(displayedGraph: Ref<Graph>, handler: ICommandHandler) {
+    handler.registerCommand(DELETE_NODES_COMMAND, () => {
+        displayedGraph.value.selectedNodes.forEach((n) => displayedGraph.value.removeNode(n));
+    });
+    handler.registerHotkey(["Delete"], DELETE_NODES_COMMAND);
+}

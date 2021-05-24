@@ -1,5 +1,5 @@
 <template>
-    <div ref="el" :class="['sidebar', { '--open': plugin.sidebar.visible }]" :style="styles">
+    <div ref="el" :class="['sidebar', { '--open': graph.sidebar.visible }]" :style="styles">
         <div class="__resizer" @mousedown="startResize"></div>
 
         <div class="d-flex align-items-center">
@@ -15,10 +15,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { Graph } from "@baklavajs/core";
-import { ViewPlugin } from "../viewPlugin";
-import { usePlugin } from "../utility";
 
 export default defineComponent({
     props: {
@@ -30,10 +28,9 @@ export default defineComponent({
     setup(props) {
         const el = ref<HTMLElement | null>(null);
         const width = ref(300);
-        const { plugin } = usePlugin();
 
         const nodeName = computed(() => {
-            const id = plugin.value.sidebar.nodeId;
+            const id = props.graph.sidebar.nodeId;
             const n = props.graph.nodes.find((x) => x.id === id);
             return n ? n.title : "";
         });
@@ -43,7 +40,7 @@ export default defineComponent({
         }));
 
         const close = () => {
-            plugin.value.sidebar.visible = false;
+            props.graph.sidebar.visible = false;
         };
 
         const startResize = () => {
@@ -67,7 +64,7 @@ export default defineComponent({
             }
         };
 
-        return { el, plugin, nodeName, styles, startResize, close };
+        return { el, nodeName, styles, startResize, close };
     },
 });
 </script>

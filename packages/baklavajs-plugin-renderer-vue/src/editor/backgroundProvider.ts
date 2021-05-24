@@ -1,7 +1,7 @@
-import { computed, ComputedRef } from "vue";
-import type { ViewPlugin } from "../viewPlugin";
+import { computed, ComputedRef, Ref } from "vue";
+import { Graph } from "@baklavajs/core";
 
-export type BackgroundProvider<T = undefined> = (plugin: ViewPlugin, config: T) => ComputedRef<Record<string, any>>;
+export type BackgroundProvider<T = undefined> = (graph: Ref<Graph>, config: T) => ComputedRef<Record<string, any>>;
 
 export interface IGridBackgroundProviderConfig {
     gridSize: number;
@@ -9,15 +9,15 @@ export interface IGridBackgroundProviderConfig {
     subGridVisibleThreshold: number;
 }
 
-export const gridBackgroundProvider: BackgroundProvider<IGridBackgroundProviderConfig> = (plugin, config) => {
+export const gridBackgroundProvider: BackgroundProvider<IGridBackgroundProviderConfig> = (graph, config) => {
     return computed(() => {
-        const positionLeft = plugin.panning.x * plugin.scaling;
-        const positionTop = plugin.panning.y * plugin.scaling;
-        const size = plugin.scaling * config.gridSize;
+        const positionLeft = graph.value.panning.x * graph.value.scaling;
+        const positionTop = graph.value.panning.y * graph.value.scaling;
+        const size = graph.value.scaling * config.gridSize;
         const subSize = size / config.gridDivision;
         const backgroundSize = `${size}px ${size}px, ${size}px ${size}px`;
         const subGridBackgroundSize =
-            plugin.scaling > config.subGridVisibleThreshold
+            graph.value.scaling > config.subGridVisibleThreshold
                 ? `, ${subSize}px ${subSize}px, ${subSize}px ${subSize}px`
                 : "";
         return {

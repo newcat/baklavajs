@@ -1,31 +1,31 @@
-import type { ViewPlugin } from "../viewPlugin";
+import { ref } from "vue";
 
-export class HotkeyHandler {
-    public pressedKeys: string[] = [];
-    private handlers: Array<{ keys: string[]; commandName: string }> = [];
+export function useHotkeyHandler(executeCommand: (name: string) => void) {
+    const pressedKeys = ref<string[]>([]);
+    const handlers = ref<Array<{ keys: string[]; commandName: string }>>([]);
 
-    public constructor(private readonly plugin: ViewPlugin) {}
-
-    public onKeyDown(ev: KeyboardEvent) {
-        if (!this.pressedKeys.includes(ev.key)) {
-            this.pressedKeys.push(ev.key);
+    const handleKeyDown = (ev: KeyboardEvent) => {
+        if (!pressedKeys.value.includes(ev.key)) {
+            pressedKeys.value.push(ev.key);
         }
 
-        this.handlers.forEach((h) => {
-            if (h.keys.every((k) => this.pressedKeys.includes(k))) {
-                this.plugin.executeCommand(h.commandName);
+        handlers.value.forEach((h) => {
+            if (h.keys.every((k) => pressedKeys.value.includes(k))) {
+                executeCommand(h.commandName);
             }
         });
-    }
+    };
 
-    public onKeyUp(ev: KeyboardEvent) {
-        const index = this.pressedKeys.indexOf(ev.key);
+    const handleKeyUp = (ev: KeyboardEvent) => {
+        const index = pressedKeys.value.indexOf(ev.key);
         if (index >= 0) {
-            this.pressedKeys.splice(index, 1);
+            pressedKeys.value.splice(index, 1);
         }
-    }
+    };
 
-    public registerCommand(keys: string[], commandName: string) {
-        this.handlers.push({ keys, commandName });
-    }
+    const registerHotkey = (keys: string[], commandName: string) => {
+        handlers.value.push({ keys, commandName });
+    };
+
+    return { pressedKeys, handleKeyDown, handleKeyUp, registerHotkey };
 }

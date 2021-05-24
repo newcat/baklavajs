@@ -1,5 +1,5 @@
 import { computed, Ref, ref } from "vue";
-import { usePlugin } from "./usePlugin";
+import { useGraph } from "./useGraph";
 
 interface IPosition {
     x: number;
@@ -7,7 +7,7 @@ interface IPosition {
 }
 
 export function useDragMove(positionRef: Ref<IPosition>) {
-    const { plugin } = usePlugin();
+    const { graph } = useGraph();
     const draggingStartPoint = ref<IPosition | null>(null);
     const draggingStartPosition = ref<IPosition | null>(null);
 
@@ -28,8 +28,8 @@ export function useDragMove(positionRef: Ref<IPosition>) {
         if (draggingStartPoint.value) {
             const dx = ev.screenX - draggingStartPoint.value.x;
             const dy = ev.screenY - draggingStartPoint.value.y;
-            positionRef.value.x = draggingStartPosition.value!.x + dx / plugin.value.scaling;
-            positionRef.value.y = draggingStartPosition.value!.y + dy / plugin.value.scaling;
+            positionRef.value.x = draggingStartPosition.value!.x + dx / graph.value.scaling;
+            positionRef.value.y = draggingStartPosition.value!.y + dy / graph.value.scaling;
         }
     };
 

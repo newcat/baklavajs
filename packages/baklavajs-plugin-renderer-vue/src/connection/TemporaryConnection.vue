@@ -14,7 +14,6 @@
 import { computed, defineComponent } from "vue";
 
 import ConnectionView from "./ConnectionView.vue";
-import { NodeInterface } from "@baklavajs/core";
 import { ITemporaryConnection, TemporaryConnectionState } from "./connection";
 import resolveDom from "./domResolver";
 import { getPortCoordinates } from "./portCoordinates";

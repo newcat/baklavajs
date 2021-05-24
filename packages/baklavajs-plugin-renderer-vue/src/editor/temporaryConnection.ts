@@ -1,16 +1,18 @@
 import { provide, ref, Ref } from "vue";
 import { NodeInterface } from "@baklavajs/core";
 import { ITemporaryConnection, TemporaryConnectionState } from "../connection/connection";
-import { ViewPlugin } from "../viewPlugin";
+import { useGraph } from "../utility";
 
-export function useTemporaryConnection(pluginRef: Ref<ViewPlugin>) {
+export function useTemporaryConnection() {
+    const { graph } = useGraph();
+
     const temporaryConnection = ref<ITemporaryConnection | null>(null) as Ref<ITemporaryConnection | null>;
     const hoveringOver = ref<NodeInterface | null>(null) as Ref<NodeInterface | null>;
 
     const onMouseMove = (ev: MouseEvent) => {
         if (temporaryConnection.value) {
-            temporaryConnection.value.mx = ev.offsetX / pluginRef.value.scaling - pluginRef.value.panning.x;
-            temporaryConnection.value.my = ev.offsetY / pluginRef.value.scaling - pluginRef.value.panning.y;
+            temporaryConnection.value.mx = ev.offsetX / graph.value.scaling - graph.value.panning.x;
+            temporaryConnection.value.my = ev.offsetY / graph.value.scaling - graph.value.panning.y;
         }
     };
 
@@ -18,13 +20,13 @@ export function useTemporaryConnection(pluginRef: Ref<ViewPlugin>) {
         if (hoveringOver.value) {
             // if this interface is an input and already has a connection
             // to it, remove the connection and make it temporary
-            const connection = pluginRef.value.editor.graph.connections.find((c) => c.to === hoveringOver.value);
+            const connection = graph.value.connections.find((c) => c.to === hoveringOver.value);
             if (hoveringOver.value.isInput && connection) {
                 temporaryConnection.value = {
                     status: TemporaryConnectionState.NONE,
                     from: connection.from,
                 };
-                pluginRef.value.editor.graph.removeConnection(connection);
+                graph.value.removeConnection(connection);
             } else {
                 temporaryConnection.value = {
                     status: TemporaryConnectionState.NONE,
@@ -39,7 +41,7 @@ export function useTemporaryConnection(pluginRef: Ref<ViewPlugin>) {
 
     const onMouseUp = () => {
         if (temporaryConnection.value && hoveringOver.value) {
-            pluginRef.value.editor.graph.addConnection(temporaryConnection.value.from, temporaryConnection.value.to!);
+            graph.value.addConnection(temporaryConnection.value.from, temporaryConnection.value.to!);
         }
         temporaryConnection.value = null;
     };
@@ -48,7 +50,7 @@ export function useTemporaryConnection(pluginRef: Ref<ViewPlugin>) {
         hoveringOver.value = ni ?? null;
         if (ni && temporaryConnection.value) {
             temporaryConnection.value.to = ni;
-            temporaryConnection.value.status = pluginRef.value.editor.graph.checkConnection(
+            temporaryConnection.value.status = graph.value.checkConnection(
                 temporaryConnection.value.from,
                 temporaryConnection.value.to
             )
@@ -65,7 +67,7 @@ export function useTemporaryConnection(pluginRef: Ref<ViewPlugin>) {
         } else if (!ni && temporaryConnection.value) {
             temporaryConnection.value.to = undefined;
             temporaryConnection.value.status = TemporaryConnectionState.NONE;
-            pluginRef.value.editor.graph.connections.forEach((c) => {
+            graph.value.connections.forEach((c) => {
                 c.isInDanger = false;
             });
         }

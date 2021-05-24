@@ -4,21 +4,13 @@
         <span v-if="intf.connectionCount > 0 || !intf.component" class="align-middle">
             {{ intf.name }}
         </span>
-        <component
-            v-else
-            :is="intf.component"
-            v-model="intf.value"
-            :node="node"
-            :intf="intf"
-        ></component>
+        <component v-else :is="intf.component" v-model="intf.value" :node="node" :intf="intf"></component>
     </div>
 </template>
 
 <script lang="ts">
-import { ComponentOptions, computed, defineComponent, inject } from "vue";
+import { computed, defineComponent, inject } from "vue";
 import { AbstractNode, NodeInterface } from "@baklavajs/core";
-import EditorView from "../Editor.vue";
-import { ViewPlugin } from "../viewPlugin";
 
 export default defineComponent({
     props: {

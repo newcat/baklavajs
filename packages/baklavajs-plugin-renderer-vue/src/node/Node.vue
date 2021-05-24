@@ -69,9 +69,9 @@ export default defineComponent({
         }));
 
         const styles = computed(() => ({
-            top: `${props.node.position.y}px`,
-            left: `${props.node.position.x}px`,
-            width: `${props.node.width}px`,
+            top: `${props.node.position?.y ?? 0}px`,
+            left: `${props.node.position?.x ?? 0}px`,
+            width: `${props.node.width ?? 200}px`,
         }));
 
         const select = () => {

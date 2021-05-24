@@ -10,12 +10,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, onBeforeUnmount, onMounted, nextTick, watchEffect, watch } from "vue";
+import { computed, defineComponent, ref, onBeforeUnmount, onMounted, nextTick, watch } from "vue";
 import { Connection } from "@baklavajs/core";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom, { IResolvedDomElements } from "./domResolver";
 import { TemporaryConnectionState } from "./connection";
-import { usePlugin } from "../utility";
+import { useGraph } from "../utility";
 
 export default defineComponent({
     components: {
@@ -28,7 +28,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const { plugin } = usePlugin();
+        const { graph } = useGraph();
 
         let resizeObserver: ResizeObserver;
         const d = ref({ x1: 0, y1: 0, x2: 0, y2: 0 });
@@ -37,8 +37,8 @@ export default defineComponent({
             props.connection.isInDanger ? TemporaryConnectionState.FORBIDDEN : TemporaryConnectionState.NONE
         );
 
-        const fromNode = computed(() => plugin.value.editor.graph.findNodeByInterface(props.connection.from.id));
-        const toNode = computed(() => plugin.value.editor.graph.findNodeByInterface(props.connection.to.id));
+        const fromNode = computed(() => graph.value.findNodeByInterface(props.connection.from.id));
+        const toNode = computed(() => graph.value.findNodeByInterface(props.connection.to.id));
 
         const getPortCoordinates = (resolved: IResolvedDomElements): [number, number] => {
             if (resolved.node && resolved.interface && resolved.port) {
