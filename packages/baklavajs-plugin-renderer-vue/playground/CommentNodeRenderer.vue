@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, ref } from "vue";
+import { computed, defineComponent, toRef } from "vue";
 import { AbstractNode } from "@baklavajs/core";
-import { ViewPlugin } from "../src";
+import { useDragMove } from "../src";
 
 export default defineComponent({
     props: {
@@ -21,8 +21,7 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
-        const plugin = inject<ViewPlugin>("plugin")!;
-        const dragging = ref(false);
+        const dragMove = useDragMove(toRef(props.node, "position"));
 
         const styles = computed(() => ({
             "position": "absolute",
@@ -33,28 +32,21 @@ export default defineComponent({
             "background-color": "yellow",
         }));
 
-        const startDrag = () => {
-            dragging.value = true;
-            document.addEventListener("mousemove", handleMove);
+        const startDrag = (ev: MouseEvent) => {
+            dragMove.onMouseDown(ev);
+            document.addEventListener("mousemove", dragMove.onMouseMove);
             document.addEventListener("mouseup", stopDrag);
             select();
         };
 
-        const select = () => {
-            emit("select", props.node);
-        };
-
         const stopDrag = () => {
-            dragging.value = false;
-            document.removeEventListener("mousemove", handleMove);
+            dragMove.onMouseUp();
+            document.removeEventListener("mousemove", dragMove.onMouseMove);
             document.removeEventListener("mouseup", stopDrag);
         };
 
-        const handleMove = (ev: MouseEvent) => {
-            if (dragging.value) {
-                props.node.position.x += ev.movementX / plugin.scaling;
-                props.node.position.y += ev.movementY / plugin.scaling;
-            }
+        const select = () => {
+            emit("select", props.node);
         };
 
         return { startDrag, styles };

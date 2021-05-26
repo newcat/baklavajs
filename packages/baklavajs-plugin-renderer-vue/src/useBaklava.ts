@@ -2,10 +2,11 @@ import { ComputedRef, reactive, ref, Ref, watch } from "vue";
 import { Editor, Graph } from "@baklavajs/core";
 
 import { gridBackgroundProvider } from "./editor/backgroundProvider";
-import { IViewNodeState } from "./node/viewNode";
-import { ICommandHandler, registerCommonCommands, useCommandHandler } from "./commands";
+import { setViewNodeProperties } from "./node/viewNode";
+import { ICommandHandler, useCommandHandler } from "./commands";
 import { IClipboard, useClipboard } from "./clipboard";
 import { IHistory, useHistory } from "./history";
+import { registerGraphCommands } from "./graph";
 
 export interface IViewSettings {
     /** Use straight connections instead of bezier curves */
@@ -44,7 +45,7 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
     const history = useHistory(displayedGraph, commandHandler);
     const clipboard = useClipboard(displayedGraph, editor, commandHandler);
 
-    registerCommonCommands(displayedGraph, commandHandler);
+    registerGraphCommands(displayedGraph, commandHandler);
 
     watch(
         editor,
@@ -78,25 +79,8 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
                 newGraph.selectedNodes = newGraph.selectedNodes ?? [];
                 newGraph.sidebar = newGraph.sidebar ?? { visible: false, nodeId: "", optionName: "" };
 
-                newGraph.events.beforeAddNode.addListener(token, (node) => {
-                    node.position = { x: 0, y: 0 };
-                    node.disablePointerEvents = false;
-                    node.twoColumn = node.twoColumn || false;
-                    node.width = node.width || 200;
-                    node.hooks.afterSave.tap(token, (state) => {
-                        (state as IViewNodeState).position = node.position;
-                        (state as IViewNodeState).width = node.width;
-                        (state as IViewNodeState).twoColumn = node.twoColumn;
-                        return state;
-                    });
-                    node.hooks.beforeLoad.tap(token, (state) => {
-                        // default values for savefiles from older versions
-                        node.position = (state as IViewNodeState).position || { x: 0, y: 0 };
-                        node.width = (state as IViewNodeState).width || 200;
-                        node.twoColumn = (state as IViewNodeState).twoColumn || false;
-                        return state;
-                    });
-                });
+                newGraph.nodes.forEach((node) => setViewNodeProperties(node, token));
+                newGraph.events.beforeAddNode.addListener(token, (node) => setViewNodeProperties(node, token));
             }
         },
         { immediate: true }

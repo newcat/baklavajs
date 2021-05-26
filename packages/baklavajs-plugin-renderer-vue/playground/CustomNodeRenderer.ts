@@ -16,6 +16,6 @@ export default defineComponent({
             return node.type === "CommentNode" ? CommentNode : (Components.Node as ComponentOptions);
         };
 
-        return h(getComponent(), this.node);
+        return h(getComponent(), { ...this.$props, ...this.$attrs });
     },
 });

@@ -1,27 +1,23 @@
 <template>
     <div id="app">
-        <baklava-editor :plugin="baklavaView"></baklava-editor>
+        <baklava-editor :plugin="baklavaView">
+            <template v-slot:node="nodeProps">
+                <CustomNodeRenderer :key="nodeProps.node.id" v-bind="nodeProps"></CustomNodeRenderer>
+            </template>
+        </baklava-editor>
         <button @click="calculate">Calculate</button>
         <button @click="save">Save</button>
         <button @click="load">Load</button>
-        <button @focus="focusState = 'focus'" @blur="focusState = 'blur'">{{ focusState }}</button>
         <button @click="setSelectItems">Set Select Items</button>
         <button @click="changeGridSize">Change Grid Size</button>
+        <button @click="createSubgraph">Create Subgraph</button>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, isReactive, Ref, ref } from "vue";
+import { defineComponent, Ref, ref } from "vue";
 
-import {
-    Editor,
-    Node,
-    NodeInterface,
-    NodeInstanceOf,
-    AbstractNodeConstructor,
-    NodeInterfaceDefinition,
-    NodeInterfaceFactory,
-} from "@baklavajs/core";
+import { Editor, NodeInstanceOf } from "@baklavajs/core";
 import { EditorComponent, SelectInterface, useBaklava } from "../src";
 // import { Engine } from "@baklavajs/plugin-engine";
 // import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
@@ -36,16 +32,17 @@ import AdvancedNode from "./AdvancedNode";
 import CommentNode from "./CommentNode";
 import InterfaceTestNode from "./InterfaceTestNode";
 import SelectTestNode from "./SelectTestNode";
+import { CREATE_SUBGRAPH_COMMAND } from "../src/graph/createSubgraph.command";
 
 export default defineComponent({
     components: {
+        CustomNodeRenderer,
         "baklava-editor": EditorComponent,
     },
     setup() {
         const token = Symbol("token");
         const editor = ref(new Editor()) as Ref<Editor>;
         const baklavaView = useBaklava(editor);
-        const focusState = ref("blur");
 
         baklavaView.settings.enableMinimap = true;
 
@@ -118,7 +115,11 @@ export default defineComponent({
             // viewPlugin.backgroundGrid.gridSize = Math.round(Math.random() * 100) + 100;
         };
 
-        return { editor, baklavaView, focusState, calculate, save, load, setSelectItems, changeGridSize };
+        const createSubgraph = () => {
+            baklavaView.commandHandler.executeCommand(CREATE_SUBGRAPH_COMMAND);
+        };
+
+        return { editor, baklavaView, calculate, save, load, setSelectItems, changeGridSize, createSubgraph };
     },
 });
 </script>
@@ -129,5 +130,3 @@ export default defineComponent({
     height: 700px;
 }
 </style>
-
-function createViewPlugin(): any { throw new Error("Function not implemented."); }

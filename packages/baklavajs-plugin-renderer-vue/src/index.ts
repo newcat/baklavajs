@@ -17,5 +17,6 @@ export const Components = {
 export { default as EditorComponent } from "./editor/Editor.vue";
 export * from "./nodeinterfaces";
 export * from "./useBaklava";
+export * from "./utility";
 
 import "./styles/all.scss";

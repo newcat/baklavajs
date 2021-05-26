@@ -18,7 +18,7 @@ export interface IGraphInterface {
     name: string;
 }
 
-export interface IGraphState extends Record<string, any> {
+export interface IGraphState {
     id: string;
     nodes: Array<INodeState<unknown, unknown>>;
     connections: IConnectionState[];
@@ -111,7 +111,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
      * @param to Target interface for the connection
      * @returns The created connection. If no connection could be created, returns `undefined`.
      */
-    public addConnection(from: NodeInterface<unknown>, to: NodeInterface<unknown>): Connection | undefined {
+    public addConnection(from: NodeInterface<any>, to: NodeInterface<any>): Connection | undefined {
         const dc = this.checkConnection(from, to);
         if (!dc) {
             return undefined;
@@ -150,7 +150,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
      * @param to The target node interface (must be an input interface)
      * @returns Whether the connection is allowed or not.
      */
-    public checkConnection(from: NodeInterface<unknown>, to: NodeInterface<unknown>): false | DummyConnection {
+    public checkConnection(from: NodeInterface<any>, to: NodeInterface<any>): false | DummyConnection {
         if (!from || !to) {
             return false;
         }
@@ -191,18 +191,18 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
      * @param id id of the NodeInterface to find
      * @returns The NodeInterface if found, otherwise undefined
      */
-    public findNodeInterface(id: string): NodeInterface<unknown> | undefined {
+    public findNodeInterface(id: string): NodeInterface<any> | undefined {
         for (const node of this.nodes) {
             for (const k in node.inputs) {
                 const nodeInput = node.inputs[k];
                 if (nodeInput.id === id) {
-                    return nodeInput as NodeInterface<unknown>;
+                    return nodeInput;
                 }
             }
             for (const k in node.outputs) {
                 const nodeOutput = node.outputs[k];
                 if (nodeOutput.id === id) {
-                    return nodeOutput as NodeInterface<unknown>;
+                    return nodeOutput;
                 }
             }
         }
@@ -234,6 +234,8 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
 
         // Load state
         this.id = state.id;
+        this.inputs = state.inputs;
+        this.outputs = state.outputs;
 
         for (const n of state.nodes) {
             // find node type
@@ -290,7 +292,7 @@ export class GraphTemplate implements IGraphState {
         return new GraphTemplate(graph.save(), editor);
     }
 
-    public id!: string;
+    public id = uuidv4();
     public nodes!: Array<INodeState<unknown, unknown>>;
     public connections!: IConnectionState[];
     public inputs!: IGraphInterface[];
@@ -298,7 +300,7 @@ export class GraphTemplate implements IGraphState {
 
     public editor: Editor;
 
-    constructor(state: IGraphState, editor: Editor) {
+    constructor(state: Omit<IGraphState, "id">, editor: Editor) {
         this.editor = editor;
         this.update(state);
     }
@@ -307,8 +309,7 @@ export class GraphTemplate implements IGraphState {
         updated: new BaklavaEvent<void>(),
     };
 
-    public update(state: IGraphState) {
-        this.id = state.id;
+    public update(state: Omit<IGraphState, "id">) {
         this.nodes = state.nodes;
         this.connections = state.connections;
         this.inputs = state.inputs;
@@ -377,6 +378,7 @@ export class GraphTemplate implements IGraphState {
 
         const g = new Graph(this.editor);
         g.load(clonedState);
+        g.template = this;
         return g;
     }
 }

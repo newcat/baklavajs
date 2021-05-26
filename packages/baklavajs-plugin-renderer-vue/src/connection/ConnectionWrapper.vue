@@ -37,8 +37,8 @@ export default defineComponent({
             props.connection.isInDanger ? TemporaryConnectionState.FORBIDDEN : TemporaryConnectionState.NONE
         );
 
-        const fromNode = computed(() => graph.value.findNodeByInterface(props.connection.from.id));
-        const toNode = computed(() => graph.value.findNodeByInterface(props.connection.to.id));
+        const fromNodePosition = computed(() => graph.value.findNodeByInterface(props.connection.from.id)?.position);
+        const toNodePosition = computed(() => graph.value.findNodeByInterface(props.connection.to.id)?.position);
 
         const getPortCoordinates = (resolved: IResolvedDomElements): [number, number] => {
             if (resolved.node && resolved.interface && resolved.port) {
@@ -85,7 +85,7 @@ export default defineComponent({
             }
         });
 
-        watch([fromNode.value?.position, toNode.value?.position], () => updateCoords());
+        watch([fromNodePosition, toNodePosition], () => updateCoords(), { deep: true });
 
         return { d, state, connection: props.connection };
     },

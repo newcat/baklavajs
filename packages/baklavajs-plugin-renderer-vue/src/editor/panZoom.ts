@@ -3,7 +3,9 @@ import { useDragMove, useGraph } from "../utility";
 
 export function usePanZoom() {
     const { graph } = useGraph();
-    const dragMove = useDragMove(toRef(graph.value, "panning"));
+
+    const panningRef = computed(() => graph.value.panning);
+    const dragMove = useDragMove(panningRef);
 
     const styles = computed(() => ({
         "transform-origin": "0 0",
