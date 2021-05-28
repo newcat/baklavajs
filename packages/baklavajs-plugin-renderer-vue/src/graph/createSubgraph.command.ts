@@ -1,4 +1,5 @@
-import { Graph, GraphTemplate } from "@baklavajs/core";
+import { createGraphNodeType, Graph, GraphTemplate, IGraphInterface, IGraphNode } from "@baklavajs/core";
+import { v4 as uuidv4 } from "uuid";
 import { Ref } from "vue";
 import type { ICommandHandler } from "../commands";
 import { switchGraph } from "./switchGraph";
@@ -18,22 +19,41 @@ export function registerCreateSubgraphCommand(displayedGraph: Ref<Graph>, handle
 
         const selectedNodesInputs = selectedNodes.flatMap((n) => Object.values(n.inputs));
         const selectedNodesOutputs = selectedNodes.flatMap((n) => Object.values(n.outputs));
-        const inputInterfaces = graph.connections
-            .filter((c) => !selectedNodesOutputs.includes(c.from) && selectedNodesInputs.includes(c.to))
-            .map((c) => c.to);
-        const outputInterfaces = graph.connections
-            .filter((c) => selectedNodesOutputs.includes(c.from) && !selectedNodesInputs.includes(c.to))
-            .map((c) => c.from);
 
+        const inputConnections = graph.connections.filter(
+            (c) => !selectedNodesOutputs.includes(c.from) && selectedNodesInputs.includes(c.to)
+        );
+        const outputConnections = graph.connections.filter(
+            (c) => selectedNodesOutputs.includes(c.from) && !selectedNodesInputs.includes(c.to)
+        );
         const innerConnections = graph.connections.filter(
             (c) => selectedNodesOutputs.includes(c.from) && selectedNodesInputs.includes(c.to)
         );
 
+        const inputInterfaces = inputConnections.map((c) => c.to);
+        const outputInterfaces = outputConnections.map((c) => c.from);
+
+        const interfaceIdMap = new Map<string, string>();
+
+        const graphInputs: IGraphInterface[] = [];
+        for (const i of inputInterfaces) {
+            const newId = uuidv4();
+            interfaceIdMap.set(i.id, newId);
+            graphInputs.push({ id: newId, nodeInterfaceId: i.id, name: i.name });
+        }
+
+        const graphOutputs: IGraphInterface[] = [];
+        for (const i of outputInterfaces) {
+            const newId = uuidv4();
+            interfaceIdMap.set(i.id, newId);
+            graphOutputs.push({ id: newId, nodeInterfaceId: i.id, name: i.name });
+        }
+
         const subgraphTemplate = new GraphTemplate(
             {
                 connections: innerConnections.map((c) => ({ id: c.id, from: c.from.id, to: c.to.id })),
-                inputs: inputInterfaces.map((i) => ({ nodeInterfaceId: i.id, name: i.name })),
-                outputs: outputInterfaces.map((i) => ({ nodeInterfaceId: i.id, name: i.name })),
+                inputs: graphInputs,
+                outputs: graphOutputs,
                 nodes: selectedNodes.map((n) => n.save()),
             },
             editor
@@ -41,7 +61,23 @@ export function registerCreateSubgraphCommand(displayedGraph: Ref<Graph>, handle
 
         editor.graphTemplates.push(subgraphTemplate);
 
-        // TODO: Delete the selected nodes and replace with the subgraph node
+        const nt = createGraphNodeType(subgraphTemplate);
+        editor.registerNodeType(nt);
+
+        const node = new nt();
+        graph.addNode(node);
+
+        inputConnections.forEach((c) => {
+            graph.removeConnection(c);
+            graph.addConnection(c.from, node.inputs[interfaceIdMap.get(c.to.id)!]);
+        });
+
+        outputConnections.forEach((c) => {
+            graph.removeConnection(c);
+            graph.addConnection(node.outputs[interfaceIdMap.get(c.from.id)!], c.to);
+        });
+
+        selectedNodes.forEach((n) => graph.removeNode(n));
 
         switchGraph(displayedGraph, subgraphTemplate);
     });

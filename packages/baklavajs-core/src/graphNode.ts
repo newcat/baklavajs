@@ -6,16 +6,21 @@ export interface IGraphNodeState extends INodeState<any, any> {
     graphState: IGraphState;
 }
 
-export function createGraphNodeType(template: GraphTemplate): new () => AbstractNode {
-    return class GraphNode extends AbstractNode {
+export interface IGraphNode {
+    template: GraphTemplate;
+    graph: Graph;
+}
+
+export function createGraphNodeType(template: GraphTemplate): new () => AbstractNode & IGraphNode {
+    return class GraphNode extends AbstractNode implements IGraphNode {
         public type = `GraphNode-${template.id}`;
         public title = "GraphNode";
 
         public inputs: Record<string, NodeInterface<any>> = {};
         public outputs: Record<string, NodeInterface<any>> = {};
 
-        private template = template;
-        private graph!: Graph;
+        public template = template;
+        public graph!: Graph;
 
         constructor() {
             super();
@@ -52,6 +57,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         }
 
         private updateInterfaces() {
+            // TODO: Move connections to new interfaces
             this.inputs = Object.fromEntries(this.getInterfaceEntries(this.graph.inputs));
             this.outputs = Object.fromEntries(this.getInterfaceEntries(this.graph.outputs));
         }
@@ -65,7 +71,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
                     );
                 }
                 intf.name = gi.name;
-                return [gi.nodeInterfaceId, intf];
+                return [gi.id, intf];
             });
         }
     };

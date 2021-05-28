@@ -14,6 +14,7 @@ import type { INodeInterfaceState, NodeInterface } from "./nodeInterface";
 import type { Editor } from "./editor";
 
 export interface IGraphInterface {
+    id: string;
     nodeInterfaceId: string;
     name: string;
 }
@@ -359,11 +360,13 @@ export class GraphTemplate implements IGraphState {
         }));
 
         const inputs: IGraphInterface[] = this.inputs.map((i) => ({
+            id: i.id,
             name: i.name,
             nodeInterfaceId: getNewId(i.nodeInterfaceId),
         }));
 
         const outputs: IGraphInterface[] = this.outputs.map((o) => ({
+            id: o.id,
             name: o.name,
             nodeInterfaceId: getNewId(o.nodeInterfaceId),
         }));
