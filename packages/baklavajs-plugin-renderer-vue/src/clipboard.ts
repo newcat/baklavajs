@@ -1,12 +1,21 @@
 import { computed, ComputedRef, Ref, ref } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { AbstractNode, INodeState, IConnectionState, Connection, NodeInterface, Editor, Graph } from "@baklavajs/core";
-import { COMMIT_TRANSACTION_COMMAND, START_TRANSACTION_COMMAND } from "./history";
-import { ICommandHandler } from "./commands";
+import {
+    CommitTransactionCommand,
+    COMMIT_TRANSACTION_COMMAND,
+    StartTransactionCommand,
+    START_TRANSACTION_COMMAND,
+} from "./history";
+import { ICommand, ICommandHandler } from "./commands";
 
 export const COPY_COMMAND = "COPY";
 export const PASTE_COMMAND = "PASTE";
 export const CLEAR_CLIPBOARD_COMMAND = "CLEAR_CLIPBOARD";
+
+export type CopyCommand = ICommand<void>;
+export type PasteCommand = ICommand<void>;
+export type ClearClipboardCommand = ICommand<void>;
 
 export interface IClipboard {
     isEmpty: ComputedRef<boolean>;
@@ -82,7 +91,7 @@ export function useClipboard(
 
         const graph = displayedGraph.value;
 
-        commandHandler.executeCommand(START_TRANSACTION_COMMAND);
+        commandHandler.executeCommand<StartTransactionCommand>(START_TRANSACTION_COMMAND);
 
         for (const n of parsedNodeBuffer) {
             const nodeType = editor.value.nodeTypes.get(n.type);
@@ -136,7 +145,7 @@ export function useClipboard(
             }
         }
 
-        commandHandler.executeCommand(COMMIT_TRANSACTION_COMMAND);
+        commandHandler.executeCommand<CommitTransactionCommand>(COMMIT_TRANSACTION_COMMAND);
 
         return {
             newNodes,
@@ -144,11 +153,20 @@ export function useClipboard(
         };
     };
 
-    commandHandler.registerCommand(COPY_COMMAND, copy);
+    commandHandler.registerCommand(COPY_COMMAND, {
+        canExecute: () => true,
+        execute: copy,
+    });
     commandHandler.registerHotkey(["Control", "c"], COPY_COMMAND);
-    commandHandler.registerCommand(PASTE_COMMAND, paste);
+    commandHandler.registerCommand(PASTE_COMMAND, {
+        canExecute: () => !isEmpty.value,
+        execute: paste,
+    });
     commandHandler.registerHotkey(["Control", "v"], PASTE_COMMAND);
-    commandHandler.registerCommand(CLEAR_CLIPBOARD_COMMAND, clear);
+    commandHandler.registerCommand(CLEAR_CLIPBOARD_COMMAND, {
+        canExecute: () => true,
+        execute: clear,
+    });
 
     return { isEmpty };
 }

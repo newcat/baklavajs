@@ -1,12 +1,12 @@
-import { ComputedRef, reactive, ref, Ref, watch } from "vue";
-import { Editor, Graph } from "@baklavajs/core";
+import { ComputedRef, reactive, ref, Ref, shallowReadonly, watch } from "vue";
+import { Editor, Graph, GraphTemplate } from "@baklavajs/core";
 
 import { gridBackgroundProvider } from "./editor/backgroundProvider";
-import { setViewNodeProperties } from "./node/viewNode";
 import { ICommandHandler, useCommandHandler } from "./commands";
 import { IClipboard, useClipboard } from "./clipboard";
 import { IHistory, useHistory } from "./history";
 import { registerGraphCommands } from "./graph";
+import { useSwitchGraph } from "./graph/switchGraph";
 
 export interface IViewSettings {
     /** Use straight connections instead of bezier curves */
@@ -23,12 +23,16 @@ export interface IBaklavaView {
     commandHandler: ICommandHandler;
     history: IHistory;
     clipboard: IClipboard;
+    switchGraph: (newGraph: Graph | GraphTemplate) => void;
 }
 
 export function useBaklava(editor: Ref<Editor>): IBaklavaView {
     const token = Symbol("ViewPluginToken");
 
-    const displayedGraph = ref(editor.value.graph) as Ref<Graph>;
+    const _displayedGraph = ref(null as any) as Ref<Graph>;
+    const displayedGraph = shallowReadonly(_displayedGraph) as Readonly<Ref<Graph>>;
+    const { switchGraph } = useSwitchGraph(editor, _displayedGraph);
+    switchGraph(editor.value.graph);
 
     const settings: IViewSettings = reactive({
         useStraightConnections: false,
@@ -45,7 +49,7 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
     const history = useHistory(displayedGraph, commandHandler);
     const clipboard = useClipboard(displayedGraph, editor, commandHandler);
 
-    registerGraphCommands(displayedGraph, commandHandler);
+    registerGraphCommands(displayedGraph, commandHandler, switchGraph);
 
     watch(
         editor,
@@ -56,35 +60,11 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
             }
             if (newValue) {
                 // TODO: Saving and loading hooks
-                displayedGraph.value = newValue.graph;
+                // displayedGraph.value = newValue.graph;
             }
         },
         { immediate: true }
     );
 
-    watch(
-        displayedGraph,
-        (newGraph, oldGraph) => {
-            if (oldGraph) {
-                oldGraph.events.beforeAddNode.removeListener(token);
-                oldGraph.nodes.forEach((n) => {
-                    n.hooks.afterSave.untap(token);
-                    n.hooks.beforeLoad.untap(token);
-                });
-            }
-
-            if (newGraph) {
-                newGraph.panning = newGraph.panning ?? { x: 0, y: 0 };
-                newGraph.scaling = newGraph.scaling ?? 1;
-                newGraph.selectedNodes = newGraph.selectedNodes ?? [];
-                newGraph.sidebar = newGraph.sidebar ?? { visible: false, nodeId: "", optionName: "" };
-
-                newGraph.nodes.forEach((node) => setViewNodeProperties(node, token));
-                newGraph.events.beforeAddNode.addListener(token, (node) => setViewNodeProperties(node, token));
-            }
-        },
-        { immediate: true }
-    );
-
-    return { editor, displayedGraph, settings, backgroundStyles, commandHandler, history, clipboard };
+    return { editor, displayedGraph, settings, backgroundStyles, commandHandler, history, clipboard, switchGraph };
 }

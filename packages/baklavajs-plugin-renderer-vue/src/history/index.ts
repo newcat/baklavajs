@@ -1,7 +1,7 @@
-import { Ref, ref, watch } from "vue";
+import { computed, Ref, ref, watch } from "vue";
 import { Graph } from "@baklavajs/core";
 
-import type { ICommandHandler } from "../commands";
+import type { ICommandHandler, ICommand } from "../commands";
 
 import { IStep } from "./step";
 import NodeStep from "./nodeStep";
@@ -12,6 +12,11 @@ export const UNDO_COMMAND = "UNDO";
 export const REDO_COMMAND = "REDO";
 export const START_TRANSACTION_COMMAND = "START_TRANSACTION";
 export const COMMIT_TRANSACTION_COMMAND = "COMMIT_TRANSACTION";
+
+export type UndoCommand = ICommand<void>;
+export type RedoCommand = ICommand<void>;
+export type StartTransactionCommand = ICommand<void>;
+export type CommitTransactionCommand = ICommand<void>;
 
 export interface IHistory {
     maxSteps: Ref<number>;
@@ -61,8 +66,9 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
         }
     };
 
+    const canUndo = computed(() => steps.value.length !== 0 && currentIndex.value !== -1);
     const undo = () => {
-        if (steps.value.length === 0 || currentIndex.value === -1) {
+        if (!canUndo.value) {
             return;
         }
         changeBySelf.value = true;
@@ -70,8 +76,9 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
         changeBySelf.value = false;
     };
 
+    const canRedo = computed(() => steps.value.length !== 0 && currentIndex.value < steps.value.length - 1);
     const redo = () => {
-        if (steps.value.length === 0 || currentIndex.value >= steps.value.length - 1) {
+        if (!canRedo.value) {
             return;
         }
         changeBySelf.value = true;
@@ -107,10 +114,22 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
         { immediate: true }
     );
 
-    commandHandler.registerCommand(UNDO_COMMAND, undo);
-    commandHandler.registerCommand(REDO_COMMAND, redo);
-    commandHandler.registerCommand(START_TRANSACTION_COMMAND, startTransaction);
-    commandHandler.registerCommand(COMMIT_TRANSACTION_COMMAND, commitTransaction);
+    commandHandler.registerCommand<UndoCommand>(UNDO_COMMAND, {
+        canExecute: () => canUndo.value,
+        execute: undo,
+    });
+    commandHandler.registerCommand<RedoCommand>(REDO_COMMAND, {
+        canExecute: () => canRedo.value,
+        execute: redo,
+    });
+    commandHandler.registerCommand<StartTransactionCommand>(START_TRANSACTION_COMMAND, {
+        canExecute: () => !activeTransaction.value,
+        execute: startTransaction,
+    });
+    commandHandler.registerCommand<CommitTransactionCommand>(COMMIT_TRANSACTION_COMMAND, {
+        canExecute: () => activeTransaction.value,
+        execute: commitTransaction,
+    });
 
     commandHandler.registerHotkey(["Control", "z"], UNDO_COMMAND);
     commandHandler.registerHotkey(["Control", "y"], REDO_COMMAND);

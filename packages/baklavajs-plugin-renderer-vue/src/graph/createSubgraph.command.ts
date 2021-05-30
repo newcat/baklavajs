@@ -1,13 +1,23 @@
-import { createGraphNodeType, Graph, GraphTemplate, IGraphInterface, IGraphNode } from "@baklavajs/core";
+import { createGraphNodeType, Graph, GraphTemplate, IGraphInterface } from "@baklavajs/core";
 import { v4 as uuidv4 } from "uuid";
 import { Ref } from "vue";
-import type { ICommandHandler } from "../commands";
-import { switchGraph } from "./switchGraph";
+import type { ICommand, ICommandHandler } from "../commands";
+import type { SwitchGraph } from "./switchGraph";
 
 export const CREATE_SUBGRAPH_COMMAND = "CREATE_SUBGRAPH";
+export type CreateSubgraphCommand = ICommand<void>;
 
-export function registerCreateSubgraphCommand(displayedGraph: Ref<Graph>, handler: ICommandHandler) {
-    handler.registerCommand(CREATE_SUBGRAPH_COMMAND, () => {
+export function registerCreateSubgraphCommand(
+    displayedGraph: Ref<Graph>,
+    handler: ICommandHandler,
+    switchGraph: SwitchGraph
+) {
+    const canCreateSubgraph = () => {
+        // TODO: Implement
+        return true;
+    };
+
+    const createSubgraph = () => {
         const graph = displayedGraph.value;
         const editor = displayedGraph.value.editor;
 
@@ -62,7 +72,7 @@ export function registerCreateSubgraphCommand(displayedGraph: Ref<Graph>, handle
         editor.graphTemplates.push(subgraphTemplate);
 
         const nt = createGraphNodeType(subgraphTemplate);
-        editor.registerNodeType(nt);
+        editor.registerNodeType(nt, { category: "Subgraphs" });
 
         const node = new nt();
         graph.addNode(node);
@@ -79,6 +89,14 @@ export function registerCreateSubgraphCommand(displayedGraph: Ref<Graph>, handle
 
         selectedNodes.forEach((n) => graph.removeNode(n));
 
-        switchGraph(displayedGraph, subgraphTemplate);
+        switchGraph(subgraphTemplate);
+
+        displayedGraph.value.panning = { ...graph.panning };
+        displayedGraph.value.scaling = graph.scaling;
+    };
+
+    handler.registerCommand<CreateSubgraphCommand>(CREATE_SUBGRAPH_COMMAND, {
+        canExecute: canCreateSubgraph,
+        execute: createSubgraph,
     });
 }

@@ -1,4 +1,5 @@
-import { AbstractNode, defineNode, GraphTemplate, Node, NodeInterface } from "@baklavajs/core";
+import { v4 as uuidv4 } from "uuid";
+import { defineNode, NodeInstanceOf, NodeInterface } from "@baklavajs/core";
 import { TextInputInterface } from "../nodeinterfaces";
 
 // https://github.com/microsoft/TypeScript/issues/30355
@@ -25,6 +26,10 @@ export function createSubgraphOutputNode<T extends NodeInterface<V>, V>(
 export const SUBGRAPH_INPUT_NODE_TYPE = "__baklavaSubgraphInputNode";
 export const SUBGRAPH_OUTPUT_NODE_TYPE = "__baklavaSubgraphOutputNode";
 
+export interface ISubgraphInterfaceNode {
+    graphInterfaceId: string;
+}
+
 export const SubgraphInputNode = defineNode({
     type: SUBGRAPH_INPUT_NODE_TYPE,
     title: "Subgraph Input",
@@ -33,6 +38,9 @@ export const SubgraphInputNode = defineNode({
     },
     outputs: {
         placeholder: () => new NodeInterface("Connection", undefined),
+    },
+    onCreate() {
+        ((this as unknown) as ISubgraphInterfaceNode).graphInterfaceId = uuidv4();
     },
 });
 
@@ -43,4 +51,10 @@ export const SubgraphOutputNode = defineNode({
         name: () => new TextInputInterface("Name", "Input").setPort(false),
         placeholder: () => new NodeInterface("Connection", undefined),
     },
+    onCreate() {
+        ((this as unknown) as ISubgraphInterfaceNode).graphInterfaceId = uuidv4();
+    },
 });
+
+export type InputNode = NodeInstanceOf<typeof SubgraphInputNode> & ISubgraphInterfaceNode;
+export type OutputNode = NodeInstanceOf<typeof SubgraphOutputNode> & ISubgraphInterfaceNode;

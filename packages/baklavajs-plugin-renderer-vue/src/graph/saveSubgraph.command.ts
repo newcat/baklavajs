@@ -1,20 +1,13 @@
 import { Ref } from "vue";
-import { Connection, Graph, IGraphInterface, NodeInstanceOf } from "@baklavajs/core";
-import type { ICommandHandler } from "../commands";
-import {
-    SUBGRAPH_INPUT_NODE_TYPE,
-    SubgraphInputNode,
-    SubgraphOutputNode,
-    SUBGRAPH_OUTPUT_NODE_TYPE,
-} from "./subgraphInterfaceNodes";
+import { Connection, Graph, IGraphInterface } from "@baklavajs/core";
+import type { ICommand, ICommandHandler } from "../commands";
+import { SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE, InputNode, OutputNode } from "./subgraphInterfaceNodes";
 
 export const SAVE_SUBGRAPH_COMMAND = "SAVE_SUBGRAPH";
-
-type InputNode = NodeInstanceOf<typeof SubgraphInputNode>;
-type OutputNode = NodeInstanceOf<typeof SubgraphOutputNode>;
+export type SaveSubgraphCommand = ICommand<void>;
 
 export function registerSaveSubgraphCommand(displayedGraph: Ref<Graph>, handler: ICommandHandler) {
-    handler.registerCommand(SAVE_SUBGRAPH_COMMAND, () => {
+    const saveSubgraph = () => {
         const graph = displayedGraph.value;
 
         if (!graph.template) {
@@ -29,6 +22,7 @@ export function registerSaveSubgraphCommand(displayedGraph: Ref<Graph>, handler:
             const connections = graph.connections.filter((c) => c.from === n.outputs.placeholder);
             connections.forEach((c) => {
                 inputs.push({
+                    id: n.graphInterfaceId,
                     name: n.inputs.name.value,
                     nodeInterfaceId: c.to.id,
                 });
@@ -42,6 +36,7 @@ export function registerSaveSubgraphCommand(displayedGraph: Ref<Graph>, handler:
             const connections = graph.connections.filter((c) => c.to === n.inputs.placeholder);
             connections.forEach((c) => {
                 outputs.push({
+                    id: n.graphInterfaceId,
                     name: n.inputs.name.value,
                     nodeInterfaceId: c.from.id,
                 });
@@ -60,5 +55,10 @@ export function registerSaveSubgraphCommand(displayedGraph: Ref<Graph>, handler:
             connections: innerConnections.map((c) => ({ id: c.id, from: c.from.id, to: c.to.id })),
             nodes,
         });
+    };
+
+    handler.registerCommand(SAVE_SUBGRAPH_COMMAND, {
+        canExecute: () => displayedGraph.value !== displayedGraph.value.editor?.graph,
+        execute: saveSubgraph,
     });
 }
