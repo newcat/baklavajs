@@ -19,7 +19,7 @@
     },
     "scripts": {
         "dev": "vite",
-        "build": "rimraf dist && vite build && tsc --emitDeclarationOnly",
+        "build": "rimraf dist && vue-tsc --noEmit && vite build && tsc --emitDeclarationOnly",
         "docs": "typedoc --json ../../docs/api/plugin-renderer-vue.json --options ../../typedoc.json"
     },
     "repository": {
@@ -40,7 +40,8 @@
         "sass": "^1.32.7",
         "typescript": "^4.1.5",
         "vite": "^2.0.0-beta.69",
-        "vue": "^3.0.7"
+        "vue": "^3.0.7",
+        "vue-tsc": "^0.1.6"
     },
     "publishConfig": {
         "access": "public"
