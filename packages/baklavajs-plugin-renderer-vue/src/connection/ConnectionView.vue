@@ -4,8 +4,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { IConnection } from "@baklavajs/core";
-import { TemporaryConnectionState, ITemporaryConnection } from "./connection";
+import { TemporaryConnectionState } from "./connection";
 import { useGraph, usePlugin } from "../utility";
 
 export default defineComponent({
@@ -33,10 +32,6 @@ export default defineComponent({
         isTemporary: {
             type: Boolean,
             default: false,
-        },
-        connection: {
-            type: Object as () => IConnection | ITemporaryConnection,
-            required: true,
         },
     },
     setup(props) {

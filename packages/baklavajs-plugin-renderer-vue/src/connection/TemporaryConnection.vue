@@ -5,7 +5,6 @@
         :x2="d.output[0]"
         :y2="d.output[1]"
         :state="status"
-        :connection="connection"
         is-temporary
     ></connection-view>
 </template>

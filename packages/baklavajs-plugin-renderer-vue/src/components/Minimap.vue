@@ -2,13 +2,8 @@
     <canvas
         ref="canvas"
         class="minimap"
-        @mouseenter="showViewBounds = true"
-        @mouseleave="
-            () => {
-                this.showViewBounds = false;
-                this.mouseup();
-            }
-        "
+        @mouseenter="mouseenter"
+        @mouseleave="mouseleave"
         @mousedown.self="mousedown"
         @mousemove.self="mousemove"
         @mouseup="mouseup"
@@ -206,6 +201,15 @@ export default defineComponent({
             dragging = false;
         };
 
+        const mouseenter = () => {
+            showViewBounds.value = true;
+        };
+
+        const mouseleave = () => {
+            showViewBounds.value = false;
+            mouseup();
+        };
+
         // TODO: This destroys the performance
         /*watch(
             [
@@ -235,7 +239,7 @@ export default defineComponent({
             updateCanvas();
         });
 
-        return { canvas, showViewBounds, mousedown, mousemove, mouseup };
+        return { canvas, showViewBounds, mousedown, mousemove, mouseup, mouseenter, mouseleave };
     },
 });
 </script>

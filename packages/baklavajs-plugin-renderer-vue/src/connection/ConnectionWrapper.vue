@@ -1,12 +1,5 @@
 <template>
-    <connection-view
-        :x1="d.x1"
-        :y1="d.y1"
-        :x2="d.x2"
-        :y2="d.y2"
-        :state="state"
-        :connection="connection"
-    ></connection-view>
+    <connection-view :x1="d.x1" :y1="d.y1" :x2="d.x2" :y2="d.y2" :state="state"></connection-view>
 </template>
 
 <script lang="ts">
