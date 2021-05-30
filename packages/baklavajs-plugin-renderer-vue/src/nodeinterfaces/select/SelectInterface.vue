@@ -1,5 +1,10 @@
 <template>
-    <div :class="['dark-select', { '--open': open }]" @click="open = !open" @click-outside="open = false">
+    <div
+        :class="['dark-select', { '--open': open }]"
+        :title="intf.name"
+        @click="open = !open"
+        @click-outside="open = false"
+    >
         <div class="__selected">
             <div class="__text">{{ selectedText }}</div>
             <div class="__icon">

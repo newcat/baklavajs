@@ -1,5 +1,4 @@
 .dark-button {
-
     background-color: $color-control-dark-background;
     color: $color-control-dark-foreground;
     transition: background-color $visual-transition;
@@ -8,6 +7,7 @@
     border-radius: $border-radius-control;
     font-size: inherit;
     cursor: pointer;
+    overflow-x: hidden;
 
     &:hover {
         background-color: $color-control-dark-hover;
@@ -19,5 +19,4 @@
     &.--block {
         width: 100%;
     }
-
 }

@@ -26,13 +26,14 @@ export class BaseNumericInterface extends NodeInterface<number> implements IVali
     }
 }
 
-export const useBaseNumericInterface = (intf: Ref<NodeInterface<number>>, inputRef: Ref<HTMLElement | null>) => {
+export const useBaseNumericInterface = (intf: Ref<NodeInterface<number>>, precision = 3) => {
+    const inputEl = ref<HTMLInputElement | null>(null);
     const editMode = ref(false);
     const invalid = ref(false);
     const tempValue = ref("0");
 
     const stringRepresentation = computed(() => {
-        const s = intf.value.value.toFixed(3);
+        const s = intf.value.value.toFixed(precision);
         return s.length > MAX_STRING_LENGTH ? intf.value.value.toExponential(MAX_STRING_LENGTH - 5) : s;
     });
 
@@ -57,11 +58,11 @@ export const useBaseNumericInterface = (intf: Ref<NodeInterface<number>>, inputR
     });
 
     const enterEditMode = async () => {
-        tempValue.value = intf.value.value.toFixed(3);
+        tempValue.value = intf.value.value.toFixed(precision);
         editMode.value = true;
         await nextTick();
-        if (inputRef.value) {
-            inputRef.value.focus();
+        if (inputEl.value) {
+            inputEl.value.focus();
         }
     };
 
@@ -75,5 +76,15 @@ export const useBaseNumericInterface = (intf: Ref<NodeInterface<number>>, inputR
         }
     };
 
-    return { editMode, invalid, tempValue, stringRepresentation, validate, setValue, enterEditMode, leaveEditMode };
+    return {
+        editMode,
+        invalid,
+        tempValue,
+        inputEl,
+        stringRepresentation,
+        validate,
+        setValue,
+        enterEditMode,
+        leaveEditMode,
+    };
 };

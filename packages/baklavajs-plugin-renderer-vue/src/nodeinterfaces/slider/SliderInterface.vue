@@ -42,8 +42,7 @@ export default defineComponent({
     },
     setup(props) {
         const el = ref<HTMLElement | null>(null);
-        const inputEl = ref<HTMLElement | null>(null);
-        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf") as Ref<SliderInterface>, inputEl);
+        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf") as Ref<SliderInterface>);
         const didSlide = ref(false);
         const isMouseDown = ref(false);
 
@@ -101,7 +100,7 @@ export default defineComponent({
             }
         };
 
-        return { ...baseNumericInterface, el, inputEl, percentage, mousedown, mouseup, mousemove, mouseleave };
+        return { ...baseNumericInterface, el, percentage, mousedown, mouseup, mousemove, mouseleave };
     },
 });
 </script>

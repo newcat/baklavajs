@@ -4,11 +4,20 @@
             <i-arrow></i-arrow>
         </div>
         <div v-if="!editMode" class="__content" @click="enterEditMode">
-            <div class="__label .text-truncate">{{ intf.name }}</div>
+            <div class="__label" :title="intf.name">{{ intf.name }}</div>
             <div class="__value">{{ stringRepresentation }}</div>
         </div>
         <div v-else class="__content">
-            <input type="number" v-model="tempValue" ref="inputEl" @blur="leaveEditMode" />
+            <input
+                type="number"
+                v-model="tempValue"
+                class="dark-input"
+                :class="{ '--invalid': invalid }"
+                ref="inputEl"
+                @blur="leaveEditMode"
+                @keydown.enter="leaveEditMode"
+                style="text-align: right"
+            />
         </div>
         <div @click="increment" class="__button --inc">
             <i-arrow></i-arrow>
@@ -33,8 +42,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const inputEl = ref<HTMLElement | null>(null);
-        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf") as Ref<IntegerInterface>, inputEl);
+        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf") as Ref<IntegerInterface>, 0);
 
         const increment = () => {
             baseNumericInterface.setValue(props.intf.value + 1);
@@ -44,7 +52,7 @@ export default defineComponent({
             baseNumericInterface.setValue(props.intf.value - 1);
         };
 
-        return { ...baseNumericInterface, inputEl, increment, decrement };
+        return { ...baseNumericInterface, increment, decrement };
     },
 });
 </script>
