@@ -17,6 +17,8 @@ interface INodeDefinition<I, O> {
     outputs?: InterfaceFactory<O>;
     calculate?: CalculateFunction<I, O>;
     onCreate?: (this: Node<I, O>) => void;
+    onPlaced?: (this: Node<I, O>) => void;
+    onDestroy?: (this: Node<I, O>) => void;
 }
 
 export function defineNode<I, O>(definition: INodeDefinition<I, O>): new () => Node<I, O> {
@@ -31,6 +33,14 @@ export function defineNode<I, O>(definition: INodeDefinition<I, O>): new () => N
             this.executeFactory("input", definition.inputs);
             this.executeFactory("output", definition.outputs);
             definition.onCreate?.call(this);
+        }
+
+        public onPlaced() {
+            definition.onPlaced?.call(this);
+        }
+
+        public onDestroy() {
+            definition.onDestroy?.call(this);
         }
 
         private executeFactory<V, T extends InterfaceFactory<V>>(type: "input" | "output", factory?: T): void {

@@ -1,6 +1,7 @@
-import { Graph, GraphTemplate, IGraphInterface, IGraphState } from "./graph";
+import { Graph, IGraphInterface, IGraphState } from "./graph";
+import type { GraphTemplate } from "./graphTemplate";
 import { AbstractNode, CalculateFunction, INodeState } from "./node";
-import { NodeInterface } from "./nodeInterface";
+import type { NodeInterface } from "./nodeInterface";
 
 export interface IGraphNodeState extends INodeState<any, any> {
     graphState: IGraphState;
@@ -13,7 +14,7 @@ export interface IGraphNode {
 
 export function createGraphNodeType(template: GraphTemplate): new () => AbstractNode & IGraphNode {
     return class GraphNode extends AbstractNode implements IGraphNode {
-        public type = `GraphNode-${template.id}`;
+        public type = `__baklava_GraphNode-${template.id}`;
         public title = "GraphNode";
 
         public inputs: Record<string, NodeInterface<any>> = {};
@@ -53,6 +54,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
 
         private initialize() {
             this.graph = this.template.createGraph();
+            this.title = this.template.name;
             this.updateInterfaces();
         }
 
