@@ -18,9 +18,9 @@ export function setViewNodeProperties(node: AbstractNode, token: Symbol) {
         return state;
     });
     node.hooks.beforeLoad.tap(token, (state) => {
-        node.position = (state as IViewNodeState).position;
-        node.width = (state as IViewNodeState).width;
-        node.twoColumn = (state as IViewNodeState).twoColumn;
+        node.position = (state as IViewNodeState).position ?? { x: 0, y: 0 };
+        node.width = (state as IViewNodeState).width ?? 200;
+        node.twoColumn = (state as IViewNodeState).twoColumn ?? false;
         return state;
     });
 }
