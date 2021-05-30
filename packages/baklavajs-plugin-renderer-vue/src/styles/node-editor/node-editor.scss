@@ -4,6 +4,7 @@
 @import "./connection";
 @import "./sidebar";
 @import "./minimap";
+@import "./toolbar";
 
 .node-editor {
     width: 100%;
@@ -11,8 +12,8 @@
     position: relative;
     overflow: hidden;
     outline: none !important;
-    font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 13px;
+    font-family: "Lato", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
 
     .background {
         @include backgroundpattern();
@@ -28,18 +29,19 @@
     }
 
     .input-user-select {
-      user-select: auto;
-      -moz-user-select: auto;
+        user-select: auto;
+        -moz-user-select: auto;
     }
 
-    & *, & *::after, & *::before {
+    & *,
+    & *::after,
+    & *::before {
         box-sizing: border-box;
     }
 
     &.--temporary-connection {
         cursor: crosshair;
     }
-
 }
 
 .ignore-mouse * {
@@ -69,5 +71,4 @@
     & * {
         pointer-events: all;
     }
-
 }

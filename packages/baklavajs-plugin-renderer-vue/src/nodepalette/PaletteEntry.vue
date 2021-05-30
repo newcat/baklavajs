@@ -40,6 +40,10 @@ export default defineComponent({
     cursor: grab;
 }
 
+.node.--palette:first-child {
+    margin-top: 0;
+}
+
 .node.--palette .__title {
     padding: 0.5rem;
 }

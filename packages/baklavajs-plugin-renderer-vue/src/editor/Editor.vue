@@ -17,6 +17,14 @@
     >
         <div class="background" :style="backgroundStyle"></div>
 
+        <slot name="toolbar">
+            <toolbar />
+        </slot>
+
+        <slot name="palette">
+            <node-palette />
+        </slot>
+
         <svg class="connections-container">
             <g v-for="connection in connections" :key="connection.id + counter.toString()">
                 <slot name="connections" :connection="connection">
@@ -52,15 +60,13 @@
         <slot name="minimap">
             <minimap v-if="plugin.settings.enableMinimap"></minimap>
         </slot>
-
-        <NodePalette />
     </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, isReactive, isRef, reactive, Ref, ref, toRef, watch, watchEffect } from "vue";
+import { computed, defineComponent, Ref, ref, toRef } from "vue";
 
-import { AbstractNode, Graph } from "@baklavajs/core";
+import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaView } from "../useBaklava";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
@@ -71,11 +77,12 @@ import TemporaryConnection from "../connection/TemporaryConnection.vue";
 import Sidebar from "../components/Sidebar.vue";
 import Minimap from "../components/Minimap.vue";
 import NodePalette from "../nodepalette/NodePalette.vue";
+import Toolbar from "../toolbar/Toolbar.vue";
 
 import { useTransform, providePlugin } from "../utility";
 
 export default defineComponent({
-    components: { Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette },
+    components: { Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette, Toolbar },
     props: {
         plugin: {
             type: Object as () => IBaklavaView,
@@ -94,20 +101,6 @@ export default defineComponent({
         const nodes = computed(() => currentGraph.value.nodes);
         const connections = computed(() => currentGraph.value.connections);
         const selectedNodes = computed(() => currentGraph.value.selectedNodes);
-
-        /*watch(
-            () => [...props.plugin.displayedGraph.nodes],
-            (c, p) => {
-                if (c.length !== p.length) {
-                    console.log(c.length, p.length);
-                }
-            },
-            { deep: true }
-        );
-
-        watchEffect(() => {
-            console.log("effect", props.plugin.editor.graph.nodes[0].position);
-        });*/
 
         const panZoom = usePanZoom();
         const temporaryConnection = useTemporaryConnection();

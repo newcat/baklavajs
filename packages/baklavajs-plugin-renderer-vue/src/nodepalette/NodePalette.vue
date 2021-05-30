@@ -68,9 +68,10 @@ export default defineComponent({
 .node-palette {
     position: absolute;
     left: 0;
-    top: 0;
+    top: 60px;
     width: 250px;
-    height: 100%;
+    height: calc(100% - 60px);
+    z-index: 3;
     padding: 2rem;
     overflow-y: auto;
     background: #0003;
