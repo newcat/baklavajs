@@ -170,7 +170,7 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
                 });
             } else {
                 throw new Error(
-                    "Interface is connected, but no editor instance is specified. Unable to delete interface"
+                    "Interface is connected, but no graph instance is specified. Unable to delete interface"
                 );
             }
         }

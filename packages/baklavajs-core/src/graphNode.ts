@@ -23,12 +23,6 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         public template = template;
         public graph!: Graph;
 
-        constructor() {
-            super();
-            this.template.events.updated.addListener(this, () => this.initialize());
-            this.initialize();
-        }
-
         public calculate?: CalculateFunction<any, any> | undefined;
 
         public load(state: IGraphNodeState) {
@@ -48,6 +42,11 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             };
         }
 
+        public onPlaced() {
+            this.template.events.updated.addListener(this, () => this.initialize());
+            this.initialize();
+        }
+
         public destroy() {
             this.template.events.updated.removeListener(this);
         }
@@ -59,12 +58,39 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         }
 
         private updateInterfaces() {
-            // TODO: Move connections to new interfaces
-            this.inputs = Object.fromEntries(this.getInterfaceEntries(this.graph.inputs));
-            this.outputs = Object.fromEntries(this.getInterfaceEntries(this.graph.outputs));
+            const inputConnectionsToCreate: Array<[NodeInterface, string]> = [];
+            const outputConnectionsToCreate: Array<[string, NodeInterface]> = [];
+
+            this.graphInstance?.connections.forEach((c) => {
+                const input = Object.entries(this.inputs).find((i) => i[1] === c.to);
+                if (input) {
+                    inputConnectionsToCreate.push([c.from, input[0]]);
+                }
+                const output = Object.entries(this.outputs).find((i) => i[1] === c.from);
+                if (output) {
+                    outputConnectionsToCreate.push([output[0], c.to]);
+                }
+            });
+
+            Object.keys(this.inputs).forEach((i) => this.removeInput(i));
+            Object.keys(this.outputs).forEach((i) => this.removeOutput(i));
+
+            this.getInterfaceEntries(this.graph.inputs).forEach(([k, v]) => {
+                this.addInput(k, v);
+            });
+            this.getInterfaceEntries(this.graph.outputs).forEach(([k, v]) => {
+                this.addOutput(k, v);
+            });
+
+            inputConnectionsToCreate.forEach(([from, toId]) => {
+                this.graphInstance?.addConnection(from, this.inputs[toId]);
+            });
+            outputConnectionsToCreate.forEach(([fromId, to]) => {
+                this.graphInstance?.addConnection(this.outputs[fromId], to);
+            });
         }
 
-        private getInterfaceEntries(graphInterfaceList: IGraphInterface[]) {
+        private getInterfaceEntries(graphInterfaceList: IGraphInterface[]): Array<[string, NodeInterface<any>]> {
             return graphInterfaceList.map((gi) => {
                 const intf = this.graph.findNodeInterface(gi.nodeInterfaceId);
                 if (!intf) {

@@ -1,6 +1,6 @@
-import { createGraphNodeType, Graph, GraphTemplate, IGraphInterface } from "@baklavajs/core";
+import { AbstractNode, createGraphNodeType, Graph, GraphTemplate, IGraphInterface } from "@baklavajs/core";
 import { v4 as uuidv4 } from "uuid";
-import { Ref } from "vue";
+import { reactive, Ref } from "vue";
 import type { ICommand, ICommandHandler } from "../commands";
 import type { SwitchGraph } from "./switchGraph";
 
@@ -13,8 +13,7 @@ export function registerCreateSubgraphCommand(
     switchGraph: SwitchGraph
 ) {
     const canCreateSubgraph = () => {
-        // TODO: Implement
-        return true;
+        return displayedGraph.value.selectedNodes.length > 0;
     };
 
     const createSubgraph = () => {
@@ -74,7 +73,7 @@ export function registerCreateSubgraphCommand(
         const nt = createGraphNodeType(subgraphTemplate);
         editor.registerNodeType(nt, { category: "Subgraphs" });
 
-        const node = new nt();
+        const node = reactive<AbstractNode>(new nt()) as AbstractNode;
         graph.addNode(node);
 
         inputConnections.forEach((c) => {
