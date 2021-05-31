@@ -12,6 +12,8 @@ export function registerCreateSubgraphCommand(
     handler: ICommandHandler,
     switchGraph: SwitchGraph
 ) {
+    const token = Symbol();
+
     const canCreateSubgraph = () => {
         return displayedGraph.value.selectedNodes.length > 0;
     };
@@ -58,20 +60,29 @@ export function registerCreateSubgraphCommand(
             graphOutputs.push({ id: newId, nodeInterfaceId: i.id, name: i.name });
         }
 
-        const subgraphTemplate = new GraphTemplate(
-            {
-                connections: innerConnections.map((c) => ({ id: c.id, from: c.from.id, to: c.to.id })),
-                inputs: graphInputs,
-                outputs: graphOutputs,
-                nodes: selectedNodes.map((n) => n.save()),
-            },
-            editor
-        );
+        const subgraphTemplate = reactive<GraphTemplate>(
+            new GraphTemplate(
+                {
+                    connections: innerConnections.map((c) => ({ id: c.id, from: c.from.id, to: c.to.id })),
+                    inputs: graphInputs,
+                    outputs: graphOutputs,
+                    nodes: selectedNodes.map((n) => n.save()),
+                },
+                editor
+            )
+        ) as GraphTemplate;
+
+        subgraphTemplate.events.updated.addListener(token, () => {
+            const nt = editor.nodeTypes.get(`__baklava_GraphNode-${subgraphTemplate.id}`);
+            if (nt) {
+                nt.title = subgraphTemplate.name;
+            }
+        });
 
         editor.graphTemplates.push(subgraphTemplate);
 
         const nt = createGraphNodeType(subgraphTemplate);
-        editor.registerNodeType(nt, { category: "Subgraphs" });
+        editor.registerNodeType(nt, { category: "Subgraphs", title: subgraphTemplate.name });
 
         const node = reactive<AbstractNode>(new nt()) as AbstractNode;
         graph.addNode(node);

@@ -15,7 +15,15 @@ export interface IGraphNode {
 export function createGraphNodeType(template: GraphTemplate): new () => AbstractNode & IGraphNode {
     return class GraphNode extends AbstractNode implements IGraphNode {
         public type = `__baklava_GraphNode-${template.id}`;
-        public title = "GraphNode";
+
+        private _title = "GraphNode";
+        public get title() {
+            return this._title;
+        }
+        public set title(v: string) {
+            this.template.name = v;
+            this.template.events.updated.emit();
+        }
 
         public inputs: Record<string, NodeInterface<any>> = {};
         public outputs: Record<string, NodeInterface<any>> = {};
