@@ -9,7 +9,7 @@ export interface ICommandHandler {
     registerCommand<T extends ICommand>(name: string, command: T): void;
     executeCommand<T extends ICommand>(name: string, throwOnNonexisting?: false): ReturnType<T["execute"]> | void;
     executeCommand<T extends ICommand>(name: string, throwOnNonexisting: true): ReturnType<T["execute"]>;
-    canExecuteCommand(name: string, throwOnNonexisting: boolean): boolean;
+    canExecuteCommand(name: string, throwOnNonexisting?: boolean): boolean;
     registerHotkey(keys: string[], commandName: string): void;
     handleKeyUp(ev: KeyboardEvent): void;
     handleKeyDown(ev: KeyboardEvent): void;

@@ -11,12 +11,14 @@ export const Components = {
     TemporaryConnection,
     Node,
     NodeInterface,
-    Sidebar,
+    Sidebar
 };
 
 export { default as EditorComponent } from "./editor/Editor.vue";
 export * from "./nodeinterfaces";
 export * from "./useBaklava";
 export * from "./utility";
+
+export * as Commands from "./commandList"
 
 import "./styles/all.scss";

@@ -66,9 +66,9 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
         }
     };
 
-    const canUndo = computed(() => steps.value.length !== 0 && currentIndex.value !== -1);
+    const canUndo = () => steps.value.length !== 0 && currentIndex.value !== -1;
     const undo = () => {
-        if (!canUndo.value) {
+        if (!canUndo()) {
             return;
         }
         changeBySelf.value = true;
@@ -76,9 +76,9 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
         changeBySelf.value = false;
     };
 
-    const canRedo = computed(() => steps.value.length !== 0 && currentIndex.value < steps.value.length - 1);
+    const canRedo = () => steps.value.length !== 0 && currentIndex.value < steps.value.length - 1;
     const redo = () => {
-        if (!canRedo.value) {
+        if (!canRedo()) {
             return;
         }
         changeBySelf.value = true;
@@ -88,7 +88,7 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
 
     watch(
         graph,
-        (oldGraph, newGraph) => {
+        (newGraph, oldGraph) => {
             if (oldGraph) {
                 oldGraph.events.addNode.removeListener(token);
                 oldGraph.events.removeNode.removeListener(token);
@@ -115,11 +115,11 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
     );
 
     commandHandler.registerCommand<UndoCommand>(UNDO_COMMAND, {
-        canExecute: () => canUndo.value,
+        canExecute: canUndo,
         execute: undo,
     });
     commandHandler.registerCommand<RedoCommand>(REDO_COMMAND, {
-        canExecute: () => canRedo.value,
+        canExecute: canRedo,
         execute: redo,
     });
     commandHandler.registerCommand<StartTransactionCommand>(START_TRANSACTION_COMMAND, {
