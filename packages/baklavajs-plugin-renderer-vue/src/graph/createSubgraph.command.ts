@@ -1,4 +1,4 @@
-import { AbstractNode, createGraphNodeType, Graph, GraphTemplate, IGraphInterface } from "@baklavajs/core";
+import { AbstractNode, Graph, GraphTemplate, IGraphInterface, getGraphNodeTypeString } from "@baklavajs/core";
 import { v4 as uuidv4 } from "uuid";
 import { reactive, Ref } from "vue";
 import type { ICommand, ICommandHandler } from "../commands";
@@ -12,8 +12,6 @@ export function registerCreateSubgraphCommand(
     handler: ICommandHandler,
     switchGraph: SwitchGraph
 ) {
-    const token = Symbol();
-
     const canCreateSubgraph = () => {
         return displayedGraph.value.selectedNodes.length > 0;
     };
@@ -72,19 +70,13 @@ export function registerCreateSubgraphCommand(
             )
         ) as GraphTemplate;
 
-        subgraphTemplate.events.updated.addListener(token, () => {
-            const nt = editor.nodeTypes.get(`__baklava_GraphNode-${subgraphTemplate.id}`);
-            if (nt) {
-                nt.title = subgraphTemplate.name;
-            }
-        });
+        editor.addGraphTemplate(subgraphTemplate);
+        const nt = editor.nodeTypes.get(getGraphNodeTypeString(subgraphTemplate));
+        if (!nt) {
+            throw new Error("Unable to create subgraph: Could not find corresponding graph node type");
+        }
 
-        editor.graphTemplates.push(subgraphTemplate);
-
-        const nt = createGraphNodeType(subgraphTemplate);
-        editor.registerNodeType(nt, { category: "Subgraphs", title: subgraphTemplate.name });
-
-        const node = reactive<AbstractNode>(new nt()) as AbstractNode;
+        const node = reactive<AbstractNode>(new nt.type()) as AbstractNode;
         graph.addNode(node);
 
         inputConnections.forEach((c) => {

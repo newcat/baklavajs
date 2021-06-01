@@ -8,6 +8,8 @@ import {
 import type { AbstractNodeConstructor } from "./node";
 import type { IAddNodeTypeEventData, IRegisterNodeTypeOptions } from "./eventDataTypes";
 import { Graph, IGraphState } from "./graph";
+import { GraphTemplate, IGraphTemplateState } from "./graphTemplate";
+import { createGraphNodeType } from "./graphNode";
 
 export interface IPlugin {
     type: string;
@@ -16,6 +18,7 @@ export interface IPlugin {
 
 export interface IEditorState extends Record<string, any> {
     graph: IGraphState;
+    graphTemplates: IGraphTemplateState[];
 }
 
 export interface INodeTypeInformation extends Required<IRegisterNodeTypeOptions> {
@@ -27,13 +30,16 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     private _plugins: Set<IPlugin> = new Set();
     private _nodeTypes: Map<string, INodeTypeInformation> = new Map();
     private _graph = new Graph(this);
-
-    public graphTemplates: IGraphState[] = [];
+    private _graphTemplates: GraphTemplate[] = [];
 
     public events = {
         loaded: new BaklavaEvent<void>(),
         beforeRegisterNodeType: new PreventableBaklavaEvent<IAddNodeTypeEventData>(),
         registerNodeType: new BaklavaEvent<IAddNodeTypeEventData>(),
+        beforeAddGraphTemplate: new PreventableBaklavaEvent<GraphTemplate>(),
+        addGraphTemplate: new BaklavaEvent<GraphTemplate>(),
+        beforeRemoveGraphTemplate: new PreventableBaklavaEvent<GraphTemplate>(),
+        removeGraphTemplate: new BaklavaEvent<GraphTemplate>(),
         beforeUsePlugin: new PreventableBaklavaEvent<IPlugin>(),
         usePlugin: new BaklavaEvent<IPlugin>(),
     };
@@ -57,6 +63,10 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
         return this._graph;
     }
 
+    public get graphTemplates(): ReadonlyArray<GraphTemplate> {
+        return this._graphTemplates;
+    }
+
     /**
      * Register a new node type
      * @param type Actual type / constructor of the node
@@ -75,14 +85,44 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
         this.events.registerNodeType.emit({ type, options });
     }
 
+    public addGraphTemplate(template: GraphTemplate): void {
+        if (this.events.beforeAddGraphTemplate.emit(template)) {
+            return;
+        }
+        this._graphTemplates.push(template);
+
+        const nt = createGraphNodeType(template);
+        this.registerNodeType(nt, { category: "Subgraphs", title: template.name });
+
+        this.events.addGraphTemplate.emit(template);
+    }
+
+    public removeGraphTemplate(template: GraphTemplate): void {
+        if (this.graphTemplates.includes(template)) {
+            if (this.events.beforeRemoveGraphTemplate.emit(template)) {
+                return;
+            }
+            this._graphTemplates.splice(this._graphTemplates.indexOf(template), 1);
+            this.events.removeGraphTemplate.emit(template);
+        }
+    }
+
     /**
      * Load a state
      * @param state State to load
      */
     public load(state: IEditorState): void {
         state = this.hooks.load.execute(state);
+
+        state.graphTemplates.forEach((tState) => {
+            const template = new GraphTemplate(tState, this);
+            this.addGraphTemplate(template);
+        });
+
         this._graph = new Graph(this);
         this._graph.load(state.graph);
+
+        this.events.loaded.emit();
     }
 
     /**
@@ -90,8 +130,9 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
      * @returns Current state
      */
     public save(): IEditorState {
-        const state = {
+        const state: IEditorState = {
             graph: this.graph.save(),
+            graphTemplates: this.graphTemplates.map((t) => t.save()),
         };
         return this.hooks.save.execute(state);
     }

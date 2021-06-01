@@ -55,12 +55,14 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
         editor,
         (newValue, oldValue) => {
             if (oldValue) {
-                oldValue.hooks.load.untap(token);
-                oldValue.hooks.save.untap(token);
+                oldValue.events.loaded.removeListener(token);
             }
             if (newValue) {
-                // TODO: Saving and loading hooks
-                // displayedGraph.value = newValue.graph;
+                // TODO: This doesn't work since we need to apply the event listeners to the graph before loading
+                // Maybe event proxies are the solution
+                newValue.events.loaded.addListener(token, () => {
+                    switchGraph(newValue.graph);
+                });
             }
         },
         { immediate: true }

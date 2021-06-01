@@ -12,9 +12,13 @@ export interface IGraphNode {
     graph: Graph;
 }
 
+export function getGraphNodeTypeString(template: GraphTemplate): string {
+    return `__baklava_GraphNode-${template.id}`;
+}
+
 export function createGraphNodeType(template: GraphTemplate): new () => AbstractNode & IGraphNode {
     return class GraphNode extends AbstractNode implements IGraphNode {
-        public type = `__baklava_GraphNode-${template.id}`;
+        public type = getGraphNodeTypeString(template);
 
         private _title = "GraphNode";
         public get title() {
@@ -22,7 +26,6 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         }
         public set title(v: string) {
             this.template.name = v;
-            this.template.events.updated.emit();
         }
 
         public inputs: Record<string, NodeInterface<any>> = {};
@@ -52,11 +55,15 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
 
         public onPlaced() {
             this.template.events.updated.addListener(this, () => this.initialize());
+            this.template.events.nameChanged.addListener(this, (name) => {
+                this._title = name;
+            });
             this.initialize();
         }
 
         public destroy() {
             this.template.events.updated.removeListener(this);
+            this.template.events.nameChanged.removeListener(this);
         }
 
         private initialize() {

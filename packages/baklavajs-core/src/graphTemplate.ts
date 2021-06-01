@@ -6,6 +6,13 @@ import { Graph, IGraphInterface, IGraphState } from "./graph";
 import type { INodeState } from "./node";
 import type { INodeInterfaceState } from "./nodeInterface";
 import { mapValues } from "./utils";
+import { getGraphNodeTypeString } from "./graphNode";
+
+type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
+
+export interface IGraphTemplateState extends IGraphState {
+    name: string;
+}
 
 export class GraphTemplate implements IGraphState {
     public static fromGraph(graph: Graph, editor: Editor): GraphTemplate {
@@ -13,7 +20,6 @@ export class GraphTemplate implements IGraphState {
     }
 
     public id = uuidv4();
-    public name = "Subgraph";
     public nodes!: Array<INodeState<unknown, unknown>>;
     public connections!: IConnectionState[];
     public inputs!: IGraphInterface[];
@@ -21,12 +27,34 @@ export class GraphTemplate implements IGraphState {
 
     public editor: Editor;
 
-    constructor(state: Omit<IGraphState, "id">, editor: Editor) {
+    private _name = "Subgraph";
+
+    public get name() {
+        return this._name;
+    }
+
+    public set name(v: string) {
+        this._name = v;
+        this.events.nameChanged.emit(v);
+        const nt = this.editor.nodeTypes.get(getGraphNodeTypeString(this));
+        if (nt) {
+            nt.title = v;
+        }
+    }
+
+    constructor(state: Optional<IGraphTemplateState, "id" | "name">, editor: Editor) {
         this.editor = editor;
+        if (state.id) {
+            this.id = state.id;
+        }
+        if (state.name) {
+            this._name = state.name;
+        }
         this.update(state);
     }
 
     public events = {
+        nameChanged: new BaklavaEvent<string>(),
         updated: new BaklavaEvent<void>(),
     };
 
@@ -36,6 +64,17 @@ export class GraphTemplate implements IGraphState {
         this.inputs = state.inputs;
         this.outputs = state.outputs;
         this.events.updated.emit();
+    }
+
+    public save(): IGraphTemplateState {
+        return {
+            id: this.id,
+            name: this.name,
+            nodes: this.nodes,
+            connections: this.connections,
+            inputs: this.inputs,
+            outputs: this.outputs,
+        };
     }
 
     public createGraph(graph?: Graph): Graph {

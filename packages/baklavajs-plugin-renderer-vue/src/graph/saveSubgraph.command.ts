@@ -49,16 +49,11 @@ export function registerSaveSubgraphCommand(displayedGraph: Ref<Graph>, handler:
             (n) => n.type !== SUBGRAPH_INPUT_NODE_TYPE && n.type !== SUBGRAPH_OUTPUT_NODE_TYPE
         );
 
-        const nt = displayedGraph.value.editor.nodeTypes.get(`__baklava_GraphNode-${graph.template.id}`);
-        if (nt) {
-            nt.title = graph.template.name;
-        }
-
         graph.template.update({
             inputs,
             outputs,
             connections: innerConnections.map((c) => ({ id: c.id, from: c.from.id, to: c.to.id })),
-            nodes,
+            nodes: nodes.map((n) => n.save()),
         });
     };
 
