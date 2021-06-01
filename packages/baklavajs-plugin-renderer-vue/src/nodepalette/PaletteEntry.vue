@@ -1,5 +1,5 @@
 <template>
-    <div :class="classes">
+    <div class="node --palette" :data-node-type="type">
         <div class="__title">
             {{ title }}
         </div>
@@ -7,8 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
-import { sanitizeName } from "../utility/cssNames";
+import { defineComponent } from "vue";
 
 export default defineComponent({
     props: {
@@ -20,15 +19,6 @@ export default defineComponent({
             type: String,
             default: false,
         },
-    },
-    setup(props) {
-        const classes = computed(() => ({
-            "node": true,
-            "--palette": true,
-            [`--type-${sanitizeName(props.type)}`]: true,
-        }));
-
-        return { classes };
     },
 });
 </script>

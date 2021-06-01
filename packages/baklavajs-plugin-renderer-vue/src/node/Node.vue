@@ -1,13 +1,27 @@
 <template>
-    <div :id="node.id" :class="classes" :style="styles" @mousedown="select">
+    <div :id="node.id" :class="classes" :style="styles" @mousedown="select" :data-node-type="node.type">
         <div class="__title" @mousedown.self.stop="startDrag">
-            <span v-if="!renaming">{{ node.title }}</span>
+            <template v-if="!renaming">
+                <div class="__title-label">{{ node.title }}</div>
+                <div class="__menu">
+                    <button @click="openContextMenu">E</button>
+                    <context-menu
+                        v-model="contextMenu.show"
+                        :x="contextMenu.x"
+                        :y="contextMenu.y"
+                        :items="contextMenu.items"
+                        @click="onContextMenuClick"
+                    ></context-menu>
+                </div>
+            </template>
             <input
                 v-else
+                ref="renameInputEl"
                 type="text"
                 class="dark-input"
                 v-model="tempName"
                 placeholder="Node Name"
+                @blur="doneRenaming"
                 @keydown.enter="doneRenaming"
             />
         </div>
@@ -32,17 +46,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, toRef } from "vue";
-
-// TODO: Make custom implementation
-// import ClickOutside from "v-click-outside";
-
+import { defineComponent, ref, computed, toRef, nextTick } from "vue";
 import { AbstractNode } from "@baklavajs/core";
-import { sanitizeName, useDragMove, usePlugin } from "../utility";
+import { useDragMove, useGraph } from "../utility";
+
+import ContextMenu from "../components/ContextMenu.vue";
 import NodeInterface from "./NodeInterface.vue";
 
 export default defineComponent({
-    components: { NodeInterface },
+    components: { ContextMenu, NodeInterface },
     props: {
         node: {
             type: Object as () => AbstractNode,
@@ -54,18 +66,28 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
-        const { plugin } = usePlugin();
+        const { graph } = useGraph();
         const dragMove = useDragMove(toRef(props.node, "position"));
 
         const renaming = ref(false);
         const tempName = ref("");
+        const renameInputEl = ref<HTMLInputElement | null>(null);
+
+        const contextMenu = ref({
+            show: false,
+            x: 0,
+            y: 0,
+            items: [
+                { value: "rename", label: "Rename" },
+                { value: "delete", label: "Delete" },
+            ],
+        });
 
         const classes = computed(() => ({
             "node": true,
             "--selected": props.selected,
             "--dragging": dragMove.dragging.value,
             "--two-column": !!props.node.twoColumn,
-            [`--type-${sanitizeName(props.node.type)}`]: true,
         }));
 
         const styles = computed(() => ({
@@ -91,12 +113,44 @@ export default defineComponent({
             document.removeEventListener("mouseup", stopDrag);
         };
 
+        const openContextMenu = (ev: MouseEvent) => {
+            contextMenu.value.show = true;
+            contextMenu.value.x = ev.offsetX;
+            contextMenu.value.y = ev.offsetY;
+        };
+
+        const onContextMenuClick = async (action: string) => {
+            switch (action) {
+                case "delete":
+                    graph.value.removeNode(props.node);
+                    break;
+                case "rename":
+                    tempName.value = props.node.title;
+                    renaming.value = true;
+                    await nextTick();
+                    renameInputEl.value?.focus();
+                    break;
+            }
+        };
+
         const doneRenaming = () => {
             props.node.title = tempName.value;
             renaming.value = false;
         };
 
-        return { plugin, renaming, tempName, doneRenaming, classes, styles, select, startDrag };
+        return {
+            renaming,
+            tempName,
+            renameInputEl,
+            contextMenu,
+            classes,
+            styles,
+            select,
+            startDrag,
+            openContextMenu,
+            onContextMenuClick,
+            doneRenaming,
+        };
     },
 });
 </script>

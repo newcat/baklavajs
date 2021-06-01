@@ -61,7 +61,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
 
         private initialize() {
             this.graph = this.template.createGraph();
-            this.title = this.template.name;
+            this._title = this.template.name;
             this.updateInterfaces();
         }
 

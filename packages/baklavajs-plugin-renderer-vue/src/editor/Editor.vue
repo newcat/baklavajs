@@ -64,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref, toRef } from "vue";
+import { computed, defineComponent, reactive, Ref, ref, toRef } from "vue";
 
 import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaView } from "../useBaklava";
@@ -92,7 +92,7 @@ export default defineComponent({
     setup(props) {
         const token = Symbol("EditorToken");
 
-        const pluginRef = (toRef(props, "plugin") as unknown) as Ref<IBaklavaView>;
+        const pluginRef = toRef(props, "plugin") as unknown as Ref<IBaklavaView>;
         providePlugin(pluginRef);
 
         const el = ref<HTMLElement | null>(null);
@@ -170,7 +170,7 @@ export default defineComponent({
                     return;
                 }
 
-                const instance = new nodeTypeInfo.type();
+                const instance = reactive(new nodeTypeInfo.type()) as AbstractNode;
                 currentGraph.value.addNode(instance);
                 const [x, y] = transform(ev.clientX, ev.clientY);
                 instance.position.x = x;
