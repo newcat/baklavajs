@@ -46,6 +46,11 @@
         }
     }
 
+    &[data-node-type|="__baklava_GraphNode"] > .__title {
+        background: $color-group-node-title-background;
+        color: $color-group-node-title-foreground;
+    }
+
     & > .__content {
         padding: 0.75em;
 

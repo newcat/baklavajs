@@ -1,10 +1,10 @@
 // Controls
-$color-primary: #5379B5;
+$color-primary: #5379b5;
 $color-error: red;
-$color-control-dark-background: #2C2C2C;
+$color-control-dark-background: #2c2c2c;
 $color-control-dark-foreground: white;
-$color-control-dark-hover: #4C4C4C;
-$color-control-dark-active: #6C6C6C;
+$color-control-dark-hover: #4c4c4c;
+$color-control-dark-active: #6c6c6c;
 $border-radius-control: 3px;
 
 // Sidebar
@@ -17,6 +17,8 @@ $color-node-foreground: white;
 $color-node-selected: $color-primary;
 $color-node-title-background: black;
 $color-node-title-foreground: white;
+$color-group-node-title-background: rgb(5, 75, 5);
+$color-group-node-title-foreground: white;
 $border-radius-node: 4px;
 
 // Connections
