@@ -1,4 +1,4 @@
-import { ComputedRef, reactive, ref, Ref, shallowReadonly, watch } from "vue";
+import { computed, ComputedRef, reactive, ref, Ref, shallowReadonly, watch } from "vue";
 import { Editor, Graph, GraphTemplate } from "@baklavajs/core";
 
 import { gridBackgroundProvider } from "./editor/backgroundProvider";
@@ -7,6 +7,8 @@ import { IClipboard, useClipboard } from "./clipboard";
 import { IHistory, useHistory } from "./history";
 import { registerGraphCommands } from "./graph";
 import { useSwitchGraph } from "./graph/switchGraph";
+import { IViewNodeState, setViewNodeProperties } from "./node/viewNode";
+import { SubgraphInputNode, SubgraphOutputNode } from "./graph/subgraphInterfaceNodes";
 
 export interface IViewSettings {
     /** Use straight connections instead of bezier curves */
@@ -18,6 +20,7 @@ export interface IViewSettings {
 export interface IBaklavaView {
     editor: Ref<Editor>;
     displayedGraph: Ref<Graph>;
+    isSubgraph: Readonly<Ref<boolean>>;
     settings: IViewSettings;
     backgroundStyles: ComputedRef<Record<string, any>>;
     commandHandler: ICommandHandler;
@@ -32,7 +35,8 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
     const _displayedGraph = ref(null as any) as Ref<Graph>;
     const displayedGraph = shallowReadonly(_displayedGraph) as Readonly<Ref<Graph>>;
     const { switchGraph } = useSwitchGraph(editor, _displayedGraph);
-    switchGraph(editor.value.graph);
+
+    const isSubgraph = computed(() => displayedGraph.value && displayedGraph.value !== editor.value.graph);
 
     const settings: IViewSettings = reactive({
         useStraightConnections: false,
@@ -55,18 +59,45 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
         editor,
         (newValue, oldValue) => {
             if (oldValue) {
-                oldValue.events.loaded.removeListener(token);
+                oldValue.events.registerGraph.unsubscribe(token);
+                oldValue.graphEvents.beforeAddNode.unsubscribe(token);
+                newValue.nodeHooks.beforeLoad.unsubscribe(token);
+                newValue.nodeHooks.afterSave.unsubscribe(token);
             }
             if (newValue) {
-                // TODO: This doesn't work since we need to apply the event listeners to the graph before loading
-                // Maybe event proxies are the solution
-                newValue.events.loaded.addListener(token, () => {
-                    switchGraph(newValue.graph);
+                newValue.nodeHooks.beforeLoad.subscribe(token, (state, node) => {
+                    node.position = (state as IViewNodeState).position ?? { x: 0, y: 0 };
+                    node.width = (state as IViewNodeState).width ?? 200;
+                    node.twoColumn = (state as IViewNodeState).twoColumn ?? false;
+                    return state;
                 });
+                newValue.nodeHooks.afterSave.subscribe(token, (state, node) => {
+                    (state as IViewNodeState).position = node.position;
+                    (state as IViewNodeState).width = node.width;
+                    (state as IViewNodeState).twoColumn = node.twoColumn;
+                    return state;
+                });
+
+                newValue.graphEvents.beforeAddNode.subscribe(token, (node) => setViewNodeProperties(node));
+
+                editor.value.registerNodeType(SubgraphInputNode, { category: "Subgraphs" });
+                editor.value.registerNodeType(SubgraphOutputNode, { category: "Subgraphs" });
+
+                switchGraph(newValue.graph);
             }
         },
         { immediate: true }
     );
 
-    return { editor, displayedGraph, settings, backgroundStyles, commandHandler, history, clipboard, switchGraph };
+    return {
+        editor,
+        displayedGraph,
+        isSubgraph,
+        settings,
+        backgroundStyles,
+        commandHandler,
+        history,
+        clipboard,
+        switchGraph,
+    };
 }

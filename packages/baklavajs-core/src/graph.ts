@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import {
     BaklavaEvent,
+    createProxy,
     IBaklavaEventEmitter,
     IBaklavaTapable,
     PreventableBaklavaEvent,
@@ -39,21 +40,27 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     protected _connections: Connection[] = [];
 
     public events = {
-        beforeAddNode: new PreventableBaklavaEvent<AbstractNode>(),
-        addNode: new BaklavaEvent<AbstractNode>(),
-        beforeRemoveNode: new PreventableBaklavaEvent<AbstractNode>(),
-        removeNode: new BaklavaEvent<AbstractNode>(),
-        beforeAddConnection: new PreventableBaklavaEvent<IAddConnectionEventData>(),
-        addConnection: new BaklavaEvent<IConnection>(),
-        checkConnection: new PreventableBaklavaEvent<IAddConnectionEventData>(),
-        beforeRemoveConnection: new PreventableBaklavaEvent<IConnection>(),
-        removeConnection: new BaklavaEvent<IConnection>(),
+        beforeAddNode: new PreventableBaklavaEvent<AbstractNode, Graph>(this),
+        addNode: new BaklavaEvent<AbstractNode, Graph>(this),
+        beforeRemoveNode: new PreventableBaklavaEvent<AbstractNode, Graph>(this),
+        removeNode: new BaklavaEvent<AbstractNode, Graph>(this),
+        beforeAddConnection: new PreventableBaklavaEvent<IAddConnectionEventData, Graph>(this),
+        addConnection: new BaklavaEvent<IConnection, Graph>(this),
+        checkConnection: new PreventableBaklavaEvent<IAddConnectionEventData, Graph>(this),
+        beforeRemoveConnection: new PreventableBaklavaEvent<IConnection, Graph>(this),
+        removeConnection: new BaklavaEvent<IConnection, Graph>(this),
     };
 
     public hooks = {
-        save: new SequentialHook<IGraphState>(),
-        load: new SequentialHook<IGraphState>(),
+        save: new SequentialHook<IGraphState, Graph>(this),
+        load: new SequentialHook<IGraphState, Graph>(this),
     };
+
+    public nodeEvents = createProxy<AbstractNode["events"]>();
+    public nodeHooks = createProxy<AbstractNode["hooks"]>();
+
+    public connectionEvents = createProxy<Connection["events"]>();
+    public connectionHooks = createProxy<Connection["hooks"]>();
 
     /** List of all nodes in this graph */
     public get nodes(): ReadonlyArray<AbstractNode> {
@@ -68,6 +75,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     public constructor(editor: Editor, template?: GraphTemplate) {
         this.editor = editor;
         this.template = template;
+        editor.registerGraph(this);
     }
 
     /**
@@ -79,6 +87,8 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         if (this.events.beforeAddNode.emit(node)) {
             return;
         }
+        this.nodeEvents.addTarget(node.events);
+        this.nodeHooks.addTarget(node.hooks);
         node.registerGraph(this);
         this._nodes.push(node);
         this.events.addNode.emit(node);
@@ -103,6 +113,8 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
             this._nodes.splice(this.nodes.indexOf(node), 1);
             this.events.removeNode.emit(node);
             node.onDestroy();
+            this.nodeEvents.removeTarget(node.events);
+            this.nodeHooks.removeTarget(node.hooks);
         }
     }
 
@@ -123,6 +135,8 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         }
 
         const c = new Connection(dc.from, dc.to);
+        this.connectionEvents.addTarget(c.events);
+        this.connectionHooks.addTarget(c.hooks);
         this._connections.push(c);
 
         this.events.addConnection.emit(c);
@@ -142,6 +156,8 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
             connection.destruct();
             this._connections.splice(this.connections.indexOf(connection), 1);
             this.events.removeConnection.emit(connection);
+            this.connectionEvents.removeTarget(connection.events);
+            this.connectionHooks.removeTarget(connection.hooks);
         }
     }
 
@@ -285,5 +301,9 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
             outputs: this.outputs,
         };
         return this.hooks.save.execute(state);
+    }
+
+    public destroy() {
+        this.editor.unregisterGraph(this);
     }
 }

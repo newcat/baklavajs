@@ -34,20 +34,20 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
     public abstract outputs: Record<string, NodeInterface<any>>;
 
     public events = {
-        loaded: new BaklavaEvent<AbstractNode>(),
-        beforeAddInput: new PreventableBaklavaEvent<NodeInterface>(),
-        addInput: new BaklavaEvent<NodeInterface>(),
-        beforeRemoveInput: new PreventableBaklavaEvent<NodeInterface>(),
-        removeInput: new BaklavaEvent<NodeInterface>(),
-        beforeAddOutput: new PreventableBaklavaEvent<NodeInterface>(),
-        addOutput: new BaklavaEvent<NodeInterface>(),
-        beforeRemoveOutput: new PreventableBaklavaEvent<NodeInterface>(),
-        removeOutput: new BaklavaEvent<NodeInterface>(),
+        loaded: new BaklavaEvent<AbstractNode, AbstractNode>(this),
+        beforeAddInput: new PreventableBaklavaEvent<NodeInterface, AbstractNode>(this),
+        addInput: new BaklavaEvent<NodeInterface, AbstractNode>(this),
+        beforeRemoveInput: new PreventableBaklavaEvent<NodeInterface, AbstractNode>(this),
+        removeInput: new BaklavaEvent<NodeInterface, AbstractNode>(this),
+        beforeAddOutput: new PreventableBaklavaEvent<NodeInterface, AbstractNode>(this),
+        addOutput: new BaklavaEvent<NodeInterface, AbstractNode>(this),
+        beforeRemoveOutput: new PreventableBaklavaEvent<NodeInterface, AbstractNode>(this),
+        removeOutput: new BaklavaEvent<NodeInterface, AbstractNode>(this),
     };
 
     public hooks = {
-        beforeLoad: new SequentialHook<INodeState<any, any>>(),
-        afterSave: new SequentialHook<INodeState<any, any>>(),
+        beforeLoad: new SequentialHook<INodeState<any, any>, AbstractNode>(this),
+        afterSave: new SequentialHook<INodeState<any, any>, AbstractNode>(this),
     };
 
     protected graphInstance?: Graph;

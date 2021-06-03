@@ -40,8 +40,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             if (!this.template) {
                 throw new Error("Unable to load graph node without graph template");
             }
-            const graph = new Graph(this.template.editor);
-            graph.load(state.graphState);
+            this.graph.load(state.graphState);
             super.load(state);
         }
 
@@ -54,16 +53,17 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         }
 
         public onPlaced() {
-            this.template.events.updated.addListener(this, () => this.initialize());
-            this.template.events.nameChanged.addListener(this, (name) => {
+            this.template.events.updated.subscribe(this, () => this.initialize());
+            this.template.events.nameChanged.subscribe(this, (name) => {
                 this._title = name;
             });
             this.initialize();
         }
 
         public destroy() {
-            this.template.events.updated.removeListener(this);
-            this.template.events.nameChanged.removeListener(this);
+            this.template.events.updated.unsubscribe(this);
+            this.template.events.nameChanged.unsubscribe(this);
+            this.graph.destroy();
         }
 
         private initialize() {
@@ -73,6 +73,8 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         }
 
         private updateInterfaces() {
+            // TODO: Initially, this works, but after this node was load()-ed, it breaks
+
             const inputConnectionsToCreate: Array<[NodeInterface, string]> = [];
             const outputConnectionsToCreate: Array<[string, NodeInterface]> = [];
 

@@ -26,15 +26,15 @@ export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTap
     public component?: any;
 
     public events = {
-        setConnectionCount: new BaklavaEvent<number>(),
-        beforeSetValue: new PreventableBaklavaEvent<T>(),
-        setValue: new BaklavaEvent<T>(),
-        updated: new BaklavaEvent<void>(),
+        setConnectionCount: new BaklavaEvent<number, NodeInterface<T>>(this),
+        beforeSetValue: new PreventableBaklavaEvent<T, NodeInterface<T>>(this),
+        setValue: new BaklavaEvent<T, NodeInterface<T>>(this),
+        updated: new BaklavaEvent<void, NodeInterface<T>>(this),
     };
 
     public hooks = {
-        load: new SequentialHook<INodeInterfaceState<T>>(),
-        save: new SequentialHook<INodeInterfaceState<T>>(),
+        load: new SequentialHook<INodeInterfaceState<T>, NodeInterface<T>>(this),
+        save: new SequentialHook<INodeInterfaceState<T>, NodeInterface<T>>(this),
     };
 
     private _connectionCount = 0;

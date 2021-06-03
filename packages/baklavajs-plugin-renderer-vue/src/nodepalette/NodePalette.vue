@@ -16,9 +16,10 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { INodeTypeInformation } from "@baklavajs/core";
+import { getGraphNodeTypeString, INodeTypeInformation } from "@baklavajs/core";
 import PaletteEntry from "./PaletteEntry.vue";
 import { usePlugin } from "../utility";
+import { SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE } from "../graph/subgraphInterfaceNodes";
 
 type NodeTypeInformations = Record<string, INodeTypeInformation>;
 
@@ -34,11 +35,26 @@ export default defineComponent({
 
             const categories: Array<{ name: string; nodeTypes: NodeTypeInformations }> = [];
             for (const c of categoryNames.values()) {
-                const nodeTypesInCategory = nodeTypeEntries.filter(([nt, ni]) => ni.category === c);
-                categories.push({
-                    name: c,
-                    nodeTypes: Object.fromEntries(nodeTypesInCategory),
-                });
+                let nodeTypesInCategory = nodeTypeEntries.filter(([nt, ni]) => ni.category === c);
+
+                if (plugin.value.displayedGraph.value.template) {
+                    // don't show the graph node for the current subgraph to prevent recursion
+                    nodeTypesInCategory = nodeTypesInCategory.filter(
+                        ([nt]) => nt !== getGraphNodeTypeString(plugin.value.displayedGraph.value.template!)
+                    );
+                } else {
+                    // if we are not in a subgraph, don't show subgraph input & output nodes
+                    nodeTypesInCategory = nodeTypesInCategory.filter(
+                        ([nt]) => ![SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE].includes(nt)
+                    );
+                }
+
+                if (nodeTypesInCategory.length > 0) {
+                    categories.push({
+                        name: c,
+                        nodeTypes: Object.fromEntries(nodeTypesInCategory),
+                    });
+                }
             }
 
             // sort, so the default category is always first and all others are sorted alphabetically

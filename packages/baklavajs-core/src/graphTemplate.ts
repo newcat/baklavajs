@@ -54,8 +54,8 @@ export class GraphTemplate implements IGraphState {
     }
 
     public events = {
-        nameChanged: new BaklavaEvent<string>(),
-        updated: new BaklavaEvent<void>(),
+        nameChanged: new BaklavaEvent<string, GraphTemplate>(this),
+        updated: new BaklavaEvent<void, GraphTemplate>(this),
     };
 
     public update(state: Omit<IGraphState, "id">) {

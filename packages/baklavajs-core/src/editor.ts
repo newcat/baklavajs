@@ -4,12 +4,14 @@ import {
     SequentialHook,
     IBaklavaEventEmitter,
     IBaklavaTapable,
+    createProxy,
 } from "@baklavajs/events";
-import type { AbstractNodeConstructor } from "./node";
+import type { Connection } from "./connection";
 import type { IAddNodeTypeEventData, IRegisterNodeTypeOptions } from "./eventDataTypes";
 import { Graph, IGraphState } from "./graph";
-import { GraphTemplate, IGraphTemplateState } from "./graphTemplate";
 import { createGraphNodeType } from "./graphNode";
+import { GraphTemplate, IGraphTemplateState } from "./graphTemplate";
+import type { AbstractNode, AbstractNodeConstructor } from "./node";
 
 export interface IPlugin {
     type: string;
@@ -27,27 +29,36 @@ export interface INodeTypeInformation extends Required<IRegisterNodeTypeOptions>
 
 /** The main model class for BaklavaJS */
 export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
+    public events = {
+        loaded: new BaklavaEvent<void, Editor>(this),
+        beforeRegisterNodeType: new PreventableBaklavaEvent<IAddNodeTypeEventData, Editor>(this),
+        registerNodeType: new BaklavaEvent<IAddNodeTypeEventData, Editor>(this),
+        beforeAddGraphTemplate: new PreventableBaklavaEvent<GraphTemplate, Editor>(this),
+        addGraphTemplate: new BaklavaEvent<GraphTemplate, Editor>(this),
+        beforeRemoveGraphTemplate: new PreventableBaklavaEvent<GraphTemplate, Editor>(this),
+        removeGraphTemplate: new BaklavaEvent<GraphTemplate, Editor>(this),
+        beforeUsePlugin: new PreventableBaklavaEvent<IPlugin, Editor>(this),
+        usePlugin: new BaklavaEvent<IPlugin, Editor>(this),
+        registerGraph: new BaklavaEvent<Graph, Editor>(this),
+        unregisterGraph: new BaklavaEvent<Graph, Editor>(this),
+    };
+
+    public hooks = {
+        save: new SequentialHook<IEditorState, Editor>(this),
+        load: new SequentialHook<IEditorState, Editor>(this),
+    };
+
+    public graphEvents = createProxy<Graph["events"]>();
+    public graphHooks = createProxy<Graph["hooks"]>();
+    public nodeEvents = createProxy<AbstractNode["events"]>();
+    public nodeHooks = createProxy<AbstractNode["hooks"]>();
+    public connectionEvents = createProxy<Connection["events"]>();
+    public connectionHooks = createProxy<Connection["hooks"]>();
+
     private _plugins: Set<IPlugin> = new Set();
     private _nodeTypes: Map<string, INodeTypeInformation> = new Map();
     private _graph = new Graph(this);
     private _graphTemplates: GraphTemplate[] = [];
-
-    public events = {
-        loaded: new BaklavaEvent<void>(),
-        beforeRegisterNodeType: new PreventableBaklavaEvent<IAddNodeTypeEventData>(),
-        registerNodeType: new BaklavaEvent<IAddNodeTypeEventData>(),
-        beforeAddGraphTemplate: new PreventableBaklavaEvent<GraphTemplate>(),
-        addGraphTemplate: new BaklavaEvent<GraphTemplate>(),
-        beforeRemoveGraphTemplate: new PreventableBaklavaEvent<GraphTemplate>(),
-        removeGraphTemplate: new BaklavaEvent<GraphTemplate>(),
-        beforeUsePlugin: new PreventableBaklavaEvent<IPlugin>(),
-        usePlugin: new BaklavaEvent<IPlugin>(),
-    };
-
-    public hooks = {
-        save: new SequentialHook<IEditorState>(),
-        load: new SequentialHook<IEditorState>(),
-    };
 
     /** List of all registered node types */
     public get nodeTypes(): ReadonlyMap<string, INodeTypeInformation> {
@@ -107,6 +118,26 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
         }
     }
 
+    public registerGraph(graph: Graph) {
+        this.graphEvents.addTarget(graph.events);
+        this.graphHooks.addTarget(graph.hooks);
+        this.nodeEvents.addTarget(graph.nodeEvents);
+        this.nodeHooks.addTarget(graph.nodeHooks);
+        this.connectionEvents.addTarget(graph.connectionEvents);
+        this.connectionHooks.addTarget(graph.connectionHooks);
+        this.events.registerGraph.emit(graph);
+    }
+
+    public unregisterGraph(graph: Graph) {
+        this.graphEvents.removeTarget(graph.events);
+        this.graphHooks.removeTarget(graph.hooks);
+        this.nodeEvents.removeTarget(graph.nodeEvents);
+        this.nodeHooks.removeTarget(graph.nodeHooks);
+        this.connectionEvents.removeTarget(graph.connectionEvents);
+        this.connectionHooks.removeTarget(graph.connectionHooks);
+        this.events.unregisterGraph.emit(graph);
+    }
+
     /**
      * Load a state
      * @param state State to load
@@ -119,7 +150,6 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
             this.addGraphTemplate(template);
         });
 
-        this._graph = new Graph(this);
         this._graph.load(state.graph);
 
         this.events.loaded.emit();

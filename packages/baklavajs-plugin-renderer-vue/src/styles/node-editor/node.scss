@@ -46,7 +46,7 @@
         }
     }
 
-    &[data-node-type|="__baklava_GraphNode"] > .__title {
+    &[data-node-type^="__baklava_"] > .__title {
         background: $color-group-node-title-background;
         color: $color-group-node-title-foreground;
     }

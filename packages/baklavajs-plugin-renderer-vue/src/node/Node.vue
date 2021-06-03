@@ -6,10 +6,10 @@
                 <div class="__menu">
                     <button @click="openContextMenu">E</button>
                     <context-menu
-                        v-model="contextMenu.show"
-                        :x="contextMenu.x"
-                        :y="contextMenu.y"
-                        :items="contextMenu.items"
+                        v-model="showContextMenu"
+                        :x="0"
+                        :y="0"
+                        :items="contextMenuItems"
                         @click="onContextMenuClick"
                     ></context-menu>
                 </div>
@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, toRef, nextTick } from "vue";
-import { AbstractNode } from "@baklavajs/core";
+import { AbstractNode, IGraphNode } from "@baklavajs/core";
 import { useDragMove, useGraph } from "../utility";
 
 import ContextMenu from "../components/ContextMenu.vue";
@@ -66,21 +66,25 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
-        const { graph } = useGraph();
+        const { graph, switchGraph } = useGraph();
         const dragMove = useDragMove(toRef(props.node, "position"));
 
         const renaming = ref(false);
         const tempName = ref("");
         const renameInputEl = ref<HTMLInputElement | null>(null);
 
-        const contextMenu = ref({
-            show: false,
-            x: 0,
-            y: 0,
-            items: [
+        const showContextMenu = ref(false);
+        const contextMenuItems = computed(() => {
+            const items = [
                 { value: "rename", label: "Rename" },
                 { value: "delete", label: "Delete" },
-            ],
+            ];
+
+            if (props.node.type.startsWith("__baklava_GraphNode")) {
+                items.push({ value: "editSubgraph", label: "Edit Subgraph" });
+            }
+
+            return items;
         });
 
         const classes = computed(() => ({
@@ -113,10 +117,8 @@ export default defineComponent({
             document.removeEventListener("mouseup", stopDrag);
         };
 
-        const openContextMenu = (ev: MouseEvent) => {
-            contextMenu.value.show = true;
-            contextMenu.value.x = ev.offsetX;
-            contextMenu.value.y = ev.offsetY;
+        const openContextMenu = () => {
+            showContextMenu.value = true;
         };
 
         const onContextMenuClick = async (action: string) => {
@@ -130,6 +132,10 @@ export default defineComponent({
                     await nextTick();
                     renameInputEl.value?.focus();
                     break;
+                case "editSubgraph":
+                    const graphNode = props.node as AbstractNode & IGraphNode;
+                    switchGraph(graphNode.template);
+                    break;
             }
         };
 
@@ -142,7 +148,8 @@ export default defineComponent({
             renaming,
             tempName,
             renameInputEl,
-            contextMenu,
+            showContextMenu,
+            contextMenuItems,
             classes,
             styles,
             select,

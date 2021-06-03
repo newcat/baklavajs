@@ -5,6 +5,7 @@
         "strict": true,
         "moduleResolution": "node",
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "declaration": true,

@@ -90,22 +90,22 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
         graph,
         (newGraph, oldGraph) => {
             if (oldGraph) {
-                oldGraph.events.addNode.removeListener(token);
-                oldGraph.events.removeNode.removeListener(token);
-                oldGraph.events.addConnection.removeListener(token);
-                oldGraph.events.removeConnection.removeListener(token);
+                oldGraph.events.addNode.unsubscribe(token);
+                oldGraph.events.removeNode.unsubscribe(token);
+                oldGraph.events.addConnection.unsubscribe(token);
+                oldGraph.events.removeConnection.unsubscribe(token);
             }
             if (newGraph) {
-                newGraph.events.addNode.addListener(token, (node) => {
+                newGraph.events.addNode.subscribe(token, (node) => {
                     addStep(new NodeStep("addNode", node.id));
                 });
-                newGraph.events.removeNode.addListener(token, (node) => {
+                newGraph.events.removeNode.subscribe(token, (node) => {
                     addStep(new NodeStep("removeNode", node.save()));
                 });
-                newGraph.events.addConnection.addListener(token, (conn) => {
+                newGraph.events.addConnection.subscribe(token, (conn) => {
                     addStep(new ConnectionStep("addConnection", conn.id));
                 });
-                newGraph.events.removeConnection.addListener(token, (conn) => {
+                newGraph.events.removeConnection.subscribe(token, (conn) => {
                     addStep(new ConnectionStep("removeConnection", conn));
                 });
                 // TODO: Also add moving nodes to the history

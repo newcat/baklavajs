@@ -25,11 +25,11 @@ export class Connection implements IConnection, IBaklavaEventEmitter, IBaklavaTa
     public destructed = false;
 
     public events = {
-        destruct: new BaklavaEvent<void>(),
+        destruct: new BaklavaEvent<void, Connection>(this),
     };
 
     public hooks = {
-        transfer: new SequentialHook<any>(),
+        transfer: new SequentialHook<any, Connection>(this),
     };
 
     public constructor(from: NodeInterface, to: NodeInterface) {

@@ -113,7 +113,7 @@ export default defineComponent({
 
         // Reason: https://github.com/newcat/baklavajs/issues/54
         const counter = ref(0);
-        props.plugin.editor.value.hooks.load.tap(token, (s) => {
+        props.plugin.editor.value.hooks.load.subscribe(token, (s) => {
             counter.value++;
             return s;
         });
