@@ -1,16 +1,29 @@
 <template>
-    <div ref="el" :class="['sidebar', { '--open': graph.sidebar.visible }]" :style="styles">
-        <div class="__resizer" @mousedown="startResize"></div>
+    <div
+        ref="el"
+        :class="['sidebar', { '--open': graph.sidebar.visible }]"
+        :style="styles"
+    >
+        <div
+            class="__resizer"
+            @mousedown="startResize"
+        />
 
         <div class="d-flex align-items-center">
-            <button tabindex="-1" class="__close" @click="close">&times;</button>
+            <button
+                tabindex="-1"
+                class="__close"
+                @click="close"
+            >
+                &times;
+            </button>
             <div class="ml-2">
                 <b>{{ nodeName }}</b>
             </div>
         </div>
 
         <!-- TODO: Make unique so it works with multiple Baklava instances on the same page -->
-        <div id="sidebar-container"></div>
+        <div id="sidebar-container" />
     </div>
 </template>
 
@@ -32,7 +45,7 @@ export default defineComponent({
         });
 
         const styles = computed(() => ({
-            width: `${width}px`,
+            width: `${width.value}px`
         }));
 
         const close = () => {
@@ -61,6 +74,6 @@ export default defineComponent({
         };
 
         return { el, graph, nodeName, styles, startResize, close };
-    },
+    }
 });
 </script>

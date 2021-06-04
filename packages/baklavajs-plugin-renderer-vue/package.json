@@ -20,7 +20,8 @@
     "scripts": {
         "dev": "vite",
         "build": "rimraf dist && vue-tsc --noEmit && vite build && tsc --emitDeclarationOnly",
-        "docs": "typedoc --json ../../docs/api/plugin-renderer-vue.json --options ../../typedoc.json"
+        "docs": "typedoc --json ../../docs/api/plugin-renderer-vue.json --options ../../typedoc.json",
+        "lint": "eslint --ext .ts,.vue src"
     },
     "repository": {
         "type": "git",

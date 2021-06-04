@@ -5,11 +5,22 @@
         @click="intf.value = !intf.value"
     >
         <div class="__checkmark-container">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                <path class="__checkmark" d="M 6 5 L 6 10 L 16 10" transform="rotate(-45 10 10)"></path>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+            >
+                <path
+                    class="__checkmark"
+                    d="M 6 5 L 6 10 L 16 10"
+                    transform="rotate(-45 10 10)"
+                />
             </svg>
         </div>
-        <div class="ml-2">{{ intf.name }}</div>
+        <div class="ml-2">
+            {{ intf.name }}
+        </div>
     </div>
 </template>
 

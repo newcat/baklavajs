@@ -1,4 +1,4 @@
-import { computed, Ref, ref, watch } from "vue";
+import { Ref, ref, watch } from "vue";
 import { Graph } from "@baklavajs/core";
 
 import type { ICommandHandler, ICommand } from "../commands";
@@ -111,7 +111,7 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
                 // TODO: Also add moving nodes to the history
             }
         },
-        { immediate: true }
+        { immediate: true },
     );
 
     commandHandler.registerCommand<UndoCommand>(UNDO_COMMAND, {

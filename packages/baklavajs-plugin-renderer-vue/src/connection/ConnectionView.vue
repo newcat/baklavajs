@@ -1,5 +1,8 @@
 <template>
-    <path :d="d" :class="classes"></path>
+    <path
+        :d="d"
+        :class="classes"
+    />
 </template>
 
 <script lang="ts">

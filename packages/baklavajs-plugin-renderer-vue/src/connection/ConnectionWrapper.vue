@@ -1,5 +1,11 @@
 <template>
-    <connection-view :x1="d.x1" :y1="d.y1" :x2="d.x2" :y2="d.y2" :state="state"></connection-view>
+    <connection-view
+        :x1="d.x1"
+        :y1="d.y1"
+        :x2="d.x2"
+        :y2="d.y2"
+        :state="state"
+    />
 </template>
 
 <script lang="ts">
@@ -12,13 +18,13 @@ import { useGraph } from "../utility";
 
 export default defineComponent({
     components: {
-        "connection-view": ConnectionView,
+        "connection-view": ConnectionView
     },
     props: {
         connection: {
             type: Object as () => Connection,
-            required: true,
-        },
+            required: true
+        }
     },
     setup(props) {
         const { graph } = useGraph();
@@ -43,7 +49,7 @@ export default defineComponent({
                     resolved.node.offsetTop +
                         resolved.interface.offsetTop +
                         resolved.port.offsetTop +
-                        resolved.port.clientHeight / 2,
+                        resolved.port.clientHeight / 2
                 ];
             } else {
                 return [0, 0];
@@ -80,7 +86,7 @@ export default defineComponent({
 
         watch([fromNodePosition, toNodePosition], () => updateCoords(), { deep: true });
 
-        return { d, state, connection: props.connection };
-    },
+        return { d, state };
+    }
 });
 </script>

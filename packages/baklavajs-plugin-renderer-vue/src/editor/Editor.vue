@@ -1,11 +1,11 @@
 <template>
     <div
+        ref="el"
         tabindex="-1"
         :class="[
             'node-editor',
-            { 'ignore-mouse': !!temporaryConnection, '--temporary-connection': !!temporaryConnection },
+            { 'ignore-mouse': !!temporaryConnection, '--temporary-connection': !!temporaryConnection }
         ]"
-        ref="el"
         @mousemove.self="mouseMoveHandler"
         @mousedown="mouseDown"
         @mouseup="mouseUp"
@@ -15,7 +15,10 @@
         @dragover="dragOver"
         @drop="drop"
     >
-        <div class="background" :style="backgroundStyle"></div>
+        <div
+            class="background"
+            :style="plugin.backgroundStyles"
+        />
 
         <slot name="toolbar">
             <toolbar />
@@ -26,39 +29,55 @@
         </slot>
 
         <svg class="connections-container">
-            <g v-for="connection in connections" :key="connection.id + counter.toString()">
-                <slot name="connections" :connection="connection">
-                    <connection-wrapper :connection="connection"></connection-wrapper>
+            <g
+                v-for="connection in connections"
+                :key="connection.id + counter.toString()"
+            >
+                <slot
+                    name="connections"
+                    :connection="connection"
+                >
+                    <connection-wrapper :connection="connection" />
                 </slot>
             </g>
-            <slot name="temporaryConnection" :temporaryConnection="temporaryConnection">
+            <slot
+                name="temporaryConnection"
+                :temporary-connection="temporaryConnection"
+            >
                 <temporary-connection
                     v-if="temporaryConnection"
                     :connection="temporaryConnection"
-                ></temporary-connection>
+                />
             </slot>
         </svg>
 
-        <div class="node-container" :style="nodeContainerStyle">
+        <div
+            class="node-container"
+            :style="nodeContainerStyle"
+        >
             <template v-for="node in nodes">
-                <slot name="node" :node="node" :selected="selectedNodes.includes(node)" @select="selectNode(node)">
+                <slot
+                    name="node"
+                    :node="node"
+                    :selected="selectedNodes.includes(node)"
+                    @select="selectNode(node)"
+                >
                     <node
                         :key="node.id + counter.toString()"
                         :node="node"
                         :selected="selectedNodes.includes(node)"
                         @select="selectNode(node)"
-                    >
-                    </node>
+                    />
                 </slot>
             </template>
         </div>
 
         <slot name="sidebar">
-            <sidebar></sidebar>
+            <sidebar />
         </slot>
 
         <slot name="minimap">
-            <minimap v-if="plugin.settings.enableMinimap"></minimap>
+            <minimap v-if="plugin.settings.enableMinimap" />
         </slot>
     </div>
 </template>
@@ -86,8 +105,8 @@ export default defineComponent({
     props: {
         plugin: {
             type: Object as () => IBaklavaView,
-            required: true,
-        },
+            required: true
+        }
     },
     setup(props) {
         const token = Symbol("EditorToken");
@@ -97,18 +116,16 @@ export default defineComponent({
 
         const el = ref<HTMLElement | null>(null);
 
-        const currentGraph = props.plugin.displayedGraph;
-        const nodes = computed(() => currentGraph.value.nodes);
-        const connections = computed(() => currentGraph.value.connections);
-        const selectedNodes = computed(() => currentGraph.value.selectedNodes);
+        const nodes = computed(() => props.plugin.displayedGraph.value.nodes);
+        const connections = computed(() => props.plugin.displayedGraph.value.connections);
+        const selectedNodes = computed(() => props.plugin.displayedGraph.value.selectedNodes);
 
         const panZoom = usePanZoom();
         const temporaryConnection = useTemporaryConnection();
         const { transform } = useTransform();
 
-        const backgroundStyle = props.plugin.backgroundStyles;
         const nodeContainerStyle = computed(() => ({
-            ...panZoom.styles.value,
+            ...panZoom.styles.value
         }));
 
         // Reason: https://github.com/newcat/baklavajs/issues/54
@@ -171,7 +188,7 @@ export default defineComponent({
                 }
 
                 const instance = reactive(new nodeTypeInfo.type()) as AbstractNode;
-                currentGraph.value.addNode(instance);
+                props.plugin.displayedGraph.value.addNode(instance);
                 const [x, y] = transform(ev.clientX, ev.clientY);
                 instance.position.x = x;
                 instance.position.y = y;
@@ -182,11 +199,11 @@ export default defineComponent({
             if (!props.plugin.commandHandler.pressedKeys.value.includes("Control")) {
                 unselectAllNodes();
             }
-            currentGraph.value.selectedNodes.push(node);
+            props.plugin.displayedGraph.value.selectedNodes.push(node);
         };
 
         const unselectAllNodes = () => {
-            currentGraph.value.selectedNodes = [];
+            props.plugin.displayedGraph.value.selectedNodes = [];
         };
 
         return {
@@ -195,7 +212,6 @@ export default defineComponent({
             nodes,
             connections,
             selectedNodes,
-            backgroundStyle,
             nodeContainerStyle,
             mouseMoveHandler,
             mouseDown,
@@ -206,9 +222,9 @@ export default defineComponent({
             drop,
             selectNode,
             temporaryConnection: temporaryConnection.temporaryConnection,
-            mouseWheel: panZoom.onMouseWheel,
+            mouseWheel: panZoom.onMouseWheel
         };
-    },
+    }
 });
 </script>
 

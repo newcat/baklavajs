@@ -6,14 +6,21 @@
         @click-outside="open = false"
     >
         <div class="__selected">
-            <div class="__text">{{ selectedText }}</div>
+            <div class="__text">
+                {{ selectedText }}
+            </div>
             <div class="__icon">
-                <i-arrow></i-arrow>
+                <i-arrow />
             </div>
         </div>
         <transition name="slide-fade">
-            <div class="__dropdown" v-show="open">
-                <div class="item --header">{{ intf.name }}</div>
+            <div
+                v-show="open"
+                class="__dropdown"
+            >
+                <div class="item --header">
+                    {{ intf.name }}
+                </div>
                 <div
                     v-for="(item, i) in intf.items"
                     :key="i"
@@ -32,16 +39,12 @@ import { computed, defineComponent, ref } from "vue";
 import Arrow from "../icons/Arrow.vue";
 import type { SelectInterface, SelectInterfaceItem } from "./SelectInterface";
 
-// @ts-ignore
-// import ClickOutside from "v-click-outside";
+// TODO: Click outside
 
 export default defineComponent({
     components: {
         "i-arrow": Arrow,
     },
-    /*directives: {
-        ClickOutside: ClickOutside.directive,
-    },*/
     props: {
         intf: {
             type: Object as () => SelectInterface<unknown>,
@@ -53,8 +56,8 @@ export default defineComponent({
 
         const selectedItem = computed(() =>
             props.intf.items.find((v) =>
-                typeof v === "string" ? v === props.intf.value : v.value === props.intf.value
-            )
+                typeof v === "string" ? v === props.intf.value : v.value === props.intf.value,
+            ),
         );
 
         const selectedText = computed(() => {

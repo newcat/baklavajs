@@ -1,4 +1,4 @@
-import { computed, toRef } from "vue";
+import { computed } from "vue";
 import { useDragMove, useGraph } from "../utility";
 
 export function usePanZoom() {

@@ -1,5 +1,8 @@
 <template>
-    <div class="node --palette" :data-node-type="type">
+    <div
+        class="node --palette"
+        :data-node-type="type"
+    >
         <div class="__title">
             {{ title }}
         </div>
@@ -17,7 +20,7 @@ export default defineComponent({
         },
         title: {
             type: String,
-            default: false,
+            required: true,
         },
     },
 });

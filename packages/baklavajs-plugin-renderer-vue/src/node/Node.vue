@@ -1,29 +1,43 @@
 <template>
-    <div ref="el" :id="node.id" :class="classes" :style="styles" @mousedown="select" :data-node-type="node.type">
-        <div class="__title" @mousedown.self.stop="startDrag">
+    <div
+        :id="node.id"
+        ref="el"
+        :class="classes"
+        :style="styles"
+        :data-node-type="node.type"
+        @mousedown="select"
+    >
+        <div
+            class="__title"
+            @mousedown.self.stop="startDrag"
+        >
             <template v-if="!renaming">
-                <div class="__title-label">{{ node.title }}</div>
+                <div class="__title-label">
+                    {{ node.title }}
+                </div>
                 <div class="__menu">
-                    <button @click="openContextMenu">E</button>
+                    <button @click="openContextMenu">
+                        E
+                    </button>
                     <context-menu
                         v-model="showContextMenu"
                         :x="0"
                         :y="0"
                         :items="contextMenuItems"
                         @click="onContextMenuClick"
-                    ></context-menu>
+                    />
                 </div>
             </template>
             <input
                 v-else
                 ref="renameInputEl"
+                v-model="tempName"
                 type="text"
                 class="dark-input"
-                v-model="tempName"
                 placeholder="Node Name"
                 @blur="doneRenaming"
                 @keydown.enter="doneRenaming"
-            />
+            >
         </div>
 
         <div class="__content">
@@ -34,12 +48,17 @@
                     :key="output.id"
                     :node="node"
                     :intf="output"
-                ></NodeInterface>
+                />
             </div>
 
             <!-- Inputs -->
             <div class="__inputs">
-                <NodeInterface v-for="input in node.inputs" :key="input.id" :node="node" :intf="input"></NodeInterface>
+                <NodeInterface
+                    v-for="input in node.inputs"
+                    :key="input.id"
+                    :node="node"
+                    :intf="input"
+                />
             </div>
         </div>
     </div>
@@ -65,6 +84,7 @@ export default defineComponent({
             default: false,
         },
     },
+    emits: ["select"],
     setup(props, { emit }) {
         const { plugin } = usePlugin();
         const { graph, switchGraph } = useGraph();
@@ -125,19 +145,18 @@ export default defineComponent({
 
         const onContextMenuClick = async (action: string) => {
             switch (action) {
-                case "delete":
-                    graph.value.removeNode(props.node);
-                    break;
-                case "rename":
-                    tempName.value = props.node.title;
-                    renaming.value = true;
-                    await nextTick();
-                    renameInputEl.value?.focus();
-                    break;
-                case "editSubgraph":
-                    const graphNode = props.node as AbstractNode & IGraphNode;
-                    switchGraph(graphNode.template);
-                    break;
+            case "delete":
+                graph.value.removeNode(props.node);
+                break;
+            case "rename":
+                tempName.value = props.node.title;
+                renaming.value = true;
+                await nextTick();
+                renameInputEl.value?.focus();
+                break;
+            case "editSubgraph":
+                switchGraph((props.node as AbstractNode & IGraphNode).template);
+                break;
             }
         };
 

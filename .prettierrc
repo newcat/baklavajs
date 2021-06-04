@@ -2,5 +2,6 @@
     "tabWidth": 4,
     "arrowParens": "always",
     "printWidth": 120,
-    "quoteProps": "consistent"
+    "quoteProps": "consistent",
+    "trailingComma": "all"
 }

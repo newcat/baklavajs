@@ -1,4 +1,4 @@
-import { AbstractNode, INodeState, Node } from "@baklavajs/core";
+import { AbstractNode, INodeState } from "@baklavajs/core";
 
 export interface IViewNodeState extends INodeState<unknown, unknown> {
     position: { x: number; y: number };

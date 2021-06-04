@@ -6,7 +6,7 @@
         :y2="d.output[1]"
         :state="status"
         is-temporary
-    ></connection-view>
+    />
 </template>
 
 <script lang="ts">
@@ -19,12 +19,13 @@ import { getPortCoordinates } from "./portCoordinates";
 
 export default defineComponent({
     components: {
-        "connection-view": ConnectionView,
+        "connection-view": ConnectionView
     },
     props: {
         connection: {
             type: Object as () => ITemporaryConnection,
-        },
+            required: true
+        }
     },
     setup(props) {
         const status = computed(() => (props.connection ? props.connection.status : TemporaryConnectionState.NONE));
@@ -33,7 +34,7 @@ export default defineComponent({
             if (!props.connection) {
                 return {
                     input: [0, 0],
-                    output: [0, 0],
+                    output: [0, 0]
                 };
             }
 
@@ -45,17 +46,17 @@ export default defineComponent({
             if (props.connection.from.isInput) {
                 return {
                     input: end,
-                    output: start,
+                    output: start
                 };
             } else {
                 return {
                     input: start,
-                    output: end,
+                    output: end
                 };
             }
         });
 
         return { d, status };
-    },
+    }
 });
 </script>

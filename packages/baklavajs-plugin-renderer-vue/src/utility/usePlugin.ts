@@ -1,4 +1,4 @@
-import { Ref, inject, provide } from "vue";
+import { Ref } from "vue";
 import { IBaklavaView } from "../useBaklava";
 
 // const injectionKey = Symbol("viewPlugin");

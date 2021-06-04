@@ -8,22 +8,35 @@
         @mousemove="mousemove"
         @mouseleave="mouseleave"
     >
-        <div class="__slider" :style="{ width: percentage + '%' }"></div>
-        <div v-if="!editMode" class="__content">
-            <div class="__label">{{ intf.name }}</div>
-            <div class="__value">{{ stringRepresentation }}</div>
+        <div
+            class="__slider"
+            :style="{ width: percentage + '%' }"
+        />
+        <div
+            v-if="!editMode"
+            class="__content"
+        >
+            <div class="__label">
+                {{ intf.name }}
+            </div>
+            <div class="__value">
+                {{ stringRepresentation }}
+            </div>
         </div>
-        <div v-else class="__content">
+        <div
+            v-else
+            class="__content"
+        >
             <input
-                type="number"
+                ref="inputEl"
                 v-model="tempValue"
+                type="number"
                 class="dark-input"
                 :class="{ '--invalid': invalid }"
-                ref="inputEl"
+                style="text-align: right"
                 @blur="leaveEditMode"
                 @keydown.enter="leaveEditMode"
-                style="text-align: right"
-            />
+            >
         </div>
     </div>
 </template>

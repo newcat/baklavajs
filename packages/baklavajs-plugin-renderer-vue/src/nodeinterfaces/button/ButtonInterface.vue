@@ -1,5 +1,11 @@
 <template>
-    <button class="dark-button --block" :title="intf.name" @click="onClick">{{ intf.name }}</button>
+    <button
+        class="dark-button --block"
+        :title="intf.name"
+        @click="onClick"
+    >
+        {{ intf.name }}
+    </button>
 </template>
 
 <script lang="ts">

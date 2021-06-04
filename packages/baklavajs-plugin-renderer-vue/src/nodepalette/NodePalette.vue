@@ -1,7 +1,12 @@
 <template>
     <div class="node-palette">
-        <section v-for="c in categories" :key="c.name">
-            <h1 v-if="c.name !== 'default'">{{ c.name }}</h1>
+        <section
+            v-for="c in categories"
+            :key="c.name"
+        >
+            <h1 v-if="c.name !== 'default'">
+                {{ c.name }}
+            </h1>
             <PaletteEntry
                 v-for="(ni, nt) in c.nodeTypes"
                 :key="nt"
@@ -31,21 +36,21 @@ export default defineComponent({
         const categories = computed<Array<{ name: string; nodeTypes: NodeTypeInformations }>>(() => {
             const nodeTypeEntries = Array.from(plugin.value.editor.value.nodeTypes.entries());
 
-            const categoryNames = new Set(nodeTypeEntries.map(([nt, ni]) => ni.category));
+            const categoryNames = new Set(nodeTypeEntries.map(([, ni]) => ni.category));
 
             const categories: Array<{ name: string; nodeTypes: NodeTypeInformations }> = [];
             for (const c of categoryNames.values()) {
-                let nodeTypesInCategory = nodeTypeEntries.filter(([nt, ni]) => ni.category === c);
+                let nodeTypesInCategory = nodeTypeEntries.filter(([, ni]) => ni.category === c);
 
                 if (plugin.value.displayedGraph.value.template) {
                     // don't show the graph node for the current subgraph to prevent recursion
                     nodeTypesInCategory = nodeTypesInCategory.filter(
-                        ([nt]) => nt !== getGraphNodeTypeString(plugin.value.displayedGraph.value.template!)
+                        ([nt]) => nt !== getGraphNodeTypeString(plugin.value.displayedGraph.value.template!),
                     );
                 } else {
                     // if we are not in a subgraph, don't show subgraph input & output nodes
                     nodeTypesInCategory = nodeTypesInCategory.filter(
-                        ([nt]) => ![SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE].includes(nt)
+                        ([nt]) => ![SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE].includes(nt),
                     );
                 }
 

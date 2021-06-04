@@ -1,32 +1,52 @@
 <template>
     <div class="dark-num-input">
-        <div @click="decrement" class="__button --dec">
-            <i-arrow></i-arrow>
+        <div
+            class="__button --dec"
+            @click="decrement"
+        >
+            <i-arrow />
         </div>
-        <div v-if="!editMode" class="__content" @click="enterEditMode">
-            <div class="__label" :title="intf.name">{{ intf.name }}</div>
-            <div class="__value">{{ stringRepresentation }}</div>
+        <div
+            v-if="!editMode"
+            class="__content"
+            @click="enterEditMode"
+        >
+            <div
+                class="__label"
+                :title="intf.name"
+            >
+                {{ intf.name }}
+            </div>
+            <div class="__value">
+                {{ stringRepresentation }}
+            </div>
         </div>
-        <div v-else class="__content">
+        <div
+            v-else
+            class="__content"
+        >
             <input
-                type="number"
+                ref="inputEl"
                 v-model="tempValue"
+                type="number"
                 class="dark-input"
                 :class="{ '--invalid': invalid }"
-                ref="inputEl"
+                style="text-align: right"
                 @blur="leaveEditMode"
                 @keydown.enter="leaveEditMode"
-                style="text-align: right"
-            />
+            >
         </div>
-        <div @click="increment" class="__button --inc">
-            <i-arrow></i-arrow>
+        <div
+            class="__button --inc"
+            @click="increment"
+        >
+            <i-arrow />
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref, toRef } from "vue";
+import { defineComponent, Ref, toRef } from "vue";
 import Arrow from "../icons/Arrow.vue";
 import { useBaseNumericInterface } from "../baseNumericInterface";
 import type { IntegerInterface } from "./IntegerInterface";

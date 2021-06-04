@@ -1,6 +1,12 @@
 <template>
     <div>
-        <input type="text" class="dark-input" v-model="v" :placeholder="intf.name" :title="intf.name" />
+        <input
+            v-model="v"
+            type="text"
+            class="dark-input"
+            :placeholder="intf.name"
+            :title="intf.name"
+        >
     </div>
 </template>
 
@@ -19,6 +25,7 @@ export default defineComponent({
             required: true,
         },
     },
+    emits: ["update:modelValue"],
     setup(props, { emit }) {
         const v = computed({
             get: () => props.modelValue,

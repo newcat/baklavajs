@@ -1,10 +1,28 @@
 <template>
-    <div ref="el" :id="intf.id" :class="classes">
-        <div v-if="intf.port" class="__port" @mouseover="startHover" @mouseout="endHover"></div>
-        <span v-if="intf.connectionCount > 0 || !intf.component" class="align-middle">
+    <div
+        :id="intf.id"
+        ref="el"
+        :class="classes"
+    >
+        <div
+            v-if="intf.port"
+            class="__port"
+            @mouseover="startHover"
+            @mouseout="endHover"
+        />
+        <span
+            v-if="intf.connectionCount > 0 || !intf.component"
+            class="align-middle"
+        >
             {{ intf.name }}
         </span>
-        <component v-else :is="intf.component" v-model="intf.value" :node="node" :intf="intf"></component>
+        <component
+            :is="intf.component"
+            v-else
+            v-model="intf.value"
+            :node="node"
+            :intf="intf"
+        />
     </div>
 </template>
 
