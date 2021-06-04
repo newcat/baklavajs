@@ -1,16 +1,13 @@
 {
     "compilerOptions": {
-        "target": "ES2019",
-        "module": "ESNext",
+        "target": "esnext",
+        "module": "esnext",
         "strict": true,
         "moduleResolution": "node",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "declaration": true,
         "baseUrl": ".",
-        "lib": ["esnext", "DOM"],
         "skipLibCheck": true
     },
     "exclude": ["node_modules"]
