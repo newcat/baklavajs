@@ -25,6 +25,7 @@
     "@baklavajs/events": "^1.8.2"
   },
   "devDependencies": {
+    "async-mutex": "^0.3.1",
     "clean-webpack-plugin": "^3.0.0",
     "ts-loader": "^8.0.14",
     "typescript": "^4.1.3",

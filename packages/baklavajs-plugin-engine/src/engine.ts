@@ -1,17 +1,17 @@
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
+import { Mutex } from "async-mutex";
 import { IEditor, INode, IPlugin, INodeInterface, IConnection } from "../../baklavajs-core/types";
 import { IInterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/types";
 import { calculateOrder, containsCycle } from "./nodeTreeBuilder";
 
 export class Engine implements IPlugin {
-
     public type = "EnginePlugin";
 
     public get rootNodes() {
         return this._rootNodes;
     }
 
-    public set rootNodes(value: INode[]|undefined) {
+    public set rootNodes(value: INode[] | undefined) {
         this._rootNodes = value;
         this.recalculateOrder = true;
     }
@@ -35,7 +35,8 @@ export class Engine implements IPlugin {
     private recalculateOrder = false;
     private calculateOnChange = false;
     private calculationInProgress = false;
-    private _rootNodes: INode[]|undefined = undefined;
+    private mutex = new Mutex();
+    private _rootNodes: INode[] | undefined = undefined;
     private interfaceTypePlugins: IInterfaceTypePlugin[] = [];
 
     /**
@@ -78,11 +79,12 @@ export class Engine implements IPlugin {
         });
 
         this.editor.events.checkConnection.addListener(this, (c) => {
-            if (!this.checkConnection(c.from, c.to)) { return false; }
+            if (!this.checkConnection(c.from, c.to)) {
+                return false;
+            }
         });
 
         this.editor.events.addConnection.addListener(this, (c) => {
-
             // as only one connection to an input interface is allowed
             // Delete all other connections to the target interface
             this.editor.connections
@@ -90,11 +92,11 @@ export class Engine implements IPlugin {
                 .forEach((conn) => this.editor.removeConnection(conn));
 
             this.onChange(true);
-
         });
 
-        this.editor.events.removeConnection.addListener(this, () => { this.onChange(true); });
-
+        this.editor.events.removeConnection.addListener(this, () => {
+            this.onChange(true);
+        });
     }
 
     /**
@@ -105,8 +107,21 @@ export class Engine implements IPlugin {
      * - a map that maps rootNodes to their calculated value (what the calculation function of the node returned)
      * - null if the calculation was prevented from the beforeCalculate event
      */
-    public async calculate(calculationData?: any): Promise<Map<INode, any>|null> {
+    public async calculate(calculationData?: any): Promise<Map<INode, any> | null> {
+        return await this.mutex.runExclusive(async () => await this.internalCalculate(calculationData));
+    }
 
+    /**
+     * Force the engine to recalculate the node execution order.
+     * This is normally done automatically. Use this method if the
+     * default change detection does not work in your scenario.
+     */
+    public calculateOrder() {
+        this.calculateNodeTree();
+        this.recalculateOrder = false;
+    }
+
+    private async internalCalculate(calculationData?: any): Promise<Map<INode, any> | null> {
         if (this.events.beforeCalculate.emit(calculationData)) {
             return null;
         }
@@ -124,8 +139,9 @@ export class Engine implements IPlugin {
             }
             if (this.connectionsPerNode.has(n)) {
                 this.connectionsPerNode.get(n)!.forEach((c) => {
-                    const conversion = this.interfaceTypePlugins.find(
-                        (p) => p.canConvert((c.from as any).type, (c.to as any).type));
+                    const conversion = this.interfaceTypePlugins.find((p) =>
+                        p.canConvert((c.from as any).type, (c.to as any).type)
+                    );
                     if (conversion) {
                         c.to.value = conversion.convert((c.from as any).type, (c.to as any).type, c.from.value);
                     } else {
@@ -137,16 +153,6 @@ export class Engine implements IPlugin {
         this.calculationInProgress = false;
         this.events.calculated.emit(results);
         return results;
-    }
-
-    /**
-     * Force the engine to recalculate the node execution order.
-     * This is normally done automatically. Use this method if the
-     * default change detection does not work in your scenario.
-     */
-    public calculateOrder() {
-        this.calculateNodeTree();
-        this.recalculateOrder = false;
     }
 
     private checkConnection(from: INodeInterface, to: INodeInterface) {
@@ -164,13 +170,19 @@ export class Engine implements IPlugin {
     }
 
     private calculateNodeTree() {
-        const { calculationOrder, rootNodes } = calculateOrder(this.editor.nodes, this.editor.connections, this.rootNodes);
+        const { calculationOrder, rootNodes } = calculateOrder(
+            this.editor.nodes,
+            this.editor.connections,
+            this.rootNodes
+        );
         this.nodeCalculationOrder = calculationOrder;
         this.actualRootNodes = rootNodes;
         this.connectionsPerNode.clear();
         this.editor.nodes.forEach((n) => {
-            this.connectionsPerNode.set(n, this.editor.connections.filter((c) => c.from.parent === n));
+            this.connectionsPerNode.set(
+                n,
+                this.editor.connections.filter((c) => c.from.parent === n)
+            );
         });
     }
-
 }
