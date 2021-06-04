@@ -105,11 +105,11 @@ export function useClipboard(
 
             const tapInterfaces = (intfs: Record<string, NodeInterface<any>>) => {
                 Object.values(intfs).forEach((intf) => {
-                    intf.hooks.load.tap(token, (intfState) => {
+                    intf.hooks.load.subscribe(token, (intfState) => {
                         const newIntfId = uuidv4();
                         idmap.set(intfState.id, newIntfId);
                         intf.id = newIntfId;
-                        intf.hooks.load.untap(token);
+                        intf.hooks.load.unsubscribe(token);
                         return intfState;
                     });
                 });
@@ -118,12 +118,13 @@ export function useClipboard(
             tapInterfaces(copiedNode.inputs);
             tapInterfaces(copiedNode.outputs);
 
-            copiedNode.hooks.beforeLoad.tap(token, (nodeState) => {
+            copiedNode.hooks.beforeLoad.subscribe(token, (nodeState) => {
                 const ns = nodeState as any;
                 if (ns.position) {
                     ns.position.x += 10;
                     ns.position.y += 10;
                 }
+                copiedNode.hooks.beforeLoad.unsubscribe(token);
                 return ns;
             });
 
