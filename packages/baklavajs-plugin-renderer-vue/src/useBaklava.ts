@@ -1,8 +1,7 @@
-import { computed, ComputedRef, reactive, ref, Ref, shallowReadonly, watch } from "vue";
+import { computed, reactive, ref, Ref, shallowReadonly, watch } from "vue";
 import { AbstractNode, Editor, Graph, GraphTemplate, NodeInterface } from "@baklavajs/core";
 import { IBaklavaTapable, SequentialHook } from "@baklavajs/events";
 
-import { gridBackgroundProvider } from "./editor/backgroundProvider";
 import { ICommandHandler, useCommandHandler } from "./commands";
 import { IClipboard, useClipboard } from "./clipboard";
 import { IHistory, useHistory } from "./history";
@@ -16,6 +15,12 @@ export interface IViewSettings {
     useStraightConnections: boolean;
     /** Show a minimap */
     enableMinimap: boolean;
+    /** Background settings */
+    background: {
+        gridSize: number;
+        gridDivision: number;
+        subGridVisibleThreshold: number;
+    };
 }
 
 export interface IBaklavaView extends IBaklavaTapable {
@@ -23,7 +28,6 @@ export interface IBaklavaView extends IBaklavaTapable {
     displayedGraph: Ref<Graph>;
     isSubgraph: Readonly<Ref<boolean>>;
     settings: IViewSettings;
-    backgroundStyles: ComputedRef<Record<string, any>>;
     commandHandler: ICommandHandler;
     history: IHistory;
     clipboard: IClipboard;
@@ -31,7 +35,7 @@ export interface IBaklavaView extends IBaklavaTapable {
         /** Called whenever a node is rendered */
         renderNode: SequentialHook<{ node: AbstractNode; el: HTMLElement }, null>;
         /** Called whenever an interface is rendered */
-        renderInterface: SequentialHook<{ interface: NodeInterface<any>; el: HTMLElement }, null>;
+        renderInterface: SequentialHook<{ intf: NodeInterface<any>; el: HTMLElement }, null>;
     };
     switchGraph: (newGraph: Graph | GraphTemplate) => void;
 }
@@ -48,12 +52,11 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
     const settings: IViewSettings = reactive({
         useStraightConnections: false,
         enableMinimap: false,
-    });
-
-    const backgroundStyles: ComputedRef<Record<string, any>> = gridBackgroundProvider(displayedGraph, {
-        gridSize: 100,
-        gridDivision: 5,
-        subGridVisibleThreshold: 0.6,
+        background: {
+            gridSize: 100,
+            gridDivision: 5,
+            subGridVisibleThreshold: 0.6,
+        },
     });
 
     const commandHandler = useCommandHandler();
@@ -64,7 +67,7 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
         /** Called whenever a node is rendered */
         renderNode: new SequentialHook<{ node: AbstractNode; el: HTMLElement }, null>(null),
         /** Called whenever an interface is rendered */
-        renderInterface: new SequentialHook<{ interface: NodeInterface<any>; el: HTMLElement }, null>(null),
+        renderInterface: new SequentialHook<{ intf: NodeInterface<any>; el: HTMLElement }, null>(null),
     };
 
     registerGraphCommands(displayedGraph, commandHandler, switchGraph);
@@ -100,7 +103,7 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
                 switchGraph(newValue.graph);
             }
         },
-        { immediate: true }
+        { immediate: true },
     );
 
     return {
@@ -108,7 +111,6 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
         displayedGraph,
         isSubgraph,
         settings,
-        backgroundStyles,
         commandHandler,
         history,
         clipboard,

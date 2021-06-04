@@ -4,7 +4,7 @@
         tabindex="-1"
         :class="[
             'node-editor',
-            { 'ignore-mouse': !!temporaryConnection, '--temporary-connection': !!temporaryConnection }
+            { 'ignore-mouse': !!temporaryConnection, '--temporary-connection': !!temporaryConnection },
         ]"
         @mousemove.self="mouseMoveHandler"
         @mousedown="mouseDown"
@@ -15,10 +15,9 @@
         @dragover="dragOver"
         @drop="drop"
     >
-        <div
-            class="background"
-            :style="plugin.backgroundStyles"
-        />
+        <slot name="background">
+            <background />
+        </slot>
 
         <slot name="toolbar">
             <toolbar />
@@ -90,6 +89,7 @@ import { IBaklavaView } from "../useBaklava";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
 
+import Background from "./Background.vue";
 import Node from "../node/Node.vue";
 import ConnectionWrapper from "../connection/ConnectionWrapper.vue";
 import TemporaryConnection from "../connection/TemporaryConnection.vue";
@@ -101,12 +101,12 @@ import Toolbar from "../toolbar/Toolbar.vue";
 import { useTransform, providePlugin } from "../utility";
 
 export default defineComponent({
-    components: { Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette, Toolbar },
+    components: { Background, Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette, Toolbar },
     props: {
         plugin: {
             type: Object as () => IBaklavaView,
-            required: true
-        }
+            required: true,
+        },
     },
     setup(props) {
         const token = Symbol("EditorToken");
@@ -125,7 +125,7 @@ export default defineComponent({
         const { transform } = useTransform();
 
         const nodeContainerStyle = computed(() => ({
-            ...panZoom.styles.value
+            ...panZoom.styles.value,
         }));
 
         // Reason: https://github.com/newcat/baklavajs/issues/54
@@ -222,9 +222,9 @@ export default defineComponent({
             drop,
             selectNode,
             temporaryConnection: temporaryConnection.temporaryConnection,
-            mouseWheel: panZoom.onMouseWheel
+            mouseWheel: panZoom.onMouseWheel,
         };
-    }
+    },
 });
 </script>
 

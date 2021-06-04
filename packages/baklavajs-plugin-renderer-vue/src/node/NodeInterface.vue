@@ -65,7 +65,7 @@ export default defineComponent({
 
         const onRender = () => {
             if (el.value) {
-                plugin.value.hooks.renderInterface.execute({ interface: props.intf, el: el.value });
+                plugin.value.hooks.renderInterface.execute({ intf: props.intf, el: el.value });
             }
         };
 
