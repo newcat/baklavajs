@@ -27,7 +27,7 @@
     "@baklavajs/plugin-interface-types": "^1.8.0"
   },
   "devDependencies": {
-    "typescript": "^4.1.5"
+    "typescript": "^4.3.2"
   },
   "publishConfig": {
     "access": "public"
