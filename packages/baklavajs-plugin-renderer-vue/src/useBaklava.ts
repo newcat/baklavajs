@@ -1,5 +1,6 @@
 import { computed, ComputedRef, reactive, ref, Ref, shallowReadonly, watch } from "vue";
-import { Editor, Graph, GraphTemplate } from "@baklavajs/core";
+import { AbstractNode, Editor, Graph, GraphTemplate, NodeInterface } from "@baklavajs/core";
+import { IBaklavaTapable, SequentialHook } from "@baklavajs/events";
 
 import { gridBackgroundProvider } from "./editor/backgroundProvider";
 import { ICommandHandler, useCommandHandler } from "./commands";
@@ -17,7 +18,7 @@ export interface IViewSettings {
     enableMinimap: boolean;
 }
 
-export interface IBaklavaView {
+export interface IBaklavaView extends IBaklavaTapable {
     editor: Ref<Editor>;
     displayedGraph: Ref<Graph>;
     isSubgraph: Readonly<Ref<boolean>>;
@@ -26,6 +27,12 @@ export interface IBaklavaView {
     commandHandler: ICommandHandler;
     history: IHistory;
     clipboard: IClipboard;
+    hooks: {
+        /** Called whenever a node is rendered */
+        renderNode: SequentialHook<{ node: AbstractNode; el: HTMLElement }, null>;
+        /** Called whenever an interface is rendered */
+        renderInterface: SequentialHook<{ interface: NodeInterface<any>; el: HTMLElement }, null>;
+    };
     switchGraph: (newGraph: Graph | GraphTemplate) => void;
 }
 
@@ -52,6 +59,13 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
     const commandHandler = useCommandHandler();
     const history = useHistory(displayedGraph, commandHandler);
     const clipboard = useClipboard(displayedGraph, editor, commandHandler);
+
+    const hooks = {
+        /** Called whenever a node is rendered */
+        renderNode: new SequentialHook<{ node: AbstractNode; el: HTMLElement }, null>(null),
+        /** Called whenever an interface is rendered */
+        renderInterface: new SequentialHook<{ interface: NodeInterface<any>; el: HTMLElement }, null>(null),
+    };
 
     registerGraphCommands(displayedGraph, commandHandler, switchGraph);
 
@@ -98,6 +112,7 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
         commandHandler,
         history,
         clipboard,
+        hooks,
         switchGraph,
     };
 }

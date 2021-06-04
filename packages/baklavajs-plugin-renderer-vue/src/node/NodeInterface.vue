@@ -1,5 +1,5 @@
 <template>
-    <div :id="intf.id" :class="classes">
+    <div ref="el" :id="intf.id" :class="classes">
         <div v-if="intf.port" class="__port" @mouseover="startHover" @mouseout="endHover"></div>
         <span v-if="intf.connectionCount > 0 || !intf.component" class="align-middle">
             {{ intf.name }}
@@ -9,8 +9,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from "vue";
+import { computed, defineComponent, inject, onMounted, onUpdated, ref } from "vue";
 import { AbstractNode, NodeInterface } from "@baklavajs/core";
+import { usePlugin } from "../utility";
 
 export default defineComponent({
     props: {
@@ -24,7 +25,10 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const { plugin } = usePlugin();
         const hoveredOver = inject<(intf: NodeInterface | undefined) => void>("hoveredOver")!;
+
+        const el = ref<HTMLElement | null>(null);
 
         const isConnected = computed(() => props.intf.connectionCount > 0);
         const classes = computed(() => ({
@@ -40,6 +44,15 @@ export default defineComponent({
         const endHover = () => {
             hoveredOver(undefined);
         };
+
+        const onRender = () => {
+            if (el.value) {
+                plugin.value.hooks.renderInterface.execute({ interface: props.intf, el: el.value });
+            }
+        };
+
+        onMounted(onRender);
+        onUpdated(onRender);
 
         return { isConnected, classes, startHover, endHover };
     },

@@ -1,5 +1,5 @@
 <template>
-    <div :id="node.id" :class="classes" :style="styles" @mousedown="select" :data-node-type="node.type">
+    <div ref="el" :id="node.id" :class="classes" :style="styles" @mousedown="select" :data-node-type="node.type">
         <div class="__title" @mousedown.self.stop="startDrag">
             <template v-if="!renaming">
                 <div class="__title-label">{{ node.title }}</div>
@@ -46,9 +46,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, toRef, nextTick } from "vue";
+import { defineComponent, ref, computed, toRef, nextTick, onUpdated, onMounted } from "vue";
 import { AbstractNode, IGraphNode } from "@baklavajs/core";
-import { useDragMove, useGraph } from "../utility";
+import { useDragMove, useGraph, usePlugin } from "../utility";
 
 import ContextMenu from "../components/ContextMenu.vue";
 import NodeInterface from "./NodeInterface.vue";
@@ -66,9 +66,11 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
+        const { plugin } = usePlugin();
         const { graph, switchGraph } = useGraph();
         const dragMove = useDragMove(toRef(props.node, "position"));
 
+        const el = ref<HTMLElement | null>(null);
         const renaming = ref(false);
         const tempName = ref("");
         const renameInputEl = ref<HTMLInputElement | null>(null);
@@ -144,7 +146,17 @@ export default defineComponent({
             renaming.value = false;
         };
 
+        const onRender = () => {
+            if (el.value) {
+                plugin.value.hooks.renderNode.execute({ node: props.node, el: el.value });
+            }
+        };
+
+        onMounted(onRender);
+        onUpdated(onRender);
+
         return {
+            el,
             renaming,
             tempName,
             renameInputEl,
