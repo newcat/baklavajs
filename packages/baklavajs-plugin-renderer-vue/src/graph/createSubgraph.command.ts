@@ -2,18 +2,21 @@ import { AbstractNode, Graph, GraphTemplate, IGraphInterface, getGraphNodeTypeSt
 import { v4 as uuidv4 } from "uuid";
 import { reactive, Ref } from "vue";
 import type { ICommand, ICommandHandler } from "../commands";
+import { SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE } from "./subgraphInterfaceNodes";
 import type { SwitchGraph } from "./switchGraph";
 
 export const CREATE_SUBGRAPH_COMMAND = "CREATE_SUBGRAPH";
 export type CreateSubgraphCommand = ICommand<void>;
 
+const IGNORE_NODE_TYPES = [SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE];
+
 export function registerCreateSubgraphCommand(
     displayedGraph: Ref<Graph>,
     handler: ICommandHandler,
-    switchGraph: SwitchGraph
+    switchGraph: SwitchGraph,
 ) {
     const canCreateSubgraph = () => {
-        return displayedGraph.value.selectedNodes.length > 0;
+        return displayedGraph.value.selectedNodes.filter((n) => !IGNORE_NODE_TYPES.includes(n.type)).length > 0;
     };
 
     const createSubgraph = () => {
@@ -24,19 +27,19 @@ export function registerCreateSubgraphCommand(
             return;
         }
 
-        const selectedNodes = graph.selectedNodes;
+        const selectedNodes = graph.selectedNodes.filter((n) => !IGNORE_NODE_TYPES.includes(n.type));
 
         const selectedNodesInputs = selectedNodes.flatMap((n) => Object.values(n.inputs));
         const selectedNodesOutputs = selectedNodes.flatMap((n) => Object.values(n.outputs));
 
         const inputConnections = graph.connections.filter(
-            (c) => !selectedNodesOutputs.includes(c.from) && selectedNodesInputs.includes(c.to)
+            (c) => !selectedNodesOutputs.includes(c.from) && selectedNodesInputs.includes(c.to),
         );
         const outputConnections = graph.connections.filter(
-            (c) => selectedNodesOutputs.includes(c.from) && !selectedNodesInputs.includes(c.to)
+            (c) => selectedNodesOutputs.includes(c.from) && !selectedNodesInputs.includes(c.to),
         );
         const innerConnections = graph.connections.filter(
-            (c) => selectedNodesOutputs.includes(c.from) && selectedNodesInputs.includes(c.to)
+            (c) => selectedNodesOutputs.includes(c.from) && selectedNodesInputs.includes(c.to),
         );
 
         const inputInterfaces = inputConnections.map((c) => c.to);
@@ -66,8 +69,8 @@ export function registerCreateSubgraphCommand(
                     outputs: graphOutputs,
                     nodes: selectedNodes.map((n) => n.save()),
                 },
-                editor
-            )
+                editor,
+            ),
         ) as GraphTemplate;
 
         editor.addGraphTemplate(subgraphTemplate);
