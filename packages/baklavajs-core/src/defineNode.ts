@@ -35,6 +35,10 @@ export function defineNode<I, O>(definition: INodeDefinition<I, O>): new () => N
             definition.onCreate?.call(this);
         }
 
+        public calculate = (inputs: I, globalValues: any) => {
+            return definition.calculate?.call(this, inputs, globalValues);
+        };
+
         public onPlaced() {
             definition.onPlaced?.call(this);
         }

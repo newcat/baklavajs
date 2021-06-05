@@ -1,34 +1,75 @@
-import { AbstractNode, IConnection, NodeInterface } from "@baklavajs/core";
+import { AbstractNode, GRAPH_NODE_TYPE_PREFIX, IConnection, IGraphNode, NodeInterface } from "@baklavajs/core";
 
 interface ITreeNode {
     n?: AbstractNode;
     children: ITreeNode[];
 }
 
-interface IOrderCalculationResult {
+export interface IOrderCalculationResult {
     calculationOrder: AbstractNode[];
     rootNodes: AbstractNode[];
+    connectionsFromNode: Map<AbstractNode, IConnection[]>;
 }
 
-const isEmpty = (obj: any) => [Object, Array].includes((obj || {}).constructor) && !Object.entries(obj || {}).length;
-
-export function calculateOrder(
+function getNodesAndConnections(
     nodes: ReadonlyArray<AbstractNode>,
     connections: ReadonlyArray<IConnection>,
-    roots?: AbstractNode[]
+): { nodes: ReadonlyArray<AbstractNode>; connections: ReadonlyArray<IConnection> } {
+    const graphNodes: Array<IGraphNode & AbstractNode> = [];
+    let expandedNodes: AbstractNode[] = [];
+    let expandedConnections: IConnection[] = connections.slice();
+
+    nodes.forEach((n) => {
+        if (n.type.startsWith(GRAPH_NODE_TYPE_PREFIX)) {
+            graphNodes.push(n as IGraphNode & AbstractNode);
+        } else {
+            expandedNodes.push(n);
+        }
+    });
+
+    graphNodes.forEach((n) => {
+        if (n.graph) {
+            const innerGraph = getNodesAndConnections(n.graph.nodes, n.graph.connections);
+            expandedNodes = expandedNodes.concat(innerGraph.nodes);
+            expandedConnections = expandedConnections.concat(innerGraph.connections);
+        }
+    });
+
+    return {
+        nodes: expandedNodes,
+        connections: expandedConnections,
+    };
+}
+
+export function calculateOrder(
+    nonExpandedNodes: ReadonlyArray<AbstractNode>,
+    nonExpandedConnections: ReadonlyArray<IConnection>,
+    roots?: AbstractNode[],
 ): IOrderCalculationResult {
+    const interfaceToNodes = new Map<NodeInterface, AbstractNode>();
     const adjacency = new Map<AbstractNode, AbstractNode[]>();
+    const connectionsFromNode = new Map<AbstractNode, IConnection[]>();
+
+    const { nodes, connections } = getNodesAndConnections(nonExpandedNodes, nonExpandedConnections);
+
+    nodes.forEach((n) => {
+        Object.values(n.inputs).forEach((intf) => interfaceToNodes.set(intf, n));
+        Object.values(n.outputs).forEach((intf) => interfaceToNodes.set(intf, n));
+    });
 
     // build adjacency list
     nodes.forEach((n) => {
+        const connectionsToCurrentNode = connections.filter((c) => c.to && interfaceToNodes.get(c.to) === n);
+        const connectionsFromCurrentNode = connections.filter((c) => c.from && interfaceToNodes.get(c.from) === n);
         adjacency.set(
             n,
-            connections.filter((c) => c.to && c.to.parent === n).map((c) => c.from.parent!)
+            connectionsToCurrentNode.map((c) => interfaceToNodes.get(c.from)!),
         );
+        connectionsFromNode.set(n, connectionsFromCurrentNode);
     });
 
     // DFS for initial tree building and cycle detection
-    const outputs: AbstractNode[] = roots || nodes.filter((n) => isEmpty(getOutputInterfacesWithPort(n)));
+    const outputs: AbstractNode[] = roots || nodes.filter((n) => getOutputInterfacesWithPort(n).length === 0);
     const root: ITreeNode = {
         children: outputs.map((o) => ({ n: o, children: [] })),
     };
@@ -37,13 +78,13 @@ export function calculateOrder(
 
     // BFS with stack to find calculation order
     const queue: ITreeNode[] = [];
-    const stack: AbstractNode[] = [];
+    const stack: Array<AbstractNode | undefined> = [];
     queue.push(root);
 
     while (queue.length > 0) {
         const current = queue.shift()!;
         current.children.forEach((c) => {
-            stack.push(c.n!);
+            stack.push(c.n);
             queue.push(c);
         });
     }
@@ -51,12 +92,12 @@ export function calculateOrder(
     // Pop stack to reverse the order
     const calculationOrder: AbstractNode[] = [];
     while (stack.length > 0) {
-        const n = stack.pop()!;
-        if (!calculationOrder.includes(n)) {
+        const n = stack.pop();
+        if (n && !calculationOrder.includes(n)) {
             calculationOrder.push(n);
         }
     }
-    return { calculationOrder, rootNodes: outputs };
+    return { calculationOrder, rootNodes: outputs, connectionsFromNode };
 }
 
 function findDescendants(tn: ITreeNode, ancestors: AbstractNode[], adjacency: Map<AbstractNode, AbstractNode[]>) {
@@ -66,7 +107,9 @@ function findDescendants(tn: ITreeNode, ancestors: AbstractNode[], adjacency: Ma
         }
 
         ancestors.unshift(c.n!);
-        c.children = c.children.concat(adjacency.get(c.n!)!.map((n) => ({ n, children: new Array<ITreeNode>() })));
+        c.children = c.children.concat(
+            adjacency.get(c.n!)?.map((n) => ({ n, children: new Array<ITreeNode>() })) ?? [],
+        );
         findDescendants(c, ancestors, adjacency);
         ancestors.shift();
     }

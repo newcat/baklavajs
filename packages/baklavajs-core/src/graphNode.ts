@@ -9,11 +9,13 @@ export interface IGraphNodeState extends INodeState<any, any> {
 
 export interface IGraphNode {
     template: GraphTemplate;
-    graph: Graph;
+    graph: Graph | undefined;
 }
 
+export const GRAPH_NODE_TYPE_PREFIX = "__baklava_GraphNode-";
+
 export function getGraphNodeTypeString(template: GraphTemplate): string {
-    return `__baklava_GraphNode-${template.id}`;
+    return GRAPH_NODE_TYPE_PREFIX + template.id;
 }
 
 export function createGraphNodeType(template: GraphTemplate): new () => AbstractNode & IGraphNode {
@@ -32,11 +34,14 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         public outputs: Record<string, NodeInterface<any>> = {};
 
         public template = template;
-        public graph!: Graph;
+        public graph: Graph | undefined;
 
         public calculate?: CalculateFunction<any, any> | undefined;
 
         public load(state: IGraphNodeState) {
+            if (!this.graph) {
+                throw new Error("Cannot load a graph node without a graph");
+            }
             if (!this.template) {
                 throw new Error("Unable to load graph node without graph template");
             }
@@ -45,6 +50,9 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         }
 
         public save(): IGraphNodeState {
+            if (!this.graph) {
+                throw new Error("Cannot save a graph node without a graph");
+            }
             const state = super.save();
             return {
                 ...state,
@@ -63,13 +71,17 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         public destroy() {
             this.template.events.updated.unsubscribe(this);
             this.template.events.nameChanged.unsubscribe(this);
-            this.graph.destroy();
+            this.graph?.destroy();
         }
 
         private initialize() {
+            if (this.graph) {
+                this.graph.destroy();
+            }
             this.graph = this.template.createGraph();
             this._title = this.template.name;
             this.updateInterfaces();
+            this.events.update.emit(null);
         }
 
         private updateInterfaces() {
@@ -92,10 +104,10 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             Object.keys(this.inputs).forEach((i) => this.removeInput(i));
             Object.keys(this.outputs).forEach((i) => this.removeOutput(i));
 
-            this.getInterfaceEntries(this.graph.inputs).forEach(([k, v]) => {
+            this.getInterfaceEntries(this.graph!.inputs).forEach(([k, v]) => {
                 this.addInput(k, v);
             });
-            this.getInterfaceEntries(this.graph.outputs).forEach(([k, v]) => {
+            this.getInterfaceEntries(this.graph!.outputs).forEach(([k, v]) => {
                 this.addOutput(k, v);
             });
 
@@ -109,10 +121,10 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
 
         private getInterfaceEntries(graphInterfaceList: IGraphInterface[]): Array<[string, NodeInterface<any>]> {
             return graphInterfaceList.map((gi) => {
-                const intf = this.graph.findNodeInterface(gi.nodeInterfaceId);
+                const intf = this.graph!.findNodeInterface(gi.nodeInterfaceId);
                 if (!intf) {
                     throw new Error(
-                        `Error while updating interfaces on GraphNode: Unable to find interface with id ${gi.nodeInterfaceId}`
+                        `Error while updating interfaces on GraphNode: Unable to find interface with id ${gi.nodeInterfaceId}`,
                     );
                 }
                 intf.name = gi.name;

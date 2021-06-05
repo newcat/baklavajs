@@ -17,3 +17,9 @@ export interface IAddNodeTypeEventData {
     type: AbstractNodeConstructor;
     options?: IRegisterNodeTypeOptions;
 }
+
+export interface INodeUpdateEventData {
+    type: "input" | "output";
+    name: string;
+    intf: NodeInterface;
+}

@@ -34,7 +34,7 @@ import { defineComponent, Ref, ref } from "vue";
 
 import { Editor, NodeInstanceOf } from "@baklavajs/core";
 import { EditorComponent, SelectInterface, useBaklava, Commands } from "../src";
-// import { Engine } from "@baklavajs/plugin-engine";
+import { Engine } from "@baklavajs/plugin-engine";
 import { BaklavaInterfaceTypes } from "@baklavajs/plugin-interface-types";
 
 import CustomNodeRenderer from "./CustomNodeRenderer";
@@ -64,14 +64,13 @@ export default defineComponent({
 
         // viewPlugin.value.components.node = CustomNodeRenderer;
 
-        /*const engine = new Engine(true);
-        engine.events.calculated.addListener(token, (r) => {
+        const engine = new Engine(editor.value.graph, true);
+        engine.events.calculated.subscribe(token, (r) => {
             for (const v of r.values()) {
                 console.log(v);
             }
         });
-        engine.hooks.gatherCalculationData.tap(token, () => "def");
-        editor.value.use(engine);*/
+        engine.hooks.gatherCalculationData.subscribe(token, () => "def");
 
         const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor.value, baklavaView);
         nodeInterfaceTypes
@@ -98,7 +97,7 @@ export default defineComponent({
         // editor.value.addNode(new AdvancedNode());
 
         const calculate = async () => {
-            // console.log(await this.engine.calculate("def"));
+            console.log(await engine.calculate("def"));
         };
 
         const save = () => {

@@ -6,6 +6,7 @@ import {
     IBaklavaEventEmitter,
     IBaklavaTapable,
 } from "@baklavajs/events";
+import type { INodeUpdateEventData } from "./eventDataTypes";
 import type { Graph } from "./graph";
 import type { NodeInterfaceDefinition, NodeInterface, NodeInterfaceDefinitionStates } from "./nodeInterface";
 import { mapValues } from "./utils";
@@ -43,6 +44,7 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
         addOutput: new BaklavaEvent<NodeInterface, AbstractNode>(this),
         beforeRemoveOutput: new PreventableBaklavaEvent<NodeInterface, AbstractNode>(this),
         removeOutput: new BaklavaEvent<NodeInterface, AbstractNode>(this),
+        update: new BaklavaEvent<INodeUpdateEventData | null, AbstractNode>(this),
     };
 
     public hooks = {
@@ -150,6 +152,7 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
         }
         ioObject[key] = io;
         io.isInput = type === "input";
+        io.events.setValue.subscribe(this, () => this.events.update.emit({ type, name: key, intf: io }));
         afterEvent.emit(io);
         return true;
     }
@@ -170,10 +173,12 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
                 });
             } else {
                 throw new Error(
-                    "Interface is connected, but no graph instance is specified. Unable to delete interface"
+                    "Interface is connected, but no graph instance is specified. Unable to delete interface",
                 );
             }
         }
+
+        io.events.setValue.unsubscribe(this);
 
         if (type === "input") {
             delete this.inputs[key];

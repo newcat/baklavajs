@@ -32,6 +32,15 @@ export class BaklavaInterfaceTypes {
             }
         });
 
+        this.editor.connectionHooks.transfer.subscribe(this, (value, connection) => {
+            const fromType = connection.from.type;
+            const toType = connection.to.type;
+            if (!fromType || !toType) {
+                return value;
+            }
+            return this.convert(fromType, toType, value);
+        });
+
         if (viewPlugin) {
             viewPlugin.hooks.renderInterface.subscribe(this, ({ intf, el }) => {
                 if (intf.type) {

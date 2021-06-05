@@ -1,10 +1,30 @@
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
-import type { Editor, IPlugin, Connection, AbstractNode, NodeInterface, IConnection } from "@baklavajs/core";
-import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
-import { calculateOrder, containsCycle } from "./nodeTreeBuilder";
+import { Connection, AbstractNode, NodeInterface, IConnection, Graph, GRAPH_NODE_TYPE_PREFIX } from "@baklavajs/core";
+import { Mutex } from "async-mutex";
+import { calculateOrder, containsCycle, IOrderCalculationResult } from "./nodeTreeBuilder";
 
-export class Engine implements IPlugin {
+export class Engine {
     public type = "EnginePlugin";
+
+    public events = {
+        /** This event will be called before all the nodes `calculate` functions are called.
+         * The argument is the calculationData that the nodes will receive
+         */
+        beforeCalculate: new PreventableBaklavaEvent<any, Engine>(this),
+        calculated: new BaklavaEvent<Map<AbstractNode, any>, Engine>(this),
+    };
+
+    public hooks = {
+        gatherCalculationData: new SequentialHook<any, Engine>(this),
+    };
+
+    private graph: Graph;
+    private orderCalculationData?: IOrderCalculationResult;
+    private recalculateOrder = false;
+    private calculateOnChange = false;
+    private calculationInProgress = false;
+    private mutex = new Mutex();
+    private _rootNodes: AbstractNode[] | undefined = undefined;
 
     public get rootNodes(): AbstractNode[] | undefined {
         return this._rootNodes;
@@ -15,71 +35,47 @@ export class Engine implements IPlugin {
         this.recalculateOrder = true;
     }
 
-    public events = {
-        /** This event will be called before all the nodes `calculate` functions are called.
-         * The argument is the calculationData that the nodes will receive
-         */
-        beforeCalculate: new PreventableBaklavaEvent<any>(),
-        calculated: new BaklavaEvent<Map<AbstractNode, any>>(),
-    };
-
-    public hooks = {
-        gatherCalculationData: new SequentialHook<any>(),
-    };
-
-    private editor!: Editor;
-    private nodeCalculationOrder: AbstractNode[] = [];
-    private actualRootNodes: AbstractNode[] = [];
-    private connectionsPerNode = new Map<AbstractNode, Connection[]>();
-    private recalculateOrder = false;
-    private calculateOnChange = false;
-    private calculationInProgress = false;
-    private _rootNodes: AbstractNode[] | undefined = undefined;
-    private interfaceTypePlugins: InterfaceTypePlugin[] = [];
-
     /**
      * Construct a new Engine plugin
      * @param calculateOnChange Whether to automatically calculate all nodes when any node interface is changed.
      */
-    public constructor(calculateOnChange = false) {
+    public constructor(graph: Graph, calculateOnChange = false) {
+        this.graph = graph;
         this.calculateOnChange = calculateOnChange;
-    }
 
-    public register(editor: Editor): void {
-        this.editor = editor;
+        this.graph.nodeEvents.update.subscribe(this, (data, node) => {
+            if (node.type.startsWith(GRAPH_NODE_TYPE_PREFIX) && data === null) {
+                this.onChange(true);
+            } else {
+                this.onChange(false);
+            }
+        });
 
-        /*this.editor.events.addNode.addListener(this, (node) => {
-            node.events.update.addListener(this, (ev) => {
-                if (ev.interface && ev.interface.connectionCount === 0) {
-                    this.onChange(false);
-                } else if (ev.option) {
-                    this.onChange(false);
-                }
-            });
+        this.graph.events.addNode.subscribe(this, () => {
             this.onChange(true);
         });
 
-        this.editor.events.removeNode.addListener(this, (node) => {
-            node.events.update.removeListener(this);
-        });*/
+        this.graph.events.removeNode.subscribe(this, () => {
+            this.onChange(true);
+        });
 
-        this.editor.events.checkConnection.addListener(this, (c) => {
-            if (!this.checkConnection(c.from as NodeInterface, c.to as NodeInterface)) {
+        this.graph.events.checkConnection.subscribe(this, (c, graph) => {
+            if (!this.checkConnection(graph, c.from, c.to)) {
                 return false;
             }
         });
 
-        this.editor.events.addConnection.addListener(this, (c) => {
+        this.graph.events.addConnection.subscribe(this, (c, graph) => {
             // as only one connection to an input interface is allowed
             // Delete all other connections to the target interface
-            this.editor.connections
-                .filter((conn) => conn !== c && conn.to === c.to)
-                .forEach((conn) => this.editor.removeConnection(conn));
+            graph.connections
+                .filter((conn) => conn.from !== c.from && conn.to === c.to)
+                .forEach((conn) => graph.removeConnection(conn));
 
             this.onChange(true);
         });
 
-        this.editor.events.removeConnection.addListener(this, () => {
+        this.graph.events.removeConnection.subscribe(this, () => {
             this.onChange(true);
         });
     }
@@ -93,37 +89,7 @@ export class Engine implements IPlugin {
      * - null if the calculation was prevented from the beforeCalculate event
      */
     public async calculate(calculationData?: any): Promise<Map<AbstractNode, any> | null> {
-        if (this.events.beforeCalculate.emit(calculationData)) {
-            return null;
-        }
-        calculationData = this.hooks.gatherCalculationData.execute(calculationData);
-
-        this.calculationInProgress = true;
-        if (this.recalculateOrder) {
-            this.calculateOrder();
-        }
-        const results: Map<AbstractNode, any> = new Map();
-        for (const n of this.nodeCalculationOrder) {
-            const r = await n.calculate!(calculationData);
-            if (this.actualRootNodes.includes(n)) {
-                results.set(n, r);
-            }
-            if (this.connectionsPerNode.has(n)) {
-                this.connectionsPerNode.get(n)!.forEach((c) => {
-                    const conversion = this.interfaceTypePlugins.find((p) =>
-                        p.canConvert((c.from as any).type, (c.to as any).type)
-                    );
-                    if (conversion) {
-                        c.to.value = conversion.convert((c.from as any).type, (c.to as any).type, c.from.value);
-                    } else {
-                        c.to.value = c.from.value;
-                    }
-                });
-            }
-        }
-        this.calculationInProgress = false;
-        this.events.calculated.emit(results);
-        return results;
+        return await this.mutex.runExclusive(async () => await this.internalCalculate(calculationData));
     }
 
     /**
@@ -136,11 +102,55 @@ export class Engine implements IPlugin {
         this.recalculateOrder = false;
     }
 
-    private checkConnection(from: NodeInterface, to: NodeInterface) {
+    private async internalCalculate(calculationData?: any): Promise<Map<AbstractNode, any> | null> {
+        if (this.events.beforeCalculate.emit(calculationData)) {
+            return null;
+        }
+        calculationData = this.hooks.gatherCalculationData.execute(calculationData);
+
+        this.calculationInProgress = true;
+        if (this.recalculateOrder || !this.orderCalculationData) {
+            this.calculateOrder();
+        }
+
+        const { calculationOrder, rootNodes, connectionsFromNode } = this.orderCalculationData!;
+
+        const results: Map<AbstractNode, any> = new Map();
+        for (const n of calculationOrder) {
+            if (!n.calculate) {
+                continue;
+            }
+            const inputs: Record<string, any> = {};
+            Object.entries(n.inputs).forEach(([k, v]) => {
+                inputs[k] = v.value;
+            });
+            const r = await n.calculate(inputs, calculationData);
+            if (typeof r === "object") {
+                Object.entries(r).forEach(([k, v]) => {
+                    if (n.outputs[k]) {
+                        n.outputs[k].value = v;
+                    }
+                });
+            }
+            if (rootNodes.includes(n)) {
+                results.set(n, r);
+            }
+            if (connectionsFromNode.has(n)) {
+                connectionsFromNode.get(n)!.forEach((c) => {
+                    c.to.value = (c as Connection).hooks.transfer.execute(c.from.value);
+                });
+            }
+        }
+        this.calculationInProgress = false;
+        this.events.calculated.emit(results);
+        return results;
+    }
+
+    private checkConnection(graph: Graph, from: NodeInterface, to: NodeInterface) {
         const dc = { from, to, id: "dc", destructed: false, isInDanger: false } as IConnection;
-        const copy = (this.editor.connections as ReadonlyArray<IConnection>).concat([dc]);
+        const copy = (graph.connections as ReadonlyArray<IConnection>).concat([dc]);
         copy.filter((conn) => conn.to !== to);
-        return containsCycle(this.editor.nodes, copy);
+        return containsCycle(graph.nodes, copy);
     }
 
     private onChange(recalculateOrder: boolean) {
@@ -151,19 +161,6 @@ export class Engine implements IPlugin {
     }
 
     private calculateNodeTree() {
-        const { calculationOrder, rootNodes } = calculateOrder(
-            this.editor.nodes,
-            this.editor.connections,
-            this.rootNodes
-        );
-        this.nodeCalculationOrder = calculationOrder;
-        this.actualRootNodes = rootNodes;
-        this.connectionsPerNode.clear();
-        this.editor.nodes.forEach((n) => {
-            this.connectionsPerNode.set(
-                n,
-                this.editor.connections.filter((c) => c.from.parent === n)
-            );
-        });
+        this.orderCalculationData = calculateOrder(this.graph.nodes, this.graph.connections, this.rootNodes);
     }
 }
