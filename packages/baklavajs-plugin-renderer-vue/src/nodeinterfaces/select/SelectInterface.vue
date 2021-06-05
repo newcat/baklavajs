@@ -1,9 +1,9 @@
 <template>
     <div
+        ref="el"
         :class="['dark-select', { '--open': open }]"
         :title="intf.name"
         @click="open = !open"
-        @click-outside="open = false"
     >
         <div class="__selected">
             <div class="__text">
@@ -35,11 +35,10 @@
 </template>
 
 <script lang="ts">
+import { onClickOutside } from "@vueuse/core";
 import { computed, defineComponent, ref } from "vue";
 import Arrow from "../icons/Arrow.vue";
 import type { SelectInterface, SelectInterfaceItem } from "./SelectInterface";
-
-// TODO: Click outside
 
 export default defineComponent({
     components: {
@@ -52,6 +51,7 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const el = ref<HTMLElement | null>(null);
         const open = ref(false);
 
         const selectedItem = computed(() =>
@@ -72,7 +72,11 @@ export default defineComponent({
             props.intf.value = typeof item === "string" ? item : item.value;
         };
 
-        return { open, selectedItem, selectedText, setSelected };
+        onClickOutside(el, () => {
+            open.value = false;
+        });
+
+        return { el, open, selectedItem, selectedText, setSelected };
     },
 });
 </script>

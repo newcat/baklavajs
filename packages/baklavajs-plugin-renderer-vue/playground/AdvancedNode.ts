@@ -20,18 +20,18 @@ export default class AdvancedNode extends Node<
             new ButtonInterface("Add Input", () => {
                 const name = "Input " + ++this.counter;
                 this.addInput(name, new NodeInterface<any>(name, undefined));
-            })
+            }),
         );
         this.addInput(
-            "addInput",
-            new ButtonInterface("Add Input", () => {
+            "removeInput",
+            new ButtonInterface("Remove Input", () => {
                 this.removeInput("Input " + this.counter--);
-            })
+            }),
         );
     }
 
     public load(
-        state: INodeState<NodeInterfaceDefinition<Record<string, any>>, NodeInterfaceDefinition<Record<string, any>>>
+        state: INodeState<NodeInterfaceDefinition<Record<string, any>>, NodeInterfaceDefinition<Record<string, any>>>,
     ) {
         Object.entries(state.inputs).forEach(([name, intfState]) => {
             const intf = new NodeInterface<any>(name, intfState.value);

@@ -72,7 +72,7 @@ export default defineComponent({
         onMounted(onRender);
         onUpdated(onRender);
 
-        return { isConnected, classes, startHover, endHover };
+        return { el, isConnected, classes, startHover, endHover };
     },
 });
 </script>

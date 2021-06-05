@@ -1,30 +1,28 @@
-import type { IPlugin, Editor } from "@baklavajs/core";
-// import type { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
+import type { Editor, NodeInterface } from "@baklavajs/core";
+import type { IBaklavaView } from "@baklavajs/plugin-renderer-vue";
 
-export interface IConversion {
+export interface IConversion<I, O> {
     targetType: string;
-    transformationFunction(value: any): any;
+    transformationFunction(value: I): O;
 }
 
-export interface INodeInterfaceType {
-    color: string;
-    conversions: IConversion[];
+export class NodeInterfaceType<T> {
+    public conversions: Array<IConversion<T, any>> = [];
+    public constructor(public name: string) {}
 }
 
-export class InterfaceTypePlugin implements IPlugin {
-    public type = "InterfaceTypePlugin";
+export const setType = <T>(intf: NodeInterface<T>, type: NodeInterfaceType<T>) => {
+    intf.type = type.name;
+};
 
-    private editor!: Editor;
-    private types: Map<string, INodeInterfaceType> = new Map();
+export class BaklavaInterfaceTypes {
+    private editor: Editor;
+    private types: Map<string, NodeInterfaceType<any>> = new Map();
 
-    public register(editor: Editor) {
+    public constructor(editor: Editor, viewPlugin?: IBaklavaView) {
         this.editor = editor;
-        this.editor.plugins.forEach((p) => {
-            if (p.type === "ViewPlugin") {
-                // this.registerView((p as unknown) as ViewPlugin);
-            }
-        });
-        this.editor.events.checkConnection.addListener(this, ({ from, to }) => {
+
+        this.editor.graphEvents.checkConnection.subscribe(this, ({ from, to }) => {
             const fromType = (from as any).type;
             const toType = (to as any).type;
             if (!fromType || !toType) {
@@ -33,11 +31,15 @@ export class InterfaceTypePlugin implements IPlugin {
                 return false;
             }
         });
-        this.editor.events.usePlugin.addListener(this, (plugin) => {
-            if (plugin.type === "ViewPlugin") {
-                // this.registerView((plugin as unknown) as ViewPlugin);
-            }
-        });
+
+        if (viewPlugin) {
+            viewPlugin.hooks.renderInterface.subscribe(this, ({ intf, el }) => {
+                if (intf.type) {
+                    el.setAttribute("data-interface-type", intf.type);
+                }
+                return { intf, el };
+            });
+        }
     }
 
     /**
@@ -45,38 +47,38 @@ export class InterfaceTypePlugin implements IPlugin {
      * @param name Name of the type
      * @param color Color of the type. Will be used to color the ports of the node interfaces.
      */
-    public addType(name: string, color: string): this {
-        this.types.set(name, { color, conversions: [] });
+    public addType<T>(type: NodeInterfaceType<T>): this {
+        this.types.set(type.name, type);
         return this;
     }
 
     /**
-     * A conversion makes it possible to connect two node interfaces altough they have different types.
+     * A conversion makes it possible to connect two node interfaces although they have different types.
      * @param from Type to convert from
      * @param to Type to convert to
      * @param transformationFunction
      * Will be called to transform the value from one type to another.
      * A transformation to convert the type `string` to `number` could be `parseInt`.
      */
-    public addConversion(from: string, to: string, transformationFunction?: (value: any) => any): this {
-        if (!this.types.has(from)) {
+    public addConversion<I, O>(
+        from: NodeInterfaceType<I>,
+        to: NodeInterfaceType<O>,
+        transformationFunction: (value: I) => O = (value: any) => value,
+    ): this {
+        if (!this.types.has(from.name)) {
             throw new Error(`Can not add conversion for unknown type "${from}"`);
         }
 
-        if (!transformationFunction) {
-            transformationFunction = (value) => value;
-        }
-
-        this.types.get(from)!.conversions.push({
-            targetType: to,
+        this.types.get(from.name)!.conversions.push({
+            targetType: to.name,
             transformationFunction,
         });
 
         return this;
     }
 
-    public getConversion(from: string, to: string) {
-        return this.types.has(from) && this.types.get(from)!.conversions.find((c) => c.targetType === to);
+    public getConversion<I = any, O = any>(from: string, to: string): IConversion<I, O> | null {
+        return this.types.get(from)?.conversions.find((c) => c.targetType === to) ?? null;
     }
 
     public canConvert(from: string, to: string): boolean {
@@ -85,9 +87,9 @@ export class InterfaceTypePlugin implements IPlugin {
         );
     }
 
-    public convert(from: string, to: string, value: any): any {
+    public convert<I = any, O = any>(from: string, to: string, value: I): O {
         if (from === to) {
-            return value;
+            return value as unknown as O;
         } else {
             const c = this.getConversion(from, to);
             if (c) {
@@ -96,20 +98,5 @@ export class InterfaceTypePlugin implements IPlugin {
                 throw Error(`Can not convert from "${from}" to "${to}"`);
             }
         }
-    }
-
-    private registerView(/*vp: ViewPlugin*/) {
-        // TODO: How do we do this?
-        /*vp.hooks.renderInterface.tap(this, (intf) => {
-            if (this.types.has(intf.data.type)) {
-                const color = this.types.get(intf.data.type)!.color;
-                const res = intf.$el.getElementsByClassName("__port") as HTMLElement[];
-                Array.from(res).forEach((el) => {
-                    el.classList.add("__port-" + intf.data.type);
-                    el.style.backgroundColor = color;
-                });
-            }
-            return intf;
-        });*/
     }
 }

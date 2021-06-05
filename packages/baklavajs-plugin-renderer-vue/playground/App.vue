@@ -1,16 +1,31 @@
 <template>
     <div id="app">
         <baklava-editor :plugin="baklavaView">
-            <template v-slot:node="nodeProps">
-                <CustomNodeRenderer :key="nodeProps.node.id" v-bind="nodeProps"></CustomNodeRenderer>
+            <template #node="nodeProps">
+                <CustomNodeRenderer
+                    :key="nodeProps.node.id"
+                    v-bind="nodeProps"
+                />
             </template>
         </baklava-editor>
-        <button @click="calculate">Calculate</button>
-        <button @click="save">Save</button>
-        <button @click="load">Load</button>
-        <button @click="setSelectItems">Set Select Items</button>
-        <button @click="changeGridSize">Change Grid Size</button>
-        <button @click="createSubgraph">Create Subgraph</button>
+        <button @click="calculate">
+            Calculate
+        </button>
+        <button @click="save">
+            Save
+        </button>
+        <button @click="load">
+            Load
+        </button>
+        <button @click="setSelectItems">
+            Set Select Items
+        </button>
+        <button @click="changeGridSize">
+            Change Grid Size
+        </button>
+        <button @click="createSubgraph">
+            Create Subgraph
+        </button>
     </div>
 </template>
 
@@ -18,9 +33,9 @@
 import { defineComponent, Ref, ref } from "vue";
 
 import { Editor, NodeInstanceOf } from "@baklavajs/core";
-import { EditorComponent, SelectInterface, useBaklava } from "../src";
+import { EditorComponent, SelectInterface, useBaklava, Commands } from "../src";
 // import { Engine } from "@baklavajs/plugin-engine";
-// import { InterfaceTypePlugin } from "@baklavajs/plugin-interface-types";
+import { BaklavaInterfaceTypes } from "@baklavajs/plugin-interface-types";
 
 import CustomNodeRenderer from "./CustomNodeRenderer";
 
@@ -32,7 +47,8 @@ import AdvancedNode from "./AdvancedNode";
 import CommentNode from "./CommentNode";
 import InterfaceTestNode from "./InterfaceTestNode";
 import SelectTestNode from "./SelectTestNode";
-import { CREATE_SUBGRAPH_COMMAND } from "../src/graph/createSubgraph.command";
+
+import { stringType, numberType, booleanType } from "./interfaceTypes";
 
 export default defineComponent({
     components: {
@@ -57,8 +73,14 @@ export default defineComponent({
         engine.hooks.gatherCalculationData.tap(token, () => "def");
         editor.value.use(engine);*/
 
-        /* const nodeInterfaceTypes = new InterfaceTypePlugin();
-        editor.value.use(nodeInterfaceTypes); */
+        const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor.value, baklavaView);
+        nodeInterfaceTypes
+            .addType(stringType)
+            .addType(numberType)
+            .addType(booleanType)
+            .addConversion(stringType, numberType, (v) => parseInt(v, 10))
+            .addConversion(numberType, stringType, (v) => (v !== null && v !== undefined && v.toString()) || "0")
+            .addConversion(booleanType, stringType, (v) => (typeof v === "boolean" ? v.toString() : "null"));
 
         editor.value.registerNodeType(TestNode, { category: "Tests" });
         editor.value.registerNodeType(OutputNode, { category: "Outputs" });
@@ -74,13 +96,6 @@ export default defineComponent({
         editor.value.graph.addNode(new OutputNode());
         editor.value.graph.addNode(new BuilderTestNode());
         // editor.value.addNode(new AdvancedNode());
-        /* nodeInterfaceTypes
-            .addType("string", "#00FF00")
-            .addType("number", "red")
-            .addType("boolean", "purple")
-            .addConversion("string", "number", (v) => parseInt(v, 10))
-            .addConversion("number", "string", (v) => (v !== null && v !== undefined && v.toString()) || "0")
-            .addConversion("boolean", "string", (v) => (typeof v === "boolean" ? v.toString() : "null")); */
 
         const calculate = async () => {
             // console.log(await this.engine.calculate("def"));
@@ -100,7 +115,7 @@ export default defineComponent({
         const setSelectItems = () => {
             for (const node of editor.value.graph.nodes) {
                 if (node.type === "SelectTestNode") {
-                    const n = (node as unknown) as NodeInstanceOf<typeof SelectTestNode>;
+                    const n = node as unknown as NodeInstanceOf<typeof SelectTestNode>;
                     const sel = n.inputs.advanced as SelectInterface<number | undefined>;
                     sel.items = [
                         { text: "X", value: 1 },
@@ -111,12 +126,11 @@ export default defineComponent({
         };
 
         const changeGridSize = () => {
-            // TODO: Make this possible again
-            // viewPlugin.backgroundGrid.gridSize = Math.round(Math.random() * 100) + 100;
+            baklavaView.settings.background.gridSize = Math.round(Math.random() * 100) + 100;
         };
 
         const createSubgraph = () => {
-            baklavaView.commandHandler.executeCommand(CREATE_SUBGRAPH_COMMAND);
+            baklavaView.commandHandler.executeCommand<Commands.CreateSubgraphCommand>(Commands.CREATE_SUBGRAPH_COMMAND);
         };
 
         return { editor, baklavaView, calculate, save, load, setSelectItems, changeGridSize, createSubgraph };

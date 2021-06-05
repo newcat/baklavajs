@@ -12,6 +12,8 @@ export interface INodeInterfaceState<T> extends Record<string, any> {
     value: T;
 }
 
+export type NodeInterfaceMiddleware<T, A extends Array<any>> = (intf: NodeInterface<T>, ...args: A) => void;
+
 export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTapable {
     public id = uuidv4();
     public name: string;
@@ -84,6 +86,11 @@ export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTap
 
     public setPort(value: boolean): this {
         this.port = value;
+        return this;
+    }
+
+    public use<A extends Array<any>>(middleware: NodeInterfaceMiddleware<T, A>, ...args: A): this {
+        middleware(this, ...args);
         return this;
     }
 }

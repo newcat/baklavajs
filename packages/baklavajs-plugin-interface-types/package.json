@@ -23,6 +23,7 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "devDependencies": {
+    "@baklavajs/plugin-renderer-vue": "^1.8.0",
     "@ts-tools/node": "^2.1.1",
     "@types/chai": "^4.2.18",
     "@types/mocha": "^8.2.2",

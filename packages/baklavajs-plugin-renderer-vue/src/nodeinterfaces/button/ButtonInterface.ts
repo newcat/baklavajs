@@ -9,6 +9,7 @@ export class ButtonInterface extends NodeInterface<undefined> {
     public constructor(name: string, callback: () => void) {
         super(name, undefined);
         this.callback = callback;
+        this.setPort(false);
     }
 }
 
