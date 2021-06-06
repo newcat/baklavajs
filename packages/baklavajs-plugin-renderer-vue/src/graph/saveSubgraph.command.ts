@@ -55,6 +55,9 @@ export function registerSaveSubgraphCommand(displayedGraph: Ref<Graph>, handler:
             connections: innerConnections.map((c) => ({ id: c.id, from: c.from.id, to: c.to.id })),
             nodes: nodes.map((n) => n.save()),
         });
+
+        graph.template.panning = graph.panning;
+        graph.template.scaling = graph.scaling;
     };
 
     handler.registerCommand(SAVE_SUBGRAPH_COMMAND, {

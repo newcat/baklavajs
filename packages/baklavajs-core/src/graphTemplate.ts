@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { BaklavaEvent } from "@baklavajs/events";
+import { BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import type { IConnectionState } from "./connection";
 import type { Editor } from "./editor";
 import { Graph, IGraphInterface, IGraphState } from "./graph";
@@ -56,6 +56,11 @@ export class GraphTemplate implements IGraphState {
     public events = {
         nameChanged: new BaklavaEvent<string, GraphTemplate>(this),
         updated: new BaklavaEvent<void, GraphTemplate>(this),
+    };
+
+    public hooks = {
+        beforeLoad: new SequentialHook<IGraphTemplateState, GraphTemplate>(this),
+        afterSave: new SequentialHook<IGraphTemplateState, GraphTemplate>(this),
     };
 
     public update(state: Omit<IGraphState, "id">) {

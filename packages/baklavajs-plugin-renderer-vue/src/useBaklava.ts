@@ -80,6 +80,8 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
                 oldValue.graphEvents.beforeAddNode.unsubscribe(token);
                 newValue.nodeHooks.beforeLoad.unsubscribe(token);
                 newValue.nodeHooks.afterSave.unsubscribe(token);
+                newValue.graphTemplateHooks.beforeLoad.unsubscribe(token);
+                newValue.graphTemplateHooks.afterSave.unsubscribe(token);
             }
             if (newValue) {
                 newValue.nodeHooks.beforeLoad.subscribe(token, (state, node) => {
@@ -92,6 +94,16 @@ export function useBaklava(editor: Ref<Editor>): IBaklavaView {
                     (state as IViewNodeState).position = node.position;
                     (state as IViewNodeState).width = node.width;
                     (state as IViewNodeState).twoColumn = node.twoColumn;
+                    return state;
+                });
+                newValue.graphTemplateHooks.beforeLoad.subscribe(token, (state, template) => {
+                    template.panning = state.panning;
+                    template.scaling = state.scaling;
+                    return state;
+                });
+                newValue.graphTemplateHooks.afterSave.subscribe(token, (state, template) => {
+                    state.panning = template.panning;
+                    state.scaling = template.scaling;
                     return state;
                 });
 

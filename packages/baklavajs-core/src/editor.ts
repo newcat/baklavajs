@@ -48,6 +48,8 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
         load: new SequentialHook<IEditorState, Editor>(this),
     };
 
+    public graphTemplateEvents = createProxy<GraphTemplate["events"]>();
+    public graphTemplateHooks = createProxy<GraphTemplate["hooks"]>();
     public graphEvents = createProxy<Graph["events"]>();
     public graphHooks = createProxy<Graph["hooks"]>();
     public nodeEvents = createProxy<AbstractNode["events"]>();
@@ -101,6 +103,8 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
             return;
         }
         this._graphTemplates.push(template);
+        this.graphTemplateEvents.addTarget(template.events);
+        this.graphTemplateHooks.addTarget(template.hooks);
 
         const nt = createGraphNodeType(template);
         this.registerNodeType(nt, { category: "Subgraphs", title: template.name });
@@ -114,6 +118,8 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
                 return;
             }
             this._graphTemplates.splice(this._graphTemplates.indexOf(template), 1);
+            this.graphTemplateEvents.removeTarget(template.events);
+            this.graphTemplateHooks.removeTarget(template.hooks);
             this.events.removeGraphTemplate.emit(template);
         }
     }

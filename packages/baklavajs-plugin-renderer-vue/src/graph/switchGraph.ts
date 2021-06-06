@@ -13,7 +13,7 @@ export function useSwitchGraph(editor: Ref<Editor>, displayedGraph: Ref<Graph>) 
             if (newGraph !== editor.value.graph) {
                 throw new Error(
                     "Can only switch using 'Graph' instance when it is the root graph. " +
-                        "Otherwise a 'GraphTemplate' must be used."
+                        "Otherwise a 'GraphTemplate' must be used.",
                 );
             }
             newGraphInstance = newGraph;
@@ -53,8 +53,8 @@ export function useSwitchGraph(editor: Ref<Editor>, displayedGraph: Ref<Graph>) 
             displayedGraph.value.destroy();
         }
 
-        newGraphInstance.panning = newGraphInstance.panning ?? { x: 0, y: 0 };
-        newGraphInstance.scaling = newGraphInstance.scaling ?? 1;
+        newGraphInstance.panning = newGraphInstance.panning ?? newGraph.panning ?? { x: 0, y: 0 };
+        newGraphInstance.scaling = newGraphInstance.scaling ?? newGraph.scaling ?? 1;
         newGraphInstance.selectedNodes = newGraphInstance.selectedNodes ?? [];
         newGraphInstance.sidebar = newGraphInstance.sidebar ?? { visible: false, nodeId: "", optionName: "" };
 

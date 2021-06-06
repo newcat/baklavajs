@@ -21,3 +21,15 @@ declare module "@baklavajs/core/dist/graph" {
         selectedNodes: AbstractNode[];
     }
 }
+
+declare module "@baklavajs/core/dist/graphTemplate" {
+    interface GraphTemplate {
+        panning?: { x: number; y: number };
+        scaling?: number;
+    }
+
+    interface IGraphTemplateState {
+        panning?: { x: number; y: number };
+        scaling?: number;
+    }
+}
