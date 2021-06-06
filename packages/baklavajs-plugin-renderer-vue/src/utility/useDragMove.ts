@@ -13,10 +13,10 @@ export function useDragMove(positionRef: Ref<IPosition>) {
 
     const dragging = computed(() => !!draggingStartPoint.value);
 
-    const onMouseDown = (ev: MouseEvent) => {
+    const onPointerDown = (ev: PointerEvent) => {
         draggingStartPoint.value = {
-            x: ev.screenX,
-            y: ev.screenY,
+            x: ev.pageX,
+            y: ev.pageY,
         };
         draggingStartPosition.value = {
             x: positionRef.value.x,
@@ -24,19 +24,19 @@ export function useDragMove(positionRef: Ref<IPosition>) {
         };
     };
 
-    const onMouseMove = (ev: MouseEvent) => {
+    const onPointerMove = (ev: PointerEvent) => {
         if (draggingStartPoint.value) {
-            const dx = ev.screenX - draggingStartPoint.value.x;
-            const dy = ev.screenY - draggingStartPoint.value.y;
+            const dx = ev.pageX - draggingStartPoint.value.x;
+            const dy = ev.pageY - draggingStartPoint.value.y;
             positionRef.value.x = draggingStartPosition.value!.x + dx / graph.value.scaling;
             positionRef.value.y = draggingStartPosition.value!.y + dy / graph.value.scaling;
         }
     };
 
-    const onMouseUp = () => {
+    const onPointerUp = () => {
         draggingStartPoint.value = null;
         draggingStartPosition.value = null;
     };
 
-    return { dragging, onMouseDown, onMouseMove, onMouseUp };
+    return { dragging, onPointerDown, onPointerMove, onPointerUp };
 }

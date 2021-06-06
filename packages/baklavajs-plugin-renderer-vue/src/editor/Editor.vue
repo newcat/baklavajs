@@ -4,11 +4,11 @@
         tabindex="-1"
         :class="[
             'node-editor',
-            { 'ignore-mouse': !!temporaryConnection, '--temporary-connection': !!temporaryConnection },
+            { 'ignore-mouse': !!temporaryConnection || dragging, '--temporary-connection': !!temporaryConnection },
         ]"
-        @mousemove.self="mouseMoveHandler"
-        @mousedown="mouseDown"
-        @mouseup="mouseUp"
+        @pointermove.self="onPointerMove"
+        @pointerdown="onPointerDown"
+        @pointerup="onPointerUp"
         @wheel.self="mouseWheel"
         @keydown="keyDown"
         @keyup="keyUp"
@@ -111,7 +111,7 @@ export default defineComponent({
     setup(props) {
         const token = Symbol("EditorToken");
 
-        const pluginRef = toRef(props, "plugin") as unknown as Ref<IBaklavaView>;
+        const pluginRef = (toRef(props, "plugin") as unknown) as Ref<IBaklavaView>;
         providePlugin(pluginRef);
 
         const el = ref<HTMLElement | null>(null);
@@ -135,23 +135,23 @@ export default defineComponent({
             return s;
         });
 
-        const mouseMoveHandler = (ev: MouseEvent) => {
-            panZoom.onMouseMove(ev);
+        const onPointerMove = (ev: PointerEvent) => {
+            panZoom.onPointerMove(ev);
             temporaryConnection.onMouseMove(ev);
         };
 
-        const mouseDown = (ev: MouseEvent) => {
+        const onPointerDown = (ev: PointerEvent) => {
             if (ev.button === 0) {
                 if (ev.target === el.value) {
                     unselectAllNodes();
-                    panZoom.onMouseDown(ev);
+                    panZoom.onPointerDown(ev);
                 }
                 temporaryConnection.onMouseDown();
             }
         };
 
-        const mouseUp = () => {
-            panZoom.onMouseUp();
+        const onPointerUp = () => {
+            panZoom.onPointerUp();
             temporaryConnection.onMouseUp();
         };
 
@@ -180,7 +180,7 @@ export default defineComponent({
 
         const drop = (ev: DragEvent) => {
             ev.preventDefault();
-            if (ev.dataTransfer?.getData("text/plain")) {
+            if (ev.dataTransfer?.getData("text/plain") && el.value) {
                 const nodeTypeName = ev.dataTransfer.getData("text/plain");
                 const nodeTypeInfo = props.plugin.editor.value.nodeTypes.get(nodeTypeName);
                 if (!nodeTypeInfo) {
@@ -189,7 +189,9 @@ export default defineComponent({
 
                 const instance = reactive(new nodeTypeInfo.type()) as AbstractNode;
                 props.plugin.displayedGraph.value.addNode(instance);
-                const [x, y] = transform(ev.clientX, ev.clientY);
+
+                const rect = el.value.getBoundingClientRect();
+                const [x, y] = transform(ev.clientX - rect.left, ev.clientY - rect.top);
                 instance.position.x = x;
                 instance.position.y = y;
             }
@@ -213,9 +215,9 @@ export default defineComponent({
             connections,
             selectedNodes,
             nodeContainerStyle,
-            mouseMoveHandler,
-            mouseDown,
-            mouseUp,
+            onPointerMove,
+            onPointerDown,
+            onPointerUp,
             keyDown,
             keyUp,
             dragOver,
@@ -223,6 +225,7 @@ export default defineComponent({
             selectNode,
             temporaryConnection: temporaryConnection.temporaryConnection,
             mouseWheel: panZoom.onMouseWheel,
+            dragging: panZoom.dragging,
         };
     },
 });

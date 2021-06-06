@@ -5,11 +5,11 @@
         :class="classes"
         :style="styles"
         :data-node-type="node.type"
-        @mousedown="select"
+        @pointerdown="select"
     >
         <div
             class="__title"
-            @mousedown.self.stop="startDrag"
+            @pointerdown.self.stop="startDrag"
         >
             <template v-if="!renaming">
                 <div class="__title-label">
@@ -126,17 +126,17 @@ export default defineComponent({
             emit("select", props.node);
         };
 
-        const startDrag = (ev: MouseEvent) => {
-            dragMove.onMouseDown(ev);
-            document.addEventListener("mousemove", dragMove.onMouseMove);
-            document.addEventListener("mouseup", stopDrag);
+        const startDrag = (ev: PointerEvent) => {
+            dragMove.onPointerDown(ev);
+            document.addEventListener("pointermove", dragMove.onPointerMove);
+            document.addEventListener("pointerup", stopDrag);
             select();
         };
 
         const stopDrag = () => {
-            dragMove.onMouseUp();
-            document.removeEventListener("mousemove", dragMove.onMouseMove);
-            document.removeEventListener("mouseup", stopDrag);
+            dragMove.onPointerUp();
+            document.removeEventListener("pointermove", dragMove.onPointerMove);
+            document.removeEventListener("pointerup", stopDrag);
         };
 
         const openContextMenu = () => {
