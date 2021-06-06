@@ -13,8 +13,7 @@ export default class AdvancedNode extends Node<
 
     private counter = 0;
 
-    public constructor() {
-        super();
+    public onPlaced() {
         this.addInput(
             "addInput",
             new ButtonInterface("Add Input", () => {
@@ -34,9 +33,11 @@ export default class AdvancedNode extends Node<
         state: INodeState<NodeInterfaceDefinition<Record<string, any>>, NodeInterfaceDefinition<Record<string, any>>>,
     ) {
         Object.entries(state.inputs).forEach(([name, intfState]) => {
-            const intf = new NodeInterface<any>(name, intfState.value);
-            intf.load(intfState);
-            this.addInput(name, intf);
+            if (name !== "addInput" && name !== "removeInput") {
+                const intf = new NodeInterface<any>(name, intfState.value);
+                intf.load(intfState);
+                this.addInput(name, intf);
+            }
         });
         this.counter = Object.keys(state.inputs).length - 2;
         super.load(state);
