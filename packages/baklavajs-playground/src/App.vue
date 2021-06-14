@@ -107,6 +107,7 @@ export default class App extends Vue {
             .addConversion("number", "string", (v) => (v !== null && v !== undefined && v.toString()) || "0")
             .addConversion("boolean", "string", (v) => (typeof v === "boolean" ? v.toString() : "null"));
         this.viewPlugin.setNodeTypeAlias("TestNode", "TestNode (with alias)");
+        this.viewPlugin.showCloseIcon = true;
     }
 
     async calculate() {

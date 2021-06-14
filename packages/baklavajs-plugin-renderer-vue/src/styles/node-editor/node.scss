@@ -30,9 +30,18 @@
         padding: 0.4em 0.75em;
         border-radius: $border-radius-node $border-radius-node 0 0;
         cursor: grab;
+        display: flex;
 
         & > span {
             pointer-events: none;
+        }
+
+        .close-icon {
+            margin-left: auto;
+            cursor: pointer;
+            svg {
+                width: 15px;
+            }
         }
 
     }
