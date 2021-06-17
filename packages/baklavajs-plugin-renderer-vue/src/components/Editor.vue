@@ -35,7 +35,7 @@
                 :key="node.id + counter.toString()"
                 :data="node"
                 :selected="selectedNodes.includes(node)"
-                @select="selectNode(node)"
+                @select="selectNode(node, $event)"
             >
             </component>
         </div>
@@ -161,6 +161,7 @@ export default class EditorView extends Vue {
         });
         this.clipboard = new Clipboard(this.plugin.editor);
         this.history = new History(this.plugin);
+        Vue.prototype.$selectedNodeEvents = [];
     }
 
     @Watch("plugin.nodeTypeAliases")
@@ -325,15 +326,18 @@ export default class EditorView extends Vue {
         }
     }
 
-    selectNode(node: IViewNode) {
+    selectNode(node: IViewNode, event: Event) {
         if (!this.ctrlPressed) {
             this.unselectAllNodes();
         }
+
         this.selectedNodes.push(node);
+        Vue.prototype.$selectedNodeEvents.push(event);
     }
 
     unselectAllNodes() {
         this.selectedNodes.splice(0, this.selectedNodes.length);
+        Vue.prototype.$selectedNodeEvents.splice(0, Vue.prototype.$selectedNodeEvents.length);
     }
 
     openContextMenu(event: MouseEvent) {

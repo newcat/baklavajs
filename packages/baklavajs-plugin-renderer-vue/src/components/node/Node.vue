@@ -169,17 +169,24 @@ export default class NodeView extends Vue {
     }
 
     startDrag(ev: MouseEvent) {
-        this.draggingStartPoint = {
-            x: ev.screenX,
-            y: ev.screenY,
-        };
-        this.draggingStartPosition = {
-            x: this.data.position.x,
-            y: this.data.position.y,
-        };
-        document.addEventListener("mousemove", this.handleMove);
-        document.addEventListener("mouseup", this.stopDrag);
         this.select();
+
+        if (Vue.prototype.$selectedNodeEvents.length === 0 || Vue.prototype.$selectedNodeEvents[0] === undefined) {
+            Vue.prototype.$selectedNodeEvents = [this];
+        }
+
+        Vue.prototype.$selectedNodeEvents.forEach((elem: any) => {
+            elem.draggingStartPoint = {
+                  x: ev.screenX,
+                  y: ev.screenY,
+            };
+            elem.draggingStartPosition = {
+                  x: elem.data.position.x,
+                  y: elem.data.position.y,
+            };
+            document.addEventListener("mousemove", elem.handleMove);
+            document.addEventListener("mouseup", elem.stopDrag);
+        });
     }
 
     select() {
@@ -187,19 +194,23 @@ export default class NodeView extends Vue {
     }
 
     stopDrag() {
-        this.draggingStartPoint = null;
-        this.draggingStartPosition = null;
-        document.removeEventListener("mousemove", this.handleMove);
-        document.removeEventListener("mouseup", this.stopDrag);
+        Vue.prototype.$selectedNodeEvents.forEach((elem: any) => {
+            elem.draggingStartPoint = null;
+            elem.draggingStartPosition = null;
+            document.removeEventListener("mousemove", elem.handleMove);
+            document.removeEventListener("mouseup", elem.stopDrag);
+        });
     }
 
     handleMove(ev: MouseEvent) {
-        if (this.draggingStartPoint) {
-            const dx = ev.screenX - this.draggingStartPoint.x;
-            const dy = ev.screenY - this.draggingStartPoint.y;
-            this.data.position.x = this.draggingStartPosition!.x + dx / this.plugin.scaling;
-            this.data.position.y = this.draggingStartPosition!.y + dy / this.plugin.scaling;
-        }
+        Vue.prototype.$selectedNodeEvents.forEach((elem: any) => {
+            if (elem.draggingStartPoint) {
+                const dx = ev.screenX - elem.draggingStartPoint.x;
+                const dy = ev.screenY - elem.draggingStartPoint.y;
+                elem.data.position.x = elem.draggingStartPosition.x + dx / elem.plugin.scaling;
+                elem.data.position.y = elem.draggingStartPosition.y + dy / elem.plugin.scaling;
+            }
+        });
     }
 
     openContextMenu(ev: MouseEvent) {
