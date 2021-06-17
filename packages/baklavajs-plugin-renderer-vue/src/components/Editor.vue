@@ -316,6 +316,10 @@ export default class EditorView extends Vue {
             this.history.undo();
         } else if (ev.key === "y" && ev.ctrlKey) {
             this.history.redo();
+        } else if (ev.key === "c" && ev.ctrlKey && this.selectedNodes.length > 0) {
+            this.clipboard.copy(this.selectedNodes);
+        } else if (ev.key === "v" && ev.ctrlKey && !this.clipboard.isEmpty) {
+            this.clipboard.paste();
         }
     }
 
