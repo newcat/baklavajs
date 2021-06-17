@@ -6,6 +6,7 @@ export interface IViewNode extends INode {
     width: number;
     disablePointerEvents: boolean;
     twoColumn: boolean;
+    customClasses: string;
 }
 
 export interface IViewPlugin extends IPlugin {
