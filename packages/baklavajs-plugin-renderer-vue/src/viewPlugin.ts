@@ -80,10 +80,12 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
             n.disablePointerEvents = false;
             n.twoColumn = n.twoColumn || false;
             n.width = n.width || 200;
+            n.customClasses = n.customClasses || "";
             node.hooks.save.tap(this, (state) => {
                 state.position = n.position;
                 state.width = n.width;
                 state.twoColumn = n.twoColumn;
+                state.customClasses = n.customClasses;
                 return state;
             });
             node.hooks.load.tap(this, (state) => {

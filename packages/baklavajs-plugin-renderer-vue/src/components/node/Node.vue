@@ -134,6 +134,7 @@ export default class NodeView extends Vue {
             "--dragging": !!this.draggingStartPoint,
             "--two-column": !!this.data.twoColumn,
             [`--type-${sanitizeName(this.data.type)}`]: true,
+            [this.data.customClasses]: true,
         };
     }
 
