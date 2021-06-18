@@ -33,6 +33,18 @@ To do more customization, like basic layout changes or conditional colors, you c
 * `.node`: Base class for nodes
 * `.--type-{NodeType}`: Every node has this modifier with `NodeType` being the type specified in the class of the node (or in the parameter of the constructor of the `NodeBuilder`)
 * `.--selected`: Applied whenever a node is selected
+* You can provide a `customClasses` property in the node to add additional classes:
+```js
+// NodeBuilder
+new NodeBuilder("MyNode", { customClasses: "class-one class-two" }).build();
+// Node Class
+class MyNode extends Node {
+    constructor() {
+        super();
+        this.customClasses = "class-one class-two";
+    }
+}
+```
 
 ### Node Interfaces
 * `.node-interface`: Base class for node interfaces
