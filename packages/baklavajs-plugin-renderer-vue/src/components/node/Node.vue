@@ -112,6 +112,9 @@ export default class NodeView extends Vue {
     @Inject("plugin")
     plugin!: ViewPlugin;
 
+    @Inject("selectedNodeViews")
+    selectedNodeViews!: NodeView[];
+
     draggingStartPosition: IPosition | null = null;
     draggingStartPoint: IPosition | null = null;
     renaming = false;
@@ -171,11 +174,12 @@ export default class NodeView extends Vue {
     startDrag(ev: MouseEvent) {
         this.select();
 
-        if (Vue.prototype.$selectedNodeEvents.length === 0 || Vue.prototype.$selectedNodeEvents[0] === undefined) {
-            Vue.prototype.$selectedNodeEvents = [this];
+        if (this.selectedNodeViews.length === 0 || this.selectedNodeViews[0] === undefined) {
+            this.selectedNodeViews.splice(0, this.selectedNodeViews.length);
+            this.selectedNodeViews.push(this);
         }
 
-        Vue.prototype.$selectedNodeEvents.forEach((elem: any) => {
+        this.selectedNodeViews.forEach((elem: any) => {
             elem.draggingStartPoint = {
                   x: ev.screenX,
                   y: ev.screenY,
@@ -194,7 +198,7 @@ export default class NodeView extends Vue {
     }
 
     stopDrag() {
-        Vue.prototype.$selectedNodeEvents.forEach((elem: any) => {
+        this.selectedNodeViews.forEach((elem: any) => {
             elem.draggingStartPoint = null;
             elem.draggingStartPosition = null;
             document.removeEventListener("mousemove", elem.handleMove);
@@ -203,7 +207,7 @@ export default class NodeView extends Vue {
     }
 
     handleMove(ev: MouseEvent) {
-        Vue.prototype.$selectedNodeEvents.forEach((elem: any) => {
+        this.selectedNodeViews.forEach((elem: any) => {
             if (elem.draggingStartPoint) {
                 const dx = ev.screenX - elem.draggingStartPoint.x;
                 const dy = ev.screenY - elem.draggingStartPoint.y;

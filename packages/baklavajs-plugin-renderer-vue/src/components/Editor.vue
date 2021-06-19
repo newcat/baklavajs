@@ -77,6 +77,8 @@ import { IMenuItem } from "./ContextMenu.vue";
 import Clipboard from "../clipboard";
 import History from "../history";
 
+import NodeView from "./node/Node.vue";
+
 interface IPosition {
     x: number;
     y: number;
@@ -90,6 +92,9 @@ export default class EditorView extends Vue {
 
     @Provide("editor")
     nodeeditor: EditorView = this;
+
+    @Provide("selectedNodeViews")
+    selectedNodeViews: NodeView[] = [];
 
     clipboard!: Clipboard;
     history!: History;
@@ -161,7 +166,6 @@ export default class EditorView extends Vue {
         });
         this.clipboard = new Clipboard(this.plugin.editor);
         this.history = new History(this.plugin);
-        Vue.prototype.$selectedNodeEvents = [];
     }
 
     @Watch("plugin.nodeTypeAliases")
@@ -326,18 +330,18 @@ export default class EditorView extends Vue {
         }
     }
 
-    selectNode(node: IViewNode, event: Event) {
+    selectNode(node: IViewNode, event: NodeView) {
         if (!this.ctrlPressed) {
             this.unselectAllNodes();
         }
 
         this.selectedNodes.push(node);
-        Vue.prototype.$selectedNodeEvents.push(event);
+        this.selectedNodeViews.push(event);
     }
 
     unselectAllNodes() {
         this.selectedNodes.splice(0, this.selectedNodes.length);
-        Vue.prototype.$selectedNodeEvents.splice(0, Vue.prototype.$selectedNodeEvents.length);
+        this.selectedNodeViews.splice(0, this.selectedNodeViews.length);
     }
 
     openContextMenu(event: MouseEvent) {
