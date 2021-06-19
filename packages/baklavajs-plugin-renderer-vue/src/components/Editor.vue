@@ -35,7 +35,7 @@
                 :key="node.id + counter.toString()"
                 :data="node"
                 :selected="selectedNodes.includes(node)"
-                @select="selectNode(node)"
+                @select="selectNode(node, $event)"
             >
             </component>
         </div>
@@ -77,6 +77,8 @@ import { IMenuItem } from "./ContextMenu.vue";
 import Clipboard from "../clipboard";
 import History from "../history";
 
+import NodeView from "./node/Node.vue";
+
 interface IPosition {
     x: number;
     y: number;
@@ -90,6 +92,9 @@ export default class EditorView extends Vue {
 
     @Provide("editor")
     nodeeditor: EditorView = this;
+
+    @Provide("selectedNodeViews")
+    selectedNodeViews: NodeView[] = [];
 
     clipboard!: Clipboard;
     history!: History;
@@ -325,15 +330,18 @@ export default class EditorView extends Vue {
         }
     }
 
-    selectNode(node: IViewNode) {
+    selectNode(node: IViewNode, nodeView: NodeView) {
         if (!this.ctrlPressed) {
             this.unselectAllNodes();
         }
+
         this.selectedNodes.push(node);
+        this.selectedNodeViews.push(nodeView);
     }
 
     unselectAllNodes() {
         this.selectedNodes.splice(0, this.selectedNodes.length);
+        this.selectedNodeViews.splice(0, this.selectedNodeViews.length);
     }
 
     openContextMenu(event: MouseEvent) {
