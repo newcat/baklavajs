@@ -330,13 +330,13 @@ export default class EditorView extends Vue {
         }
     }
 
-    selectNode(node: IViewNode, event: NodeView) {
+    selectNode(node: IViewNode, nodeView: NodeView) {
         if (!this.ctrlPressed) {
             this.unselectAllNodes();
         }
 
         this.selectedNodes.push(node);
-        this.selectedNodeViews.push(event);
+        this.selectedNodeViews.push(nodeView);
     }
 
     unselectAllNodes() {
