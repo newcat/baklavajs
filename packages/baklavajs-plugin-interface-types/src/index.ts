@@ -1,3 +1,7 @@
+/**
+ * @module @baklavajs/plugin-interface-types
+ */
+
 import type { Editor, NodeInterface } from "@baklavajs/core";
 import type { IBaklavaView } from "@baklavajs/plugin-renderer-vue";
 

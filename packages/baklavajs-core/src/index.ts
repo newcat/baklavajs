@@ -1,3 +1,7 @@
+/**
+ * @module @baklavajs/core
+ */
+
 export * from "./connection";
 export * from "./defineNode";
 export * from "./editor";

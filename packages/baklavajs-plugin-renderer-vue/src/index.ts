@@ -1,3 +1,7 @@
+/**
+ * @module @baklavajs/plugin-renderer-vue
+ */
+
 import Connection from "./connection/ConnectionView.vue";
 import ConnectionWrapper from "./connection/ConnectionWrapper.vue";
 import TemporaryConnection from "./connection/TemporaryConnection.vue";
@@ -11,7 +15,7 @@ export const Components = {
     TemporaryConnection,
     Node,
     NodeInterface,
-    Sidebar
+    Sidebar,
 };
 
 export { default as EditorComponent } from "./editor/Editor.vue";
@@ -19,6 +23,6 @@ export * from "./nodeinterfaces";
 export * from "./useBaklava";
 export * from "./utility";
 
-export * as Commands from "./commandList"
+export * as Commands from "./commandList";
 
 import "./styles/all.scss";

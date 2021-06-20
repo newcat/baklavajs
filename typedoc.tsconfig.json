@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES2019",
+        "module": "esnext",
+        "strict": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "declaration": true,
+        "baseUrl": ".",
+        "skipLibCheck": true
+    },
+    "exclude": ["node_modules", "**/dist/**", "**/test/**", "packages/baklavajs-full/**"]
+}

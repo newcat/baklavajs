@@ -20,7 +20,6 @@
     "scripts": {
         "dev": "vite",
         "build": "rimraf dist && vue-tsc --noEmit && vite build && tsc --emitDeclarationOnly",
-        "docs": "typedoc --json ../../docs/api/plugin-renderer-vue.json --options ../../typedoc.json",
         "lint": "eslint --ext .ts,.vue src"
     },
     "repository": {
@@ -35,15 +34,15 @@
         "@baklavajs/events": "^1.8.0",
         "@types/resize-observer-browser": "^0.1.5",
         "@vitejs/plugin-vue": "^1.2.3",
-        "@vue/compiler-sfc": "^3.0.11",
-        "@vueuse/core": "^4.11.2",
+        "@vue/compiler-sfc": "^3.1.1",
+        "@vueuse/core": "^5.0.3",
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-vue": "^6.0.0",
-        "sass": "^1.34.1",
-        "typescript": "^4.3.2",
-        "vite": "^2.3.6",
+        "sass": "^1.35.1",
+        "typescript": "^4.3.4",
+        "vite": "^2.3.8",
         "vue": "^3.0.11",
-        "vue-tsc": "^0.1.7"
+        "vue-tsc": "^0.2.0"
     },
     "publishConfig": {
         "access": "public"

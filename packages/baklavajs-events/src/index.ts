@@ -1,3 +1,7 @@
+/**
+ * @module @baklavajs/events
+ */
+
 export * from "./event";
 export * from "./hook";
 export * from "./proxy";

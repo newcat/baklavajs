@@ -1,8 +1,15 @@
 {
-    "mode": "file",
     "excludeExternals": true,
-    "excludeNotExported": true,
     "excludePrivate": true,
     "name": "Reference - BaklavaJS",
-    "gitRevision": "master"
+    "gitRevision": "master",
+    "tsconfig": "typedoc.tsconfig.json",
+    "out": "docs/api",
+    "entryPoints": [
+        "packages/baklavajs-core/src/index.ts",
+        "packages/baklavajs-events/src/index.ts",
+        "packages/baklavajs-plugin-engine/src/index.ts",
+        "packages/baklavajs-plugin-interface-types/src/index.ts",
+        "packages/baklavajs-plugin-renderer-vue/src/index.ts"
+    ]
 }

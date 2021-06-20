@@ -12,8 +12,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "test": "mocha -r ts-node/register --extensions ts \"test/**/*.spec.ts\"",
-    "docs": "typedoc --json ../../docs/api/core.json --options ../../typedoc.json"
+    "test": "mocha -r ts-node/register --extensions ts \"test/**/*.spec.ts\""
   },
   "repository": {
     "type": "git",
@@ -27,18 +26,18 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.18",
+    "@types/chai": "^4.2.19",
     "@types/lodash.mapvalues": "^4.6.6",
     "@types/mocha": "^8.2.2",
     "@types/sinon": "^10.0.2",
     "@types/uuid": "^8.3.0",
     "chai": "^4.3.4",
-    "mocha": "^8.4.0",
+    "mocha": "^9.0.1",
     "rimraf": "^3.0.2",
     "sinon": "^11.1.1",
-    "ts-node": "^9.1.1",
-    "typedoc": "^0.20.36",
-    "typescript": "^4.3.2"
+    "ts-node": "^10.0.0",
+    "typedoc": "^0.21.0",
+    "typescript": "^4.3.4"
   },
   "publishConfig": {
     "access": "public"
