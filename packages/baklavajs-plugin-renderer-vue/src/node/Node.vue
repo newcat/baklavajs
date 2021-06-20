@@ -16,9 +16,10 @@
                     {{ node.title }}
                 </div>
                 <div class="__menu">
-                    <button @click="openContextMenu">
-                        E
-                    </button>
+                    <vertical-dots
+                        class="--clickable"
+                        @click="openContextMenu"
+                    />
                     <context-menu
                         v-model="showContextMenu"
                         :x="0"
@@ -70,10 +71,11 @@ import { AbstractNode, IGraphNode } from "@baklavajs/core";
 import { useDragMove, useGraph, usePlugin } from "../utility";
 
 import ContextMenu from "../components/ContextMenu.vue";
+import VerticalDots from "../icons/VerticalDots.vue";
 import NodeInterface from "./NodeInterface.vue";
 
 export default defineComponent({
-    components: { ContextMenu, NodeInterface },
+    components: { ContextMenu, NodeInterface, VerticalDots },
     props: {
         node: {
             type: Object as () => AbstractNode,

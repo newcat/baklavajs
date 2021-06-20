@@ -16,3 +16,22 @@
     margin-left: 0.5rem;
     margin-right: 0.5rem;
 }
+
+.toolbar-button {
+    color: white;
+    background: none;
+    border: none;
+    transition: color $visual-transition;
+}
+
+.toolbar-button:not([disabled]) {
+    cursor: pointer;
+}
+
+.toolbar-button:hover:not([disabled]) {
+    color: $color-primary;
+}
+
+.toolbar-button[disabled] {
+    color: gray;
+}

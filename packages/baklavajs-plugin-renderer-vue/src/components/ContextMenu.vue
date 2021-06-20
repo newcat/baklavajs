@@ -1,58 +1,60 @@
 <template>
-    <div
-        v-show="modelValue"
-        ref="el"
-        :class="classes"
-        :style="styles"
-    >
-        <template v-for="(item, index) in itemsWithHoverProperty">
-            <div
-                v-if="item.isDivider"
-                :key="`d-${index}`"
-                class="divider"
-            />
-
-            <div
-                v-else
-                :key="`i-${index}`"
-                :class="{ 'item': true, 'submenu': !!item.submenu, '--disabled': !!item.disabled }"
-                class="d-flex align-items-center"
-                @mouseenter="onMouseEnter($event, index)"
-                @mouseleave="onMouseLeave($event, index)"
-                @click.stop.prevent="onClick(item)"
-            >
-                <div class="flex-fill">
-                    {{ item.label }}
-                </div>
+    <transition name="slide-fade">
+        <div
+            v-show="modelValue"
+            ref="el"
+            :class="classes"
+            :style="styles"
+        >
+            <template v-for="(item, index) in itemsWithHoverProperty">
                 <div
-                    v-if="item.submenu"
-                    class="ml-3"
-                    style="line-height: 1em"
-                >
-                    <svg
-                        width="13"
-                        height="13"
-                        viewBox="-60 120 250 250"
-                    >
-                        <path
-                            d="M160.875 279.5625 L70.875 369.5625 L70.875 189.5625 L160.875 279.5625 Z"
-                            stroke="none"
-                            fill="white"
-                        />
-                    </svg>
-                </div>
-                <context-menu
-                    v-if="item.submenu"
-                    :value="activeMenu === index"
-                    :items="item.submenu"
-                    :is-nested="true"
-                    :is-flipped="{ x: flippedX, y: flippedY }"
-                    :flippable="flippable"
-                    @click="onChildClick"
+                    v-if="item.isDivider"
+                    :key="`d-${index}`"
+                    class="divider"
                 />
-            </div>
-        </template>
-    </div>
+
+                <div
+                    v-else
+                    :key="`i-${index}`"
+                    :class="{ 'item': true, 'submenu': !!item.submenu, '--disabled': !!item.disabled }"
+                    class="d-flex align-items-center"
+                    @mouseenter="onMouseEnter($event, index)"
+                    @mouseleave="onMouseLeave($event, index)"
+                    @click.stop.prevent="onClick(item)"
+                >
+                    <div class="flex-fill">
+                        {{ item.label }}
+                    </div>
+                    <div
+                        v-if="item.submenu"
+                        class="ml-3"
+                        style="line-height: 1em"
+                    >
+                        <svg
+                            width="13"
+                            height="13"
+                            viewBox="-60 120 250 250"
+                        >
+                            <path
+                                d="M160.875 279.5625 L70.875 369.5625 L70.875 189.5625 L160.875 279.5625 Z"
+                                stroke="none"
+                                fill="white"
+                            />
+                        </svg>
+                    </div>
+                    <context-menu
+                        v-if="item.submenu"
+                        :value="activeMenu === index"
+                        :items="item.submenu"
+                        :is-nested="true"
+                        :is-flipped="{ x: flippedX, y: flippedY }"
+                        :flippable="flippable"
+                        @click="onChildClick"
+                    />
+                </div>
+            </template>
+        </div>
+    </transition>
 </template>
 
 <script lang="ts">
@@ -71,32 +73,32 @@ export default defineComponent({
     props: {
         modelValue: {
             type: Boolean,
-            default: false
+            default: false,
         },
         items: {
             type: Array as () => IMenuItem[],
-            required: true
+            required: true,
         },
         x: {
             type: Number,
-            default: 0
+            default: 0,
         },
         y: {
             type: Number,
-            default: 0
+            default: 0,
         },
         isNested: {
             type: Boolean,
-            default: false
+            default: false,
         },
         isFlipped: {
             type: Object as () => { x: boolean; y: boolean },
-            default: () => ({ x: false, y: false })
+            default: () => ({ x: false, y: false }),
         },
         flippable: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     emits: ["click", "update:modelValue"],
     setup(props, { emit }) {
@@ -124,7 +126,7 @@ export default defineComponent({
                 "dark-context-menu": true,
                 "--flipped-x": flippedX.value,
                 "--flipped-y": flippedY.value,
-                "--nested": props.isNested
+                "--nested": props.isNested,
             };
         });
 
@@ -190,8 +192,8 @@ export default defineComponent({
             onChildClick,
             onClickOutside,
             onMouseEnter,
-            onMouseLeave
+            onMouseLeave,
         };
-    }
+    },
 });
 </script>

@@ -1,0 +1,13 @@
+.icon {
+    display: block;
+    height: 100%;
+}
+
+.icon.--clickable {
+    cursor: pointer;
+    transition: color $visual-transition;
+}
+
+.icon.--clickable:hover {
+    color: $color-primary;
+}

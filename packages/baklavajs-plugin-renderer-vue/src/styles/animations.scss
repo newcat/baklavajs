@@ -1,10 +1,22 @@
 .slide-fade-enter-active {
-    transition: all .15s ease-out;
+    transition: all 0.1s ease-out;
 }
 .slide-fade-leave-active {
-    transition: all .15s ease-out;
+    transition: all 0.1s ease-out;
 }
-.slide-fade-enter, .slide-fade-leave-to {
+.slide-fade-enter-from,
+.slide-fade-leave-to {
     transform: translateY(5px);
+    opacity: 0;
+}
+
+.fade-enter-active {
+    transition: opacity 0.1s ease-out !important;
+}
+.fade-leave-active {
+    transition: opacity 0.1s ease-out !important;
+}
+.fade-enter-from,
+.fade-leave-to {
     opacity: 0;
 }

@@ -51,6 +51,7 @@
         max-width: 100%;
         min-width: 0;
         align-items: center;
+        transition: background-color $visual-transition;
 
         &:hover {
             background-color: $color-control-dark-hover;

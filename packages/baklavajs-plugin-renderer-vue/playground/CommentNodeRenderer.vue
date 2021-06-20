@@ -1,6 +1,13 @@
 <template>
-    <div :id="node.id" :style="styles" @mousedown="startDrag">
-        <textarea rows="6" cols="20"></textarea>
+    <div
+        :id="node.id"
+        :style="styles"
+        @mousedown="startDrag"
+    >
+        <textarea
+            rows="6"
+            cols="20"
+        />
     </div>
 </template>
 
@@ -20,6 +27,7 @@ export default defineComponent({
             required: true,
         },
     },
+    emits: ["select"],
     setup(props, { emit }) {
         const dragMove = useDragMove(toRef(props.node, "position"));
 
@@ -33,15 +41,15 @@ export default defineComponent({
         }));
 
         const startDrag = (ev: MouseEvent) => {
-            dragMove.onMouseDown(ev);
-            document.addEventListener("mousemove", dragMove.onMouseMove);
+            dragMove.onPointerDown(ev);
+            document.addEventListener("mousemove", dragMove.onPointerMove);
             document.addEventListener("mouseup", stopDrag);
             select();
         };
 
         const stopDrag = () => {
-            dragMove.onMouseUp();
-            document.removeEventListener("mousemove", dragMove.onMouseMove);
+            dragMove.onPointerUp();
+            document.removeEventListener("mousemove", dragMove.onPointerMove);
             document.removeEventListener("mouseup", stopDrag);
         };
 

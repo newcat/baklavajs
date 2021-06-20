@@ -54,21 +54,23 @@
             class="node-container"
             :style="nodeContainerStyle"
         >
-            <template v-for="node in nodes">
-                <slot
-                    name="node"
-                    :node="node"
-                    :selected="selectedNodes.includes(node)"
-                    @select="selectNode(node)"
-                >
-                    <node
-                        :key="node.id + counter.toString()"
+            <transition-group name="fade">
+                <template v-for="node in nodes">
+                    <slot
+                        name="node"
                         :node="node"
                         :selected="selectedNodes.includes(node)"
                         @select="selectNode(node)"
-                    />
-                </slot>
-            </template>
+                    >
+                        <node
+                            :key="node.id + counter.toString()"
+                            :node="node"
+                            :selected="selectedNodes.includes(node)"
+                            @select="selectNode(node)"
+                        />
+                    </slot>
+                </template>
+            </transition-group>
         </div>
 
         <slot name="sidebar">
