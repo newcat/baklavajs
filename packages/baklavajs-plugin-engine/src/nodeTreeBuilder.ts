@@ -1,4 +1,4 @@
-import { AbstractNode, GRAPH_NODE_TYPE_PREFIX, IConnection, IGraphNode, NodeInterface } from "@baklavajs/core";
+import { AbstractNode, Graph, GRAPH_NODE_TYPE_PREFIX, IConnection, IGraphNode, NodeInterface } from "@baklavajs/core";
 
 interface ITreeNode {
     n?: AbstractNode;
@@ -11,10 +11,15 @@ export interface IOrderCalculationResult {
     connectionsFromNode: Map<AbstractNode, IConnection[]>;
 }
 
+export interface IExpandedGraph {
+    nodes: ReadonlyArray<AbstractNode>;
+    connections: ReadonlyArray<IConnection>;
+}
+
 function getNodesAndConnections(
     nodes: ReadonlyArray<AbstractNode>,
     connections: ReadonlyArray<IConnection>,
-): { nodes: ReadonlyArray<AbstractNode>; connections: ReadonlyArray<IConnection> } {
+): IExpandedGraph {
     const graphNodes: Array<IGraphNode & AbstractNode> = [];
     let expandedNodes: AbstractNode[] = [];
     let expandedConnections: IConnection[] = connections.slice();
@@ -39,6 +44,11 @@ function getNodesAndConnections(
         nodes: expandedNodes,
         connections: expandedConnections,
     };
+}
+
+/** Expand a graph, which may contain subgraphs, into a flat list of nodes and connections */
+export function expandGraph(graph: Graph): IExpandedGraph {
+    return getNodesAndConnections(graph.nodes, graph.connections);
 }
 
 export function calculateOrder(

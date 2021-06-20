@@ -103,6 +103,7 @@ export class GraphTemplate implements IGraphState {
             return mapValues(interfaceStates, (intf) => {
                 const clonedIntf: INodeInterfaceState<any> = {
                     id: createNewId(intf.id),
+                    templateId: intf.id,
                     value: intf.value,
                 };
                 return clonedIntf;

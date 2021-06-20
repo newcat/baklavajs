@@ -62,7 +62,7 @@ export default defineComponent({
 
         baklavaView.settings.enableMinimap = true;
 
-        const engine = new Engine(editor.value.graph, true);
+        const engine = new Engine(editor.value, true);
         engine.events.calculated.subscribe(token, (r) => {
             for (const v of r.values()) {
                 console.log(v);
@@ -112,7 +112,7 @@ export default defineComponent({
         const setSelectItems = () => {
             for (const node of editor.value.graph.nodes) {
                 if (node.type === "SelectTestNode") {
-                    const n = (node as unknown) as NodeInstanceOf<typeof SelectTestNode>;
+                    const n = node as unknown as NodeInstanceOf<typeof SelectTestNode>;
                     const sel = n.inputs.advanced as SelectInterface<number | undefined>;
                     sel.items = [
                         { text: "X", value: 1 },

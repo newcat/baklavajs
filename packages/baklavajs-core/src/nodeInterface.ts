@@ -9,6 +9,7 @@ import {
 
 export interface INodeInterfaceState<T> extends Record<string, any> {
     id: string;
+    templateId?: string | undefined;
     value: T;
 }
 
@@ -16,6 +17,14 @@ export type NodeInterfaceMiddleware<T, A extends Array<any>> = (intf: NodeInterf
 
 export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTapable {
     public id = uuidv4();
+
+    /**
+     * If the interface is instantiated by a graph template, this property will be
+     * set to the id of the corresponding instance in the template
+     */
+    public templateId?: string | undefined;
+
+    /** Display name of the interface */
     public name: string;
 
     /** Will be set automatically after the node was created */
@@ -67,13 +76,15 @@ export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTap
 
     public load(state: INodeInterfaceState<T>): void {
         this.id = state.id;
+        this.templateId = state.templateId;
         this.value = state.value;
         this.hooks.load.execute(state);
     }
 
     public save(): INodeInterfaceState<T> {
-        const state = {
+        const state: INodeInterfaceState<T> = {
             id: this.id,
+            templateId: this.templateId,
             value: this.value,
         };
         return this.hooks.save.execute(state);

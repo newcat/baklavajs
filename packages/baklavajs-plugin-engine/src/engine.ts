@@ -1,7 +1,7 @@
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
-import { Connection, AbstractNode, NodeInterface, IConnection, Graph, GRAPH_NODE_TYPE_PREFIX } from "@baklavajs/core";
+import { Connection, AbstractNode, NodeInterface, IConnection, GRAPH_NODE_TYPE_PREFIX, Editor } from "@baklavajs/core";
 import { Mutex } from "async-mutex";
-import { calculateOrder, containsCycle, IOrderCalculationResult } from "./nodeTreeBuilder";
+import { calculateOrder, containsCycle, expandGraph, IOrderCalculationResult } from "./nodeTreeBuilder";
 
 export class Engine {
     public type = "EnginePlugin";
@@ -18,7 +18,7 @@ export class Engine {
         gatherCalculationData: new SequentialHook<any, Engine>(this),
     };
 
-    private graph: Graph;
+    private editor: Editor;
     private orderCalculationData?: IOrderCalculationResult;
     private recalculateOrder = false;
     private calculateOnChange = false;
@@ -39,11 +39,11 @@ export class Engine {
      * Construct a new Engine plugin
      * @param calculateOnChange Whether to automatically calculate all nodes when any node interface is changed.
      */
-    public constructor(graph: Graph, calculateOnChange = false) {
-        this.graph = graph;
+    public constructor(editor: Editor, calculateOnChange = false) {
+        this.editor = editor;
         this.calculateOnChange = calculateOnChange;
 
-        this.graph.nodeEvents.update.subscribe(this, (data, node) => {
+        this.editor.nodeEvents.update.subscribe(this, (data, node) => {
             if (node.type.startsWith(GRAPH_NODE_TYPE_PREFIX) && data === null) {
                 this.onChange(true);
             } else {
@@ -51,21 +51,21 @@ export class Engine {
             }
         });
 
-        this.graph.events.addNode.subscribe(this, () => {
+        this.editor.graphEvents.addNode.subscribe(this, () => {
             this.onChange(true);
         });
 
-        this.graph.events.removeNode.subscribe(this, () => {
+        this.editor.graphEvents.removeNode.subscribe(this, () => {
             this.onChange(true);
         });
 
-        this.graph.events.checkConnection.subscribe(this, (c, graph) => {
-            if (!this.checkConnection(graph, c.from, c.to)) {
+        this.editor.graphEvents.checkConnection.subscribe(this, (c) => {
+            if (!this.checkConnection(c.from, c.to)) {
                 return false;
             }
         });
 
-        this.graph.events.addConnection.subscribe(this, (c, graph) => {
+        this.editor.graphEvents.addConnection.subscribe(this, (c, graph) => {
             // as only one connection to an input interface is allowed
             // Delete all other connections to the target interface
             graph.connections
@@ -75,7 +75,7 @@ export class Engine {
             this.onChange(true);
         });
 
-        this.graph.events.removeConnection.subscribe(this, () => {
+        this.editor.graphEvents.removeConnection.subscribe(this, () => {
             this.onChange(true);
         });
     }
@@ -146,11 +146,30 @@ export class Engine {
         return results;
     }
 
-    private checkConnection(graph: Graph, from: NodeInterface, to: NodeInterface) {
+    private checkConnection(from: NodeInterface, to: NodeInterface): boolean {
+        const { nodes, connections } = expandGraph(this.editor.graph);
+
+        if (from.templateId) {
+            const newFrom = this.findInterfaceByTemplateId(nodes, from.templateId);
+            if (!newFrom) {
+                return true;
+            }
+            from = newFrom;
+        }
+
+        if (to.templateId) {
+            const newTo = this.findInterfaceByTemplateId(nodes, to.templateId);
+            if (!newTo) {
+                return true;
+            }
+            to = newTo;
+        }
+
         const dc = { from, to, id: "dc", destructed: false, isInDanger: false } as IConnection;
-        const copy = (graph.connections as ReadonlyArray<IConnection>).concat([dc]);
+
+        const copy = connections.concat([dc]);
         copy.filter((conn) => conn.to !== to);
-        return containsCycle(graph.nodes, copy);
+        return containsCycle(nodes, copy);
     }
 
     private onChange(recalculateOrder: boolean) {
@@ -161,6 +180,21 @@ export class Engine {
     }
 
     private calculateNodeTree() {
-        this.orderCalculationData = calculateOrder(this.graph.nodes, this.graph.connections, this.rootNodes);
+        this.orderCalculationData = calculateOrder(
+            this.editor.graph.nodes,
+            this.editor.graph.connections,
+            this.rootNodes,
+        );
+    }
+
+    private findInterfaceByTemplateId(nodes: ReadonlyArray<AbstractNode>, templateId: string): NodeInterface | null {
+        for (const n of nodes) {
+            for (const intf of [...Object.values(n.inputs), ...Object.values(n.outputs)]) {
+                if (intf.templateId === templateId) {
+                    return intf;
+                }
+            }
+        }
+        return null;
     }
 }
