@@ -18,7 +18,6 @@ export function createProxy<T extends Record<string, Subscribable<any>>>(): T & 
     };
 
     const addSubscribable = (key: string) => {
-        console.log("addSubscribable", key);
         const subscribable = new Subscribable();
         listeners.set(key, subscribable);
         targets.forEach((t) => register(key, t[key]));
