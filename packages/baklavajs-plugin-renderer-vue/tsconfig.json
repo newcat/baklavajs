@@ -2,7 +2,7 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "declarationDir": "dist",
-        "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "lib": ["ESNext", "DOM", "DOM.Iterable", "ES2019"],
         "types": ["resize-observer-browser", "vite/client"]
     },
     "include": ["src/**/*.ts", "src/**/*.vue"]

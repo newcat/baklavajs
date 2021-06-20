@@ -2,6 +2,7 @@ import { AbstractNode, Graph, GraphTemplate, IGraphInterface, getGraphNodeTypeSt
 import { v4 as uuidv4 } from "uuid";
 import { reactive, Ref } from "vue";
 import type { ICommand, ICommandHandler } from "../commands";
+import { SaveSubgraphCommand, SAVE_SUBGRAPH_COMMAND } from "./saveSubgraph.command";
 import { SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE } from "./subgraphInterfaceNodes";
 import type { SwitchGraph } from "./switchGraph";
 
@@ -93,6 +94,10 @@ export function registerCreateSubgraphCommand(
         });
 
         selectedNodes.forEach((n) => graph.removeNode(n));
+
+        if (handler.canExecuteCommand(SAVE_SUBGRAPH_COMMAND)) {
+            handler.executeCommand<SaveSubgraphCommand>(SAVE_SUBGRAPH_COMMAND);
+        }
 
         switchGraph(subgraphTemplate);
 

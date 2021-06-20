@@ -21,10 +21,11 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { getGraphNodeTypeString, INodeTypeInformation } from "@baklavajs/core";
+import { INodeTypeInformation } from "@baklavajs/core";
 import PaletteEntry from "./PaletteEntry.vue";
 import { usePlugin } from "../utility";
 import { SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE } from "../graph/subgraphInterfaceNodes";
+import { checkRecursion } from "./checkRecursion";
 
 type NodeTypeInformations = Record<string, INodeTypeInformation>;
 
@@ -43,9 +44,9 @@ export default defineComponent({
                 let nodeTypesInCategory = nodeTypeEntries.filter(([, ni]) => ni.category === c);
 
                 if (plugin.value.displayedGraph.value.template) {
-                    // don't show the graph node for the current subgraph to prevent recursion
+                    // don't show the graph nodes that directly or indirectly contain the current subgraph to prevent recursion
                     nodeTypesInCategory = nodeTypesInCategory.filter(
-                        ([nt]) => nt !== getGraphNodeTypeString(plugin.value.displayedGraph.value.template!),
+                        ([nt]) => !checkRecursion(plugin.value.editor.value, plugin.value.displayedGraph.value, nt),
                     );
                 } else {
                     // if we are not in a subgraph, don't show subgraph input & output nodes
@@ -84,22 +85,3 @@ export default defineComponent({
     },
 });
 </script>
-
-<style scoped>
-.node-palette {
-    position: absolute;
-    left: 0;
-    top: 60px;
-    width: 250px;
-    height: calc(100% - 60px);
-    z-index: 3;
-    padding: 2rem;
-    overflow-y: auto;
-    background: #0003;
-    color: white;
-}
-
-.node-palette h1 {
-    margin-top: 2rem;
-}
-</style>
