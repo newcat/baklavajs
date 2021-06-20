@@ -11,11 +11,14 @@ export function createProxy<T extends Record<string, Subscribable<any>>>(): T & 
     const listeners: Map<string, Subscribable<any>> = new Map();
     const targets: Set<T> = new Set();
 
-    const register = (key: string, subscribable: Subscribable<any>) => {
-        subscribable.registerProxy(token, () => listeners.get(key)?.listeners ?? []);
+    const register = (key: string, subscribable?: Subscribable<any>) => {
+        if (subscribable instanceof Subscribable) {
+            subscribable.registerProxy(token, () => listeners.get(key)?.listeners ?? []);
+        }
     };
 
     const addSubscribable = (key: string) => {
+        console.log("addSubscribable", key);
         const subscribable = new Subscribable();
         listeners.set(key, subscribable);
         targets.forEach((t) => register(key, t[key]));
@@ -30,7 +33,9 @@ export function createProxy<T extends Record<string, Subscribable<any>>>(): T & 
 
     const removeTarget = (target: T): void => {
         for (const key of listeners.keys()) {
-            target[key].unregisterProxy(token);
+            if (target[key] instanceof Subscribable) {
+                target[key].unregisterProxy(token);
+            }
         }
         targets.delete(target);
     };

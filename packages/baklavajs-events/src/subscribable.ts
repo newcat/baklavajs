@@ -1,8 +1,8 @@
 import { TokenType } from "./types";
 
-export type GetListenersFn<F extends Function> = () => F[];
+export type GetListenersFn<F extends CallableFunction> = () => F[];
 
-export class Subscribable<F extends Function> {
+export class Subscribable<F extends CallableFunction> {
     private listenerMap: WeakMap<TokenType, F> = new Map();
     private _listeners: F[] = [];
 
