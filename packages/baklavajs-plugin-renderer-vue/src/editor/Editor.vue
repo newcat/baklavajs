@@ -12,8 +12,6 @@
         @wheel.self="mouseWheel"
         @keydown="keyDown"
         @keyup="keyUp"
-        @dragover="dragOver"
-        @drop="drop"
     >
         <slot name="background">
             <background />
@@ -84,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, Ref, ref, toRef } from "vue";
+import { computed, defineComponent, provide, Ref, ref, toRef } from "vue";
 
 import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaView } from "../useBaklava";
@@ -100,7 +98,7 @@ import Minimap from "../components/Minimap.vue";
 import NodePalette from "../nodepalette/NodePalette.vue";
 import Toolbar from "../toolbar/Toolbar.vue";
 
-import { useTransform, providePlugin } from "../utility";
+import { providePlugin } from "../utility";
 
 export default defineComponent({
     components: { Background, Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette, Toolbar },
@@ -117,6 +115,7 @@ export default defineComponent({
         providePlugin(pluginRef);
 
         const el = ref<HTMLElement | null>(null);
+        provide("editorEl", el);
 
         const nodes = computed(() => props.plugin.displayedGraph.value.nodes);
         const connections = computed(() => props.plugin.displayedGraph.value.connections);
@@ -124,7 +123,6 @@ export default defineComponent({
 
         const panZoom = usePanZoom();
         const temporaryConnection = useTemporaryConnection();
-        const { transform } = useTransform();
 
         const nodeContainerStyle = computed(() => ({
             ...panZoom.styles.value,
@@ -168,37 +166,6 @@ export default defineComponent({
             props.plugin.commandHandler.handleKeyUp(ev);
         };
 
-        const dragOver = (ev: DragEvent) => {
-            ev.preventDefault();
-            if (ev.dataTransfer?.getData("text/plain")) {
-                const nodeTypeName = ev.dataTransfer.getData("text/plain");
-                if (props.plugin.editor.value.nodeTypes.has(nodeTypeName)) {
-                    ev.dataTransfer.dropEffect = "copy";
-                } else {
-                    ev.dataTransfer.dropEffect = "none";
-                }
-            }
-        };
-
-        const drop = (ev: DragEvent) => {
-            ev.preventDefault();
-            if (ev.dataTransfer?.getData("text/plain") && el.value) {
-                const nodeTypeName = ev.dataTransfer.getData("text/plain");
-                const nodeTypeInfo = props.plugin.editor.value.nodeTypes.get(nodeTypeName);
-                if (!nodeTypeInfo) {
-                    return;
-                }
-
-                const instance = reactive(new nodeTypeInfo.type()) as AbstractNode;
-                props.plugin.displayedGraph.value.addNode(instance);
-
-                const rect = el.value.getBoundingClientRect();
-                const [x, y] = transform(ev.clientX - rect.left, ev.clientY - rect.top);
-                instance.position.x = x;
-                instance.position.y = y;
-            }
-        };
-
         const selectNode = (node: AbstractNode) => {
             if (!props.plugin.commandHandler.pressedKeys.value.includes("Control")) {
                 unselectAllNodes();
@@ -222,8 +189,6 @@ export default defineComponent({
             onPointerUp,
             keyDown,
             keyUp,
-            dragOver,
-            drop,
             selectNode,
             temporaryConnection: temporaryConnection.temporaryConnection,
             mouseWheel: panZoom.onMouseWheel,
@@ -232,5 +197,3 @@ export default defineComponent({
     },
 });
 </script>
-
-function useDragMove() { throw new Error("Function not implemented."); }

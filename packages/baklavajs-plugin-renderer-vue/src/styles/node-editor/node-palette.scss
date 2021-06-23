@@ -14,3 +14,11 @@
 .node-palette h1 {
     margin-top: 2rem;
 }
+
+.dragged-node {
+    position: absolute;
+    width: calc(250px - 4rem);
+    height: 40px;
+    z-index: 4;
+    pointer-events: none;
+}

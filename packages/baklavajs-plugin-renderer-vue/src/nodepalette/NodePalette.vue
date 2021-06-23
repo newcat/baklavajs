@@ -12,27 +12,50 @@
                 :key="nt"
                 :type="nt"
                 :title="ni.title"
-                draggable="true"
-                @dragstart="onDragStart($event, nt)"
+                @pointerdown="onDragStart(nt, ni)"
             />
         </section>
     </div>
+    <transition name="fade">
+        <div
+            v-if="draggedNode"
+            class="dragged-node"
+            :style="draggedNodeStyles"
+        >
+            <PaletteEntry
+                :type="draggedNode.type"
+                :title="draggedNode.nodeInformation.title"
+            />
+        </div>
+    </transition>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
-import { INodeTypeInformation } from "@baklavajs/core";
+import { computed, CSSProperties, defineComponent, inject, Ref, ref, reactive } from "vue";
+import { useMouse } from "@vueuse/core";
+import { AbstractNode, INodeTypeInformation } from "@baklavajs/core";
 import PaletteEntry from "./PaletteEntry.vue";
-import { usePlugin } from "../utility";
+import { usePlugin, useTransform } from "../utility";
 import { SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE } from "../graph/subgraphInterfaceNodes";
 import { checkRecursion } from "./checkRecursion";
 
 type NodeTypeInformations = Record<string, INodeTypeInformation>;
 
+interface IDraggedNode {
+    type: string;
+    nodeInformation: INodeTypeInformation;
+}
+
 export default defineComponent({
     components: { PaletteEntry },
     setup() {
         const { plugin } = usePlugin();
+        const { x: mouseX, y: mouseY } = useMouse();
+        const { transform } = useTransform();
+
+        const editorEl = inject<Ref<HTMLElement | null>>("editorEl");
+
+        const draggedNode = ref<IDraggedNode | null>(null);
 
         const categories = computed<Array<{ name: string; nodeTypes: NodeTypeInformations }>>(() => {
             const nodeTypeEntries = Array.from(plugin.value.editor.value.nodeTypes.entries());
@@ -77,11 +100,40 @@ export default defineComponent({
             return categories;
         });
 
-        const onDragStart = (ev: DragEvent, nodeType: string) => {
-            ev.dataTransfer?.setData("text/plain", nodeType);
+        const draggedNodeStyles = computed<CSSProperties>(() => {
+            if (!draggedNode.value || !editorEl?.value) {
+                return {};
+            }
+            const { left, top } = editorEl.value.getBoundingClientRect();
+            return {
+                top: `${mouseY.value - top}px`,
+                left: `${mouseX.value - left}px`,
+            };
+        });
+
+        const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
+            draggedNode.value = {
+                type,
+                nodeInformation,
+            };
+
+            const onDragEnd = () => {
+                console.log("pointerup");
+                const instance = reactive(new nodeInformation.type()) as AbstractNode;
+                plugin.value.displayedGraph.value.addNode(instance);
+
+                const rect = editorEl!.value!.getBoundingClientRect();
+                const [x, y] = transform(mouseX.value - rect.left, mouseY.value - rect.top);
+                instance.position.x = x;
+                instance.position.y = y;
+
+                draggedNode.value = null;
+                document.removeEventListener("pointerup", onDragEnd);
+            };
+            document.addEventListener("pointerup", onDragEnd);
         };
 
-        return { categories, onDragStart };
+        return { draggedNode, categories, draggedNodeStyles, onDragStart };
     },
 });
 </script>

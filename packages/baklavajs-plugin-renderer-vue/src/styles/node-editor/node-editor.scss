@@ -28,6 +28,7 @@
     & *:not(input):not(textarea) {
         user-select: none;
         -moz-user-select: none;
+        touch-action: none;
     }
 
     .input-user-select {
