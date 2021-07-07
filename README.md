@@ -32,3 +32,9 @@ There is also the `baklavajs` package, which contains the core package as well a
 
 ## Getting Started & Documentation
 You can find the documentation here: https://newcat.github.io/baklavajs
+
+## Sponsors
+
+### Continuous Sponsors
+<a href="https://github.com/finchMFG">finchMFG</a>&nbsp;&middot;
+<a href="https://github.com/LittleMouseGames">LittleMouseGames</a>
