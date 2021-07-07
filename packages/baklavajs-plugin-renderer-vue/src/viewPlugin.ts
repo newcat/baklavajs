@@ -27,6 +27,9 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
     /** Show a minimap */
     public enableMinimap = false;
 
+    /** Show close icon on nodes */
+    public showCloseIcon = false;
+
     /** Background configuration */
     backgroundGrid = {
         gridSize: 100,
