@@ -3,12 +3,19 @@ import { NodeInterface } from "./nodeInterface";
 import { Connection, DummyConnection } from "./connection";
 import { IState } from "../types/state";
 import { PreventableBaklavaEvent, BaklavaEvent, SequentialHook } from "@baklavajs/events";
-import { IEditor, IPlugin, IConnection, NodeConstructor, INode, IAddConnectionEventData, IAddNodeTypeEventData } from "../types";
+import {
+    IEditor,
+    IPlugin,
+    IConnection,
+    NodeConstructor,
+    INode,
+    IAddConnectionEventData,
+    IAddNodeTypeEventData
+} from "../types";
 import generateId from "./idGenerator";
 
 /** The main model class for BaklavaJS */
 export class Editor implements IEditor {
-
     private _plugins: Set<IPlugin> = new Set();
     private _nodes: Node[] = [];
     private _connections: Connection[] = [];
@@ -68,7 +75,9 @@ export class Editor implements IEditor {
      * @param category Category of the node. Will be used in the view's context menu for adding nodes
      */
     public registerNodeType(typeName: string, type: NodeConstructor, category = "default") {
-        if (this.events.beforeRegisterNodeType.emit({ typeName, type, category })) { return; }
+        if (this.events.beforeRegisterNodeType.emit({ typeName, type, category })) {
+            return;
+        }
         this._nodeTypes.set(typeName, type);
         if (!this.nodeCategories.has(category)) {
             this._nodeCategories.set(category, []);
@@ -82,8 +91,10 @@ export class Editor implements IEditor {
      * @param node Instance of a node
      * @returns Instance of the node or undefined if the node was not added
      */
-    public addNode(node: Node): Node|undefined {
-        if (this.events.beforeAddNode.emit(node)) { return; }
+    public addNode(node: Node): Node | undefined {
+        if (this.events.beforeAddNode.emit(node)) {
+            return;
+        }
         node.registerEditor(this);
         this._nodes.push(node);
         this.events.addNode.emit(node);
@@ -97,7 +108,9 @@ export class Editor implements IEditor {
      */
     public removeNode(node: Node) {
         if (this.nodes.includes(node)) {
-            if (this.events.beforeRemoveNode.emit(node)) { return; }
+            if (this.events.beforeRemoveNode.emit(node)) {
+                return;
+            }
             this.connections
                 .filter((c) => c.from.parent === node || c.to.parent === node)
                 .forEach((c) => this.removeConnection(c));
@@ -112,14 +125,15 @@ export class Editor implements IEditor {
      * @param to Target interface for the connection
      * @returns The created connection. If no connection could be created, returns `undefined`.
      */
-    public addConnection(from: NodeInterface, to: NodeInterface): Connection|undefined {
-
+    public addConnection(from: NodeInterface, to: NodeInterface): Connection | undefined {
         const dc = this.checkConnection(from, to);
         if (!dc) {
             return undefined;
         }
 
-        if (this.events.beforeAddConnection.emit({ from, to })) { return; }
+        if (this.events.beforeAddConnection.emit({ from, to })) {
+            return;
+        }
 
         const c = new Connection(dc.from, dc.to);
         this._connections.push(c);
@@ -127,7 +141,6 @@ export class Editor implements IEditor {
         this.events.addConnection.emit(c);
 
         return c;
-
     }
 
     /**
@@ -136,7 +149,9 @@ export class Editor implements IEditor {
      */
     public removeConnection(connection: Connection) {
         if (this.connections.includes(connection)) {
-            if (this.events.beforeRemoveConnection.emit(connection)) { return; }
+            if (this.events.beforeRemoveConnection.emit(connection)) {
+                return;
+            }
             connection.destruct();
             this._connections.splice(this.connections.indexOf(connection), 1);
             this.events.removeConnection.emit(connection);
@@ -149,8 +164,7 @@ export class Editor implements IEditor {
      * @param to The target node interface (must be an input interface)
      * @returns Whether the connection is allowed or not.
      */
-    public checkConnection(from: NodeInterface, to: NodeInterface): false|DummyConnection {
-
+    public checkConnection(from: NodeInterface, to: NodeInterface): false | DummyConnection {
         if (!from || !to) {
             return false;
         } else if (from.parent === to.parent) {
@@ -175,17 +189,20 @@ export class Editor implements IEditor {
             return false;
         }
 
-        if (this.events.checkConnection.emit({ from, to })) { return false; }
+        if (this.events.checkConnection.emit({ from, to })) {
+            return false;
+        }
 
         return new DummyConnection(from, to);
-
     }
 
     /**
      * Load a state
      * @param state State to load
+     * @returns An array of warnings that occured during loading. If the array is empty, the state was successfully loaded.
      */
-    public load(state: IState) {
+    public load(state: IState): string[] {
+        const warnings: string[] = [];
 
         // Clear current state
         for (let i = this.connections.length - 1; i >= 0; i--) {
@@ -197,39 +214,41 @@ export class Editor implements IEditor {
 
         // Load state
         for (const n of state.nodes) {
-
             // find node type
             const nt = this.nodeTypes.get(n.type);
             if (!nt) {
-                // tslint:disable-next-line:no-console
-                console.warn(`Node type ${n.type} is not registered`);
+                warnings.push(`Node type ${n.type} is not registered`);
                 continue;
             }
 
             const node = new nt() as Node;
             this.addNode(node);
             node.load(n);
-
         }
 
         for (const c of state.connections) {
             const fromIf = this.findNodeInterface(c.from);
             const toIf = this.findNodeInterface(c.to);
             if (!fromIf) {
-                // tslint:disable-next-line:no-console
-                console.warn(`Could not find interface with id ${c.from}`);
+                warnings.push(`Could not find interface with id ${c.from}`);
                 continue;
             } else if (!toIf) {
-                // tslint:disable-next-line:no-console
-                console.warn(`Could not find interface with id ${c.to}`);
+                warnings.push(`Could not find interface with id ${c.to}`);
                 continue;
             } else {
-                this.addConnection(fromIf, toIf);
+                const conn = this.addConnection(fromIf, toIf);
+                if (!conn) {
+                    warnings.push(`Unable to create connection from ${c.from} to ${c.to}`);
+                    continue;
+                }
+                conn.id = c.id;
             }
         }
 
         this.hooks.load.execute(state);
 
+        warnings.forEach((w) => console.warn(w));
+        return warnings;
     }
 
     /**
@@ -254,7 +273,9 @@ export class Editor implements IEditor {
      * @returns Whether the plugin was successfully registered
      */
     public use(plugin: IPlugin): boolean {
-        if (this.events.beforeUsePlugin.emit(plugin)) { return false; }
+        if (this.events.beforeUsePlugin.emit(plugin)) {
+            return false;
+        }
         this._plugins.add(plugin);
         plugin.register(this);
         this.events.usePlugin.emit(plugin);
@@ -274,5 +295,4 @@ export class Editor implements IEditor {
             }
         }
     }
-
 }

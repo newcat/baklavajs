@@ -14,7 +14,7 @@
 			},
 			"children": [
 				{
-					"id": 44,
+					"id": 45,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -27,7 +27,7 @@
 					},
 					"signatures": [
 						{
-							"id": 45,
+							"id": 46,
 							"name": "new Engine",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -39,7 +39,7 @@
 							},
 							"parameters": [
 								{
-									"id": 46,
+									"id": 47,
 									"name": "calculateOnChange",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -66,7 +66,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-engine/src/engine.ts",
-							"line": 39,
+							"line": 40,
 							"character": 62
 						}
 					]
@@ -185,7 +185,7 @@
 					]
 				},
 				{
-					"id": 50,
+					"id": 51,
 					"name": "calculate",
 					"kind": 2048,
 					"kindString": "Method",
@@ -195,7 +195,7 @@
 					},
 					"signatures": [
 						{
-							"id": 51,
+							"id": 52,
 							"name": "calculate",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -208,7 +208,7 @@
 							},
 							"parameters": [
 								{
-									"id": 52,
+									"id": 53,
 									"name": "calculationData",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -256,13 +256,13 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-engine/src/engine.ts",
-							"line": 108,
+							"line": 110,
 							"character": 26
 						}
 					]
 				},
 				{
-					"id": 53,
+					"id": 54,
 					"name": "calculateOrder",
 					"kind": 2048,
 					"kindString": "Method",
@@ -272,7 +272,7 @@
 					},
 					"signatures": [
 						{
-							"id": 54,
+							"id": 55,
 							"name": "calculateOrder",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -291,13 +291,13 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-engine/src/engine.ts",
-							"line": 147,
+							"line": 119,
 							"character": 25
 						}
 					]
 				},
 				{
-					"id": 47,
+					"id": 48,
 					"name": "register",
 					"kind": 2048,
 					"kindString": "Method",
@@ -307,7 +307,7 @@
 					},
 					"signatures": [
 						{
-							"id": 48,
+							"id": 49,
 							"name": "register",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -316,7 +316,7 @@
 							},
 							"parameters": [
 								{
-									"id": 49,
+									"id": 50,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -338,7 +338,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-engine/src/engine.ts",
-							"line": 49,
+							"line": 50,
 							"character": 19
 						}
 					]
@@ -508,7 +508,7 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						44
+						45
 					]
 				},
 				{
@@ -529,9 +529,9 @@
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						50,
-						53,
-						47
+						51,
+						54,
+						48
 					]
 				},
 				{
@@ -546,7 +546,7 @@
 			"sources": [
 				{
 					"fileName": "packages/baklavajs-plugin-engine/src/engine.ts",
-					"line": 6,
+					"line": 7,
 					"character": 19
 				}
 			],

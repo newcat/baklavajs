@@ -242,7 +242,7 @@
 			]
 		},
 		{
-			"id": 102,
+			"id": 103,
 			"name": "ConnectionStep",
 			"kind": 128,
 			"kindString": "Class",
@@ -251,7 +251,7 @@
 			},
 			"children": [
 				{
-					"id": 106,
+					"id": 107,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -261,7 +261,7 @@
 					},
 					"signatures": [
 						{
-							"id": 107,
+							"id": 108,
 							"name": "new ConnectionStep",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -270,7 +270,7 @@
 							},
 							"parameters": [
 								{
-									"id": 108,
+									"id": 109,
 									"name": "type",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -292,7 +292,7 @@
 									}
 								},
 								{
-									"id": 109,
+									"id": 110,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -316,7 +316,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 102,
+								"id": 103,
 								"name": "ConnectionStep"
 							}
 						}
@@ -330,7 +330,7 @@
 					]
 				},
 				{
-					"id": 103,
+					"id": 104,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -360,12 +360,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 95,
+						"id": 96,
 						"name": "IStep.type"
 					}
 				},
 				{
-					"id": 113,
+					"id": 114,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -375,7 +375,7 @@
 					},
 					"signatures": [
 						{
-							"id": 114,
+							"id": 115,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -384,7 +384,7 @@
 							},
 							"parameters": [
 								{
-									"id": 115,
+									"id": 116,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -403,7 +403,7 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 100,
+								"id": 101,
 								"name": "IStep.redo"
 							}
 						}
@@ -417,12 +417,12 @@
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 99,
+						"id": 100,
 						"name": "IStep.redo"
 					}
 				},
 				{
-					"id": 110,
+					"id": 111,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -432,7 +432,7 @@
 					},
 					"signatures": [
 						{
-							"id": 111,
+							"id": 112,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -441,7 +441,7 @@
 							},
 							"parameters": [
 								{
-									"id": 112,
+									"id": 113,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -460,7 +460,7 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 97,
+								"id": 98,
 								"name": "IStep.undo"
 							}
 						}
@@ -474,7 +474,7 @@
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 96,
+						"id": 97,
 						"name": "IStep.undo"
 					}
 				}
@@ -484,22 +484,22 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						106
+						107
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						103
+						104
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						113,
-						110
+						114,
+						111
 					]
 				}
 			],
@@ -513,13 +513,13 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"id": 94,
+					"id": 95,
 					"name": "IStep"
 				}
 			]
 		},
 		{
-			"id": 142,
+			"id": 143,
 			"name": "History",
 			"kind": 128,
 			"kindString": "Class",
@@ -528,7 +528,7 @@
 			},
 			"children": [
 				{
-					"id": 150,
+					"id": 151,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -538,7 +538,7 @@
 					},
 					"signatures": [
 						{
-							"id": 151,
+							"id": 152,
 							"name": "new History",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -547,7 +547,7 @@
 							},
 							"parameters": [
 								{
-									"id": 152,
+									"id": 153,
 									"name": "viewPlugin",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -563,7 +563,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 142,
+								"id": 143,
 								"name": "History"
 							}
 						}
@@ -577,7 +577,7 @@
 					]
 				},
 				{
-					"id": 143,
+					"id": 144,
 					"name": "maxSteps",
 					"kind": 1024,
 					"kindString": "Property",
@@ -599,7 +599,7 @@
 					"defaultValue": "200"
 				},
 				{
-					"id": 155,
+					"id": 156,
 					"name": "commitTransaction",
 					"kind": 2048,
 					"kindString": "Method",
@@ -609,7 +609,7 @@
 					},
 					"signatures": [
 						{
-							"id": 156,
+							"id": 157,
 							"name": "commitTransaction",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -631,7 +631,7 @@
 					]
 				},
 				{
-					"id": 159,
+					"id": 160,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -641,7 +641,7 @@
 					},
 					"signatures": [
 						{
-							"id": 160,
+							"id": 161,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -663,7 +663,7 @@
 					]
 				},
 				{
-					"id": 153,
+					"id": 154,
 					"name": "startTransaction",
 					"kind": 2048,
 					"kindString": "Method",
@@ -673,7 +673,7 @@
 					},
 					"signatures": [
 						{
-							"id": 154,
+							"id": 155,
 							"name": "startTransaction",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -695,7 +695,7 @@
 					]
 				},
 				{
-					"id": 157,
+					"id": 158,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -705,7 +705,7 @@
 					},
 					"signatures": [
 						{
-							"id": 158,
+							"id": 159,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -732,24 +732,24 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						150
+						151
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						143
+						144
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						155,
-						159,
-						153,
-						157
+						156,
+						160,
+						154,
+						158
 					]
 				}
 			],
@@ -762,7 +762,7 @@
 			]
 		},
 		{
-			"id": 122,
+			"id": 123,
 			"name": "NodeStep",
 			"kind": 128,
 			"kindString": "Class",
@@ -771,7 +771,7 @@
 			},
 			"children": [
 				{
-					"id": 126,
+					"id": 127,
 					"name": "constructor",
 					"kind": 512,
 					"kindString": "Constructor",
@@ -781,7 +781,7 @@
 					},
 					"signatures": [
 						{
-							"id": 127,
+							"id": 128,
 							"name": "new NodeStep",
 							"kind": 16384,
 							"kindString": "Constructor signature",
@@ -790,7 +790,7 @@
 							},
 							"parameters": [
 								{
-									"id": 128,
+									"id": 129,
 									"name": "type",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -812,7 +812,7 @@
 									}
 								},
 								{
-									"id": 129,
+									"id": 130,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -827,7 +827,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 122,
+								"id": 123,
 								"name": "NodeStep"
 							}
 						}
@@ -841,7 +841,7 @@
 					]
 				},
 				{
-					"id": 123,
+					"id": 124,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -871,12 +871,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"id": 95,
+						"id": 96,
 						"name": "IStep.type"
 					}
 				},
 				{
-					"id": 133,
+					"id": 134,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -886,7 +886,7 @@
 					},
 					"signatures": [
 						{
-							"id": 134,
+							"id": 135,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -895,7 +895,7 @@
 							},
 							"parameters": [
 								{
-									"id": 135,
+									"id": 136,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -914,7 +914,7 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 100,
+								"id": 101,
 								"name": "IStep.redo"
 							}
 						}
@@ -928,12 +928,12 @@
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 99,
+						"id": 100,
 						"name": "IStep.redo"
 					}
 				},
 				{
-					"id": 130,
+					"id": 131,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -943,7 +943,7 @@
 					},
 					"signatures": [
 						{
-							"id": 131,
+							"id": 132,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -952,7 +952,7 @@
 							},
 							"parameters": [
 								{
-									"id": 132,
+									"id": 133,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -971,7 +971,7 @@
 							},
 							"implementationOf": {
 								"type": "reference",
-								"id": 97,
+								"id": 98,
 								"name": "IStep.undo"
 							}
 						}
@@ -985,7 +985,7 @@
 					],
 					"implementationOf": {
 						"type": "reference",
-						"id": 96,
+						"id": 97,
 						"name": "IStep.undo"
 					}
 				}
@@ -995,22 +995,22 @@
 					"title": "Constructors",
 					"kind": 512,
 					"children": [
-						126
+						127
 					]
 				},
 				{
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						123
+						124
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						133,
-						130
+						134,
+						131
 					]
 				}
 			],
@@ -1024,7 +1024,7 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"id": 94,
+					"id": 95,
 					"name": "IStep"
 				}
 			]
@@ -1326,7 +1326,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
-							"line": 104,
+							"line": 106,
 							"character": 25
 						}
 					]
@@ -1404,7 +1404,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-renderer-vue/src/viewPlugin.ts",
-							"line": 114,
+							"line": 116,
 							"character": 27
 						}
 					]
@@ -2148,7 +2148,7 @@
 			]
 		},
 		{
-			"id": 81,
+			"id": 82,
 			"name": "IResolvedDomElements",
 			"kind": 256,
 			"kindString": "Interface",
@@ -2157,7 +2157,7 @@
 			},
 			"children": [
 				{
-					"id": 83,
+					"id": 84,
 					"name": "interface",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2186,7 +2186,7 @@
 					}
 				},
 				{
-					"id": 82,
+					"id": 83,
 					"name": "node",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2215,7 +2215,7 @@
 					}
 				},
 				{
-					"id": 84,
+					"id": 85,
 					"name": "port",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2249,9 +2249,9 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
+						84,
 						83,
-						82,
-						84
+						85
 					]
 				}
 			],
@@ -2264,7 +2264,7 @@
 			]
 		},
 		{
-			"id": 94,
+			"id": 95,
 			"name": "IStep",
 			"kind": 256,
 			"kindString": "Interface",
@@ -2273,7 +2273,7 @@
 			},
 			"children": [
 				{
-					"id": 95,
+					"id": 96,
 					"name": "type",
 					"kind": 1024,
 					"kindString": "Property",
@@ -2293,7 +2293,7 @@
 					}
 				},
 				{
-					"id": 99,
+					"id": 100,
 					"name": "redo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2302,7 +2302,7 @@
 					},
 					"signatures": [
 						{
-							"id": 100,
+							"id": 101,
 							"name": "redo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2311,7 +2311,7 @@
 							},
 							"parameters": [
 								{
-									"id": 101,
+									"id": 102,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2339,7 +2339,7 @@
 					]
 				},
 				{
-					"id": 96,
+					"id": 97,
 					"name": "undo",
 					"kind": 2048,
 					"kindString": "Method",
@@ -2348,7 +2348,7 @@
 					},
 					"signatures": [
 						{
-							"id": 97,
+							"id": 98,
 							"name": "undo",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2357,7 +2357,7 @@
 							},
 							"parameters": [
 								{
-									"id": 98,
+									"id": 99,
 									"name": "editor",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2390,15 +2390,15 @@
 					"title": "Properties",
 					"kind": 1024,
 					"children": [
-						95
+						96
 					]
 				},
 				{
 					"title": "Methods",
 					"kind": 2048,
 					"children": [
-						99,
-						96
+						100,
+						97
 					]
 				}
 			],
@@ -2412,12 +2412,12 @@
 			"implementedBy": [
 				{
 					"type": "reference",
-					"id": 102,
+					"id": 103,
 					"name": "ConnectionStep"
 				},
 				{
 					"type": "reference",
-					"id": 122,
+					"id": 123,
 					"name": "NodeStep"
 				}
 			]
@@ -2524,7 +2524,7 @@
 			"defaultValue": "Baklava"
 		},
 		{
-			"id": 85,
+			"id": 86,
 			"name": "getDomElementOfNode",
 			"kind": 64,
 			"kindString": "Function",
@@ -2533,7 +2533,7 @@
 			},
 			"signatures": [
 				{
-					"id": 86,
+					"id": 87,
 					"name": "getDomElementOfNode",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -2542,7 +2542,7 @@
 					},
 					"parameters": [
 						{
-							"id": 87,
+							"id": 88,
 							"name": "node",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -2579,7 +2579,7 @@
 			]
 		},
 		{
-			"id": 88,
+			"id": 89,
 			"name": "getDomElements",
 			"kind": 64,
 			"kindString": "Function",
@@ -2588,7 +2588,7 @@
 			},
 			"signatures": [
 				{
-					"id": 89,
+					"id": 90,
 					"name": "getDomElements",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -2597,7 +2597,7 @@
 					},
 					"parameters": [
 						{
-							"id": 90,
+							"id": 91,
 							"name": "ni",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -2612,7 +2612,7 @@
 					],
 					"type": {
 						"type": "reference",
-						"id": 81,
+						"id": 82,
 						"name": "IResolvedDomElements"
 					}
 				}
@@ -2626,7 +2626,7 @@
 			]
 		},
 		{
-			"id": 91,
+			"id": 92,
 			"name": "getPortCoordinates",
 			"kind": 64,
 			"kindString": "Function",
@@ -2635,7 +2635,7 @@
 			},
 			"signatures": [
 				{
-					"id": 92,
+					"id": 93,
 					"name": "getPortCoordinates",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -2644,7 +2644,7 @@
 					},
 					"parameters": [
 						{
-							"id": 93,
+							"id": 94,
 							"name": "resolved",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -2653,7 +2653,7 @@
 							},
 							"type": {
 								"type": "reference",
-								"id": 81,
+								"id": 82,
 								"name": "IResolvedDomElements"
 							}
 						}
@@ -2682,7 +2682,7 @@
 			]
 		},
 		{
-			"id": 164,
+			"id": 165,
 			"name": "sanitizeName",
 			"kind": 64,
 			"kindString": "Function",
@@ -2691,7 +2691,7 @@
 			},
 			"signatures": [
 				{
-					"id": 165,
+					"id": 166,
 					"name": "sanitizeName",
 					"kind": 4096,
 					"kindString": "Call signature",
@@ -2700,7 +2700,7 @@
 					},
 					"parameters": [
 						{
-							"id": 166,
+							"id": 167,
 							"name": "name",
 							"kind": 32768,
 							"kindString": "Parameter",
@@ -2840,7 +2840,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
-							"line": 13,
+							"line": 14,
 							"character": 14
 						}
 					],
@@ -2866,7 +2866,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
-							"line": 13,
+							"line": 14,
 							"character": 33
 						}
 					],
@@ -2892,8 +2892,34 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
-							"line": 15,
+							"line": 16,
 							"character": 15
+						}
+					],
+					"type": {
+						"type": "reference",
+						"typeArguments": [
+							{
+								"type": "reference",
+								"name": "Vue"
+							}
+						],
+						"name": "VueConstructor"
+					}
+				},
+				{
+					"id": 81,
+					"name": "Minimap",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
+							"line": 16,
+							"character": 33
 						}
 					],
 					"type": {
@@ -2918,7 +2944,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
-							"line": 14,
+							"line": 15,
 							"character": 8
 						}
 					],
@@ -2944,7 +2970,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
-							"line": 14,
+							"line": 15,
 							"character": 23
 						}
 					],
@@ -2970,7 +2996,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
-							"line": 14,
+							"line": 15,
 							"character": 35
 						}
 					],
@@ -2996,7 +3022,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
-							"line": 15,
+							"line": 16,
 							"character": 24
 						}
 					],
@@ -3022,7 +3048,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
-							"line": 13,
+							"line": 14,
 							"character": 54
 						}
 					],
@@ -3046,6 +3072,7 @@
 						73,
 						74,
 						79,
+						81,
 						76,
 						77,
 						78,
@@ -3057,7 +3084,7 @@
 			"sources": [
 				{
 					"fileName": "packages/baklavajs-plugin-renderer-vue/src/index.ts",
-					"line": 12,
+					"line": 13,
 					"character": 23
 				}
 			],
@@ -3073,9 +3100,9 @@
 			"kind": 128,
 			"children": [
 				12,
-				102,
-				142,
-				122,
+				103,
+				143,
+				123,
 				28
 			]
 		},
@@ -3083,8 +3110,8 @@
 			"title": "Interfaces",
 			"kind": 256,
 			"children": [
-				81,
-				94
+				82,
+				95
 			]
 		},
 		{
@@ -3098,10 +3125,10 @@
 			"title": "Functions",
 			"kind": 64,
 			"children": [
-				85,
-				88,
-				91,
-				164
+				86,
+				89,
+				92,
+				165
 			]
 		},
 		{

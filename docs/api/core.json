@@ -669,7 +669,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 45,
+							"line": 52,
 							"character": 26
 						}
 					],
@@ -725,7 +725,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 55,
+							"line": 62,
 							"character": 29
 						}
 					],
@@ -779,7 +779,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 50,
+							"line": 57,
 							"character": 24
 						}
 					],
@@ -829,7 +829,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 40,
+							"line": 47,
 							"character": 20
 						}
 					],
@@ -879,7 +879,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 60,
+							"line": 67,
 							"character": 22
 						}
 					],
@@ -966,7 +966,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 115,
+							"line": 128,
 							"character": 24
 						}
 					],
@@ -1036,7 +1036,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 85,
+							"line": 94,
 							"character": 18
 						}
 					],
@@ -1123,7 +1123,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 152,
+							"line": 167,
 							"character": 26
 						}
 					],
@@ -1190,7 +1190,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 268,
+							"line": 289,
 							"character": 28
 						}
 					],
@@ -1243,7 +1243,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 264,
+							"line": 285,
 							"character": 21
 						}
 					],
@@ -1272,7 +1272,8 @@
 								"isExported": true
 							},
 							"comment": {
-								"shortText": "Load a state"
+								"shortText": "Load a state",
+								"returns": "An array of warnings that occured during loading. If the array is empty, the state was successfully loaded.\n"
 							},
 							"parameters": [
 								{
@@ -1284,7 +1285,7 @@
 										"isExported": true
 									},
 									"comment": {
-										"text": "State to load\n"
+										"text": "State to load"
 									},
 									"type": {
 										"type": "reference",
@@ -1294,8 +1295,11 @@
 								}
 							],
 							"type": {
-								"type": "intrinsic",
-								"name": "void"
+								"type": "array",
+								"elementType": {
+									"type": "intrinsic",
+									"name": "string"
+								}
 							},
 							"implementationOf": {
 								"type": "reference",
@@ -1307,7 +1311,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 188,
+							"line": 204,
 							"character": 15
 						}
 					],
@@ -1399,7 +1403,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 70,
+							"line": 77,
 							"character": 27
 						}
 					],
@@ -1458,7 +1462,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 137,
+							"line": 150,
 							"character": 27
 						}
 					],
@@ -1517,7 +1521,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 98,
+							"line": 109,
 							"character": 21
 						}
 					],
@@ -1564,7 +1568,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 239,
+							"line": 258,
 							"character": 15
 						}
 					],
@@ -1629,7 +1633,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 256,
+							"line": 275,
 							"character": 14
 						}
 					],
@@ -1660,7 +1664,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 26,
+									"line": 33,
 									"character": 21
 								}
 							],
@@ -1688,7 +1692,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 22,
+									"line": 29,
 									"character": 15
 								}
 							],
@@ -1716,7 +1720,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 25,
+									"line": 32,
 									"character": 27
 								}
 							],
@@ -1744,7 +1748,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 21,
+									"line": 28,
 									"character": 21
 								}
 							],
@@ -1772,7 +1776,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 19,
+									"line": 26,
 									"character": 30
 								}
 							],
@@ -1800,7 +1804,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 28,
+									"line": 35,
 									"character": 30
 								}
 							],
@@ -1828,7 +1832,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 23,
+									"line": 30,
 									"character": 24
 								}
 							],
@@ -1856,7 +1860,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 30,
+									"line": 37,
 									"character": 23
 								}
 							],
@@ -1884,7 +1888,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 27,
+									"line": 34,
 									"character": 23
 								}
 							],
@@ -1912,7 +1916,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 20,
+									"line": 27,
 									"character": 24
 								}
 							],
@@ -1940,7 +1944,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 29,
+									"line": 36,
 									"character": 24
 								}
 							],
@@ -1968,7 +1972,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 24,
+									"line": 31,
 									"character": 18
 								}
 							],
@@ -1996,7 +2000,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 31,
+									"line": 38,
 									"character": 17
 								}
 							],
@@ -2038,7 +2042,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 18,
+							"line": 25,
 							"character": 17
 						}
 					],
@@ -2073,7 +2077,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 36,
+									"line": 43,
 									"character": 12
 								}
 							],
@@ -2101,7 +2105,7 @@
 							"sources": [
 								{
 									"fileName": "packages/baklavajs-core/src/editor.ts",
-									"line": 35,
+									"line": 42,
 									"character": 12
 								}
 							],
@@ -2132,7 +2136,7 @@
 					"sources": [
 						{
 							"fileName": "packages/baklavajs-core/src/editor.ts",
-							"line": 34,
+							"line": 41,
 							"character": 16
 						}
 					],
@@ -2188,7 +2192,7 @@
 			"sources": [
 				{
 					"fileName": "packages/baklavajs-core/src/editor.ts",
-					"line": 10,
+					"line": 18,
 					"character": 19
 				}
 			],
