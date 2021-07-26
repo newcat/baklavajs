@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Options, Prop, Vue, Watch } from "vue-property-decorator";
 import { ResizeObserver as ResizeObserverPolyfill } from "@juggle/resize-observer";
 import ConnectionView from "./ConnectionView.vue";
 import resolveDom, { IResolvedDomElements } from "./domResolver";
@@ -11,7 +11,7 @@ import { ITransferConnection, TemporaryConnectionState } from "../../../../bakla
 
 const ResizeObserver = (window as any).ResizeObserver || ResizeObserverPolyfill;
 
-@Component({
+@Options({
     components: {
         "connection-view": ConnectionView
     }

@@ -1,4 +1,4 @@
-import Vue, { VueConstructor } from "vue";
+import { ComponentOptions, markRaw } from "vue";
 import { IPlugin, IEditor } from "../../baklavajs-core/types";
 import { SequentialHook } from "@baklavajs/events";
 import { IViewNode, IViewPlugin } from "../types";
@@ -6,7 +6,6 @@ import { IViewNode, IViewPlugin } from "../types";
 import NodeView from "./components/node/Node.vue";
 import NodeOptionView from "./components/node/NodeOption.vue";
 import NodeInterfaceView from "./components/node/NodeInterface.vue";
-import ConnectionView from "./components/connection/ConnectionView.vue";
 import ConnectionWrapper from "./components/connection/ConnectionWrapper.vue";
 import TempConnectionView from "./components/connection/TemporaryConnection.vue";
 import ContextMenu from "./components/ContextMenu.vue";
@@ -14,7 +13,6 @@ import Sidebar from "./components/Sidebar.vue";
 import Minimap from "./components/Minimap.vue";
 
 export class ViewPlugin implements IPlugin, IViewPlugin {
-
     public type = "ViewPlugin";
     public editor!: IEditor;
     public panning = { x: 0, y: 0 };
@@ -34,32 +32,32 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
         subGridVisibleThreshold: 0.6
     };
 
-    public options: Record<string, VueConstructor> = {};
+    public options: Record<string, ComponentOptions> = {};
     public nodeTypeAliases: Record<string, string> = {};
 
     public hooks = {
         /** Called whenever a node is rendered */
-        renderNode: new SequentialHook<NodeView>(),
+        renderNode: new SequentialHook<any>(),
         /** Called whenever an option is rendered */
-        renderOption: new SequentialHook<NodeOptionView>(),
+        renderOption: new SequentialHook<any>(),
         /** Called whenever an interface is rendered */
-        renderInterface: new SequentialHook<NodeInterfaceView>(),
+        renderInterface: new SequentialHook<any>(),
         /** Called whenever a connection is rendered */
-        renderConnection: new SequentialHook<ConnectionView>()
+        renderConnection: new SequentialHook<any>()
     };
 
     /** Use this property to provide custom components,
      * which will be used when rendering the respective entities
      */
-    public components: Record<string, Vue.Component> = {
-        node: NodeView,
-        nodeOption: NodeOptionView,
-        nodeInterface: NodeInterfaceView,
-        connection: ConnectionWrapper,
-        tempConnection: TempConnectionView,
-        contextMenu: ContextMenu,
-        sidebar: Sidebar,
-        minimap: Minimap
+    public components: Record<string, any> = {
+        node: markRaw(NodeView),
+        nodeOption: markRaw(NodeOptionView),
+        nodeInterface: markRaw(NodeInterfaceView),
+        connection: markRaw(ConnectionWrapper),
+        tempConnection: markRaw(TempConnectionView),
+        contextMenu: markRaw(ContextMenu),
+        sidebar: markRaw(Sidebar),
+        minimap: markRaw(Minimap)
     };
 
     public register(editor: IEditor): void {
@@ -103,8 +101,8 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
      * @param name Name of the node option as used when defining nodes
      * @param component Component that will be rendered for the option
      */
-    public registerOption(name: string, component: VueConstructor) {
-        Vue.set(this.options, name, component);
+    public registerOption(name: string, component: ComponentOptions) {
+        this.options[name] = markRaw(component);
     }
 
     /**
@@ -113,12 +111,11 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
      * @param nodeType Node type
      * @param alias Alias that will be displayed in the context menu. When this value is `null`, an existing alias is removed
      */
-    public setNodeTypeAlias(nodeType: string, alias: string|null) {
+    public setNodeTypeAlias(nodeType: string, alias: string | null) {
         if (alias) {
-            Vue.set(this.nodeTypeAliases, nodeType, alias);
+            this.nodeTypeAliases[nodeType] = alias;
         } else if (this.nodeTypeAliases[nodeType]) {
-            Vue.delete(this.nodeTypeAliases, nodeType);
+            delete this.nodeTypeAliases[nodeType];
         }
     }
-
 }

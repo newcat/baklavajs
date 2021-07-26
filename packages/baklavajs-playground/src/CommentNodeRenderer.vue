@@ -1,29 +1,24 @@
 <template>
-    <div :id="data.id" :style="styles" @mousedown="startDrag">
+    <div :id="node.id" :style="styles" @mousedown="startDrag">
         <textarea rows="6" cols="20"></textarea>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Inject, Watch } from "vue-property-decorator";
-import { VueConstructor } from "vue";
-
-// @ts-ignore
-import ClickOutside from "v-click-outside";
+import { Vue, Prop, Inject } from "vue-property-decorator";
 
 import { ViewPlugin } from "../../baklavajs-plugin-renderer-vue/src";
 import { IViewNode } from "../../baklavajs-plugin-renderer-vue/types";
 
-@Component
 export default class CommentNode extends Vue {
 
     @Prop({ type: Object })
-    data!: IViewNode;
+    node!: IViewNode;
 
     @Prop({ type: Boolean, default: false })
     selected!: boolean;
 
-    @Inject("plugin")
+    @Inject()
     plugin!: ViewPlugin;
 
     dragging = false;
@@ -32,8 +27,8 @@ export default class CommentNode extends Vue {
     get styles() {
         return {
             "position": "absolute",
-            "top": `${this.data.position.y}px`,
-            "left": `${this.data.position.x}px`,
+            "top": `${this.node.position.y}px`,
+            "left": `${this.node.position.x}px`,
             "width": `${this.width}px`,
             "height": "200px",
             "background-color": "yellow"
@@ -64,8 +59,8 @@ export default class CommentNode extends Vue {
     handleMove(ev: MouseEvent) {
         if (this.dragging) {
             const scaleFactor = this.plugin.scaling * window.devicePixelRatio;
-            this.data.position.x += ev.movementX / scaleFactor;
-            this.data.position.y += ev.movementY / scaleFactor;
+            this.node.position.x += ev.movementX / scaleFactor;
+            this.node.position.y += ev.movementY / scaleFactor;
         }
     }
 

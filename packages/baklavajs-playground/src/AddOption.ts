@@ -1,12 +1,18 @@
-import Vue from "vue";
+import { defineComponent, h } from "vue";
 
-export default Vue.extend({
-    props: [ "name", "node" ],
-    render(h) {
-        return h("button", {
-            on: {
-                click: () => { this.node.action(this.name); }
-            }
-        }, this.name as string);
+export default defineComponent({
+    props: ["name", "node"],
+    render() {
+        return h(
+            "button",
+            {
+                on: {
+                    click: () => {
+                        this.node.action(this.name);
+                    }
+                }
+            },
+            this.name as string
+        );
     }
 });

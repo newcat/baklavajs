@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { VueConstructor } from "vue";
+import { markRaw } from "vue";
+import { Vue } from "vue-property-decorator";
 
-import { Editor, Node, NodeInterface } from "../../baklavajs-core/src";
+import { Editor } from "../../baklavajs-core/src";
 import { ViewPlugin } from "../../baklavajs-plugin-renderer-vue/src";
 import { Engine } from "../../baklavajs-plugin-engine/src";
 import { InterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/src";
@@ -36,23 +36,18 @@ import AddOption from "./AddOption";
 import TriggerOption from "./TriggerOption.vue";
 import SidebarOption from "./SidebarOption.vue";
 
-@Component
 export default class App extends Vue {
-    editor: Editor;
-    viewPlugin: ViewPlugin;
-    engine: Engine;
-    nodeInterfaceTypes: InterfaceTypePlugin;
+    editor: Editor = new Editor();
+    viewPlugin: ViewPlugin = new ViewPlugin();
+    engine!: Engine;
+    nodeInterfaceTypes!: InterfaceTypePlugin;
 
     focusState = "blur";
     counter = 1;
 
-    constructor() {
-        super();
+    created() {
 
-        this.editor = new Editor();
-
-        this.viewPlugin = new ViewPlugin();
-        this.viewPlugin.components.node = CustomNodeRenderer;
+        this.viewPlugin.components.node = markRaw(CustomNodeRenderer);
         this.viewPlugin.enableMinimap = true;
         this.editor.use(this.viewPlugin);
 
@@ -72,18 +67,16 @@ export default class App extends Vue {
         this.editor.use(new OptionPlugin());
 
         this.viewPlugin.hooks.renderNode.tap(this, (node) => {
-            if (node.data.type === "TestNode") {
+            if (node.node.type === "TestNode") {
                 (node.$el as HTMLElement).style.backgroundColor = "red";
             }
             return node;
         });
 
-        this.viewPlugin.registerOption("AddOption", AddOption);
-        this.viewPlugin.registerOption("TriggerOption", TriggerOption);
-        this.viewPlugin.registerOption("SidebarOption", SidebarOption);
-    }
+        this.viewPlugin.registerOption("AddOption", AddOption as any);
+        this.viewPlugin.registerOption("TriggerOption", TriggerOption as any);
+        this.viewPlugin.registerOption("SidebarOption", SidebarOption as any);
 
-    mounted() {
         this.editor.registerNodeType("TestNode", TestNode, "Tests");
         this.editor.registerNodeType("OutputNode", OutputNode, "Outputs");
         this.editor.registerNodeType("BuilderTestNode", BuilderTestNode, "Tests");

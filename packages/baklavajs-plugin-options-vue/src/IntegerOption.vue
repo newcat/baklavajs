@@ -26,11 +26,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Options } from "vue-property-decorator";
 import Arrow from "./Arrow.vue";
 import { BaseNumericOption } from "./BaseNumericOption";
 
-@Component({
+@Options({
     components: {
         "i-arrow": Arrow
     }

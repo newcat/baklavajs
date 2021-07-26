@@ -30,12 +30,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Options } from "vue-property-decorator";
 import Arrow from "./Arrow.vue";
-import { INodeOption } from "../../baklavajs-core/types";
 import { BaseNumericOption } from "./BaseNumericOption";
 
-@Component({
+@Options({
     components: {
         "i-arrow": Arrow
     }

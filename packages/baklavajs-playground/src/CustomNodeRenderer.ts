@@ -1,18 +1,24 @@
-import { FunctionalComponentOptions } from "vue";
+import { defineComponent, h } from "vue";
 import { Components } from "../../baklavajs-plugin-renderer-vue/src";
 import { Node } from "../../baklavajs-core/src";
 import CommentNode from "./CommentNodeRenderer.vue";
 
-export default {
+export default defineComponent({
     functional: true,
-    render(h, context) {
+    props: {
+        node: {
+            type: Object as () => Node,
+            required: true,
+        },
+    },
+    render() {
 
         const getComponent = () => {
-            const node = context.props.data as Node;
+            const node = this.$props.node;
             return node.type === "CommentNode" ? CommentNode : Components.Node;
         };
 
-        return h(getComponent(), context.data);
+        return h(getComponent(), this.$props);
 
     }
-} as FunctionalComponentOptions;
+});

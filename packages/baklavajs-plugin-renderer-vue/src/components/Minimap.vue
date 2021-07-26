@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Inject, Watch } from "vue-property-decorator";
+import { Prop, Vue, Inject, Watch } from "vue-property-decorator";
 import { IConnection } from "../../../baklavajs-core/types";
 import { IViewNode } from "../../types";
 import getDomElements, { getDomElementOfNode } from "./connection/domResolver";
@@ -25,7 +25,6 @@ interface IRect {
     y2: number;
 }
 
-@Component
 export default class Minimap extends Vue {
 
     ctx?: CanvasRenderingContext2D;
@@ -40,7 +39,7 @@ export default class Minimap extends Vue {
     @Prop()
     connections!: IConnection[];
 
-    @Inject("plugin")
+    @Inject()
     plugin!: ViewPlugin;
 
     mounted() {
@@ -180,8 +179,8 @@ export default class Minimap extends Vue {
 
     /** Returns view bounds in editor space */
     getViewBounds(): IRect {
-        const parentWidth = (this.$parent.$el as HTMLElement).offsetWidth;
-        const parentHeight = (this.$parent.$el as HTMLElement).offsetHeight;
+        const parentWidth = (this.$parent!.$el as HTMLElement).offsetWidth;
+        const parentHeight = (this.$parent!.$el as HTMLElement).offsetHeight;
         const x2 = (parentWidth / this.plugin.scaling) - this.plugin.panning.x;
         const y2 = (parentHeight / this.plugin.scaling) - this.plugin.panning.y;
         return { x1: -this.plugin.panning.x, y1: -this.plugin.panning.y, x2, y2 };

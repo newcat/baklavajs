@@ -9,14 +9,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Options, Prop, Vue } from "vue-property-decorator";
 
 import ConnectionView from "./ConnectionView.vue";
-import { ITemporaryConnection, TemporaryConnectionState, INodeInterface } from "../../../../baklavajs-core/types";
+import { ITemporaryConnection, TemporaryConnectionState } from "../../../../baklavajs-core/types";
 import resolveDom from "./domResolver";
 import { getPortCoordinates } from "./portCoordinates";
 
-@Component({
+@Options({
     components: {
         "connection-view": ConnectionView
     }

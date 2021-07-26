@@ -88,11 +88,11 @@ export class InterfaceTypePlugin implements IPlugin {
 
     private registerView(vp: IViewPlugin) {
         vp.hooks.renderInterface.tap(this, (intf) => {
-            if (this.types.has(intf.data.type)) {
-                const color = this.types.get(intf.data.type)!.color;
+            if (this.types.has(intf.intf.type)) {
+                const color = this.types.get(intf.intf.type)!.color;
                 const res = intf.$el.getElementsByClassName("__port") as HTMLElement[];
                 Array.from(res).forEach((el) => {
-                    el.classList.add("__port-" + intf.data.type);
+                    el.classList.add("__port-" + intf.intf.type);
                     el.style.backgroundColor = color;
                 });
             }

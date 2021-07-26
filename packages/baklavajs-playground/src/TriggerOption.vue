@@ -6,10 +6,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Options, Prop, Vue } from "vue-property-decorator";
 import { ButtonOption } from "../../baklavajs-plugin-options-vue/src";
 
-@Component({
+@Options({
     components: { ButtonOption }
 })
 export default class TriggerOption extends Vue {

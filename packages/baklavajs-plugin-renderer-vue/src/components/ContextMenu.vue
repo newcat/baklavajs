@@ -1,11 +1,11 @@
 <template>
     <div :class="classes" :style="styles" v-show="value" v-click-outside="onClickOutside">
         <template v-for="(item, index) in _items">
-            <div v-if="item.isDivider" :key="index" class="divider"></div>
+            <div v-if="item.isDivider" :key="`divider-${index}`" class="divider"></div>
 
             <div
                 v-else
-                :key="index"
+                :key="`item-${index}`"
                 :class="{ 'item': true, 'submenu': !!item.submenu, '--disabled': !!item.disabled }"
                 @mouseenter="onMouseEnter($event, index)"
                 @mouseleave="onMouseLeave($event, index)"
@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Options, Prop, Vue, Watch } from "vue-property-decorator";
 
 // @ts-ignore
 import ClickOutside from "v-click-outside";
@@ -51,7 +51,7 @@ export interface IMenuItem {
     disabledFunction?: () => boolean;
 }
 
-@Component({
+@Options({
     directives: {
         ClickOutside: ClickOutside.directive,
     },
@@ -157,9 +157,9 @@ export default class ContextMenu extends Vue {
 
     created() {
         if (this.$options.components) {
-            this.$options.components["context-menu"] = Vue.extend(ContextMenu);
+            this.$options.components["context-menu"] = ContextMenu;
         } else {
-            this.$options.components = { "context-menu": Vue.extend(ContextMenu) };
+            this.$options.components = { "context-menu": ContextMenu };
         }
     }
 
@@ -167,8 +167,8 @@ export default class ContextMenu extends Vue {
     @Watch("items")
     updateFlipped() {
         this.height = this.items.length * 30;
-        const parentWidth = (this.$parent.$el as HTMLElement).offsetWidth;
-        const parentHeight = (this.$parent.$el as HTMLElement).offsetHeight;
+        const parentWidth = (this.$parent!.$el as HTMLElement).offsetWidth;
+        const parentHeight = (this.$parent!.$el as HTMLElement).offsetHeight;
         this.rootIsFlipped.x = !this.isNested && this.x > parentWidth * 0.75;
         this.rootIsFlipped.y = !this.isNested && this.y + this.height > parentHeight - 20;
     }
@@ -178,7 +178,7 @@ export default class ContextMenu extends Vue {
         if (this.value) {
             this.items.forEach((item) => {
                 if (item.disabledFunction) {
-                    this.$set(item, "disabled", item.disabledFunction());
+                    item.disabled = item.disabledFunction();
                 }
             });
         }

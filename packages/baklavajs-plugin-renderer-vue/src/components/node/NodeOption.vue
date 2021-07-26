@@ -12,12 +12,10 @@
 </template>
 
 <script lang="ts">
-import { CreateElement, VueConstructor } from "vue";
-import { Component, Prop, Vue, Inject } from "vue-property-decorator";
+import { Prop, Vue, Inject } from "vue-property-decorator";
 import { INodeOption, INode } from "../../../../baklavajs-core/types";
 import { ViewPlugin } from "../../viewPlugin";
 
-@Component
 export default class NodeOptionView extends Vue {
 
     @Prop()
@@ -32,7 +30,7 @@ export default class NodeOptionView extends Vue {
     @Prop()
     node!: INode;
 
-    @Inject("plugin")
+    @Inject()
     plugin!: ViewPlugin;
 
     value: any = null;

@@ -1,7 +1,7 @@
 <template>
-    <div :id="data.id" :class="classes" :style="styles">
+    <div :id="node.id" :class="classes" :style="styles">
         <div class="__title" @mousedown.self.stop="startDrag" @contextmenu.self.prevent="openContextMenu">
-            <span v-if="!renaming">{{ data.name }}</span>
+            <span v-if="!renaming">{{ node.name }}</span>
             <input
                 v-else
                 type="text"
@@ -27,44 +27,43 @@
             <div class="__outputs">
                 <component
                     :is="plugin.components.nodeInterface"
-                    v-for="(output, name) in data.outputInterfaces"
+                    v-for="(output, name) in node.outputInterfaces"
                     :key="output.id"
                     :name="name"
-                    :data="output"
+                    :intf="output"
                 ></component>
             </div>
 
             <!-- Options -->
             <div class="__options">
-                <template v-for="[name, option] in data.options">
+                <template v-for="[name, option] in node.options" :key="name">
                     <component
                         :is="plugin.components.nodeOption"
-                        :key="name"
                         :name="name"
                         :option="option"
                         :componentName="option.optionComponent"
-                        :node="data"
+                        :node="node"
                         @openSidebar="openSidebar(name)"
                     ></component>
 
-                    <portal
+                    <teleport
                         :key="'sb_' + name"
-                        to="sidebar"
+                        to="#sidebar"
                         v-if="
-                            plugin.sidebar.nodeId === data.id &&
+                            plugin.sidebar.nodeId === node.id &&
                             plugin.sidebar.optionName === name &&
                             option.sidebarComponent
                         "
                     >
                         <component
                             :is="plugin.components.nodeOption"
-                            :key="data.id + name"
+                            :key="node.id + name"
                             :name="name"
                             :option="option"
                             :componentName="option.sidebarComponent"
-                            :node="data"
+                            :node="node"
                         ></component>
-                    </portal>
+                    </teleport>
                 </template>
             </div>
 
@@ -72,10 +71,10 @@
             <div class="__inputs">
                 <component
                     :is="plugin.components.nodeInterface"
-                    v-for="(input, name) in data.inputInterfaces"
+                    v-for="(input, name) in node.inputInterfaces"
                     :key="input.id"
                     :name="name"
-                    :data="input"
+                    :intf="input"
                 ></component>
             </div>
         </div>
@@ -83,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Inject } from "vue-property-decorator";
+import { Options, Vue, Prop, Inject } from "vue-property-decorator";
 
 // @ts-ignore
 import ClickOutside from "v-click-outside";
@@ -97,22 +96,22 @@ interface IPosition {
     y: number;
 }
 
-@Component({
+@Options({
     directives: {
         ClickOutside: ClickOutside.directive,
     },
 })
 export default class NodeView extends Vue {
     @Prop({ type: Object })
-    data!: IViewNode;
+    node!: IViewNode;
 
     @Prop({ type: Boolean, default: false })
     selected!: boolean;
 
-    @Inject("plugin")
+    @Inject()
     plugin!: ViewPlugin;
 
-    @Inject("selectedNodeViews")
+    @Inject()
     selectedNodeViews!: NodeView[];
 
     draggingStartPosition: IPosition | null = null;
@@ -135,25 +134,25 @@ export default class NodeView extends Vue {
             "node": true,
             "--selected": this.selected,
             "--dragging": !!this.draggingStartPoint,
-            "--two-column": !!this.data.twoColumn,
-            [`--type-${sanitizeName(this.data.type)}`]: true,
-            [this.data.customClasses]: true,
+            "--two-column": !!this.node.twoColumn,
+            [`--type-${sanitizeName(this.node.type)}`]: true,
+            [this.node.customClasses]: true,
         };
     }
 
     get styles() {
         return {
-            top: `${this.data.position.y}px`,
-            left: `${this.data.position.x}px`,
-            width: `${this.data.width}px`,
+            top: `${this.node.position.y}px`,
+            left: `${this.node.position.x}px`,
+            width: `${this.node.width}px`,
         };
     }
 
     mounted() {
-        this.data.events.addInterface.addListener(this, () => this.update());
-        this.data.events.removeInterface.addListener(this, () => this.update());
-        this.data.events.addOption.addListener(this, () => this.update());
-        this.data.events.removeOption.addListener(this, () => this.update());
+        this.node.events.addInterface.addListener(this, () => this.update());
+        this.node.events.removeInterface.addListener(this, () => this.update());
+        this.node.events.addOption.addListener(this, () => this.update());
+        this.node.events.removeOption.addListener(this, () => this.update());
         this.plugin.hooks.renderNode.execute(this);
     }
 
@@ -162,10 +161,10 @@ export default class NodeView extends Vue {
     }
 
     beforeDestroy() {
-        this.data.events.addInterface.removeListener(this);
-        this.data.events.removeInterface.removeListener(this);
-        this.data.events.addOption.removeListener(this);
-        this.data.events.removeOption.removeListener(this);
+        this.node.events.addInterface.removeListener(this);
+        this.node.events.removeInterface.removeListener(this);
+        this.node.events.addOption.removeListener(this);
+        this.node.events.removeOption.removeListener(this);
     }
 
     update() {
@@ -186,8 +185,8 @@ export default class NodeView extends Vue {
                   y: ev.screenY,
             };
             elem.draggingStartPosition = {
-                  x: elem.data.position.x,
-                  y: elem.data.position.y,
+                  x: elem.node.position.x,
+                  y: elem.node.position.y,
             };
             document.addEventListener("mousemove", elem.handleMove);
             document.addEventListener("mouseup", elem.stopDrag);
@@ -212,8 +211,8 @@ export default class NodeView extends Vue {
             if (elem.draggingStartPoint) {
                 const dx = ev.screenX - elem.draggingStartPoint.x;
                 const dy = ev.screenY - elem.draggingStartPoint.y;
-                elem.data.position.x = elem.draggingStartPosition.x + dx / elem.plugin.scaling;
-                elem.data.position.y = elem.draggingStartPosition.y + dy / elem.plugin.scaling;
+                elem.node.position.x = elem.draggingStartPosition.x + dx / elem.plugin.scaling;
+                elem.node.position.y = elem.draggingStartPosition.y + dy / elem.plugin.scaling;
             }
         });
     }
@@ -227,21 +226,21 @@ export default class NodeView extends Vue {
     onContextMenu(action: string) {
         switch (action) {
             case "delete":
-                this.plugin.editor.removeNode(this.data);
+                this.plugin.editor.removeNode(this.node);
                 break;
             case "rename":
-                this.tempName = this.data.name;
+                this.tempName = this.node.name;
                 this.renaming = true;
         }
     }
 
     doneRenaming() {
-        this.data.name = this.tempName;
+        this.node.name = this.tempName;
         this.renaming = false;
     }
 
     openSidebar(optionName: string) {
-        this.plugin.sidebar.nodeId = this.data.id;
+        this.plugin.sidebar.nodeId = this.node.id;
         this.plugin.sidebar.optionName = optionName;
         this.plugin.sidebar.visible = true;
     }

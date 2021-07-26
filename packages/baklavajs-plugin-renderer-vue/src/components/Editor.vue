@@ -33,7 +33,7 @@
                 :is="plugin.components.node"
                 v-for="node in nodes"
                 :key="node.id + counter.toString()"
-                :data="node"
+                :node="node"
                 :selected="selectedNodes.includes(node)"
                 @select="selectNode(node, $event)"
             >
@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Provide, Watch } from "vue-property-decorator";
+import { Vue, Prop, Provide, Watch } from "vue-property-decorator";
 
 import {
     ITransferConnection,
@@ -84,16 +84,15 @@ interface IPosition {
     y: number;
 }
 
-@Component
 export default class EditorView extends Vue {
     @Prop({ type: Object, required: true })
-    @Provide("plugin")
+    @Provide()
     plugin!: ViewPlugin;
 
-    @Provide("editor")
+    @Provide({ to: "editor" })
     nodeeditor: EditorView = this;
 
-    @Provide("selectedNodeViews")
+    @Provide()
     selectedNodeViews: NodeView[] = [];
 
     clipboard!: Clipboard;
@@ -227,7 +226,7 @@ export default class EditorView extends Vue {
                     });
             }
         } else if (!ni && this.temporaryConnection) {
-            this.$set(this.temporaryConnection, "to", undefined);
+            this.temporaryConnection.to = undefined;
             this.temporaryConnection.status = TemporaryConnectionState.NONE;
             this.connections.forEach((c) => {
                 (c as ITransferConnection).isInDanger = false;
@@ -266,8 +265,8 @@ export default class EditorView extends Vue {
                     };
                 }
 
-                this.$set(this.temporaryConnection as any, "mx", null);
-                this.$set(this.temporaryConnection as any, "my", null);
+                (this.temporaryConnection as any).mx = null;
+                (this.temporaryConnection as any).my = null;
             } else if (ev.target === this.$el) {
                 this.unselectAllNodes();
                 this.draggingStartPoint = {

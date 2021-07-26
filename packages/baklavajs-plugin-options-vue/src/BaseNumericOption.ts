@@ -1,7 +1,6 @@
-import { Prop, Vue, Watch, Component } from "vue-property-decorator";
+import { Prop, Vue, Watch } from "vue-property-decorator";
 import { INodeInterface, INodeOption } from "../../baklavajs-core/types";
 
-@Component
 export class BaseNumericOption extends Vue {
     MAX_STRING_LENGTH = 9;
 

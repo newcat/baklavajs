@@ -11,9 +11,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Prop, Vue } from "vue-property-decorator";
 
-@Component
 export default class InputOption extends Vue {
 
     @Prop({ type: String, default: "" })
@@ -23,7 +22,7 @@ export default class InputOption extends Vue {
     name!: string;
 
     get listeners(): any {
-        return { ...this.$listeners, input: (ev: any) => this.$emit("input", ev.target.value) };
+        return { ...this.listeners, input: (ev: any) => this.$emit("input", ev.target.value) };
     }
 
 }

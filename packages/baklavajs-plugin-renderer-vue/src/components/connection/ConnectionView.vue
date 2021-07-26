@@ -3,11 +3,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Inject } from "vue-property-decorator";
+import { Vue, Prop, Inject } from "vue-property-decorator";
 import { TemporaryConnectionState, ITransferConnection, ITemporaryConnection } from "../../../../baklavajs-core/types";
 import { ViewPlugin } from "../../viewPlugin";
 
-@Component
 export default class Connection extends Vue {
 
     @Prop({ type: Number })
@@ -29,7 +28,7 @@ export default class Connection extends Vue {
     @Prop({ type: Object })
     connection!: ITransferConnection|ITemporaryConnection;
 
-    @Inject("plugin")
+    @Inject()
     plugin!: ViewPlugin;
 
     mounted() {

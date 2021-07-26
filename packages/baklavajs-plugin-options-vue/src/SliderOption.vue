@@ -22,10 +22,8 @@
 </template>
 
 <script lang="ts">
-import { Component } from "vue-property-decorator";
 import { BaseNumericOption } from "./BaseNumericOption";
 
-@Component
 export default class SliderOption extends BaseNumericOption {
 
     didSlide = false;

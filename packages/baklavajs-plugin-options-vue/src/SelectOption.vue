@@ -18,14 +18,14 @@
                 :key="i"
                 :class="['item', { '--active': isSelected(item) }]"
                 @click="setSelected(item)"
-            >{{ isAdvancedMode ? item.text : item }}</div>
+            >{{ getItemText(item) }}</div>
         </div>
     </transition>
 </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Options, Vue, Prop } from "vue-property-decorator";
 import Arrow from "./Arrow.vue";
 import { INodeOption, INodeInterface } from "../../baklavajs-core/types";
 
@@ -38,7 +38,7 @@ interface IAdvancedItem {
 }
 type ItemType = string|IAdvancedItem;
 
-@Component({
+@Options({
     components: {
         "i-arrow": Arrow
     },
@@ -100,6 +100,10 @@ export default class SelectOption extends Vue {
 
     getItemByValue(value: any) {
         return (this.items as IAdvancedItem[]).find((i) => i.value === value);
+    }
+
+    getItemText(item: ItemType) {
+        return this.isAdvancedMode ? (item as IAdvancedItem).text : item;
     }
 
 }

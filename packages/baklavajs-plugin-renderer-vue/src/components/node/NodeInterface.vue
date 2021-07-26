@@ -1,40 +1,38 @@
 <template>
-    <div :id="data.id" :class="classes">
+    <div :id="intf.id" :class="classes">
         <div class="__port" @mouseover="startHover" @mouseout="endHover"></div>
-        <span v-if="data.connectionCount > 0 || !data.option || !getOptionComponent(data.option)" class="align-middle">
+        <span v-if="intf.connectionCount > 0 || !intf.option || !getOptionComponent(intf.option)" class="align-middle">
             {{ displayName }}
         </span>
         <component
             v-else
-            :is="getOptionComponent(data.option)"
-            :option="data"
+            :is="getOptionComponent(intf.option)"
+            :option="intf"
             :value="value"
-            @input="data.value = $event"
+            @input="intf.value = $event"
             :name="displayName"
         ></component>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Inject } from "vue-property-decorator";
-import { VueConstructor } from "vue";
+import { Vue, Prop, Inject } from "vue-property-decorator";
 import EditorView from "../Editor.vue";
 import { INodeInterface } from "../../../../baklavajs-core/types";
 import { ViewPlugin } from "../../viewPlugin";
 
-@Component
 export default class NodeInterfaceView extends Vue {
 
     @Prop({ type: Object, default: () => ({}) })
-    data!: INodeInterface;
+    intf!: INodeInterface;
 
     @Prop({ type: String, default: "" })
     name!: string;
 
-    @Inject("plugin")
+    @Inject()
     plugin!: ViewPlugin;
 
-    @Inject("editor")
+    @Inject()
     editor!: EditorView;
 
     value: any = null;
@@ -43,25 +41,25 @@ export default class NodeInterfaceView extends Vue {
     get classes() {
         return {
             "node-interface": true,
-            "--input": this.data.isInput,
-            "--output": !this.data.isInput,
+            "--input": this.intf.isInput,
+            "--output": !this.intf.isInput,
             "--connected": this.isConnected
         };
     }
 
     get displayName() {
-        return this.data.displayName || this.name;
+        return this.intf.displayName || this.name;
     }
 
     beforeMount() {
-        this.value = this.data.value;
-        this.data.events.setValue.addListener(this, (v) => { this.value = v; });
-        this.data.events.setConnectionCount.addListener(this, (c) => {
+        this.value = this.intf.value;
+        this.intf.events.setValue.addListener(this, (v) => { this.value = v; });
+        this.intf.events.setConnectionCount.addListener(this, (c) => {
             this.$forceUpdate();
             this.isConnected = c > 0;
         });
-        this.data.events.updated.addListener(this, (v) => { this.$forceUpdate(); });
-        this.isConnected = this.data.connectionCount > 0;
+        this.intf.events.updated.addListener(this, (v) => { this.$forceUpdate(); });
+        this.isConnected = this.intf.connectionCount > 0;
     }
 
     mounted() {
@@ -73,13 +71,13 @@ export default class NodeInterfaceView extends Vue {
     }
 
     beforeDestroy() {
-        this.data.events.setValue.removeListener(this);
-        this.data.events.setConnectionCount.removeListener(this);
-        this.data.events.updated.removeListener(this);
+        this.intf.events.setValue.removeListener(this);
+        this.intf.events.setConnectionCount.removeListener(this);
+        this.intf.events.updated.removeListener(this);
     }
 
     startHover() {
-        this.editor.hoveredOver(this.data);
+        this.editor.hoveredOver(this.intf);
     }
     endHover() {
         this.editor.hoveredOver(undefined);
