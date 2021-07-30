@@ -344,6 +344,7 @@ export default class EditorView extends Vue {
     }
 
     openContextMenu(event: MouseEvent) {
+        console.log("CM", event);
         this.contextMenu.show = true;
         this.contextMenu.x = event.offsetX;
         this.contextMenu.y = event.offsetY;

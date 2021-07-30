@@ -1,5 +1,5 @@
 <template>
-    <div :class="classes" :style="styles" v-show="value" v-click-outside="onClickOutside">
+    <div :class="classes" :style="styles" v-show="modelValue" v-click-outside="onClickOutside">
         <template v-for="(item, index) in _items">
             <div v-if="item.isDivider" :key="`divider-${index}`" class="divider"></div>
 
@@ -24,7 +24,7 @@
                 </div>
                 <context-menu
                     v-if="item.submenu"
-                    :value="activeMenu === index"
+                    :model-value="activeMenu === index"
                     :items="item.submenu"
                     :is-nested="true"
                     :is-flipped="{ x: flippedX, y: flippedY }"
@@ -55,6 +55,7 @@ export interface IMenuItem {
     directives: {
         ClickOutside: ClickOutside.directive,
     },
+    emits: ["update:modelValue", "click"]
 })
 export default class ContextMenu extends Vue {
     activeMenu = -1;
@@ -64,7 +65,7 @@ export default class ContextMenu extends Vue {
     rootIsFlipped = { x: false, y: false };
 
     @Prop({ type: Boolean, default: false })
-    value!: boolean;
+    modelValue!: boolean;
 
     @Prop({ type: Array, default: () => [] })
     items!: IMenuItem[];
@@ -117,7 +118,7 @@ export default class ContextMenu extends Vue {
     onClick(item: IMenuItem) {
         if (!item.submenu && item.value) {
             this.$emit("click", item.value);
-            this.$emit("input", false);
+            this.$emit("update:modelValue", false);
         }
     }
 
@@ -125,13 +126,13 @@ export default class ContextMenu extends Vue {
         this.$emit("click", value);
         this.activeMenu = -1;
         if (!this.isNested) {
-            this.$emit("input", false);
+            this.$emit("update:modelValue", false);
         }
     }
 
     onClickOutside(event: MouseEvent) {
-        if (this.value) {
-            this.$emit("input", false);
+        if (this.modelValue) {
+            this.$emit("update:modelValue", false);
         }
     }
 
@@ -173,9 +174,9 @@ export default class ContextMenu extends Vue {
         this.rootIsFlipped.y = !this.isNested && this.y + this.height > parentHeight - 20;
     }
 
-    @Watch("value", { immediate: true })
+    @Watch("modelValue", { immediate: true })
     updateDisabledValues() {
-        if (this.value) {
+        if (this.modelValue) {
             this.items.forEach((item) => {
                 if (item.disabledFunction) {
                     item.disabled = item.disabledFunction();
