@@ -32,7 +32,7 @@ import OptionTestNode from "./OptionTestNode";
 import SelectTestNode from "./SelectTestNode";
 import SplitterNode from "./SplitterNode";
 
-import AddOption from "./AddOption";
+import AddOption from "./AddOption.vue";
 import TriggerOption from "./TriggerOption.vue";
 import SidebarOption from "./SidebarOption.vue";
 

@@ -11,8 +11,11 @@
 </template>
 
 <script lang="ts">
-import { Prop, Vue } from "vue-property-decorator";
+import { Options, Prop, Vue } from "vue-property-decorator";
 
+@Options({
+    emits: ["input"]
+})
 export default class InputOption extends Vue {
 
     @Prop({ type: String, default: "" })

@@ -44,7 +44,8 @@ type ItemType = string|IAdvancedItem;
     },
     directives: {
         ClickOutside: ClickOutside.directive
-    }
+    },
+    emits: ["input"]
 })
 export default class SelectOption extends Vue {
 

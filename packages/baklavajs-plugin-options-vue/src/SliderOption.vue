@@ -22,8 +22,12 @@
 </template>
 
 <script lang="ts">
+import { Options } from "vue-property-decorator";
 import { BaseNumericOption } from "./BaseNumericOption";
 
+@Options({
+    emits: ["input"]
+})
 export default class SliderOption extends BaseNumericOption {
 
     didSlide = false;

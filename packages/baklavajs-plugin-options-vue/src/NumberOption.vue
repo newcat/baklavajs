@@ -37,7 +37,8 @@ import { BaseNumericOption } from "./BaseNumericOption";
 @Options({
     components: {
         "i-arrow": Arrow
-    }
+    },
+    emits: ["input"]
 })
 export default class NumberOption extends BaseNumericOption {
 

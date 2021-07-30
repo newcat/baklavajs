@@ -88,7 +88,7 @@ export class Engine implements IPlugin {
             // as only one connection to an input interface is allowed
             // Delete all other connections to the target interface
             this.editor.connections
-                .filter((conn) => conn !== c && conn.to === c.to)
+                .filter((conn) => conn.id !== c.id && conn.to === c.to)
                 .forEach((conn) => this.editor.removeConnection(conn));
 
             this.onChange(true);

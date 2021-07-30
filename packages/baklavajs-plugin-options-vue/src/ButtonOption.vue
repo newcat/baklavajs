@@ -3,8 +3,11 @@
 </template>
 
 <script lang="ts">
-import { Prop, Vue } from "vue-property-decorator";
+import { Options, Prop, Vue } from "vue-property-decorator";
 
+@Options({
+    emits: ["openSidebar"]
+})
 export default class ButtonOption extends Vue {
 
     @Prop({ type: String })
