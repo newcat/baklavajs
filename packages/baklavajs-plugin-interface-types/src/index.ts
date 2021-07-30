@@ -87,16 +87,20 @@ export class InterfaceTypePlugin implements IPlugin {
     }
 
     private registerView(vp: IViewPlugin) {
-        vp.hooks.renderInterface.tap(this, (intf) => {
-            if (this.types.has(intf.data.type)) {
-                const color = this.types.get(intf.data.type)!.color;
-                const res = intf.$el.getElementsByClassName("__port") as HTMLElement[];
+        vp.hooks.renderInterface.tap(this, (intfComponent) => {
+            const intf = intfComponent.intf || intfComponent.data;
+            if (!intf) {
+                throw new Error("Could not get interface data");
+            }
+            if (this.types.has(intf.type)) {
+                const color = this.types.get(intf.type)!.color;
+                const res = intfComponent.$el.getElementsByClassName("__port") as HTMLElement[];
                 Array.from(res).forEach((el) => {
-                    el.classList.add("__port-" + intf.data.type);
+                    el.classList.add("__port-" + intf.type);
                     el.style.backgroundColor = color;
                 });
             }
-            return intf;
+            return intfComponent;
         });
     }
 
