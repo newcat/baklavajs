@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@baklavajs/core",
   "version": "1.9.1",
   "description": "Core logic of BaklavaJS, a graph editor / node editor for the web",

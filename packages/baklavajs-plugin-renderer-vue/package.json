@@ -1,5 +1,5 @@
 {
-  "name": "@baklavajs/plugin-renderer-vue",
+  "name": "@baklavajs/plugin-renderer-vue3",
   "version": "1.9.0",
   "description": "Add types to node interfaces for BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",

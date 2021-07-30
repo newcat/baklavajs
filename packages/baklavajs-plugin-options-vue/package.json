@@ -1,5 +1,5 @@
 {
-  "name": "@baklavajs/plugin-options-vue",
+  "name": "@baklavajs/plugin-options-vue3",
   "version": "1.9.1",
   "description": "This plugin adds a set of predefined option components to the renderer-vue plugin for BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",

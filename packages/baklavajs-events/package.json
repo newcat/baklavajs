@@ -1,4 +1,6 @@
+
 {
+  "private": true,
   "name": "@baklavajs/events",
   "version": "1.8.2",
   "description": "Implementation of the Baklava event system. Mainly intended for internal use in the Baklava ecosystem",
