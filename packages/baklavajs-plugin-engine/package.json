@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@baklavajs/plugin-engine",
-  "version": "1.8.7",
+  "version": "1.9.2",
   "description": "Execute BaklavaJS graphs",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
@@ -23,7 +23,7 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "dependencies": {
-    "@baklavajs/events": "^1.8.2"
+    "@baklavajs/events": "^1.9.2"
   },
   "devDependencies": {
     "async-mutex": "^0.3.1",
