@@ -24,5 +24,4 @@ yarn-error.log*
 cypress/
 lerna-debug.log
 
-# Can be removed after the folder is deleted
-packages/baklavajs-playground-old
+docs/api

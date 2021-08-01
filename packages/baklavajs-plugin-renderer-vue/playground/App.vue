@@ -2,10 +2,7 @@
     <div id="app">
         <baklava-editor :plugin="baklavaView">
             <template #node="nodeProps">
-                <CustomNodeRenderer
-                    :key="nodeProps.node.id"
-                    v-bind="nodeProps"
-                />
+                <CustomNodeRenderer :key="nodeProps.node.id" v-bind="nodeProps" />
             </template>
         </baklava-editor>
         <button @click="calculate">
@@ -30,9 +27,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref } from "vue";
+import { defineComponent } from "vue";
 
-import { Editor, NodeInstanceOf } from "@baklavajs/core";
+import { NodeInstanceOf } from "@baklavajs/core";
 import { EditorComponent, SelectInterface, useBaklava, Commands } from "../src";
 import { Engine } from "@baklavajs/plugin-engine";
 import { BaklavaInterfaceTypes } from "@baklavajs/plugin-interface-types";
@@ -57,8 +54,8 @@ export default defineComponent({
     },
     setup() {
         const token = Symbol("token");
-        const editor = ref(new Editor()) as Ref<Editor>;
-        const baklavaView = useBaklava(editor);
+        const baklavaView = useBaklava();
+        const editor = baklavaView.editor;
 
         baklavaView.settings.enableMinimap = true;
 

@@ -1,4 +1,4 @@
-import { computed, reactive, ref, Ref, shallowReadonly, watch } from "vue";
+import { computed, reactive, ref, Ref, shallowReadonly, UnwrapRef, watch } from "vue";
 import { AbstractNode, Editor, Graph, GraphTemplate, NodeInterface } from "@baklavajs/core";
 import { IBaklavaTapable, SequentialHook } from "@baklavajs/events";
 
@@ -40,7 +40,8 @@ export interface IBaklavaView extends IBaklavaTapable {
     switchGraph: (newGraph: Graph | GraphTemplate) => void;
 }
 
-export function useBaklava(editor: Ref<Editor>): IBaklavaView {
+export function useBaklava(existingEditor?: Ref<UnwrapRef<Editor>>): IBaklavaView {
+    const editor: Ref<Editor> = (existingEditor as Ref<Editor>) ?? ref(new Editor());
     const token = Symbol("ViewPluginToken");
 
     const _displayedGraph = ref(null as any) as Ref<Graph>;

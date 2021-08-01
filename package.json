@@ -7,7 +7,9 @@
         "build": "lerna run build --stream --ignore \"baklavajs-playground\" --ignore \"baklavajs\"",
         "test": "lerna run test",
         "clean": "rimraf ./packages/*/dist && rimraf ./packages/baklavajs-full/lib",
-        "generate-api-docs": "typedoc"
+        "generate-api-docs": "typedoc",
+        "docs:dev": "vitepress dev docs",
+        "docs:build": "vitepress build docs"
     },
     "workspaces": [
         "packages/*"
@@ -26,6 +28,7 @@
         "rimraf": "^3.0.2",
         "typedoc": "^0.21.0",
         "typescript": "^4.3.4",
+        "vitepress": "^0.15.6",
         "vue-eslint-parser": "^7.6.0"
     }
 }
