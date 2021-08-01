@@ -3,19 +3,13 @@
         ref="el"
         class="dark-slider"
         :class="{ 'ignore-mouse': !editMode }"
-        @mousedown="mousedown"
-        @mouseup="mouseup"
-        @mousemove="mousemove"
-        @mouseleave="mouseleave"
+        @pointerdown="mousedown"
+        @pointerup="mouseup"
+        @pointermove="mousemove"
+        @pointerleave="mouseleave"
     >
-        <div
-            class="__slider"
-            :style="{ width: percentage + '%' }"
-        />
-        <div
-            v-if="!editMode"
-            class="__content"
-        >
+        <div class="__slider" :style="{ width: percentage + '%' }" />
+        <div v-if="!editMode" class="__content">
             <div class="__label">
                 {{ intf.name }}
             </div>
@@ -23,10 +17,7 @@
                 {{ stringRepresentation }}
             </div>
         </div>
-        <div
-            v-else
-            class="__content"
-        >
+        <div v-else class="__content">
             <input
                 ref="inputEl"
                 v-model="tempValue"

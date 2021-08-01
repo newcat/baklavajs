@@ -26,40 +26,20 @@
         </slot>
 
         <svg class="connections-container">
-            <g
-                v-for="connection in connections"
-                :key="connection.id + counter.toString()"
-            >
-                <slot
-                    name="connections"
-                    :connection="connection"
-                >
+            <g v-for="connection in connections" :key="connection.id + counter.toString()">
+                <slot name="connections" :connection="connection">
                     <connection-wrapper :connection="connection" />
                 </slot>
             </g>
-            <slot
-                name="temporaryConnection"
-                :temporary-connection="temporaryConnection"
-            >
-                <temporary-connection
-                    v-if="temporaryConnection"
-                    :connection="temporaryConnection"
-                />
+            <slot name="temporaryConnection" :temporary-connection="temporaryConnection">
+                <temporary-connection v-if="temporaryConnection" :connection="temporaryConnection" />
             </slot>
         </svg>
 
-        <div
-            class="node-container"
-            :style="nodeContainerStyle"
-        >
+        <div class="node-container" :style="nodeContainerStyle">
             <transition-group name="fade">
                 <template v-for="node in nodes">
-                    <slot
-                        name="node"
-                        :node="node"
-                        :selected="selectedNodes.includes(node)"
-                        @select="selectNode(node)"
-                    >
+                    <slot name="node" :node="node" :selected="selectedNodes.includes(node)" @select="selectNode(node)">
                         <node
                             :key="node.id + counter.toString()"
                             :node="node"
@@ -150,8 +130,8 @@ export default defineComponent({
             }
         };
 
-        const onPointerUp = () => {
-            panZoom.onPointerUp();
+        const onPointerUp = (ev: PointerEvent) => {
+            panZoom.onPointerUp(ev);
             temporaryConnection.onMouseUp();
         };
 

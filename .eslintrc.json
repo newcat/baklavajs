@@ -18,6 +18,7 @@
         "@typescript-eslint/no-explicit-any": 0,
         "@typescript-eslint/explicit-module-boundary-types": 0,
         "vue/html-indent": ["warn", 4],
-        "vue/no-mutating-props": "off"
+        "vue/no-mutating-props": "off",
+        "vue/max-attributes-per-line": "off"
     }
 }
