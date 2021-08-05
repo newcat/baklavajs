@@ -9,9 +9,9 @@ export default defineNode({
     },
     outputs: {
         text: () => new TextInterface("output", "").setPort(false),
-        data: () => new TextInterface("data", "").setPort(false),
+        data: () => new TextInterface("data", "test").setHidden(true),
     },
-    calculate({ text }, data) {
-        return { text, data: String(data) };
+    calculate({ text }) {
+        return { text, data: text };
     },
 });

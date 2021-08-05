@@ -9,15 +9,23 @@ export type InterfaceFactory<T> = {
     [K in keyof T]: NodeInterfaceFactory<T[K]>;
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-interface INodeDefinition<I, O> {
+export interface INodeDefinition<I, O> {
+    /** NodeType */
     type: string;
+    /** Default title when creating the node. If not specified, it is set to the nodeType */
     title?: string;
+    /** Inputs of the node */
     inputs?: InterfaceFactory<I>;
+    /** Outputs of the node */
     outputs?: InterfaceFactory<O>;
+    /** This function is called by the engine with the input values.
+     * It should perform the necessary calculation and then return the output values */
     calculate?: CalculateFunction<I, O>;
+    /** Called as soon as an instance of the node is created but before it is placed into a graph */
     onCreate?: (this: Node<I, O>) => void;
+    /** Called when the node is placed into a graph */
     onPlaced?: (this: Node<I, O>) => void;
+    /** Called after the node is removed from a graph. Can be used for cleanup */
     onDestroy?: (this: Node<I, O>) => void;
 }
 

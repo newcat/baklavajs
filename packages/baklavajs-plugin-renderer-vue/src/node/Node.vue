@@ -1,25 +1,12 @@
 <template>
-    <div
-        :id="node.id"
-        ref="el"
-        :class="classes"
-        :style="styles"
-        :data-node-type="node.type"
-        @pointerdown="select"
-    >
-        <div
-            class="__title"
-            @pointerdown.self.stop="startDrag"
-        >
+    <div :id="node.id" ref="el" :class="classes" :style="styles" :data-node-type="node.type" @pointerdown="select">
+        <div class="__title" @pointerdown.self.stop="startDrag">
             <template v-if="!renaming">
                 <div class="__title-label">
                     {{ node.title }}
                 </div>
                 <div class="__menu">
-                    <vertical-dots
-                        class="--clickable"
-                        @click="openContextMenu"
-                    />
+                    <vertical-dots class="--clickable" @click="openContextMenu" />
                     <context-menu
                         v-model="showContextMenu"
                         :x="0"
@@ -44,22 +31,12 @@
         <div class="__content">
             <!-- Outputs -->
             <div class="__outputs">
-                <NodeInterface
-                    v-for="output in node.outputs"
-                    :key="output.id"
-                    :node="node"
-                    :intf="output"
-                />
+                <NodeInterface v-for="output in displayedOutputs" :key="output.id" :node="node" :intf="output" />
             </div>
 
             <!-- Inputs -->
             <div class="__inputs">
-                <NodeInterface
-                    v-for="input in node.inputs"
-                    :key="input.id"
-                    :node="node"
-                    :intf="input"
-                />
+                <NodeInterface v-for="input in displayedInputs" :key="input.id" :node="node" :intf="input" />
             </div>
         </div>
     </div>
@@ -124,6 +101,9 @@ export default defineComponent({
             width: `${props.node.width ?? 200}px`,
         }));
 
+        const displayedInputs = computed(() => Object.values(props.node.inputs).filter((ni) => !ni.hidden));
+        const displayedOutputs = computed(() => Object.values(props.node.outputs).filter((ni) => !ni.hidden));
+
         const select = () => {
             emit("select", props.node);
         };
@@ -185,6 +165,8 @@ export default defineComponent({
             contextMenuItems,
             classes,
             styles,
+            displayedInputs,
+            displayedOutputs,
             select,
             startDrag,
             openContextMenu,

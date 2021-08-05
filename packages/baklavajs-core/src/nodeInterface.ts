@@ -33,6 +33,9 @@ export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTap
     /** Whether to show the port (the thing connections connect to) */
     public port = true;
 
+    /** Whether to hide the node interface in the UI */
+    public hidden = false;
+
     /** The component which will be displayed when the interface is not connected or port === false */
     public component?: any;
 
@@ -97,6 +100,11 @@ export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTap
 
     public setPort(value: boolean): this {
         this.port = value;
+        return this;
+    }
+
+    public setHidden(value: boolean): this {
+        this.hidden = value;
         return this;
     }
 
