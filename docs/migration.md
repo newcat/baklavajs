@@ -6,6 +6,6 @@
 
 ## Nodes
 
--   The `NodeBuilder` doesn't exist in V2 anymore. You can either use [class-based] or [declaration-based] approach.
+-   The `NodeBuilder` doesn't exist in V2 anymore. You can either use [class-based](/nodes/nodes#class-based-approach) or [declaration-based](/nodes/nodes#definenode) approach.
 -   Node options have been removed. They are now interfaces with `.setPort(false)`
--   The `calculate` functions behave differently, see [Graph Execution]
+-   The `calculate` function behaves differently, see [Graph Execution](/execution)

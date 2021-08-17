@@ -24,4 +24,4 @@ yarn-error.log*
 cypress/
 lerna-debug.log
 
-docs/api
+docs/public/api

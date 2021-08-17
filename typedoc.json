@@ -4,7 +4,7 @@
     "name": "Reference - BaklavaJS",
     "gitRevision": "master",
     "tsconfig": "typedoc.tsconfig.json",
-    "out": "docs/api",
+    "out": "docs/public/api",
     "entryPoints": [
         "packages/baklavajs-core/src/index.ts",
         "packages/baklavajs-events/src/index.ts",

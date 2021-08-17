@@ -12,7 +12,7 @@ There are two approaches for defining node types:
 This is the recommended way to create node types as it is easier to understand what's happening and provides more type safety when using TypeScript.
 The `defineNode` function is similar to the `defineComponent` function of Vue (hence the name). It expects a single argument, which is an object defining the node type.
 
-You can find all the properties of the object [here](TODO: API Link), but these are the most important ones:
+You can find all the properties of the object <a href="/api/">here</a>, but these are the most important ones:
 
 -   `type`: This is the only required property. The node type is used for saving and loading graphs, for example. It can essentially be seen as the name of your class. Therefore, it has to be unique.
 -   `title`: (_optional_) The default title of the node. If this property isn't specified, the `type` is used as the default title. (Note that users can rename nodes, so don't rely on the title for identifying nodes).
@@ -52,3 +52,38 @@ export default defineNode({
 ```
 
 ## Class-based approach
+
+For nodes that have dynamic inputs and outputs, it is also possible to use a class-based approach similar to BaklavaJS V1.
+However, be aware that this is not type-safe! If possible, always prefer the approach using `defineNode()`
+
+Although it doesn't really make sense to use it in this case, here is the `MathNode` from the example above
+written using the class-based approach:
+
+```js
+import { AbstractNode, NodeInterface, NumberInterface, SelectInterface } from "baklavajs";
+
+export default class MathNode extends AbstractNode {
+    constructor() {
+        super();
+        this.type = "MathNode";
+        this.title = this.type;
+        this.inputs = {};
+        this.outputs = {};
+        this.addInput("number1", new NumberInterface("Number", 1));
+        this.addInput("number2", new NumberInterface("Number", 10));
+        this.addInput("operation", new SelectInterface("Operation", "Add", ["Add", "Subtract"]).setPort(false));
+        this.addOutput("output", new NodeInterface("Output", 0));
+        this.calculate = ({ number1, number2, operation }) => {
+            let output;
+            if (operation === "Add") {
+                output = number1 + number2;
+            } else if (operation === "Subtract") {
+                output = number1 - number2;
+            } else {
+                throw new Error("Unknown operation: " + operation);
+            }
+            return { output };
+        };
+    }
+}
+```

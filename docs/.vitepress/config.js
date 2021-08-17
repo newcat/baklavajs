@@ -4,7 +4,7 @@ module.exports = {
         nav: [
             {
                 text: "API Reference",
-                link: "api/index.html",
+                link: "/api/index.html",
             },
         ],
         sidebar: {
@@ -15,10 +15,12 @@ module.exports = {
                     children: [
                         { text: "Create Nodes", link: "/nodes/nodes" },
                         { text: "Node Interfaces", link: "/nodes/interfaces" },
+                        { text: "Pre-defined Interfaces", link: "/nodes/pre-defined-interfaces" },
                         { text: "Node Lifecycle", link: "/nodes/lifecycle" },
                     ],
                 },
                 { text: "Graph Execution", link: "/execution" },
+                { text: "Plugins", children: [{ text: "Interface Types", link: "/plugins/interface-types" }] },
                 { text: "Migration", link: "/migration" },
             ],
         },

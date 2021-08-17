@@ -15,20 +15,20 @@
         "packages/*"
     ],
     "devDependencies": {
-        "@types/chai": "^4.2.19",
-        "@typescript-eslint/eslint-plugin": "^4.27.0",
-        "@typescript-eslint/parser": "^4.27.0",
+        "@types/chai": "^4.2.21",
+        "@typescript-eslint/eslint-plugin": "^4.29.2",
+        "@typescript-eslint/parser": "^4.29.2",
         "chai": "^4.3.4",
-        "eslint": "^7.29.0",
+        "eslint": "^7.32.0",
         "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-vue": "^7.11.1",
+        "eslint-plugin-vue": "^7.16.0",
         "lerna": "^4.0.0",
-        "prettier": "^2.3.1",
-        "prettier-eslint": "^12.0.0",
+        "prettier": "^2.3.2",
+        "prettier-eslint": "^13.0.0",
         "rimraf": "^3.0.2",
-        "typedoc": "^0.21.0",
-        "typescript": "^4.3.4",
-        "vitepress": "^0.15.6",
-        "vue-eslint-parser": "^7.6.0"
+        "typedoc": "^0.21.5",
+        "typescript": "^4.3.5",
+        "vitepress": "^0.16.1",
+        "vue-eslint-parser": "^7.10.0"
     }
 }
