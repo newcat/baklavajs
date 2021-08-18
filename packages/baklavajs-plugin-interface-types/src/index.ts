@@ -13,6 +13,23 @@ export interface IConversion<I, O> {
 export class NodeInterfaceType<T> {
     public conversions: Array<IConversion<T, any>> = [];
     public constructor(public name: string) {}
+
+    /**
+     * A conversion makes it possible to connect two node interfaces although they have different types.
+     * @param to Type to convert to
+     * @param transformationFunction
+     * Will be called to transform the value from one type to another.
+     * A transformation to convert the type `string` to `number` could be `parseInt`.
+     *
+     * @returns the instance the method was called on for chaining
+     */
+    public addConversion<O>(to: NodeInterfaceType<O>, transformationFunction: (value: T) => O = (value: any) => value) {
+        this.conversions.push({
+            targetType: to.name,
+            transformationFunction,
+        });
+        return this;
+    }
 }
 
 export const setType = <T>(intf: NodeInterface<T>, type: NodeInterfaceType<T>) => {
@@ -57,36 +74,12 @@ export class BaklavaInterfaceTypes {
 
     /**
      * Add a new node interface type
-     * @param name Name of the type
-     * @param color Color of the type. Will be used to color the ports of the node interfaces.
+     * @param {...*} types The types to add
      */
-    public addType<T>(type: NodeInterfaceType<T>): this {
-        this.types.set(type.name, type);
-        return this;
-    }
-
-    /**
-     * A conversion makes it possible to connect two node interfaces although they have different types.
-     * @param from Type to convert from
-     * @param to Type to convert to
-     * @param transformationFunction
-     * Will be called to transform the value from one type to another.
-     * A transformation to convert the type `string` to `number` could be `parseInt`.
-     */
-    public addConversion<I, O>(
-        from: NodeInterfaceType<I>,
-        to: NodeInterfaceType<O>,
-        transformationFunction: (value: I) => O = (value: any) => value,
-    ): this {
-        if (!this.types.has(from.name)) {
-            throw new Error(`Can not add conversion for unknown type "${from}"`);
-        }
-
-        this.types.get(from.name)!.conversions.push({
-            targetType: to.name,
-            transformationFunction,
+    public addTypes(...types: Array<NodeInterfaceType<unknown>>): this {
+        types.forEach((t) => {
+            this.types.set(t.name, t);
         });
-
         return this;
     }
 
