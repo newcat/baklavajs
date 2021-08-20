@@ -113,7 +113,7 @@ export class Engine {
             this.calculateOrder();
         }
 
-        const { calculationOrder, rootNodes, connectionsFromNode } = this.orderCalculationData!;
+        const { calculationOrder, connectionsFromNode } = this.orderCalculationData!;
 
         const results: Map<AbstractNode, any> = new Map();
         for (const n of calculationOrder) {
@@ -131,9 +131,6 @@ export class Engine {
                         n.outputs[k].value = v;
                     }
                 });
-            }
-            if (rootNodes.includes(n)) {
-                results.set(n, r);
             }
             if (connectionsFromNode.has(n)) {
                 connectionsFromNode.get(n)!.forEach((c) => {
@@ -180,11 +177,7 @@ export class Engine {
     }
 
     private calculateNodeTree() {
-        this.orderCalculationData = calculateOrder(
-            this.editor.graph.nodes,
-            this.editor.graph.connections,
-            this.rootNodes,
-        );
+        this.orderCalculationData = calculateOrder(this.editor.graph.nodes, this.editor.graph.connections);
     }
 
     private findInterfaceByTemplateId(nodes: ReadonlyArray<AbstractNode>, templateId: string): NodeInterface | null {

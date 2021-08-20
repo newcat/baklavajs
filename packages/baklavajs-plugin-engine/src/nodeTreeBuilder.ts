@@ -1,13 +1,7 @@
-import { AbstractNode, Graph, GRAPH_NODE_TYPE_PREFIX, IConnection, IGraphNode, NodeInterface } from "@baklavajs/core";
-
-interface ITreeNode {
-    n?: AbstractNode;
-    children: ITreeNode[];
-}
+import { AbstractNode, Graph, GRAPH_NODE_TYPE_PREFIX, IConnection, IGraphNode } from "@baklavajs/core";
 
 export interface IOrderCalculationResult {
     calculationOrder: AbstractNode[];
-    rootNodes: AbstractNode[];
     connectionsFromNode: Map<AbstractNode, IConnection[]>;
 }
 
@@ -54,79 +48,63 @@ export function expandGraph(graph: Graph): IExpandedGraph {
 export function calculateOrder(
     nonExpandedNodes: ReadonlyArray<AbstractNode>,
     nonExpandedConnections: ReadonlyArray<IConnection>,
-    roots?: AbstractNode[],
 ): IOrderCalculationResult {
-    const interfaceToNodes = new Map<NodeInterface, AbstractNode>();
-    const adjacency = new Map<AbstractNode, AbstractNode[]>();
+    /** NodeInterface.id -> parent Node.id */
+    const interfaceIdToNodeId = new Map<string, string>();
+
+    /** Node.id -> set of connected node.id */
+    const adjacency = new Map<string, Set<string>>();
     const connectionsFromNode = new Map<AbstractNode, IConnection[]>();
 
     const { nodes, connections } = getNodesAndConnections(nonExpandedNodes, nonExpandedConnections);
 
     nodes.forEach((n) => {
-        Object.values(n.inputs).forEach((intf) => interfaceToNodes.set(intf, n));
-        Object.values(n.outputs).forEach((intf) => interfaceToNodes.set(intf, n));
+        Object.values(n.inputs).forEach((intf) => interfaceIdToNodeId.set(intf.id, n.id));
+        Object.values(n.outputs).forEach((intf) => interfaceIdToNodeId.set(intf.id, n.id));
     });
 
     // build adjacency list
     nodes.forEach((n) => {
-        const connectionsToCurrentNode = connections.filter((c) => c.to && interfaceToNodes.get(c.to) === n);
-        const connectionsFromCurrentNode = connections.filter((c) => c.from && interfaceToNodes.get(c.from) === n);
-        adjacency.set(
-            n,
-            connectionsToCurrentNode.map((c) => interfaceToNodes.get(c.from)!),
+        const connectionsFromCurrentNode = connections.filter(
+            (c) => c.from && interfaceIdToNodeId.get(c.from.id) === n.id,
         );
+        adjacency.set(n.id, new Set(connectionsFromCurrentNode.map((c) => interfaceIdToNodeId.get(c.to.id)!)));
         connectionsFromNode.set(n, connectionsFromCurrentNode);
     });
 
-    // DFS for initial tree building and cycle detection
-    const outputs: AbstractNode[] = roots || nodes.filter((n) => getOutputInterfacesWithPort(n).length === 0);
-    const root: ITreeNode = {
-        children: outputs.map((o) => ({ n: o, children: [] })),
+    // startNodes are all nodes that don't have any input connected
+    const startNodes = nodes.slice();
+    connections.forEach((c) => {
+        const index = startNodes.findIndex((n) => interfaceIdToNodeId.get(c.to.id) === n.id);
+        if (index >= 0) {
+            startNodes.splice(index, 1);
+        }
+    });
+
+    const sorted: AbstractNode[] = [];
+
+    while (startNodes.length > 0) {
+        const n = startNodes.pop()!;
+        sorted.push(n);
+        const nodesConnectedFromN = adjacency.get(n.id)!;
+        while (nodesConnectedFromN.size > 0) {
+            const mId: string = nodesConnectedFromN.values().next()!.value;
+            nodesConnectedFromN.delete(mId);
+            if (Array.from(adjacency.values()).every((connectedNodes) => !connectedNodes.has(mId))) {
+                const m = nodes.find((node) => node.id === mId)!;
+                startNodes.push(m);
+            }
+        }
+    }
+
+    if (Array.from(adjacency.values()).some((c) => c.size > 0)) {
+        throw new Error("Cycle detected");
+    }
+
+    return {
+        calculationOrder: sorted,
+        connectionsFromNode,
     };
-
-    findDescendants(root, [], adjacency);
-
-    // BFS with stack to find calculation order
-    const queue: ITreeNode[] = [];
-    const stack: Array<AbstractNode | undefined> = [];
-    queue.push(root);
-
-    while (queue.length > 0) {
-        const current = queue.shift()!;
-        current.children.forEach((c) => {
-            stack.push(c.n);
-            queue.push(c);
-        });
-    }
-
-    // Pop stack to reverse the order
-    const calculationOrder: AbstractNode[] = [];
-    while (stack.length > 0) {
-        const n = stack.pop();
-        if (n && !calculationOrder.includes(n)) {
-            calculationOrder.push(n);
-        }
-    }
-    return { calculationOrder, rootNodes: outputs, connectionsFromNode };
-}
-
-function findDescendants(tn: ITreeNode, ancestors: AbstractNode[], adjacency: Map<AbstractNode, AbstractNode[]>) {
-    for (const c of tn.children) {
-        if (ancestors.includes(c.n!)) {
-            throw new Error("Cycle detected");
-        }
-
-        ancestors.unshift(c.n!);
-        c.children = c.children.concat(
-            adjacency.get(c.n!)?.map((n) => ({ n, children: new Array<ITreeNode>() })) ?? [],
-        );
-        findDescendants(c, ancestors, adjacency);
-        ancestors.shift();
-    }
-}
-
-function getOutputInterfacesWithPort(node: AbstractNode): NodeInterface[] {
-    return Object.values(node.outputs).filter((output) => output.port) as NodeInterface[];
 }
 
 export function containsCycle(nodes: ReadonlyArray<AbstractNode>, connections: ReadonlyArray<IConnection>): boolean {
