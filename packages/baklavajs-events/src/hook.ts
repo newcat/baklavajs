@@ -15,12 +15,12 @@ export abstract class Hook<I, O, E> extends Subscribable<HookTap<I, O, E>> {
 }
 
 /** This class will run the taps one after each other and pass the data from every subscriber to another. */
-export class SequentialHook<T, E> extends Hook<T, T, E> {
-    public execute(data: T): T {
-        let currentValue = data;
+export class SequentialHook<I, E, O extends I = I> extends Hook<I, O, E> {
+    public execute(data: I): O {
+        let currentValue: O = data as O;
         for (const callback of this.listeners) {
             currentValue = callback(currentValue, this.entity);
         }
-        return currentValue;
+        return currentValue as O;
     }
 }

@@ -143,32 +143,6 @@ export class Engine {
         return results;
     }
 
-    private checkConnection(from: NodeInterface, to: NodeInterface): boolean {
-        const { nodes, connections } = expandGraph(this.editor.graph);
-
-        if (from.templateId) {
-            const newFrom = this.findInterfaceByTemplateId(nodes, from.templateId);
-            if (!newFrom) {
-                return true;
-            }
-            from = newFrom;
-        }
-
-        if (to.templateId) {
-            const newTo = this.findInterfaceByTemplateId(nodes, to.templateId);
-            if (!newTo) {
-                return true;
-            }
-            to = newTo;
-        }
-
-        const dc = { from, to, id: "dc", destructed: false, isInDanger: false } as IConnection;
-
-        const copy = connections.concat([dc]);
-        copy.filter((conn) => conn.to !== to);
-        return containsCycle(nodes, copy);
-    }
-
     private onChange(recalculateOrder: boolean) {
         this.recalculateOrder = this.recalculateOrder || recalculateOrder;
         if (this.calculateOnChange && !this.calculationInProgress) {
@@ -178,16 +152,5 @@ export class Engine {
 
     private calculateNodeTree() {
         this.orderCalculationData = calculateOrder(this.editor.graph.nodes, this.editor.graph.connections);
-    }
-
-    private findInterfaceByTemplateId(nodes: ReadonlyArray<AbstractNode>, templateId: string): NodeInterface | null {
-        for (const n of nodes) {
-            for (const intf of [...Object.values(n.inputs), ...Object.values(n.outputs)]) {
-                if (intf.templateId === templateId) {
-                    return intf;
-                }
-            }
-        }
-        return null;
     }
 }
