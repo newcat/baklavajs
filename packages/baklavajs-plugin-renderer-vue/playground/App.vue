@@ -31,7 +31,7 @@ import { defineComponent } from "vue";
 
 import { NodeInstanceOf } from "@baklavajs/core";
 import { EditorComponent, SelectInterface, useBaklava, Commands } from "../src";
-import { Engine } from "@baklavajs/plugin-engine";
+import { DependencyEngine } from "@baklavajs/plugin-engine";
 import { BaklavaInterfaceTypes } from "@baklavajs/plugin-interface-types";
 
 import CustomNodeRenderer from "./CustomNodeRenderer";
@@ -59,7 +59,7 @@ export default defineComponent({
 
         baklavaView.settings.enableMinimap = true;
 
-        const engine = new Engine(editor.value, true);
+        const engine = new DependencyEngine(editor.value, true);
         engine.events.calculated.subscribe(token, (r) => {
             for (const v of r.values()) {
                 console.log(v);

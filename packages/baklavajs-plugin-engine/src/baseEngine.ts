@@ -1,6 +1,13 @@
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
-import { AbstractNode, NodeInterface, IConnection, Editor, GRAPH_NODE_TYPE_PREFIX } from "@baklavajs/core";
-import { containsCycle, expandGraph } from "./nodeTreeBuilder";
+import {
+    AbstractNode,
+    NodeInterface,
+    IConnection,
+    Editor,
+    GRAPH_NODE_TYPE_PREFIX,
+    INodeUpdateEventData,
+} from "@baklavajs/core";
+import { calculateOrder, containsCycle, expandGraph, IOrderCalculationResult } from "./nodeTreeBuilder";
 
 export type CalculationResult = Map<string, Map<string, any>>;
 
@@ -23,11 +30,17 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         >(this),
     };
 
+    /** This should be set to "true" while updating the graph with the calculation results */
+    public disableCalculateOnChange = false;
+
+    protected order?: IOrderCalculationResult;
+    protected recalculateOrder = false;
+
     /**
      * Construct a new Engine plugin
      * @param calculateOnChange Whether to automatically calculate all nodes when any node interface is changed.
      */
-    public constructor(protected editor: Editor, private calculateOnChange = false) {
+    public constructor(protected editor: Editor, protected calculateOnChange = false) {
         this.editor.graphEvents.checkConnection.subscribe(this, (c) => {
             if (!this.checkConnection(c.from, c.to)) {
                 return false;
@@ -36,18 +49,18 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
 
         this.editor.nodeEvents.update.subscribe(this, (data, node) => {
             if (node.type.startsWith(GRAPH_NODE_TYPE_PREFIX) && data === null) {
-                this.onChange(true);
+                this.internalOnChange(true);
             } else {
-                this.onChange(false, node);
+                this.internalOnChange(false, node, data!);
             }
         });
 
         this.editor.graphEvents.addNode.subscribe(this, () => {
-            this.onChange(true);
+            this.internalOnChange(true);
         });
 
         this.editor.graphEvents.removeNode.subscribe(this, () => {
-            this.onChange(true);
+            this.internalOnChange(true);
         });
 
         this.editor.graphEvents.checkConnection.subscribe(this, (c) => {
@@ -57,11 +70,11 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         });
 
         this.editor.graphEvents.addConnection.subscribe(this, () => {
-            this.onChange(true);
+            this.internalOnChange(true);
         });
 
         this.editor.graphEvents.removeConnection.subscribe(this, () => {
-            this.onChange(true);
+            this.internalOnChange(true);
         });
     }
 
@@ -79,6 +92,10 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
     ): Promise<CalculationResult | null> {
         if (this.events.beforeCalculate.emit(calculationData)) {
             return null;
+        }
+
+        if (this.recalculateOrder) {
+            this.calculateOrder();
         }
 
         const result = await this.runCalculation(calculationData, ...args);
@@ -118,16 +135,50 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         return containsCycle(nodes, copy);
     }
 
+    /**
+     * Force the engine to recalculate the node execution order.
+     * This is normally done automatically. Use this method if the
+     * default change detection does not work in your scenario.
+     */
+    public calculateOrder(): void {
+        this.order = calculateOrder(this.editor.graph.nodes, this.editor.graph.connections);
+        this.recalculateOrder = false;
+    }
+
     protected async calculateWithoutData(...args: CalculationArgs): Promise<CalculationResult | null> {
         const calculationData = this.hooks.gatherCalculationData.execute(undefined);
         return await this.calculate(calculationData, ...args);
+    }
+
+    protected validateNodeCalculationOutput(node: AbstractNode, output: any): void {
+        if (typeof output !== "object") {
+            throw new Error(`Invalid calculation return value from node ${node.id} (type ${node.type})`);
+        }
+        Object.keys(node.outputs).forEach((k) => {
+            if (!(k in output)) {
+                throw new Error(
+                    `Calculation return value from node ${node.id} (type ${node.type}) is missing key "${k}"`,
+                );
+            }
+        });
     }
 
     protected abstract runCalculation(
         calculationData: CalculationData,
         ...calculationArgs: CalculationArgs
     ): Promise<CalculationResult>;
-    protected abstract onChange(recalculateOrder: boolean, updatedNode?: AbstractNode): void;
+
+    protected abstract onChange(
+        recalculateOrder: boolean,
+        updatedNode?: AbstractNode,
+        data?: INodeUpdateEventData,
+    ): void;
+
+    private internalOnChange(recalculateOrder: boolean, updatedNode?: AbstractNode, data?: INodeUpdateEventData) {
+        if (!this.disableCalculateOnChange) {
+            this.onChange(recalculateOrder, updatedNode, data);
+        }
+    }
 
     private findInterfaceByTemplateId(nodes: ReadonlyArray<AbstractNode>, templateId: string): NodeInterface | null {
         for (const n of nodes) {

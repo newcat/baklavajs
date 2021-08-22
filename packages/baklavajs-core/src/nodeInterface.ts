@@ -36,12 +36,6 @@ export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTap
     /** Whether to hide the node interface in the UI */
     public hidden = false;
 
-    /**
-     * Whether this interface can receive data through multiple connections.
-     * Only affects input interfaces.
-     */
-    public allowMultipleConnections = false;
-
     /** The component which will be displayed when the interface is not connected or port === false */
     public component?: any;
 
@@ -111,11 +105,6 @@ export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTap
 
     public setHidden(value: boolean): this {
         this.hidden = value;
-        return this;
-    }
-
-    public setAllowMultipleConnections(value: T extends Array<any> ? boolean : false): this {
-        this.allowMultipleConnections = value;
         return this;
     }
 

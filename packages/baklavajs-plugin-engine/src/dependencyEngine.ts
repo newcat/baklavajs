@@ -1,11 +1,11 @@
-import { AbstractNode, Connection, Editor } from "@baklavajs/core";
+import { Connection, Editor, NodeInterface } from "@baklavajs/core";
 import { BaseEngine, CalculationResult } from "./baseEngine";
-import { calculateOrder, IOrderCalculationResult } from "./nodeTreeBuilder";
+
+export const allowMultipleConnections = <T extends Array<any>>(intf: NodeInterface<T>) => {
+    intf.allowMultipleConnections = true;
+};
 
 export class DependencyEngine<CalculationData = any> extends BaseEngine<CalculationData, []> {
-    private orderCalculationData?: IOrderCalculationResult;
-    private recalculateOrder = false;
-
     public constructor(editor: Editor, calculateOnChange = false) {
         super(editor, calculateOnChange);
         this.editor.graphEvents.addConnection.subscribe(this, (c, graph) => {
@@ -19,53 +19,64 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
         });
     }
 
-    /**
-     * Force the engine to recalculate the node execution order.
-     * This is normally done automatically. Use this method if the
-     * default change detection does not work in your scenario.
-     */
-    public calculateOrder(): void {
-        this.orderCalculationData = calculateOrder(this.editor.graph.nodes, this.editor.graph.connections);
-        this.recalculateOrder = false;
-    }
-
     protected async runCalculation(calculationData: CalculationData): Promise<CalculationResult> {
-        if (this.recalculateOrder) {
-            this.calculateOrder();
+        if (!this.order) {
+            throw new Error("runCalculation called without order being calculated before");
         }
 
-        const { calculationOrder, connectionsFromNode } = this.orderCalculationData!;
+        const { calculationOrder, connectionsFromNode } = this.order;
 
-        const results: Map<AbstractNode, any> = new Map();
+        // gather all values of the unconnected inputs
+        // maps NodeInterface.id -> value
+        // the reason it is done here and not during calculation is that this
+        // way we prevent race conditions because calculations can be async
+        const inputValues = new Map<string, any>();
+        for (const n of calculationOrder) {
+            Object.values(n.inputs).forEach((ni) => {
+                if (ni.connectionCount === 0) {
+                    inputValues.set(ni.id, ni.value);
+                }
+            });
+        }
+
+        const result: CalculationResult = new Map();
         for (const n of calculationOrder) {
             if (!n.calculate) {
                 continue;
             }
-            const inputs: Record<string, any> = {};
+
+            const inputsForNode: Record<string, any> = {};
             Object.entries(n.inputs).forEach(([k, v]) => {
-                inputs[k] = v.value;
+                if (!inputValues.has(v.id)) {
+                    throw new Error(
+                        `Could not find value for interface ${v.id}\n` +
+                            "This is likely a Baklava internal issue. Please report it to GitHub.",
+                    );
+                }
+                inputsForNode[k] = inputValues.get(v.id);
             });
-            const r = await n.calculate(inputs, calculationData);
-            if (typeof r === "object") {
-                Object.entries(r).forEach(([k, v]) => {
-                    if (n.outputs[k]) {
-                        n.outputs[k].value = v;
-                    }
-                });
-            }
+
+            const r = await n.calculate(inputsForNode, calculationData);
+
+            // validate return
+            this.validateNodeCalculationOutput(n, r);
+
+            result.set(n.id, new Map(Object.entries(r)));
             if (connectionsFromNode.has(n)) {
                 connectionsFromNode.get(n)!.forEach((c) => {
-                    c.to.value = (c as Connection).hooks.transfer.execute(c.from.value);
+                    console.log("Setting", c.to.id);
+                    inputValues.set(c.to.id, (c as Connection).hooks.transfer.execute(c.from.value));
                 });
             }
         }
 
-        // TODO:
-        return new Map();
+        return result;
     }
 
     protected onChange(recalculateOrder: boolean): void {
         this.recalculateOrder = recalculateOrder || this.recalculateOrder;
-        this.calculateWithoutData();
+        if (this.calculateOnChange) {
+            this.calculateWithoutData();
+        }
     }
 }

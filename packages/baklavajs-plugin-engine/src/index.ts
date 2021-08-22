@@ -2,5 +2,6 @@
  * @module @baklavajs/plugin-engine
  */
 
-export * from "./engineOld";
+export * from "./baseEngine";
+export * from "./dependencyEngine";
 export * from "./nodeTreeBuilder";
