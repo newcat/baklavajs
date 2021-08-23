@@ -3,6 +3,8 @@ import { AbstractNode, Graph, GRAPH_NODE_TYPE_PREFIX, IConnection, IGraphNode } 
 export interface IOrderCalculationResult {
     calculationOrder: AbstractNode[];
     connectionsFromNode: Map<AbstractNode, IConnection[]>;
+    /** NodeInterface.id -> parent Node.id */
+    interfaceIdToNodeId: Map<string, string>;
 }
 
 export interface IExpandedGraph {
@@ -104,6 +106,7 @@ export function calculateOrder(
     return {
         calculationOrder: sorted,
         connectionsFromNode,
+        interfaceIdToNodeId,
     };
 }
 

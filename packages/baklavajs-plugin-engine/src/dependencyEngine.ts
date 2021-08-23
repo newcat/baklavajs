@@ -64,8 +64,16 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
             result.set(n.id, new Map(Object.entries(r)));
             if (connectionsFromNode.has(n)) {
                 connectionsFromNode.get(n)!.forEach((c) => {
-                    console.log("Setting", c.to.id);
-                    inputValues.set(c.to.id, (c as Connection).hooks.transfer.execute(c.from.value));
+                    const v = (c as Connection).hooks.transfer.execute(c.from.value);
+                    if (c.to.allowMultipleConnections) {
+                        if (inputValues.has(c.to.id)) {
+                            (inputValues.get(c.to.id)! as Array<any>).push(v);
+                        } else {
+                            inputValues.set(c.to.id, [v]);
+                        }
+                    } else {
+                        inputValues.set(c.to.id, v);
+                    }
                 });
             }
         }
