@@ -83,7 +83,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
      * @param node Instance of a node
      * @returns Instance of the node or undefined if the node was not added
      */
-    public addNode(node: AbstractNode): AbstractNode | undefined {
+    public addNode<T extends AbstractNode>(node: T): T | undefined {
         if (this.events.beforeAddNode.emit(node)) {
             return;
         }

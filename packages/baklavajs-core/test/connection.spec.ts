@@ -1,15 +1,10 @@
-import chai from "chai";
-const expect = chai.expect;
+import { expect } from "chai";
 import { NodeInterface, Connection } from "../src";
-import TestNode from "./TestNode";
 
 describe("Connection", () => {
-
     it("properly constructs and destructs", () => {
-        const node = new TestNode();
-        const ni1 = new NodeInterface(node, false);
-        ni1.value = "Test";
-        const ni2 = new NodeInterface(node, true);
+        const ni1 = new NodeInterface("Ni1", "foo");
+        const ni2 = new NodeInterface("Ni2", "bar");
         const c = new Connection(ni1, ni2);
         expect(ni1.connectionCount).to.equal(1);
         expect(ni2.connectionCount).to.equal(1);
@@ -18,5 +13,4 @@ describe("Connection", () => {
         expect(ni1.connectionCount).to.equal(0);
         expect(ni2.connectionCount).to.equal(0);
     });
-
 });
