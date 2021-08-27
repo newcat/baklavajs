@@ -35,6 +35,9 @@ You can find the documentation here: https://newcat.github.io/baklavajs
 
 ## Sponsors
 
+### Top Sponsors
+<a href="https://github.com/ThePixelDeveloper">ThePixelDeveloper</a>
+
 ### Continuous Sponsors
 <a href="https://github.com/finchMFG">finchMFG</a>&nbsp;&middot;
 <a href="https://github.com/LittleMouseGames">LittleMouseGames</a>
