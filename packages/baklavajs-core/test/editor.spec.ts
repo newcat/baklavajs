@@ -11,6 +11,8 @@ describe("Editor", () => {
         const e = new Editor();
         e.registerNodeType(TestNode);
         expect(e.nodeTypes.get("TestNode")).to.eql({
+            category: "default",
+            title: "TestNode",
             type: TestNode,
         });
     });
