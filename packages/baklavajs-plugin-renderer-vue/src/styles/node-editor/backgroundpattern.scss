@@ -1,7 +1,0 @@
-@mixin backgroundpattern() {
-    background-color:$color-pattern-default;
-    background-image: linear-gradient($color-pattern-black 2px, transparent 2px),
-        linear-gradient(90deg, $color-pattern-black 2px, transparent 2px),
-        linear-gradient($color-pattern-line 1px, transparent 1px),
-        linear-gradient(90deg, $color-pattern-line 1px, transparent 1px);
-}

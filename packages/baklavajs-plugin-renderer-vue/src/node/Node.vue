@@ -1,5 +1,13 @@
 <template>
-    <div :id="node.id" ref="el" :class="classes" :style="styles" :data-node-type="node.type" @pointerdown="select">
+    <div
+        :id="node.id"
+        ref="el"
+        class="baklava-node"
+        :class="classes"
+        :style="styles"
+        :data-node-type="node.type"
+        @pointerdown="select"
+    >
         <div class="__title" @pointerdown.self.stop="startDrag">
             <template v-if="!renaming">
                 <div class="__title-label">
@@ -21,7 +29,7 @@
                 ref="renameInputEl"
                 v-model="tempName"
                 type="text"
-                class="dark-input"
+                class="baklava-input"
                 placeholder="Node Name"
                 @blur="doneRenaming"
                 @keydown.enter="doneRenaming"
@@ -89,7 +97,6 @@ export default defineComponent({
         });
 
         const classes = computed(() => ({
-            "node": true,
             "--selected": props.selected,
             "--dragging": dragMove.dragging.value,
             "--two-column": !!props.node.twoColumn,

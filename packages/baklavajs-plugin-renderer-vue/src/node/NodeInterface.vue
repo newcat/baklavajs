@@ -1,28 +1,10 @@
 <template>
-    <div
-        :id="intf.id"
-        ref="el"
-        :class="classes"
-    >
-        <div
-            v-if="intf.port"
-            class="__port"
-            @mouseover="startHover"
-            @mouseout="endHover"
-        />
-        <span
-            v-if="intf.connectionCount > 0 || !intf.component"
-            class="align-middle"
-        >
+    <div :id="intf.id" ref="el" class="baklava-node-interface" :class="classes">
+        <div v-if="intf.port" class="__port" @mouseover="startHover" @mouseout="endHover" />
+        <span v-if="intf.connectionCount > 0 || !intf.component" class="align-middle">
             {{ intf.name }}
         </span>
-        <component
-            :is="intf.component"
-            v-else
-            v-model="intf.value"
-            :node="node"
-            :intf="intf"
-        />
+        <component :is="intf.component" v-else v-model="intf.value" :node="node" :intf="intf" />
     </div>
 </template>
 
@@ -50,7 +32,6 @@ export default defineComponent({
 
         const isConnected = computed(() => props.intf.connectionCount > 0);
         const classes = computed(() => ({
-            "node-interface": true,
             "--input": props.intf.isInput,
             "--output": !props.intf.isInput,
             "--connected": isConnected.value,

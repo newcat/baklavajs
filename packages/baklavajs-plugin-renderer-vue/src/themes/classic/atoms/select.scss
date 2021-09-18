@@ -1,7 +1,7 @@
-.dark-select {
+.baklava-select {
     width: 100%;
     position: relative;
-    color: $color-control-dark-foreground;
+    color: var(--baklava-control-color-foreground);
 
     &.--open > .__selected {
         border-bottom-left-radius: 0;
@@ -12,20 +12,20 @@
     }
 
     & > .__selected {
-        background-color: $color-control-dark-background;
+        background-color: var(--baklava-control-color-background);
         padding: 0.35em 0.75em;
-        border-radius: $border-radius-control;
-        transition: background $visual-transition;
+        border-radius: var(--baklava-control-border-radius);
+        transition: background var(--baklava-visual-transition);
         min-height: 1.7em;
         display: flex;
         align-items: center;
         cursor: pointer;
 
         &:hover {
-            background: $color-control-dark-hover;
+            background: var(--baklava-control-color-hover);
         }
         &:active {
-            background: $color-control-dark-active;
+            background: var(--baklava-control-color-active);
         }
 
         & > .__text {
@@ -46,8 +46,8 @@
             height: 18px;
 
             & path {
-                stroke: $color-control-dark-foreground;
-                fill: $color-control-dark-foreground;
+                stroke: var(--baklava-control-color-foreground);
+                fill: var(--baklava-control-color-foreground);
             }
         }
     }
@@ -58,9 +58,9 @@
         left: 0;
         right: 0;
         z-index: 10;
-        background-color: #000000aa;
+        background-color: var(--baklava-context-menu-background);
         filter: drop-shadow(0 0 4px black);
-        border-radius: 0 0 $border-radius-control $border-radius-control;
+        border-radius: 0 0 var(--baklava-control-border-radius) var(--baklava-control-border-radius);
 
         max-height: 15em;
         overflow-y: scroll;
@@ -77,17 +77,17 @@
             &:not(.--header):not(.--active) {
                 cursor: pointer;
                 &:hover {
-                    background: $color-control-dark-hover;
+                    background: var(--baklava-control-color-hover);
                 }
             }
 
             &.--active {
-                background: $color-primary;
+                background: var(--baklava-control-color-primary);
             }
 
             &.--header {
-                color: gray;
-                border-bottom: 1px solid gray;
+                color: var(--baklava-control-color-disabled-foreground);
+                border-bottom: 1px solid var(--baklava-control-color-disabled-foreground);
                 padding: 0.5em 0.35em;
                 padding-left: 1em;
             }

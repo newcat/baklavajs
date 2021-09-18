@@ -1,10 +1,5 @@
 <template>
-    <div
-        ref="el"
-        :class="['dark-select', { '--open': open }]"
-        :title="intf.name"
-        @click="open = !open"
-    >
+    <div ref="el" class="baklava-select" :class="{ '--open': open }" :title="intf.name" @click="open = !open">
         <div class="__selected">
             <div class="__text">
                 {{ selectedText }}
@@ -14,10 +9,7 @@
             </div>
         </div>
         <transition name="slide-fade">
-            <div
-                v-show="open"
-                class="__dropdown"
-            >
+            <div v-show="open" class="__dropdown">
                 <div class="item --header">
                     {{ intf.name }}
                 </div>
@@ -37,7 +29,7 @@
 <script lang="ts">
 import { onClickOutside } from "@vueuse/core";
 import { computed, defineComponent, ref } from "vue";
-import Arrow from "../icons/Arrow.vue";
+import Arrow from "../../icons/ChevronDown.vue";
 import type { SelectInterface, SelectInterfaceItem } from "./SelectInterface";
 
 export default defineComponent({

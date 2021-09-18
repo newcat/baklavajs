@@ -1,19 +1,19 @@
-.node {
+.baklava-node {
     max-width: 20rem;
-    background: $color-node-background;
-    color: $color-node-foreground;
-    border-radius: $border-radius-node;
+    background: var(--baklava-node-color-background);
+    color: var(--baklava-node-color-foreground);
+    border-radius: var(--baklava-node-border-radius);
     position: absolute;
     filter: drop-shadow(0 0 3px #000000cc);
-    transition: box-shadow $visual-transition, filter $visual-transition;
+    transition: box-shadow var(--baklava-visual-transition), filter var(--baklava-visual-transition);
 
     &:hover {
-        box-shadow: 0 0 0 0.35px $color-node-selected;
+        box-shadow: 0 0 0 0.35px var(--baklava-node-color-selected);
     }
 
     &.--selected {
         z-index: 5;
-        box-shadow: 0 0 0 1px $color-node-selected;
+        box-shadow: 0 0 0 1px var(--baklava-node-color-selected);
     }
 
     &.--dragging {
@@ -26,10 +26,10 @@
 
     & > .__title {
         display: flex;
-        background: $color-node-title-background;
-        color: $color-node-title-foreground;
+        background: var(--baklava-node-title-color-background);
+        color: var(--baklava-node-title-color-foreground);
         padding: 0.4em 0.75em;
-        border-radius: $border-radius-node $border-radius-node 0 0;
+        border-radius: var(--baklava-node-border-radius) var(--baklava-node-border-radius) 0 0;
         cursor: grab;
 
         & > *:first-child {
@@ -47,8 +47,8 @@
     }
 
     &[data-node-type^="__baklava_"] > .__title {
-        background: $color-group-node-title-background;
-        color: $color-group-node-title-foreground;
+        background: var(--baklava-group-node-title-color-background);
+        color: var(--baklava-group-node-title-color-foreground);
     }
 
     & > .__content {

@@ -1,0 +1,42 @@
+.baklava-slider {
+    background: var(--baklava-control-color-background);
+    color: var(--baklava-control-color-foreground);
+    border-radius: var(--baklava-control-border-radius);
+    position: relative;
+    cursor: pointer;
+
+    & > .__content {
+        display: flex;
+        position: relative;
+        z-index: 1;
+
+        & > .__label,
+        & > .__value {
+            flex: 1 1 auto;
+            margin: 0.35em 0;
+            padding: 0 0.5em;
+            text-overflow: ellipsis;
+        }
+
+        & > .__value {
+            text-align: right;
+        }
+
+        & > input {
+            background-color: var(--baklava-control-color-background);
+            color: var(--baklava-control-color-foreground);
+            caret-color: var(--baklava-control-color-primary);
+            padding: 0.35em;
+            width: 100%;
+        }
+    }
+
+    & > .__slider {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        background-color: var(--baklava-control-color-primary);
+        border-radius: var(--baklava-control-border-radius);
+    }
+}

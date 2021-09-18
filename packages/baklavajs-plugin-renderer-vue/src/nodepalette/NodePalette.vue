@@ -1,9 +1,6 @@
 <template>
-    <div class="node-palette">
-        <section
-            v-for="c in categories"
-            :key="c.name"
-        >
+    <div class="baklava-node-palette">
+        <section v-for="c in categories" :key="c.name">
             <h1 v-if="c.name !== 'default'">
                 {{ c.name }}
             </h1>
@@ -17,15 +14,8 @@
         </section>
     </div>
     <transition name="fade">
-        <div
-            v-if="draggedNode"
-            class="dragged-node"
-            :style="draggedNodeStyles"
-        >
-            <PaletteEntry
-                :type="draggedNode.type"
-                :title="draggedNode.nodeInformation.title"
-            />
+        <div v-if="draggedNode" class="baklava-dragged-node" :style="draggedNodeStyles">
+            <PaletteEntry :type="draggedNode.type" :title="draggedNode.nodeInformation.title" />
         </div>
     </transition>
 </template>
@@ -133,7 +123,7 @@ export default defineComponent({
             document.addEventListener("pointerup", onDragEnd);
         };
 
-        return { draggedNode, categories, draggedNodeStyles, onDragStart };
+        return { draggedNode, categories, draggedNodeStyles, onDragStart, mouseX, mouseY };
     },
 });
 </script>

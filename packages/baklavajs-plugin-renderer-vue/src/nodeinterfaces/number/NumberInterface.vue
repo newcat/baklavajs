@@ -1,45 +1,29 @@
 <template>
-    <div class="dark-num-input">
-        <div
-            class="__button --dec"
-            @click="decrement"
-        >
+    <div class="baklava-num-input">
+        <div class="__button --dec" @click="decrement">
             <i-arrow />
         </div>
-        <div
-            v-if="!editMode"
-            class="__content"
-            @click="enterEditMode"
-        >
-            <div
-                class="__label"
-                :title="intf.name"
-            >
+        <div v-if="!editMode" class="__content" @click="enterEditMode">
+            <div class="__label" :title="intf.name">
                 {{ intf.name }}
             </div>
             <div class="__value">
                 {{ stringRepresentation }}
             </div>
         </div>
-        <div
-            v-else
-            class="__content"
-        >
+        <div v-else class="__content">
             <input
                 ref="inputEl"
                 v-model="tempValue"
                 type="number"
-                class="dark-input"
+                class="baklava-input"
                 :class="{ '--invalid': invalid }"
                 style="text-align: right"
                 @blur="leaveEditMode"
                 @keydown.enter="leaveEditMode"
             >
         </div>
-        <div
-            class="__button --inc"
-            @click="increment"
-        >
+        <div class="__button --inc" @click="increment">
             <i-arrow />
         </div>
     </div>
@@ -47,7 +31,7 @@
 
 <script lang="ts">
 import { defineComponent, Ref, toRef } from "vue";
-import Arrow from "../icons/Arrow.vue";
+import Arrow from "../../icons/ChevronDown.vue";
 import { useBaseNumericInterface } from "../baseNumericInterface";
 import type { NumberInterface } from "./NumberInterface";
 

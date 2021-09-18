@@ -1,4 +1,4 @@
-.sidebar {
+.baklava-sidebar {
     position: absolute;
     height: 100%;
     width: 25%;
@@ -8,8 +8,8 @@
     right: 0;
     z-index: 1000;
 
-    background-color: $color-sidebar-background;
-    color: $color-sidebar-foreground;
+    background-color: var(--baklava-sidebar-color-background);
+    color: var(--baklava-sidebar-color-foreground);
     box-shadow: none;
 
     overflow-x: hidden;
@@ -30,6 +30,11 @@
         height: 100%;
         width: 4px;
         cursor: col-resize;
+    }
+
+    & .__header {
+        display: flex;
+        align-items: center;
     }
 
     & .__close {

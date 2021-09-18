@@ -1,12 +1,6 @@
-.node-interface {
+.baklava-node-interface {
     padding: 0.25em 0;
     position: relative;
-
-    @each $name, $value in $iftypes {
-        &.--iftype-#{$name} .__port {
-            background: $value !important;
-        }
-    }
 
     .__port {
         position: absolute;
@@ -25,7 +19,6 @@
         .__port {
             left: -1.1em;
         }
-
     }
     &.--output {
         text-align: right;
@@ -34,7 +27,5 @@
         .__port {
             right: -1.1em;
         }
-
     }
-
 }

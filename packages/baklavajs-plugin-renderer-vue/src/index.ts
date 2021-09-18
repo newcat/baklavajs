@@ -29,4 +29,4 @@ export * from "./utility";
 
 export * as Commands from "./commandList";
 
-import "./styles/all.scss";
+import "./themes/classic/all.scss";

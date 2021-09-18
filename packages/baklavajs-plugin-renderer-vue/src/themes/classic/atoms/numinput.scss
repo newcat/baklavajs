@@ -1,7 +1,7 @@
-.dark-num-input {
-    background: $color-control-dark-background;
-    color: $color-control-dark-foreground;
-    border-radius: $border-radius-control;
+.baklava-num-input {
+    background: var(--baklava-control-color-background);
+    color: var(--baklava-control-color-foreground);
+    border-radius: var(--baklava-control-border-radius);
     width: 100%;
     display: grid;
     grid-template-columns: 20px 1fr 20px;
@@ -12,14 +12,14 @@
         width: 20px;
         justify-content: center;
         align-items: center;
-        transition: background $visual-transition;
+        transition: background var(--baklava-visual-transition);
         cursor: pointer;
 
         &:hover {
-            background-color: $color-control-dark-hover;
+            background-color: var(--baklava-control-color-hover);
         }
         &:active {
-            background-color: $color-control-dark-active;
+            background-color: var(--baklava-control-color-active);
         }
 
         &.--dec {
@@ -39,8 +39,8 @@
         }
 
         & path {
-            stroke: $color-control-dark-foreground;
-            fill: $color-control-dark-foreground;
+            stroke: var(--baklava-control-color-foreground);
+            fill: var(--baklava-control-color-foreground);
         }
     }
 
@@ -51,13 +51,13 @@
         max-width: 100%;
         min-width: 0;
         align-items: center;
-        transition: background-color $visual-transition;
+        transition: background-color var(--baklava-visual-transition);
 
         &:hover {
-            background-color: $color-control-dark-hover;
+            background-color: var(--baklava-control-color-hover);
         }
         &:active {
-            background-color: $color-control-dark-active;
+            background-color: var(--baklava-control-color-active);
         }
 
         & > .__label,
@@ -77,9 +77,9 @@
         }
 
         & > input {
-            background-color: $color-control-dark-background;
-            color: $color-control-dark-foreground;
-            caret-color: $color-primary;
+            background-color: var(--baklava-control-color-background);
+            color: var(--baklava-control-color-foreground);
+            caret-color: var(--baklava-control-color-primary);
             padding: 0.35em;
             width: 100%;
         }

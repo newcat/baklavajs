@@ -1,4 +1,4 @@
-.toolbar {
+.baklava-toolbar {
     position: absolute;
     left: 0;
     top: 0;
@@ -6,22 +6,22 @@
     height: 60px;
     z-index: 3;
     padding: 0.5rem 2rem;
-    background: #0003;
-    color: white;
+    background: var(--baklava-toolbar-background);
+    color: var(--baklava-toolbar-foreground);
     display: flex;
     align-items: center;
 }
 
-.toolbar-entry {
+.baklava-toolbar-entry {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
 }
 
-.toolbar-button {
-    color: white;
+.baklava-toolbar-button {
+    color: var(--baklava-toolbar-foreground);
     background: none;
     border: none;
-    transition: color $visual-transition;
+    transition: color var(--baklava-visual-transition);
 }
 
 .toolbar-button:not([disabled]) {
@@ -29,9 +29,9 @@
 }
 
 .toolbar-button:hover:not([disabled]) {
-    color: $color-primary;
+    color: var(--baklava-control-color-primary);
 }
 
 .toolbar-button[disabled] {
-    color: gray;
+    color: var(--baklava-control-color-disabled-foreground);
 }

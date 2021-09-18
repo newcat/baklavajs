@@ -1,0 +1,46 @@
+:root {
+    // Controls
+    --baklava-control-color-primary: #5379b5;
+    --baklava-control-color-error: red;
+    --baklava-control-color-background: #2c2c2c;
+    --baklava-control-color-foreground: white;
+    --baklava-control-color-hover: #4c4c4c;
+    --baklava-control-color-active: #6c6c6c;
+    --baklava-control-color-disabled-foreground: gray;
+    --baklava-control-border-radius: 3px;
+
+    // Sidebar
+    --baklava-sidebar-color-background: #3f3f3f;
+    --baklava-sidebar-color-foreground: white;
+
+    // Nodes
+    --baklava-node-color-background: #3f3f3fcc;
+    --baklava-node-color-foreground: white;
+    --baklava-node-color-selected: var(--baklava-control-color-primary);
+    --baklava-node-title-color-background: black;
+    --baklava-node-title-color-foreground: white;
+    --baklava-group-node-title-color-background: rgb(5, 75, 5);
+    --baklava-group-node-title-color-foreground: white;
+    --baklava-node-border-radius: 4px;
+
+    // Connections
+    --baklava-color-connection-default: white;
+    --baklava-color-connection-allowed: green;
+    --baklava-color-connection-forbidden: red;
+
+    // Background pattern
+    --baklava-editor-background-pattern-default: #232323;
+    --baklava-editor-background-pattern-line: #131313;
+    --baklava-editor-background-pattern-black: #00000022;
+
+    // Context Menu
+    --baklava-context-menu-background: #000000cc;
+    --baklava-context-menu-shadow: 0 0 8px rgba(0, 0, 0, 0.65);
+
+    // Toolbar
+    --baklava-toolbar-background: #0003;
+    --baklava-toolbar-foreground: white;
+
+    // Misc
+    --baklava-visual-transition: 0.1s linear;
+}

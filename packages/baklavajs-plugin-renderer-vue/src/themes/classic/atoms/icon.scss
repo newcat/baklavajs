@@ -1,0 +1,13 @@
+.baklava-icon {
+    display: block;
+    height: 100%;
+
+    &.--clickable {
+        cursor: pointer;
+        transition: color var(--baklava-visual-transition);
+    }
+
+    &.--clickable:hover {
+        color: var(--baklava-control-color-primary);
+    }
+}

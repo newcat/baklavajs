@@ -1,14 +1,11 @@
 <template>
     <button
-        class="toolbar-entry toolbar-button"
+        class="baklava-toolbar-entry baklava-toolbar-button"
         :disabled="!plugin.commandHandler.canExecuteCommand(command)"
         :title="title"
         @click="plugin.commandHandler.executeCommand(command)"
     >
-        <component
-            :is="icon"
-            v-if="icon"
-        />
+        <component :is="icon" v-if="icon" />
         <template v-else>
             {{ title }}
         </template>

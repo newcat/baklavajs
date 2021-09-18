@@ -1,8 +1,5 @@
 <template>
-    <path
-        :d="d"
-        :class="classes"
-    />
+    <path class="baklava-connection" :class="classes" :d="d" />
 </template>
 
 <script lang="ts">
@@ -59,7 +56,6 @@ export default defineComponent({
         });
 
         const classes = computed(() => ({
-            "connection": true,
             "--temporary": props.isTemporary,
             "--allowed": props.state === TemporaryConnectionState.ALLOWED,
             "--forbidden": props.state === TemporaryConnectionState.FORBIDDEN,

@@ -1,20 +1,9 @@
 <template>
-    <div
-        ref="el"
-        :class="['sidebar', { '--open': graph.sidebar.visible }]"
-        :style="styles"
-    >
-        <div
-            class="__resizer"
-            @mousedown="startResize"
-        />
+    <div ref="el" class="baklava-sidebar" :class="{ '--open': graph.sidebar.visible }" :style="styles">
+        <div class="__resizer" @mousedown="startResize" />
 
-        <div class="d-flex align-items-center">
-            <button
-                tabindex="-1"
-                class="__close"
-                @click="close"
-            >
+        <div class="__header">
+            <button tabindex="-1" class="__close" @click="close">
                 &times;
             </button>
             <div class="ml-2">
@@ -45,7 +34,7 @@ export default defineComponent({
         });
 
         const styles = computed(() => ({
-            width: `${width.value}px`
+            width: `${width.value}px`,
         }));
 
         const close = () => {
@@ -59,7 +48,7 @@ export default defineComponent({
                 () => {
                     window.removeEventListener("mousemove", onMouseMove);
                 },
-                { once: true }
+                { once: true },
             );
         };
 
@@ -74,6 +63,6 @@ export default defineComponent({
         };
 
         return { el, graph, nodeName, styles, startResize, close };
-    }
+    },
 });
 </script>

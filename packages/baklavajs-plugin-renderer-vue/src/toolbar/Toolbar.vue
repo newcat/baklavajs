@@ -1,12 +1,6 @@
 <template>
-    <div class="toolbar">
-        <toolbar-button
-            v-for="c in commands"
-            :key="c.command"
-            :command="c.command"
-            :title="c.title"
-            :icon="c.icon"
-        />
+    <div class="baklava-toolbar">
+        <toolbar-button v-for="c in commands" :key="c.command" :command="c.command" :title="c.title" :icon="c.icon" />
 
         <template v-if="isSubgraph">
             <toolbar-button

@@ -1,7 +1,7 @@
 <template>
     <canvas
         ref="canvas"
-        class="minimap"
+        class="baklava-minimap"
         @mouseenter="mouseenter"
         @mouseleave="mouseleave"
         @mousedown.self="mousedown"
@@ -53,7 +53,7 @@ export default defineComponent({
                     x1: posX,
                     y1: posY,
                     x2: posX + width,
-                    y2: posY + height
+                    y2: posY + height,
                 });
                 nodeDomElements.set(n, domElement);
             }
@@ -63,7 +63,7 @@ export default defineComponent({
                 x1: Number.MAX_SAFE_INTEGER,
                 y1: Number.MAX_SAFE_INTEGER,
                 x2: Number.MIN_SAFE_INTEGER,
-                y2: Number.MIN_SAFE_INTEGER
+                y2: Number.MIN_SAFE_INTEGER,
             };
             for (const nc of nodeCoords.values()) {
                 if (nc.x1 < newBounds.x1) {
@@ -133,7 +133,7 @@ export default defineComponent({
         const transformCoordinates = (origX: number, origY: number): [number, number] => {
             return [
                 ((origX - bounds.x1) / (bounds.x2 - bounds.x1)) * ctx!.canvas.clientWidth,
-                ((origY - bounds.y1) / (bounds.y2 - bounds.y1)) * ctx!.canvas.clientHeight
+                ((origY - bounds.y1) / (bounds.y2 - bounds.y1)) * ctx!.canvas.clientHeight,
             ];
         };
 
@@ -141,7 +141,7 @@ export default defineComponent({
         const reverseTransform = (thisX: number, thisY: number): [number, number] => {
             return [
                 (thisX * (bounds.x2 - bounds.x1)) / ctx!.canvas.clientWidth + bounds.x1,
-                (thisY * (bounds.y2 - bounds.y1)) / ctx!.canvas.clientHeight + bounds.y1
+                (thisY * (bounds.y2 - bounds.y1)) / ctx!.canvas.clientHeight + bounds.y1,
             ];
         };
 
@@ -240,6 +240,6 @@ export default defineComponent({
         });
 
         return { canvas, showViewBounds, mousedown, mousemove, mouseup, mouseenter, mouseleave };
-    }
+    },
 });
 </script>

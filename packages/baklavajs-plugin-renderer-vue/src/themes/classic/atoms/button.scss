@@ -1,0 +1,22 @@
+.baklava-button {
+    background-color: var(--baklava-control-color-background);
+    color: var(--baklava-control-color-foreground);
+    transition: background-color var(--baklava-visual-transition);
+    border: none;
+    padding: 0.45em 0.35em;
+    border-radius: var(--baklava-control-border-radius);
+    font-size: inherit;
+    cursor: pointer;
+    overflow-x: hidden;
+
+    &:hover {
+        background-color: var(--baklava-control-color-hover);
+    }
+    &:active {
+        background-color: var(--baklava-control-color-primary);
+    }
+
+    &.--block {
+        width: 100%;
+    }
+}

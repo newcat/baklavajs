@@ -1,7 +1,7 @@
 <template>
     <div
         ref="el"
-        class="dark-slider"
+        class="baklava-slider"
         :class="{ 'ignore-mouse': !editMode }"
         @pointerdown="mousedown"
         @pointerup="mouseup"
@@ -22,7 +22,7 @@
                 ref="inputEl"
                 v-model="tempValue"
                 type="number"
-                class="dark-input"
+                class="baklava-input"
                 :class="{ '--invalid': invalid }"
                 style="text-align: right"
                 @blur="leaveEditMode"
@@ -51,7 +51,7 @@ export default defineComponent({
         const isMouseDown = ref(false);
 
         const percentage = computed(() =>
-            Math.min(100, Math.max(0, (props.intf.value * 100) / (props.intf.max - props.intf.min)))
+            Math.min(100, Math.max(0, (props.intf.value * 100) / (props.intf.max - props.intf.min))),
         );
 
         const mousedown = () => {
@@ -95,8 +95,8 @@ export default defineComponent({
                 props.intf.min,
                 Math.min(
                     props.intf.max,
-                    (props.intf.max - props.intf.min) * (ev.offsetX / el.value!.clientWidth) + props.intf.min
-                )
+                    (props.intf.max - props.intf.min) * (ev.offsetX / el.value!.clientWidth) + props.intf.min,
+                ),
             );
             if (isMouseDown.value) {
                 baseNumericInterface.setValue(v);

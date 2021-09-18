@@ -50,7 +50,7 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
                 if (!inputValues.has(v.id)) {
                     throw new Error(
                         `Could not find value for interface ${v.id}\n` +
-                            "This is likely a Baklava internal issue. Please report it to GitHub.",
+                            "This is likely a Baklava internal issue. Please report it on GitHub.",
                     );
                 }
                 inputsForNode[k] = inputValues.get(v.id);

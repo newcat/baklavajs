@@ -1,0 +1,29 @@
+.baklava-input {
+    background-color: var(--baklava-control-color-background);
+    color: var(--baklava-control-color-foreground);
+    caret-color: var(--baklava-control-color-primary);
+    border: none;
+    border-radius: var(--baklava-control-border-radius);
+    padding: 0.45em 0.75em;
+    width: 100%;
+    transition: background-color var(--baklava-visual-transition);
+    font-size: inherit;
+    font: inherit;
+
+    &:hover {
+        background-color: var(--baklava-control-color-hover);
+    }
+    &:active {
+        background-color: var(--baklava-control-color-active);
+    }
+
+    &[type="number"]::-webkit-inner-spin-button,
+    &[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    &.--invalid {
+        box-shadow: 0 0 2px 2px var(--baklava-control-color-error);
+    }
+}

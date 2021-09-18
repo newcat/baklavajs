@@ -2,10 +2,8 @@
     <div
         ref="el"
         tabindex="-1"
-        :class="[
-            'node-editor',
-            { 'ignore-mouse': !!temporaryConnection || dragging, '--temporary-connection': !!temporaryConnection },
-        ]"
+        class="baklava-editor"
+        :class="{ 'ignore-mouse': !!temporaryConnection || dragging, '--temporary-connection': !!temporaryConnection }"
         @pointermove.self="onPointerMove"
         @pointerdown="onPointerDown"
         @pointerup="onPointerUp"
@@ -91,7 +89,7 @@ export default defineComponent({
     setup(props) {
         const token = Symbol("EditorToken");
 
-        const pluginRef = (toRef(props, "plugin") as unknown) as Ref<IBaklavaView>;
+        const pluginRef = toRef(props, "plugin") as unknown as Ref<IBaklavaView>;
         providePlugin(pluginRef);
 
         const el = ref<HTMLElement | null>(null);

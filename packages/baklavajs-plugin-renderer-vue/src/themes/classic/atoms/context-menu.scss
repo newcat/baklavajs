@@ -1,31 +1,37 @@
-.dark-context-menu {
-    color: $color-control-dark-foreground;
+.baklava-context-menu {
+    color: var(--baklava-control-color-foreground);
     position: absolute;
     display: inline-block;
     z-index: 100;
-    background-color: #000000cc;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.65);
-    border-radius: 0 0 $border-radius-control $border-radius-control;
+    background-color: var(--baklava-context-menu-background);
+    box-shadow: var(--baklava-context-menu-shadow);
+    border-radius: 0 0 var(--baklava-control-border-radius) var(--baklava-control-border-radius);
     min-width: 6rem;
     width: max-content;
 
     & > .item {
+        display: flex;
+        align-items: center;
         padding: 0.35em 1em;
         transition: background 0.05s linear;
         position: relative;
 
+        & > .__label {
+            flex: 1 1 auto;
+        }
+
         &.--disabled {
-            color: $color-control-dark-hover;
+            color: var(--baklava-control-color-hover);
         }
 
         &:not(.--header):not(.--active):not(.--disabled) {
             &:hover {
-                background: $color-primary;
+                background: var(--baklava-control-color-primary);
             }
         }
 
         &.--active {
-            background: $color-primary;
+            background: var(--baklava-control-color-primary);
         }
     }
 
@@ -47,6 +53,6 @@
     & > .divider {
         margin: 0.35em 0;
         height: 1px;
-        background-color: $color-control-dark-hover;
+        background-color: var(--baklava-control-color-hover);
     }
 }
