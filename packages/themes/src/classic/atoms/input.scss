@@ -16,6 +16,9 @@
     &:active {
         background-color: var(--baklava-control-color-active);
     }
+    &:focus-visible {
+        outline: 1px solid var(--baklava-control-color-primary);
+    }
 
     &[type="number"]::-webkit-inner-spin-button,
     &[type="number"]::-webkit-outer-spin-button {

@@ -2,7 +2,7 @@
 /// <reference path="../src/overrides.ts" />
 
 import { defineNode, NodeInterface } from "@baklavajs/core";
-import { setType } from "@baklavajs/plugin-interface-types";
+import { setType } from "@baklavajs/interface-types";
 import { TextInputInterface } from "../src";
 import { stringType } from "./interfaceTypes";
 

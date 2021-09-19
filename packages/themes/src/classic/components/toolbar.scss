@@ -22,16 +22,16 @@
     background: none;
     border: none;
     transition: color var(--baklava-visual-transition);
-}
 
-.toolbar-button:not([disabled]) {
-    cursor: pointer;
-}
+    &:not([disabled]) {
+        cursor: pointer;
+    }
 
-.toolbar-button:hover:not([disabled]) {
-    color: var(--baklava-control-color-primary);
-}
+    &:hover:not([disabled]) {
+        color: var(--baklava-control-color-primary);
+    }
 
-.toolbar-button[disabled] {
-    color: var(--baklava-control-color-disabled-foreground);
+    &[disabled] {
+        color: var(--baklava-control-color-disabled-foreground);
+    }
 }

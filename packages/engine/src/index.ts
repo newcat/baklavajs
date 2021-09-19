@@ -1,5 +1,5 @@
 /**
- * @module @baklavajs/plugin-engine
+ * @module @baklavajs/engine
  */
 
 export * from "./baseEngine";

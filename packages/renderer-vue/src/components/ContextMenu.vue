@@ -7,7 +7,8 @@
                 <div
                     v-else
                     :key="`i-${index}`"
-                    :class="{ 'item': true, 'submenu': !!item.submenu, '--disabled': !!item.disabled }"
+                    class="item"
+                    :class="{ 'submenu': !!item.submenu, '--disabled': !!item.disabled }"
                     @mouseenter="onMouseEnter($event, index)"
                     @mouseleave="onMouseLeave($event, index)"
                     @click.stop.prevent="onClick(item)"
@@ -15,7 +16,7 @@
                     <div class="flex-fill">
                         {{ item.label }}
                     </div>
-                    <div v-if="item.submenu" class="ml-3" style="line-height: 1em">
+                    <div v-if="item.submenu" class="__submenu-icon" style="line-height: 1em">
                         <svg width="13" height="13" viewBox="-60 120 250 250">
                             <path
                                 d="M160.875 279.5625 L70.875 369.5625 L70.875 189.5625 L160.875 279.5625 Z"

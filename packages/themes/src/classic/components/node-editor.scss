@@ -41,13 +41,6 @@
         cursor: crosshair;
     }
 
-    .ignore-mouse * {
-        pointer-events: none !important;
-    }
-    .ignore-mouse .__port {
-        pointer-events: all !important;
-    }
-
     .connections-container {
         position: absolute;
         top: 0;
@@ -69,4 +62,11 @@
             pointer-events: all;
         }
     }
+}
+
+.baklava-ignore-mouse * {
+    pointer-events: none !important;
+}
+.baklava-ignore-mouse .__port {
+    pointer-events: all !important;
 }

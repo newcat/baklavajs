@@ -20,6 +20,10 @@
             flex: 1 1 auto;
         }
 
+        & > .__submenu-icon {
+            margin-left: 0.75rem;
+        }
+
         &.--disabled {
             color: var(--baklava-control-color-hover);
         }

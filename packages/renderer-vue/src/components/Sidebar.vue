@@ -6,7 +6,7 @@
             <button tabindex="-1" class="__close" @click="close">
                 &times;
             </button>
-            <div class="ml-2">
+            <div class="__node-name">
                 <b>{{ nodeName }}</b>
             </div>
         </div>

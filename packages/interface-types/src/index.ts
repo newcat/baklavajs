@@ -1,9 +1,9 @@
 /**
- * @module @baklavajs/plugin-interface-types
+ * @module @baklavajs/interface-types
  */
 
 import type { Editor, NodeInterface } from "@baklavajs/core";
-import type { IBaklavaView } from "@baklavajs/plugin-renderer-vue";
+import type { IBaklavaView } from "@baklavajs/renderer-vue";
 
 export interface IConversion<I, O> {
     targetType: string;

@@ -9,7 +9,7 @@ export default defineConfig({
         lib: {
             entry: path.resolve(__dirname, "src/index.ts"),
             name: "BaklavaJSRendererVue",
-            fileName: (format) => `plugin-renderer-vue.${format}.js`,
+            fileName: (format) => `renderer-vue.${format}.js`,
         },
         rollupOptions: {
             external: ["vue"],
@@ -21,4 +21,9 @@ export default defineConfig({
         },
     },
     plugins: [vue()],
+    server: {
+        fs: {
+            allow: ["../.."],
+        },
+    },
 });

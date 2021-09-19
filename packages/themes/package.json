@@ -1,0 +1,32 @@
+{
+    "name": "@baklavajs/themes",
+    "version": "1.8.1",
+    "description": "Themes for BaklavaJS",
+    "author": "newcat <freddy.wagner@web.de>",
+    "homepage": "https://newcat.github.io/baklavajs",
+    "license": "MIT",
+    "files": [
+        "dist/**/*"
+    ],
+    "scripts": {
+        "build": "ts-node src/build.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/newcat/baklavajs.git"
+    },
+    "bugs": {
+        "url": "https://github.com/newcat/baklavajs/issues"
+    },
+    "devDependencies": {
+        "@types/rimraf": "^3.0.2",
+        "@types/sass": "^1.16.1",
+        "rimraf": "^3.0.2",
+        "sass": "^1.41.1",
+        "ts-node": "^10.2.1",
+        "typescript": "^4.4.3"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}

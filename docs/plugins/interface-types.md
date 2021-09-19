@@ -7,7 +7,7 @@ You can, however, override this behavior by using conversions.
 ## Usage
 
 The plugin is included in the `baklavajs` package.
-If you installed the packages individually, make sure to also install `@baklavajs/plugin-interface-types`
+If you installed the packages individually, make sure to also install `@baklavajs/interface-types`
 
 Afterwards you can use the plugin like this:
 
@@ -16,7 +16,7 @@ Afterwards you can use the plugin like this:
 ```js
 // Create the types. It is recommended to define them
 // in a separate file and import them when creating the nodes.
-import { NodeInterfaceType } from "@baklavajs/plugin-interface-types";
+import { NodeInterfaceType } from "@baklavajs/interface-types";
 
 export const stringType = new NodeInterfaceType("string");
 export const numberType = new NodeInterfaceType("number");
@@ -31,7 +31,7 @@ The constructor of the `NodeInterfaceType` class expects a name for the type. Th
 
 ```js
 // In your App.vue or wherever you use the <baklava-editor>
-import { BaklavaInterfaceTypes, NodeInterfaceType } from "@baklavajs/plugin-interface-types";
+import { BaklavaInterfaceTypes, NodeInterfaceType } from "@baklavajs/interface-types";
 import { stringType, numberType, booleanType } from "./interfaceTypes";
 
 const baklavaView = useBaklava();
@@ -45,7 +45,7 @@ nodeInterfaceTypes.addTypes(stringType, numberType, booleanType);
 
 ```js
 // when creating a node
-import { setType } from "@baklavajs/plugin-interface-types";
+import { setType } from "@baklavajs/interface-types";
 import { stringType } from "./interfaceTypes";
 
 defineNode({

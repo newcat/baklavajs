@@ -2,7 +2,7 @@
     <div
         ref="el"
         class="baklava-slider"
-        :class="{ 'ignore-mouse': !editMode }"
+        :class="{ 'baklava-ignore-mouse': !editMode }"
         @pointerdown="mousedown"
         @pointerup="mouseup"
         @pointermove="mousemove"

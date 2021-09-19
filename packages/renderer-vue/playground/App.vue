@@ -31,8 +31,8 @@ import { defineComponent } from "vue";
 
 import { NodeInstanceOf } from "@baklavajs/core";
 import { EditorComponent, SelectInterface, useBaklava, Commands } from "../src";
-import { DependencyEngine } from "@baklavajs/plugin-engine";
-import { BaklavaInterfaceTypes } from "@baklavajs/plugin-interface-types";
+import { DependencyEngine } from "@baklavajs/engine";
+import { BaklavaInterfaceTypes } from "@baklavajs/interface-types";
 
 import CustomNodeRenderer from "./CustomNodeRenderer";
 

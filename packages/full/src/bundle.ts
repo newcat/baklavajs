@@ -1,9 +1,9 @@
 import * as Core from "@baklavajs/core";
-import * as PluginEngine from "@baklavajs/plugin-engine";
-import * as PluginInterfaceTypes from "@baklavajs/plugin-interface-types";
-import * as PluginRendererVue from "@baklavajs/plugin-renderer-vue";
+import * as PluginEngine from "@baklavajs/engine";
+import * as PluginInterfaceTypes from "@baklavajs/interface-types";
+import * as PluginRendererVue from "@baklavajs/renderer-vue";
 
-import "@baklavajs/plugin-renderer-vue/dist/styles.css";
+import "@baklavajs/renderer-vue/dist/styles.css";
 
 import { createApp, h } from "vue";
 function createBaklava(element: Element): PluginRendererVue.ViewPlugin {

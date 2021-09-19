@@ -1,4 +1,4 @@
 export * from "@baklavajs/core";
-export * from "@baklavajs/plugin-engine";
-export * from "@baklavajs/plugin-interface-types";
-export * from "@baklavajs/plugin-renderer-vue";
+export * from "@baklavajs/engine";
+export * from "@baklavajs/interface-types";
+export * from "@baklavajs/renderer-vue";

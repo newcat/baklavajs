@@ -3,7 +3,10 @@
         ref="el"
         tabindex="-1"
         class="baklava-editor"
-        :class="{ 'ignore-mouse': !!temporaryConnection || dragging, '--temporary-connection': !!temporaryConnection }"
+        :class="{
+            'baklava-ignore-mouse': !!temporaryConnection || dragging,
+            '--temporary-connection': !!temporaryConnection,
+        }"
         @pointermove.self="onPointerMove"
         @pointerdown="onPointerDown"
         @pointerup="onPointerUp"

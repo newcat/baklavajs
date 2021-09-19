@@ -1,20 +1,20 @@
 {
-    "name": "@baklavajs/plugin-renderer-vue",
+    "name": "@baklavajs/renderer-vue",
     "version": "1.8.1",
-    "description": "Add types to node interfaces for BaklavaJS",
+    "description": "Vue frontend for BaklavaJS",
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
     "license": "MIT",
     "files": [
         "dist/**/!(report.html)"
     ],
-    "main": "./dist/plugin-renderer-vue.umd.js",
-    "module": "./dist/plugin-renderer-vue.es.js",
+    "main": "./dist/renderer-vue.umd.js",
+    "module": "./dist/renderer-vue.es.js",
     "types": "./dist/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/plugin-renderer-vue.es.js",
-            "require": "./dist/plugin-renderer-vue.umd.js"
+            "import": "./dist/renderer-vue.es.js",
+            "require": "./dist/renderer-vue.umd.js"
         }
     },
     "scripts": {

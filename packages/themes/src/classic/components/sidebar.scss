@@ -35,6 +35,10 @@
     & .__header {
         display: flex;
         align-items: center;
+
+        .__node-name {
+            margin-left: 0.5rem;
+        }
     }
 
     & .__close {

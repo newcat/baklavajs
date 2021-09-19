@@ -1,5 +1,5 @@
 /**
- * @module @baklavajs/plugin-renderer-vue
+ * @module @baklavajs/renderer-vue
  */
 
 import Connection from "./connection/ConnectionView.vue";
@@ -28,5 +28,3 @@ export * from "./useBaklava";
 export * from "./utility";
 
 export * as Commands from "./commandList";
-
-import "./themes/classic/all.scss";
