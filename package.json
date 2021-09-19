@@ -2,11 +2,11 @@
     "name": "baklavajs",
     "private": true,
     "scripts": {
-        "playground": "cd packages/baklavajs-plugin-renderer-vue && yarn run dev",
+        "playground": "cd packages/renderer-vue && yarn run dev",
         "lint": "eslint packages --ext .js,.ts",
-        "build": "lerna run build --stream --ignore \"baklavajs-playground\" --ignore \"baklavajs\"",
+        "build": "lerna run build --stream --ignore \"baklavajs\"",
         "test": "lerna run test",
-        "clean": "rimraf ./packages/*/dist && rimraf ./packages/baklavajs-full/lib",
+        "clean": "rimraf ./packages/*/dist && rimraf ./packages/full/lib",
         "generate-api-docs": "typedoc",
         "docs:dev": "vitepress dev docs",
         "docs:build": "vitepress build docs"

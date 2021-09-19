@@ -6,10 +6,10 @@
     "tsconfig": "typedoc.tsconfig.json",
     "out": "docs/public/api",
     "entryPoints": [
-        "packages/baklavajs-core/src/index.ts",
-        "packages/baklavajs-events/src/index.ts",
-        "packages/baklavajs-plugin-engine/src/index.ts",
-        "packages/baklavajs-plugin-interface-types/src/index.ts",
-        "packages/baklavajs-plugin-renderer-vue/src/index.ts"
+        "packages/core/src/index.ts",
+        "packages/events/src/index.ts",
+        "packages/engine/src/index.ts",
+        "packages/interface-types/src/index.ts",
+        "packages/renderer-vue/src/index.ts"
     ]
 }

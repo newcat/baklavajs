@@ -3,7 +3,7 @@
 module.exports = {
     projects: [
         {
-            root: "./packages/baklavajs-plugin-renderer-vue",
+            root: "./packages/renderer-vue",
             tsconfig: "./tsconfig.json",
         },
     ],

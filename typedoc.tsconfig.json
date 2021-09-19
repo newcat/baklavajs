@@ -10,5 +10,5 @@
         "baseUrl": ".",
         "skipLibCheck": true
     },
-    "exclude": ["node_modules", "**/dist/**", "**/test/**", "packages/baklavajs-full/**"]
+    "exclude": ["node_modules", "**/dist/**", "**/test/**", "packages/full/**"]
 }
