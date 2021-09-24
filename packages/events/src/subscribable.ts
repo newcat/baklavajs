@@ -20,6 +20,11 @@ export class Subscribable<F extends CallableFunction> {
      */
     public subscribe(token: TokenType, callback: F) {
         if (this.listenerMap.has(token)) {
+            console.warn(
+                "Already subscribed. Unsubscribing for you.\n" +
+                    "Please check that you don't accidentally use the same token twice " +
+                    "to register two different handlers for the same event/hook.",
+            );
             this.unsubscribe(token);
         }
         this.listenerMap.set(token, callback);
@@ -45,6 +50,11 @@ export class Subscribable<F extends CallableFunction> {
     /** This function is only used internally for proxies */
     public registerProxy(token: TokenType, getListeners: GetListenersFn<F>) {
         if (this.proxyMap.has(token)) {
+            console.warn(
+                "Already subscribed. Unsubscribing for you.\n" +
+                    "Please check that you don't accidentally use the same token twice " +
+                    "to register two different proxies for the same event/hook.",
+            );
             this.unregisterProxy(token);
         }
         this.proxyMap.set(token, getListeners);
