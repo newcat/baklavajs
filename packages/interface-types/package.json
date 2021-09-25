@@ -30,10 +30,10 @@
     "@baklavajs/engine": "^1.8.0",
     "@baklavajs/renderer-vue": "^1.8.0",
     "@ts-tools/node": "^3.0.1",
-    "@types/chai": "^4.2.21",
+    "@types/chai": "^4.2.22",
     "@types/mocha": "^9.0.0",
     "chai": "^4.3.4",
-    "mocha": "^9.0.3",
+    "mocha": "^9.1.2",
     "typescript": "^4.3.5"
   },
   "publishConfig": {

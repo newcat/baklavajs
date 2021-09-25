@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { computed, CSSProperties, defineComponent, inject, Ref, ref, reactive } from "vue";
-import { useMouse } from "@vueuse/core";
+import { usePointer } from "@vueuse/core";
 import { AbstractNode, INodeTypeInformation } from "@baklavajs/core";
 import PaletteEntry from "./PaletteEntry.vue";
 import { usePlugin, useTransform } from "../utility";
@@ -40,7 +40,7 @@ export default defineComponent({
     components: { PaletteEntry },
     setup() {
         const { plugin } = usePlugin();
-        const { x: mouseX, y: mouseY } = useMouse();
+        const { x: mouseX, y: mouseY } = usePointer();
         const { transform } = useTransform();
 
         const editorEl = inject<Ref<HTMLElement | null>>("editorEl");
