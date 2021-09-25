@@ -7,8 +7,8 @@
     z-index: 3;
     padding: 2rem;
     overflow-y: auto;
-    background: #0003;
-    color: white;
+    background: var(--baklava-node-palette-background);
+    color: var(--baklava-node-palette-foreground);
 
     & h1 {
         margin-top: 2rem;
@@ -26,6 +26,7 @@
 
     & .__title {
         padding: 0.5rem;
+        border-radius: var(--baklava-node-border-radius);
     }
 }
 

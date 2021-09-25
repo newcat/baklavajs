@@ -38,8 +38,12 @@
     --baklava-context-menu-shadow: 0 0 8px rgba(0, 0, 0, 0.65);
 
     // Toolbar
-    --baklava-toolbar-background: #1b202c;
+    --baklava-toolbar-background: #1b202caa;
     --baklava-toolbar-foreground: white;
+
+    // Node Palette
+    --baklava-node-palette-background: #1b202caa;
+    --baklava-node-palette-foreground: white;
 
     // Misc
     --baklava-visual-transition: 0.1s linear;
