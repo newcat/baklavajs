@@ -67,7 +67,10 @@ export default defineComponent({
         });
         engine.hooks.gatherCalculationData.subscribe(token, () => "def");
 
-        const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor.value, baklavaView);
+        const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor.value, {
+            viewPlugin: baklavaView,
+            engine,
+        });
         nodeInterfaceTypes.addTypes(stringType, numberType, booleanType);
 
         editor.value.registerNodeType(TestNode, { category: "Tests" });

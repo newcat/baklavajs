@@ -37,7 +37,7 @@ import { stringType, numberType, booleanType } from "./interfaceTypes";
 const baklavaView = useBaklava();
 const editor = baklavaView.editor;
 
-const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor, baklavaView);
+const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor, { viewPlugin: baklavaView });
 nodeInterfaceTypes.addTypes(stringType, numberType, booleanType);
 ```
 
@@ -109,17 +109,43 @@ This attribute can be used to style the interfaces using CSS.
 Here is an example of how to set the color of the ports depending on the interface type:
 
 ```css
-.node-interface[data-interface-type="string"] .__port {
+.baklava-node-interface[data-interface-type="string"] .__port {
     background-color: green;
 }
 
-.node-interface[data-interface-type="number"] .__port {
+.baklava-node-interface[data-interface-type="number"] .__port {
     background-color: red;
 }
 
-.node-interface[data-interface-type="boolean"] .__port {
+.baklava-node-interface[data-interface-type="boolean"] .__port {
     background-color: purple;
 }
+```
+
+## Options
+
+The `BaklavaInterfaceTypes` can receive up to two arguments:
+
+-   The editor instance (required)
+-   Configuration options (not required)
+
+The configuration options have the following format:
+
+```ts
+interface BaklavaInterfaceTypesOptions {
+    viewPlugin?: IBaklavaView;
+    engine?: BaseEngine<any, any>;
+}
+```
+
+Both the `viewPlugin` and `engine` are optional. The `viewPlugin` is used for applying the `data-interface-type` attribute on node interfaces. The `engine` plugin is used for applying the conversions during calculation.
+
+## Engine
+
+When using this plugin together with the Engine, make sure to provide the engine instance to the plugin:
+
+```js
+
 ```
 
 ## Backend Usage

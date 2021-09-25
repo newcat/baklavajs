@@ -1,11 +1,11 @@
-.node-interface[data-interface-type="string"] .__port {
+.baklava-node-interface[data-interface-type="string"] .__port {
     background-color: green;
 }
 
-.node-interface[data-interface-type="number"] .__port {
+.baklava-node-interface[data-interface-type="number"] .__port {
     background-color: red;
 }
 
-.node-interface[data-interface-type="boolean"] .__port {
+.baklava-node-interface[data-interface-type="boolean"] .__port {
     background-color: purple;
 }

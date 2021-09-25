@@ -4,10 +4,16 @@
 
 import type { Editor, NodeInterface } from "@baklavajs/core";
 import type { IBaklavaView } from "@baklavajs/renderer-vue";
+import type { BaseEngine } from "@baklavajs/engine";
 
 export interface IConversion<I, O> {
     targetType: string;
     transformationFunction(value: I): O;
+}
+
+export interface BaklavaInterfaceTypesOptions {
+    viewPlugin?: IBaklavaView;
+    engine?: BaseEngine<any, any>;
 }
 
 export class NodeInterfaceType<T> {
@@ -40,7 +46,7 @@ export class BaklavaInterfaceTypes {
     private editor: Editor;
     private types: Map<string, NodeInterfaceType<any>> = new Map();
 
-    public constructor(editor: Editor, viewPlugin?: IBaklavaView) {
+    public constructor(editor: Editor, options?: BaklavaInterfaceTypesOptions) {
         this.editor = editor;
 
         this.editor.graphEvents.checkConnection.subscribe(this, ({ from, to }) => {
@@ -53,17 +59,19 @@ export class BaklavaInterfaceTypes {
             }
         });
 
-        this.editor.connectionHooks.transfer.subscribe(this, (value, connection) => {
-            const fromType = connection.from.type;
-            const toType = connection.to.type;
-            if (!fromType || !toType) {
-                return value;
-            }
-            return this.convert(fromType, toType, value);
-        });
+        if (options?.engine) {
+            options.engine.hooks.transferData.subscribe(this, (value, connection) => {
+                const fromType = connection.from.type;
+                const toType = connection.to.type;
+                if (!fromType || !toType) {
+                    return value;
+                }
+                return this.convert(fromType, toType, value);
+            });
+        }
 
-        if (viewPlugin) {
-            viewPlugin.hooks.renderInterface.subscribe(this, ({ intf, el }) => {
+        if (options?.viewPlugin) {
+            options.viewPlugin.hooks.renderInterface.subscribe(this, ({ intf, el }) => {
                 if (intf.type) {
                     el.setAttribute("data-interface-type", intf.type);
                 }

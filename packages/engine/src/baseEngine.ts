@@ -1,4 +1,4 @@
-import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
+import { BaklavaEvent, DynamicSequentialHook, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
 import {
     AbstractNode,
     NodeInterface,
@@ -28,6 +28,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
             BaseEngine<CalculationData, CalculationArgs>,
             CalculationData
         >(this),
+        transferData: new DynamicSequentialHook<any, IConnection>(),
     };
 
     /** This should be set to "true" while updating the graph with the calculation results */
@@ -41,12 +42,6 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
      * @param calculateOnChange Whether to automatically calculate all nodes when any node interface is changed.
      */
     public constructor(protected editor: Editor, protected calculateOnChange = false) {
-        this.editor.graphEvents.checkConnection.subscribe(this, (c) => {
-            if (!this.checkConnection(c.from, c.to)) {
-                return false;
-            }
-        });
-
         this.editor.nodeEvents.update.subscribe(this, (data, node) => {
             if (node.type.startsWith(GRAPH_NODE_TYPE_PREFIX) && data === null) {
                 this.internalOnChange(true);
@@ -131,6 +126,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         const dc = { from, to, id: "dc", destructed: false, isInDanger: false } as IConnection;
 
         const copy = connections.concat([dc]);
+        // TODO: Only filter if to doesn't allow multiple connections
         copy.filter((conn) => conn.to !== to);
         return containsCycle(nodes, copy);
     }

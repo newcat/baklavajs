@@ -1,4 +1,4 @@
-import { Connection, Editor, NodeInterface } from "@baklavajs/core";
+import { Editor, NodeInterface } from "@baklavajs/core";
 import { BaseEngine, CalculationResult } from "./baseEngine";
 
 export const allowMultipleConnections = <T extends Array<any>>(intf: NodeInterface<T>) => {
@@ -6,9 +6,11 @@ export const allowMultipleConnections = <T extends Array<any>>(intf: NodeInterfa
 };
 
 export class DependencyEngine<CalculationData = any> extends BaseEngine<CalculationData, []> {
+    private token = Symbol();
+
     public constructor(editor: Editor, calculateOnChange = false) {
         super(editor, calculateOnChange);
-        this.editor.graphEvents.addConnection.subscribe(this, (c, graph) => {
+        this.editor.graphEvents.addConnection.subscribe(this.token, (c, graph) => {
             // Delete all other connections to the target interface
             // if only one connection to the input interface is allowed
             if (!c.to.allowMultipleConnections) {
@@ -64,7 +66,14 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
             result.set(n.id, new Map(Object.entries(r)));
             if (connectionsFromNode.has(n)) {
                 connectionsFromNode.get(n)!.forEach((c) => {
-                    const v = (c as Connection).hooks.transfer.execute(c.from.value);
+                    const intfKey = Object.entries(n.outputs).find(([, intf]) => intf.id === c.from.id)?.[0];
+                    if (!intfKey) {
+                        throw new Error(
+                            `Could not find key for interface ${c.from.id}\n` +
+                                "This is likely a Baklava internal issue. Please report it on GitHub.",
+                        );
+                    }
+                    const v = this.hooks.transferData.execute(r[intfKey], c);
                     if (c.to.allowMultipleConnections) {
                         if (inputValues.has(c.to.id)) {
                             (inputValues.get(c.to.id)! as Array<any>).push(v);

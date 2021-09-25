@@ -12,6 +12,12 @@ export interface IExpandedGraph {
     connections: ReadonlyArray<IConnection>;
 }
 
+export class CycleError extends Error {
+    public constructor() {
+        super("Cycle detected");
+    }
+}
+
 function getNodesAndConnections(
     nodes: ReadonlyArray<AbstractNode>,
     connections: ReadonlyArray<IConnection>,
@@ -42,11 +48,16 @@ function getNodesAndConnections(
     };
 }
 
+function isString(v: string | undefined): v is string {
+    return typeof v === "string";
+}
+
 /** Expand a graph, which may contain subgraphs, into a flat list of nodes and connections */
 export function expandGraph(graph: Graph): IExpandedGraph {
     return getNodesAndConnections(graph.nodes, graph.connections);
 }
 
+/** Uses Kahn's algorithm to topologically sort the nodes in the graph */
 export function calculateOrder(
     nonExpandedNodes: ReadonlyArray<AbstractNode>,
     nonExpandedConnections: ReadonlyArray<IConnection>,
@@ -70,7 +81,10 @@ export function calculateOrder(
         const connectionsFromCurrentNode = connections.filter(
             (c) => c.from && interfaceIdToNodeId.get(c.from.id) === n.id,
         );
-        adjacency.set(n.id, new Set(connectionsFromCurrentNode.map((c) => interfaceIdToNodeId.get(c.to.id)!)));
+        const adjacentNodes = new Set<string>(
+            connectionsFromCurrentNode.map((c) => interfaceIdToNodeId.get(c.to.id)).filter(isString),
+        );
+        adjacency.set(n.id, adjacentNodes);
         connectionsFromNode.set(n, connectionsFromCurrentNode);
     });
 
@@ -100,7 +114,7 @@ export function calculateOrder(
     }
 
     if (Array.from(adjacency.values()).some((c) => c.size > 0)) {
-        throw new Error("Cycle detected");
+        throw new CycleError();
     }
 
     return {
@@ -115,6 +129,9 @@ export function containsCycle(nodes: ReadonlyArray<AbstractNode>, connections: R
         calculateOrder(nodes, connections);
         return true;
     } catch (err) {
-        return false;
+        if (err instanceof CycleError) {
+            return false;
+        }
+        throw err;
     }
 }

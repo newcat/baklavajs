@@ -55,7 +55,6 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     public nodeEvents = createProxy<AbstractNode["events"]>();
     public nodeHooks = createProxy<AbstractNode["hooks"]>();
     public connectionEvents = createProxy<Connection["events"]>();
-    public connectionHooks = createProxy<Connection["hooks"]>();
 
     private _plugins: Set<IPlugin> = new Set();
     private _nodeTypes: Map<string, INodeTypeInformation> = new Map();
@@ -130,7 +129,6 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
         this.nodeEvents.addTarget(graph.nodeEvents);
         this.nodeHooks.addTarget(graph.nodeHooks);
         this.connectionEvents.addTarget(graph.connectionEvents);
-        this.connectionHooks.addTarget(graph.connectionHooks);
         this.events.registerGraph.emit(graph);
     }
 
@@ -140,7 +138,6 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
         this.nodeEvents.removeTarget(graph.nodeEvents);
         this.nodeHooks.removeTarget(graph.nodeHooks);
         this.connectionEvents.removeTarget(graph.connectionEvents);
-        this.connectionHooks.removeTarget(graph.connectionHooks);
         this.events.unregisterGraph.emit(graph);
     }
 

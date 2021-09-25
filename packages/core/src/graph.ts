@@ -60,7 +60,6 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     public nodeHooks = createProxy<AbstractNode["hooks"]>();
 
     public connectionEvents = createProxy<Connection["events"]>();
-    public connectionHooks = createProxy<Connection["hooks"]>();
 
     /** List of all nodes in this graph */
     public get nodes(): ReadonlyArray<AbstractNode> {
@@ -136,7 +135,6 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
 
         const c = new Connection(dc.from, dc.to);
         this.connectionEvents.addTarget(c.events);
-        this.connectionHooks.addTarget(c.hooks);
         this._connections.push(c);
 
         this.events.addConnection.emit(c);
@@ -157,7 +155,6 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
             this._connections.splice(this.connections.indexOf(connection), 1);
             this.events.removeConnection.emit(connection);
             this.connectionEvents.removeTarget(connection.events);
-            this.connectionHooks.removeTarget(connection.hooks);
         }
     }
 
