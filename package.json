@@ -12,13 +12,13 @@
         "packages/*"
     ],
     "devDependencies": {
-        "@types/chai": "^4.2.14",
-        "chai": "^4.2.0",
-        "clean-webpack-plugin": "^3.0.0",
-        "lerna": "^3.22.1",
+        "@types/chai": "^4.2.22",
+        "chai": "^4.3.4",
+        "clean-webpack-plugin": "^4.0.0",
+        "lerna": "^4.0.0",
         "rimraf": "^3.0.2",
-        "typedoc": "^0.19.2",
-        "webpack-bundle-analyzer": "^4.1.0"
+        "typedoc": "^0.22.7",
+        "webpack-bundle-analyzer": "^4.5.0"
     },
     "postcss": {
         "useConfigFile": false,
