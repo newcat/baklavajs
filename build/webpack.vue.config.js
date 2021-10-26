@@ -1,15 +1,22 @@
-const merge = require('webpack-merge');
-const base = require('./webpack.config');
+const { mergeWithRules } = require("webpack-merge");
+const base = require("./webpack.config");
 
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = merge.smart(base, {
+module.exports = mergeWithRules({
+    module: {
+        rules: {
+            loader: "match",
+            options: "replace"
+        }
+    }
+})(base, {
     module: {
         rules: [
             {
                 test: /\.ts$/,
-                loader: 'ts-loader',
+                loader: "ts-loader",
                 options: {
                     appendTsSuffixTo: [/\.vue$/],
                 },
@@ -17,21 +24,21 @@ module.exports = merge.smart(base, {
             },
             {
                 test: /\.vue$/,
-                use: 'vue-loader'
+                use: "vue-loader"
             },
             {
                 test: /\.(sa|sc|c)ss$/,
-                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
+                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
             }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.vue']
+        extensions: [".ts", ".vue"]
     },
     plugins: [
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
-            filename: "[name].css",
+            filename: "[name].css"
         })
     ],
     optimization: {

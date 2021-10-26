@@ -1,5 +1,5 @@
 const path = require('path');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const base = require('../../build/webpack.vue.config');
 
 module.exports = merge(base, {
