@@ -1,6 +1,6 @@
 import { AbstractNode, Graph, GRAPH_NODE_TYPE_PREFIX, IConnection, IGraphNode } from "@baklavajs/core";
 
-export interface IOrderCalculationResult {
+export interface ITopologicalSortingResult {
     calculationOrder: AbstractNode[];
     connectionsFromNode: Map<AbstractNode, IConnection[]>;
     /** NodeInterface.id -> parent Node.id */
@@ -18,7 +18,7 @@ export class CycleError extends Error {
     }
 }
 
-function getNodesAndConnections(
+function expandNodesAndConnections(
     nodes: ReadonlyArray<AbstractNode>,
     connections: ReadonlyArray<IConnection>,
 ): IExpandedGraph {
@@ -36,7 +36,7 @@ function getNodesAndConnections(
 
     graphNodes.forEach((n) => {
         if (n.graph) {
-            const innerGraph = getNodesAndConnections(n.graph.nodes, n.graph.connections);
+            const innerGraph = expandNodesAndConnections(n.graph.nodes, n.graph.connections);
             expandedNodes = expandedNodes.concat(innerGraph.nodes);
             expandedConnections = expandedConnections.concat(innerGraph.connections);
         }
@@ -54,14 +54,25 @@ function isString(v: string | undefined): v is string {
 
 /** Expand a graph, which may contain subgraphs, into a flat list of nodes and connections */
 export function expandGraph(graph: Graph): IExpandedGraph {
-    return getNodesAndConnections(graph.nodes, graph.connections);
+    return expandNodesAndConnections(graph.nodes, graph.connections);
 }
 
 /** Uses Kahn's algorithm to topologically sort the nodes in the graph */
-export function calculateOrder(
+export function sortTopologically(graph: Graph): ITopologicalSortingResult;
+/** Uses Kahn's algorithm to topologically sort the nodes in the graph */
+export function sortTopologically(
     nonExpandedNodes: ReadonlyArray<AbstractNode>,
     nonExpandedConnections: ReadonlyArray<IConnection>,
-): IOrderCalculationResult {
+): ITopologicalSortingResult;
+/** This overload is only used for internal purposes */
+export function sortTopologically(
+    nonExpandedNodesOrGraph: ReadonlyArray<AbstractNode> | Graph,
+    nonExpandedConnections?: ReadonlyArray<IConnection>,
+): ITopologicalSortingResult;
+export function sortTopologically(
+    nonExpandedNodesOrGraph: ReadonlyArray<AbstractNode> | Graph,
+    nonExpandedConnections?: ReadonlyArray<IConnection>,
+): ITopologicalSortingResult {
     /** NodeInterface.id -> parent Node.id */
     const interfaceIdToNodeId = new Map<string, string>();
 
@@ -69,7 +80,16 @@ export function calculateOrder(
     const adjacency = new Map<string, Set<string>>();
     const connectionsFromNode = new Map<AbstractNode, IConnection[]>();
 
-    const { nodes, connections } = getNodesAndConnections(nonExpandedNodes, nonExpandedConnections);
+    let expandedGraph: IExpandedGraph;
+    if (nonExpandedNodesOrGraph instanceof Graph) {
+        expandedGraph = expandGraph(nonExpandedNodesOrGraph);
+    } else {
+        if (!nonExpandedConnections) {
+            throw new Error("Invalid argument value: expected array of connections");
+        }
+        expandedGraph = expandNodesAndConnections(nonExpandedNodesOrGraph, nonExpandedConnections);
+    }
+    const { nodes, connections } = expandedGraph;
 
     nodes.forEach((n) => {
         Object.values(n.inputs).forEach((intf) => interfaceIdToNodeId.set(intf.id, n.id));
@@ -124,9 +144,16 @@ export function calculateOrder(
     };
 }
 
-export function containsCycle(nodes: ReadonlyArray<AbstractNode>, connections: ReadonlyArray<IConnection>): boolean {
+/** Checks whether a graph contains a cycle */
+export function containsCycle(graph: Graph): boolean;
+/** Checks whether the provided set of nodes and connections contains a cycle */
+export function containsCycle(nodes: ReadonlyArray<AbstractNode>, connections: ReadonlyArray<IConnection>): boolean;
+export function containsCycle(
+    nodesOrGraph: ReadonlyArray<AbstractNode> | Graph,
+    connections?: ReadonlyArray<IConnection>,
+): boolean {
     try {
-        calculateOrder(nodes, connections);
+        sortTopologically(nodesOrGraph, connections);
         return true;
     } catch (err) {
         if (err instanceof CycleError) {

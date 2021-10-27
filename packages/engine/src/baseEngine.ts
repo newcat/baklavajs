@@ -7,8 +7,14 @@ import {
     GRAPH_NODE_TYPE_PREFIX,
     INodeUpdateEventData,
 } from "@baklavajs/core";
-import { calculateOrder, containsCycle, expandGraph, IOrderCalculationResult } from "./nodeTreeBuilder";
+import { sortTopologically, containsCycle, expandGraph, ITopologicalSortingResult } from "./topologicalSorting";
 
+/**
+ * Key: node id
+ * Value: calculation result of that node
+ *   Calculation result key: output interface key
+ *   Calculation result value: calculated value for that interface
+ */
 export type CalculationResult = Map<string, Map<string, any>>;
 
 export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<any>> {
@@ -34,7 +40,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
     /** This should be set to "true" while updating the graph with the calculation results */
     public disableCalculateOnChange = false;
 
-    protected order?: IOrderCalculationResult;
+    protected order?: ITopologicalSortingResult;
     protected recalculateOrder = false;
 
     /**
@@ -77,6 +83,8 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
      * Calculate all nodes.
      * This will automatically calculate the node calculation order if necessary and
      * transfer values between connected node interfaces.
+     * @param calculationData The data which is provided to each node's `calculate` method
+     * @param calculationArgs Additional data which is only provided to the engine
      * @returns A promise that resolves to either
      * - a map that maps rootNodes to their calculated value (what the calculation function of the node returned)
      * - null if the calculation was prevented from the beforeCalculate event
@@ -137,15 +145,27 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
      * default change detection does not work in your scenario.
      */
     public calculateOrder(): void {
-        this.order = calculateOrder(this.editor.graph.nodes, this.editor.graph.connections);
+        this.order = sortTopologically(this.editor.graph.nodes, this.editor.graph.connections);
         this.recalculateOrder = false;
     }
 
+    /**
+     * Use the `gatherCalculationData` hook to get the calculation data
+     * @param args The calculation arguments with which the engine's calculate method will be called (in addition to the `calculationData`)
+     * @returns The calculation result
+     */
     protected async calculateWithoutData(...args: CalculationArgs): Promise<CalculationResult | null> {
         const calculationData = this.hooks.gatherCalculationData.execute(undefined);
         return await this.calculate(calculationData, ...args);
     }
 
+    /**
+     * Validate the result of a node's `calculate` method. A result is valid if:
+     * - is has the correct format (it must be an object, where the key is the interface key and the value is the output value for that interface)
+     * - every output interface has a value assigned to it (null and undefined are also valid, but the key must exist in the object)
+     * @param node The node which produced the output data
+     * @param output The result of the node's `calculate` method
+     */
     protected validateNodeCalculationOutput(node: AbstractNode, output: any): void {
         if (typeof output !== "object") {
             throw new Error(`Invalid calculation return value from node ${node.id} (type ${node.type})`);
@@ -159,11 +179,25 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         });
     }
 
+    /**
+     * Overwrite this method to perform the calculation
+     * @param calculationData The data which is provided to each node's `calculate` method
+     * @param calculationArgs Additional data which is only provided to the engine
+     * @returns The calculation result
+     */
     protected abstract runCalculation(
         calculationData: CalculationData,
         ...calculationArgs: CalculationArgs
     ): Promise<CalculationResult>;
 
+    /**
+     * This method is called whenever the graph or values of node interfaces have been changed.
+     * You can overwrite this method to automatically trigger a calculation on change.
+     * Note: This method is NOT called when the `disableCalculateOnChange` flag is set
+     * @param recalculateOrder Whether the change modified the graph itself, e. g. a connection or a node was added/removed
+     * @param updatedNode If a node was updated (which means the value a node's interface has been changed): the node that was updated; `undefined` otherwise
+     * @param data If a node was updated: The `update` event payload to determine, which interface exactly has been changed; `undefined` otherwise
+     */
     protected abstract onChange(
         recalculateOrder: boolean,
         updatedNode?: AbstractNode,
