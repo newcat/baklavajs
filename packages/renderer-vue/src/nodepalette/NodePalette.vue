@@ -25,7 +25,7 @@ import { computed, CSSProperties, defineComponent, inject, Ref, ref, reactive } 
 import { usePointer } from "@vueuse/core";
 import { AbstractNode, INodeTypeInformation } from "@baklavajs/core";
 import PaletteEntry from "./PaletteEntry.vue";
-import { usePlugin, useTransform } from "../utility";
+import { useViewModel, useTransform } from "../utility";
 import { SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE } from "../graph/subgraphInterfaceNodes";
 import { checkRecursion } from "./checkRecursion";
 
@@ -39,7 +39,7 @@ interface IDraggedNode {
 export default defineComponent({
     components: { PaletteEntry },
     setup() {
-        const { plugin } = usePlugin();
+        const { viewModel } = useViewModel();
         const { x: mouseX, y: mouseY } = usePointer();
         const { transform } = useTransform();
 
@@ -48,7 +48,7 @@ export default defineComponent({
         const draggedNode = ref<IDraggedNode | null>(null);
 
         const categories = computed<Array<{ name: string; nodeTypes: NodeTypeInformations }>>(() => {
-            const nodeTypeEntries = Array.from(plugin.value.editor.value.nodeTypes.entries());
+            const nodeTypeEntries = Array.from(viewModel.value.editor.value.nodeTypes.entries());
 
             const categoryNames = new Set(nodeTypeEntries.map(([, ni]) => ni.category));
 
@@ -56,10 +56,11 @@ export default defineComponent({
             for (const c of categoryNames.values()) {
                 let nodeTypesInCategory = nodeTypeEntries.filter(([, ni]) => ni.category === c);
 
-                if (plugin.value.displayedGraph.value.template) {
+                if (viewModel.value.displayedGraph.value.template) {
                     // don't show the graph nodes that directly or indirectly contain the current subgraph to prevent recursion
                     nodeTypesInCategory = nodeTypesInCategory.filter(
-                        ([nt]) => !checkRecursion(plugin.value.editor.value, plugin.value.displayedGraph.value, nt),
+                        ([nt]) =>
+                            !checkRecursion(viewModel.value.editor.value, viewModel.value.displayedGraph.value, nt),
                     );
                 } else {
                     // if we are not in a subgraph, don't show subgraph input & output nodes
@@ -110,7 +111,7 @@ export default defineComponent({
             const onDragEnd = () => {
                 console.log("pointerup");
                 const instance = reactive(new nodeInformation.type()) as AbstractNode;
-                plugin.value.displayedGraph.value.addNode(instance);
+                viewModel.value.displayedGraph.value.addNode(instance);
 
                 const rect = editorEl!.value!.getBoundingClientRect();
                 const [x, y] = transform(mouseX.value - rect.left, mouseY.value - rect.top);

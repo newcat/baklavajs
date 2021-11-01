@@ -25,7 +25,7 @@ import { GRAPH_NODE_TYPE_PREFIX } from "@baklavajs/core";
 
 import ContextMenu, { IMenuItem } from "../components/ContextMenu.vue";
 import VerticalDots from "../icons/VerticalDots.vue";
-import { usePlugin } from "../utility";
+import { useViewModel } from "../utility";
 
 export default defineComponent({
     components: { ContextMenu, VerticalDots },
@@ -40,7 +40,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const { plugin } = usePlugin();
+        const { viewModel } = useViewModel();
 
         const showContextMenu = ref(false);
         const hasContextMenu = computed(() => props.type.startsWith(GRAPH_NODE_TYPE_PREFIX));
@@ -54,9 +54,11 @@ export default defineComponent({
         const onContextMenuClick = (action: string) => {
             if (action === "deleteSubgraph") {
                 const graphTemplateId = props.type.substring(GRAPH_NODE_TYPE_PREFIX.length);
-                const graphTemplate = plugin.value.editor.value.graphTemplates.find((gt) => gt.id === graphTemplateId);
+                const graphTemplate = viewModel.value.editor.value.graphTemplates.find(
+                    (gt) => gt.id === graphTemplateId,
+                );
                 if (graphTemplate) {
-                    plugin.value.editor.value.removeGraphTemplate(graphTemplate);
+                    viewModel.value.editor.value.removeGraphTemplate(graphTemplate);
                 }
             }
         };

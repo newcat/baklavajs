@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { usePlugin } from "../utility";
+import { useViewModel } from "../utility";
 import {
     COPY_COMMAND,
     PASTE_COMMAND,
@@ -32,9 +32,9 @@ import ToolbarButton from "./ToolbarButton.vue";
 export default defineComponent({
     components: { ToolbarButton },
     setup() {
-        const { plugin } = usePlugin();
+        const { viewModel } = useViewModel();
 
-        const isSubgraph = computed(() => plugin.value.displayedGraph.value !== plugin.value.editor.value.graph);
+        const isSubgraph = computed(() => viewModel.value.displayedGraph.value !== viewModel.value.editor.value.graph);
 
         const commands = [
             { command: COPY_COMMAND, title: "Copy", icon: Icons.Copy },
@@ -49,7 +49,7 @@ export default defineComponent({
             { command: SWITCH_TO_MAIN_GRAPH_COMMAND, title: "Back to Main Graph", icon: Icons.ArrowLeft },
         ];
 
-        return { plugin, isSubgraph, commands, subgraphCommands };
+        return { isSubgraph, commands, subgraphCommands };
     },
 });
 </script>

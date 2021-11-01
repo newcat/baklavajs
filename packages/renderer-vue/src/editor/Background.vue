@@ -1,21 +1,18 @@
 <template>
-    <div
-        class="background"
-        :style="styles"
-    />
+    <div class="background" :style="styles" />
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import { useGraph, usePlugin } from "../utility";
+import { useGraph, useViewModel } from "../utility";
 
 export default defineComponent({
     setup() {
-        const { plugin } = usePlugin();
+        const { viewModel } = useViewModel();
         const { graph } = useGraph();
 
         const styles = computed(() => {
-            const config = plugin.value.settings.background;
+            const config = viewModel.value.settings.background;
             const positionLeft = graph.value.panning.x * graph.value.scaling;
             const positionTop = graph.value.panning.y * graph.value.scaling;
             const size = graph.value.scaling * config.gridSize;

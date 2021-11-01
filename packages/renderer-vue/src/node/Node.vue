@@ -51,9 +51,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, toRef, nextTick, onUpdated, onMounted } from "vue";
+import { defineComponent, ref, computed, toRef, nextTick, onUpdated, onMounted, Ref } from "vue";
 import { AbstractNode, IGraphNode } from "@baklavajs/core";
-import { useDragMove, useGraph, usePlugin } from "../utility";
+import { useDragMove, useGraph, useViewModel } from "../utility";
 
 import ContextMenu from "../components/ContextMenu.vue";
 import VerticalDots from "../icons/VerticalDots.vue";
@@ -73,11 +73,11 @@ export default defineComponent({
     },
     emits: ["select"],
     setup(props, { emit }) {
-        const { plugin } = usePlugin();
+        const { viewModel } = useViewModel();
         const { graph, switchGraph } = useGraph();
         const dragMove = useDragMove(toRef(props.node, "position"));
 
-        const el = ref<HTMLElement | null>(null);
+        const el = ref<HTMLElement | null>(null) as Ref<HTMLElement | null>;
         const renaming = ref(false);
         const tempName = ref("");
         const renameInputEl = ref<HTMLInputElement | null>(null);
@@ -156,7 +156,7 @@ export default defineComponent({
 
         const onRender = () => {
             if (el.value) {
-                plugin.value.hooks.renderNode.execute({ node: props.node, el: el.value });
+                viewModel.value.hooks.renderNode.execute({ node: props.node, el: el.value });
             }
         };
 

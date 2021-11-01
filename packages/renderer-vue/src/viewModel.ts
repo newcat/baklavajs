@@ -23,7 +23,7 @@ export interface IViewSettings {
     };
 }
 
-export interface IBaklavaView extends IBaklavaTapable {
+export interface IBaklavaViewModel extends IBaklavaTapable {
     editor: Ref<Editor>;
     displayedGraph: Ref<Graph>;
     isSubgraph: Readonly<Ref<boolean>>;
@@ -40,9 +40,9 @@ export interface IBaklavaView extends IBaklavaTapable {
     switchGraph: (newGraph: Graph | GraphTemplate) => void;
 }
 
-export function useBaklava(existingEditor?: Ref<UnwrapRef<Editor>>): IBaklavaView {
+export function useBaklava(existingEditor?: Ref<UnwrapRef<Editor>>): IBaklavaViewModel {
     const editor: Ref<Editor> = (existingEditor as Ref<Editor>) ?? ref(new Editor());
-    const token = Symbol("ViewPluginToken");
+    const token = Symbol("ViewModelToken");
 
     const _displayedGraph = ref(null as any) as Ref<Graph>;
     const displayedGraph = shallowReadonly(_displayedGraph) as Readonly<Ref<Graph>>;

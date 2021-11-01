@@ -18,7 +18,7 @@
 <script lang="ts">
 import { computed, defineComponent, inject, onMounted, onUpdated, Ref, ref } from "vue";
 import { AbstractNode, NodeInterface } from "@baklavajs/core";
-import { usePlugin } from "../utility";
+import { useViewModel } from "../utility";
 
 export default defineComponent({
     props: {
@@ -32,7 +32,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const { plugin } = usePlugin();
+        const { viewModel } = useViewModel();
         const hoveredOver = inject<(intf: NodeInterface | undefined) => void>("hoveredOver")!;
 
         const el = ref<HTMLElement | null>(null) as Ref<HTMLElement>;
@@ -53,7 +53,7 @@ export default defineComponent({
 
         const onRender = () => {
             if (el.value) {
-                plugin.value.hooks.renderInterface.execute({ intf: props.intf, el: el.value });
+                viewModel.value.hooks.renderInterface.execute({ intf: props.intf, el: el.value });
             }
         };
 

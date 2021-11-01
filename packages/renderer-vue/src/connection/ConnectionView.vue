@@ -5,7 +5,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { TemporaryConnectionState } from "./connection";
-import { useGraph, usePlugin } from "../utility";
+import { useGraph, useViewModel } from "../utility";
 
 export default defineComponent({
     props: {
@@ -35,7 +35,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const { plugin } = usePlugin();
+        const { viewModel } = useViewModel();
         const { graph } = useGraph();
 
         const transform = (x: number, y: number) => {
@@ -47,7 +47,7 @@ export default defineComponent({
         const d = computed(() => {
             const [tx1, ty1] = transform(props.x1, props.y1);
             const [tx2, ty2] = transform(props.x2, props.y2);
-            if (plugin.value.settings.useStraightConnections) {
+            if (viewModel.value.settings.useStraightConnections) {
                 return `M ${tx1} ${ty1} L ${tx2} ${ty2}`;
             } else {
                 const dx = 0.3 * Math.abs(tx1 - tx2);

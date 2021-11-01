@@ -57,7 +57,7 @@
         </slot>
 
         <slot name="minimap">
-            <minimap v-if="plugin.settings.enableMinimap" />
+            <minimap v-if="viewModel.settings.enableMinimap" />
         </slot>
     </div>
 </template>
@@ -66,7 +66,7 @@
 import { computed, defineComponent, provide, Ref, ref, toRef } from "vue";
 
 import { AbstractNode } from "@baklavajs/core";
-import { IBaklavaView } from "../useBaklava";
+import { IBaklavaViewModel } from "../viewModel";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
 
@@ -84,23 +84,23 @@ import { providePlugin } from "../utility";
 export default defineComponent({
     components: { Background, Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette, Toolbar },
     props: {
-        plugin: {
-            type: Object as () => IBaklavaView,
+        viewModel: {
+            type: Object as () => IBaklavaViewModel,
             required: true,
         },
     },
     setup(props) {
         const token = Symbol("EditorToken");
 
-        const pluginRef = toRef(props, "plugin") as unknown as Ref<IBaklavaView>;
-        providePlugin(pluginRef);
+        const viewModelRef = toRef(props, "viewModel") as unknown as Ref<IBaklavaViewModel>;
+        providePlugin(viewModelRef);
 
         const el = ref<HTMLElement | null>(null);
         provide("editorEl", el);
 
-        const nodes = computed(() => props.plugin.displayedGraph.value.nodes);
-        const connections = computed(() => props.plugin.displayedGraph.value.connections);
-        const selectedNodes = computed(() => props.plugin.displayedGraph.value.selectedNodes);
+        const nodes = computed(() => props.viewModel.displayedGraph.value.nodes);
+        const connections = computed(() => props.viewModel.displayedGraph.value.connections);
+        const selectedNodes = computed(() => props.viewModel.displayedGraph.value.selectedNodes);
 
         const panZoom = usePanZoom();
         const temporaryConnection = useTemporaryConnection();
@@ -111,7 +111,7 @@ export default defineComponent({
 
         // Reason: https://github.com/newcat/baklavajs/issues/54
         const counter = ref(0);
-        props.plugin.editor.value.hooks.load.subscribe(token, (s) => {
+        props.viewModel.editor.value.hooks.load.subscribe(token, (s) => {
             counter.value++;
             return s;
         });
@@ -140,22 +140,22 @@ export default defineComponent({
             if (ev.key === "Tab") {
                 ev.preventDefault();
             }
-            props.plugin.commandHandler.handleKeyDown(ev);
+            props.viewModel.commandHandler.handleKeyDown(ev);
         };
 
         const keyUp = (ev: KeyboardEvent) => {
-            props.plugin.commandHandler.handleKeyUp(ev);
+            props.viewModel.commandHandler.handleKeyUp(ev);
         };
 
         const selectNode = (node: AbstractNode) => {
-            if (!props.plugin.commandHandler.pressedKeys.value.includes("Control")) {
+            if (!props.viewModel.commandHandler.pressedKeys.value.includes("Control")) {
                 unselectAllNodes();
             }
-            props.plugin.displayedGraph.value.selectedNodes.push(node);
+            props.viewModel.displayedGraph.value.selectedNodes.push(node);
         };
 
         const unselectAllNodes = () => {
-            props.plugin.displayedGraph.value.selectedNodes = [];
+            props.viewModel.displayedGraph.value.selectedNodes = [];
         };
 
         return {

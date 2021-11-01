@@ -87,7 +87,7 @@ export default defineComponent({
     setup(props, { emit }) {
         let activeMenuResetTimeout: number | null = null;
 
-        const el = ref<HTMLElement | null>(null);
+        const el = ref<HTMLElement | null>(null) as Ref<HTMLElement | null>;
         const activeMenu = ref(-1);
         const height = ref(0);
         const rootIsFlipped = ref({ x: false, y: false });

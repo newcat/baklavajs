@@ -1,12 +1,12 @@
 import { Ref } from "vue";
 import { Graph } from "@baklavajs/core";
-import { usePlugin } from "./usePlugin";
+import { useViewModel } from "./useViewModel";
 import { SwitchGraph } from "../graph/switchGraph";
 
 export function useGraph(): { graph: Readonly<Ref<Graph>>; switchGraph: SwitchGraph } {
-    const { plugin } = usePlugin();
+    const { viewModel } = useViewModel();
     return {
-        graph: plugin.value.displayedGraph,
-        switchGraph: plugin.value.switchGraph,
+        graph: viewModel.value.displayedGraph,
+        switchGraph: viewModel.value.switchGraph,
     };
 }

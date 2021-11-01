@@ -1,9 +1,9 @@
 <template>
     <button
         class="baklava-toolbar-entry baklava-toolbar-button"
-        :disabled="!plugin.commandHandler.canExecuteCommand(command)"
+        :disabled="!viewModel.commandHandler.canExecuteCommand(command)"
         :title="title"
-        @click="plugin.commandHandler.executeCommand(command)"
+        @click="viewModel.commandHandler.executeCommand(command)"
     >
         <component :is="icon" v-if="icon" />
         <template v-else>
@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { usePlugin } from "../utility";
+import { useViewModel } from "../utility";
 
 export default defineComponent({
     props: {
@@ -33,8 +33,8 @@ export default defineComponent({
         },
     },
     setup() {
-        const { plugin } = usePlugin();
-        return { plugin };
+        const { viewModel } = useViewModel();
+        return { viewModel };
     },
 });
 </script>

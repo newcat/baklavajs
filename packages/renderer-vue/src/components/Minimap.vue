@@ -15,7 +15,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import { AbstractNode } from "@baklavajs/core";
 import getDomElements, { getDomElementOfNode } from "../connection/domResolver";
 import { getPortCoordinates } from "../connection/portCoordinates";
-import { useGraph, usePlugin } from "../utility";
+import { useGraph, useViewModel } from "../utility";
 
 interface IRect {
     x1: number;
@@ -26,7 +26,7 @@ interface IRect {
 
 export default defineComponent({
     setup() {
-        const { plugin } = usePlugin();
+        const { viewModel } = useViewModel();
         const { graph } = useGraph();
 
         const canvas = ref<HTMLCanvasElement | null>(null);
@@ -99,7 +99,7 @@ export default defineComponent({
                 const [x2, y2] = transformCoordinates(origX2, origY2);
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
-                if (plugin.value.settings.useStraightConnections) {
+                if (viewModel.value.settings.useStraightConnections) {
                     ctx.lineTo(x2, y2);
                 } else {
                     const dx = 0.3 * Math.abs(x1 - x2);
