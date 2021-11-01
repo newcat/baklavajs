@@ -3,7 +3,7 @@
  */
 
 import type { Editor, NodeInterface } from "@baklavajs/core";
-import type { IBaklavaView } from "@baklavajs/renderer-vue";
+import type { IBaklavaViewModel } from "@baklavajs/renderer-vue";
 import type { BaseEngine } from "@baklavajs/engine";
 
 export interface IConversion<I, O> {
@@ -12,7 +12,7 @@ export interface IConversion<I, O> {
 }
 
 export interface BaklavaInterfaceTypesOptions {
-    viewPlugin?: IBaklavaView;
+    viewPlugin?: IBaklavaViewModel;
     engine?: BaseEngine<any, any>;
 }
 

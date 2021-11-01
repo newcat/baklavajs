@@ -18,6 +18,9 @@
     transform: translateX(100%);
     transition: transform 0.5s;
 
+    display: flex;
+    flex-direction: column;
+
     &.--open {
         transform: translateX(0);
         box-shadow: 0px 0px 15px black;
@@ -47,5 +50,9 @@
         background: none;
         color: inherit;
         cursor: pointer;
+    }
+
+    & .__interface {
+        margin: 0.5em 0;
     }
 }

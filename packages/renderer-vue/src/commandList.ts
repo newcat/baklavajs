@@ -1,6 +1,7 @@
 export type { CreateSubgraphCommand, DeleteNodesCommand, SaveSubgraphCommand, SwitchToMainGraphCommand } from "./graph";
 export type { CommitTransactionCommand, StartTransactionCommand, UndoCommand, RedoCommand } from "./history";
 export type { ClearClipboardCommand, CopyCommand, PasteCommand } from "./clipboard";
+export type { OpenSidebarCommand } from "./sidebar";
 
 export {
     CREATE_SUBGRAPH_COMMAND,
@@ -10,3 +11,4 @@ export {
 } from "./graph";
 export { COMMIT_TRANSACTION_COMMAND, START_TRANSACTION_COMMAND, UNDO_COMMAND, REDO_COMMAND } from "./history";
 export { CLEAR_CLIPBOARD_COMMAND, COPY_COMMAND, PASTE_COMMAND } from "./clipboard";
+export { OPEN_SIDEBAR_COMMAND } from "./sidebar";

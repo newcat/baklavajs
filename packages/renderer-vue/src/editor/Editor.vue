@@ -74,7 +74,7 @@ import Background from "./Background.vue";
 import Node from "../node/Node.vue";
 import ConnectionWrapper from "../connection/ConnectionWrapper.vue";
 import TemporaryConnection from "../connection/TemporaryConnection.vue";
-import Sidebar from "../components/Sidebar.vue";
+import Sidebar from "../sidebar/Sidebar.vue";
 import Minimap from "../components/Minimap.vue";
 import NodePalette from "../nodepalette/NodePalette.vue";
 import Toolbar from "../toolbar/Toolbar.vue";

@@ -6,9 +6,12 @@ export * from "./command";
 
 export interface ICommandHandler {
     pressedKeys: Ref<string[]>;
-    registerCommand<T extends ICommand>(name: string, command: T): void;
-    executeCommand<T extends ICommand>(name: string, throwOnNonexisting?: false): ReturnType<T["execute"]> | void;
-    executeCommand<T extends ICommand>(name: string, throwOnNonexisting: true): ReturnType<T["execute"]>;
+    registerCommand<T extends ICommand<any, any[]>>(name: string, command: T): void;
+    executeCommand<T extends ICommand<any, any[]>>(
+        name: string,
+        throwOnNonexisting?: false,
+    ): ReturnType<T["execute"]> | void;
+    executeCommand<T extends ICommand<any, any[]>>(name: string, throwOnNonexisting: true): ReturnType<T["execute"]>;
     canExecuteCommand(name: string, throwOnNonexisting?: boolean): boolean;
     registerHotkey(keys: string[], commandName: string): void;
     handleKeyUp(ev: KeyboardEvent): void;
@@ -27,7 +30,7 @@ export const useCommandHandler: () => ICommandHandler = () => {
 
     const executeCommand = <T extends ICommand>(
         name: string,
-        throwOnNonexisting = false
+        throwOnNonexisting = false,
     ): ReturnType<T["execute"]> | void => {
         if (!commands.value.has(name)) {
             if (throwOnNonexisting) {

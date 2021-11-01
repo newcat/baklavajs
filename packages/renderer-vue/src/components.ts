@@ -5,4 +5,4 @@ export { default as Node } from "./node/Node.vue";
 export { default as NodeInterface } from "./node/NodeInterface.vue";
 export { default as ContextMenu } from "./components/ContextMenu.vue";
 export { default as Minimap } from "./components/Minimap.vue";
-export { default as Sidebar } from "./components/Sidebar.vue";
+export { default as Sidebar } from "./sidebar/Sidebar.vue";

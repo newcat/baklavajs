@@ -7,35 +7,45 @@
                 &times;
             </button>
             <div class="__node-name">
-                <b>{{ nodeName }}</b>
+                <b>{{ node ? node.title : "" }}</b>
             </div>
         </div>
 
-        <!-- TODO: Make unique so it works with multiple Baklava instances on the same page -->
-        <div id="sidebar-container" />
+        <div v-for="intf in displayedInterfaces" :key="intf.id" class="__interface">
+            <component :is="intf.component" v-model="intf.value" :node="node" :intf="intf" />
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
-import { useGraph } from "../utility";
+import { useGraph, useViewModel } from "../utility";
+import { OpenSidebarCommand, OPEN_SIDEBAR_COMMAND } from "./index";
 
 export default defineComponent({
     setup() {
+        const { viewModel } = useViewModel();
         const { graph } = useGraph();
 
         const el = ref<HTMLElement | null>(null);
         const width = ref(300);
 
-        const nodeName = computed(() => {
+        const node = computed(() => {
             const id = graph.value.sidebar.nodeId;
-            const n = graph.value.nodes.find((x) => x.id === id);
-            return n ? n.title : "";
+            return graph.value.nodes.find((x) => x.id === id);
         });
 
         const styles = computed(() => ({
             width: `${width.value}px`,
         }));
+
+        const displayedInterfaces = computed(() => {
+            if (!node.value) {
+                return [];
+            }
+            const allIntfs = [...Object.values(node.value.inputs), ...Object.values(node.value.outputs)];
+            return allIntfs.filter((intf) => intf.displayInSidebar && intf.component);
+        });
 
         const close = () => {
             graph.value.sidebar.visible = false;
@@ -62,7 +72,15 @@ export default defineComponent({
             }
         };
 
-        return { el, graph, nodeName, styles, startResize, close };
+        viewModel.value.commandHandler.registerCommand<OpenSidebarCommand>(OPEN_SIDEBAR_COMMAND, {
+            execute: (nodeId: string) => {
+                graph.value.sidebar.nodeId = nodeId;
+                graph.value.sidebar.visible = true;
+            },
+            canExecute: () => true,
+        });
+
+        return { el, graph, node, styles, displayedInterfaces, startResize, close };
     },
 });
 </script>

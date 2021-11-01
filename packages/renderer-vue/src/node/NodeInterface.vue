@@ -11,7 +11,14 @@
         <span v-if="intf.connectionCount > 0 || !intf.component" class="align-middle">
             {{ intf.name }}
         </span>
-        <component :is="intf.component" v-else v-model="intf.value" :node="node" :intf="intf" />
+        <component
+            :is="intf.component"
+            v-else
+            v-model="intf.value"
+            :node="node"
+            :intf="intf"
+            @openSidebar="openSidebar"
+        />
     </div>
 </template>
 
@@ -57,10 +64,17 @@ export default defineComponent({
             }
         };
 
+        const openSidebar = () => {
+            const sidebar = viewModel.value.displayedGraph.value.sidebar;
+            sidebar.nodeId = props.node.id;
+            sidebar.optionName = props.intf.name;
+            sidebar.visible = true;
+        };
+
         onMounted(onRender);
         onUpdated(onRender);
 
-        return { el, isConnected, classes, startHover, endHover };
+        return { el, isConnected, classes, startHover, endHover, openSidebar };
     },
 });
 </script>

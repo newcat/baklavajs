@@ -1,4 +1,4 @@
-export interface ICommand<T = any, A extends Array<any> = []> {
-    execute(...args: A): T;
+export interface ICommand<Returns = any, Arguments extends Array<any> = []> {
+    execute(...args: Arguments): Returns;
     canExecute(): boolean;
 }

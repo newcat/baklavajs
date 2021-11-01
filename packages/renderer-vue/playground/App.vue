@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <baklava-editor :plugin="baklavaView">
+        <baklava-editor :view-model="baklavaView">
             <template #node="nodeProps">
                 <CustomNodeRenderer :key="nodeProps.node.id" v-bind="nodeProps" />
             </template>
@@ -44,6 +44,7 @@ import AdvancedNode from "./AdvancedNode";
 import CommentNode from "./CommentNode";
 import InterfaceTestNode from "./InterfaceTestNode";
 import SelectTestNode from "./SelectTestNode";
+import SidebarNode from "./SidebarNode";
 
 import { stringType, numberType, booleanType } from "./interfaceTypes";
 
@@ -81,6 +82,7 @@ export default defineComponent({
         editor.value.registerNodeType(CommentNode, { title: "Comment" });
         editor.value.registerNodeType(InterfaceTestNode);
         editor.value.registerNodeType(SelectTestNode);
+        editor.value.registerNodeType(SidebarNode);
         editor.value.graph.addNode(new TestNode());
         editor.value.graph.addNode(new TestNode());
         editor.value.graph.addNode(new TestNode());
