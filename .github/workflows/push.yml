@@ -1,0 +1,23 @@
+name: Push
+
+on:
+    push:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            - name: Use Node.js 16
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "16"
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+            - name: Lint
+              run: yarn run lint
+            - name: Build
+              run: yarn run build
+            - name: Test
+              run: yarn run test

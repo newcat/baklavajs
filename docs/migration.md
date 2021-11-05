@@ -9,3 +9,7 @@
 -   The `NodeBuilder` doesn't exist in V2 anymore. You can either use [class-based](/nodes/nodes#class-based-approach) or [declaration-based](/nodes/nodes#definenode) approach.
 -   Node options have been removed. They are now interfaces with `.setPort(false)`
 -   The `calculate` function behaves differently, see [Graph Execution](/execution)
+
+## Sidebar
+
+-   The sidebar is now per-node instead of per-option / per-interface as before. See TODO: [Sidebar](./)
