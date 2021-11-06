@@ -22,8 +22,7 @@ jobs:
             - name: Publish
               run: |
                   echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
-                  npm whoami
-                  lerna publish --dist-tag next --canary --preid next --yes
+                  lerna publish --dist-tag next --canary --preid next --yes --no-verify-access
             - name: Build docs
               run: |
                   yarn run generate-api-docs
