@@ -15,34 +15,36 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: "16"
-            - name: Install dependencies
-              run: yarn install --frozen-lockfile
-            - name: Build
-              run: yarn run build
-            - name: Publish
-              run: |
-                  echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
-                  lerna publish --dist-tag next --canary --preid next --yes --no-verify-access
-            - name: Build docs
-              run: |
-                  yarn run generate-api-docs
-                  yarn run docs:build
-            - name: Azure login
-              uses: azure/login@v1
-              with:
-                  creds: ${{ secrets.AZURE_CREDENTIALS }}
-            - name: Publish docs
-              uses: azure/CLI@v1
-              with:
-                  azcliversion: 2.0.72
-                  inlineScript: |
-                      az storage blob upload-batch --account-name baklavajs --auth-mode key -d '$web' -s "./docs/.vitepress/dist/"
-            - name: Purge CDN endpoint
-              uses: azure/CLI@v1
-              with:
-                  azcliversion: 2.0.72
-                  inlineScript: |
-                      az cdn endpoint purge --content-paths "/*" --profile-name "baklavajs" --name "baklavajs.azureedge.net" --resource-group "Private"
-            - name: Azure Logout
-              run: az logout
-              if: always()
+            - name: Debug
+              run: git describe --always --long --dirty --first-parent
+            # - name: Install dependencies
+            #   run: yarn install --frozen-lockfile
+            # - name: Build
+            #   run: yarn run build
+            # - name: Publish
+            #   run: |
+            #       echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
+            #       lerna publish --dist-tag next --canary --preid next --yes --no-verify-access
+            # - name: Build docs
+            #   run: |
+            #       yarn run generate-api-docs
+            #       yarn run docs:build
+            # - name: Azure login
+            #   uses: azure/login@v1
+            #   with:
+            #       creds: ${{ secrets.AZURE_CREDENTIALS }}
+            # - name: Publish docs
+            #   uses: azure/CLI@v1
+            #   with:
+            #       azcliversion: 2.0.72
+            #       inlineScript: |
+            #           az storage blob upload-batch --account-name baklavajs --auth-mode key -d '$web' -s "./docs/.vitepress/dist/"
+            # - name: Purge CDN endpoint
+            #   uses: azure/CLI@v1
+            #   with:
+            #       azcliversion: 2.0.72
+            #       inlineScript: |
+            #           az cdn endpoint purge --content-paths "/*" --profile-name "baklavajs" --name "baklavajs.azureedge.net" --resource-group "Private"
+            # - name: Azure Logout
+            #   run: az logout
+            #   if: always()
