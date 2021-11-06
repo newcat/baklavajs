@@ -36,7 +36,7 @@ jobs:
               with:
                   azcliversion: 2.0.72
                   inlineScript: |
-                      az storage blob upload-batch --account-name baklavajs --auth-mode key -d '$web' -s .
+                      az storage blob upload-batch --account-name baklavajs --auth-mode key -d '$web' -s "./docs/.vitepress/dist/"
             - name: Purge CDN endpoint
               uses: azure/CLI@v1
               with:
