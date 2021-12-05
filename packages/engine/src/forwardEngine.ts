@@ -5,7 +5,7 @@ export class ForwardEngine<CalculationData = any> extends BaseEngine<
     CalculationData,
     [AbstractNode, INodeUpdateEventData]
 > {
-    protected async runCalculation(
+    protected async execute(
         calculationData: CalculationData,
         startingNode: AbstractNode,
         data: INodeUpdateEventData,
@@ -29,14 +29,14 @@ export class ForwardEngine<CalculationData = any> extends BaseEngine<
             this.validateNodeCalculationOutput(node, r);
             result.set(node.id, new Map(Object.entries(r)));
 
-            const connections = this.order!.connectionsFromNode.get(node);
+            const connections = this.order.connectionsFromNode.get(node);
             if (!connections) {
                 continue;
             }
 
             for (const c of connections) {
-                const nodeId = this.order!.interfaceIdToNodeId.get(c.to.id);
-                const targetNode = nodeId && this.order!.calculationOrder.find((n) => n.id === nodeId);
+                const nodeId = this.order.interfaceIdToNodeId.get(c.to.id);
+                const targetNode = nodeId && this.order.calculationOrder.find((n) => n.id === nodeId);
                 if (!nodeId || !targetNode || !targetNode.calculate) {
                     continue;
                 }
@@ -51,8 +51,8 @@ export class ForwardEngine<CalculationData = any> extends BaseEngine<
 
     protected onChange(recalculateOrder: boolean, updatedNode?: AbstractNode, data?: INodeUpdateEventData): void {
         this.recalculateOrder = recalculateOrder || this.recalculateOrder;
-        if (this.calculateOnChange && updatedNode && data) {
-            this.calculateWithoutData(updatedNode, data);
+        if (updatedNode && data) {
+            void this.calculateWithoutData(updatedNode, data);
         }
     }
 }

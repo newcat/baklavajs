@@ -27,7 +27,7 @@
                 style="text-align: right"
                 @blur="leaveEditMode"
                 @keydown.enter="leaveEditMode"
-            >
+            />
         </div>
     </div>
 </template>
@@ -66,7 +66,7 @@ export default defineComponent({
                 return;
             }
             if (!didSlide.value) {
-                baseNumericInterface.enterEditMode();
+                void baseNumericInterface.enterEditMode();
             }
             isMouseDown.value = false;
             didSlide.value = false;

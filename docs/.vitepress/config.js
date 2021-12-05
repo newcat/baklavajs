@@ -19,7 +19,14 @@ module.exports = {
                         { text: "Node Lifecycle", link: "/nodes/lifecycle" },
                     ],
                 },
-                { text: "Graph Execution", link: "/execution" },
+                {
+                    text: "Graph Execution",
+                    children: [
+                        { text: "Setup", link: "/execution/index" },
+                        { text: "Dependency Engine", link: "/execution/dependency" },
+                        { text: "Forward Engine", link: "/execution/forward" },
+                    ],
+                },
                 { text: "Plugins", children: [{ text: "Interface Types", link: "/plugins/interface-types" }] },
                 { text: "Migration", link: "/migration" },
             ],

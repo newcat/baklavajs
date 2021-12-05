@@ -17,15 +17,30 @@ import { sortTopologically, containsCycle, expandGraph, ITopologicalSortingResul
  */
 export type CalculationResult = Map<string, Map<string, any>>;
 
+export enum EngineStatus {
+    /** The engine is currently running a calculation */
+    Running = "Running",
+    /** The engine is not currently running a calculation but will do so when the graph changes */
+    Idle = "Idle",
+    /** The engine is temporarily paused */
+    Paused = "Paused",
+    /** The engine is not running */
+    Stopped = "Stopped",
+}
+
 export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<any>> {
     public events = {
-        /** This event will be called before all the nodes `calculate` functions are called.
+        /**
+         * This event will be called before all the nodes `calculate` functions are called.
          * The argument is the calculationData that the nodes will receive
          */
-        beforeCalculate: new PreventableBaklavaEvent<CalculationData, BaseEngine<CalculationData, CalculationArgs>>(
-            this,
-        ),
-        calculated: new BaklavaEvent<CalculationResult, BaseEngine<CalculationData, CalculationArgs>>(this),
+        beforeRun: new PreventableBaklavaEvent<CalculationData, BaseEngine<CalculationData, CalculationArgs>>(this),
+        /**
+         * This event is called as soon as a run is completed.
+         * The argument is the result of the calculation.
+         */
+        afterRun: new BaklavaEvent<CalculationResult, BaseEngine<CalculationData, CalculationArgs>>(this),
+        statusChange: new BaklavaEvent<EngineStatus, BaseEngine<CalculationData, CalculationArgs>>(this),
     };
 
     public hooks = {
@@ -37,17 +52,20 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         transferData: new DynamicSequentialHook<any, IConnection>(),
     };
 
-    /** This should be set to "true" while updating the graph with the calculation results */
-    public disableCalculateOnChange = false;
+    public get status(): EngineStatus {
+        if (this.isRunning) {
+            return EngineStatus.Running;
+        }
+        return this.internalStatus;
+    }
 
     protected order?: ITopologicalSortingResult;
     protected recalculateOrder = false;
+    /** the internal status will never be set to running, as this is determined by the running flag */
+    private internalStatus: EngineStatus = EngineStatus.Stopped;
+    private isRunning = false;
 
-    /**
-     * Construct a new Engine plugin
-     * @param calculateOnChange Whether to automatically calculate all nodes when any node interface is changed.
-     */
-    public constructor(protected editor: Editor, protected calculateOnChange = false) {
+    public constructor(protected editor: Editor) {
         this.editor.nodeEvents.update.subscribe(this, (data, node) => {
             if (node.type.startsWith(GRAPH_NODE_TYPE_PREFIX) && data === null) {
                 this.internalOnChange(true);
@@ -79,31 +97,73 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         });
     }
 
+    /** Start the engine. After started, it will run everytime the graph is changed. */
+    public start() {
+        if (this.internalStatus === EngineStatus.Stopped) {
+            this.internalStatus = EngineStatus.Idle;
+            this.events.statusChange.emit(this.status);
+        }
+    }
+
     /**
-     * Calculate all nodes.
+     * Temporarily pause the engine.
+     * Use this method when you want to update the graph with the calculation results.
+     */
+    public pause() {
+        if (this.internalStatus === EngineStatus.Idle) {
+            this.internalStatus = EngineStatus.Paused;
+            this.events.statusChange.emit(this.status);
+        }
+    }
+
+    /** Resume the engine from the paused state */
+    public resume() {
+        if (this.internalStatus === EngineStatus.Paused) {
+            this.internalStatus = EngineStatus.Idle;
+            this.events.statusChange.emit(this.status);
+        }
+    }
+
+    /** Stop the engine */
+    public stop() {
+        if (this.internalStatus === EngineStatus.Idle || this.internalStatus === EngineStatus.Paused) {
+            this.internalStatus = EngineStatus.Stopped;
+            this.events.statusChange.emit(this.status);
+        }
+    }
+
+    /**
+     * Calculate all nodes once.
      * This will automatically calculate the node calculation order if necessary and
      * transfer values between connected node interfaces.
      * @param calculationData The data which is provided to each node's `calculate` method
      * @param calculationArgs Additional data which is only provided to the engine
      * @returns A promise that resolves to either
      * - a map that maps rootNodes to their calculated value (what the calculation function of the node returned)
-     * - null if the calculation was prevented from the beforeCalculate event
+     * - null if the calculation was prevented from the beforeRun event
      */
-    public async calculate(
+    public async runOnce(
         calculationData: CalculationData,
         ...args: CalculationArgs
     ): Promise<CalculationResult | null> {
-        if (this.events.beforeCalculate.emit(calculationData)) {
+        if (this.events.beforeRun.emit(calculationData)) {
             return null;
         }
 
-        if (this.recalculateOrder) {
-            this.calculateOrder();
-        }
+        try {
+            this.isRunning = true;
+            this.events.statusChange.emit(this.status);
+            if (this.recalculateOrder) {
+                this.calculateOrder();
+            }
 
-        const result = await this.runCalculation(calculationData, ...args);
-        this.events.calculated.emit(result);
-        return result;
+            const result = await this.execute(calculationData, ...args);
+            this.events.afterRun.emit(result);
+            return result;
+        } finally {
+            this.isRunning = false;
+            this.events.statusChange.emit(this.status);
+        }
     }
 
     /** Check whether a connection can be created.
@@ -156,7 +216,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
      */
     protected async calculateWithoutData(...args: CalculationArgs): Promise<CalculationResult | null> {
         const calculationData = this.hooks.gatherCalculationData.execute(undefined);
-        return await this.calculate(calculationData, ...args);
+        return await this.runOnce(calculationData, ...args);
     }
 
     /**
@@ -185,7 +245,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
      * @param calculationArgs Additional data which is only provided to the engine
      * @returns The calculation result
      */
-    protected abstract runCalculation(
+    protected abstract execute(
         calculationData: CalculationData,
         ...calculationArgs: CalculationArgs
     ): Promise<CalculationResult>;
@@ -193,7 +253,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
     /**
      * This method is called whenever the graph or values of node interfaces have been changed.
      * You can overwrite this method to automatically trigger a calculation on change.
-     * Note: This method is NOT called when the `disableCalculateOnChange` flag is set
+     * Note: This method is only called when the engine is either idle or running.
      * @param recalculateOrder Whether the change modified the graph itself, e. g. a connection or a node was added/removed
      * @param updatedNode If a node was updated (which means the value a node's interface has been changed): the node that was updated; `undefined` otherwise
      * @param data If a node was updated: The `update` event payload to determine, which interface exactly has been changed; `undefined` otherwise
@@ -205,7 +265,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
     ): void;
 
     private internalOnChange(recalculateOrder: boolean, updatedNode?: AbstractNode, data?: INodeUpdateEventData) {
-        if (!this.disableCalculateOnChange) {
+        if (this.internalStatus === EngineStatus.Idle) {
             this.onChange(recalculateOrder, updatedNode, data);
         }
     }

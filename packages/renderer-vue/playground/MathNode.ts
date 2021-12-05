@@ -18,7 +18,7 @@ export default defineNode({
         } else if (operation === "Subtract") {
             output = number1 - number2;
         } else {
-            throw new Error("Unknown operation: " + operation);
+            throw new Error(`Unknown operation: ${operation}`);
         }
         return { output };
     },

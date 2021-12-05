@@ -13,7 +13,7 @@ export class DynamicSequentialHook<I, E, O extends I = I> extends Subscribable<H
         for (const callback of this.listeners) {
             currentValue = callback(currentValue, entity);
         }
-        return currentValue as O;
+        return currentValue;
     }
 }
 

@@ -9,11 +9,11 @@ export interface IAdvancedSelectInterfaceItem<V> {
 
 export type SelectInterfaceItem<V> = string | IAdvancedSelectInterfaceItem<V>;
 
-export class SelectInterface<V = string> extends NodeInterface<V | undefined> {
+export class SelectInterface<V = string> extends NodeInterface<V> {
     component = markRaw(SelectInterfaceComponent);
     items: SelectInterfaceItem<V>[];
 
-    constructor(name: string, value: V | undefined, items: SelectInterfaceItem<V>[]) {
+    constructor(name: string, value: V, items: SelectInterfaceItem<V>[]) {
         super(name, value);
         this.items = items;
     }

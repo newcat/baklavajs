@@ -3,7 +3,7 @@
     "private": true,
     "scripts": {
         "playground": "cd packages/renderer-vue && yarn run dev",
-        "lint": "eslint packages --ext .js,.ts",
+        "lint": "eslint \"packages/*/src/**/*.{ts,vue}\"",
         "build": "lerna run build --stream --ignore \"baklavajs\"",
         "test": "lerna run test",
         "clean": "rimraf ./packages/*/dist && rimraf ./packages/full/lib",

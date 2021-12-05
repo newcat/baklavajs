@@ -8,8 +8,8 @@ export const allowMultipleConnections = <T extends Array<any>>(intf: NodeInterfa
 export class DependencyEngine<CalculationData = any> extends BaseEngine<CalculationData, []> {
     private token = Symbol();
 
-    public constructor(editor: Editor, calculateOnChange = false) {
-        super(editor, calculateOnChange);
+    public constructor(editor: Editor) {
+        super(editor);
         this.editor.graphEvents.addConnection.subscribe(this.token, (c, graph) => {
             // Delete all other connections to the target interface
             // if only one connection to the input interface is allowed
@@ -21,7 +21,12 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
         });
     }
 
-    protected async runCalculation(calculationData: CalculationData): Promise<CalculationResult> {
+    public override start() {
+        super.start();
+        void this.calculateWithoutData();
+    }
+
+    protected override async execute(calculationData: CalculationData): Promise<CalculationResult> {
         if (!this.order) {
             throw new Error("runCalculation called without order being calculated before");
         }
@@ -92,8 +97,6 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
 
     protected onChange(recalculateOrder: boolean): void {
         this.recalculateOrder = recalculateOrder || this.recalculateOrder;
-        if (this.calculateOnChange) {
-            this.calculateWithoutData();
-        }
+        void this.calculateWithoutData();
     }
 }

@@ -1,35 +1,33 @@
 import * as Core from "@baklavajs/core";
-import * as PluginEngine from "@baklavajs/engine";
-import * as PluginInterfaceTypes from "@baklavajs/interface-types";
-import * as PluginRendererVue from "@baklavajs/renderer-vue";
+import * as Engine from "@baklavajs/engine";
+import * as InterfaceTypes from "@baklavajs/interface-types";
+import * as RendererVue from "@baklavajs/renderer-vue";
 
 import "@baklavajs/renderer-vue/dist/styles.css";
 
 import { createApp, h } from "vue";
-function createBaklava(element: Element): PluginRendererVue.ViewPlugin {
-    const editor = new Core.Editor();
-    const plugin = new PluginRendererVue.ViewPlugin();
-    editor.use(plugin);
+function createBaklava(element: Element): RendererVue.IBaklavaViewModel {
+    let exportViewModel: RendererVue.IBaklavaViewModel;
 
     createApp({
         components: {
-            "baklava-editor": PluginRendererVue.EditorComponent,
+            "baklava-editor": RendererVue.EditorComponent,
         },
-        data() {
-            return {
-                plugin,
-            };
+        setup() {
+            const { viewModel } = RendererVue.useViewModel();
+            exportViewModel = viewModel.value;
+            return { viewModel };
         },
         render() {
             return h("baklava-editor", {
                 props: {
-                    plugin: this.plugin,
+                    viewModel: this.viewModel,
                 },
             });
         },
     }).mount(element);
 
-    return plugin;
+    return exportViewModel;
 }
 
-export { Core, PluginEngine, PluginInterfaceTypes, PluginRendererVue, createBaklava };
+export { Core, Engine, InterfaceTypes, RendererVue, createBaklava };

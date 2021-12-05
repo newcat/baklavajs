@@ -44,7 +44,7 @@ jobs:
               with:
                   azcliversion: 2.0.72
                   inlineScript: |
-                      az cdn endpoint purge --content-paths "/*" --profile-name "baklavajs" --name "baklavajs.azureedge.net" --resource-group "Private"
+                      az cdn endpoint purge --content-paths "/*" --profile-name "baklavajs" --name "baklavajs" --resource-group "Private" --no-wait
             - name: Azure Logout
               run: az logout
               if: always()

@@ -2,7 +2,9 @@
     "root": true,
     "parser": "vue-eslint-parser",
     "parserOptions": {
-        "parser": "@typescript-eslint/parser"
+        "parser": "@typescript-eslint/parser",
+        "project": ["./tsconfig.eslint.json", "./packages/*/tsconfig.json"],
+        "extraFileExtensions": [".vue"]
     },
     "plugins": ["@typescript-eslint"],
     "extends": [
@@ -17,8 +19,18 @@
         "@typescript-eslint/no-non-null-assertion": 0,
         "@typescript-eslint/no-explicit-any": 0,
         "@typescript-eslint/explicit-module-boundary-types": 0,
+        "@typescript-eslint/no-floating-promises": "error",
+        "@typescript-eslint/no-for-in-array": "error",
+        "no-implied-eval": "off",
+        "@typescript-eslint/no-implied-eval": "error",
+        "@typescript-eslint/no-misused-promises": "error",
+        "@typescript-eslint/no-unnecessary-type-assertion": "error",
+        "require-await": "off",
+        "@typescript-eslint/require-await": "error",
+        "@typescript-eslint/unbound-method": "error",
         "vue/html-indent": ["warn", 4],
         "vue/no-mutating-props": "off",
-        "vue/max-attributes-per-line": "off"
+        "vue/max-attributes-per-line": "off",
+        "vue/html-self-closing": ["warn", { "html": { "void": "any" } }]
     }
 }
