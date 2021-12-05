@@ -1,4 +1,4 @@
-name: Push
+name: Build
 
 on:
     push:
@@ -15,9 +15,9 @@ jobs:
                   node-version: "16"
             - name: Install dependencies
               run: yarn install --frozen-lockfile
-            - name: Lint
-              run: yarn run lint
             - name: Build
               run: yarn run build
+            - name: Lint
+              run: yarn run lint
             - name: Test
               run: yarn run test

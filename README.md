@@ -1,6 +1,6 @@
 # BaklavaJS
 
-![example branch parameter](https://github.com/newcat/baklavajs/actions/workflows/push.yml/badge.svg?branch=dev-v2.0)
+![example branch parameter](https://github.com/newcat/baklavajs/actions/workflows/build.yml/badge.svg?branch=dev-v2.0)
 ![npm](https://img.shields.io/npm/v/baklavajs.svg)
 
 Graph / node editor in the browser using VueJS, less than 60kb gzipped

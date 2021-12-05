@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, toRef, nextTick, onUpdated, onMounted, Ref } from "vue";
+import { defineComponent, ref, computed, toRef, nextTick, onUpdated, onMounted } from "vue";
 import { AbstractNode, IGraphNode } from "@baklavajs/core";
 import { useDragMove, useGraph, useViewModel } from "../utility";
 
@@ -77,7 +77,7 @@ export default defineComponent({
         const { graph, switchGraph } = useGraph();
         const dragMove = useDragMove(toRef(props.node, "position"));
 
-        const el = ref<HTMLElement | null>(null) as Ref<HTMLElement | null>;
+        const el = ref<HTMLElement | null>(null);
         const renaming = ref(false);
         const tempName = ref("");
         const renameInputEl = ref<HTMLInputElement | null>(null);

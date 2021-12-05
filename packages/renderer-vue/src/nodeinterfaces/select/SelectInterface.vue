@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { onClickOutside } from "@vueuse/core";
-import { computed, defineComponent, Ref, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import Arrow from "../../icons/ChevronDown.vue";
 import type { SelectInterface, SelectInterfaceItem } from "./SelectInterface";
 
@@ -43,7 +43,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const el = ref<HTMLElement | null>(null) as Ref<HTMLElement | null>;
+        const el = ref<HTMLElement | null>(null);
         const open = ref(false);
 
         const selectedItem = computed(() =>
