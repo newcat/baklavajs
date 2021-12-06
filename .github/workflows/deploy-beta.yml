@@ -1,9 +1,6 @@
 name: Deploy Beta
 
-on:
-    push:
-        branches:
-            - dev-v2.0
+on: workflow_dispatch
 
 jobs:
     build:
