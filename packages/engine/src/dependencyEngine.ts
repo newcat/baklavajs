@@ -23,6 +23,7 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
 
     public override start() {
         super.start();
+        this.recalculateOrder = true;
         void this.calculateWithoutData();
     }
 

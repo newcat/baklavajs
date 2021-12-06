@@ -5,7 +5,7 @@ export class ForwardEngine<CalculationData = any> extends BaseEngine<
     CalculationData,
     [AbstractNode, INodeUpdateEventData]
 > {
-    protected async execute(
+    protected override async execute(
         calculationData: CalculationData,
         startingNode: AbstractNode,
         data: INodeUpdateEventData,
