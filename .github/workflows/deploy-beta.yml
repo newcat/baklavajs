@@ -36,13 +36,11 @@ jobs:
             - name: Publish docs
               uses: azure/CLI@v1
               with:
-                  azcliversion: 2.0.72
                   inlineScript: |
                       az storage blob upload-batch --account-name baklavajs --auth-mode key -d '$web' -s "./docs/.vitepress/dist/"
             - name: Purge CDN endpoint
               uses: azure/CLI@v1
               with:
-                  azcliversion: 2.0.72
                   inlineScript: |
                       az cdn endpoint purge --content-paths "/*" --profile-name "baklavajs" --name "baklavajs" --resource-group "Private" --no-wait
             - name: Azure Logout
