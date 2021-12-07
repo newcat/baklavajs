@@ -1,6 +1,6 @@
 {
     "name": "@baklavajs/renderer-vue",
-    "version": "2.0.0",
+    "version": "2.0.1-alpha.0",
     "description": "Vue frontend for BaklavaJS",
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
@@ -29,10 +29,9 @@
     "bugs": {
         "url": "https://github.com/newcat/baklavajs/issues"
     },
-    "dependencies": {},
     "devDependencies": {
-        "@baklavajs/core": "^2.0.0",
-        "@baklavajs/events": "^2.0.0",
+        "@baklavajs/core": "^2.0.1-alpha.0",
+        "@baklavajs/events": "^2.0.1-alpha.0",
         "@types/resize-observer-browser": "^0.1.6",
         "@vitejs/plugin-vue": "^1.9.2",
         "@vue/compiler-sfc": "^3.2.19",
