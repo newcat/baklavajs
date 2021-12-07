@@ -11,7 +11,7 @@ BaklavaJS is split into multiple packages:
 
 You can install the packages individually or use the combined `baklavajs` package:
 
-```sh
+```bash
 # npm
 npm i baklavajs
 

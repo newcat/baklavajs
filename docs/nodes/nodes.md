@@ -3,7 +3,7 @@
 A graph is comprised of nodes as well as connections between these nodes. A node inside the graph can be seen as the instance of a class.
 You have to define the "class" before being able to create the node.
 
-Each node is similar to a function in programming: It receives input data, performs some calculation and returns output data. For input and output so-called [Node Interfaces](./interfaces) are used. The calculation is done inside the `calculate` function. You can find more about it [here](../execution).
+Each node is similar to a function in programming: It receives input data, performs some calculation and returns output data. For input and output so-called [Node Interfaces](./interfaces) are used. The calculation is done inside the `calculate` function. You can find more about it [here](../execution/index).
 
 There are two approaches for defining node types:
 
@@ -18,7 +18,7 @@ You can find all the properties of the object <a href="/api/">here</a>, but thes
 -   `title`: (_optional_) The default title of the node. If this property isn't specified, the `type` is used as the default title. (Note that users can rename nodes, so don't rely on the title for identifying nodes).
 -   `inputs`: (_optional_) An object specifying the input interfaces of the node. The keys are the "handle" for the node interface, while the values are functions that return a `NodeInterface` instance (or an instance of a subclass of `NodeInterface`).
 -   `outputs`: (_optional_) An object specifying the input interfaces of the node. It has the same structure as the `inputs` object.
--   `calculate`: (_optional_) A function that is called whenever the node is executed. You can find more details on the [Graph Execution](../execution) page.
+-   `calculate`: (_optional_) A function that is called whenever the node is executed. You can find more details on the [Graph Execution](../execution/index) page.
 
 Additionally, you can provide [lifecycle callbacks](./lifecycle).
 
