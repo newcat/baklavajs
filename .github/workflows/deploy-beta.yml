@@ -20,6 +20,8 @@ jobs:
               run: yarn run build
             - name: Publish
               run: |
+                  git config --global user.name 'BaklavaJS CICD'
+                  git config --global user.email 'newcat@users.noreply.github.com'
                   echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
                   lerna version prepatch --preid alpha --yes
                   lerna publish --dist-tag next --yes --no-verify-access
