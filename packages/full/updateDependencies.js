@@ -7,7 +7,7 @@ const fs = require("fs");
 
 const pkgNameRegex = /@baklavajs\/([a-z-]+)/;
 function packageNameToFolder(pkgName) {
-    return path.resolve(__dirname, "..", pkgName.replace(pkgNameRegex, "baklavajs-$1"));
+    return path.resolve(__dirname, "..", pkgName.replace(pkgNameRegex, "$1"));
 }
 
 for (let dep in packageJson.dependencies) {
