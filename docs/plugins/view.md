@@ -54,7 +54,7 @@ viewPlugin.registerOption("MyOption", MyOption);
 ```
 
 ## Additional Options
-You can pass additional options to your nodes, node interfaces or node options that can be used by the `renderer-vue` plugin. These additional options can also be used when you use [custom components](../styling.md).
+You can pass additional options to your nodes, node interfaces or node options that can be used by the `renderer-vue` plugin. These additional options can also be used when you use [custom components](/styling.md).
 
 Currently, additional options are only used for nodes:
 * `position: { x: number, y: number }`: Position of the node
