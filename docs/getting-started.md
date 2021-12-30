@@ -41,3 +41,42 @@ export default defineComponent({
 });
 </script>
 ```
+
+## Creating your first node
+
+When initializing Baklava, you can't see any nodes in the palette.
+This is because you haven't registered any nodes yet.
+To do this, we first need to create a node type, which is essentially a template for the node instances.
+In object-oriented programming, the node type is similar to a class and the node instances are instances of that class.
+
+To create a node you can use the `defineNode()` method:
+
+```ts
+// file: MyNode.ts
+import { defineNode, NodeInterface, NumberInterface, SelectInterface } from "baklavajs";
+
+export default defineNode({
+    type: "MyNode",
+    inputs: {
+        number1: () => new NumberInterface("Number", 1),
+        number2: () => new NumberInterface("Number", 10),
+        operation: () => new SelectInterface("Operation", "Add", ["Add", "Subtract"]).setPort(false),
+    },
+    outputs: {
+        output: () => new NodeInterface("Output", 0),
+    },
+});
+```
+
+Now register the node type so the editor knows it exists:
+
+```ts{5}
+import MyNode from "./MyNode";
+
+// this code is from the setup function above
+const baklava = useBaklava();
+baklava.editor.value.registerNodeType(MyNode);
+return { baklava };
+```
+
+That's it! You should now be able to create nodes and connect them.

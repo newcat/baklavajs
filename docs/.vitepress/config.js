@@ -27,6 +27,13 @@ module.exports = {
                         { text: "Forward Engine", link: "/execution/forward" },
                     ],
                 },
+                {
+                    text: "Editor",
+                    children: [
+                        { text: "Registering Nodes", link: "/editor/registering-nodes" },
+                        { text: "Subgraphs", link: "/editor/subgraphs" },
+                    ],
+                },
                 { text: "Plugins", children: [{ text: "Interface Types", link: "/plugins/interface-types" }] },
                 { text: "Migration", link: "/migration" },
             ],

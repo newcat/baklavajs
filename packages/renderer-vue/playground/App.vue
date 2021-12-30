@@ -5,24 +5,12 @@
                 <CustomNodeRenderer :key="nodeProps.node.id" v-bind="nodeProps" />
             </template>
         </baklava-editor>
-        <button @click="calculate">
-            Calculate
-        </button>
-        <button @click="save">
-            Save
-        </button>
-        <button @click="load">
-            Load
-        </button>
-        <button @click="setSelectItems">
-            Set Select Items
-        </button>
-        <button @click="changeGridSize">
-            Change Grid Size
-        </button>
-        <button @click="createSubgraph">
-            Create Subgraph
-        </button>
+        <button @click="calculate">Calculate</button>
+        <button @click="save">Save</button>
+        <button @click="load">Load</button>
+        <button @click="setSelectItems">Set Select Items</button>
+        <button @click="changeGridSize">Change Grid Size</button>
+        <button @click="createSubgraph">Create Subgraph</button>
     </div>
 </template>
 
@@ -60,13 +48,14 @@ export default defineComponent({
 
         baklavaView.settings.enableMinimap = true;
 
-        const engine = new DependencyEngine(editor.value, true);
-        engine.events.calculated.subscribe(token, (r) => {
+        const engine = new DependencyEngine(editor.value);
+        engine.events.afterRun.subscribe(token, (r) => {
             for (const v of r.values()) {
                 console.log(v);
             }
         });
         engine.hooks.gatherCalculationData.subscribe(token, () => "def");
+        engine.start();
 
         const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor.value, {
             viewPlugin: baklavaView,
@@ -91,7 +80,7 @@ export default defineComponent({
         // editor.value.addNode(new AdvancedNode());
 
         const calculate = async () => {
-            console.log(await engine.calculate("def"));
+            console.log(await engine.runOnce("def"));
         };
 
         const save = () => {
@@ -126,7 +115,7 @@ export default defineComponent({
             baklavaView.commandHandler.executeCommand<Commands.CreateSubgraphCommand>(Commands.CREATE_SUBGRAPH_COMMAND);
         };
 
-        return { editor, baklavaView, calculate, save, load, setSelectItems, changeGridSize, createSubgraph };
+        return { baklavaView, calculate, save, load, setSelectItems, changeGridSize, createSubgraph };
     },
 });
 </script>
@@ -134,6 +123,6 @@ export default defineComponent({
 <style>
 #app {
     margin: 30px 0;
-    height: 700px;
+    height: calc(100vh - 60px);
 }
 </style>
