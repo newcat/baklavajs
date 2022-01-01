@@ -33,17 +33,17 @@
         "@baklavajs/core": "^2.0.1-alpha.0",
         "@baklavajs/events": "^2.0.1-alpha.0",
         "@types/resize-observer-browser": "^0.1.6",
-        "@vitejs/plugin-vue": "^1.9.2",
-        "@vue/compiler-sfc": "^3.2.19",
-        "@vueuse/core": "^6.5.3",
+        "@vitejs/plugin-vue": "^2.0.1",
+        "@vue/compiler-sfc": "^3.2.26",
+        "@vueuse/core": "^7.5.1",
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-visualizer": "^5.5.2",
         "rollup-plugin-vue": "^6.0.0",
-        "sass": "^1.42.1",
-        "typescript": "^4.3.5",
-        "vite": "^2.5.0",
-        "vue": "^3.2.4",
-        "vue-tsc": "^0.3.0"
+        "sass": "^1.45.2",
+        "typescript": "^4.5.4",
+        "vite": "^2.7.10",
+        "vue": "^3.2.26",
+        "vue-tsc": "^0.30.1"
     },
     "publishConfig": {
         "access": "public"
