@@ -1,4 +1,4 @@
-import { Ref, ref, watch } from "vue";
+import { reactive, Ref, ref, watch } from "vue";
 import { Graph } from "@baklavajs/core";
 
 import type { ICommandHandler, ICommand } from "../commands";
@@ -19,7 +19,7 @@ export type StartTransactionCommand = ICommand<void>;
 export type CommitTransactionCommand = ICommand<void>;
 
 export interface IHistory {
-    maxSteps: Ref<number>;
+    maxSteps: number;
 }
 
 export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): IHistory {
@@ -134,7 +134,7 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
     commandHandler.registerHotkey(["Control", "z"], UNDO_COMMAND);
     commandHandler.registerHotkey(["Control", "y"], REDO_COMMAND);
 
-    return {
+    return reactive({
         maxSteps,
-    };
+    });
 }

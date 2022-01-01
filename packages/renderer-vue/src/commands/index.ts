@@ -1,11 +1,11 @@
-import { Ref, ref } from "vue";
+import { reactive, ref } from "vue";
 import { ICommand } from "./command";
 import { useHotkeyHandler } from "./hotkeyHandler";
 
 export * from "./command";
 
 export interface ICommandHandler {
-    pressedKeys: Ref<string[]>;
+    pressedKeys: string[];
     registerCommand<T extends ICommand<any, any[]>>(name: string, command: T): void;
     executeCommand<T extends ICommand<any, any[]>>(
         name: string,
@@ -55,5 +55,5 @@ export const useCommandHandler: () => ICommandHandler = () => {
 
     const hotkeyHandler = useHotkeyHandler(executeCommand);
 
-    return { registerCommand, executeCommand, canExecuteCommand, ...hotkeyHandler };
+    return reactive({ registerCommand, executeCommand, canExecuteCommand, ...hotkeyHandler });
 };

@@ -34,7 +34,7 @@ export default defineComponent({
     setup() {
         const { viewModel } = useViewModel();
 
-        const isSubgraph = computed(() => viewModel.value.displayedGraph.value !== viewModel.value.editor.value.graph);
+        const isSubgraph = computed(() => viewModel.value.displayedGraph !== viewModel.value.editor.graph);
 
         const commands = [
             { command: COPY_COMMAND, title: "Copy", icon: Icons.Copy },

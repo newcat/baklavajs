@@ -54,11 +54,11 @@ export default defineComponent({
         const onContextMenuClick = (action: string) => {
             if (action === "deleteSubgraph") {
                 const graphTemplateId = props.type.substring(GRAPH_NODE_TYPE_PREFIX.length);
-                const graphTemplate = viewModel.value.editor.value.graphTemplates.find(
+                const graphTemplate = viewModel.value.editor.graphTemplates.find(
                     (gt) => gt.id === graphTemplateId,
                 );
                 if (graphTemplate) {
-                    viewModel.value.editor.value.removeGraphTemplate(graphTemplate);
+                    viewModel.value.editor.removeGraphTemplate(graphTemplate);
                 }
             }
         };

@@ -1,4 +1,4 @@
-import { computed, ComputedRef, Ref, ref } from "vue";
+import { computed, reactive, Ref, ref } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { AbstractNode, INodeState, IConnectionState, Connection, NodeInterface, Editor, Graph } from "@baklavajs/core";
 import {
@@ -18,7 +18,7 @@ export type PasteCommand = ICommand<void>;
 export type ClearClipboardCommand = ICommand<void>;
 
 export interface IClipboard {
-    isEmpty: ComputedRef<boolean>;
+    isEmpty: boolean;
 }
 
 export function useClipboard(
@@ -169,5 +169,5 @@ export function useClipboard(
         execute: clear,
     });
 
-    return { isEmpty };
+    return reactive({ isEmpty });
 }

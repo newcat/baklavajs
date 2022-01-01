@@ -48,7 +48,7 @@ export default defineComponent({
         const draggedNode = ref<IDraggedNode | null>(null);
 
         const categories = computed<Array<{ name: string; nodeTypes: NodeTypeInformations }>>(() => {
-            const nodeTypeEntries = Array.from(viewModel.value.editor.value.nodeTypes.entries());
+            const nodeTypeEntries = Array.from(viewModel.value.editor.nodeTypes.entries());
 
             const categoryNames = new Set(nodeTypeEntries.map(([, ni]) => ni.category));
 
@@ -56,11 +56,11 @@ export default defineComponent({
             for (const c of categoryNames.values()) {
                 let nodeTypesInCategory = nodeTypeEntries.filter(([, ni]) => ni.category === c);
 
-                if (viewModel.value.displayedGraph.value.template) {
+                if (viewModel.value.displayedGraph.template) {
                     // don't show the graph nodes that directly or indirectly contain the current subgraph to prevent recursion
                     nodeTypesInCategory = nodeTypesInCategory.filter(
                         ([nt]) =>
-                            !checkRecursion(viewModel.value.editor.value, viewModel.value.displayedGraph.value, nt),
+                            !checkRecursion(viewModel.value.editor, viewModel.value.displayedGraph, nt),
                     );
                 } else {
                     // if we are not in a subgraph, don't show subgraph input & output nodes
@@ -111,7 +111,7 @@ export default defineComponent({
             const onDragEnd = () => {
                 console.log("pointerup");
                 const instance = reactive(new nodeInformation.type()) as AbstractNode;
-                viewModel.value.displayedGraph.value.addNode(instance);
+                viewModel.value.displayedGraph.addNode(instance);
 
                 const rect = editorEl!.value!.getBoundingClientRect();
                 const [x, y] = transform(mouseX.value - rect.left, mouseY.value - rect.top);

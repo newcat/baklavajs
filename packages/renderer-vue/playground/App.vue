@@ -48,7 +48,7 @@ export default defineComponent({
 
         baklavaView.settings.enableMinimap = true;
 
-        const engine = new DependencyEngine(editor.value);
+        const engine = new DependencyEngine(editor);
         engine.events.afterRun.subscribe(token, (r) => {
             for (const v of r.values()) {
                 console.log(v);
@@ -57,45 +57,45 @@ export default defineComponent({
         engine.hooks.gatherCalculationData.subscribe(token, () => "def");
         engine.start();
 
-        const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor.value, {
+        const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor, {
             viewPlugin: baklavaView,
             engine,
         });
         nodeInterfaceTypes.addTypes(stringType, numberType, booleanType);
 
-        editor.value.registerNodeType(TestNode, { category: "Tests" });
-        editor.value.registerNodeType(OutputNode, { category: "Outputs" });
-        editor.value.registerNodeType(BuilderTestNode, { category: "Tests" });
-        editor.value.registerNodeType(MathNode);
-        editor.value.registerNodeType(AdvancedNode);
-        editor.value.registerNodeType(CommentNode, { title: "Comment" });
-        editor.value.registerNodeType(InterfaceTestNode);
-        editor.value.registerNodeType(SelectTestNode);
-        editor.value.registerNodeType(SidebarNode);
-        editor.value.graph.addNode(new TestNode());
-        editor.value.graph.addNode(new TestNode());
-        editor.value.graph.addNode(new TestNode());
-        editor.value.graph.addNode(new OutputNode());
-        editor.value.graph.addNode(new BuilderTestNode());
-        // editor.value.addNode(new AdvancedNode());
+        editor.registerNodeType(TestNode, { category: "Tests" });
+        editor.registerNodeType(OutputNode, { category: "Outputs" });
+        editor.registerNodeType(BuilderTestNode, { category: "Tests" });
+        editor.registerNodeType(MathNode);
+        editor.registerNodeType(AdvancedNode);
+        editor.registerNodeType(CommentNode, { title: "Comment" });
+        editor.registerNodeType(InterfaceTestNode);
+        editor.registerNodeType(SelectTestNode);
+        editor.registerNodeType(SidebarNode);
+        editor.graph.addNode(new TestNode());
+        editor.graph.addNode(new TestNode());
+        editor.graph.addNode(new TestNode());
+        editor.graph.addNode(new OutputNode());
+        editor.graph.addNode(new BuilderTestNode());
+        // editor.addNode(new AdvancedNode());
 
         const calculate = async () => {
             console.log(await engine.runOnce("def"));
         };
 
         const save = () => {
-            console.log(JSON.stringify(editor.value.save()));
+            console.log(JSON.stringify(editor.save()));
         };
 
         const load = () => {
             const s = prompt();
             if (s) {
-                editor.value.load(JSON.parse(s));
+                editor.load(JSON.parse(s));
             }
         };
 
         const setSelectItems = () => {
-            for (const node of editor.value.graph.nodes) {
+            for (const node of editor.graph.nodes) {
                 if (node.type === "SelectTestNode") {
                     const n = node as unknown as NodeInstanceOf<typeof SelectTestNode>;
                     const sel = n.inputs.advanced as SelectInterface<number | undefined>;

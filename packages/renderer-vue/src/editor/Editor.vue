@@ -98,9 +98,9 @@ export default defineComponent({
         const el = ref<HTMLElement | null>(null);
         provide("editorEl", el);
 
-        const nodes = computed(() => props.viewModel.displayedGraph.value.nodes);
-        const connections = computed(() => props.viewModel.displayedGraph.value.connections);
-        const selectedNodes = computed(() => props.viewModel.displayedGraph.value.selectedNodes);
+        const nodes = computed(() => props.viewModel.displayedGraph.nodes);
+        const connections = computed(() => props.viewModel.displayedGraph.connections);
+        const selectedNodes = computed(() => props.viewModel.displayedGraph.selectedNodes);
 
         const panZoom = usePanZoom();
         const temporaryConnection = useTemporaryConnection();
@@ -111,7 +111,7 @@ export default defineComponent({
 
         // Reason: https://github.com/newcat/baklavajs/issues/54
         const counter = ref(0);
-        props.viewModel.editor.value.hooks.load.subscribe(token, (s) => {
+        props.viewModel.editor.hooks.load.subscribe(token, (s) => {
             counter.value++;
             return s;
         });
@@ -148,14 +148,14 @@ export default defineComponent({
         };
 
         const selectNode = (node: AbstractNode) => {
-            if (!props.viewModel.commandHandler.pressedKeys.value.includes("Control")) {
+            if (!props.viewModel.commandHandler.pressedKeys.includes("Control")) {
                 unselectAllNodes();
             }
-            props.viewModel.displayedGraph.value.selectedNodes.push(node);
+            props.viewModel.displayedGraph.selectedNodes.push(node);
         };
 
         const unselectAllNodes = () => {
-            props.viewModel.displayedGraph.value.selectedNodes = [];
+            props.viewModel.displayedGraph.selectedNodes = [];
         };
 
         return {

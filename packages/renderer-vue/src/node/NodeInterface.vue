@@ -5,8 +5,6 @@
             class="__port"
             @pointerover="startHover"
             @pointerout="endHover"
-            @pointerdown="startHover"
-            @pointerup="endHover"
         />
         <span v-if="intf.connectionCount > 0 || !intf.component" class="align-middle">
             {{ intf.name }}
@@ -17,7 +15,7 @@
             v-model="intf.value"
             :node="node"
             :intf="intf"
-            @openSidebar="openSidebar"
+            @open-sidebar="openSidebar"
         />
     </div>
 </template>
@@ -65,7 +63,7 @@ export default defineComponent({
         };
 
         const openSidebar = () => {
-            const sidebar = viewModel.value.displayedGraph.value.sidebar;
+            const sidebar = viewModel.value.displayedGraph.sidebar;
             sidebar.nodeId = props.node.id;
             sidebar.optionName = props.intf.name;
             sidebar.visible = true;

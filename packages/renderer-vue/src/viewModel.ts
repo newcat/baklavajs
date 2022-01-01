@@ -1,4 +1,4 @@
-import { computed, reactive, ref, Ref, shallowReadonly, UnwrapRef, watch } from "vue";
+import { computed, reactive, ref, Ref, shallowReadonly, watch } from "vue";
 import { AbstractNode, Editor, Graph, GraphTemplate, NodeInterface } from "@baklavajs/core";
 import { IBaklavaTapable, SequentialHook } from "@baklavajs/events";
 
@@ -24,9 +24,9 @@ export interface IViewSettings {
 }
 
 export interface IBaklavaViewModel extends IBaklavaTapable {
-    editor: Ref<Editor>;
-    displayedGraph: Ref<Graph>;
-    isSubgraph: Readonly<Ref<boolean>>;
+    editor: Editor;
+    displayedGraph: Graph;
+    isSubgraph: Readonly<boolean>;
     settings: IViewSettings;
     commandHandler: ICommandHandler;
     history: IHistory;
@@ -40,8 +40,8 @@ export interface IBaklavaViewModel extends IBaklavaTapable {
     switchGraph: (newGraph: Graph | GraphTemplate) => void;
 }
 
-export function useBaklava(existingEditor?: Ref<UnwrapRef<Editor>>): IBaklavaViewModel {
-    const editor: Ref<Editor> = (existingEditor as Ref<Editor>) ?? ref(new Editor());
+export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
+    const editor: Ref<Editor> = ref(existingEditor ?? new Editor()) as Ref<Editor>;
     const token = Symbol("ViewModelToken");
 
     const _displayedGraph = ref(null as any) as Ref<Graph>;
@@ -119,7 +119,7 @@ export function useBaklava(existingEditor?: Ref<UnwrapRef<Editor>>): IBaklavaVie
         { immediate: true },
     );
 
-    return {
+    return reactive({
         editor,
         displayedGraph,
         isSubgraph,
@@ -129,5 +129,5 @@ export function useBaklava(existingEditor?: Ref<UnwrapRef<Editor>>): IBaklavaVie
         clipboard,
         hooks,
         switchGraph,
-    };
+    }) as IBaklavaViewModel;
 }
