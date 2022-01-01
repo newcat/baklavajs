@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref, toRef } from "vue";
+import { computed, defineComponent, ref, toRef } from "vue";
 import { useBaseNumericInterface } from "../baseNumericInterface";
 import type { SliderInterface } from "./SliderInterface";
 
@@ -46,7 +46,7 @@ export default defineComponent({
     },
     setup(props) {
         const el = ref<HTMLElement | null>(null);
-        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf") as Ref<SliderInterface>);
+        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf"));
         const didSlide = ref(false);
         const isMouseDown = ref(false);
 

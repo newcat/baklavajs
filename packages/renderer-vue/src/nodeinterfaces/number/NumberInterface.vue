@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, toRef } from "vue";
+import { defineComponent, toRef } from "vue";
 import Arrow from "../../icons/ChevronDown.vue";
 import { useBaseNumericInterface } from "../baseNumericInterface";
 import type { NumberInterface } from "./NumberInterface";
@@ -46,7 +46,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf") as Ref<NumberInterface>);
+        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf"));
 
         const increment = () => {
             baseNumericInterface.setValue(props.intf.value + 0.1);
