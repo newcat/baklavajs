@@ -75,7 +75,7 @@ import MyNode from "./MyNode";
 
 // this code is from the setup function above
 const baklava = useBaklava();
-baklava.editor.value.registerNodeType(MyNode);
+baklava.editor.registerNodeType(MyNode);
 return { baklava };
 ```
 
