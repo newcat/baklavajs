@@ -3,7 +3,11 @@
     "parser": "vue-eslint-parser",
     "parserOptions": {
         "parser": "@typescript-eslint/parser",
-        "project": ["./tsconfig.eslint.json", "./packages/*/tsconfig.json"],
+        "project": [
+            "./tsconfig.eslint.json",
+            "./packages/*/tsconfig.json",
+            "./packages/renderer-vue/playground/tsconfig.json"
+        ],
         "extraFileExtensions": [".vue"]
     },
     "plugins": ["@typescript-eslint"],
@@ -31,6 +35,7 @@
         "vue/html-indent": ["warn", 4],
         "vue/no-mutating-props": "off",
         "vue/max-attributes-per-line": "off",
-        "vue/html-self-closing": ["warn", { "html": { "void": "any" } }]
+        "vue/html-self-closing": ["warn", { "html": { "void": "any" } }],
+        "vue/multi-word-component-names": "off"
     }
 }
