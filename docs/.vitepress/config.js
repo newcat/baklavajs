@@ -10,6 +10,7 @@ module.exports = {
         sidebar: {
             "/": [
                 { text: "Getting Started", link: "/getting-started" },
+                { text: "Core Concepts", link: "/core-concepts" },
                 {
                     text: "Nodes",
                     children: [
@@ -22,7 +23,7 @@ module.exports = {
                 {
                     text: "Graph Execution",
                     children: [
-                        { text: "Setup", link: "/execution/index" },
+                        { text: "Setup", link: "/execution/setup" },
                         { text: "Dependency Engine", link: "/execution/dependency" },
                         { text: "Forward Engine", link: "/execution/forward" },
                     ],
@@ -35,6 +36,7 @@ module.exports = {
                     ],
                 },
                 { text: "Plugins", children: [{ text: "Interface Types", link: "/plugins/interface-types" }] },
+                { text: "Event System", link: "/event-system" },
                 { text: "Migration", link: "/migration" },
             ],
         },

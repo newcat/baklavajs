@@ -12,7 +12,7 @@ If you want the behavior of Baklava V1's engine, use the dependency engine.
 
 There are, however, some prerequisites that are indenpendent of the engine implementation:
 
-## Node `calculate` function
+## Node calculate function
 
 Each node needs to have a caluate function.
 The calculate function receives the node inputs as a JavaScript object (and optionally some [global calculation data](#global-calculation-data)), does the calculation and returns the values for the outputs as a JavaScript object.
@@ -68,6 +68,42 @@ const engine = new DependencyEngine(editor);
 engine.start();
 ```
 
-The second parameter specifies whether the engine should automatically execute the graph when it
-
 ## Global calculation data
+
+You can provide data that is passed to every node's `calculate()` function as a second parameter.
+There are two ways to provide the global calculation to the engine:
+
+### When using the engine in manual mode with `runOnce`
+
+```ts
+engine.runOnce({ offset: 5 });
+```
+
+### When using the engine in automatic mode (after `engine.start()`)
+
+In this case you need to register a hook beforehand.
+This hook is called for every calculation; except the ones triggered manually with `engine.runOnce()`
+```ts
+const token = Symbol("token");
+engine.hooks.gatherCalculationData.subscribe(token, () => {
+    return { offset: 5 };
+});
+engine.start();
+```
+
+You can find more information about hooks in the documentation for the [event system](/event-system).
+
+### Consuming global data
+
+You can now use the global data in the `calculate` function of your nodes:
+
+```ts
+export default defineNode({
+    // ...
+    calculate(inputs, global) {
+        return {
+            result: inputs.number1 + inputs.number2 + global.offset,
+        };
+    },
+});
+```
