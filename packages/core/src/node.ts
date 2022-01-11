@@ -143,17 +143,26 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
      */
     public onDestroy(): void {}
 
-    private addInterface(type: "input" | "output", key: string, io: NodeInterface): boolean {
+    protected initializeIo() {
+        Object.entries(this.inputs).forEach(([key, intf]) => this.initializeIntf("input", key, intf));
+        Object.entries(this.outputs).forEach(([key, intf]) => this.initializeIntf("output", key, intf));
+    }
+
+    private initializeIntf(type: "input" | "output", key: string, intf: NodeInterface) {
+        intf.isInput = type === "input";
+        intf.events.setValue.subscribe(this, () => this.events.update.emit({ type, name: key, intf }));
+    }
+
+    private addInterface(type: "input" | "output", key: string, intf: NodeInterface): boolean {
         const beforeEvent = type === "input" ? this.events.beforeAddInput : this.events.beforeAddOutput;
         const afterEvent = type === "input" ? this.events.addInput : this.events.addOutput;
         const ioObject = type === "input" ? this.inputs : this.outputs;
-        if (beforeEvent.emit(io)) {
+        if (beforeEvent.emit(intf)) {
             return false;
         }
-        ioObject[key] = io;
-        io.isInput = type === "input";
-        io.events.setValue.subscribe(this, () => this.events.update.emit({ type, name: key, intf: io }));
-        afterEvent.emit(io);
+        ioObject[key] = intf;
+        this.initializeIntf(type, key, intf);
+        afterEvent.emit(intf);
         return true;
     }
 

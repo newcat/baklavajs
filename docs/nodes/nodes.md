@@ -53,37 +53,56 @@ export default defineNode({
 
 ## Class-based approach
 
-For nodes that have dynamic inputs and outputs, it is also possible to use a class-based approach similar to BaklavaJS V1.
-However, be aware that this is not type-safe! If possible, always prefer the approach using `defineNode()`
+For nodes that have dynamic inputs and outputs, it is also possible to use a class-based approach similar to BaklavaJS v1.
 
-Although it doesn't really make sense to use it in this case, here is the `MathNode` from the example above
-written using the class-based approach:
+::: warning
+It is very important to call `this.initializeIo()` in your constructor! Otherwise, the node might not work properly.
+:::
 
-```js
-import { AbstractNode, NodeInterface, NumberInterface, SelectInterface } from "baklavajs";
+Although it doesn't really make sense to use it in this case, here is the `MathNode` from the example above written using the class-based approach:
 
-export default class MathNode extends AbstractNode {
-    constructor() {
+```ts
+import { Node, NodeInterface, CalculateFunction, NumberInterface, SelectInterface } from "baklavajs";
+
+interface Inputs {
+    number1: number;
+    number2: number;
+    operation: string;
+}
+
+interface Outputs {
+    output: number;
+}
+
+export default class MathNode extends Node<Inputs, Outputs> {
+    public type = "MathNode";
+    public title = this.type;
+
+    public inputs = {
+        number1: new NumberInterface("Number", 1),
+        number2: new NumberInterface("Number", 2),
+        operation: new SelectInterface("Operation", "Add").setPort(false),
+    };
+
+    public outputs = {
+        output: new NodeInterface("Output", 0),
+    };
+
+    public constructor() {
         super();
-        this.type = "MathNode";
-        this.title = this.type;
-        this.inputs = {};
-        this.outputs = {};
-        this.addInput("number1", new NumberInterface("Number", 1));
-        this.addInput("number2", new NumberInterface("Number", 10));
-        this.addInput("operation", new SelectInterface("Operation", "Add", ["Add", "Subtract"]).setPort(false));
-        this.addOutput("output", new NodeInterface("Output", 0));
-        this.calculate = ({ number1, number2, operation }) => {
-            let output;
-            if (operation === "Add") {
-                output = number1 + number2;
-            } else if (operation === "Subtract") {
-                output = number1 - number2;
-            } else {
-                throw new Error("Unknown operation: " + operation);
-            }
-            return { output };
-        };
+        this.initializeIo();
+    }
+
+    public calculate: CalculateFunction<Inputs, Outputs> = ({ number1, number2, operation }) => {
+        let output;
+        if (operation === "Add") {
+            output = number1 + number2;
+        } else if (operation === "Subtract") {
+            output = number1 - number2;
+        } else {
+            throw new Error("Unknown operation: " + operation);
+        }
+        return { output };
     }
 }
 ```

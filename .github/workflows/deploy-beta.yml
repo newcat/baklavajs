@@ -23,7 +23,7 @@ jobs:
                   git config --global user.name 'BaklavaJS CICD'
                   git config --global user.email 'newcat@users.noreply.github.com'
                   echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
-                  lerna version prepatch --preid alpha --yes
+                  lerna version prerelease --preid alpha --yes
                   lerna publish from-package --dist-tag next --yes --no-verify-access
             - name: Build docs
               run: |
