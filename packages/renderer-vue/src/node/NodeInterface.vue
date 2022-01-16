@@ -1,22 +1,17 @@
 <template>
     <div :id="intf.id" ref="el" class="baklava-node-interface" :class="classes">
-        <div
-            v-if="intf.port"
-            class="__port"
-            @pointerover="startHover"
-            @pointerout="endHover"
-        />
-        <span v-if="intf.connectionCount > 0 || !intf.component" class="align-middle">
-            {{ intf.name }}
-        </span>
+        <div v-if="intf.port" class="__port" @pointerover="startHover" @pointerout="endHover" />
         <component
             :is="intf.component"
-            v-else
+            v-if="showComponent"
             v-model="intf.value"
             :node="node"
             :intf="intf"
             @open-sidebar="openSidebar"
         />
+        <span v-else class="align-middle">
+            {{ intf.name }}
+        </span>
     </div>
 </template>
 
@@ -48,6 +43,9 @@ export default defineComponent({
             "--output": !props.intf.isInput,
             "--connected": isConnected.value,
         }));
+        const showComponent = computed<boolean>(
+            () => props.intf.component && props.intf.connectionCount === 0 && (props.intf.isInput || !props.intf.port),
+        );
 
         const startHover = () => {
             hoveredOver(props.intf);
@@ -72,7 +70,7 @@ export default defineComponent({
         onMounted(onRender);
         onUpdated(onRender);
 
-        return { el, isConnected, classes, startHover, endHover, openSidebar };
+        return { el, isConnected, classes, showComponent, startHover, endHover, openSidebar };
     },
 });
 </script>
