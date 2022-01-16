@@ -109,7 +109,6 @@ export default defineComponent({
             };
 
             const onDragEnd = () => {
-                console.log("pointerup");
                 const instance = reactive(new nodeInformation.type()) as AbstractNode;
                 viewModel.value.displayedGraph.addNode(instance);
 
