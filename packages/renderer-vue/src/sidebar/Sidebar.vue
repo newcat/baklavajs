@@ -19,12 +19,10 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
-import { useGraph, useViewModel } from "../utility";
-import { OpenSidebarCommand, OPEN_SIDEBAR_COMMAND } from "./index";
+import { useGraph } from "../utility";
 
 export default defineComponent({
     setup() {
-        const { viewModel } = useViewModel();
         const { graph } = useGraph();
 
         const el = ref<HTMLElement | null>(null);
@@ -71,14 +69,6 @@ export default defineComponent({
                 width.value = 0.9 * maxwidth;
             }
         };
-
-        viewModel.value.commandHandler.registerCommand<OpenSidebarCommand>(OPEN_SIDEBAR_COMMAND, {
-            execute: (nodeId: string) => {
-                graph.value.sidebar.nodeId = nodeId;
-                graph.value.sidebar.visible = true;
-            },
-            canExecute: () => true,
-        });
 
         return { el, graph, node, styles, displayedInterfaces, startResize, close };
     },

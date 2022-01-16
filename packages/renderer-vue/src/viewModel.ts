@@ -9,6 +9,7 @@ import { registerGraphCommands } from "./graph";
 import { useSwitchGraph } from "./graph/switchGraph";
 import { IViewNodeState, setViewNodeProperties } from "./node/viewNode";
 import { SubgraphInputNode, SubgraphOutputNode } from "./graph/subgraphInterfaceNodes";
+import { registerSidebarCommands } from "./sidebar";
 
 export interface IViewSettings {
     /** Use straight connections instead of bezier curves */
@@ -72,6 +73,7 @@ export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
     };
 
     registerGraphCommands(displayedGraph, commandHandler, switchGraph);
+    registerSidebarCommands(displayedGraph, commandHandler);
 
     watch(
         editor,

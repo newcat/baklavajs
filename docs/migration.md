@@ -9,8 +9,11 @@
 ## Nodes
 
 -   The `NodeBuilder` doesn't exist in V2 anymore. You can either use [class-based](/nodes/nodes#class-based-approach) or [declaration-based](/nodes/nodes#definenode) approach.
+-   The [class-based approach](/nodes/nodes#class-based-approach) has been completely changed in comparison to v1
 -   Node options have been removed. They are now interfaces with `.setPort(false)`
 -   The `calculate` function behaves differently, see [Graph Execution](/execution/setup)
+-   The `name` property has been changed to `title` to reduce confusion
+-   Node interfaces don't receive a `name` prop anymore. Instead, use the `name` property of the interface instance provided by the `intf` prop: `intf.name`
 
 ## Sidebar
 
