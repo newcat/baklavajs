@@ -19,7 +19,7 @@ import { defineComponent } from "vue";
 
 import { NodeInstanceOf } from "@baklavajs/core";
 import { EditorComponent, SelectInterface, useBaklava, Commands } from "../src";
-import { DependencyEngine } from "@baklavajs/engine";
+import { DependencyEngine, applyResult } from "@baklavajs/engine";
 import { BaklavaInterfaceTypes } from "@baklavajs/interface-types";
 
 import CustomNodeRenderer from "./CustomNodeRenderer";
@@ -50,6 +50,9 @@ export default defineComponent({
 
         const engine = new DependencyEngine(editor);
         engine.events.afterRun.subscribe(token, (r) => {
+            engine.pause();
+            applyResult(r, editor);
+            engine.resume();
             for (const v of r.values()) {
                 console.log(v);
             }

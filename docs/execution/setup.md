@@ -107,3 +107,24 @@ export default defineNode({
     },
 });
 ```
+
+## Applying the result to the graph
+
+By default, you just get the calculated values of the output interfaces in the calculation result object.
+The values are not applied to the output interfaces inside the graph.
+If you want to use the output interfaces to display the calculation result in the graph, you can use the `applyResult` function provided by the engine:
+
+```ts
+import { applyResult } from "@baklavajs/engine";
+
+const token = Symbol();
+engine.events.afterRun.subscribe(token, (result) => {
+    engine.pause();
+    applyResult(result, editor);
+    engine.resume();
+});
+```
+
+::: warning
+It is important to call `engine.pause()` before calling `applyResult()`. Otherwise it would lead to an infinite loop.
+:::

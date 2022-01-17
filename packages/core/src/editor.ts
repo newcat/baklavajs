@@ -51,8 +51,7 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     public nodeHooks = createProxy<AbstractNode["hooks"]>();
     public connectionEvents = createProxy<Connection["events"]>();
 
-    private graphs = new Set<Graph>();
-
+    private _graphs = new Set<Graph>();
     private _nodeTypes: Map<string, INodeTypeInformation> = new Map();
     private _graph = new Graph(this);
     private _graphTemplates: GraphTemplate[] = [];
@@ -70,6 +69,11 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     /** List of all registered graph templates (subgraphs) */
     public get graphTemplates(): ReadonlyArray<GraphTemplate> {
         return this._graphTemplates;
+    }
+
+    /** Set of all graphs in the editor, including subgraphs */
+    public get graphs(): ReadonlySet<Graph> {
+        return this._graphs;
     }
 
     /**
@@ -151,7 +155,7 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
         this.connectionEvents.addTarget(graph.connectionEvents);
         this.events.registerGraph.emit(graph);
 
-        this.graphs.add(graph);
+        this._graphs.add(graph);
     }
 
     public unregisterGraph(graph: Graph) {
@@ -162,7 +166,7 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
         this.connectionEvents.removeTarget(graph.connectionEvents);
         this.events.unregisterGraph.emit(graph);
 
-        this.graphs.delete(graph);
+        this._graphs.delete(graph);
     }
 
     /**
