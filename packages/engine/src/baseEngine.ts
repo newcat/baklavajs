@@ -60,7 +60,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
     }
 
     protected order?: ITopologicalSortingResult;
-    protected recalculateOrder = false;
+    protected recalculateOrder = true;
     /** the internal status will never be set to running, as this is determined by the running flag */
     private internalStatus: EngineStatus = EngineStatus.Stopped;
     private isRunning = false;
@@ -265,6 +265,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
     ): void;
 
     private internalOnChange(recalculateOrder: boolean, updatedNode?: AbstractNode, data?: INodeUpdateEventData) {
+        this.recalculateOrder = this.recalculateOrder || recalculateOrder;
         if (this.internalStatus === EngineStatus.Idle) {
             this.onChange(recalculateOrder, updatedNode, data);
         }
