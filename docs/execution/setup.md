@@ -6,7 +6,7 @@ This is done by _engines_. There are different types of engines which execute th
 -   [Dependency Engine](./dependency)
 -   [Forward Engine](./forward)
 
-::: info
+::: tip
 If you want the behavior of Baklava V1's engine, use the dependency engine.
 :::
 

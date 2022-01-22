@@ -1,5 +1,5 @@
 # Forward Engine
 
-::: info
+::: tip Info
 This engine is still WIP
 :::

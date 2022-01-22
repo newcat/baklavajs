@@ -31,8 +31,8 @@ The component allows the user to set the value of the node interface manually.
 The components receives these props:
 
 -   `modelValue`: The value of the interface. The type of this prop is dependent on the type of the value
--   `node` (TODO: Link to API doc): The node instance in which this interface lives
--   `intf` (TODO: Link to API doc): The instance of the node interface
+-   `node` (type: <ApiLink type="classes" module="@baklavajs/core" name="AbstractNode">AbstractNode</ApiLink>): The node instance in which this interface lives
+-   `intf` (type: <ApiLink type="classes" module="@baklavajs/core" name="NodeInterface">NodeInterface</ApiLink>): The instance of the node interface
 
 To update the value of the interface, the component can emit the `update:modelValue` event with the new value.
 
@@ -75,8 +75,8 @@ import MyComponent from "MyComponent.vue";
 new NodeInterface("My Interface", 0).setComponent(markRaw(MyComponent));
 ```
 
-::: info
-Please use the Vue's `markRaw` function, since the node interface will be made reactive.
+::: warning
+Use Vue's `markRaw` function, since the node interface will be made reactive.
 This can cause performance issues (and will also print warnings to the console).
 :::
 

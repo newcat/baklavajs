@@ -1,4 +1,4 @@
-# Interface Type Plugin
+# Interface Types
 
 This plugin allows you to add types to node interfaces.
 By default, two node interfaces can only be connected if they have the same type.
@@ -23,7 +23,7 @@ export const numberType = new NodeInterfaceType("number");
 export const booleanType = new NodeInterfaceType("boolean");
 ```
 
-::: info
+::: tip
 The constructor of the `NodeInterfaceType` class expects a name for the type. This name can be arbitrary and is used for [styling](#styling).
 :::
 

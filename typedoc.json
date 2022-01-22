@@ -4,7 +4,7 @@
     "name": "Reference - BaklavaJS",
     "gitRevision": "master",
     "tsconfig": "typedoc.tsconfig.json",
-    "out": "docs/public/api",
+    "out": "docs/.vuepress/public/api",
     "entryPoints": [
         "packages/core/src/index.ts",
         "packages/events/src/index.ts",

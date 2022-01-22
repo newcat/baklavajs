@@ -8,7 +8,7 @@ When using the `defineNode()` approach for creating node types, the lifecycle me
 This method is called when the node is instantiated.
 It can be seen as the "constructor".
 
-::: info
+::: tip
 This lifecycle is only available when using the `defineNode()` approach.
 When using the class-based approach, use the `constructor` instead
 :::
