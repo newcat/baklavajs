@@ -18,7 +18,7 @@
         "plugin:vue/vue3-recommended"
     ],
     "rules": {
-        "indent": ["warn", 4],
+        "indent": ["warn", 4, { "SwitchCase": 1 }],
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-non-null-assertion": 0,
         "@typescript-eslint/no-explicit-any": 0,

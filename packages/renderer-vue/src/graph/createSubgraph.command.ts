@@ -83,6 +83,17 @@ export function registerCreateSubgraphCommand(
         const node = reactive<AbstractNode>(new nt.type()) as AbstractNode;
         graph.addNode(node);
 
+        // calculate the position for the graph node
+        // it should appear in the middle of the nodes it replaces
+        const averageX = Math.round(
+            selectedNodes.map((n) => n.position.x).reduce((p, c) => p + c, 0) / selectedNodes.length,
+        );
+        const averageY = Math.round(
+            selectedNodes.map((n) => n.position.y).reduce((p, c) => p + c, 0) / selectedNodes.length,
+        );
+        node.position.x = averageX;
+        node.position.y = averageY;
+
         inputConnections.forEach((c) => {
             graph.removeConnection(c);
             graph.addConnection(c.from, node.inputs[interfaceIdMap.get(c.to.id)!]);

@@ -33,7 +33,7 @@
                 placeholder="Node Name"
                 @blur="doneRenaming"
                 @keydown.enter="doneRenaming"
-            >
+            />
         </div>
 
         <div class="__content">
@@ -134,18 +134,18 @@ export default defineComponent({
 
         const onContextMenuClick = async (action: string) => {
             switch (action) {
-            case "delete":
-                graph.value.removeNode(props.node);
-                break;
-            case "rename":
-                tempName.value = props.node.title;
-                renaming.value = true;
-                await nextTick();
-                renameInputEl.value?.focus();
-                break;
-            case "editSubgraph":
-                switchGraph((props.node as AbstractNode & IGraphNode).template);
-                break;
+                case "delete":
+                    graph.value.removeNode(props.node);
+                    break;
+                case "rename":
+                    tempName.value = props.node.title;
+                    renaming.value = true;
+                    await nextTick();
+                    renameInputEl.value?.focus();
+                    break;
+                case "editSubgraph":
+                    switchGraph((props.node as AbstractNode & IGraphNode).template);
+                    break;
             }
         };
 
