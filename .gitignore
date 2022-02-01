@@ -27,3 +27,5 @@ lerna-debug.log
 docs/.vuepress/public/api
 docs/.vuepress/.cache
 docs/.vuepress/.temp
+
+coverage

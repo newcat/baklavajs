@@ -1,16 +1,15 @@
-import { expect } from "chai";
 import { Editor } from "../src";
 import TestNode from "./TestNode";
 
 describe("Editor", () => {
     it("can construct", () => {
-        expect(new Editor()).to.not.be.null;
+        expect(new Editor()).toBeTruthy();
     });
 
     it("can register a new node type", () => {
         const e = new Editor();
         e.registerNodeType(TestNode);
-        expect(e.nodeTypes.get("TestNode")).to.eql({
+        expect(e.nodeTypes.get("TestNode")).toEqual({
             category: "default",
             title: "TestNode",
             type: TestNode,
@@ -23,12 +22,12 @@ describe("Editor", () => {
             category: "category",
             title: "title",
         });
-        expect(e.nodeTypes.get("TestNode")).to.eql({
+        expect(e.nodeTypes.get("TestNode")).toEqual({
             type: TestNode,
             category: "category",
             title: "title",
         });
     });
 
-    it("can save and load a state"); // TODO
+    it.todo("can save and load a state"); // TODO
 });

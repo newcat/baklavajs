@@ -55,10 +55,10 @@ export class Connection implements IConnection, IBaklavaEventEmitter {
  */
 export class DummyConnection implements IConnection {
     public id: string;
-    public from: NodeInterface<unknown>;
-    public to: NodeInterface<unknown>;
+    public from: NodeInterface;
+    public to: NodeInterface;
 
-    public constructor(from: NodeInterface<unknown>, to: NodeInterface<unknown>) {
+    public constructor(from: NodeInterface, to: NodeInterface) {
         if (!from || !to) {
             throw new Error("Cannot initialize connection with null/undefined for 'from' or 'to' values");
         }

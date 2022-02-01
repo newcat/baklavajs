@@ -1,34 +1,32 @@
-import { expect } from "chai";
-import { spy } from "sinon";
 import { NodeInterface } from "../src";
 
 describe("Node Interface", () => {
     it("generates an id", () => {
         const ni = new NodeInterface("Test", "test");
-        expect(ni.id).to.not.be.empty;
+        expect(ni.id).toBeTruthy();
     });
 
     it("can set and get the value", () => {
         const ni = new NodeInterface("Test", "test");
         ni.value = "myValue";
-        expect(ni.value).to.equal("myValue");
+        expect(ni.value).toEqual("myValue");
     });
 
     it("calls the 'beforeSetValue' and 'setValue' events when a value is set", () => {
-        const spy1 = spy();
-        const spy2 = spy();
+        const spy1 = jest.fn();
+        const spy2 = jest.fn();
         const newValue = "myValue";
         const ni = new NodeInterface("Test", "test");
         ni.events.beforeSetValue.subscribe(Symbol(), spy1);
         ni.events.setValue.subscribe(Symbol(), spy2);
         ni.value = newValue;
-        expect(spy1.called).to.be.true;
-        expect(spy2.called).to.be.true;
-        expect(spy1.firstCall.args[0]).to.equal("myValue");
-        expect(spy2.firstCall.args[0]).to.equal("myValue");
+        expect(spy1).toHaveBeenCalledTimes(1);
+        expect(spy2).toHaveBeenCalledTimes(1);
+        expect(spy1.mock.calls[0][0]).toEqual("myValue");
+        expect(spy2.mock.calls[0][0]).toEqual("myValue");
     });
 
-    it("correctly loads a state"); // TODO
+    it.todo("correctly loads a state"); // TODO
 
-    it("correctly saves a state"); // TODO
+    it.todo("correctly saves a state"); // TODO
 });
