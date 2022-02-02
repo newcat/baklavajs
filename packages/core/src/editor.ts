@@ -104,15 +104,6 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
             if (this.events.beforeUnregisterNodeType.emit(stringType)) {
                 return;
             }
-
-            // remove all nodes of this type in all graphs
-            for (const g of [this.graph, ...this.graphs.values()]) {
-                const nodesToRemove = g.nodes.filter((n) => n.type === stringType);
-                for (const n of nodesToRemove) {
-                    g.removeNode(n);
-                }
-            }
-
             this._nodeTypes.delete(stringType);
             this.events.unregisterNodeType.emit(stringType);
         }
@@ -138,7 +129,16 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
                 return;
             }
 
-            this.unregisterNodeType(getGraphNodeTypeString(template));
+            // remove all nodes of this type in all graphs
+            const graphNodeType = getGraphNodeTypeString(template);
+            for (const g of [this.graph, ...this.graphs.values()]) {
+                const nodesToRemove = g.nodes.filter((n) => n.type === graphNodeType);
+                for (const n of nodesToRemove) {
+                    g.removeNode(n);
+                }
+            }
+
+            this.unregisterNodeType(graphNodeType);
 
             this._graphTemplates.splice(this._graphTemplates.indexOf(template), 1);
             this.graphTemplateEvents.removeTarget(template.events);
