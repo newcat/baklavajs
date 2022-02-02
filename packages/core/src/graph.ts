@@ -134,11 +134,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         }
 
         const c = new Connection(dc.from, dc.to);
-        this.connectionEvents.addTarget(c.events);
-        this._connections.push(c);
-
-        this.events.addConnection.emit(c);
-
+        this.internalAddConnection(c);
         return c;
     }
 
@@ -274,7 +270,9 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
                 console.warn(`Could not find interface with id ${c.to}`);
                 continue;
             } else {
-                this.addConnection(fromIf, toIf);
+                const conn = new Connection(fromIf, toIf);
+                conn.id = c.id;
+                this.internalAddConnection(conn);
             }
         }
 
@@ -301,6 +299,14 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     }
 
     public destroy() {
+        // TODO: Destroy all nodes
+        // TODO: Do we need to unregister event listeners?
         this.editor.unregisterGraph(this);
+    }
+
+    private internalAddConnection(c: Connection) {
+        this.connectionEvents.addTarget(c.events);
+        this._connections.push(c);
+        this.events.addConnection.emit(c);
     }
 }

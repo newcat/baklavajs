@@ -38,7 +38,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
 
         public calculate?: CalculateFunction<any, any> | undefined;
 
-        public load(state: IGraphNodeState) {
+        public override load(state: IGraphNodeState) {
             if (!this.graph) {
                 throw new Error("Cannot load a graph node without a graph");
             }
@@ -49,7 +49,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             super.load(state);
         }
 
-        public save(): IGraphNodeState {
+        public override save(): IGraphNodeState {
             if (!this.graph) {
                 throw new Error("Cannot save a graph node without a graph");
             }
@@ -60,7 +60,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             };
         }
 
-        public onPlaced() {
+        public override onPlaced() {
             this.template.events.updated.subscribe(this, () => this.initialize());
             this.template.events.nameChanged.subscribe(this, (name) => {
                 this._title = name;
@@ -68,7 +68,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             this.initialize();
         }
 
-        public destroy() {
+        public override onDestroy() {
             this.template.events.updated.unsubscribe(this);
             this.template.events.nameChanged.unsubscribe(this);
             this.graph?.destroy();

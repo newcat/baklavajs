@@ -10,6 +10,11 @@ export default class TestNode extends AbstractNode {
         b: new NodeInterface("B", 2),
     };
 
+    public constructor() {
+        super();
+        this.initializeIo();
+    }
+
     public calculate?: CalculateFunction<any, any>;
 
     public registerCalled = false;

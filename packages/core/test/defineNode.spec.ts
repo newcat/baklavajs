@@ -67,4 +67,16 @@ describe("defineNode", () => {
         expect(result).toEqual({ b: "5" });
         expect(calculateSpy).toHaveBeenCalledWith({ a: 4 }, { test: true });
     });
+
+    it("sets the title to the type if no title is specified", () => {
+        const Nt = defineNode({ type: "test" });
+        const n = new Nt();
+        expect(n.title).toEqual("test");
+    });
+
+    it("doesnt override the title property if it is specified", () => {
+        const Nt = defineNode({ type: "test", title: "title" });
+        const n = new Nt();
+        expect(n.title).toEqual("title");
+    });
 });

@@ -26,7 +26,48 @@ describe("Node Interface", () => {
         expect(spy2.mock.calls[0][0]).toEqual("myValue");
     });
 
-    it.todo("correctly loads a state"); // TODO
+    it("correctly saves and loads a state", () => {
+        const n1 = new NodeInterface("Test", 4);
+        const save = n1.save();
 
-    it.todo("correctly saves a state"); // TODO
+        const n2 = new NodeInterface("Test", 1);
+        n2.load(save);
+
+        expect(n2.save()).toEqual(save);
+    });
+
+    it("allows to prevent setting a new value", () => {
+        const n = new NodeInterface("Test", 1);
+        n.events.beforeSetValue.subscribe(this, () => false);
+        n.value = 10;
+        expect(n.value).toEqual(1);
+    });
+
+    it("allows setting a component", () => {
+        const n = new NodeInterface("Test", 1);
+        expect(n.component).toBeUndefined();
+        n.setComponent("myComponent");
+        expect(n.component).toEqual("myComponent");
+    });
+
+    it("allows setting the port visibility", () => {
+        const n = new NodeInterface("Test", 1);
+        expect(n.port).toBeTruthy();
+        n.setPort(false);
+        expect(n.port).toBeFalsy();
+    });
+
+    it("allows setting the 'hidden' property", () => {
+        const n = new NodeInterface("Test", 1);
+        expect(n.hidden).toBeFalsy();
+        n.setHidden(true);
+        expect(n.hidden).toBeTruthy();
+    });
+
+    it("allows using middleware", () => {
+        const n = new NodeInterface("Test", 1);
+        const mw = jest.fn();
+        n.use(mw, "hello", 3);
+        expect(mw).toHaveBeenCalledWith(n, "hello", 3);
+    });
 });
