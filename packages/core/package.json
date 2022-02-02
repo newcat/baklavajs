@@ -12,9 +12,9 @@
   "types": "dist/index.d.ts",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build:esm": "tsc --declaration false --outDir dist/esm --module esnext",
-    "build:cjs": "tsc --declaration false --outDir dist/cjs",
-    "build:declaration": "tsc --emitDeclarationOnly --outDir dist",
+    "build:esm": "tsc -p tsconfig.build.json --declaration false --outDir dist/esm --module esnext",
+    "build:cjs": "tsc -p tsconfig.build.json --declaration false --outDir dist/cjs",
+    "build:declaration": "tsc -p tsconfig.build.json --emitDeclarationOnly --outDir dist",
     "build": "rimraf dist && yarn run build:esm && yarn run build:cjs && yarn run build:declaration",
     "test": "jest --coverage"
   },
