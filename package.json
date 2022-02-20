@@ -24,6 +24,7 @@
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-vue": "^8.2.0",
         "lerna": "^4.0.0",
+        "mermaid": "^8.14.0",
         "prettier": "^2.5.1",
         "prettier-eslint": "^13.0.0",
         "rimraf": "^3.0.2",

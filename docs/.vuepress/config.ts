@@ -48,6 +48,7 @@ export default defineUserConfig<DefaultThemeOptions>({
                 components: {
                     StaticLink: path.resolve(__dirname, "./components/StaticLink.vue"),
                     ApiLink: path.resolve(__dirname, "./components/ApiLink.vue"),
+                    Mermaid: path.resolve(__dirname, "./components/Mermaid.vue"),
                 },
             },
         ],
