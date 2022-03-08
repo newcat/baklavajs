@@ -13,7 +13,7 @@
   "devDependencies": {
     "@vue/cli-plugin-typescript": "^5.0.1",
     "@vue/cli-service": "^5.0.1",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "sass-loader": "^12.2.0",
     "typescript": "^4.6.2",
     "vue-template-compiler": "^2.6.14"
