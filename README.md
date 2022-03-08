@@ -33,11 +33,15 @@ There is also the `baklavajs` package, which contains the core package as well a
 ## Getting Started & Documentation
 You can find the documentation here: https://newcat.github.io/baklavajs
 
+## Vue 3
+BaklavaJS also supports Vue 3. Have a look at [this issue](https://github.com/newcat/baklavajs/issues/135#issuecomment-890263908) for more information.
+
 ## Sponsors
 
 ### Top Sponsors
 <a href="https://github.com/ThePixelDeveloper">ThePixelDeveloper</a>
 
 ### Continuous Sponsors
-<a href="https://github.com/finchMFG">finchMFG</a>&nbsp;&middot;
-<a href="https://github.com/LittleMouseGames">LittleMouseGames</a>
+<a href="https://github.com/yochrisbolton">Chris Bolton</a>&nbsp;&middot;
+<a href="https://github.com/LittleMouseGames">LittleMouseGames</a>&nbsp;&middot;
+<a href="https://github.com/andreibosco">Andrei Bosco B. Torres</a>
