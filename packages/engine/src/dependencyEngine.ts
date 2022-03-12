@@ -1,5 +1,6 @@
-import { Editor, NodeInterface } from "@baklavajs/core";
+import type { Editor, Graph, NodeInterface } from "@baklavajs/core";
 import { BaseEngine, CalculationResult } from "./baseEngine";
+import { ITopologicalSortingResult, sortTopologically } from "./topologicalSorting";
 
 export const allowMultipleConnections = <T extends Array<any>>(intf: NodeInterface<T>) => {
     intf.allowMultipleConnections = true;
@@ -7,9 +8,12 @@ export const allowMultipleConnections = <T extends Array<any>>(intf: NodeInterfa
 
 export class DependencyEngine<CalculationData = any> extends BaseEngine<CalculationData, []> {
     private token = Symbol();
+    private order: Map<string, ITopologicalSortingResult> = new Map();
 
     public constructor(editor: Editor) {
         super(editor);
+        // we can't use "this" as a token here, since the superclass already
+        // subscribes to "addConnection" using "this".
         this.editor.graphEvents.addConnection.subscribe(this.token, (c, graph) => {
             // Delete all other connections to the target interface
             // if only one connection to the input interface is allowed
@@ -27,25 +31,16 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
         void this.calculateWithoutData();
     }
 
-    protected override async execute(calculationData: CalculationData): Promise<CalculationResult> {
-        if (!this.order) {
-            throw new Error("runCalculation called without order being calculated before");
+    public override async runGraph(
+        graph: Graph,
+        inputs: Map<string, any>,
+        calculationData: CalculationData,
+    ): Promise<CalculationResult> {
+        if (!this.order.has(graph.id)) {
+            this.order.set(graph.id, sortTopologically(graph));
         }
 
-        const { calculationOrder, connectionsFromNode } = this.order;
-
-        // gather all values of the unconnected inputs
-        // maps NodeInterface.id -> value
-        // the reason it is done here and not during calculation is that this
-        // way we prevent race conditions because calculations can be async
-        const inputValues = new Map<string, any>();
-        for (const n of calculationOrder) {
-            Object.values(n.inputs).forEach((ni) => {
-                if (ni.connectionCount === 0) {
-                    inputValues.set(ni.id, ni.value);
-                }
-            });
-        }
+        const { calculationOrder, connectionsFromNode } = this.order.get(graph.id)!;
 
         const result: CalculationResult = new Map();
         for (const n of calculationOrder) {
@@ -55,16 +50,16 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
 
             const inputsForNode: Record<string, any> = {};
             Object.entries(n.inputs).forEach(([k, v]) => {
-                if (!inputValues.has(v.id)) {
+                if (!inputs.has(v.id)) {
                     throw new Error(
                         `Could not find value for interface ${v.id}\n` +
                             "This is likely a Baklava internal issue. Please report it on GitHub.",
                     );
                 }
-                inputsForNode[k] = inputValues.get(v.id);
+                inputsForNode[k] = inputs.get(v.id);
             });
 
-            const r = await n.calculate(inputsForNode, calculationData);
+            const r = await n.calculate(inputsForNode, { globalValues: calculationData, engine: this });
 
             // validate return
             this.validateNodeCalculationOutput(n, r);
@@ -81,19 +76,41 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
                     }
                     const v = this.hooks.transferData.execute(r[intfKey], c);
                     if (c.to.allowMultipleConnections) {
-                        if (inputValues.has(c.to.id)) {
-                            (inputValues.get(c.to.id)! as Array<any>).push(v);
+                        if (inputs.has(c.to.id)) {
+                            (inputs.get(c.to.id)! as Array<any>).push(v);
                         } else {
-                            inputValues.set(c.to.id, [v]);
+                            inputs.set(c.to.id, [v]);
                         }
                     } else {
-                        inputValues.set(c.to.id, v);
+                        inputs.set(c.to.id, v);
                     }
                 });
             }
         }
 
         return result;
+    }
+
+    protected override async execute(calculationData: CalculationData): Promise<CalculationResult> {
+        if (this.recalculateOrder) {
+            this.order.clear();
+            this.recalculateOrder = false;
+        }
+
+        // gather all values of the unconnected inputs
+        // maps NodeInterface.id -> value
+        // the reason it is done here and not during calculation is that this
+        // way we prevent race conditions because calculations can be async
+        const inputValues = new Map<string, any>();
+        for (const n of this.editor.graph.nodes) {
+            Object.values(n.inputs).forEach((ni) => {
+                if (ni.connectionCount === 0) {
+                    inputValues.set(ni.id, ni.value);
+                }
+            });
+        }
+
+        return await this.runGraph(this.editor.graph, inputValues, calculationData);
     }
 
     protected onChange(recalculateOrder: boolean): void {

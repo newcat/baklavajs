@@ -1,15 +1,24 @@
-import { AbstractNode, INodeUpdateEventData } from "@baklavajs/core";
+import { AbstractNode, Graph, INodeUpdateEventData } from "@baklavajs/core";
 import { BaseEngine, CalculationResult } from "./baseEngine";
 
 export class ForwardEngine<CalculationData = any> extends BaseEngine<
     CalculationData,
     [AbstractNode, INodeUpdateEventData]
 > {
-    protected override async execute(
+    public override runGraph(
+        graph: Graph,
+        inputs: Map<string, any>,
+        calculationData: CalculationData,
+    ): Promise<CalculationResult> {
+        throw new Error("Not implemented");
+    }
+
+    protected override execute(
         calculationData: CalculationData,
         startingNode: AbstractNode,
         data: INodeUpdateEventData,
     ): Promise<CalculationResult> {
+        /*TODO: Rewrite
         if (!this.order) {
             throw new Error("runCalculation called without order being calculated before");
         }
@@ -46,7 +55,8 @@ export class ForwardEngine<CalculationData = any> extends BaseEngine<
             }
         }
 
-        return result;
+        return result;*/
+        throw new Error("Not implemented");
     }
 
     protected onChange(recalculateOrder: boolean, updatedNode?: AbstractNode, data?: INodeUpdateEventData): void {

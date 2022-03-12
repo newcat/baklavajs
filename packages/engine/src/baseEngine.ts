@@ -1,13 +1,6 @@
+import type { AbstractNode, NodeInterface, IConnection, Editor, INodeUpdateEventData, Graph } from "@baklavajs/core";
 import { BaklavaEvent, DynamicSequentialHook, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
-import {
-    AbstractNode,
-    NodeInterface,
-    IConnection,
-    Editor,
-    GRAPH_NODE_TYPE_PREFIX,
-    INodeUpdateEventData,
-} from "@baklavajs/core";
-import { sortTopologically, containsCycle, expandGraph, ITopologicalSortingResult } from "./topologicalSorting";
+import { containsCycle } from "./topologicalSorting";
 
 /**
  * Key: node id
@@ -59,19 +52,15 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         return this.internalStatus;
     }
 
-    protected order?: ITopologicalSortingResult;
     protected recalculateOrder = true;
+
     /** the internal status will never be set to running, as this is determined by the running flag */
     private internalStatus: EngineStatus = EngineStatus.Stopped;
     private isRunning = false;
 
     public constructor(protected editor: Editor) {
         this.editor.nodeEvents.update.subscribe(this, (data, node) => {
-            if (node.type.startsWith(GRAPH_NODE_TYPE_PREFIX) && data === null) {
-                this.internalOnChange(true);
-            } else {
-                this.internalOnChange(false, node, data!);
-            }
+            this.internalOnChange(false, node, data ?? undefined);
         });
 
         this.editor.graphEvents.addNode.subscribe(this, () => {
@@ -166,6 +155,21 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         }
     }
 
+    /**
+     * Run a non-root graph. This method can be used by nodes to calculate internal graphs (e. g. GraphNode).
+     * DO NOT use this method for calculation of the root graph! It won't emit any events.
+     * @param graph The graph to execute
+     * @param inputs Map<NodeInterfaceId, value>
+     * @param calculationData The data which is provided to each node's `calculate` method
+     * @param args Additional data which is only provided to the engine
+     * @returns A promise that resolves to a map that maps rootNodes to their calculated value (what the calculation function of the node returned)
+     */
+    public abstract runGraph(
+        graph: Graph,
+        inputs: Map<string, any>,
+        calculationData: CalculationData,
+    ): Promise<CalculationResult>;
+
     /** Check whether a connection can be created.
      * A connection can not be created when it would result in a cyclic graph.
      * @param from The interface from which the connection would start
@@ -173,10 +177,8 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
      * @returns Whether the connection can be created
      */
     public checkConnection(from: NodeInterface, to: NodeInterface): boolean {
-        const { nodes, connections } = expandGraph(this.editor.graph);
-
         if (from.templateId) {
-            const newFrom = this.findInterfaceByTemplateId(nodes, from.templateId);
+            const newFrom = this.findInterfaceByTemplateId(this.editor.graph.nodes, from.templateId);
             if (!newFrom) {
                 return true;
             }
@@ -184,7 +186,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         }
 
         if (to.templateId) {
-            const newTo = this.findInterfaceByTemplateId(nodes, to.templateId);
+            const newTo = this.findInterfaceByTemplateId(this.editor.graph.nodes, to.templateId);
             if (!newTo) {
                 return true;
             }
@@ -193,20 +195,20 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
 
         const dc = { from, to, id: "dc", destructed: false, isInDanger: false } as IConnection;
 
-        const copy = connections.concat([dc]);
-        // TODO: Only filter if to doesn't allow multiple connections
-        copy.filter((conn) => conn.to !== to);
-        return containsCycle(nodes, copy);
+        const copy = (this.editor.graph.connections as readonly IConnection[]).concat([dc]);
+        if (!to.allowMultipleConnections) {
+            copy.filter((conn) => conn.to !== to);
+        }
+        return containsCycle(this.editor.graph.nodes, copy);
     }
 
     /**
-     * Force the engine to recalculate the node execution order.
+     * Force the engine to recalculate the node execution order before the next run.
      * This is normally done automatically. Use this method if the
      * default change detection does not work in your scenario.
      */
     public calculateOrder(): void {
-        this.order = sortTopologically(this.editor.graph.nodes, this.editor.graph.connections);
-        this.recalculateOrder = false;
+        this.recalculateOrder = true;
     }
 
     /**

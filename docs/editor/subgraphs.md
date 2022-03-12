@@ -30,7 +30,8 @@ If that is the case for a specific subgraph it is not displayed in the node pale
 
 ## How it works
 
-TODO: Bla bla bla
+Each Graph Node has an internal graph instance that is based on the graph template of the subgraph.
+
 
 <mermaid>
 {{`

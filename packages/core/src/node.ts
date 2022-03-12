@@ -11,9 +11,14 @@ import type { Graph } from "./graph";
 import type { NodeInterfaceDefinition, NodeInterface, NodeInterfaceDefinitionStates } from "./nodeInterface";
 import { mapValues } from "./utils";
 
+export interface CalculationContext<G = any, E = unknown> {
+    globalValues: G;
+    engine: E;
+}
+
 export type CalculateFunctionReturnType<O> = O | Promise<O> | void;
 
-export type CalculateFunction<I, O> = (inputs: I, globalValues?: any) => CalculateFunctionReturnType<O>;
+export type CalculateFunction<I, O> = (inputs: I, context: CalculationContext) => CalculateFunctionReturnType<O>;
 
 export interface INodeState<I, O> {
     type: string;
@@ -203,8 +208,8 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
  * Abstract base class for every node
  */
 export abstract class Node<I, O> extends AbstractNode {
-    public abstract inputs: NodeInterfaceDefinition<I> & Record<string, NodeInterface<any>>;
-    public abstract outputs: NodeInterfaceDefinition<O> & Record<string, NodeInterface<any>>;
+    public abstract inputs: NodeInterfaceDefinition<I>;
+    public abstract outputs: NodeInterfaceDefinition<O>;
 
     public load(state: INodeState<I, O>): void {
         super.load(state);

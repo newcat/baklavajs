@@ -1,7 +1,7 @@
-import { Graph, IGraphInterface, IGraphState } from "./graph";
 import type { GraphTemplate } from "./graphTemplate";
+import { Graph, IGraphState } from "./graph";
 import { AbstractNode, CalculateFunction, INodeState } from "./node";
-import type { NodeInterface } from "./nodeInterface";
+import { NodeInterface } from "./nodeInterface";
 
 export interface IGraphNodeState extends INodeState<any, any> {
     graphState: IGraphState;
@@ -36,7 +36,62 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         public template = template;
         public graph: Graph | undefined;
 
-        public calculate?: CalculateFunction<any, any> | undefined;
+        public override calculate: CalculateFunction<Record<string, any>, Record<string, any>> = async (
+            inputs,
+            context,
+        ) => {
+            if (!this.graph) {
+                // TODO: The engine will run while `this.graph` is being created.
+                // If we just return `undefined` for every output interface,
+                // we will probably break stuff for users (other nodes not expecting undefined as input).
+                // We need to find a way to prevent calculation while a graph is being loaded
+                // while still emitting the nodeAdded, ... events (which is needed for other functionality)
+                return;
+            }
+
+            if (
+                typeof context.engine === "object" &&
+                !!context.engine &&
+                typeof (context.engine as any).runGraph === "function"
+            ) {
+                const graphInputs: Map<string, any> = new Map();
+
+                // gather all values of the unconnected inputs
+                for (const n of this.graph.nodes) {
+                    Object.values(n.inputs).forEach((ni) => {
+                        if (ni.connectionCount === 0) {
+                            graphInputs.set(ni.id, ni.value);
+                        }
+                    });
+                }
+
+                // map graph inputs to their respective nodeInterfaceId in the graph
+                Object.entries(inputs).forEach(([k, v]) => {
+                    const gi = this.graph!.inputs.find((x) => x.id === k)!;
+                    graphInputs.set(gi.nodeInterfaceId, v);
+                });
+
+                const result: Map<string, Map<string, any>> = await (context.engine as any).runGraph(
+                    this.graph,
+                    graphInputs,
+                    context.globalValues,
+                );
+                const flatResult: Map<string, any> = new Map();
+                result.forEach((nodeOutputs, nodeId) => {
+                    const node = this.graph!.nodes.find((n) => n.id === nodeId)!;
+                    nodeOutputs.forEach((v, nodeInterfaceKey) => {
+                        flatResult.set(node.outputs[nodeInterfaceKey].id, v);
+                    });
+                });
+
+                const outputs: Record<string, any> = {};
+                this.graph.outputs.forEach((graphOutput) => {
+                    outputs[graphOutput.id] = flatResult.get(graphOutput.nodeInterfaceId);
+                });
+
+                return outputs;
+            }
+        };
 
         public override load(state: IGraphNodeState) {
             if (!this.graph) {
@@ -85,51 +140,38 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         }
 
         private updateInterfaces() {
+            // TODO: Check if TODO below still applies
             // TODO: Initially, this works, but after this node was load()-ed, it breaks
 
-            const inputConnectionsToCreate: Array<[NodeInterface, string]> = [];
-            const outputConnectionsToCreate: Array<[string, NodeInterface]> = [];
+            if (!this.graph) {
+                throw new Error("Trying to update interfaces without graph instance");
+            }
 
-            this.graphInstance?.connections.forEach((c) => {
-                const input = Object.entries(this.inputs).find((i) => i[1] === c.to);
-                if (input) {
-                    inputConnectionsToCreate.push([c.from, input[0]]);
+            for (const graphInput of this.graph.inputs) {
+                if (!(graphInput.id in this.inputs)) {
+                    this.addInput(graphInput.id, new NodeInterface(graphInput.name, undefined));
+                } else {
+                    this.inputs[graphInput.id].name = graphInput.name;
                 }
-                const output = Object.entries(this.outputs).find((i) => i[1] === c.from);
-                if (output) {
-                    outputConnectionsToCreate.push([output[0], c.to]);
+            }
+            for (const k of Object.keys(this.inputs)) {
+                if (!this.graph.inputs.some((gi) => gi.id === k)) {
+                    this.removeInput(k);
                 }
-            });
+            }
 
-            Object.keys(this.inputs).forEach((i) => this.removeInput(i));
-            Object.keys(this.outputs).forEach((i) => this.removeOutput(i));
-
-            this.getInterfaceEntries(this.graph!.inputs).forEach(([k, v]) => {
-                this.addInput(k, v);
-            });
-            this.getInterfaceEntries(this.graph!.outputs).forEach(([k, v]) => {
-                this.addOutput(k, v);
-            });
-
-            inputConnectionsToCreate.forEach(([from, toId]) => {
-                this.graphInstance?.addConnection(from, this.inputs[toId]);
-            });
-            outputConnectionsToCreate.forEach(([fromId, to]) => {
-                this.graphInstance?.addConnection(this.outputs[fromId], to);
-            });
-        }
-
-        private getInterfaceEntries(graphInterfaceList: IGraphInterface[]): Array<[string, NodeInterface<any>]> {
-            return graphInterfaceList.map((gi) => {
-                const intf = this.graph!.findNodeInterface(gi.nodeInterfaceId);
-                if (!intf) {
-                    throw new Error(
-                        `Error while updating interfaces on GraphNode: Unable to find interface with id ${gi.nodeInterfaceId}`,
-                    );
+            for (const graphOutput of this.graph.outputs) {
+                if (!(graphOutput.id in this.outputs)) {
+                    this.addOutput(graphOutput.id, new NodeInterface(graphOutput.name, undefined));
+                } else {
+                    this.outputs[graphOutput.id].name = graphOutput.name;
                 }
-                intf.name = gi.name;
-                return [gi.id, intf];
-            });
+            }
+            for (const k of Object.keys(this.outputs)) {
+                if (!this.graph.outputs.some((gi) => gi.id === k)) {
+                    this.removeOutput(k);
+                }
+            }
         }
     };
 }

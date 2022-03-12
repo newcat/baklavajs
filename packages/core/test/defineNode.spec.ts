@@ -63,9 +63,9 @@ describe("defineNode", () => {
             calculate: calculateSpy,
         });
         const n = new TestNode();
-        const result = n.calculate!({ a: 4 }, { test: true });
+        const result = n.calculate!({ a: 4 }, { globalValues: { test: true }, engine: {} });
         expect(result).toEqual({ b: "5" });
-        expect(calculateSpy).toHaveBeenCalledWith({ a: 4 }, { test: true });
+        expect(calculateSpy).toHaveBeenCalledWith({ a: 4 }, { globalValues: { test: true }, engine: {} });
     });
 
     it("sets the title to the type if no title is specified", () => {

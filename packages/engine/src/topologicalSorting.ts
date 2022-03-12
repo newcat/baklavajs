@@ -1,4 +1,4 @@
-import { AbstractNode, Graph, GRAPH_NODE_TYPE_PREFIX, IConnection, IGraphNode } from "@baklavajs/core";
+import { AbstractNode, Graph, IConnection } from "@baklavajs/core";
 
 export interface ITopologicalSortingResult {
     calculationOrder: AbstractNode[];
@@ -7,71 +7,31 @@ export interface ITopologicalSortingResult {
     interfaceIdToNodeId: Map<string, string>;
 }
 
-export interface IExpandedGraph {
-    nodes: ReadonlyArray<AbstractNode>;
-    connections: ReadonlyArray<IConnection>;
-}
-
 export class CycleError extends Error {
     public constructor() {
         super("Cycle detected");
     }
 }
 
-function expandNodesAndConnections(
-    nodes: ReadonlyArray<AbstractNode>,
-    connections: ReadonlyArray<IConnection>,
-): IExpandedGraph {
-    const graphNodes: Array<IGraphNode & AbstractNode> = [];
-    let expandedNodes: AbstractNode[] = [];
-    let expandedConnections: IConnection[] = connections.slice();
-
-    nodes.forEach((n) => {
-        if (n.type.startsWith(GRAPH_NODE_TYPE_PREFIX)) {
-            graphNodes.push(n as IGraphNode & AbstractNode);
-        } else {
-            expandedNodes.push(n);
-        }
-    });
-
-    graphNodes.forEach((n) => {
-        if (n.graph) {
-            const innerGraph = expandNodesAndConnections(n.graph.nodes, n.graph.connections);
-            expandedNodes = expandedNodes.concat(innerGraph.nodes);
-            expandedConnections = expandedConnections.concat(innerGraph.connections);
-        }
-    });
-
-    return {
-        nodes: expandedNodes,
-        connections: expandedConnections,
-    };
-}
-
 function isString(v: string | undefined): v is string {
     return typeof v === "string";
-}
-
-/** Expand a graph, which may contain subgraphs, into a flat list of nodes and connections */
-export function expandGraph(graph: Graph): IExpandedGraph {
-    return expandNodesAndConnections(graph.nodes, graph.connections);
 }
 
 /** Uses Kahn's algorithm to topologically sort the nodes in the graph */
 export function sortTopologically(graph: Graph): ITopologicalSortingResult;
 /** Uses Kahn's algorithm to topologically sort the nodes in the graph */
 export function sortTopologically(
-    nonExpandedNodes: ReadonlyArray<AbstractNode>,
-    nonExpandedConnections: ReadonlyArray<IConnection>,
+    nodes: ReadonlyArray<AbstractNode>,
+    connections: ReadonlyArray<IConnection>,
 ): ITopologicalSortingResult;
 /** This overload is only used for internal purposes */
 export function sortTopologically(
-    nonExpandedNodesOrGraph: ReadonlyArray<AbstractNode> | Graph,
-    nonExpandedConnections?: ReadonlyArray<IConnection>,
+    nodesOrGraph: ReadonlyArray<AbstractNode> | Graph,
+    connections?: ReadonlyArray<IConnection>,
 ): ITopologicalSortingResult;
 export function sortTopologically(
-    nonExpandedNodesOrGraph: ReadonlyArray<AbstractNode> | Graph,
-    nonExpandedConnections?: ReadonlyArray<IConnection>,
+    nodesOrGraph: ReadonlyArray<AbstractNode> | Graph,
+    pConnections?: ReadonlyArray<IConnection>,
 ): ITopologicalSortingResult {
     /** NodeInterface.id -> parent Node.id */
     const interfaceIdToNodeId = new Map<string, string>();
@@ -80,16 +40,19 @@ export function sortTopologically(
     const adjacency = new Map<string, Set<string>>();
     const connectionsFromNode = new Map<AbstractNode, IConnection[]>();
 
-    let expandedGraph: IExpandedGraph;
-    if (nonExpandedNodesOrGraph instanceof Graph) {
-        expandedGraph = expandGraph(nonExpandedNodesOrGraph);
+    let nodes: ReadonlyArray<AbstractNode>;
+    let connections: ReadonlyArray<IConnection>;
+
+    if (nodesOrGraph instanceof Graph) {
+        nodes = nodesOrGraph.nodes;
+        connections = nodesOrGraph.connections;
     } else {
-        if (!nonExpandedConnections) {
+        if (!pConnections) {
             throw new Error("Invalid argument value: expected array of connections");
         }
-        expandedGraph = expandNodesAndConnections(nonExpandedNodesOrGraph, nonExpandedConnections);
+        nodes = nodesOrGraph;
+        connections = pConnections;
     }
-    const { nodes, connections } = expandedGraph;
 
     nodes.forEach((n) => {
         Object.values(n.inputs).forEach((intf) => interfaceIdToNodeId.set(intf.id, n.id));
