@@ -21,7 +21,7 @@ You can directly use BaklavaJS without using Vue (it will still use Vue under th
         <div id="editor"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/baklavajs/dist/index.js"></script>
     <script>
         const plugin = BaklavaJS.createBaklava(document.getElementById("editor"));
