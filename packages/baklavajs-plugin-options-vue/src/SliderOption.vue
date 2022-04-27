@@ -40,7 +40,7 @@ export default class SliderOption extends BaseNumericOption {
     }
 
     get percentage() {
-        return Math.min(100, Math.max(0, (this.v * 100) / (this.max - this.min)));
+        return Math.min(100, Math.max(0, ((this.v - this.min) * 100) / (this.max - this.min)));
     }
 
     mousedown() {
