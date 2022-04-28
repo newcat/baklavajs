@@ -120,7 +120,9 @@ export default class EditorView extends Vue {
     get styles() {
         return {
             "transform-origin": "0 0",
-            "transform": `scale(${this.plugin.scaling}) translate(${this.plugin.panning.x}px, ${this.plugin.panning.y}px)`,
+            "transform": `scale(${this.plugin.scaling})`,
+            "top": this.plugin.scaling * this.plugin.panning.y + "px",
+            "left": this.plugin.scaling * this.plugin.panning.x + "px"
         };
     }
 
