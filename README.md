@@ -40,6 +40,7 @@ BaklavaJS also supports Vue 3. Have a look at [this issue](https://github.com/ne
 
 ### Top Sponsors
 <a href="https://github.com/ThePixelDeveloper">ThePixelDeveloper</a>
+<a href="https://github.com/RDIL">Reece Dunham</a>
 
 ### Continuous Sponsors
 <a href="https://github.com/yochrisbolton">Chris Bolton</a>&nbsp;&middot;
