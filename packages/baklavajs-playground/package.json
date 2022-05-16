@@ -6,15 +6,15 @@
         "serve": "vue-cli-service serve"
     },
     "dependencies": {
-        "vue": "^3.1.0",
+        "vue": "^3.2.33",
         "vue-class-component": "8.0.0-rc.1",
         "vue-property-decorator": "10.0.0-rc.3"
     },
     "devDependencies": {
         "@vue/cli-plugin-typescript": "^4.5.11",
         "@vue/cli-service": "^4.5.11",
-        "@vue/compiler-sfc": "^3.1.0",
-        "node-sass": "^5.0.0",
+        "@vue/compiler-sfc": "^3.2.33",
+        "sass": "^1.51.0",
         "sass-loader": "^10.1.1",
         "typescript": "~4.1.5"
     },
