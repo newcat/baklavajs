@@ -180,7 +180,7 @@ export default class NodeView extends Vue {
             this.selectedNodeViews.push(this);
         }
 
-        this.selectedNodeViews.forEach((elem: any) => {
+        this.selectedNodeViews.forEach((elem) => {
             elem.draggingStartPoint = {
                   x: ev.screenX,
                   y: ev.screenY,
@@ -199,7 +199,7 @@ export default class NodeView extends Vue {
     }
 
     stopDrag() {
-        this.selectedNodeViews.forEach((elem: any) => {
+        this.selectedNodeViews.forEach((elem) => {
             elem.draggingStartPoint = null;
             elem.draggingStartPosition = null;
             document.removeEventListener("mousemove", elem.handleMove);
@@ -208,14 +208,23 @@ export default class NodeView extends Vue {
     }
 
     handleMove(ev: MouseEvent) {
-        this.selectedNodeViews.forEach((elem: any) => {
-            if (elem.draggingStartPoint) {
-                const dx = ev.screenX - elem.draggingStartPoint.x;
-                const dy = ev.screenY - elem.draggingStartPoint.y;
-                elem.data.position.x = elem.draggingStartPosition.x + dx / elem.plugin.scaling;
-                elem.data.position.y = elem.draggingStartPosition.y + dy / elem.plugin.scaling;
+        if (this.draggingStartPoint) {
+            const dx = ev.screenX - this.draggingStartPoint.x;
+            const dy = ev.screenY - this.draggingStartPoint.y;
+            const newX = this.draggingStartPosition!.x + dx / this.plugin.scaling;
+            const newY = this.draggingStartPosition!.y + dy / this.plugin.scaling;
+            
+            const eventData = {
+                nodeView: this,
+                newPosition: { x: newX, y: newY }
+            };
+            if (this.plugin.events.beforeNodeMove.emit(eventData)) {
+                return;
             }
-        });
+            this.data.position.x = newX;
+            this.data.position.y = newY;
+            this.plugin.events.nodeMove.emit(eventData);
+        }
     }
 
     openContextMenu(ev: MouseEvent) {

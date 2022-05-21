@@ -1,7 +1,8 @@
 import Vue, { VueConstructor } from "vue";
 import { IPlugin, IEditor } from "../../baklavajs-core/types";
-import { SequentialHook } from "@baklavajs/events";
+import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { IViewNode, IViewPlugin } from "../types";
+import { NodeMoveEventData } from "./eventTypes";
 
 import NodeView from "./components/node/Node.vue";
 import NodeOptionView from "./components/node/NodeOption.vue";
@@ -47,6 +48,11 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
         /** Called whenever a connection is rendered */
         renderConnection: new SequentialHook<ConnectionView>()
     };
+
+    public events = {
+        beforeNodeMove: new PreventableBaklavaEvent<NodeMoveEventData>(),
+        nodeMove: new BaklavaEvent<NodeMoveEventData>()
+    }
 
     /** Use this property to provide custom components,
      * which will be used when rendering the respective entities
