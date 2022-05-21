@@ -45,4 +45,5 @@ BaklavaJS also supports Vue 3. Have a look at [this issue](https://github.com/ne
 ### Continuous Sponsors
 <a href="https://github.com/yochrisbolton">Chris Bolton</a>&nbsp;&middot;
 <a href="https://github.com/LittleMouseGames">LittleMouseGames</a>&nbsp;&middot;
-<a href="https://github.com/andreibosco">Andrei Bosco B. Torres</a>
+<a href="https://github.com/andreibosco">Andrei Bosco B. Torres</a>&nbsp;&middot;
+<a href="https://github.com/TigerHix">Tiger Tang</a>
