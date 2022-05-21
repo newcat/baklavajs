@@ -1,10 +1,11 @@
 const { mergeWithRules } = require("webpack-merge");
-const base = require("./webpack.config");
+const { base, getOutputs } = require("./webpack.config");
 
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = mergeWithRules({
+module.exports.getOutputs = getOutputs;
+module.exports.base = mergeWithRules({
     module: {
         rules: {
             loader: "match",

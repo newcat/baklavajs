@@ -11,7 +11,7 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf ./dist && tsc",
     "docs": "typedoc --json ../../docs/api/events.json --options ../../typedoc.json"
   },
   "publishConfig": {

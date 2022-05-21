@@ -9,9 +9,17 @@
     "dist/**/!(report.html)"
   ],
   "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.cjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./dist/styles.css": "./dist/styles.css"
+  },
   "types": "dist/baklavajs-plugin-renderer-vue/src/index.d.ts",
   "scripts": {
-    "build": "webpack",
+    "build": "rimraf ./dist && webpack",
     "docs": "typedoc --json ../../docs/api/plugin-renderer-vue.json --options ../../typedoc.json"
   },
   "repository": {
@@ -26,7 +34,6 @@
   },
   "devDependencies": {
     "@juggle/resize-observer": "^3.3.1",
-    "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.7.1",
     "mini-css-extract-plugin": "^2.6.0",

@@ -10,9 +10,17 @@
         "lib/**/*"
     ],
     "main": "lib/index.js",
+    "exports": {
+        ".": {
+            "import": "./dist/index.cjs",
+            "require": "./dist/index.cjs",
+            "default": "./dist/index.js"
+        },
+        "./dist/index.css": "./dist/index.css"
+    },
     "types": "lib/index.d.ts",
     "scripts": {
-        "build": "webpack && tsc",
+        "build": "rimraf ./dist && webpack && tsc",
         "version": "node updateDependencies.js"
     },
     "repository": {

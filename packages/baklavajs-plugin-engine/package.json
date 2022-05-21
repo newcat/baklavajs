@@ -9,9 +9,14 @@
     "dist/**/!(report.html)"
   ],
   "main": "dist/index.js",
+  "exports": {
+    "import": "./dist/index.cjs",
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.js"
+  },
   "types": "dist/baklavajs-plugin-engine/src/index.d.ts",
   "scripts": {
-    "build": "webpack",
+    "build": "rimraf ./dist && webpack",
     "docs": "typedoc --json ../../docs/api/plugin-engine.json --options ../../typedoc.json"
   },
   "repository": {
@@ -26,7 +31,6 @@
   },
   "devDependencies": {
     "async-mutex": "^0.3.2",
-    "clean-webpack-plugin": "^4.0.0",
     "ts-loader": "^9.2.7",
     "typescript": "^4.6.2",
     "webpack": "^5.70.0",
