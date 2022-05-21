@@ -21,6 +21,7 @@ export class Editor implements IEditor {
     private _connections: Connection[] = [];
     private _nodeTypes: Map<string, NodeConstructor> = new Map();
     private _nodeCategories: Map<string, string[]> = new Map([["default", []]]);
+    private _loading = false;
 
     public events = {
         beforeRegisterNodeType: new PreventableBaklavaEvent<IAddNodeTypeEventData>(),
@@ -66,6 +67,11 @@ export class Editor implements IEditor {
     /** List of all plugins in this editor */
     public get plugins() {
         return this._plugins as ReadonlySet<IPlugin>;
+    }
+
+    /** Whether the editor is currently in the process of loading a saved graph */
+    public get loading() {
+        return this._loading;
     }
 
     /**
@@ -202,53 +208,58 @@ export class Editor implements IEditor {
      * @returns An array of warnings that occured during loading. If the array is empty, the state was successfully loaded.
      */
     public load(state: IState): string[] {
-        const warnings: string[] = [];
-
-        // Clear current state
-        for (let i = this.connections.length - 1; i >= 0; i--) {
-            this.removeConnection(this.connections[i]);
-        }
-        for (let i = this.nodes.length - 1; i >= 0; i--) {
-            this.removeNode(this.nodes[i]);
-        }
-
-        // Load state
-        for (const n of state.nodes) {
-            // find node type
-            const nt = this.nodeTypes.get(n.type);
-            if (!nt) {
-                warnings.push(`Node type ${n.type} is not registered`);
-                continue;
+        try {
+            this._loading = true;
+            const warnings: string[] = [];
+    
+            // Clear current state
+            for (let i = this.connections.length - 1; i >= 0; i--) {
+                this.removeConnection(this.connections[i]);
             }
-
-            const node = new nt() as Node;
-            this.addNode(node);
-            node.load(n);
-        }
-
-        for (const c of state.connections) {
-            const fromIf = this.findNodeInterface(c.from);
-            const toIf = this.findNodeInterface(c.to);
-            if (!fromIf) {
-                warnings.push(`Could not find interface with id ${c.from}`);
-                continue;
-            } else if (!toIf) {
-                warnings.push(`Could not find interface with id ${c.to}`);
-                continue;
-            } else {
-                const conn = this.addConnection(fromIf, toIf);
-                if (!conn) {
-                    warnings.push(`Unable to create connection from ${c.from} to ${c.to}`);
+            for (let i = this.nodes.length - 1; i >= 0; i--) {
+                this.removeNode(this.nodes[i]);
+            }
+    
+            // Load state
+            for (const n of state.nodes) {
+                // find node type
+                const nt = this.nodeTypes.get(n.type);
+                if (!nt) {
+                    warnings.push(`Node type ${n.type} is not registered`);
                     continue;
                 }
-                conn.id = c.id;
+    
+                const node = new nt() as Node;
+                this.addNode(node);
+                node.load(n);
             }
+    
+            for (const c of state.connections) {
+                const fromIf = this.findNodeInterface(c.from);
+                const toIf = this.findNodeInterface(c.to);
+                if (!fromIf) {
+                    warnings.push(`Could not find interface with id ${c.from}`);
+                    continue;
+                } else if (!toIf) {
+                    warnings.push(`Could not find interface with id ${c.to}`);
+                    continue;
+                } else {
+                    const conn = this.addConnection(fromIf, toIf);
+                    if (!conn) {
+                        warnings.push(`Unable to create connection from ${c.from} to ${c.to}`);
+                        continue;
+                    }
+                    conn.id = c.id;
+                }
+            }
+    
+            this.hooks.load.execute(state);
+    
+            warnings.forEach((w) => console.warn(w));
+            return warnings;
+        } finally {
+            this._loading = false;
         }
-
-        this.hooks.load.execute(state);
-
-        warnings.forEach((w) => console.warn(w));
-        return warnings;
     }
 
     /**
