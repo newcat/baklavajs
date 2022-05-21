@@ -65,10 +65,10 @@ export default class SelectOption extends Vue {
     }
 
     get selectedText() {
-        if (this.value) {
-            return this.isAdvancedMode ?
-                this.getItemByValue(this.value)?.text ?? "" :
-                this.value;
+        if (this.isAdvancedMode) {
+            return this.getItemByValue(this.value)?.text ?? "";
+        } else if(this.value) {
+            return this.value;
         } else {
             return "";
         }
