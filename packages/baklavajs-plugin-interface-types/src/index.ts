@@ -3,7 +3,6 @@ import { IViewPlugin } from "../../baklavajs-plugin-renderer-vue/types";
 import { INodeInterfaceType } from "../types";
 
 export class InterfaceTypePlugin implements IPlugin {
-
     public type = "InterfaceTypePlugin";
 
     private editor!: IEditor;
@@ -12,7 +11,9 @@ export class InterfaceTypePlugin implements IPlugin {
     public register(editor: IEditor) {
         this.editor = editor;
         this.editor.plugins.forEach((p) => {
-            if (p.type === "ViewPlugin") { this.registerView(p as IViewPlugin); }
+            if (p.type === "ViewPlugin") {
+                this.registerView(p as IViewPlugin);
+            }
         });
         this.editor.events.checkConnection.addListener(this, ({ from, to }) => {
             const fromType = (from as any).type;
@@ -24,7 +25,9 @@ export class InterfaceTypePlugin implements IPlugin {
             }
         });
         this.editor.events.usePlugin.addListener(this, (plugin) => {
-            if (plugin.type === "ViewPlugin") { this.registerView(plugin as IViewPlugin); }
+            if (plugin.type === "ViewPlugin") {
+                this.registerView(plugin as IViewPlugin);
+            }
         });
     }
 
@@ -47,7 +50,6 @@ export class InterfaceTypePlugin implements IPlugin {
      * A transformation to convert the type `string` to `number` could be `parseInt`.
      */
     public addConversion(from: string, to: string, transformationFunction?: (value: any) => any): this {
-
         if (!this.types.has(from)) {
             throw new Error(`Can not add conversion for unknown type "${from}"`);
         }
@@ -62,7 +64,6 @@ export class InterfaceTypePlugin implements IPlugin {
         });
 
         return this;
-
     }
 
     public getConversion(from: string, to: string) {
@@ -70,7 +71,9 @@ export class InterfaceTypePlugin implements IPlugin {
     }
 
     public canConvert(from: string, to: string): boolean {
-        return from === to || this.types.has(from) && this.types.get(from)!.conversions.some((c) => c.targetType === to);
+        return (
+            from === to || (this.types.has(from) && this.types.get(from)!.conversions.some((c) => c.targetType === to))
+        );
     }
 
     public convert(from: string, to: string, value: any): any {
@@ -98,10 +101,10 @@ export class InterfaceTypePlugin implements IPlugin {
                 Array.from(res).forEach((el) => {
                     el.classList.add("__port-" + intf.type);
                     el.style.backgroundColor = color;
+                    el.title = intf.type;
                 });
             }
             return intfComponent;
         });
     }
-
 }
