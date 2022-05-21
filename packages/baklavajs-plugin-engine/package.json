@@ -1,6 +1,6 @@
 {
   "name": "@baklavajs/plugin-engine",
-  "version": "1.9.3",
+  "version": "1.10.0",
   "description": "Execute BaklavaJS graphs",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
@@ -27,7 +27,7 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "dependencies": {
-    "@baklavajs/events": "^1.9.3"
+    "@baklavajs/events": "^1.10.0"
   },
   "devDependencies": {
     "async-mutex": "^0.3.2",
