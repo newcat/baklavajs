@@ -15,7 +15,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { VueConstructor } from "vue";
 
 import { Editor, Node, NodeInterface } from "../../baklavajs-core/src";
-import { ViewPlugin } from "../../baklavajs-plugin-renderer-vue/src";
+import { ViewPlugin, createSimpleSnappingProvider } from "../../baklavajs-plugin-renderer-vue/src";
 import { Engine } from "../../baklavajs-plugin-engine/src";
 import { InterfaceTypePlugin } from "../../baklavajs-plugin-interface-types/src";
 import { OptionPlugin } from "../../baklavajs-plugin-options-vue/src";
@@ -81,6 +81,8 @@ export default class App extends Vue {
         this.viewPlugin.registerOption("AddOption", AddOption);
         this.viewPlugin.registerOption("TriggerOption", TriggerOption);
         this.viewPlugin.registerOption("SidebarOption", SidebarOption);
+
+        this.viewPlugin.snappingProvider = createSimpleSnappingProvider(30, 30);
     }
 
     mounted() {

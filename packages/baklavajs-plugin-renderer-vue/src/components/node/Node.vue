@@ -52,8 +52,8 @@
                         to="sidebar"
                         v-if="
                             plugin.sidebar.nodeId === data.id &&
-                            plugin.sidebar.optionName === name &&
-                            option.sidebarComponent
+                                plugin.sidebar.optionName === name &&
+                                option.sidebarComponent
                         "
                     >
                         <component
@@ -99,8 +99,8 @@ interface IPosition {
 
 @Component({
     directives: {
-        ClickOutside: ClickOutside.directive,
-    },
+        ClickOutside: ClickOutside.directive
+    }
 })
 export default class NodeView extends Vue {
     @Prop({ type: Object })
@@ -126,8 +126,8 @@ export default class NodeView extends Vue {
         y: 0,
         items: [
             { value: "rename", label: "Rename" },
-            { value: "delete", label: "Delete" },
-        ],
+            { value: "delete", label: "Delete" }
+        ]
     };
 
     get classes() {
@@ -137,7 +137,7 @@ export default class NodeView extends Vue {
             "--dragging": !!this.draggingStartPoint,
             "--two-column": !!this.data.twoColumn,
             [`--type-${sanitizeName(this.data.type)}`]: true,
-            [this.data.customClasses]: true,
+            [this.data.customClasses]: true
         };
     }
 
@@ -145,7 +145,7 @@ export default class NodeView extends Vue {
         return {
             top: `${this.data.position.y}px`,
             left: `${this.data.position.x}px`,
-            width: `${this.data.width}px`,
+            width: `${this.data.width}px`
         };
     }
 
@@ -182,12 +182,12 @@ export default class NodeView extends Vue {
 
         this.selectedNodeViews.forEach((elem) => {
             elem.draggingStartPoint = {
-                  x: ev.screenX,
-                  y: ev.screenY,
+                x: ev.screenX,
+                y: ev.screenY
             };
             elem.draggingStartPosition = {
-                  x: elem.data.position.x,
-                  y: elem.data.position.y,
+                x: elem.data.position.x,
+                y: elem.data.position.y
             };
             document.addEventListener("mousemove", elem.handleMove);
             document.addEventListener("mouseup", elem.stopDrag);
@@ -211,9 +211,11 @@ export default class NodeView extends Vue {
         if (this.draggingStartPoint) {
             const dx = ev.screenX - this.draggingStartPoint.x;
             const dy = ev.screenY - this.draggingStartPoint.y;
-            const newX = this.draggingStartPosition!.x + dx / this.plugin.scaling;
-            const newY = this.draggingStartPosition!.y + dy / this.plugin.scaling;
-            
+            const { x: newX, y: newY } = this.plugin.snappingProvider(
+                this.draggingStartPosition!.x + dx / this.plugin.scaling,
+                this.draggingStartPosition!.y + dy / this.plugin.scaling
+            );
+
             const eventData = {
                 nodeView: this,
                 newPosition: { x: newX, y: newY }

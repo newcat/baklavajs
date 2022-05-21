@@ -84,6 +84,17 @@ You can optionally enable the minimap:
 viewPlugin.enableMinimap = true;
 ```
 
+## Node Snapping
+
+To snap the nodes to a custom grid, you can set the [snappingProvider](!!API%{ "module": "@baklavajs/plugin-renderer-view", "type": "class", "name": "ViewPlugin", "field": "snappingProvider" }%) property of the `ViewPlugin`. The package also exports a simple snapping implementation, which you can use like this:
+
+```js
+import { createSimpleSnappingProvider } from "@baklavajs/plugin-renderer-vue";
+viewPlugin.snappingProvider = createSimpleSnappingProvider(30, 30);
+```
+
+In this case, nodes are snapped to a 30x30 grid.
+
 ## Electron
 If you want to use this plugin in Electron, you might need to add it to the whitelisted externals.
 To do that, add the following code to your `package.json`:

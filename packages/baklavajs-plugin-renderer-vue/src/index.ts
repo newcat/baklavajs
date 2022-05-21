@@ -17,4 +17,5 @@ export const Components = {
 };
 
 export * from "./baklavaVuePlugin";
+export * from "./snapping";
 export * from "./viewPlugin";

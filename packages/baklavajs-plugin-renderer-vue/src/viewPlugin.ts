@@ -3,6 +3,7 @@ import { IPlugin, IEditor } from "../../baklavajs-core/types";
 import { BaklavaEvent, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { IViewNode, IViewPlugin } from "../types";
 import { NodeMoveEventData } from "./eventTypes";
+import { createSimpleSnappingProvider, SnappingProvider } from "./snapping";
 
 import NodeView from "./components/node/Node.vue";
 import NodeOptionView from "./components/node/NodeOption.vue";
@@ -29,11 +30,17 @@ export class ViewPlugin implements IPlugin, IViewPlugin {
     public enableMinimap = false;
 
     /** Background configuration */
-    backgroundGrid = {
+    public backgroundGrid = {
         gridSize: 100,
         gridDivision: 5,
         subGridVisibleThreshold: 0.6
     };
+
+    /**
+     * Set this property to your own SnappingProvider to implement custom snapping logic.
+     * You can also use the "createSimpleSnappingProvider" with custom xGrid and yGrid values.
+    */
+    public snappingProvider: SnappingProvider = createSimpleSnappingProvider(1, 1);
 
     public options: Record<string, VueConstructor> = {};
     public nodeTypeAliases: Record<string, string> = {};
