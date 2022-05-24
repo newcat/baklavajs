@@ -1,12 +1,8 @@
 const path = require("path");
-const { merge } = require("webpack-merge");
-const { base, getOutputs } = require("../../build/webpack.config");
+const { getConfig } = require("../../build/webpack.config");
 
-module.exports = getOutputs(path.resolve(__dirname, "dist"), "BaklavaJSInterfaceTypes").map((o) =>
-    merge(base, {
-        entry: {
-            index: path.resolve(__dirname, "src", "index.ts")
-        },
-        output: o
-    })
-);
+module.exports = getConfig(path.resolve(__dirname, "dist"), "BaklavaJSInterfaceTypes", {
+    entry: {
+        index: path.resolve(__dirname, "src", "index.ts")
+    }
+});

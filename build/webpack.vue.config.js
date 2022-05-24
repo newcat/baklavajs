@@ -1,49 +1,56 @@
-const { mergeWithRules } = require("webpack-merge");
-const { base, getOutputs } = require("./webpack.config");
+const { merge, mergeWithRules } = require("webpack-merge");
+const { getConfig } = require("./webpack.config");
 
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports.getOutputs = getOutputs;
-module.exports.base = mergeWithRules({
-    module: {
-        rules: {
-            loader: "match",
-            options: "replace"
-        }
-    }
-})(base, {
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                loader: "ts-loader",
-                options: {
-                    appendTsSuffixTo: [/\.vue$/],
-                },
-                exclude: /node_modules/
-            },
-            {
-                test: /\.vue$/,
-                use: "vue-loader"
-            },
-            {
-                test: /\.(sa|sc|c)ss$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+function mergeVueConfig(config) {
+    return mergeWithRules({
+        module: {
+            rules: {
+                loader: "match",
+                options: "replace"
             }
-        ]
-    },
-    resolve: {
-        extensions: [".ts", ".vue"]
-    },
-    plugins: [
-        new VueLoaderPlugin(),
-        new MiniCssExtractPlugin({
-            filename: "[name].css"
-        })
-    ],
-    optimization: {
-        minimize: false,
-        concatenateModules: false
-    }
-});
+        }
+    })(config, {
+        module: {
+            rules: [
+                {
+                    test: /\.ts$/,
+                    loader: "ts-loader",
+                    options: {
+                        appendTsSuffixTo: [/\.vue$/]
+                    },
+                    exclude: /node_modules/
+                },
+                {
+                    test: /\.vue$/,
+                    use: "vue-loader"
+                },
+                {
+                    test: /\.(sa|sc|c)ss$/,
+                    use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+                }
+            ]
+        },
+        resolve: {
+            extensions: [".ts", ".vue"]
+        },
+        plugins: [
+            new VueLoaderPlugin(),
+            new MiniCssExtractPlugin({
+                filename: "[name].css"
+            })
+        ],
+        optimization: {
+            minimize: false,
+            concatenateModules: false
+        }
+    });
+}
+
+module.exports.getConfig = (distPath, libraryName, additionalConfig = {}) => {
+    return getConfig(distPath, libraryName)
+        .map((c) => mergeVueConfig(c))
+        .map((c) => merge(c, additionalConfig));
+};

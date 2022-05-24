@@ -1,31 +1,6 @@
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { merge } = require("webpack-merge");
 
-module.exports.getOutputs = (distPath, libraryName) => {
-    return [
-        // CommonJS (also ESM compatible)
-        {
-            path: distPath,
-            library: {
-                type: "commonjs-static",
-            },
-            filename: "[name].cjs",
-            globalObject: `(typeof self !== 'undefined' ? self : this)`
-        },
-        // UMD
-        {
-            path: distPath,
-            library: {
-                name: libraryName,
-                type: "umd",
-                umdNamedDefine: true,
-            },
-            filename: "[name].js",
-            globalObject: `(typeof self !== 'undefined' ? self : this)`
-        },
-    ];
-};
-
-module.exports.base = {
+const baseConfig = {
     mode: "production",
     module: {
         rules: [
@@ -38,19 +13,47 @@ module.exports.base = {
     },
     resolve: {
         extensions: [".ts", ".js"]
-    },
-    externals: {
-        vue: {
-            commonjs: "vue",
-            commonjs2: "vue",
-            amd: "vue",
-            root: "Vue"
+    }
+};
+
+module.exports.getConfig = (distPath, libraryName, additionalConfig = {}) => {
+    return [
+        // CommonJS (also ESM compatible)
+        {
+            ...baseConfig,
+            output: {
+                path: distPath,
+                library: {
+                    type: "commonjs-static"
+                },
+                filename: "[name].cjs",
+                globalObject: `(typeof self !== 'undefined' ? self : this)`
+            },
+            externals: {
+                vue: "vue"
+            }
+        },
+        // UMD
+        {
+            ...baseConfig,
+            output: {
+                path: distPath,
+                library: {
+                    name: libraryName,
+                    type: "umd",
+                    umdNamedDefine: true
+                },
+                filename: "[name].js",
+                globalObject: `(typeof self !== 'undefined' ? self : this)`
+            },
+            externals: {
+                vue: {
+                    commonjs: "vue",
+                    commonjs2: "vue",
+                    amd: "vue",
+                    root: "Vue"
+                }
+            }
         }
-    },
-    plugins: [
-        new BundleAnalyzerPlugin({
-            analyzerMode: "static",
-            openAnalyzer: false
-        })
-    ]
+    ].map((c) => merge(c, additionalConfig));
 };
