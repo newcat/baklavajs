@@ -38,6 +38,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
 
     protected _nodes: AbstractNode[] = [];
     protected _connections: Connection[] = [];
+    protected _loading = false;
 
     public events = {
         beforeAddNode: new PreventableBaklavaEvent<AbstractNode, Graph>(this),
@@ -71,6 +72,11 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         return this._connections;
     }
 
+    /** Whether the graph is currently in the process of loading a saved graph */
+    public get loading() {
+        return this._loading;
+    }
+
     public constructor(editor: Editor, template?: GraphTemplate) {
         this.editor = editor;
         this.template = template;
@@ -90,8 +96,8 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         this.nodeHooks.addTarget(node.hooks);
         node.registerGraph(this);
         this._nodes.push(node);
-        this.events.addNode.emit(node);
         node.onPlaced();
+        this.events.addNode.emit(node);
         return node;
     }
 
@@ -232,51 +238,60 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     /**
      * Load a state
      * @param state State to load
+     * @returns An array of warnings that occured during loading. If the array is empty, the state was successfully loaded.
      */
-    public load(state: IGraphState): void {
-        // Clear current state
-        for (let i = this.connections.length - 1; i >= 0; i--) {
-            this.removeConnection(this.connections[i]);
-        }
-        for (let i = this.nodes.length - 1; i >= 0; i--) {
-            this.removeNode(this.nodes[i]);
-        }
+    public load(state: IGraphState): string[] {
+        try {
+            this._loading = true;
+            const warnings: string[] = [];
 
-        // Load state
-        this.id = state.id;
-        this.inputs = state.inputs;
-        this.outputs = state.outputs;
-
-        for (const n of state.nodes) {
-            // find node type
-            const nodeInformation = this.editor.nodeTypes.get(n.type);
-            if (!nodeInformation) {
-                console.warn(`Node type ${n.type} is not registered`);
-                continue;
+            // Clear current state
+            for (let i = this.connections.length - 1; i >= 0; i--) {
+                this.removeConnection(this.connections[i]);
+            }
+            for (let i = this.nodes.length - 1; i >= 0; i--) {
+                this.removeNode(this.nodes[i]);
             }
 
-            const node = new nodeInformation.type();
-            this.addNode(node);
-            node.load(n);
-        }
+            // Load state
+            this.id = state.id;
+            this.inputs = state.inputs;
+            this.outputs = state.outputs;
 
-        for (const c of state.connections) {
-            const fromIf = this.findNodeInterface(c.from);
-            const toIf = this.findNodeInterface(c.to);
-            if (!fromIf) {
-                console.warn(`Could not find interface with id ${c.from}`);
-                continue;
-            } else if (!toIf) {
-                console.warn(`Could not find interface with id ${c.to}`);
-                continue;
-            } else {
-                const conn = new Connection(fromIf, toIf);
-                conn.id = c.id;
-                this.internalAddConnection(conn);
+            for (const n of state.nodes) {
+                // find node type
+                const nodeInformation = this.editor.nodeTypes.get(n.type);
+                if (!nodeInformation) {
+                    warnings.push(`Node type ${n.type} is not registered`);
+                    continue;
+                }
+
+                const node = new nodeInformation.type();
+                this.addNode(node);
+                node.load(n);
             }
-        }
 
-        this.hooks.load.execute(state);
+            for (const c of state.connections) {
+                const fromIf = this.findNodeInterface(c.from);
+                const toIf = this.findNodeInterface(c.to);
+                if (!fromIf) {
+                    warnings.push(`Could not find interface with id ${c.from}`);
+                    continue;
+                } else if (!toIf) {
+                    warnings.push(`Could not find interface with id ${c.to}`);
+                    continue;
+                } else {
+                    const conn = new Connection(fromIf, toIf);
+                    conn.id = c.id;
+                    this.internalAddConnection(conn);
+                }
+            }
+
+            this.hooks.load.execute(state);
+            return warnings;
+        } finally {
+            this._loading = false;
+        }
     }
 
     /**

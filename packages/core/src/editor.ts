@@ -55,6 +55,7 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     private _nodeTypes: Map<string, INodeTypeInformation> = new Map();
     private _graph = new Graph(this);
     private _graphTemplates: GraphTemplate[] = [];
+    private _loading = false;
 
     /** List of all registered node types */
     public get nodeTypes(): ReadonlyMap<string, INodeTypeInformation> {
@@ -74,6 +75,11 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     /** Set of all graphs in the editor, including subgraphs */
     public get graphs(): ReadonlySet<Graph> {
         return this._graphs;
+    }
+
+    /** Whether the editor is currently in the process of loading a saved graph */
+    public get loading() {
+        return this._loading;
     }
 
     /**
@@ -172,18 +178,27 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     /**
      * Load a state
      * @param state State to load
+     * @returns An array of warnings that occured during loading. If the array is empty, the state was successfully loaded.
      */
-    public load(state: IEditorState): void {
-        state = this.hooks.load.execute(state);
+    public load(state: IEditorState): string[] {
+        try {
+            this._loading = true;
+            state = this.hooks.load.execute(state);
 
-        state.graphTemplates.forEach((tState) => {
-            const template = new GraphTemplate(tState, this);
-            this.addGraphTemplate(template);
-        });
+            state.graphTemplates.forEach((tState) => {
+                const template = new GraphTemplate(tState, this);
+                this.addGraphTemplate(template);
+            });
 
-        this._graph.load(state.graph);
+            const warnings = this._graph.load(state.graph);
 
-        this.events.loaded.emit();
+            this.events.loaded.emit();
+
+            warnings.forEach((w) => console.warn(w));
+            return warnings;
+        } finally {
+            this._loading = false;
+        }
     }
 
     /**

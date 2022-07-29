@@ -62,6 +62,14 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
     public abstract calculate?: CalculateFunction<any, any>;
 
     /**
+     * The graph instance the node is placed in.
+     * `undefined` if the node hasn't been placed in a graph yet.
+     */
+    public get graph() {
+        return this.graphInstance;
+    }
+
+    /**
      * Add an input interface to the node
      * @param key Key of the input
      * @param input The input instance

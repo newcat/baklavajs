@@ -60,15 +60,23 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
 
     public constructor(protected editor: Editor) {
         this.editor.nodeEvents.update.subscribe(this, (data, node) => {
-            this.internalOnChange(false, node, data ?? undefined);
+            if (node.graph && !node.graph.loading) {
+                this.internalOnChange(node, data ?? undefined);
+            }
         });
 
-        this.editor.graphEvents.addNode.subscribe(this, () => {
-            this.internalOnChange(true);
+        this.editor.graphEvents.addNode.subscribe(this, (node, graph) => {
+            this.recalculateOrder = true;
+            if (!graph.loading) {
+                this.internalOnChange();
+            }
         });
 
-        this.editor.graphEvents.removeNode.subscribe(this, () => {
-            this.internalOnChange(true);
+        this.editor.graphEvents.removeNode.subscribe(this, (node, graph) => {
+            this.recalculateOrder = true;
+            if (!graph.loading) {
+                this.internalOnChange();
+            }
         });
 
         this.editor.graphEvents.checkConnection.subscribe(this, (c) => {
@@ -77,12 +85,18 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
             }
         });
 
-        this.editor.graphEvents.addConnection.subscribe(this, () => {
-            this.internalOnChange(true);
+        this.editor.graphEvents.addConnection.subscribe(this, (c, graph) => {
+            this.recalculateOrder = true;
+            if (!graph.loading) {
+                this.internalOnChange();
+            }
         });
 
-        this.editor.graphEvents.removeConnection.subscribe(this, () => {
-            this.internalOnChange(true);
+        this.editor.graphEvents.removeConnection.subscribe(this, (c, graph) => {
+            this.recalculateOrder = true;
+            if (!graph.loading) {
+                this.internalOnChange();
+            }
         });
     }
 
@@ -266,10 +280,9 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         data?: INodeUpdateEventData,
     ): void;
 
-    private internalOnChange(recalculateOrder: boolean, updatedNode?: AbstractNode, data?: INodeUpdateEventData) {
-        this.recalculateOrder = this.recalculateOrder || recalculateOrder;
+    private internalOnChange(updatedNode?: AbstractNode, data?: INodeUpdateEventData) {
         if (this.internalStatus === EngineStatus.Idle) {
-            this.onChange(recalculateOrder, updatedNode, data);
+            this.onChange(this.recalculateOrder, updatedNode, data);
         }
     }
 

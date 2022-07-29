@@ -63,7 +63,7 @@ describe("Graph Node", () => {
         const n = new GraphNode();
         n.onPlaced();
         const spy = jest.fn();
-        n.graph!.destroy = spy;
+        n.subgraph!.destroy = spy;
         n.onDestroy();
         expect(spy).toHaveBeenCalledTimes(1);
     });
@@ -82,12 +82,12 @@ describe("Graph Node", () => {
         const GraphNode = createGraphNodeType(template);
         const n = new GraphNode();
         n.onPlaced();
-        (n.graph!.nodes[0] as TestNode).inputs.a.value = 22;
+        (n.subgraph!.nodes[0] as TestNode).inputs.a.value = 22;
         const savedState = n.save();
         const n2 = new GraphNode();
         n2.onPlaced();
         n2.load(savedState);
-        expect((n2.graph!.nodes[0] as TestNode).inputs.a.value).toBe(22);
+        expect((n2.subgraph!.nodes[0] as TestNode).inputs.a.value).toBe(22);
     });
 
     it("keeps connections when updating its interfaces", () => {
@@ -112,7 +112,7 @@ describe("Graph Node", () => {
         editor.graph.addConnection(Object.values(gn.outputs)[0], n2.inputs.a);
         expect(editor.graph.connections).toHaveLength(2);
 
-        template.update(gn.graph!.save());
+        template.update(gn.subgraph!.save());
         expect(editor.graph.connections).toHaveLength(2);
     });
 });
