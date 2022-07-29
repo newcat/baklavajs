@@ -16,7 +16,7 @@
     "build:cjs": "tsc -p tsconfig.build.json --declaration false --outDir dist/cjs",
     "build:declaration": "tsc -p tsconfig.build.json --emitDeclarationOnly --outDir dist",
     "build": "rimraf dist && yarn run build:esm && yarn run build:cjs && yarn run build:declaration",
-    "test": "jest --coverage"
+    "test": "jest --coverage --colors"
   },
   "repository": {
     "type": "git",

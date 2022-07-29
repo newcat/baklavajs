@@ -30,6 +30,9 @@ export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTap
     /** Will be set automatically after the node was created */
     public isInput?: boolean;
 
+    /** Id of the node this interface is part of */
+    public nodeId = "";
+
     /** Whether to show the port (the thing connections connect to) */
     public port = true;
 

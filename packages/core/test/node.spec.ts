@@ -1,4 +1,4 @@
-import { NodeInterface } from "../src";
+import { type AbstractNode, NodeInterface } from "../src";
 import TestNode from "./TestNode";
 
 describe("Node", () => {
@@ -27,6 +27,7 @@ describe("Node", () => {
         expect(Object.keys(n.inputs)).toHaveLength(1);
         n["addInput"]("test", new NodeInterface("Test", 3));
         expect(Object.keys(n.inputs)).toHaveLength(2);
+        expect((n as AbstractNode).inputs.test.nodeId === n.id);
         expect(beforeAddSpy).toHaveBeenCalled();
         expect(addSpy).toHaveBeenCalled();
     });
@@ -53,6 +54,7 @@ describe("Node", () => {
         expect(Object.keys(n.outputs)).toHaveLength(1);
         n["addOutput"]("test", new NodeInterface("Test", 3));
         expect(Object.keys(n.outputs)).toHaveLength(2);
+        expect((n as AbstractNode).outputs.test.nodeId === n.id);
         expect(beforeAddSpy).toHaveBeenCalled();
         expect(addSpy).toHaveBeenCalled();
     });

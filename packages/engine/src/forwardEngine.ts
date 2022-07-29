@@ -3,7 +3,7 @@ import { BaseEngine, CalculationResult } from "./baseEngine";
 
 export class ForwardEngine<CalculationData = any> extends BaseEngine<
     CalculationData,
-    [AbstractNode, INodeUpdateEventData]
+    [startingNode: AbstractNode, nodeUpdateEvent: INodeUpdateEventData | undefined]
 > {
     public override runGraph(
         graph: Graph,
@@ -13,56 +13,80 @@ export class ForwardEngine<CalculationData = any> extends BaseEngine<
         throw new Error("Not implemented");
     }
 
-    protected override execute(
+    protected override async execute(
         calculationData: CalculationData,
         startingNode: AbstractNode,
-        data: INodeUpdateEventData,
+        data: INodeUpdateEventData | undefined,
     ): Promise<CalculationResult> {
-        /*TODO: Rewrite
-        if (!this.order) {
-            throw new Error("runCalculation called without order being calculated before");
-        }
-
         const nodesToCalculate: Array<{ node: AbstractNode; inputData: Record<string, any> }> = [];
         const result = new Map<string, Map<string, any>>();
 
         if (startingNode.calculate) {
             // TODO: Make it possible to give the initial data to the function
-            nodesToCalculate.push({ node: startingNode, inputData: { [data.name]: data.intf.value } });
+            const inputData = this.getDataForNode(startingNode);
+            if (data) {
+                inputData[data.name] = data.intf.value;
+            }
+            nodesToCalculate.push({
+                node: startingNode,
+                inputData,
+            });
         }
 
         while (nodesToCalculate.length > 0) {
             const { node, inputData } = nodesToCalculate.shift()!;
 
-            const r = await node.calculate!(inputData, calculationData);
+            const r = await node.calculate!(inputData, {
+                engine: this,
+                globalValues: calculationData,
+            });
             this.validateNodeCalculationOutput(node, r);
             result.set(node.id, new Map(Object.entries(r)));
 
-            const connections = this.order.connectionsFromNode.get(node);
-            if (!connections) {
-                continue;
+            const graph = node.graph;
+            if (!graph) {
+                throw new Error(`Can't run engine on node that is not in graph (nodeId: ${node.id})`);
             }
 
-            for (const c of connections) {
-                const nodeId = this.order.interfaceIdToNodeId.get(c.to.id);
-                const targetNode = nodeId && this.order.calculationOrder.find((n) => n.id === nodeId);
+            const nodeOutputInterfaces = Object.values(node.outputs);
+            const outgoingConnections = graph.connections.filter((c) => nodeOutputInterfaces.includes(c.from));
+
+            for (const c of outgoingConnections) {
+                //TODO: This approach doesn't work when a node has multiple connections to another node
+                const nodeId = c.to.nodeId;
+                const targetNode = nodeId && graph.findNodeById(nodeId);
                 if (!nodeId || !targetNode || !targetNode.calculate) {
                     continue;
                 }
                 const [inputKey] = Object.entries(targetNode.inputs).find(([, v]) => v.id === c.to.id)!;
                 const [outputKey] = Object.entries(node.outputs).find(([, v]) => v.id === c.from.id)!;
-                nodesToCalculate.push({ node: targetNode, inputData: { [inputKey]: r[outputKey] } });
+                nodesToCalculate.push({
+                    node: targetNode,
+                    inputData: { ...this.getDataForNode(targetNode), [inputKey]: r[outputKey] },
+                });
             }
         }
 
-        return result;*/
-        throw new Error("Not implemented");
+        return result;
     }
 
-    protected onChange(recalculateOrder: boolean, updatedNode?: AbstractNode, data?: INodeUpdateEventData): void {
+    protected override onChange(
+        recalculateOrder: boolean,
+        updatedNode?: AbstractNode,
+        data?: INodeUpdateEventData,
+    ): void {
         this.recalculateOrder = recalculateOrder || this.recalculateOrder;
         if (updatedNode && data) {
             void this.calculateWithoutData(updatedNode, data);
         }
+    }
+
+    /** Get the current value of all input interfaces of the given node */
+    private getDataForNode(node: AbstractNode): Record<string, any> {
+        const values: Record<string, any> = {};
+        Object.entries(node.inputs).forEach(([k, v]) => {
+            values[k] = v.value;
+        });
+        return values;
     }
 }

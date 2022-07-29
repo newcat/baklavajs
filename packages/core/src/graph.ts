@@ -171,8 +171,8 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
             return false;
         }
 
-        const fromNode = this.findNodeByInterface(from.id);
-        const toNode = this.findNodeByInterface(to.id);
+        const fromNode = this.findNodeById(from.nodeId);
+        const toNode = this.findNodeById(to.nodeId);
         if (fromNode && toNode && fromNode === toNode) {
             // connections must be between two separate nodes.
             return false;
@@ -224,15 +224,13 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         }
     }
 
-    public findNodeByInterface(id: string): AbstractNode | undefined {
-        for (const node of this.nodes) {
-            if (
-                Object.values(node.inputs).some((intf) => intf.id === id) ||
-                Object.values(node.outputs).some((intf) => intf.id === id)
-            ) {
-                return node;
-            }
-        }
+    /**
+     * Finds the Node with the provided id, as long as it exists in this graph
+     * @param id id of the Node to find
+     * @returns The Node if found, otherwise undefined
+     */
+    public findNodeById(id: string): AbstractNode | undefined {
+        return this.nodes.find((n) => n.id === id);
     }
 
     /**

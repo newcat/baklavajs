@@ -1,11 +1,5 @@
 <template>
-    <connection-view
-        :x1="d.x1"
-        :y1="d.y1"
-        :x2="d.x2"
-        :y2="d.y2"
-        :state="state"
-    />
+    <connection-view :x1="d.x1" :y1="d.y1" :x2="d.x2" :y2="d.y2" :state="state" />
 </template>
 
 <script lang="ts">
@@ -18,13 +12,13 @@ import { useGraph } from "../utility";
 
 export default defineComponent({
     components: {
-        "connection-view": ConnectionView
+        "connection-view": ConnectionView,
     },
     props: {
         connection: {
             type: Object as () => Connection,
-            required: true
-        }
+            required: true,
+        },
     },
     setup(props) {
         const { graph } = useGraph();
@@ -33,11 +27,11 @@ export default defineComponent({
         const d = ref({ x1: 0, y1: 0, x2: 0, y2: 0 });
 
         const state = computed(() =>
-            props.connection.isInDanger ? TemporaryConnectionState.FORBIDDEN : TemporaryConnectionState.NONE
+            props.connection.isInDanger ? TemporaryConnectionState.FORBIDDEN : TemporaryConnectionState.NONE,
         );
 
-        const fromNodePosition = computed(() => graph.value.findNodeByInterface(props.connection.from.id)?.position);
-        const toNodePosition = computed(() => graph.value.findNodeByInterface(props.connection.to.id)?.position);
+        const fromNodePosition = computed(() => graph.value.findNodeById(props.connection.from.nodeId)?.position);
+        const toNodePosition = computed(() => graph.value.findNodeById(props.connection.to.nodeId)?.position);
 
         const getPortCoordinates = (resolved: IResolvedDomElements): [number, number] => {
             if (resolved.node && resolved.interface && resolved.port) {
@@ -49,7 +43,7 @@ export default defineComponent({
                     resolved.node.offsetTop +
                         resolved.interface.offsetTop +
                         resolved.port.offsetTop +
-                        resolved.port.clientHeight / 2
+                        resolved.port.clientHeight / 2,
                 ];
             } else {
                 return [0, 0];
@@ -87,6 +81,6 @@ export default defineComponent({
         watch([fromNodePosition, toNodePosition], () => updateCoords(), { deep: true });
 
         return { d, state };
-    }
+    },
 });
 </script>

@@ -163,6 +163,7 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
 
     private initializeIntf(type: "input" | "output", key: string, intf: NodeInterface) {
         intf.isInput = type === "input";
+        intf.nodeId = this.id;
         intf.events.setValue.subscribe(this, () => this.events.update.emit({ type, name: key, intf }));
     }
 

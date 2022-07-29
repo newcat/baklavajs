@@ -10,4 +10,10 @@ export const TestNode = defineNode({
         c: () => new NodeInterface("C", 1),
         d: () => new NodeInterface("D", 1),
     },
+    calculate({ a, b }) {
+        return {
+            c: a + b,
+            d: a - b,
+        };
+    },
 });
