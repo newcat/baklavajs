@@ -27,3 +27,17 @@ export class SequentialHook<I, E, O extends I = I> extends DynamicSequentialHook
         return super.execute(data, this.entity);
     }
 }
+
+export class ParallelHook<I, O, E> extends Subscribable<HookTap<I, O, E>> {
+    public constructor(protected readonly entity: E) {
+        super();
+    }
+
+    public execute(data: I): O[] {
+        const results: O[] = [];
+        for (const callback of this.listeners) {
+            results.push(callback(data, this.entity));
+        }
+        return results;
+    }
+}

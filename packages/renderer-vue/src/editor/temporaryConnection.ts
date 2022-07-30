@@ -50,20 +50,22 @@ export function useTemporaryConnection() {
         hoveringOver.value = ni ?? null;
         if (ni && temporaryConnection.value) {
             temporaryConnection.value.to = ni;
-            temporaryConnection.value.status = graph.value.checkConnection(
+            const checkConnectionResult = graph.value.checkConnection(
                 temporaryConnection.value.from,
-                temporaryConnection.value.to
-            )
+                temporaryConnection.value.to,
+            );
+            temporaryConnection.value.status = checkConnectionResult.connectionAllowed
                 ? TemporaryConnectionState.ALLOWED
                 : TemporaryConnectionState.FORBIDDEN;
-            // TODO: Move this into the engine plugin, create general interface for plugins to use
-            /*if (this.hasEnginePlugin) {
-            this.connections
-                .filter((c) => c.to === ni)
-                .forEach((c) => {
-                    (c as ITransferConnection).isInDanger = true;
+
+            if (checkConnectionResult.connectionAllowed) {
+                const ids = checkConnectionResult.connectionsInDanger.map((c) => c.id);
+                graph.value.connections.forEach((c) => {
+                    if (ids.includes(c.id)) {
+                        c.isInDanger = true;
+                    }
                 });
-        }*/
+            }
         } else if (!ni && temporaryConnection.value) {
             temporaryConnection.value.to = undefined;
             temporaryConnection.value.status = TemporaryConnectionState.NONE;

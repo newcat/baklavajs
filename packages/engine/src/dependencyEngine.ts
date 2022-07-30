@@ -7,22 +7,10 @@ export const allowMultipleConnections = <T extends Array<any>>(intf: NodeInterfa
 };
 
 export class DependencyEngine<CalculationData = any> extends BaseEngine<CalculationData, []> {
-    private token = Symbol();
     private order: Map<string, ITopologicalSortingResult> = new Map();
 
     public constructor(editor: Editor) {
         super(editor);
-        // we can't use "this" as a token here, since the superclass already
-        // subscribes to "addConnection" using "this".
-        this.editor.graphEvents.addConnection.subscribe(this.token, (c, graph) => {
-            // Delete all other connections to the target interface
-            // if only one connection to the input interface is allowed
-            if (!c.to.allowMultipleConnections) {
-                graph.connections
-                    .filter((conn) => conn.from !== c.from && conn.to === c.to)
-                    .forEach((conn) => graph.removeConnection(conn));
-            }
-        });
     }
 
     public override start() {

@@ -5,6 +5,9 @@ import { AbstractNode } from "@baklavajs/core/dist/node";
 import { NodeInterface } from "@baklavajs/core/dist/nodeInterface";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Connection } from "@baklavajs/core/dist/connection";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Graph } from "@baklavajs/core/dist/graph";
 
 declare module "@baklavajs/core/dist/node" {
@@ -19,6 +22,12 @@ declare module "@baklavajs/core/dist/node" {
 declare module "@baklavajs/core/dist/nodeInterface" {
     interface NodeInterface {
         displayInSidebar?: boolean;
+    }
+}
+
+declare module "@baklavajs/core/dist/connection" {
+    interface Connection {
+        isInDanger?: boolean;
     }
 }
 

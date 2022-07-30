@@ -3,7 +3,8 @@
     "compilerOptions": {
         "declarationDir": "dist",
         "lib": ["ESNext", "DOM", "DOM.Iterable", "ES2019"],
-        "types": ["resize-observer-browser", "vite/client"]
+        "types": ["resize-observer-browser", "vite/client"],
+        "jsx": "preserve"
     },
     "include": ["src/**/*.ts", "src/**/*.vue"]
 }

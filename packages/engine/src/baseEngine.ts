@@ -1,4 +1,13 @@
-import type { AbstractNode, NodeInterface, IConnection, Editor, INodeUpdateEventData, Graph } from "@baklavajs/core";
+import {
+    AbstractNode,
+    NodeInterface,
+    IConnection,
+    Editor,
+    INodeUpdateEventData,
+    Graph,
+    CheckConnectionHookResult,
+    DummyConnection,
+} from "@baklavajs/core";
 import { BaklavaEvent, DynamicSequentialHook, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { containsCycle } from "./topologicalSorting";
 
@@ -79,12 +88,6 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
             }
         });
 
-        this.editor.graphEvents.checkConnection.subscribe(this, (c) => {
-            if (!this.checkConnection(c.from, c.to)) {
-                return false;
-            }
-        });
-
         this.editor.graphEvents.addConnection.subscribe(this, (c, graph) => {
             this.recalculateOrder = true;
             if (!graph.loading) {
@@ -98,6 +101,8 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
                 this.internalOnChange();
             }
         });
+
+        this.editor.graphHooks.checkConnection.subscribe(this, (c) => this.checkConnection(c.from, c.to));
     }
 
     /** Start the engine. After started, it will run everytime the graph is changed. */
@@ -190,11 +195,11 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
      * @param to The interface where the connection would end
      * @returns Whether the connection can be created
      */
-    public checkConnection(from: NodeInterface, to: NodeInterface): boolean {
+    public checkConnection(from: NodeInterface, to: NodeInterface): CheckConnectionHookResult {
         if (from.templateId) {
             const newFrom = this.findInterfaceByTemplateId(this.editor.graph.nodes, from.templateId);
             if (!newFrom) {
-                return true;
+                return { connectionAllowed: true, connectionsInDanger: [] };
             }
             from = newFrom;
         }
@@ -202,18 +207,29 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         if (to.templateId) {
             const newTo = this.findInterfaceByTemplateId(this.editor.graph.nodes, to.templateId);
             if (!newTo) {
-                return true;
+                return { connectionAllowed: true, connectionsInDanger: [] };
             }
             to = newTo;
         }
 
-        const dc = { from, to, id: "dc", destructed: false, isInDanger: false } as IConnection;
+        const dc = new DummyConnection(from, to);
 
-        const copy = (this.editor.graph.connections as readonly IConnection[]).concat([dc]);
+        let copy: IConnection[] = this.editor.graph.connections.slice();
         if (!to.allowMultipleConnections) {
-            copy.filter((conn) => conn.to !== to);
+            copy = copy.filter((conn) => conn.to !== to);
         }
-        return !containsCycle(this.editor.graph.nodes, copy);
+        copy.push(dc);
+
+        if (containsCycle(this.editor.graph.nodes, copy)) {
+            return { connectionAllowed: false, connectionsInDanger: [] };
+        }
+
+        return {
+            connectionAllowed: true,
+            connectionsInDanger: to.allowMultipleConnections
+                ? []
+                : this.editor.graph.connections.filter((c) => c.to === to),
+        };
     }
 
     /**

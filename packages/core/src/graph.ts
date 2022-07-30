@@ -6,6 +6,7 @@ import {
     IBaklavaTapable,
     PreventableBaklavaEvent,
     SequentialHook,
+    ParallelHook,
 } from "@baklavajs/events";
 import { Connection, DummyConnection, IConnection, IConnectionState } from "./connection";
 import type { Editor } from "./editor";
@@ -28,6 +29,22 @@ export interface IGraphState {
     outputs: IGraphInterface[];
 }
 
+export interface CheckConnectionHookResult {
+    connectionAllowed: boolean;
+    connectionsInDanger: IConnection[];
+}
+
+interface PositiveCheckConnectionResult extends CheckConnectionHookResult {
+    connectionAllowed: true;
+    dummyConnection: DummyConnection;
+}
+
+interface NegativeCheckConnectionResult {
+    connectionAllowed: false;
+}
+
+export type CheckConnectionResult = PositiveCheckConnectionResult | NegativeCheckConnectionResult;
+
 export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     public id = uuidv4();
     public editor: Editor;
@@ -39,6 +56,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     protected _nodes: AbstractNode[] = [];
     protected _connections: Connection[] = [];
     protected _loading = false;
+    protected _destroying = false;
 
     public events = {
         beforeAddNode: new PreventableBaklavaEvent<AbstractNode, Graph>(this),
@@ -55,6 +73,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     public hooks = {
         save: new SequentialHook<IGraphState, Graph>(this),
         load: new SequentialHook<IGraphState, Graph>(this),
+        checkConnection: new ParallelHook<IAddConnectionEventData, CheckConnectionHookResult, Graph>(this),
     };
 
     public nodeEvents = createProxy<AbstractNode["events"]>();
@@ -75,6 +94,11 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     /** Whether the graph is currently in the process of loading a saved graph */
     public get loading() {
         return this._loading;
+    }
+
+    /** Whether the graph is currently in the process of destroying itself */
+    public get destroying() {
+        return this._destroying;
     }
 
     public constructor(editor: Editor, template?: GraphTemplate) {
@@ -130,8 +154,8 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
      * @returns The created connection. If no connection could be created, returns `undefined`.
      */
     public addConnection(from: NodeInterface<any>, to: NodeInterface<any>): Connection | undefined {
-        const dc = this.checkConnection(from, to);
-        if (!dc) {
+        const checkConnectionResult = this.checkConnection(from, to);
+        if (!checkConnectionResult.connectionAllowed) {
             return undefined;
         }
 
@@ -139,7 +163,14 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
             return;
         }
 
-        const c = new Connection(dc.from, dc.to);
+        for (const connectionToRemove of checkConnectionResult.connectionsInDanger) {
+            const instance = this.connections.find((c) => c.id === connectionToRemove.id);
+            if (instance) {
+                this.removeConnection(instance);
+            }
+        }
+
+        const c = new Connection(checkConnectionResult.dummyConnection.from, checkConnectionResult.dummyConnection.to);
         this.internalAddConnection(c);
         return c;
     }
@@ -166,16 +197,16 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
      * @param to The target node interface (must be an input interface)
      * @returns Whether the connection is allowed or not.
      */
-    public checkConnection(from: NodeInterface<any>, to: NodeInterface<any>): false | DummyConnection {
+    public checkConnection(from: NodeInterface<any>, to: NodeInterface<any>): CheckConnectionResult {
         if (!from || !to) {
-            return false;
+            return { connectionAllowed: false };
         }
 
         const fromNode = this.findNodeById(from.nodeId);
         const toNode = this.findNodeById(to.nodeId);
         if (fromNode && toNode && fromNode === toNode) {
             // connections must be between two separate nodes.
-            return false;
+            return { connectionAllowed: false };
         }
 
         if (from.isInput && !to.isInput) {
@@ -187,19 +218,29 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
 
         if (from.isInput || !to.isInput) {
             // connections are only allowed from input to output interface
-            return false;
+            return { connectionAllowed: false };
         }
 
         // prevent duplicate connections
         if (this.connections.some((c) => c.from === from && c.to === to)) {
-            return false;
+            return { connectionAllowed: false };
         }
 
         if (this.events.checkConnection.emit({ from, to })) {
-            return false;
+            return { connectionAllowed: false };
         }
 
-        return new DummyConnection(from, to);
+        const hookResults = this.hooks.checkConnection.execute({ from, to });
+        if (hookResults.some((hr) => !hr.connectionAllowed)) {
+            return { connectionAllowed: false };
+        }
+
+        const connectionsInDanger = Array.from(new Set(hookResults.flatMap((hr) => hr.connectionsInDanger)));
+        return {
+            connectionAllowed: true,
+            dummyConnection: new DummyConnection(from, to),
+            connectionsInDanger,
+        };
     }
 
     /**
@@ -312,8 +353,10 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     }
 
     public destroy() {
-        // TODO: Destroy all nodes
-        // TODO: Do we need to unregister event listeners?
+        this._destroying = true;
+        for (const n of this.nodes) {
+            this.removeNode(n);
+        }
         this.editor.unregisterGraph(this);
     }
 

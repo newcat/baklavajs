@@ -16,7 +16,7 @@ export class Subscribable<F extends CallableFunction> {
     /**
      * Subscribe to the event / hook
      * @param token A token that can be used to unsubscribe from the event / hook later on
-     * @param listener A callback that will be invoked when the event / hook occurs
+     * @param callback A callback that will be invoked when the event / hook occurs
      */
     public subscribe(token: TokenType, callback: F) {
         if (this.listenerMap.has(token)) {

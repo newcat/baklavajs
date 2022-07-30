@@ -21,7 +21,6 @@ export class Connection implements IConnection, IBaklavaEventEmitter {
     public id: string;
     public from: NodeInterface;
     public to: NodeInterface;
-    public isInDanger = false;
     public destructed = false;
 
     public events = {

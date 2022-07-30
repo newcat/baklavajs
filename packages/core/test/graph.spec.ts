@@ -68,7 +68,7 @@ describe("Graph", () => {
         const n = e.graph.addNode(new TestNode())!;
         const if1 = n.outputs.b;
         const if2 = n.inputs.a;
-        expect(e.graph.checkConnection(if1, if2)).toStrictEqual(false);
+        expect(e.graph.checkConnection(if1, if2)).toEqual({ connectionAllowed: false });
         expect(e.graph.addConnection(if1, if2)).toBeUndefined();
     });
 });
