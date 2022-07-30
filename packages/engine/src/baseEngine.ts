@@ -213,7 +213,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         if (!to.allowMultipleConnections) {
             copy.filter((conn) => conn.to !== to);
         }
-        return containsCycle(this.editor.graph.nodes, copy);
+        return !containsCycle(this.editor.graph.nodes, copy);
     }
 
     /**

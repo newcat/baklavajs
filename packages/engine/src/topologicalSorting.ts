@@ -117,10 +117,10 @@ export function containsCycle(
 ): boolean {
     try {
         sortTopologically(nodesOrGraph, connections);
-        return true;
+        return false;
     } catch (err) {
         if (err instanceof CycleError) {
-            return false;
+            return true;
         }
         throw err;
     }
