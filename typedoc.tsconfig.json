@@ -10,5 +10,5 @@
         "baseUrl": ".",
         "skipLibCheck": true
     },
-    "exclude": ["node_modules", "**/dist/**", "**/test/**", "packages/full/**"]
+    "exclude": ["node_modules", "**/dist/**", "**/test/**", "packages/full/**", "packages/renderer-vue/playground"]
 }
