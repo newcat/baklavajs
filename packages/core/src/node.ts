@@ -50,12 +50,12 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
         beforeRemoveOutput: new PreventableBaklavaEvent<NodeInterface, AbstractNode>(this),
         removeOutput: new BaklavaEvent<NodeInterface, AbstractNode>(this),
         update: new BaklavaEvent<INodeUpdateEventData | null, AbstractNode>(this),
-    };
+    } as const;
 
     public hooks = {
         beforeLoad: new SequentialHook<INodeState<any, any>, AbstractNode>(this),
         afterSave: new SequentialHook<INodeState<any, any>, AbstractNode>(this),
-    };
+    } as const;
 
     protected graphInstance?: Graph;
 
@@ -171,7 +171,7 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
         const beforeEvent = type === "input" ? this.events.beforeAddInput : this.events.beforeAddOutput;
         const afterEvent = type === "input" ? this.events.addInput : this.events.addOutput;
         const ioObject = type === "input" ? this.inputs : this.outputs;
-        if (beforeEvent.emit(intf)) {
+        if (beforeEvent.emit(intf).prevented) {
             return false;
         }
         ioObject[key] = intf;
@@ -184,7 +184,7 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
         const beforeEvent = type === "input" ? this.events.beforeRemoveInput : this.events.beforeRemoveOutput;
         const afterEvent = type === "input" ? this.events.removeInput : this.events.removeOutput;
         const io = type === "input" ? this.inputs[key] : this.outputs[key];
-        if (!io || beforeEvent.emit(io)) {
+        if (!io || beforeEvent.emit(io).prevented) {
             return false;
         }
 

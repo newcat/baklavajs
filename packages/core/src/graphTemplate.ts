@@ -69,12 +69,12 @@ export class GraphTemplate implements IGraphState {
     public events = {
         nameChanged: new BaklavaEvent<string, GraphTemplate>(this),
         updated: new BaklavaEvent<void, GraphTemplate>(this),
-    };
+    } as const;
 
     public hooks = {
         beforeLoad: new SequentialHook<IGraphTemplateState, GraphTemplate>(this),
         afterSave: new SequentialHook<IGraphTemplateState, GraphTemplate>(this),
-    };
+    } as const;
 
     /** Update the state of the graph template with the provided state */
     public update(state: Omit<IGraphState, "id">) {

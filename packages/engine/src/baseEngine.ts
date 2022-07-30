@@ -154,7 +154,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         calculationData: CalculationData,
         ...args: CalculationArgs
     ): Promise<CalculationResult | null> {
-        if (this.events.beforeRun.emit(calculationData)) {
+        if (this.events.beforeRun.emit(calculationData).prevented) {
             return null;
         }
 

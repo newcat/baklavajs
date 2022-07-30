@@ -49,13 +49,13 @@ export class BaklavaInterfaceTypes {
     public constructor(editor: Editor, options?: BaklavaInterfaceTypesOptions) {
         this.editor = editor;
 
-        this.editor.graphEvents.checkConnection.subscribe(this, ({ from, to }) => {
+        this.editor.graphEvents.checkConnection.subscribe(this, ({ from, to }, prevent) => {
             const fromType = (from as any).type;
             const toType = (to as any).type;
             if (!fromType || !toType) {
                 return;
             } else if (!this.canConvert(fromType, toType)) {
-                return false;
+                return prevent();
             }
         });
 

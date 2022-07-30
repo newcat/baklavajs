@@ -23,6 +23,7 @@
 
 - `addListener` has been renamed to `subscribe`
 - `removeListener` has been renamed to `unsubscribe`
+- The way preventable events works has [slightly changed](/event-system.md)
 
 ## Engine
 

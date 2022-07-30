@@ -68,13 +68,13 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         checkConnection: new PreventableBaklavaEvent<IAddConnectionEventData, Graph>(this),
         beforeRemoveConnection: new PreventableBaklavaEvent<IConnection, Graph>(this),
         removeConnection: new BaklavaEvent<IConnection, Graph>(this),
-    };
+    } as const;
 
     public hooks = {
         save: new SequentialHook<IGraphState, Graph>(this),
         load: new SequentialHook<IGraphState, Graph>(this),
         checkConnection: new ParallelHook<IAddConnectionEventData, CheckConnectionHookResult, Graph>(this),
-    };
+    } as const;
 
     public nodeEvents = createProxy<AbstractNode["events"]>();
     public nodeHooks = createProxy<AbstractNode["hooks"]>();
@@ -113,7 +113,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
      * @returns Instance of the node or undefined if the node was not added
      */
     public addNode<T extends AbstractNode>(node: T): T | undefined {
-        if (this.events.beforeAddNode.emit(node)) {
+        if (this.events.beforeAddNode.emit(node).prevented) {
             return;
         }
         this.nodeEvents.addTarget(node.events);
@@ -132,7 +132,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
      */
     public removeNode(node: AbstractNode): void {
         if (this.nodes.includes(node)) {
-            if (this.events.beforeRemoveNode.emit(node)) {
+            if (this.events.beforeRemoveNode.emit(node).prevented) {
                 return;
             }
             const interfaces = [...Object.values(node.inputs), ...Object.values(node.outputs)];
@@ -159,7 +159,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
             return undefined;
         }
 
-        if (this.events.beforeAddConnection.emit({ from, to })) {
+        if (this.events.beforeAddConnection.emit({ from, to }).prevented) {
             return;
         }
 
@@ -181,7 +181,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
      */
     public removeConnection(connection: Connection): void {
         if (this.connections.includes(connection)) {
-            if (this.events.beforeRemoveConnection.emit(connection)) {
+            if (this.events.beforeRemoveConnection.emit(connection).prevented) {
                 return;
             }
             connection.destruct();
@@ -226,7 +226,7 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
             return { connectionAllowed: false };
         }
 
-        if (this.events.checkConnection.emit({ from, to })) {
+        if (this.events.checkConnection.emit({ from, to }).prevented) {
             return { connectionAllowed: false };
         }
 

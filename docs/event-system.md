@@ -29,7 +29,7 @@ ev.emit("This won't be printed");
 There are two types of events: _normal_ and _preventable_ events.
 _Normal_ events are usually fired after an action, to react to that action.
 _Preventable_ events, on the other hand, are fired before an action and can be used by the listener to prevent the action from happening.
-This is done by returning `false` in a listener function.
+This is done by calling the `prevent` function in a listener function.
 Most preventable events have the `before` prefix in their name.
 
 ```ts
@@ -38,9 +38,10 @@ import { PreventableBaklavaEvent } from "@baklavajs/events";
 const ev = new PreventableBaklavaEvent<string, null>(null);
 
 const token = Symbol();
-ev.subscribe(token, (data) => {
+ev.subscribe(token, (data, prevent) => {
     if (data === "prevent me") {
-        return false;
+        prevent();
+        return;
     }
     console.log(data);
 });
@@ -62,10 +63,11 @@ emit("this works");
 This can for example be used to prevent certain connections from being created:
 
 ```ts
-editor.graphEvents.beforeAddConnection.subscribe(token, (conn) => {
+editor.graphEvents.beforeAddConnection.subscribe(token, (conn, prevent) => {
     // check, whether the user should be able to create this connection.
     if (/* user not allowed to create connection */) {
-        return false;
+        prevent();
+        return;
     }
 });
 ```

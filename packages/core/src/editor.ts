@@ -36,12 +36,12 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
         removeGraphTemplate: new BaklavaEvent<GraphTemplate, Editor>(this),
         registerGraph: new BaklavaEvent<Graph, Editor>(this),
         unregisterGraph: new BaklavaEvent<Graph, Editor>(this),
-    };
+    } as const;
 
     public hooks = {
         save: new SequentialHook<IEditorState, Editor>(this),
         load: new SequentialHook<IEditorState, Editor>(this),
-    };
+    } as const;
 
     public graphTemplateEvents = createProxy<GraphTemplate["events"]>();
     public graphTemplateHooks = createProxy<GraphTemplate["hooks"]>();
@@ -88,7 +88,7 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
      * @param options Optionally specify a title and/or a category for this node
      */
     public registerNodeType(type: AbstractNodeConstructor, options?: IRegisterNodeTypeOptions): void {
-        if (this.events.beforeRegisterNodeType.emit({ type, options })) {
+        if (this.events.beforeRegisterNodeType.emit({ type, options }).prevented) {
             return;
         }
         const nodeInstance = new type();
@@ -107,7 +107,7 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     public unregisterNodeType(type: AbstractNodeConstructor | string): void {
         const stringType = typeof type === "string" ? type : new type().type;
         if (this.nodeTypes.has(stringType)) {
-            if (this.events.beforeUnregisterNodeType.emit(stringType)) {
+            if (this.events.beforeUnregisterNodeType.emit(stringType).prevented) {
                 return;
             }
             this._nodeTypes.delete(stringType);
@@ -116,7 +116,7 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     }
 
     public addGraphTemplate(template: GraphTemplate): void {
-        if (this.events.beforeAddGraphTemplate.emit(template)) {
+        if (this.events.beforeAddGraphTemplate.emit(template).prevented) {
             return;
         }
         this._graphTemplates.push(template);
@@ -131,7 +131,7 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
 
     public removeGraphTemplate(template: GraphTemplate): void {
         if (this.graphTemplates.includes(template)) {
-            if (this.events.beforeRemoveGraphTemplate.emit(template)) {
+            if (this.events.beforeRemoveGraphTemplate.emit(template).prevented) {
                 return;
             }
 

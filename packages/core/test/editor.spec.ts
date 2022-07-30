@@ -68,7 +68,7 @@ describe("Editor", () => {
 
     it("can prevent node types from being registered", () => {
         const e = new Editor();
-        const before = jest.fn(() => false);
+        const before = jest.fn((nt, prevent) => { prevent() });
         const after = jest.fn();
         e.events.beforeRegisterNodeType.subscribe(this, before);
         e.events.registerNodeType.subscribe(this, after);
@@ -91,7 +91,7 @@ describe("Editor", () => {
 
     it("can prevent node types from being unregistered", () => {
         const e = new Editor();
-        const before = jest.fn(() => false);
+        const before = jest.fn((nt, prevent) => { prevent() });
         const after = jest.fn();
         e.events.beforeUnregisterNodeType.subscribe(this, before);
         e.events.unregisterNodeType.subscribe(this, after);
@@ -125,7 +125,7 @@ describe("Editor", () => {
         const e = new Editor();
         e.registerNodeType(TestNode);
 
-        const before = jest.fn(() => false);
+        const before = jest.fn((gt, prevent) => { prevent() });
         const after = jest.fn();
         e.events.beforeAddGraphTemplate.subscribe(this, before);
         e.events.addGraphTemplate.subscribe(this, after);
@@ -170,7 +170,7 @@ describe("Editor", () => {
         e.addGraphTemplate(gt);
         expect(e.graphTemplates).toHaveLength(1);
 
-        const before = jest.fn(() => false);
+        const before = jest.fn((gt, prevent) => { prevent() });
         const after = jest.fn();
         e.events.beforeRemoveGraphTemplate.subscribe(this, before);
         e.events.removeGraphTemplate.subscribe(this, after);

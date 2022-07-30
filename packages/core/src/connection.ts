@@ -25,7 +25,7 @@ export class Connection implements IConnection, IBaklavaEventEmitter {
 
     public events = {
         destruct: new BaklavaEvent<void, Connection>(this),
-    };
+    } as const;
 
     public constructor(from: NodeInterface, to: NodeInterface) {
         if (!from || !to) {

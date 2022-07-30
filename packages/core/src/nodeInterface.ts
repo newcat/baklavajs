@@ -47,12 +47,12 @@ export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTap
         beforeSetValue: new PreventableBaklavaEvent<T, NodeInterface<T>>(this),
         setValue: new BaklavaEvent<T, NodeInterface<T>>(this),
         updated: new BaklavaEvent<void, NodeInterface<T>>(this),
-    };
+    } as const;
 
     public hooks = {
         load: new SequentialHook<INodeInterfaceState<T>, NodeInterface<T>>(this),
         save: new SequentialHook<INodeInterfaceState<T>, NodeInterface<T>>(this),
-    };
+    } as const;
 
     private _connectionCount = 0;
     public set connectionCount(v: number) {
@@ -65,7 +65,7 @@ export class NodeInterface<T = any> implements IBaklavaEventEmitter, IBaklavaTap
 
     private _value: T;
     public set value(v: T) {
-        if (this.events.beforeSetValue.emit(v)) {
+        if (this.events.beforeSetValue.emit(v).prevented) {
             return;
         }
         this._value = v;

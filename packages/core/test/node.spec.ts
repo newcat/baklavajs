@@ -36,7 +36,9 @@ describe("Node", () => {
         const n = new TestNode();
         const t = Symbol("token");
         const addSpy = jest.fn();
-        n.events.beforeAddInput.subscribe(t, () => false);
+        n.events.beforeAddInput.subscribe(t, (_, prevent) => {
+            prevent();
+        });
         n.events.addInput.subscribe(t, addSpy);
         expect(Object.keys(n.inputs)).toHaveLength(1);
         n["addInput"]("test", new NodeInterface("Test", 3));
@@ -63,7 +65,9 @@ describe("Node", () => {
         const n = new TestNode();
         const t = Symbol("token");
         const addSpy = jest.fn();
-        n.events.beforeAddOutput.subscribe(t, () => false);
+        n.events.beforeAddOutput.subscribe(t, (_, prevent) => {
+            prevent();
+        });
         n.events.addOutput.subscribe(t, addSpy);
         expect(Object.keys(n.outputs)).toHaveLength(1);
         n["addOutput"]("test", new NodeInterface("Test", 3));

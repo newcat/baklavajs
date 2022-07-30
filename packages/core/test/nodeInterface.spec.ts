@@ -38,7 +38,9 @@ describe("Node Interface", () => {
 
     it("allows to prevent setting a new value", () => {
         const n = new NodeInterface("Test", 1);
-        n.events.beforeSetValue.subscribe(this, () => false);
+        n.events.beforeSetValue.subscribe(this, (_, prevent) => {
+            prevent();
+        });
         n.value = 10;
         expect(n.value).toEqual(1);
     });
