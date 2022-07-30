@@ -82,7 +82,7 @@ export class BaklavaInterfaceTypes {
 
     /**
      * Add a new node interface type
-     * @param {...*} types The types to add
+     * @param types The types to add
      */
     public addTypes(...types: Array<NodeInterfaceType<unknown>>): this {
         types.forEach((t) => {

@@ -16,7 +16,7 @@
     "build:cjs": "tsc --declaration false --outDir dist/cjs",
     "build:declaration": "tsc --emitDeclarationOnly --outDir dist",
     "build": "rimraf dist && yarn run build:esm && yarn run build:cjs && yarn run build:declaration",
-    "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\""
+    "test": "jest --coverage --colors"
   },
   "repository": {
     "type": "git",
@@ -29,11 +29,10 @@
     "@baklavajs/core": "^2.0.2-alpha.3",
     "@baklavajs/engine": "^2.0.2-alpha.3",
     "@baklavajs/renderer-vue": "^2.0.2-alpha.3",
-    "@ts-tools/node": "^4.0.0",
-    "@types/chai": "^4.3.1",
-    "@types/mocha": "^9.0.0",
-    "chai": "^4.3.6",
-    "mocha": "^9.1.3",
+    "@types/jest": "^28.1.6",
+    "jest": "^28.1.3",
+    "ts-jest": "^28.0.7",
+    "ts-node": "^10.9.1",
     "typescript": "^4.7.4"
   },
   "publishConfig": {

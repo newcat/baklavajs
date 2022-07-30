@@ -46,7 +46,7 @@ export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
     const token = Symbol("ViewModelToken");
 
     const _displayedGraph = ref(null as any) as Ref<Graph>;
-    const displayedGraph = shallowReadonly(_displayedGraph) as Readonly<Ref<Graph>>;
+    const displayedGraph = shallowReadonly(_displayedGraph);
     const { switchGraph } = useSwitchGraph(editor, _displayedGraph);
 
     const isSubgraph = computed(() => displayedGraph.value && displayedGraph.value !== editor.value.graph);
