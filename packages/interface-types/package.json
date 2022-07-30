@@ -6,15 +6,15 @@
   "homepage": "https://newcat.github.io/baklavajs",
   "license": "MIT",
   "files": [
-    "dist/**/!(report.html)"
+    "dist/*"
   ],
   "main": "dist/cjs/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build:esm": "tsc --declaration false --outDir dist/esm --module esnext",
-    "build:cjs": "tsc --declaration false --outDir dist/cjs",
-    "build:declaration": "tsc --emitDeclarationOnly --outDir dist",
+    "build:esm": "tsc -p tsconfig.build.json --declaration false --outDir dist/esm --module esnext",
+    "build:cjs": "tsc -p tsconfig.build.json --declaration false --outDir dist/cjs",
+    "build:declaration": "tsc -p tsconfig.build.json --emitDeclarationOnly --outDir dist",
     "build": "rimraf dist && yarn run build:esm && yarn run build:cjs && yarn run build:declaration",
     "test": "jest --coverage --colors"
   },
@@ -25,10 +25,12 @@
   "bugs": {
     "url": "https://github.com/newcat/baklavajs/issues"
   },
-  "devDependencies": {
+  "dependencies": {
     "@baklavajs/core": "^2.0.2-alpha.3",
     "@baklavajs/engine": "^2.0.2-alpha.3",
-    "@baklavajs/renderer-vue": "^2.0.2-alpha.3",
+    "@baklavajs/renderer-vue": "^2.0.2-alpha.3"
+  },
+  "devDependencies": {
     "@types/jest": "^28.1.6",
     "jest": "^28.1.3",
     "ts-jest": "^28.0.7",
