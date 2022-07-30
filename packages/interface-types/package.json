@@ -29,12 +29,12 @@
     "@baklavajs/core": "^2.0.2-alpha.3",
     "@baklavajs/engine": "^2.0.2-alpha.3",
     "@baklavajs/renderer-vue": "^2.0.2-alpha.3",
-    "@ts-tools/node": "^3.0.1",
-    "@types/chai": "^4.3.0",
+    "@ts-tools/node": "^4.0.0",
+    "@types/chai": "^4.3.1",
     "@types/mocha": "^9.0.0",
-    "chai": "^4.3.4",
+    "chai": "^4.3.6",
     "mocha": "^9.1.3",
-    "typescript": "^4.5.4"
+    "typescript": "^4.7.4"
   },
   "publishConfig": {
     "access": "public"

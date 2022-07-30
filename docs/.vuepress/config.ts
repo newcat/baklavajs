@@ -1,13 +1,13 @@
-import { defineUserConfig } from "vuepress";
-import type { DefaultThemeOptions } from "vuepress";
+import { defaultTheme, defineUserConfig } from "vuepress";
 import { path } from "@vuepress/utils";
+import { registerComponentsPlugin } from "@vuepress/plugin-register-components";
 
-export default defineUserConfig<DefaultThemeOptions>({
+export default defineUserConfig({
     lang: "en-US",
     title: "BaklavaJS",
     description: "Graph / node editor in the browser using VueJS",
 
-    themeConfig: {
+    theme: defaultTheme({
         repo: "https://github.com/newcat/baklavajs",
         navbar: [
             {
@@ -39,18 +39,15 @@ export default defineUserConfig<DefaultThemeOptions>({
             "/event-system.md",
             "/migration.md",
         ],
-    },
+    }),
 
     plugins: [
-        [
-            "@vuepress/register-components",
-            {
-                components: {
-                    StaticLink: path.resolve(__dirname, "./components/StaticLink.vue"),
-                    ApiLink: path.resolve(__dirname, "./components/ApiLink.vue"),
-                    Mermaid: path.resolve(__dirname, "./components/Mermaid.vue"),
-                },
+        registerComponentsPlugin({
+            components: {
+                StaticLink: path.resolve(__dirname, "./components/StaticLink.vue"),
+                ApiLink: path.resolve(__dirname, "./components/ApiLink.vue"),
+                Mermaid: path.resolve(__dirname, "./components/Mermaid.vue"),
             },
-        ],
+        }),
     ],
 });

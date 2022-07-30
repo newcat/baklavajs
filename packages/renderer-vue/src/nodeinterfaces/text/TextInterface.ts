@@ -1,9 +1,9 @@
-import { markRaw } from "vue";
+import { type ComponentOptions, markRaw } from "vue";
 import { NodeInterface } from "@baklavajs/core";
 import TextInterfaceComponent from "./TextInterface.vue";
 
 export class TextInterface extends NodeInterface<string> {
-    component = markRaw(TextInterfaceComponent);
+    component = markRaw(TextInterfaceComponent) as ComponentOptions;
 
     public constructor(name: string, value: string) {
         super(name, value);
