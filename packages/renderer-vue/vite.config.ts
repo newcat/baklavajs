@@ -11,9 +11,10 @@ export default defineConfig({
             entry: path.resolve(__dirname, "src/index.ts"),
             name: "BaklavaJSRendererVue",
             fileName: (format) => `renderer-vue.${format}.js`,
+            formats: ["es"],
         },
         rollupOptions: {
-            external: ["vue"],
+            external: ["vue", "@baklavajs/core", "@baklavajs/events"],
             output: {
                 globals: {
                     vue: "Vue",

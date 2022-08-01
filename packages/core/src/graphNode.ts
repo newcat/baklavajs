@@ -47,7 +47,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             if (
                 typeof context.engine === "object" &&
                 !!context.engine &&
-                typeof (context.engine as any).runGraph === "function"
+                typeof context.engine.runGraph === "function"
             ) {
                 const graphInputs: Map<string, any> = new Map();
 
@@ -66,7 +66,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
                     graphInputs.set(gi.nodeInterfaceId, v);
                 });
 
-                const result: Map<string, Map<string, any>> = await (context.engine as any).runGraph(
+                const result: Map<string, Map<string, any>> = await context.engine.runGraph(
                     this.subgraph,
                     graphInputs,
                     context.globalValues,
