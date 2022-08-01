@@ -1,6 +1,6 @@
 {
   "name": "@baklavajs/interface-types",
-  "version": "2.0.2-alpha.5",
+  "version": "2.0.2-alpha.6",
   "description": "Add types to node interfaces for BaklavaJS",
   "author": "newcat <freddy.wagner@web.de>",
   "homepage": "https://newcat.github.io/baklavajs",
@@ -26,9 +26,9 @@
     "url": "https://github.com/newcat/baklavajs/issues"
   },
   "dependencies": {
-    "@baklavajs/core": "^2.0.2-alpha.5",
-    "@baklavajs/engine": "^2.0.2-alpha.5",
-    "@baklavajs/renderer-vue": "^2.0.2-alpha.5"
+    "@baklavajs/core": "^2.0.2-alpha.6",
+    "@baklavajs/engine": "^2.0.2-alpha.6",
+    "@baklavajs/renderer-vue": "^2.0.2-alpha.6"
   },
   "devDependencies": {
     "@types/jest": "^28.1.6",
