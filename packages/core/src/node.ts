@@ -18,7 +18,10 @@ export interface CalculationContext<G = any, E = unknown> {
 
 export type CalculateFunctionReturnType<O> = O | Promise<O> | void;
 
-export type CalculateFunction<I, O> = (inputs: I, context: CalculationContext) => CalculateFunctionReturnType<O>;
+export type CalculateFunction<I, O, C extends CalculationContext = CalculationContext> = (
+    inputs: I,
+    context: C,
+) => CalculateFunctionReturnType<O>;
 
 export interface INodeState<I, O> {
     type: string;
