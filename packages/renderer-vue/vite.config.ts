@@ -20,6 +20,7 @@ export default defineConfig({
                 },
             },
         },
+        minify: false,
     },
     plugins: [
         vue(),

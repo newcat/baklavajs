@@ -11,7 +11,7 @@ import type { Graph } from "./graph";
 import type { NodeInterfaceDefinition, NodeInterface, NodeInterfaceDefinitionStates } from "./nodeInterface";
 import { mapValues } from "./utils";
 
-export interface CalculationContext<G = any, E = unknown> {
+export interface CalculationContext<G = any, E = any> {
     globalValues: G;
     engine: E;
 }
