@@ -26,7 +26,9 @@ export interface IViewSettings {
 
 export interface IBaklavaViewModel extends IBaklavaTapable {
     editor: Editor;
+    /** Currently displayed graph */
     displayedGraph: Graph;
+    /** True if the currently displayed graph is a subgraph, false if it is the root graph */
     isSubgraph: Readonly<boolean>;
     settings: IViewSettings;
     commandHandler: ICommandHandler;

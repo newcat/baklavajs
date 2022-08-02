@@ -3,6 +3,7 @@
  */
 
 export { default as EditorComponent } from "./editor/Editor.vue";
+export * from "./commands";
 export * from "./nodeinterfaces";
 export * from "./viewModel";
 export * from "./utility";

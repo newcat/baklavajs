@@ -23,7 +23,7 @@ Now you can use Baklava in your Vue application:
 
 ```vue
 <template>
-    <baklava-editor :plugin="baklava" />
+    <baklava-editor :view-model="baklava" />
 </template>
 
 <script lang="ts">

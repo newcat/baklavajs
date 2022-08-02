@@ -29,12 +29,21 @@ export default defineUserConfig({
                 ],
             },
             {
-                text: "Graph Execution",
-                children: ["/execution/setup.md", "/execution/dependency.md", "/execution/forward.md"],
-            },
-            {
                 text: "Editor",
                 children: ["/editor/registering-nodes.md", "/editor/subgraphs.md"],
+            },
+            {
+                text: "Visual Editor",
+                children: [
+                    "/visual-editor/setup.md",
+                    "/visual-editor/commands.md",
+                    "/visual-editor/toolbar.md",
+                    "/visual-editor/themes.md",
+                ],
+            },
+            {
+                text: "Graph Execution",
+                children: ["/execution/setup.md", "/execution/dependency.md", "/execution/forward.md"],
             },
             "/event-system.md",
             "/migration.md",
