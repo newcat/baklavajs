@@ -84,6 +84,8 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
                     outputs[graphOutput.id] = flatResult.get(graphOutput.nodeInterfaceId);
                 });
 
+                outputs._calculationResults = result;
+
                 return outputs;
             }
         };
@@ -135,9 +137,6 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
         }
 
         private updateInterfaces() {
-            // TODO: Check if TODO below still applies
-            // TODO: Initially, this works, but after this node was load()-ed, it breaks
-
             if (!this.subgraph) {
                 throw new Error("Trying to update interfaces without graph instance");
             }
@@ -167,6 +166,9 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
                     this.removeOutput(k);
                 }
             }
+
+            // Add an internal output to allow accessing the calculation results of nodes inside the graph
+            this.addOutput("_calculationResults", new NodeInterface("_calculationResults", undefined).setHidden(true));
         }
     };
 }
