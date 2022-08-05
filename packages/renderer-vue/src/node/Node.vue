@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, toRef, nextTick, onUpdated, onMounted } from "vue";
-import { AbstractNode, IGraphNode } from "@baklavajs/core";
+import { AbstractNode, GRAPH_NODE_TYPE_PREFIX, IGraphNode } from "@baklavajs/core";
 import { useDragMove, useGraph, useViewModel } from "../utility";
 
 import ContextMenu from "../components/ContextMenu.vue";
@@ -89,7 +89,7 @@ export default defineComponent({
                 { value: "delete", label: "Delete" },
             ];
 
-            if (props.node.type.startsWith("__baklava_GraphNode")) {
+            if (props.node.type.startsWith(GRAPH_NODE_TYPE_PREFIX)) {
                 items.push({ value: "editSubgraph", label: "Edit Subgraph" });
             }
 
