@@ -13,7 +13,7 @@ export default defineNode({
         text: () => new TextInterface("output", "").setPort(false),
         data: () => new TextInterface("data", "test").setHidden(true),
     },
-    calculate({ text }, data) {
-        return { text, data };
+    calculate({ text }, { globalValues }) {
+        return { text, data: globalValues };
     },
 });

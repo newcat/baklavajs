@@ -1,15 +1,12 @@
-import { Node, INodeState, NodeInterfaceDefinition, NodeInterface } from "@baklavajs/core";
+import { INodeState, NodeInterface, AbstractNode, CalculateFunction } from "@baklavajs/core";
 import { ButtonInterface } from "../src";
 
-export default class AdvancedNode extends Node<
-    NodeInterfaceDefinition<Record<string, any>>,
-    NodeInterfaceDefinition<Record<string, any>>
-> {
+export default class AdvancedNode extends AbstractNode {
     public type = "AdvancedNode";
     public title = this.type;
 
-    public inputs: NodeInterfaceDefinition<Record<string, any>> = {};
-    public outputs: NodeInterfaceDefinition<Record<string, any>> = {};
+    public inputs: Record<string, NodeInterface<any>> = {};
+    public outputs: Record<string, NodeInterface<any>> = {};
 
     private counter = 0;
 
@@ -29,12 +26,10 @@ export default class AdvancedNode extends Node<
         );
     }
 
-    public load(
-        state: INodeState<NodeInterfaceDefinition<Record<string, any>>, NodeInterfaceDefinition<Record<string, any>>>,
-    ) {
+    public load(state: INodeState<any, any>) {
         Object.entries(state.inputs).forEach(([name, intfState]) => {
             if (name !== "addInput" && name !== "removeInput") {
-                const intf = new NodeInterface<any>(name, intfState.value);
+                const intf = new NodeInterface(name, intfState.value);
                 intf.load(intfState);
                 this.addInput(name, intf);
             }
@@ -42,4 +37,6 @@ export default class AdvancedNode extends Node<
         this.counter = Object.keys(state.inputs).length - 2;
         super.load(state);
     }
+
+    calculate?: CalculateFunction<any, any> | undefined;
 }
