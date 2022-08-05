@@ -120,6 +120,10 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         this.nodeHooks.addTarget(node.hooks);
         node.registerGraph(this);
         this._nodes.push(node);
+        // when adding the node to the array, it will be made reactive by Vue.
+        // However, our current reference is the non-reactive version.
+        // Therefore, we need to get the reactive version from the array.
+        node = this.nodes.find(n => n.id === node.id)! as T;
         node.onPlaced();
         this.events.addNode.emit(node);
         return node;
