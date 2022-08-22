@@ -100,9 +100,9 @@ You can now use the global data in the `calculate` function of your nodes:
 ```ts
 export default defineNode({
     // ...
-    calculate(inputs, global) {
+    calculate(inputs, { globalValues }) {
         return {
-            result: inputs.number1 + inputs.number2 + global.offset,
+            result: inputs.number1 + inputs.number2 + globalValues.offset,
         };
     },
 });
