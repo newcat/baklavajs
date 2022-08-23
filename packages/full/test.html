@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+
+        <link rel="stylesheet" href="../themes/dist/syrup-dark.css" />
+        <style>
+            html,
+            body {
+                margin: 0;
+            }
+
+            #editor {
+                width: 100vw;
+                height: 100vh;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="editor"></div>
+
+        <script src="dist/bundle.js"></script>
+        <script>
+            const vm = BaklavaJS.createBaklava(document.getElementById("editor"));
+            console.log(vm);
+
+            const TestNode = BaklavaJS.Core.defineNode({
+                type: "TestNode",
+                inputs: {
+                    a: () => new BaklavaJS.RendererVue.TextInputInterface("Hello", "world"),
+                },
+                outputs: {
+                    b: () => new BaklavaJS.RendererVue.TextInputInterface("Hello", "world"),
+                },
+            });
+            vm.editor.registerNodeType(TestNode);
+        </script>
+    </body>
+</html>

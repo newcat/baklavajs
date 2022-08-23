@@ -46,6 +46,7 @@ export default defineUserConfig({
                 children: ["/execution/setup.md", "/execution/dependency.md", "/execution/forward.md"],
             },
             "/event-system.md",
+            "/browser-build.md",
             "/migration.md",
         ],
     }),

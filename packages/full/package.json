@@ -1,20 +1,22 @@
 {
     "name": "baklavajs",
     "version": "2.0.2-alpha.7",
-    "private": true,
     "description": "Full installation of BaklavaJS including the core and all plugins",
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
     "license": "MIT",
     "files": [
-        "dist/**/!(report.html)",
-        "lib/**/*"
-    ],
-    "main": "lib/index.js",
-    "types": "lib/index.d.ts",
+        "dist/*"
+      ],
+    "main": "dist/cjs/index.js",
+    "types": "dist/index.d.ts",
+    "module": "dist/esm/index.js",
     "scripts": {
-        "build": "rimraf dist && webpack && tsc",
-        "version": "node updateDependencies.js"
+        "build:esm": "tsc --declaration false --outDir dist/esm --module esnext",
+        "build:cjs": "tsc --declaration false --outDir dist/cjs",
+        "build:declaration": "tsc --emitDeclarationOnly --outDir dist",
+        "build:browser": "esbuild src/bundle.ts --bundle --minify --sourcemap --global-name=BaklavaJS --outfile=dist/bundle.js",
+        "build": "rimraf dist && yarn run build:esm && yarn run build:cjs && yarn run build:declaration && yarn build:browser"
     },
     "repository": {
         "type": "git",
@@ -30,6 +32,11 @@
         "@baklavajs/core": "2.0.2-alpha.7",
         "@baklavajs/engine": "2.0.2-alpha.7",
         "@baklavajs/interface-types": "2.0.2-alpha.7",
-        "@baklavajs/renderer-vue": "2.0.2-alpha.7"
+        "@baklavajs/renderer-vue": "2.0.2-alpha.7",
+        "@baklavajs/themes": "2.0.2-alpha.4"
+    },
+    "devDependencies": {
+        "esbuild": "^0.15.5",
+        "typescript": "^4.7.4"
     }
 }

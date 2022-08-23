@@ -2,6 +2,11 @@
 
 ## Installation
 
+::: tip
+While not recommended, it is possible to use BaklavaJS standalone; without Vue and any build tools.
+For more information see [Browser Build](./browser-build.md)
+:::
+
 BaklavaJS is split into multiple packages:
 
 -   `@baklavajs/core`: Contains all the core elements that Baklava needs to work
