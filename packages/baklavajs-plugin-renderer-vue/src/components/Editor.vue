@@ -69,6 +69,8 @@ import {
     INodeInterface,
     ITemporaryConnection,
     TemporaryConnectionState,
+    INode,
+    IConnection,
 } from "../../../baklavajs-core/types";
 import { ViewPlugin } from "../viewPlugin";
 import { IViewNode } from "../../types";
@@ -142,11 +144,11 @@ export default class EditorView extends Vue {
         };
     }
 
-    get nodes() {
+    get nodes(): readonly INode[] {
         return this.plugin.editor ? this.plugin.editor.nodes : [];
     }
 
-    get connections() {
+    get connections(): readonly IConnection[] {
         return this.plugin.editor ? this.plugin.editor.connections : [];
     }
 
