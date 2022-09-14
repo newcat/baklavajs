@@ -167,8 +167,8 @@ export default class ContextMenu extends Vue {
     @Watch("items")
     updateFlipped() {
         this.height = this.items.length * 30;
-        const parentWidth = (this.$parent.$el as HTMLElement).offsetWidth;
-        const parentHeight = (this.$parent.$el as HTMLElement).offsetHeight;
+        const parentWidth = (this.$parent!.$el as HTMLElement).offsetWidth;
+        const parentHeight = (this.$parent!.$el as HTMLElement).offsetHeight;
         this.rootIsFlipped.x = !this.isNested && this.x > parentWidth * 0.75;
         this.rootIsFlipped.y = !this.isNested && this.y + this.height > parentHeight - 20;
     }

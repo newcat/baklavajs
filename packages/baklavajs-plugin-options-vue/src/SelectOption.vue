@@ -49,7 +49,7 @@ type ItemType = string|IAdvancedItem;
 export default class SelectOption extends Vue {
 
     open = false;
-    items = [];
+    items: ItemType[] = [];
 
     @Prop({ type: String })
     name!: string;

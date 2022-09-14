@@ -49,7 +49,7 @@ export default class Sidebar extends Vue {
     }
 
     onMouseMove(event: MouseEvent) {
-        const maxwidth = this.$parent.$el.getBoundingClientRect().width;
+        const maxwidth = this.$parent!.$el.getBoundingClientRect().width;
         this.width -= event.movementX;
         if (this.width < 300) {
             this.width = 300;
