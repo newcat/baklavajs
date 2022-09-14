@@ -58,6 +58,8 @@
             :nodes="nodes"
             :connections="connections"
         ></component>
+
+        <slot></slot>
     </div>
 </template>
 
