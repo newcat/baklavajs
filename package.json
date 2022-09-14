@@ -16,7 +16,7 @@
         "@vue/runtime-dom": "^3.2.39",
         "chai": "^4.3.6",
         "clean-webpack-plugin": "^4.0.0",
-        "lerna": "^4.0.0",
+        "lerna": "^5.5.1",
         "rimraf": "^3.0.2",
         "typedoc": "^0.23.14",
         "webpack-bundle-analyzer": "^4.6.1"
