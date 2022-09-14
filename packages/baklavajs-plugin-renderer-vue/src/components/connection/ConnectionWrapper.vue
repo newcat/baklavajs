@@ -1,5 +1,16 @@
 <template>
-    <connection-view :x1="d.x1" :y1="d.y1" :x2="d.x2" :y2="d.y2" :state="state" :connection="connection"></connection-view>
+    <connection-view
+        :x1="d.x1"
+        :y1="d.y1"
+        :x2="d.x2"
+        :y2="d.y2"
+        :state="state"
+        :connection="connection"
+        :data-from="connection.from.id"
+        :data-to="connection.to.id"
+        :data-from-node="connection.from.parent.id"
+        :data-to-node="connection.to.parent.id"
+    ></connection-view>
 </template>
 
 <script lang="ts">
@@ -17,7 +28,6 @@ const ResizeObserver = (window as any).ResizeObserver || ResizeObserverPolyfill;
     }
 })
 export default class ConnectionWrapper extends Vue {
-
     @Prop({ type: Object })
     connection!: ITransferConnection;
 
@@ -26,9 +36,7 @@ export default class ConnectionWrapper extends Vue {
     private resizeObserver!: ResizeObserverPolyfill;
 
     get state() {
-        return this.connection.isInDanger ?
-            TemporaryConnectionState.FORBIDDEN :
-            TemporaryConnectionState.NONE;
+        return this.connection.isInDanger ? TemporaryConnectionState.FORBIDDEN : TemporaryConnectionState.NONE;
     }
 
     async mounted() {
@@ -47,7 +55,9 @@ export default class ConnectionWrapper extends Vue {
         const to = resolveDom(this.connection.to);
         if (from.node && to.node) {
             if (!this.resizeObserver) {
-                this.resizeObserver = new ResizeObserver(() => { this.updateCoords(); });
+                this.resizeObserver = new ResizeObserver(() => {
+                    this.updateCoords();
+                });
                 this.resizeObserver.observe(from.node);
                 this.resizeObserver.observe(to.node);
             }
@@ -61,13 +71,18 @@ export default class ConnectionWrapper extends Vue {
     private getPortCoordinates(resolved: IResolvedDomElements): [number, number] {
         if (resolved.node && resolved.interface && resolved.port) {
             return [
-                resolved.node.offsetLeft + resolved.interface.offsetLeft + resolved.port.offsetLeft + resolved.port.clientWidth / 2,
-                resolved.node.offsetTop + resolved.interface.offsetTop + resolved.port.offsetTop + resolved.port.clientHeight / 2
+                resolved.node.offsetLeft +
+                    resolved.interface.offsetLeft +
+                    resolved.port.offsetLeft +
+                    resolved.port.clientWidth / 2,
+                resolved.node.offsetTop +
+                    resolved.interface.offsetTop +
+                    resolved.port.offsetTop +
+                    resolved.port.clientHeight / 2
             ];
         } else {
             return [0, 0];
         }
     }
-
 }
 </script>
