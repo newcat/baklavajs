@@ -42,7 +42,7 @@ export default class ConnectionWrapper extends Vue {
 
     @Watch("connection.from.parent.position", { deep: true })
     @Watch("connection.to.parent.position", { deep: true })
-    updateCoords() {
+    async updateCoords() {
         const from = resolveDom(this.connection.from);
         const to = resolveDom(this.connection.to);
         if (from.node && to.node) {
@@ -52,6 +52,7 @@ export default class ConnectionWrapper extends Vue {
                 this.resizeObserver.observe(to.node);
             }
         }
+        await Vue.nextTick();
         const [x1, y1] = this.getPortCoordinates(from);
         const [x2, y2] = this.getPortCoordinates(to);
         this.d = { x1, y1, x2, y2 };
