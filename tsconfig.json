@@ -11,14 +11,16 @@
         "downlevelIteration": true,
         "declaration": true,
         "baseUrl": ".",
-        "lib": [
-            "esnext",
-            "dom",
-            "dom.iterable",
-            "scripthost"
-        ]
+        "jsx": "preserve",
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
     },
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": ["node_modules"],
+    "vueCompilerOptions": {
+        "experimentalCompatMode": 2,
+        "experimentalTemplateCompilerOptions": {
+            "compatConfig": {
+                "MODE": 2
+            }
+        }
+    }
 }
