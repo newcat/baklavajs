@@ -15,7 +15,9 @@
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
-    "./dist/styles.css": "./dist/styles.css"
+    "./dist/styles.css": "./dist/styles.css",
+    "./dist/styles/variables.scss": "./dist/styles/variables.scss",
+    "./dist/styles/styles.scss": "./dist/styles/styles.scss"
   },
   "types": "dist/baklavajs-plugin-renderer-vue/src/index.d.ts",
   "scripts": {
