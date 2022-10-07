@@ -1,46 +1,46 @@
 {
-  "name": "@baklavajs/plugin-interface-types",
-  "version": "1.10.1",
-  "description": "Add types to node interfaces for BaklavaJS",
-  "author": "newcat <freddy.wagner@web.de>",
-  "homepage": "https://newcat.github.io/baklavajs",
-  "license": "MIT",
-  "files": [
-    "dist/**/!(report.html)"
-  ],
-  "main": "dist/index.js",
-  "exports": {
-    "import": "./dist/index.cjs",
-    "require": "./dist/index.cjs",
-    "default": "./dist/index.js"
-  },
-  "types": "dist/baklavajs-plugin-interface-types/src/index.d.ts",
-  "scripts": {
-    "build": "rimraf ./dist && webpack",
-    "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\"",
-    "docs": "typedoc --json ../../docs/api/plugin-interface-types.json --options ../../typedoc.json"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/newcat/baklavajs.git"
-  },
-  "bugs": {
-    "url": "https://github.com/newcat/baklavajs/issues"
-  },
-  "devDependencies": {
-    "@ts-tools/node": "^4.0.0",
-    "@types/chai": "^4.3.3",
-    "@types/mocha": "^10.0.0",
-    "chai": "^4.3.6",
-    "mocha": "^10.0.0",
-    "ts-loader": "^9.4.1",
-    "typescript": "^4.8.4",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-merge": "^5.8.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "gitHead": "723bf8b6249e6b67d9a7a5a9c84cf1ee0ca33739"
+    "name": "@baklavajs/plugin-interface-types",
+    "version": "1.10.2",
+    "description": "Add types to node interfaces for BaklavaJS",
+    "author": "newcat <freddy.wagner@web.de>",
+    "homepage": "https://newcat.github.io/baklavajs",
+    "license": "MIT",
+    "files": [
+        "dist/**/!(report.html)"
+    ],
+    "main": "dist/index.js",
+    "exports": {
+        "import": "./dist/index.cjs",
+        "require": "./dist/index.cjs",
+        "default": "./dist/index.js"
+    },
+    "types": "dist/baklavajs-plugin-interface-types/src/index.d.ts",
+    "scripts": {
+        "build": "rimraf ./dist && webpack",
+        "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts\"",
+        "docs": "typedoc --json ../../docs/api/plugin-interface-types.json --options ../../typedoc.json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/newcat/baklavajs.git"
+    },
+    "bugs": {
+        "url": "https://github.com/newcat/baklavajs/issues"
+    },
+    "devDependencies": {
+        "@ts-tools/node": "^4.0.0",
+        "@types/chai": "^4.3.3",
+        "@types/mocha": "^10.0.0",
+        "chai": "^4.3.6",
+        "mocha": "^10.0.0",
+        "ts-loader": "^9.4.1",
+        "typescript": "^4.8.4",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0",
+        "webpack-merge": "^5.8.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "gitHead": "723bf8b6249e6b67d9a7a5a9c84cf1ee0ca33739"
 }
