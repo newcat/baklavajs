@@ -13,12 +13,12 @@
     ],
     "devDependencies": {
         "@types/chai": "^4.3.3",
-        "@vue/runtime-dom": "^3.2.39",
+        "@vue/runtime-dom": "^3.2.40",
         "chai": "^4.3.6",
         "clean-webpack-plugin": "^4.0.0",
-        "lerna": "^5.5.1",
+        "lerna": "^5.6.1",
         "rimraf": "^3.0.2",
-        "typedoc": "^0.23.14",
+        "typedoc": "^0.23.15",
         "webpack-bundle-analyzer": "^4.6.1"
     },
     "postcss": {
