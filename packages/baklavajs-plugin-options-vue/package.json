@@ -1,46 +1,46 @@
 {
-  "name": "@baklavajs/plugin-options-vue",
-  "version": "1.10.1",
-  "description": "This plugin adds a set of predefined option components to the renderer-vue plugin for BaklavaJS",
-  "author": "newcat <freddy.wagner@web.de>",
-  "homepage": "https://newcat.github.io/baklavajs",
-  "license": "MIT",
-  "files": [
-    "dist/**/!(report.html)"
-  ],
-  "main": "dist/index.js",
-  "exports": {
-    "import": "./dist/index.cjs",
-    "require": "./dist/index.cjs",
-    "default": "./dist/index.js"
-  },
-  "types": "dist/baklavajs-plugin-options-vue/src/index.d.ts",
-  "scripts": {
-    "build": "rimraf ./dist && webpack"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/newcat/baklavajs.git"
-  },
-  "bugs": {
-    "url": "https://github.com/newcat/baklavajs/issues"
-  },
-  "devDependencies": {
-    "mini-css-extract-plugin": "^2.6.1",
-    "ts-loader": "^8.0.14",
-    "typescript": "^4.8.3",
-    "v-click-outside": "^3.2.0",
-    "vue": "^2.7.10",
-    "vue-class-component": "7.2.6",
-    "vue-loader": "^15.9.8",
-    "vue-property-decorator": "9.1.2",
-    "vue-template-compiler": "^2.7.10",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-merge": "^5.8.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "gitHead": "ac12fc9a34736475d40dd391b27162be5b73378f"
+    "name": "@baklavajs/plugin-options-vue",
+    "version": "1.10.2",
+    "description": "This plugin adds a set of predefined option components to the renderer-vue plugin for BaklavaJS",
+    "author": "newcat <freddy.wagner@web.de>",
+    "homepage": "https://newcat.github.io/baklavajs",
+    "license": "MIT",
+    "files": [
+        "dist/**/!(report.html)"
+    ],
+    "main": "dist/index.js",
+    "exports": {
+        "import": "./dist/index.cjs",
+        "require": "./dist/index.cjs",
+        "default": "./dist/index.js"
+    },
+    "types": "dist/baklavajs-plugin-options-vue/src/index.d.ts",
+    "scripts": {
+        "build": "rimraf ./dist && webpack"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/newcat/baklavajs.git"
+    },
+    "bugs": {
+        "url": "https://github.com/newcat/baklavajs/issues"
+    },
+    "devDependencies": {
+        "mini-css-extract-plugin": "^2.6.1",
+        "ts-loader": "^8.0.14",
+        "typescript": "^4.8.4",
+        "v-click-outside": "^3.2.0",
+        "vue": "^2.7.10",
+        "vue-class-component": "7.2.6",
+        "vue-loader": "^15.9.8",
+        "vue-property-decorator": "9.1.2",
+        "vue-template-compiler": "^2.7.10",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0",
+        "webpack-merge": "^5.8.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "gitHead": "ac12fc9a34736475d40dd391b27162be5b73378f"
 }

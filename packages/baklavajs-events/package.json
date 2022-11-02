@@ -1,30 +1,30 @@
 {
-  "name": "@baklavajs/events",
-  "version": "1.10.0",
-  "description": "Implementation of the Baklava event system. Mainly intended for internal use in the Baklava ecosystem",
-  "author": "newcat <freddy.wagner@web.de>",
-  "homepage": "https://github.com/newcat/baklavajs#readme",
-  "license": "MIT",
-  "files": [
-    "dist/**/*"
-  ],
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
-  "scripts": {
-    "build": "rimraf ./dist && tsc",
-    "docs": "typedoc --json ../../docs/api/events.json --options ../../typedoc.json"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/newcat/baklavajs.git"
-  },
-  "bugs": {
-    "url": "https://github.com/newcat/baklavajs/issues"
-  },
-  "devDependencies": {
-    "typescript": "^4.8.3"
-  }
+    "name": "@baklavajs/events",
+    "version": "1.10.2",
+    "description": "Implementation of the Baklava event system. Mainly intended for internal use in the Baklava ecosystem",
+    "author": "newcat <freddy.wagner@web.de>",
+    "homepage": "https://github.com/newcat/baklavajs#readme",
+    "license": "MIT",
+    "files": [
+        "dist/**/*"
+    ],
+    "main": "dist/src/index.js",
+    "types": "dist/src/index.d.ts",
+    "scripts": {
+        "build": "rimraf ./dist && tsc",
+        "docs": "typedoc --json ../../docs/api/events.json --options ../../typedoc.json"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/newcat/baklavajs.git"
+    },
+    "bugs": {
+        "url": "https://github.com/newcat/baklavajs/issues"
+    },
+    "devDependencies": {
+        "typescript": "^4.8.4"
+    }
 }
