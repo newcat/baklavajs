@@ -41,7 +41,7 @@ describe("Graph Node", () => {
         const n = new GraphNode();
         n.onPlaced();
         expect(Object.keys(n.inputs)).toHaveLength(0);
-        expect(Object.keys(n.outputs)).toHaveLength(0);
+        expect(Object.keys(n.outputs)).toHaveLength(1);
         template.update({
             ...template.save(),
             inputs: [
@@ -54,7 +54,7 @@ describe("Graph Node", () => {
             ],
         });
         expect(Object.keys(n.inputs)).toHaveLength(1);
-        expect(Object.keys(n.outputs)).toHaveLength(0);
+        expect(Object.keys(n.outputs)).toHaveLength(1);
     });
 
     it("calls the destroy method of the internal graph when destroying the node", () => {
