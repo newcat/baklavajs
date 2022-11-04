@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/newcat/baklavajs.svg?branch=master)](https://travis-ci.org/newcat/baklavajs)
 ![npm](https://img.shields.io/npm/v/baklavajs.svg)
 
+### V2 is now in beta! [Check it out](https://github.com/newcat/baklavajs/discussions/219)
+
 Graph / node editor in the browser using VueJS, less than 60kb gzipped
 
 **[Online Demo](https://codesandbox.io/s/baklavajs-example-jyc6f?file=/src/App.vue)**
