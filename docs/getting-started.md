@@ -28,6 +28,14 @@ Now you can use Baklava in your Vue application:
 
 ```vue
 <template>
+    <!--
+        By default, the editor completely fills its parent HTML element.
+        If you directly use the editor in the <body> element, make sure to use
+        a wrapper <div> with specified width and height properties:
+        <div style="width: 90vw; height: 90vh">
+            <baklava-editor :view-model="baklava" />
+        </div>
+    -->
     <baklava-editor :view-model="baklava" />
 </template>
 
