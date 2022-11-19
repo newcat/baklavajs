@@ -123,14 +123,15 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
         Object.entries(state.inputs).forEach(([k, v]) => {
             if (this.inputs[k]) {
                 this.inputs[k].load(v);
+                this.inputs[k].nodeId = this.id;
             }
         });
         Object.entries(state.outputs).forEach(([k, v]) => {
             if (this.outputs[k]) {
                 this.outputs[k].load(v);
+                this.outputs[k].nodeId = this.id;
             }
         });
-        this.initializeIo();
         this.events.loaded.emit(this as any);
     }
 
