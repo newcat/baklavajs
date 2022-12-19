@@ -38,7 +38,7 @@ export default defineUserConfig({
                     "/visual-editor/setup.md",
                     "/visual-editor/commands.md",
                     "/visual-editor/toolbar.md",
-                    "/visual-editor/themes.md",
+                    "/visual-editor/customization.md",
                 ],
             },
             {

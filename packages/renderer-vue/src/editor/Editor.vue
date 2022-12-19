@@ -28,7 +28,7 @@
 
         <svg class="connections-container">
             <g v-for="connection in connections" :key="connection.id + counter.toString()">
-                <slot name="connections" :connection="connection">
+                <slot name="connection" :connection="connection">
                     <connection-wrapper :connection="connection" />
                 </slot>
             </g>

@@ -11,6 +11,7 @@
         <button @click="setSelectItems">Set Select Items</button>
         <button @click="changeGridSize">Change Grid Size</button>
         <button @click="createSubgraph">Create Subgraph</button>
+        <button @click="saveAndLoad">Save and Load</button>
     </div>
 </template>
 
@@ -88,6 +89,10 @@ const load = () => {
         editor.load(JSON.parse(s));
     }
 };
+
+const saveAndLoad = () => {
+    editor.load(editor.save());
+}
 
 const setSelectItems = () => {
     for (const node of editor.graph.nodes) {
