@@ -9,10 +9,14 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
-            - name: Use Node.js 16
+            - name: Use Node.js 18
               uses: actions/setup-node@v2
               with:
-                  node-version: "16"
+                  node-version: "18"
+            - name: Setup Yarn v3
+              run: |
+                corepack enable
+                corepack prepare yarn@stable --activate
             - name: Install dependencies
               run: yarn install --frozen-lockfile
             - name: Build

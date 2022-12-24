@@ -18,6 +18,10 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: "18"
+            - name: Setup Yarn v3
+              run: |
+                corepack enable
+                corepack prepare yarn@stable --activate
             - name: Install dependencies
               run: yarn install --frozen-lockfile
             - name: Build
