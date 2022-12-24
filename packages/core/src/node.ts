@@ -33,7 +33,7 @@ export interface INodeState<I, O> {
 
 export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapable {
     /** Type of the node */
-    public abstract type: string;
+    public abstract readonly type: string;
     /** Customizable display name of the node. */
     public abstract title: string;
     /** Unique identifier of the node */

@@ -4,6 +4,7 @@
 
 export * from "./connection";
 export * from "./defineNode";
+export * from "./dynamicNode";
 export * from "./editor";
 export * from "./eventDataTypes";
 export * from "./graph";

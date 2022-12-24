@@ -31,7 +31,7 @@ export interface INodeDefinition<I, O> {
 
 export function defineNode<I, O>(definition: INodeDefinition<I, O>): new () => Node<I, O> {
     return class extends Node<I, O> {
-        public type = definition.type;
+        public readonly type = definition.type;
         public title = definition.title ?? definition.type;
         public inputs: NodeInterfaceDefinition<I> = {} as any;
         public outputs: NodeInterfaceDefinition<O> = {} as any;
