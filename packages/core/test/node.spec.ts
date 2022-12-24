@@ -1,4 +1,4 @@
-import { type AbstractNode, NodeInterface } from "../src";
+import { type AbstractNode, NodeInterface, Graph } from "../src";
 import TestNode from "./TestNode";
 
 describe("Node", () => {
@@ -73,6 +73,13 @@ describe("Node", () => {
         n["addOutput"]("test", new NodeInterface("Test", 3));
         expect(Object.keys(n.outputs)).toHaveLength(1);
         expect(addSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it("returns the graph instance after it is registered", () => {
+        const n = new TestNode();
+        const g = Symbol() as unknown as Graph;
+        n.registerGraph(g);
+        expect(n.graph).toBe(g);
     });
 
     it.todo("correctly loads a state"); // TODO

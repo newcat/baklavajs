@@ -32,6 +32,7 @@ import CommentNode from "./CommentNode";
 import InterfaceTestNode from "./InterfaceTestNode";
 import SelectTestNode from "./SelectTestNode";
 import SidebarNode from "./SidebarNode";
+import DynamicNode from "./DynamicNode";
 
 import { stringType, numberType, booleanType } from "./interfaceTypes";
 
@@ -67,6 +68,7 @@ editor.registerNodeType(CommentNode, { title: "Comment" });
 editor.registerNodeType(InterfaceTestNode);
 editor.registerNodeType(SelectTestNode);
 editor.registerNodeType(SidebarNode);
+editor.registerNodeType(DynamicNode);
 
 editor.graph.addNode(new TestNode());
 editor.graph.addNode(new TestNode());
@@ -92,7 +94,7 @@ const load = () => {
 
 const saveAndLoad = () => {
     editor.load(editor.save());
-}
+};
 
 const setSelectItems = () => {
     for (const node of editor.graph.nodes) {

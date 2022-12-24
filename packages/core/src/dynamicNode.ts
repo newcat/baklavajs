@@ -2,7 +2,7 @@ import { InterfaceFactory } from "./defineNode";
 import { Node, CalculateFunction, INodeState } from "./node";
 import { NodeInterface, NodeInterfaceDefinition } from "./nodeInterface";
 
-type Dynamic<T> = T & Record<string, unknown>;
+type Dynamic<T> = T & Record<string, any>;
 
 /**
  * @internal
@@ -12,13 +12,7 @@ export abstract class DynamicNode<I, O> extends Node<Dynamic<I>, Dynamic<O>> {
     public abstract inputs: NodeInterfaceDefinition<Dynamic<I>>;
     public abstract outputs: NodeInterfaceDefinition<Dynamic<O>>;
 
-    public load(state: INodeState<Dynamic<I>, Dynamic<O>>): void {
-        super.load(state);
-    }
-
-    public save(): INodeState<Dynamic<I>, Dynamic<O>> {
-        return super.save();
-    }
+    public abstract load(state: INodeState<Dynamic<I>, Dynamic<O>>): void;
 
     /**
      * The default implementation does nothing.
@@ -65,10 +59,11 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
     return class extends DynamicNode<I, O> {
         public readonly type = definition.type;
         public title = definition.title ?? definition.type;
-        public inputs = {} as any;
-        public outputs = {} as any;
+        public inputs = {} as NodeInterfaceDefinition<Dynamic<I>>;
+        public outputs = {} as NodeInterfaceDefinition<Dynamic<O>>;
         public calculate;
 
+        private preventUpdate = false;
         private readonly staticInputKeys = Object.keys(definition.inputs ?? {});
         private readonly staticOutputKeys = Object.keys(definition.outputs ?? {});
 
@@ -82,6 +77,10 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
                     definition.calculate?.call(this, inputs, globalValues);
             }
 
+            definition.onCreate?.call(this);
+        }
+
+        public onPlaced() {
             this.events.update.subscribe(this, (data) => {
                 if (!data) {
                     return;
@@ -94,12 +93,8 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
                     this.onUpdate();
                 }
             });
-
-            definition.onCreate?.call(this);
             this.onUpdate();
-        }
 
-        public onPlaced() {
             definition.onPlaced?.call(this);
         }
 
@@ -107,7 +102,52 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
             definition.onDestroy?.call(this);
         }
 
+        public load(state: INodeState<Dynamic<I>, Dynamic<O>>): void {
+            // prevent automatic updates during loading
+            this.preventUpdate = true;
+
+            this.hooks.beforeLoad.execute(state);
+            this.id = state.id;
+            this.title = state.title;
+
+            // first load the state for the static interfaces
+            for (const k of this.staticInputKeys) {
+                this.inputs[k].load(state.inputs[k]);
+                this.inputs[k].nodeId = this.id;
+            }
+            for (const k of this.staticOutputKeys) {
+                this.outputs[k].load(state.outputs[k]);
+                this.outputs[k].nodeId = this.id;
+            }
+
+            // run the update function to correctly generate all interfaces
+            this.preventUpdate = false;
+            this.onUpdate();
+            this.preventUpdate = true;
+
+            // load the state for all generated interfaces
+            for (const k of Object.keys(state.inputs)) {
+                if (!this.staticInputKeys.includes(k)) {
+                    this.inputs[k].load(state.inputs[k]);
+                    this.inputs[k].nodeId = this.id;
+                }
+            }
+            for (const k of Object.keys(state.outputs)) {
+                if (!this.staticOutputKeys.includes(k)) {
+                    this.outputs[k].load(state.outputs[k]);
+                    this.outputs[k].nodeId = this.id;
+                }
+            }
+
+            this.preventUpdate = false;
+            this.events.loaded.emit(this as any);
+        }
+
         private onUpdate() {
+            if (this.preventUpdate) {
+                return;
+            }
+
             const inputValues = this.getStaticValues<I>(this.staticInputKeys, this.inputs);
             const outputValues = this.getStaticValues<O>(this.staticOutputKeys, this.outputs);
             const result = definition.onUpdate.call(this, inputValues, outputValues);
