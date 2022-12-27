@@ -13,8 +13,8 @@ describe("Dynamic Node", () => {
             const outputs: DynamicNodeDefinition = {};
             const inputs: DynamicNodeDefinition = {};
             for (let i = 0; i < numIntfs; i++) {
-                inputs[`intf${i}`] = () => new NodeInterface(`Intf ${i}`, 0);
-                outputs[`intf${i}`] = () => new NodeInterface(`Intf ${i}`, 0);
+                inputs[`i_intf${i}`] = () => new NodeInterface(`Intf ${i}`, 0);
+                outputs[`o_intf${i}`] = () => new NodeInterface(`Intf ${i}`, 0);
             }
             return { inputs, outputs };
         },
@@ -22,6 +22,7 @@ describe("Dynamic Node", () => {
 
     it("dynamically updates interfaces as needed", () => {
         const dn = new DynNode();
+        dn.onPlaced();
         expect(Object.keys(dn.inputs)).toHaveLength(1);
         expect(Object.keys(dn.outputs)).toHaveLength(1);
         dn.inputs.numIntfs.value = 10;
@@ -119,9 +120,10 @@ describe("Dynamic Node", () => {
 
     it("correctly saves and loads", () => {
         const dn = new DynNode();
+        dn.onPlaced();
         dn.inputs.numIntfs.value = 3;
         dn.outputs.staticOut.value = "test";
-        dn.inputs.intf2.value = 20;
+        dn.inputs.i_intf2.value = 20;
         const state = dn.save();
 
         const dn2 = new DynNode();
