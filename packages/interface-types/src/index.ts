@@ -50,8 +50,8 @@ export class BaklavaInterfaceTypes {
         this.editor = editor;
 
         this.editor.graphEvents.checkConnection.subscribe(this, ({ from, to }, prevent) => {
-            const fromType = (from as any).type;
-            const toType = (to as any).type;
+            const fromType = from.type;
+            const toType = to.type;
             if (!fromType || !toType) {
                 return;
             } else if (!this.canConvert(fromType, toType)) {
