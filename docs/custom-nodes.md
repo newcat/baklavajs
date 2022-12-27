@@ -114,3 +114,14 @@ calculate() {
     this.getInterface("Output").value = a + b;
 }
 ```
+
+## Overriding the name of a Node Interface or Node Option
+
+Keys for interfaces and options must be unique.
+Still, sometimes you may want two interfaces or options to have the same name.
+You can do this by passing the additional property `displayName` when adding the interface/option:
+
+```js
+this.addInputInterface("number1", "NumberOption", 1, { displayName: "Number" });
+this.addInputInterface("number2", "NumberOption", 1, { displayName: "Number" });
+```
