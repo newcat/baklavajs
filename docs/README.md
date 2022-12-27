@@ -13,7 +13,7 @@ You can directly use BaklavaJS without using Vue (it will still use Vue under th
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BaklavaJS Vanilla Example</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/baklavajs/dist/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/baklavajs/dist/index.css">
 </head>
 <body>
 
