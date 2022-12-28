@@ -69,35 +69,35 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
 
     public constructor(protected editor: Editor) {
         this.editor.nodeEvents.update.subscribe(this, (data, node) => {
-            if (node.graph && !node.graph.loading) {
+            if (node.graph && !node.graph.loading && node.graph.activeTransactions === 0) {
                 this.internalOnChange(node, data ?? undefined);
             }
         });
 
         this.editor.graphEvents.addNode.subscribe(this, (node, graph) => {
             this.recalculateOrder = true;
-            if (!graph.loading) {
+            if (!graph.loading && graph.activeTransactions === 0) {
                 this.internalOnChange();
             }
         });
 
         this.editor.graphEvents.removeNode.subscribe(this, (node, graph) => {
             this.recalculateOrder = true;
-            if (!graph.loading) {
+            if (!graph.loading && graph.activeTransactions === 0) {
                 this.internalOnChange();
             }
         });
 
         this.editor.graphEvents.addConnection.subscribe(this, (c, graph) => {
             this.recalculateOrder = true;
-            if (!graph.loading) {
+            if (!graph.loading && graph.activeTransactions === 0) {
                 this.internalOnChange();
             }
         });
 
         this.editor.graphEvents.removeConnection.subscribe(this, (c, graph) => {
             this.recalculateOrder = true;
-            if (!graph.loading) {
+            if (!graph.loading && graph.activeTransactions === 0) {
                 this.internalOnChange();
             }
         });

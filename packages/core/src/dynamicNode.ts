@@ -148,11 +148,19 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
                 return;
             }
 
+            if (this.graph) {
+                this.graph.activeTransactions++;
+            }
+
             const inputValues = this.getStaticValues<I>(this.staticInputKeys, this.inputs);
             const outputValues = this.getStaticValues<O>(this.staticOutputKeys, this.outputs);
             const result = definition.onUpdate.call(this, inputValues, outputValues);
             this.updateInterfaces("input", result.inputs ?? {}, result.forceUpdateInputs ?? []);
             this.updateInterfaces("output", result.outputs ?? {}, result.forceUpdateOutputs ?? []);
+
+            if (this.graph) {
+                this.graph.activeTransactions--;
+            }
         }
 
         private getStaticValues<T>(keys: string[], interfaces: Record<string, NodeInterface>): T {

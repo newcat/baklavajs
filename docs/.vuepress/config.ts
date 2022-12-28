@@ -26,6 +26,7 @@ export default defineUserConfig({
                     "/nodes/pre-defined-interfaces.md",
                     "/nodes/interface-types.md",
                     "/nodes/lifecycle.md",
+                    "/nodes/dynamic-nodes.md",
                 ],
             },
             {
