@@ -140,14 +140,6 @@ interface BaklavaInterfaceTypesOptions {
 
 Both the `viewPlugin` and `engine` are optional. The `viewPlugin` is used for applying the `data-interface-type` attribute on node interfaces. The `engine` plugin is used for applying the conversions during calculation.
 
-## Engine
-
-When using this plugin together with the Engine, make sure to provide the engine instance to the plugin:
-
-```js
-
-```
-
 ## Backend Usage
 
 By default, the `BaklavaInterfaceTypes` constructor expects two arguments: the editor and the return value of the `useBaklava` function.
