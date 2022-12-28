@@ -35,18 +35,18 @@
     },
     "devDependencies": {
         "@types/resize-observer-browser": "^0.1.7",
-        "@vitejs/plugin-vue": "^3.0.1",
-        "@vue/compiler-sfc": "^3.2.37",
-        "@vueuse/core": "^9.0.2",
+        "@vitejs/plugin-vue": "^4.0.0",
+        "@vue/compiler-sfc": "^3.2.45",
+        "@vueuse/core": "^9.9.0",
         "rollup-plugin-peer-deps-external": "^2.2.4",
-        "rollup-plugin-visualizer": "^5.7.1",
+        "rollup-plugin-visualizer": "^5.8.3",
         "rollup-plugin-vue": "^6.0.0",
-        "sass": "^1.54.0",
-        "typescript": "^4.7.4",
-        "vite": "^3.0.4",
+        "sass": "^1.57.1",
+        "typescript": "^4.9.4",
+        "vite": "^4.0.3",
         "vite-plugin-dts": "^1.7.1",
-        "vue": "^3.2.37",
-        "vue-tsc": "^0.39.2"
+        "vue": "^3.2.45",
+        "vue-tsc": "^1.0.18"
     },
     "publishConfig": {
         "access": "public"
