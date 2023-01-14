@@ -12,14 +12,14 @@
         "packages/*"
     ],
     "devDependencies": {
-        "@types/chai": "^4.3.3",
-        "@vue/runtime-dom": "^3.2.40",
-        "chai": "^4.3.6",
+        "@types/chai": "^4.3.4",
+        "@vue/runtime-dom": "^3.2.45",
+        "chai": "^4.3.7",
         "clean-webpack-plugin": "^4.0.0",
-        "lerna": "^5.6.1",
-        "rimraf": "^3.0.2",
-        "typedoc": "^0.23.15",
-        "webpack-bundle-analyzer": "^4.6.1"
+        "lerna": "^6.4.1",
+        "rimraf": "^4.0.4",
+        "typedoc": "^0.23.24",
+        "webpack-bundle-analyzer": "^4.7.0"
     },
     "postcss": {
         "useConfigFile": false,
