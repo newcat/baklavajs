@@ -18,7 +18,7 @@ jobs:
                 corepack enable
                 corepack prepare yarn@stable --activate
             - name: Install dependencies
-              run: yarn install --frozen-lockfile
+              run: yarn install --immutable
             - name: Build
               run: yarn run build
             - name: Lint
