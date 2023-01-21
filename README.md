@@ -5,9 +5,9 @@
 
 Graph / node editor in the browser using VueJS
 
-**[Online Demo](https://codesandbox.io/s/baklavajs-example-jyc6f?file=/src/App.vue)**
+**[Online Demo](https://codesandbox.io/s/baklavajs-v2-example-zpfkec?file=/src/App.vue)**
 
-![example](docs/public/img/example.png)
+![example](docs/.vuepress/public/img/example.png)
 
 | Package                    | Version                                                                                        |
 | -------------------------- | ---------------------------------------------------------------------------------------------- |
