@@ -24,7 +24,7 @@ export abstract class DynamicNode<I, O> extends Node<Dynamic<I>, Dynamic<O>> {
     public calculate?: CalculateFunction<Dynamic<I>, Dynamic<O>>;
 }
 
-export type DynamicNodeDefinition = Record<string, () => NodeInterface<any>>;
+export type DynamicNodeDefinition = Record<string, (() => NodeInterface<any>) | undefined>;
 export interface DynamicNodeUpdateResult {
     inputs?: DynamicNodeDefinition;
     outputs?: DynamicNodeDefinition;
@@ -194,7 +194,7 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
                     continue;
                 }
 
-                const intf = newInterfaces[k]();
+                const intf = newInterfaces[k]!();
                 type === "input" ? this.addInput(k, intf) : this.addOutput(k, intf);
             }
         }
