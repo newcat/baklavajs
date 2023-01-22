@@ -11,7 +11,7 @@ While not recommended, it is possible to use BaklavaJS standalone; without Vue a
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@baklavajs/themes@2.0.2-alpha.4/dist/syrup-dark.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@baklavajs/themes@2.0.2-beta.3/dist/syrup-dark.css" />
         <style>
             html,
             body {
@@ -27,7 +27,7 @@ While not recommended, it is possible to use BaklavaJS standalone; without Vue a
     <body>
         <div id="editor"></div>
 
-        <script src="https://cdn.jsdelivr.net/npm/baklavajs@2.0.2-alpha.8/dist/index.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/baklavajs@2.0.2-beta.3/dist/bundle.js"></script>
         <script>
             const viewModel = BaklavaJS.createBaklava(document.getElementById("editor"));
             const TestNode = BaklavaJS.Core.defineNode({
