@@ -182,8 +182,8 @@ export default class NodeView extends Vue {
 
         this.selectedNodeViews.forEach((elem) => {
             elem.draggingStartPoint = {
-                x: ev.screenX,
-                y: ev.screenY
+                x: ev.clientX,
+                y: ev.clientY
             };
             elem.draggingStartPosition = {
                 x: elem.data.position.x,
@@ -209,8 +209,8 @@ export default class NodeView extends Vue {
 
     handleMove(ev: MouseEvent) {
         if (this.draggingStartPoint) {
-            const dx = ev.screenX - this.draggingStartPoint.x;
-            const dy = ev.screenY - this.draggingStartPoint.y;
+            const dx = ev.clientX - this.draggingStartPoint.x;
+            const dy = ev.clientY - this.draggingStartPoint.y;
             const { x: newX, y: newY } = this.plugin.snappingProvider(
                 this.draggingStartPosition!.x + dx / this.plugin.scaling,
                 this.draggingStartPosition!.y + dy / this.plugin.scaling

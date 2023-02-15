@@ -246,8 +246,8 @@ export default class EditorView extends Vue {
             this.temporaryConnection.mx = ev.offsetX / this.plugin.scaling - this.plugin.panning.x;
             this.temporaryConnection.my = ev.offsetY / this.plugin.scaling - this.plugin.panning.y;
         } else if (this.draggingStartPoint) {
-            const dx = ev.screenX - this.draggingStartPoint.x;
-            const dy = ev.screenY - this.draggingStartPoint.y;
+            const dx = ev.clientX - this.draggingStartPoint.x;
+            const dy = ev.clientY - this.draggingStartPoint.y;
             this.plugin.panning.x = this.draggingStartPanning!.x + dx / this.plugin.scaling;
             this.plugin.panning.y = this.draggingStartPanning!.y + dy / this.plugin.scaling;
         }
@@ -277,8 +277,8 @@ export default class EditorView extends Vue {
             } else if (ev.target === this.$el) {
                 this.unselectAllNodes();
                 this.draggingStartPoint = {
-                    x: ev.screenX,
-                    y: ev.screenY,
+                    x: ev.clientX,
+                    y: ev.clientY,
                 };
                 this.draggingStartPanning = {
                     x: this.plugin.panning.x,
