@@ -22,7 +22,7 @@ You can find all the properties of the object <ApiLink type="interfaces" module=
 -   `type`: This is the only required property. The node type is used for saving and loading graphs, for example. It can essentially be seen as the name of your class. Therefore, it has to be unique.
 -   `title`: (_optional_) The default title of the node. If this property isn't specified, the `type` is used as the default title. (Note that users can rename nodes, so don't rely on the title for identifying nodes).
 -   `inputs`: (_optional_) An object specifying the input interfaces of the node. The keys are the "handle" for the node interface, while the values are functions that return a `NodeInterface` instance (or an instance of a subclass of `NodeInterface`).
--   `outputs`: (_optional_) An object specifying the input interfaces of the node. It has the same structure as the `inputs` object.
+-   `outputs`: (_optional_) An object specifying the output interfaces of the node. It has the same structure as the `inputs` object.
 -   `calculate`: (_optional_) A function that is called whenever the node is executed. You can find more details on the [Graph Execution](../execution/setup) page.
 
 Additionally, you can provide [lifecycle callbacks](./lifecycle).
