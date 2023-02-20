@@ -111,6 +111,16 @@ export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
                     state.scaling = template.scaling;
                     return state;
                 });
+                newValue.graph.hooks.load.subscribe(token, (state, graph) => {
+                    graph.panning = state.panning;
+                    graph.scaling = state.scaling;
+                    return state;
+                });
+                newValue.graph.hooks.save.subscribe(token, (state, graph) => {
+                    state.panning = graph.panning;
+                    state.scaling = graph.scaling;
+                    return state;
+                });
 
                 newValue.graphEvents.beforeAddNode.subscribe(token, (node) => setViewNodeProperties(node));
 

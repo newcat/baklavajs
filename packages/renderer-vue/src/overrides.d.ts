@@ -38,6 +38,11 @@ declare module "@baklavajs/core/dist/graph" {
         sidebar: { visible: boolean; nodeId: string; optionName: string };
         selectedNodes: AbstractNode[];
     }
+
+    interface IGraphState {
+        panning: { x: number; y: number };
+        scaling: number;
+    }
 }
 
 declare module "@baklavajs/core/dist/graphTemplate" {
