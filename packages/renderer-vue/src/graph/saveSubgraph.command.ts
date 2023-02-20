@@ -46,7 +46,7 @@ export function registerSaveSubgraphCommand(displayedGraph: Ref<Graph>, handler:
 
         const innerConnections = graph.connections.filter((c) => !interfaceConnections.includes(c));
         const nodes = graph.nodes.filter(
-            (n) => n.type !== SUBGRAPH_INPUT_NODE_TYPE && n.type !== SUBGRAPH_OUTPUT_NODE_TYPE
+            (n) => n.type !== SUBGRAPH_INPUT_NODE_TYPE && n.type !== SUBGRAPH_OUTPUT_NODE_TYPE,
         );
 
         graph.template.update({
@@ -54,6 +54,9 @@ export function registerSaveSubgraphCommand(displayedGraph: Ref<Graph>, handler:
             outputs,
             connections: innerConnections.map((c) => ({ id: c.id, from: c.from.id, to: c.to.id })),
             nodes: nodes.map((n) => n.save()),
+            // will be ignored in the update method but still providing them to make TypeScript happy
+            panning: graph.panning,
+            scaling: graph.scaling,
         });
 
         graph.template.panning = graph.panning;
