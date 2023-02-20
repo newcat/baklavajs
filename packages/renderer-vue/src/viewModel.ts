@@ -87,6 +87,8 @@ export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
                 newValue.nodeHooks.afterSave.unsubscribe(token);
                 newValue.graphTemplateHooks.beforeLoad.unsubscribe(token);
                 newValue.graphTemplateHooks.afterSave.unsubscribe(token);
+                newValue.graph.hooks.load.unsubscribe(token);
+                newValue.graph.hooks.save.unsubscribe(token);
             }
             if (newValue) {
                 newValue.nodeHooks.beforeLoad.subscribe(token, (state, node) => {
