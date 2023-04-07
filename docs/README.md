@@ -52,7 +52,7 @@ const myNode = new BaklavaJS.Core.NodeBuilder("My Node");
 editor.use(new BaklavaJS.PluginOptionsVue.OptionPlugin());
 ```
 
-So in general, `import { Foo } from "@baklavajs/plugin-bar"` will be `BaklavaJS.PluginBar.Foo`.
+So in general, <code>import { <span style="color: dodgerblue">Foo</span> } from "@<span style="color: teal">baklavajs</span>/<span style="color: purple">plugin-bar</span>"</code> will be <code><span style="color: teal">BaklavaJS</span>.<span style="color: purple">PluginBar</span>.<span style="color: dodgerblue">Foo</span></code>.
 
 ## With Vue / NPM
 
