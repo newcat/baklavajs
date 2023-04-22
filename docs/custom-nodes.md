@@ -77,8 +77,7 @@ export class MathNode extends Node {
         this.addInputInterface("Number 1", "NumberOption", 1);
         this.addInputInterface("Number 2", "NumberOption", 10);
         this.addOutputInterface("Output");
-        this.addOption("Operation", "SelectOption", {
-            selected: "Add",
+        this.addOption("Operation", "SelectOption", "Add", undefined, {
             items: [ "Add", "Subtract" ]
         });
     }
