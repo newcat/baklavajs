@@ -82,6 +82,29 @@ describe("Node", () => {
         expect(n.graph).toBe(g);
     });
 
+    it("can prevent title changes", () => {
+        const n = new TestNode();
+        const oldTitle = n.title;
+        let called = false;
+        n.events.beforeTitleChanged.subscribe("x", (t, prevent) => {
+            called = true;
+            expect(t).toBe("newTitle");
+            prevent();
+        });
+        n.title = "newTitle";
+        expect(called).toBe(true);
+        expect(n.title).toEqual(oldTitle);
+    });
+
+    it("emits an event after the title has been changed", () => {
+        const n = new TestNode();
+        const spy = jest.fn();
+        n.events.titleChanged.subscribe("x", spy);
+        n.title = "newTitle";
+        expect(spy).toHaveBeenCalled();
+        expect(spy.mock.lastCall[0]).toBe("newTitle");
+    });
+
     it.todo("correctly loads a state"); // TODO
 
     it.todo("correctly saves a state"); // TODO

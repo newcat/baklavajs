@@ -32,10 +32,10 @@ export interface INodeState<I, O> {
 }
 
 export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapable {
+    protected _title = "";
+
     /** Type of the node */
     public abstract readonly type: string;
-    /** Customizable display name of the node. */
-    public abstract title: string;
     /** Unique identifier of the node */
     public id: string = uuidv4();
 
@@ -52,6 +52,8 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
         addOutput: new BaklavaEvent<NodeInterface, AbstractNode>(this),
         beforeRemoveOutput: new PreventableBaklavaEvent<NodeInterface, AbstractNode>(this),
         removeOutput: new BaklavaEvent<NodeInterface, AbstractNode>(this),
+        beforeTitleChanged: new PreventableBaklavaEvent<string, AbstractNode>(this),
+        titleChanged: new BaklavaEvent<string, AbstractNode>(this),
         update: new BaklavaEvent<INodeUpdateEventData | null, AbstractNode>(this),
     } as const;
 
@@ -70,6 +72,17 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
      */
     public get graph() {
         return this.graphInstance;
+    }
+
+    /** Customizable display name of the node. */
+    public get title() {
+        return this._title;
+    }
+    public set title(v: string) {
+        if (!this.events.beforeTitleChanged.emit(v).prevented) {
+            this._title = v;
+            this.events.titleChanged.emit(v);
+        }
     }
 
     /**
@@ -119,7 +132,7 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
     public load(state: INodeState<any, any>): void {
         this.hooks.beforeLoad.execute(state);
         this.id = state.id;
-        this.title = state.title;
+        this._title = state.title;
         Object.entries(state.inputs).forEach(([k, v]) => {
             if (this.inputs[k]) {
                 this.inputs[k].load(v);

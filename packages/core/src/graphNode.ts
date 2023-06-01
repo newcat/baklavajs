@@ -22,11 +22,10 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
     return class GraphNode extends AbstractNode implements IGraphNode {
         public type = getGraphNodeTypeString(template);
 
-        private _title = "GraphNode";
-        public get title() {
+        public override get title() {
             return this._title;
         }
-        public set title(v: string) {
+        public override set title(v: string) {
             this.template.name = v;
         }
 

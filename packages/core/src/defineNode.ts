@@ -32,12 +32,12 @@ export interface INodeDefinition<I, O> {
 export function defineNode<I, O>(definition: INodeDefinition<I, O>): new () => Node<I, O> {
     return class extends Node<I, O> {
         public readonly type = definition.type;
-        public title = definition.title ?? definition.type;
         public inputs: NodeInterfaceDefinition<I> = {} as any;
         public outputs: NodeInterfaceDefinition<O> = {} as any;
 
         constructor() {
             super();
+            this._title = definition.title ?? definition.type;
             this.executeFactory("input", definition.inputs);
             this.executeFactory("output", definition.outputs);
             definition.onCreate?.call(this);

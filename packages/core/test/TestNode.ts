@@ -2,7 +2,6 @@ import { AbstractNode, CalculateFunction, Graph, NodeInterface } from "../src";
 
 export default class TestNode extends AbstractNode {
     public type = "TestNode";
-    public title = this.type;
     public inputs = {
         a: new NodeInterface("A", 2),
     };
@@ -12,6 +11,7 @@ export default class TestNode extends AbstractNode {
 
     public constructor() {
         super();
+        this._title = this.type;
         this.initializeIo();
     }
 

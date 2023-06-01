@@ -58,7 +58,6 @@ export interface IDynamicNodeDefinition<I, O> {
 export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>): new () => DynamicNode<I, O> {
     return class extends DynamicNode<I, O> {
         public readonly type = definition.type;
-        public title = definition.title ?? definition.type;
         public inputs = {} as NodeInterfaceDefinition<Dynamic<I>>;
         public outputs = {} as NodeInterfaceDefinition<Dynamic<O>>;
         public calculate;
@@ -69,6 +68,7 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
 
         constructor() {
             super();
+            this._title = definition.title ?? definition.type;
             this.executeFactory("input", definition.inputs);
             this.executeFactory("output", definition.outputs);
 
