@@ -12,6 +12,7 @@
         <button @click="changeGridSize">Change Grid Size</button>
         <button @click="createSubgraph">Create Subgraph</button>
         <button @click="saveAndLoad">Save and Load</button>
+        <button @click="changeSidebarWidth">SidebarWidth</button>
     </div>
 </template>
 
@@ -42,6 +43,7 @@ const editor = baklavaView.editor;
 
 (window as any).editor = baklavaView.editor;
 baklavaView.settings.enableMinimap = true;
+baklavaView.settings.sidebar.resizable = false;
 
 const engine = new DependencyEngine(editor);
 engine.events.afterRun.subscribe(token, (r) => {
@@ -115,6 +117,11 @@ const changeGridSize = () => {
 
 const createSubgraph = () => {
     baklavaView.commandHandler.executeCommand<Commands.CreateSubgraphCommand>(Commands.CREATE_SUBGRAPH_COMMAND);
+};
+
+const changeSidebarWidth = () => {
+    baklavaView.settings.sidebar.width = Math.round(Math.random() * 500) + 300;
+    baklavaView.settings.sidebar.resizable = !baklavaView.settings.sidebar.resizable;
 };
 </script>
 

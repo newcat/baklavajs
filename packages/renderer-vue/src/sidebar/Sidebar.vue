@@ -1,11 +1,9 @@
 <template>
     <div ref="el" class="baklava-sidebar" :class="{ '--open': graph.sidebar.visible }" :style="styles">
-        <div class="__resizer" @mousedown="startResize" />
+        <div v-if="resizable" class="__resizer" @mousedown="startResize" />
 
         <div class="__header">
-            <button tabindex="-1" class="__close" @click="close">
-                &times;
-            </button>
+            <button tabindex="-1" class="__close" @click="close">&times;</button>
             <div class="__node-name">
                 <b>{{ node ? node.title : "" }}</b>
             </div>
@@ -18,15 +16,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
-import { useGraph } from "../utility";
+import { computed, defineComponent, ref, toRef } from "vue";
+import { useGraph, useViewModel } from "../utility";
 
 export default defineComponent({
     setup() {
+        const { viewModel } = useViewModel();
         const { graph } = useGraph();
 
         const el = ref<HTMLElement | null>(null);
-        const width = ref(300);
+
+        const width = toRef(viewModel.value.settings.sidebar, "width");
+        const resizable = computed(() => viewModel.value.settings.sidebar.resizable);
 
         const node = computed(() => {
             const id = graph.value.sidebar.nodeId;
@@ -62,15 +63,16 @@ export default defineComponent({
 
         const onMouseMove = (event: MouseEvent) => {
             const maxwidth = el.value?.parentElement?.getBoundingClientRect().width ?? 500;
-            width.value -= event.movementX;
-            if (width.value < 300) {
-                width.value = 300;
-            } else if (width.value > 0.9 * maxwidth) {
-                width.value = 0.9 * maxwidth;
+            let newWidth = width.value - event.movementX;
+            if (newWidth < 300) {
+                newWidth = 300;
+            } else if (newWidth > 0.9 * maxwidth) {
+                newWidth = 0.9 * maxwidth;
             }
+            width.value = newWidth;
         };
 
-        return { el, graph, node, styles, displayedInterfaces, startResize, close };
+        return { el, graph, resizable, node, styles, displayedInterfaces, startResize, close };
     },
 });
 </script>

@@ -22,6 +22,13 @@ export interface IViewSettings {
         gridDivision: number;
         subGridVisibleThreshold: number;
     };
+    /** Sidebar settings */
+    sidebar: {
+        /** Width of the sidebar in pixels */
+        width: number;
+        /** Whether users should be able to resize the sidebar */
+        resizable: boolean;
+    };
 }
 
 export interface IBaklavaViewModel extends IBaklavaTapable {
@@ -61,7 +68,11 @@ export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
             gridDivision: 5,
             subGridVisibleThreshold: 0.6,
         },
-    });
+        sidebar: {
+            width: 300,
+            resizable: true,
+        },
+    } satisfies IViewSettings);
 
     const commandHandler = useCommandHandler();
     const history = useHistory(displayedGraph, commandHandler);
