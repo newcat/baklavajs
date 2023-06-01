@@ -31,11 +31,11 @@
         "@baklavajs/renderer-vue": "^2.0.2-beta.3"
     },
     "devDependencies": {
-        "@types/jest": "^29.2.4",
-        "jest": "^29.3.1",
-        "ts-jest": "^29.0.3",
+        "@types/jest": "^29.5.2",
+        "jest": "^29.5.0",
+        "ts-jest": "^29.1.0",
         "ts-node": "^10.9.1",
-        "typescript": "^4.9.4"
+        "typescript": "^5.1.3"
     },
     "publishConfig": {
         "access": "public"

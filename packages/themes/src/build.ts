@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as sass from "sass";
-import rimraf from "rimraf";
+import * as rimraf from "rimraf";
 
 const OUTPUT_DIR = path.resolve("./dist");
 
@@ -10,10 +10,7 @@ const THEMES = ["classic", "syrup-dark"];
 function buildTheme(name: string) {
     console.log("Building", name);
     const outFile = path.resolve("dist", `${name}.css`);
-    const result = sass.renderSync({
-        file: path.resolve("src", name, "all.scss"),
-        outFile,
-    });
+    const result = sass.compile(path.resolve("src", name, "all.scss"));
     fs.writeFileSync(outFile, result.css);
 }
 

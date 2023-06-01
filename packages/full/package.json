@@ -36,7 +36,7 @@
         "@baklavajs/themes": "^2.0.2-beta.3"
     },
     "devDependencies": {
-        "esbuild": "^0.16.12",
-        "typescript": "^4.9.4"
+        "esbuild": "^0.17.19",
+        "typescript": "^5.1.3"
     }
 }
