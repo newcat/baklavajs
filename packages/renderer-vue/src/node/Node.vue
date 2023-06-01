@@ -33,10 +33,11 @@
                 placeholder="Node Name"
                 @blur="doneRenaming"
                 @keydown.enter="doneRenaming"
+                @keydown.delete.stop
             />
         </div>
 
-        <div class="__content">
+        <div class="__content" @keydown.delete.stop>
             <!-- Outputs -->
             <div class="__outputs">
                 <NodeInterface v-for="output in displayedOutputs" :key="output.id" :node="node" :intf="output" />
