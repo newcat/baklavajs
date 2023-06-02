@@ -42,7 +42,7 @@ Here is an example component, that display a button that, when clicked, increase
 <!-- MyComponent.vue -->
 
 <template>
-    <button @click="add">{{ modelValue }}</button>
+    <button @click="count">{{ modelValue }}</button>
 </template>
 
 <script>
