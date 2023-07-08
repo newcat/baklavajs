@@ -15,62 +15,51 @@
     </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, inject, onMounted, onUpdated, Ref, ref } from "vue";
+<script setup lang="ts">
+import { computed, inject, onMounted, onUpdated, Ref, ref } from "vue";
 import { AbstractNode, NodeInterface } from "@baklavajs/core";
 import { useViewModel } from "../utility";
 
-export default defineComponent({
-    props: {
-        node: {
-            type: Object as () => AbstractNode,
-            required: true,
-        },
-        intf: {
-            type: Object as () => NodeInterface,
-            required: true,
-        },
-    },
-    setup(props) {
-        const { viewModel } = useViewModel();
-        const hoveredOver = inject<(intf: NodeInterface | undefined) => void>("hoveredOver")!;
+const props = defineProps<{
+    node: AbstractNode;
+    intf: NodeInterface;
+}>();
 
-        const el = ref<HTMLElement | null>(null) as Ref<HTMLElement>;
+const { viewModel } = useViewModel();
+const hoveredOver = inject<(intf: NodeInterface | undefined) => void>("hoveredOver")!;
 
-        const isConnected = computed(() => props.intf.connectionCount > 0);
-        const classes = computed(() => ({
-            "--input": props.intf.isInput,
-            "--output": !props.intf.isInput,
-            "--connected": isConnected.value,
-        }));
-        const showComponent = computed<boolean>(
-            () => props.intf.component && props.intf.connectionCount === 0 && (props.intf.isInput || !props.intf.port),
-        );
+const el = ref<HTMLElement | null>(null) as Ref<HTMLElement>;
 
-        const startHover = () => {
-            hoveredOver(props.intf);
-        };
-        const endHover = () => {
-            hoveredOver(undefined);
-        };
+const isConnected = computed(() => props.intf.connectionCount > 0);
+const classes = computed(() => ({
+    "--input": props.intf.isInput,
+    "--output": !props.intf.isInput,
+    "--connected": isConnected.value,
+}));
+const showComponent = computed<boolean>(
+    () => props.intf.component && props.intf.connectionCount === 0 && (props.intf.isInput || !props.intf.port),
+);
 
-        const onRender = () => {
-            if (el.value) {
-                viewModel.value.hooks.renderInterface.execute({ intf: props.intf, el: el.value });
-            }
-        };
+const startHover = () => {
+    hoveredOver(props.intf);
+};
+const endHover = () => {
+    hoveredOver(undefined);
+};
 
-        const openSidebar = () => {
-            const sidebar = viewModel.value.displayedGraph.sidebar;
-            sidebar.nodeId = props.node.id;
-            sidebar.optionName = props.intf.name;
-            sidebar.visible = true;
-        };
+const onRender = () => {
+    if (el.value) {
+        viewModel.value.hooks.renderInterface.execute({ intf: props.intf, el: el.value });
+    }
+};
 
-        onMounted(onRender);
-        onUpdated(onRender);
+const openSidebar = () => {
+    const sidebar = viewModel.value.displayedGraph.sidebar;
+    sidebar.nodeId = props.node.id;
+    sidebar.optionName = props.intf.name;
+    sidebar.visible = true;
+};
 
-        return { el, isConnected, classes, showComponent, startHover, endHover, openSidebar };
-    },
-});
+onMounted(onRender);
+onUpdated(onRender);
 </script>

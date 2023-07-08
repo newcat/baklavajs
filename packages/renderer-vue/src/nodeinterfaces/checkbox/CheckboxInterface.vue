@@ -1,9 +1,9 @@
 <template>
     <div
         class="baklava-checkbox"
-        :class="{ '--checked': intf.value }"
+        :class="{ '--checked': modelValue }"
         :title="intf.name"
-        @click="intf.value = !intf.value"
+        @click="emit('update:modelValue', !modelValue)"
     >
         <div class="__checkmark-container">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
@@ -16,16 +16,15 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import type { CheckboxInterface } from "./CheckboxInterface";
 
-export default defineComponent({
-    props: {
-        intf: {
-            type: Object as () => CheckboxInterface,
-            required: true,
-        },
-    },
-});
+defineProps<{
+    modelValue: boolean;
+    intf: CheckboxInterface;
+}>();
+
+const emit = defineEmits<{
+    (e: "update:modelValue", v: boolean): void;
+}>();
 </script>

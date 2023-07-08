@@ -34,6 +34,7 @@ import InterfaceTestNode from "./InterfaceTestNode";
 import SelectTestNode from "./SelectTestNode";
 import SidebarNode from "./SidebarNode";
 import DynamicNode from "./DynamicNode";
+import UpdateTestNode from "./UpdateTestNode";
 
 import { stringType, numberType, booleanType } from "./interfaceTypes";
 
@@ -71,6 +72,7 @@ editor.registerNodeType(InterfaceTestNode);
 editor.registerNodeType(SelectTestNode);
 editor.registerNodeType(SidebarNode);
 editor.registerNodeType(DynamicNode);
+editor.registerNodeType(UpdateTestNode);
 
 editor.graph.addNode(new TestNode());
 editor.graph.addNode(new TestNode());
