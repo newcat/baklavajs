@@ -89,7 +89,7 @@ export default class MathNode extends Node<Inputs, Outputs> {
     public inputs = {
         number1: new NumberInterface("Number", 1),
         number2: new NumberInterface("Number", 2),
-        operation: new SelectInterface("Operation", "Add",["Add", "Subtract"]).setPort(false),
+        operation: new SelectInterface("Operation", "Add", ["Add", "Subtract"]).setPort(false),
     };
 
     public outputs = {
@@ -130,7 +130,7 @@ export default class MathNode extends Node {
         this.inputs = {
             number1: new NumberInterface("Number", 1),
             number2: new NumberInterface("Number", 2),
-            operation: new SelectInterface("Operation", "Add",["Add", "Subtract"]).setPort(false),
+            operation: new SelectInterface("Operation", "Add", ["Add", "Subtract"]).setPort(false),
         };
         this.outputs = {
             output: new NodeInterface("Output", 0),
