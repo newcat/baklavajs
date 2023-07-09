@@ -2,22 +2,23 @@
     max-width: 20rem;
     background: var(--baklava-node-color-background);
     color: var(--baklava-node-color-foreground);
+    border: 1px solid transparent;
     border-radius: var(--baklava-node-border-radius);
     position: absolute;
-    filter: drop-shadow(0 0 3px #000000cc);
-    transition: box-shadow var(--baklava-visual-transition), filter var(--baklava-visual-transition);
+    box-shadow: 0 0 4px #000000cc;
+    transition: border-color var(--baklava-visual-transition), box-shadow var(--baklava-visual-transition);
 
     &:hover {
-        box-shadow: 0 0 0 0.35px var(--baklava-node-color-selected);
+        border-color: var(--baklava-node-color-hover);
     }
 
     &.--selected {
         z-index: 5;
-        box-shadow: 0 0 0 1px var(--baklava-node-color-selected);
+        border-color: var(--baklava-node-color-selected);
     }
 
     &.--dragging {
-        filter: drop-shadow(0 0 7px #000000cc);
+        box-shadow: 0 0 12px #000000cc;
 
         & > .__title {
             cursor: grabbing;
