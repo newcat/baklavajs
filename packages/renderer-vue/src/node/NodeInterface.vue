@@ -1,6 +1,12 @@
 <template>
     <div :id="intf.id" ref="el" class="baklava-node-interface" :class="classes">
-        <div v-if="intf.port" class="__port" @pointerover="startHover" @pointerout="endHover" />
+        <div
+            v-if="intf.port"
+            class="__port"
+            :class="{ '--selected': temporaryConnection?.from === intf }"
+            @pointerover="startHover"
+            @pointerout="endHover"
+        />
         <component
             :is="intf.component"
             v-if="showComponent"
@@ -30,7 +36,9 @@ const props = defineProps<{
 }>();
 
 const { viewModel } = useViewModel();
-const { hoveredOver } = inject<ITemporaryConnectionHandler>(TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL)!;
+const { hoveredOver, temporaryConnection } = inject<ITemporaryConnectionHandler>(
+    TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL,
+)!;
 
 const el = ref<HTMLElement | null>(null) as Ref<HTMLElement>;
 

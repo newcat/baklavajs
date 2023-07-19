@@ -6,6 +6,7 @@ import { useGraph } from "../utility";
 export const TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL = Symbol();
 export interface ITemporaryConnectionHandler {
     hoveredOver: (ni: NodeInterface | undefined) => void;
+    temporaryConnection: Ref<ITemporaryConnection | null>;
 }
 
 export function useTemporaryConnection() {
@@ -91,7 +92,10 @@ export function useTemporaryConnection() {
         }
     };
 
-    provide<ITemporaryConnectionHandler>(TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL, { hoveredOver });
+    provide<ITemporaryConnectionHandler>(TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL, {
+        temporaryConnection,
+        hoveredOver,
+    });
 
-    return { temporaryConnection, onMouseMove, onMouseDown, onMouseUp };
+    return { temporaryConnection, onMouseMove, onMouseDown, onMouseUp, hoveredOver };
 }

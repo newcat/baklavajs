@@ -10,6 +10,11 @@
         border-radius: 50%;
         top: calc(50% - 5px);
         cursor: crosshair;
+
+        &.--selected {
+            outline: 2px var(--baklava-color-connection-default) solid;
+            outline-offset: 4px;
+        }
     }
 
     &.--input {
