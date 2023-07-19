@@ -3,6 +3,11 @@ import { NodeInterface } from "@baklavajs/core";
 import { ITemporaryConnection, TemporaryConnectionState } from "../connection/connection";
 import { useGraph } from "../utility";
 
+export const TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL = Symbol();
+export interface ITemporaryConnectionHandler {
+    hoveredOver: (ni: NodeInterface | undefined) => void;
+}
+
 export function useTemporaryConnection() {
     const { graph } = useGraph();
 
@@ -18,6 +23,12 @@ export function useTemporaryConnection() {
 
     const onMouseDown = () => {
         if (hoveringOver.value) {
+            if (temporaryConnection.value) {
+                // onMouseUp();
+                // for creating connections with clicking instead of dragging
+                return;
+            }
+
             // if this interface is an input and already has a connection
             // to it, remove the connection and make it temporary
             const connection = graph.value.connections.find((c) => c.to === hoveringOver.value);
@@ -41,6 +52,11 @@ export function useTemporaryConnection() {
 
     const onMouseUp = () => {
         if (temporaryConnection.value && hoveringOver.value) {
+            if (temporaryConnection.value.from === hoveringOver.value) {
+                // for creating connections with clicking instead of dragging
+                return;
+            }
+
             graph.value.addConnection(temporaryConnection.value.from, temporaryConnection.value.to!);
         }
         temporaryConnection.value = null;
@@ -75,7 +91,7 @@ export function useTemporaryConnection() {
         }
     };
 
-    provide("hoveredOver", hoveredOver);
+    provide<ITemporaryConnectionHandler>(TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL, { hoveredOver });
 
     return { temporaryConnection, onMouseMove, onMouseDown, onMouseUp };
 }

@@ -4,36 +4,39 @@
         tabindex="-1"
         class="baklava-editor"
         :class="{
-            'baklava-ignore-mouse': !!temporaryConnection || dragging,
-            '--temporary-connection': !!temporaryConnection,
+            'baklava-ignore-mouse': !!temporaryConnection.temporaryConnection.value || panZoom.dragging.value,
+            '--temporary-connection': !!temporaryConnection.temporaryConnection.value,
         }"
         @pointermove.self="onPointerMove"
         @pointerdown="onPointerDown"
         @pointerup="onPointerUp"
-        @wheel.self="mouseWheel"
+        @wheel.self="panZoom.onMouseWheel"
         @keydown="keyDown"
         @keyup="keyUp"
     >
         <slot name="background">
-            <background />
+            <Background />
         </slot>
 
         <slot name="toolbar">
-            <toolbar />
+            <Toolbar />
         </slot>
 
         <slot name="palette">
-            <node-palette />
+            <NodePalette />
         </slot>
 
         <svg class="connections-container">
             <g v-for="connection in connections" :key="connection.id + counter.toString()">
                 <slot name="connection" :connection="connection">
-                    <connection-wrapper :connection="connection" />
+                    <ConnectionWrapper :connection="connection" />
                 </slot>
             </g>
-            <slot name="temporaryConnection" :temporary-connection="temporaryConnection">
-                <temporary-connection v-if="temporaryConnection" :connection="temporaryConnection" />
+            <slot name="temporaryConnection" :temporary-connection="temporaryConnection.temporaryConnection.value">
+                <TemporaryConnection
+                    v-if="temporaryConnection.temporaryConnection.value"
+                    :connection="temporaryConnection.temporaryConnection.value"
+                />
             </slot>
         </svg>
 
@@ -53,17 +56,17 @@
         </div>
 
         <slot name="sidebar">
-            <sidebar />
+            <Sidebar />
         </slot>
 
         <slot name="minimap">
-            <minimap v-if="viewModel.settings.enableMinimap" />
+            <Minimap v-if="viewModel.settings.enableMinimap" />
         </slot>
     </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, provide, Ref, ref, toRef } from "vue";
+<script setup lang="ts">
+import { computed, provide, Ref, ref, toRef } from "vue";
 
 import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaViewModel } from "../viewModel";
@@ -81,100 +84,73 @@ import Toolbar from "../toolbar/Toolbar.vue";
 
 import { providePlugin } from "../utility";
 
-export default defineComponent({
-    components: { Background, Node, ConnectionWrapper, TemporaryConnection, Sidebar, Minimap, NodePalette, Toolbar },
-    props: {
-        viewModel: {
-            type: Object as () => IBaklavaViewModel,
-            required: true,
-        },
-    },
-    setup(props) {
-        const token = Symbol("EditorToken");
+const props = defineProps<{ viewModel: IBaklavaViewModel }>();
 
-        const viewModelRef = toRef(props, "viewModel") as unknown as Ref<IBaklavaViewModel>;
-        providePlugin(viewModelRef);
+const token = Symbol("EditorToken");
 
-        const el = ref<HTMLElement | null>(null);
-        provide("editorEl", el);
+const viewModelRef = toRef(props, "viewModel") as unknown as Ref<IBaklavaViewModel>;
+providePlugin(viewModelRef);
 
-        const nodes = computed(() => props.viewModel.displayedGraph.nodes);
-        const connections = computed(() => props.viewModel.displayedGraph.connections);
-        const selectedNodes = computed(() => props.viewModel.displayedGraph.selectedNodes);
+const el = ref<HTMLElement | null>(null);
+provide("editorEl", el);
 
-        const panZoom = usePanZoom();
-        const temporaryConnection = useTemporaryConnection();
+const nodes = computed(() => props.viewModel.displayedGraph.nodes);
+const connections = computed(() => props.viewModel.displayedGraph.connections);
+const selectedNodes = computed(() => props.viewModel.displayedGraph.selectedNodes);
 
-        const nodeContainerStyle = computed(() => ({
-            ...panZoom.styles.value,
-        }));
+const panZoom = usePanZoom();
+const temporaryConnection = useTemporaryConnection();
 
-        // Reason: https://github.com/newcat/baklavajs/issues/54
-        const counter = ref(0);
-        props.viewModel.editor.hooks.load.subscribe(token, (s) => {
-            counter.value++;
-            return s;
-        });
+const nodeContainerStyle = computed(() => ({
+    ...panZoom.styles.value,
+}));
 
-        const onPointerMove = (ev: PointerEvent) => {
-            panZoom.onPointerMove(ev);
-            temporaryConnection.onMouseMove(ev);
-        };
-
-        const onPointerDown = (ev: PointerEvent) => {
-            if (ev.button === 0) {
-                if (ev.target === el.value) {
-                    unselectAllNodes();
-                    panZoom.onPointerDown(ev);
-                }
-                temporaryConnection.onMouseDown();
-            }
-        };
-
-        const onPointerUp = (ev: PointerEvent) => {
-            panZoom.onPointerUp(ev);
-            temporaryConnection.onMouseUp();
-        };
-
-        const keyDown = (ev: KeyboardEvent) => {
-            if (ev.key === "Tab") {
-                ev.preventDefault();
-            }
-            props.viewModel.commandHandler.handleKeyDown(ev);
-        };
-
-        const keyUp = (ev: KeyboardEvent) => {
-            props.viewModel.commandHandler.handleKeyUp(ev);
-        };
-
-        const selectNode = (node: AbstractNode) => {
-            if (!props.viewModel.commandHandler.pressedKeys.includes("Control")) {
-                unselectAllNodes();
-            }
-            props.viewModel.displayedGraph.selectedNodes.push(node);
-        };
-
-        const unselectAllNodes = () => {
-            props.viewModel.displayedGraph.selectedNodes = [];
-        };
-
-        return {
-            el,
-            counter,
-            nodes,
-            connections,
-            selectedNodes,
-            nodeContainerStyle,
-            onPointerMove,
-            onPointerDown,
-            onPointerUp,
-            keyDown,
-            keyUp,
-            selectNode,
-            temporaryConnection: temporaryConnection.temporaryConnection,
-            mouseWheel: panZoom.onMouseWheel,
-            dragging: panZoom.dragging,
-        };
-    },
+// Reason: https://github.com/newcat/baklavajs/issues/54
+const counter = ref(0);
+props.viewModel.editor.hooks.load.subscribe(token, (s) => {
+    counter.value++;
+    return s;
 });
+
+const onPointerMove = (ev: PointerEvent) => {
+    panZoom.onPointerMove(ev);
+    temporaryConnection.onMouseMove(ev);
+};
+
+const onPointerDown = (ev: PointerEvent) => {
+    if (ev.button === 0) {
+        if (ev.target === el.value) {
+            unselectAllNodes();
+            panZoom.onPointerDown(ev);
+        }
+        temporaryConnection.onMouseDown();
+    }
+};
+
+const onPointerUp = (ev: PointerEvent) => {
+    panZoom.onPointerUp(ev);
+    temporaryConnection.onMouseUp();
+};
+
+const keyDown = (ev: KeyboardEvent) => {
+    if (ev.key === "Tab") {
+        ev.preventDefault();
+    }
+    props.viewModel.commandHandler.handleKeyDown(ev);
+};
+
+const keyUp = (ev: KeyboardEvent) => {
+    props.viewModel.commandHandler.handleKeyUp(ev);
+};
+
+const selectNode = (node: AbstractNode) => {
+    if (!props.viewModel.commandHandler.pressedKeys.includes("Control")) {
+        unselectAllNodes();
+    }
+    props.viewModel.displayedGraph.selectedNodes.push(node);
+};
+
+const unselectAllNodes = () => {
+    props.viewModel.displayedGraph.selectedNodes = [];
+};
 </script>

@@ -19,6 +19,10 @@
 import { computed, inject, onMounted, onUpdated, Ref, ref } from "vue";
 import { AbstractNode, NodeInterface } from "@baklavajs/core";
 import { useViewModel } from "../utility";
+import {
+    ITemporaryConnectionHandler,
+    TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL,
+} from "../editor/temporaryConnection";
 
 const props = defineProps<{
     node: AbstractNode;
@@ -26,7 +30,7 @@ const props = defineProps<{
 }>();
 
 const { viewModel } = useViewModel();
-const hoveredOver = inject<(intf: NodeInterface | undefined) => void>("hoveredOver")!;
+const { hoveredOver } = inject<ITemporaryConnectionHandler>(TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL)!;
 
 const el = ref<HTMLElement | null>(null) as Ref<HTMLElement>;
 
