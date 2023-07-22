@@ -30,6 +30,20 @@ export enum EngineStatus {
     Stopped = "Stopped",
 }
 
+export interface BeforeNodeCalculationEventData {
+    /** The node that is about to be calculated */
+    node: AbstractNode;
+    /** Values for the node's input interfaces (key: node interface key, value: value for the node interface) */
+    inputValues: Record<string, any>;
+}
+
+export interface AfterNodeCalculationEventData {
+    /** The node that has just been calculated */
+    node: AbstractNode;
+    /** Output values of the node's calculate method (key: node interface key, value: value for the node interface) */
+    outputValues: Record<string, any>;
+}
+
 export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<any>> {
     public events = {
         /**
@@ -43,6 +57,19 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
          */
         afterRun: new BaklavaEvent<CalculationResult, BaseEngine<CalculationData, CalculationArgs>>(this),
         statusChange: new BaklavaEvent<EngineStatus, BaseEngine<CalculationData, CalculationArgs>>(this),
+        /**
+         * This event is called before a node is calculated.
+         * It is not preventable since this would break calculation.
+         */
+        beforeNodeCalculation: new BaklavaEvent<
+            BeforeNodeCalculationEventData,
+            BaseEngine<CalculationData, CalculationArgs>
+        >(this),
+        /** This event is called after a node has been calculated. */
+        afterNodeCalculation: new BaklavaEvent<
+            AfterNodeCalculationEventData,
+            BaseEngine<CalculationData, CalculationArgs>
+        >(this),
     };
 
     public hooks = {

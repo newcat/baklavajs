@@ -47,10 +47,10 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
                 inputsForNode[k] = inputs.get(v.id);
             });
 
+            this.events.beforeNodeCalculation.emit({ inputValues: inputsForNode, node: n });
             const r = await n.calculate(inputsForNode, { globalValues: calculationData, engine: this });
-
-            // validate return
             this.validateNodeCalculationOutput(n, r);
+            this.events.afterNodeCalculation.emit({ outputValues: r, node: n });
 
             result.set(n.id, new Map(Object.entries(r)));
             if (connectionsFromNode.has(n)) {
