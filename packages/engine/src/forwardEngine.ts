@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// TODO: Reenable ESLint rule after implementation
 import { AbstractNode, Graph, INodeUpdateEventData } from "@baklavajs/core";
 import { BaseEngine, CalculationResult } from "./baseEngine";
 
