@@ -1,4 +1,4 @@
-import { defineNode } from "@baklavajs/core";
+import { NodeInterface, defineNode } from "@baklavajs/core";
 import { CheckboxInterface, NumberInterface, TextInputInterface, SelectInterface, SliderInterface } from "../src";
 
 export default defineNode({
@@ -13,7 +13,7 @@ export default defineNode({
         slider: () => new SliderInterface("Slider", 0.5, 0, 1).setPort(false),
     },
     outputs: {
-        output: () => new CheckboxInterface("Output", false),
+        output: () => new NodeInterface("Output", false),
     },
     calculate({ input }) {
         return { output: input };

@@ -2,7 +2,7 @@
     <div id="app">
         <EditorComponent :view-model="baklavaView">
             <template #node="nodeProps">
-                <CommentNode v-if="nodeProps.node.type === 'CommentNode'" v-bind="nodeProps" />
+                <CommentNodeRenderer v-if="nodeProps.node.type === 'CommentNode'" v-bind="nodeProps" />
                 <NodeComponent v-else v-bind="nodeProps" />
             </template>
         </EditorComponent>
@@ -36,6 +36,8 @@ import DynamicNode from "./DynamicNode";
 import UpdateTestNode from "./UpdateTestNode";
 
 import { stringType, numberType, booleanType } from "./interfaceTypes";
+
+import CommentNodeRenderer from "./CommentNodeRenderer.vue";
 
 const NodeComponent = Components.Node;
 

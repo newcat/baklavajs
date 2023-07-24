@@ -49,7 +49,7 @@ const classes = computed(() => ({
     "--connected": isConnected.value,
 }));
 const showComponent = computed<boolean>(
-    () => props.intf.component && props.intf.connectionCount === 0 && (props.intf.isInput || !props.intf.port),
+    () => props.intf.component && (!props.intf.isInput || !props.intf.port || props.intf.connectionCount === 0),
 );
 
 const startHover = () => {
