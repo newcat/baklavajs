@@ -23,7 +23,7 @@
         "eslint-plugin-vue": "^9.15.1",
         "lerna": "^7.1.4",
         "mermaid": "^10.2.4",
-        "prettier": "^3.0.0",
+        "prettier": "^2.8.8",
         "prettier-eslint": "^15.0.1",
         "rimraf": "^5.0.1",
         "typedoc": "^0.24.8",
