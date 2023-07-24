@@ -2,7 +2,8 @@
     <div id="app">
         <EditorComponent :view-model="baklavaView">
             <template #node="nodeProps">
-                <CustomNodeRenderer :key="nodeProps.node.id" v-bind="nodeProps" />
+                <CommentNode v-if="nodeProps.node.type === 'CommentNode'" v-bind="nodeProps" />
+                <NodeComponent v-else v-bind="nodeProps" />
             </template>
         </EditorComponent>
         <button @click="calculate">Calculate</button>
@@ -18,11 +19,9 @@
 
 <script setup lang="ts">
 import { NodeInstanceOf } from "@baklavajs/core";
-import { EditorComponent, SelectInterface, useBaklava, Commands } from "../src";
+import { EditorComponent, Components, SelectInterface, useBaklava, Commands } from "../src";
 import { DependencyEngine, applyResult } from "@baklavajs/engine";
 import { BaklavaInterfaceTypes } from "@baklavajs/interface-types";
-
-import CustomNodeRenderer from "./CustomNodeRenderer";
 
 import TestNode from "./TestNode";
 import OutputNode from "./OutputNode";
@@ -37,6 +36,8 @@ import DynamicNode from "./DynamicNode";
 import UpdateTestNode from "./UpdateTestNode";
 
 import { stringType, numberType, booleanType } from "./interfaceTypes";
+
+const NodeComponent = Components.Node;
 
 const token = Symbol("token");
 const baklavaView = useBaklava();

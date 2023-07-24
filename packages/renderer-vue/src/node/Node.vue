@@ -8,46 +8,58 @@
         :data-node-type="node.type"
         @pointerdown="select"
     >
-        <div class="__title" @pointerdown.self.stop="startDrag">
-            <template v-if="!renaming">
-                <div class="__title-label">
-                    {{ node.title }}
-                </div>
-                <div class="__menu">
-                    <vertical-dots class="--clickable" @click="openContextMenu" />
-                    <context-menu
-                        v-model="showContextMenu"
-                        :x="0"
-                        :y="0"
-                        :items="contextMenuItems"
-                        @click="onContextMenuClick"
-                    />
-                </div>
-            </template>
-            <input
-                v-else
-                ref="renameInputEl"
-                v-model="tempName"
-                type="text"
-                class="baklava-input"
-                placeholder="Node Name"
-                @blur="doneRenaming"
-                @keydown.enter="doneRenaming"
-                @keydown.delete.stop
-            />
-        </div>
-
-        <div class="__content" @keydown.delete.stop>
-            <!-- Outputs -->
-            <div class="__outputs">
-                <NodeInterface v-for="output in displayedOutputs" :key="output.id" :node="node" :intf="output" />
+        <slot name="title">
+            <div class="__title" @pointerdown.self.stop="startDrag">
+                <template v-if="!renaming">
+                    <div class="__title-label">
+                        {{ node.title }}
+                    </div>
+                    <div class="__menu">
+                        <vertical-dots class="--clickable" @click="openContextMenu" />
+                        <context-menu
+                            v-model="showContextMenu"
+                            :x="0"
+                            :y="0"
+                            :items="contextMenuItems"
+                            @click="onContextMenuClick"
+                        />
+                    </div>
+                </template>
+                <input
+                    v-else
+                    ref="renameInputEl"
+                    v-model="tempName"
+                    type="text"
+                    class="baklava-input"
+                    placeholder="Node Name"
+                    @blur="doneRenaming"
+                    @keydown.enter="doneRenaming"
+                    @keydown.delete.stop
+                />
             </div>
+        </slot>
 
-            <!-- Inputs -->
-            <div class="__inputs">
-                <NodeInterface v-for="input in displayedInputs" :key="input.id" :node="node" :intf="input" />
+        <slot name="content">
+            <div class="__content" @keydown.delete.stop>
+                <!-- Outputs -->
+                <div class="__outputs">
+                    <template v-for="output in displayedOutputs" :key="output.id">
+                        <slot name="nodeInterface" type="output" :node="node" :intf="output">
+                            <NodeInterface :node="node" :intf="output" />
+                        </slot>
+                    </template>
+                </div>
+
+                <!-- Inputs -->
+                <div class="__inputs">
+                    <template v-for="input in displayedInputs" :key="input.id">
+                        <slot name="nodeInterface" type="input" :node="node" :intf="input">
+                            <NodeInterface :node="node" :intf="input" />
+                        </slot>
+                    </template>
+                </div>
             </div>
-        </div>
+        </slot>
     </div>
 </template>
 

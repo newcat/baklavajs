@@ -6,5 +6,5 @@
         "types": ["resize-observer-browser", "vite/client"],
         "jsx": "preserve"
     },
-    "include": ["./**/*.ts", "./**/*.vue"]
+    "include": ["./**/*.ts", "./**/*.vue", "../src/**/*.ts", "../src/**/*.vue"]
 }

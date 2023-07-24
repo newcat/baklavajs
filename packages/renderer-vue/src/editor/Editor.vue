@@ -42,14 +42,9 @@
 
         <div class="node-container" :style="nodeContainerStyle">
             <transition-group name="fade">
-                <template v-for="node in nodes">
+                <template v-for="node in nodes" :key="node.id + counter.toString()">
                     <slot name="node" :node="node" :selected="selectedNodes.includes(node)" @select="selectNode(node)">
-                        <node
-                            :key="node.id + counter.toString()"
-                            :node="node"
-                            :selected="selectedNodes.includes(node)"
-                            @select="selectNode(node)"
-                        />
+                        <Node :node="node" :selected="selectedNodes.includes(node)" @select="selectNode(node)" />
                     </slot>
                 </template>
             </transition-group>
@@ -72,6 +67,7 @@ import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaViewModel } from "../viewModel";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
+import { providePlugin } from "../utility";
 
 import Background from "./Background.vue";
 import Node from "../node/Node.vue";
@@ -81,8 +77,6 @@ import Sidebar from "../sidebar/Sidebar.vue";
 import Minimap from "../components/Minimap.vue";
 import NodePalette from "../nodepalette/NodePalette.vue";
 import Toolbar from "../toolbar/Toolbar.vue";
-
-import { providePlugin } from "../utility";
 
 const props = defineProps<{ viewModel: IBaklavaViewModel }>();
 
