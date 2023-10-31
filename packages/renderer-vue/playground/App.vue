@@ -35,6 +35,8 @@ import SidebarNode from "./SidebarNode";
 import DynamicNode from "./DynamicNode";
 import UpdateTestNode from "./UpdateTestNode";
 
+import ReactiveOutputTestNode from "./ReactiveOutputTestNode";
+
 import { stringType, numberType, booleanType } from "./interfaceTypes";
 
 import CommentNodeRenderer from "./CommentNodeRenderer.vue";
@@ -76,6 +78,7 @@ editor.registerNodeType(SelectTestNode);
 editor.registerNodeType(SidebarNode);
 editor.registerNodeType(DynamicNode);
 editor.registerNodeType(UpdateTestNode);
+editor.registerNodeType(ReactiveOutputTestNode);
 
 editor.graph.addNode(new TestNode());
 editor.graph.addNode(new TestNode());
