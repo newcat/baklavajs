@@ -44,11 +44,11 @@ The old version of BaklavaJS can be found here: https://github.com/newcat/baklav
 ### Top Sponsors
 <a href="https://github.com/ThePixelDeveloper">ThePixelDeveloper</a>&nbsp;&middot;
 <a href="https://github.com/RDIL">Reece Dunham</a>&nbsp;&middot;
-<a href="https://github.com/adrianrudnik">Adrian Rudnik</a>
+<a href="https://github.com/adrianrudnik">Adrian Rudnik</a>&nbsp;&middot;
 <a href="https://github.com/yochrisbolton">Chris Bolton</a>&nbsp;&middot;
 <a href="https://github.com/LittleMouseGames">LittleMouseGames</a>&nbsp;&middot;
 <a href="https://github.com/andreibosco">Andrei Bosco B. Torres</a>&nbsp;&middot;
-<a href="https://github.com/eviltik">eviltik</a>&nbsp;&middot;
+<a href="https://github.com/eviltik">eviltik</a>
 
 ### Gold Sponsors
 <a href="https://github.com/TigerHix">Tiger Tang</a>
