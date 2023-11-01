@@ -1,6 +1,6 @@
 import { Ref } from "vue";
-import { Editor, Graph, GraphTemplate } from "@baklavajs/core";
-import { InputNode, OutputNode, SubgraphInputNode, SubgraphOutputNode } from "./subgraphInterfaceNodes";
+import { AbstractNode, Editor, Graph, GraphTemplate } from "@baklavajs/core";
+import { SubgraphInputNode, SubgraphOutputNode } from "./subgraphInterfaceNodes";
 
 export type SwitchGraph = (newGraph: Graph | GraphTemplate) => void;
 
@@ -21,12 +21,39 @@ export function useSwitchGraph(editor: Ref<Editor>, displayedGraph: Ref<Graph>) 
             newGraphInstance = new Graph(editor.value);
             newGraph.createGraph(newGraphInstance);
 
+            // get bounding box of all nodes to place the interface nodes in a nice way
+            const xRight = newGraphInstance.nodes.reduce((acc: number, cur: AbstractNode) => {
+                const x = cur.position.x;
+                return x < acc ? x : acc;
+            }, Infinity);
+
+            const yTop = newGraphInstance.nodes.reduce((acc: number, cur: AbstractNode) => {
+                const y = cur.position.y;
+                return y < acc ? y : acc;
+            }, Infinity);
+
+            const xLeft = newGraphInstance.nodes.reduce((acc: number, cur: AbstractNode) => {
+                const x = cur.position.x + cur.width;
+                return x > acc ? x : acc;
+            }, -Infinity);
+
             // create interface nodes
-            newGraphInstance.inputs.forEach((input) => {
-                const node = new SubgraphInputNode() as InputNode;
-                node.inputs.name.value = input.name;
-                node.graphInterfaceId = input.id;
-                newGraphInstance.addNode(node);
+            newGraphInstance.inputs.forEach((input, idx) => {
+                let node = newGraphInstance.nodes.find(
+                    (n) => n instanceof SubgraphInputNode && n.graphInterfaceId === input.id,
+                ) as SubgraphInputNode;
+
+                if (!node) {
+                    node = new SubgraphInputNode();
+                    node.inputs.name.value = input.name;
+                    node.graphInterfaceId = input.id;
+                    node.position = {
+                        x: xRight - 300,
+                        y: yTop + idx * 200
+                    };
+                    newGraphInstance.addNode(node);
+                }
+
                 const targetInterface = newGraphInstance.findNodeInterface(input.nodeInterfaceId);
                 if (!targetInterface) {
                     console.warn(`Could not find target interface ${input.nodeInterfaceId} for subgraph input node`);
@@ -35,11 +62,22 @@ export function useSwitchGraph(editor: Ref<Editor>, displayedGraph: Ref<Graph>) 
                 newGraphInstance.addConnection(node.outputs.placeholder, targetInterface);
             });
 
-            newGraphInstance.outputs.forEach((output) => {
-                const node = new SubgraphOutputNode() as OutputNode;
-                node.inputs.name.value = output.name;
-                node.graphInterfaceId = output.id;
-                newGraphInstance.addNode(node);
+            newGraphInstance.outputs.forEach((output, index) => {
+                let node = newGraphInstance.nodes.find(
+                    (n) => n instanceof SubgraphOutputNode && n.graphInterfaceId === output.id,
+                ) as SubgraphOutputNode;
+
+                if (!node) {
+                    node = new SubgraphOutputNode();
+                    node.inputs.name.value = output.name;
+                    node.graphInterfaceId = output.id;
+                    node.position = {
+                        x: xLeft + 100,
+                        y: yTop + index * 200
+                    };
+                    newGraphInstance.addNode(node);
+                }
+
                 const targetInterface = newGraphInstance.findNodeInterface(output.nodeInterfaceId);
                 if (!targetInterface) {
                     console.warn(`Could not find target interface ${output.nodeInterfaceId} for subgraph input node`);
