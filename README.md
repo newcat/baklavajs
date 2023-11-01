@@ -1,6 +1,6 @@
 # BaklavaJS
 
-![example branch parameter](https://github.com/newcat/baklavajs/actions/workflows/build.yml/badge.svg?branch=dev-v2.0)
+![build-status](https://github.com/newcat/baklavajs/actions/workflows/build.yml/badge.svg)
 ![npm](https://img.shields.io/npm/v/baklavajs.svg)
 
 Graph / node editor in the browser using VueJS
@@ -20,7 +20,7 @@ Graph / node editor in the browser using VueJS
 
 ## Introduction
 
-BaklavaJS is a graph/node editor for the web. It provides an easy-to-use editor together with the ability to create custom nodes. Aditionally, it puts a strong emphasis on extensibility, which lead to an versatile plugin system.
+BaklavaJS is a graph/node editor for the web. It provides an easy-to-use editor together with the ability to create custom nodes. Aditionally, it puts a strong emphasis on extensibility, which leads to a versatile plugin system.
 To guarantee type safety, the entirety of the BaklavaJS ecosystem is written in TypeScript.
 
 The core functionality is shipped in the `@baklavajs/core` package. Any other functionality can be added a-la-carte by installing the desired plugins:
@@ -35,3 +35,23 @@ There is also the `baklavajs` package, which contains the core package as well a
 ## Getting Started & Documentation
 
 You can find the documentation here: https://v2.baklava.tech
+
+## BaklavaJS v1
+The old version of BaklavaJS can be found here: https://github.com/newcat/baklavajs/tree/v1
+
+## Sponsors
+
+### Top Sponsors
+<a href="https://github.com/ThePixelDeveloper">ThePixelDeveloper</a>&nbsp;&middot;
+<a href="https://github.com/RDIL">Reece Dunham</a>&nbsp;&middot;
+<a href="https://github.com/adrianrudnik">Adrian Rudnik</a>
+<a href="https://github.com/yochrisbolton">Chris Bolton</a>&nbsp;&middot;
+<a href="https://github.com/LittleMouseGames">LittleMouseGames</a>&nbsp;&middot;
+<a href="https://github.com/andreibosco">Andrei Bosco B. Torres</a>&nbsp;&middot;
+<a href="https://github.com/eviltik">eviltik</a>&nbsp;&middot;
+
+### Gold Sponsors
+<a href="https://github.com/TigerHix">Tiger Tang</a>
+
+### Sponsors
+<a href="https://github.com/notgull">John Nunley</a>
