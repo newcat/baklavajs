@@ -9,7 +9,8 @@
         "clean": "rimraf ./packages/*/dist && rimraf ./packages/full/lib",
         "generate-api-docs": "typedoc",
         "docs:dev": "vuepress dev docs",
-        "docs:build": "vuepress build docs"
+        "docs:build": "vuepress build docs",
+        "version": "yarn install && git stage yarn.lock"
     },
     "workspaces": [
         "packages/*"
