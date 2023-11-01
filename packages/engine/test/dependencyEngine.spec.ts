@@ -59,14 +59,6 @@ describe("DependencyEngine", () => {
         } as AfterNodeCalculationEventData);
     });
 
-    it("handles nodes without a calculate method", async () => {
-        const editor = new Editor();
-        const NoCalculationNode = defineNode({ type: "NoCalculation" });
-        editor.graph.addNode(new NoCalculationNode());
-        const engine = new DependencyEngine<void>(editor);
-        expect(await engine.runOnce()).toEqual(new Map());
-    });
-
     it("allows using multiple connections", async () => {
         const editor = new Editor();
         const spy = jest.fn();
@@ -97,7 +89,7 @@ describe("DependencyEngine", () => {
             type: "NoCalculateNode",
             outputs: {
                 a: () => new NodeInterface("a", 3),
-            }
+            },
         });
         const n1 = editor.graph.addNode(new NoCalculateNode())!;
         const n2 = editor.graph.addNode(new TestNode())!;
@@ -106,6 +98,17 @@ describe("DependencyEngine", () => {
         const engine = new DependencyEngine<void>(editor);
         const result = await engine.runOnce();
 
-        expect(result).toMatchSnapshot();
+        expect(result).toEqual(
+            new Map([
+                [n1.id, new Map([["a", 3]])],
+                [
+                    n2.id,
+                    new Map([
+                        ["c", 4],
+                        ["d", 2],
+                    ]),
+                ],
+            ]),
+        );
     });
 });
