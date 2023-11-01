@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DependencyEngine handles nodes without calculate functions 1`] = `
+Map {
+  "3595507a-28e8-4dac-a536-82f1cfb9b7cf" => Map {
+    "a" => 3,
+  },
+  "1ed1bcb1-6582-4606-9336-32c69330e8d1" => Map {
+    "c" => 4,
+    "d" => 2,
+  },
+}
+`;

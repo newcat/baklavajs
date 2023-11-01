@@ -32,23 +32,23 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
 
         const result: CalculationResult = new Map();
         for (const n of calculationOrder) {
-            if (!n.calculate) {
-                continue;
-            }
-
             const inputsForNode: Record<string, any> = {};
             Object.entries(n.inputs).forEach(([k, v]) => {
-                if (!inputs.has(v.id)) {
-                    throw new Error(
-                        `Could not find value for interface ${v.id}\n` +
-                            "This is likely a Baklava internal issue. Please report it on GitHub.",
-                    );
-                }
-                inputsForNode[k] = inputs.get(v.id);
+                inputsForNode[k] = this.getInterfaceValue(inputs, v.id);
             });
 
             this.events.beforeNodeCalculation.emit({ inputValues: inputsForNode, node: n });
-            const r = await n.calculate(inputsForNode, { globalValues: calculationData, engine: this });
+
+            let r: any;
+            if (n.calculate) {
+                r = await n.calculate(inputsForNode, { globalValues: calculationData, engine: this });
+            } else {
+                r = {};
+                for (const [k, intf] of Object.entries(n.outputs)) {
+                    r[k] = this.getInterfaceValue(inputs, intf.id);
+                }
+            }
+
             this.validateNodeCalculationOutput(n, r);
             this.events.afterNodeCalculation.emit({ outputValues: r, node: n });
 
@@ -85,10 +85,11 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
             this.recalculateOrder = false;
         }
 
-        // gather all values of the unconnected inputs
+        // Gather all values of the unconnected inputs.
         // maps NodeInterface.id -> value
-        // the reason it is done here and not during calculation is that this
-        // way we prevent race conditions because calculations can be async
+        // The reason it is done here and not during calculation is
+        // that this way we prevent race conditions because calculations can be async.
+        // For the same reason, we need to gather all output values for nodes that do not have a calculate function.
         const inputValues = new Map<string, any>();
         for (const n of this.editor.graph.nodes) {
             Object.values(n.inputs).forEach((ni) => {
@@ -96,6 +97,11 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
                     inputValues.set(ni.id, ni.value);
                 }
             });
+            if (!n.calculate) {
+                Object.values(n.outputs).forEach((ni) => {
+                    inputValues.set(ni.id, ni.value);
+                });
+            }
         }
 
         return await this.runGraph(this.editor.graph, inputValues, calculationData);
@@ -104,5 +110,15 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
     protected onChange(recalculateOrder: boolean): void {
         this.recalculateOrder = recalculateOrder || this.recalculateOrder;
         void this.calculateWithoutData();
+    }
+
+    private getInterfaceValue(values: Map<string, any>, id: string): any {
+        if (!values.has(id)) {
+            throw new Error(
+                `Could not find value for interface ${id}\n` +
+                    "This is likely a Baklava internal issue. Please report it on GitHub.",
+            );
+        }
+        return values.get(id);
     }
 }

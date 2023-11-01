@@ -90,4 +90,22 @@ describe("DependencyEngine", () => {
 
         expect(spy).toHaveBeenCalledWith([2, 0]);
     });
+
+    it("handles nodes without calculate functions", async () => {
+        const editor = new Editor();
+        const NoCalculateNode = defineNode({
+            type: "NoCalculateNode",
+            outputs: {
+                a: () => new NodeInterface("a", 3),
+            }
+        });
+        const n1 = editor.graph.addNode(new NoCalculateNode())!;
+        const n2 = editor.graph.addNode(new TestNode())!;
+        editor.graph.addConnection(n1.outputs.a, n2.inputs.a);
+
+        const engine = new DependencyEngine<void>(editor);
+        const result = await engine.runOnce();
+
+        expect(result).toMatchSnapshot();
+    });
 });
