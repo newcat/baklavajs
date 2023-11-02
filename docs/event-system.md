@@ -1,7 +1,7 @@
 # Event System
 
 BaklavaJS uses a custom event system to allow for extensibility and plugins.
-Each class that supports has an `events` and/or a `hook` property, which can be used to subscribe to an event or tap into a hook.
+Each class that supports it has an `events` and/or a `hook` property, which can be used to subscribe to an event or tap into a hook.
 
 Most JS event systems need a reference to the listener function to remove an event listener.
 However, this doesn't work well with inline arrow-functions.

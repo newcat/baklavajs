@@ -23,7 +23,7 @@ There are currently two themes available:
 
 Baklava's themes make heavy use of CSS variables.
 This means that you can easily change colors or other visual properties by overriding the values of the variables in your CSS.
-Check out [this file](https://github.com/newcat/baklavajs/blob/dev-v2.0/packages/themes/src/classic/variables.scss) for a list of variables.
+Check out [this file](https://github.com/newcat/baklavajs/blob/master/packages/themes/src/classic/variables.scss) for a list of variables.
 
 ## CSS Classes
 
@@ -44,22 +44,22 @@ For example, to make all nodes of type `MyNodeType` have a blue background, you 
 If these options don't fulfill your needs for customization, you can provide custom components.
 For this, the editor provides the following slots:
 
--   `background` [(default component)](https://github.com/newcat/baklavajs/blob/dev-v2.0/packages/renderer-vue/src/editor/Background.vue)
--   `toolbar` [(default component)](https://github.com/newcat/baklavajs/blob/dev-v2.0/packages/renderer-vue/src/toolbar/Toolbar.vue)
--   `palette` [(default component)](https://github.com/newcat/baklavajs/blob/dev-v2.0/packages/renderer-vue/src/nodepalette/NodePalette.vue)
--   `connection` [(default component)](https://github.com/newcat/baklavajs/blob/dev-v2.0/packages/renderer-vue/src/connection/ConnectionWrapper.vue)
+-   `background` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/editor/Background.vue)
+-   `toolbar` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/toolbar/Toolbar.vue)
+-   `palette` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/nodepalette/NodePalette.vue)
+-   `connection` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/connection/ConnectionWrapper.vue)
     -   Props:
         -   `connection` (type: <code><ApiLink type="classes" module="@baklavajs/core" name="Connection">Connection</ApiLink></code>)
--   `temporaryConnection` [(default component)](https://github.com/newcat/baklavajs/blob/dev-v2.0/packages/renderer-vue/src/connection/TemporaryConnection.vue)
+-   `temporaryConnection` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/connection/TemporaryConnection.vue)
     -   Props:
         -   `temporaryConnection` (type: <code><ApiLink type="interfaces" module="@baklavajs/core" name="ITemporaryConnection">ITemporaryConnection</ApiLink> | null</code>)
--   `node` [(default component)](https://github.com/newcat/baklavajs/blob/dev-v2.0/packages/renderer-vue/src/node/Node.vue)
+-   `node` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/node/Node.vue)
     -   Props:
         -   `node` (type: <code><ApiLink type="classes" module="@baklavajs/core" name="AbstractNode">AbstractNode</ApiLink></code>)
         -   `selected` (type: `boolean`)
         -   `select` (type: `() => void`) callback for node being selected
--   `sidebar` [(default component)](https://github.com/newcat/baklavajs/blob/dev-v2.0/packages/renderer-vue/src/sidebar/Sidebar.vue)
--   `minimap` [(default component)](https://github.com/newcat/baklavajs/blob/dev-v2.0/packages/renderer-vue/src/components/Minimap.vue)
+-   `sidebar` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/sidebar/Sidebar.vue)
+-   `minimap` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/components/Minimap.vue)
 
 So, for example, if you want to use a custom component for a certain node type, you could do it like this:
 

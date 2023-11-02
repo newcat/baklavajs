@@ -38,6 +38,7 @@ export default defineConfig({
                 items: [
                     { text: "Registering Nodes", link: "/editor/registering-nodes.md" },
                     { text: "Subgraphs", link: "/editor/subgraphs.md" },
+                    { text: "Saving and Loading", link: "/editor/saving-loading.md" },
                 ],
             },
             {
