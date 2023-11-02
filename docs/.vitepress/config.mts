@@ -12,7 +12,7 @@ export default defineConfig({
         nav: [
             {
                 text: "API Reference",
-                link: "/api-reference.md",
+                link: "https://v2.baklava.tech/api/",
             },
             {
                 text: "v1",
@@ -61,5 +61,6 @@ export default defineConfig({
             { text: "Browser Build", link: "/browser-build.md" },
             { text: "Migrating from Baklava v1", link: "/migration.md" },
         ],
+        socialLinks: [{ icon: "github", link: "https://github.com/newcat/baklavajs" }],
     },
 });
