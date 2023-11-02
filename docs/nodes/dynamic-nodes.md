@@ -3,6 +3,10 @@ lang: en-US
 title: Dynamic Nodes
 ---
 
+<script setup>
+import ApiLink from "../components/ApiLink.vue";
+</script>
+
 # Dynamic Nodes
 
 Sometimes you may want to have nodes, that have a different set interfaces based on certain parameters.

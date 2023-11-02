@@ -4,5 +4,5 @@
         // ensure that nobody can accidentally use this config for a build
         "noEmit": true
     },
-    "include": ["src", "test"]
+    "include": ["src", "test", "docs"]
 }

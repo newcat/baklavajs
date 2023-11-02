@@ -7,7 +7,7 @@ Graph / node editor in the browser using VueJS
 
 **[Online Demo](https://codesandbox.io/s/baklavajs-v2-example-zpfkec?file=/src/App.vue)**
 
-![example](docs/.vuepress/public/img/example.png)
+![example](docs/example.png)
 
 | Package                    | Version                                                                                        |
 | -------------------------- | ---------------------------------------------------------------------------------------------- |

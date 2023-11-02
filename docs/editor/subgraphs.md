@@ -1,3 +1,8 @@
+<script setup>
+import ApiLink from "../components/ApiLink.vue";
+import mermaid from "../components/Mermaid.vue";
+</script>
+
 # Subgraphs
 
 Subgraphs are a way to have graphs inside graphs.

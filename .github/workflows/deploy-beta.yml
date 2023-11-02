@@ -37,22 +37,3 @@ jobs:
               run: |
                   yarn run generate-api-docs
                   yarn run docs:build
-            - name: Azure login
-              uses: azure/login@v1
-              with:
-                  client-id: ${{ secrets.AZURE_CLIENT_ID }}
-                  tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-                  subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-            - name: Publish docs
-              uses: azure/CLI@v1
-              with:
-                  inlineScript: |
-                      az storage blob sync --account-name baklavajs -c '$web' -s "./docs/.vuepress/dist/"
-            - name: Purge CDN endpoint
-              uses: azure/CLI@v1
-              with:
-                  inlineScript: |
-                      az cdn endpoint purge --content-paths "/*" --profile-name "baklavajs" --name "baklavajs" --resource-group "Private" --no-wait
-            - name: Azure Logout
-              run: az logout
-              if: always()

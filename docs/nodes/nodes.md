@@ -3,6 +3,10 @@ lang: en-US
 title: Creating Nodes
 ---
 
+<script setup>
+import ApiLink from "../components/ApiLink.vue";
+</script>
+
 # Creating Nodes
 
 A graph is comprised of nodes as well as connections between these nodes. A node inside the graph can be seen as the instance of a class.

@@ -1,3 +1,7 @@
+<script setup>
+import ApiLink from "../components/ApiLink.vue";
+</script>
+
 # Customization
 
 Baklava offers many levels of customization, from simple theming up to full-blown custom components.

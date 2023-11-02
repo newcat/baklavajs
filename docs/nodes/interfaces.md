@@ -1,3 +1,7 @@
+<script setup>
+import ApiLink from "../components/ApiLink.vue";
+</script>
+
 # Node Interfaces
 
 Node interfaces define the inputs and outputs of a node.
@@ -90,7 +94,7 @@ The node interface class also provides the option to use _middleware_.
 This can be used to set additional meta-data of the node interface in a type-safe way.
 A middleware is essentially just a function that is called with the node interface as the first parameter and an arbitrary amount of other parameters.
 
-Let's take the `setType` middleware of the [Interface Types Plugin](/plugins/interface-types) as an example:
+Let's take the `setType` middleware of the [Interface Types Plugin](./interface-types) as an example:
 
 ```js
 function setType(intf, type) {

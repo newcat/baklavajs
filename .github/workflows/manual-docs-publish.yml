@@ -39,7 +39,7 @@ jobs:
               uses: azure/CLI@v1
               with:
                   inlineScript: |
-                      az storage blob sync --account-name baklavajs -c '$web' -s "./docs/.vuepress/dist/"
+                      az storage blob sync --account-name baklavajs -c '$web' -s "./docs/.vitepress/dist/"
             - name: Purge CDN endpoint
               uses: azure/CLI@v1
               with:

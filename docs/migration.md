@@ -32,7 +32,7 @@
 
 ## Interface Types
 
-- The interface type plugin does not use strings anymore to identify node interface types. Instead, you need to create `NodeInterfaceType`s. See the [documentation](/plugins/interface-types) for more information.
+- The interface type plugin does not use strings anymore to identify node interface types. Instead, you need to create `NodeInterfaceType`s. See the [documentation](/nodes/interface-types) for more information.
 - Conversions have to be added directly to the `NodeInterfaceType`.
 - It is no longer possible to specify the color of the port using JS/TS. Instead, you need to use CSS.
 

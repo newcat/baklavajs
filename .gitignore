@@ -24,9 +24,8 @@ yarn-error.log*
 cypress/
 lerna-debug.log
 
-docs/.vuepress/public/api
-docs/.vuepress/.cache
-docs/.vuepress/.temp
+docs/.vitepress/cache
+docs/public/api
 
 coverage
 

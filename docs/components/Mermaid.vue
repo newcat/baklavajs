@@ -1,17 +1,16 @@
 <template>
     <div class="mermaid">
-        <slot></slot>
+        <slot />
     </div>
 </template>
 
 <script lang="ts">
 export default {
     mounted() {
-        // @ts-ignore
-        import("mermaid/dist/mermaid").then((m) => {
+        void import("mermaid/dist/mermaid").then((m: any) => {
             m.initialize({
                 startOnLoad: true,
-                theme: "dark"
+                theme: "dark",
             });
             m.init();
         });

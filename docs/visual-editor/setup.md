@@ -1,3 +1,7 @@
+<script setup>
+import ApiLink from "../components/ApiLink.vue";
+</script>
+
 # Setup
 
 ## View Model
