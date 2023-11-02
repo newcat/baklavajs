@@ -1,4 +1,5 @@
 {
+    "$schema": "http://json.schemastore.org/tsconfig",
     "compilerOptions": {
         "target": "ES2019",
         "module": "esnext",
@@ -8,7 +9,9 @@
         "allowSyntheticDefaultImports": true,
         "declaration": true,
         "baseUrl": ".",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "lib": ["DOM"]
     },
+    "include": ["packages/*/src/*.ts", "packages/*/src/*.d.ts"],
     "exclude": ["node_modules", "**/dist/**", "**/test/**", "packages/full/**", "packages/renderer-vue/playground"]
 }

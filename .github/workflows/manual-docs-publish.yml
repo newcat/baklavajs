@@ -1,0 +1,50 @@
+name: Manual Docs Publish
+
+permissions:
+    id-token: write
+    contents: write
+
+on: workflow_dispatch
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+            - name: Use Node.js 20
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20"
+            - name: Setup Yarn v3
+              run: |
+                  corepack enable
+                  corepack prepare yarn@stable --activate
+            - name: Install dependencies
+              run: yarn install --immutable
+            - name: Build
+              run: yarn run build
+            - name: Build docs
+              run: |
+                  yarn run generate-api-docs
+                  yarn run docs:build
+            - name: Azure login
+              uses: azure/login@v1
+              with:
+                  client-id: ${{ secrets.AZURE_CLIENT_ID }}
+                  tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+                  subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+            - name: Publish docs
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: |
+                      az storage blob sync --account-name baklavajs -c '$web' -s "./docs/.vuepress/dist/"
+            - name: Purge CDN endpoint
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: |
+                      az cdn endpoint purge --content-paths "/*" --profile-name "baklavajs" --name "baklavajs" --resource-group "Private" --no-wait
+            - name: Azure Logout
+              run: az logout
+              if: always()
