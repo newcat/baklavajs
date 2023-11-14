@@ -33,4 +33,16 @@
             right: -1.1em;
         }
     }
+
+    .__tooltip {
+        position: absolute;
+        left: 5px;
+        top: 15px;
+        transform: translate(-50%, 0%);
+        background: var(--baklava-editor-background-pattern-black);
+        color: var(--baklava-control-color-primary);
+        padding: 0.25em 0.5em;
+        text-align: center;
+        z-index: 2;
+    }
 }

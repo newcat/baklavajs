@@ -106,6 +106,7 @@ Below you can find a list of CSS classes used in Baklava:
     -   `--output`: Applied when the node interface is an output
     -   `--connected`: Applied when the node interface has a connection
     -   `__port`: The "dot" via which the node interface can be connected
+    -   `.__tooltip`: The tooltip that is shown when hovering over the node interface
 -   **Connection:**
     -   `baklava-connection`: Base class for each connection
     -   `--temporary`: Applied when the connection is still being dragged (in the process of being created or changed)
