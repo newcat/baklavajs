@@ -34,11 +34,14 @@ import {
     TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL,
 } from "../editor/temporaryConnection";
 
-const ellipsis = (value: string, characters = 100) => {
-    if (value.length > characters) {
-        return value.slice(0, characters) + "...";
+const ellipsis = (value: any, characters = 100) => {
+    const stringValue  = value?.toString ? value.toString() : ''
+
+    if (stringValue.length > characters) {
+        return stringValue.slice(0, characters) + "...";
     }
-    return value;
+
+    return stringValue;
 };
 
 const props = defineProps<{
