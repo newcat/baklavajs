@@ -93,10 +93,10 @@ export function useClipboard(
 
         commandHandler.executeCommand<StartTransactionCommand>(START_TRANSACTION_COMMAND);
 
-        for (const n of parsedNodeBuffer) {
-            const nodeType = editor.value.nodeTypes.get(n.type);
+        for (const oldNode of parsedNodeBuffer) {
+            const nodeType = editor.value.nodeTypes.get(oldNode.type);
             if (!nodeType) {
-                console.warn(`Node type ${n.type} not registered`);
+                console.warn(`Node type ${oldNode.type} not registered`);
                 return;
             }
             const copiedNode = new nodeType.type();
@@ -121,17 +121,17 @@ export function useClipboard(
             copiedNode.hooks.beforeLoad.subscribe(token, (nodeState) => {
                 const ns = nodeState as any;
                 if (ns.position) {
-                    ns.position.x += 10;
-                    ns.position.y += 10;
+                    ns.position.x += 100;
+                    ns.position.y += 100;
                 }
                 copiedNode.hooks.beforeLoad.unsubscribe(token);
                 return ns;
             });
 
             graph.addNode(copiedNode);
-            copiedNode.load(n);
+            copiedNode.load({ ...oldNode, id: generatedId });
             copiedNode.id = generatedId;
-            idmap.set(n.id, generatedId);
+            idmap.set(oldNode.id, generatedId);
         }
 
         for (const c of parsedConnectionBuffer) {
