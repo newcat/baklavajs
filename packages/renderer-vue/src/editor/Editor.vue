@@ -42,9 +42,22 @@
 
         <div class="node-container" :style="nodeContainerStyle">
             <transition-group name="fade">
-                <template v-for="node in nodes" :key="node.id + counter.toString()">
-                    <slot name="node" :node="node" :selected="selectedNodes.includes(node)" @select="selectNode(node)">
-                        <Node :node="node" :selected="selectedNodes.includes(node)" @select="selectNode(node)" />
+                <template v-for="(node, idx) in nodes" :key="node.id + counter.toString()">
+                    <slot
+                        name="node"
+                        :node="node"
+                        :selected="selectedNodes.includes(node)"
+                        :dragging="dragMoves[idx].dragging.value"
+                        @select="selectNode(node)"
+                        @start-drag="startDrag"
+                    >
+                        <Node
+                            :node="node"
+                            :selected="selectedNodes.includes(node)"
+                            :dragging="dragMoves[idx].dragging.value"
+                            @select="selectNode(node)"
+                            @start-drag="startDrag"
+                        />
                     </slot>
                 </template>
             </transition-group>
@@ -67,7 +80,7 @@ import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaViewModel } from "../viewModel";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
-import { providePlugin } from "../utility";
+import { providePlugin, useDragMove } from "../utility";
 
 import Background from "./Background.vue";
 import Node from "../node/Node.vue";
@@ -89,6 +102,7 @@ const el = ref<HTMLElement | null>(null);
 provide("editorEl", el);
 
 const nodes = computed(() => props.viewModel.displayedGraph.nodes);
+const dragMoves = computed(() => props.viewModel.displayedGraph.nodes.map((n) => useDragMove(toRef(n, "position"))));
 const connections = computed(() => props.viewModel.displayedGraph.connections);
 const selectedNodes = computed(() => props.viewModel.displayedGraph.selectedNodes);
 
@@ -146,5 +160,29 @@ const selectNode = (node: AbstractNode) => {
 
 const unselectAllNodes = () => {
     props.viewModel.displayedGraph.selectedNodes = [];
+};
+
+const startDrag = (ev: PointerEvent) => {
+    for (const selectedNode of props.viewModel.displayedGraph.selectedNodes) {
+        const idx = nodes.value.indexOf(selectedNode);
+        const dragMove = dragMoves.value[idx];
+        dragMove.onPointerDown(ev);
+
+        document.addEventListener("pointermove", dragMove.onPointerMove);
+    }
+
+    document.addEventListener("pointerup", stopDrag);
+};
+
+const stopDrag = () => {
+    for (const selectedNode of props.viewModel.displayedGraph.selectedNodes) {
+        const idx = nodes.value.indexOf(selectedNode);
+        const dragMove = dragMoves.value[idx];
+        dragMove.onPointerUp();
+
+        document.removeEventListener("pointermove", dragMove.onPointerMove);
+    }
+
+    document.removeEventListener("pointerup", stopDrag);
 };
 </script>
