@@ -39,8 +39,8 @@
         left: 5px;
         top: 15px;
         transform: translate(-50%, 0%);
-        background: var(--baklava-editor-background-pattern-black);
-        color: var(--baklava-control-color-primary);
+        background: var(--baklava-node-interface-port-tooltip-color-background);
+        color: var(--baklava-node-interface-port-tooltip-color-foreground);
         padding: 0.25em 0.5em;
         text-align: center;
         z-index: 2;

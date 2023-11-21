@@ -61,6 +61,19 @@ For this, the editor provides the following slots:
 -   `sidebar` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/sidebar/Sidebar.vue)
 -   `minimap` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/components/Minimap.vue)
 
+There are other components that provide slots as well:
+
+- Node
+  - `nodeInterface` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/node/NodeInterface.vue)
+    - Props:
+      - `type` (type: `"input"|"output"`)
+      - `node` (type: <code><ApiLink type="classes" module="@baklavajs/core" name="AbstractNode">AbstractNode</ApiLink></code>)
+      - `intf` (type: <code><ApiLink type="classes" module="@baklavajs/core" name="NodeInterface">NodeInterface</ApiLink></code>)
+- NodeInterface
+  - `portTooltip` [(default content)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/node/NodeInterface.vue#L11-L13)
+    - Props:
+      - `showTooltip` (type: `boolean`)
+
 So, for example, if you want to use a custom component for a certain node type, you could do it like this:
 
 ```vue
@@ -106,7 +119,7 @@ Below you can find a list of CSS classes used in Baklava:
     -   `--output`: Applied when the node interface is an output
     -   `--connected`: Applied when the node interface has a connection
     -   `__port`: The "dot" via which the node interface can be connected
-    -   `.__tooltip`: The tooltip that is shown when hovering over the node interface
+    -   `__tooltip`: The tooltip that is shown when hovering over the node interface
 -   **Connection:**
     -   `baklava-connection`: Base class for each connection
     -   `--temporary`: Applied when the connection is still being dragged (in the process of being created or changed)

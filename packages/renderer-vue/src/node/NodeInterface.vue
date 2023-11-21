@@ -7,9 +7,11 @@
             @pointerover="startHover"
             @pointerout="endHover"
         >
-            <span v-if="showTooltip === true" class="__tooltip">
-                {{ ellipsis(intf.value) }}
-            </span>
+            <slot name="portTooltip" :show-tooltip="showTooltip">
+                <span v-if="showTooltip === true" class="__tooltip">
+                    {{ ellipsis(intf.value) }}
+                </span>
+            </slot>
         </div>
         <component
             :is="intf.component"
@@ -35,7 +37,7 @@ import {
 } from "../editor/temporaryConnection";
 
 const ellipsis = (value: any, characters = 100) => {
-    const stringValue  = value?.toString ? value.toString() : ''
+    const stringValue = value?.toString ? value.toString() : "";
 
     if (stringValue.length > characters) {
         return stringValue.slice(0, characters) + "...";
