@@ -50,7 +50,7 @@ const editor = baklavaView.editor;
 (window as any).editor = baklavaView.editor;
 baklavaView.settings.enableMinimap = true;
 baklavaView.settings.sidebar.resizable = false;
-
+baklavaView.settings.displayValueOnHover = true;
 const engine = new DependencyEngine(editor);
 engine.events.afterRun.subscribe(token, (r) => {
     engine.pause();

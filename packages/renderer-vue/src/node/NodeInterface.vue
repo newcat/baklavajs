@@ -6,7 +6,13 @@
             :class="{ '--selected': temporaryConnection?.from === intf }"
             @pointerover="startHover"
             @pointerout="endHover"
-        />
+        >
+            <slot name="portTooltip" :show-tooltip="showTooltip">
+                <span v-if="showTooltip === true" class="__tooltip">
+                    {{ ellipsis(intf.value) }}
+                </span>
+            </slot>
+        </div>
         <component
             :is="intf.component"
             v-if="showComponent"
@@ -30,6 +36,16 @@ import {
     TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL,
 } from "../editor/temporaryConnection";
 
+const ellipsis = (value: any, characters = 100) => {
+    const stringValue = value?.toString ? value.toString() : "";
+
+    if (stringValue.length > characters) {
+        return stringValue.slice(0, characters) + "...";
+    }
+
+    return stringValue;
+};
+
 const props = defineProps<{
     node: AbstractNode;
     intf: NodeInterface;
@@ -43,6 +59,8 @@ const { hoveredOver, temporaryConnection } = inject<ITemporaryConnectionHandler>
 const el = ref<HTMLElement | null>(null) as Ref<HTMLElement>;
 
 const isConnected = computed(() => props.intf.connectionCount > 0);
+const isHovered = ref<boolean>(false);
+const showTooltip = computed(() => viewModel.value.settings.displayValueOnHover && isHovered.value);
 const classes = computed(() => ({
     "--input": props.intf.isInput,
     "--output": !props.intf.isInput,
@@ -53,9 +71,11 @@ const showComponent = computed<boolean>(
 );
 
 const startHover = () => {
+    isHovered.value = true;
     hoveredOver(props.intf);
 };
 const endHover = () => {
+    isHovered.value = false;
     hoveredOver(undefined);
 };
 
