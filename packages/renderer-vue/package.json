@@ -1,6 +1,6 @@
 {
     "name": "@baklavajs/renderer-vue",
-    "version": "2.1.1",
+    "version": "2.2.0",
     "description": "Vue frontend for BaklavaJS",
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
