@@ -152,7 +152,7 @@ const keyUp = (ev: KeyboardEvent) => {
 };
 
 const selectNode = (node: AbstractNode) => {
-    if (!props.viewModel.commandHandler.pressedKeys.includes("Control")) {
+    if (!["Control", "Shift"].some(k => props.viewModel.commandHandler.pressedKeys.includes(k))) {
         unselectAllNodes();
     }
     props.viewModel.displayedGraph.selectedNodes.push(node);
