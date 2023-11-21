@@ -64,9 +64,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, toRef, nextTick, onUpdated, onMounted } from "vue";
+import { ref, computed, nextTick, onUpdated, onMounted } from "vue";
 import { AbstractNode, GRAPH_NODE_TYPE_PREFIX, IGraphNode } from "@baklavajs/core";
-import { useDragMove, useGraph, useViewModel } from "../utility";
+import { useGraph, useViewModel } from "../utility";
 
 import ContextMenu from "../components/ContextMenu.vue";
 import VerticalDots from "../icons/VerticalDots.vue";
@@ -76,17 +76,18 @@ const props = withDefaults(
     defineProps<{
         node: AbstractNode;
         selected?: boolean;
+        dragging?: boolean;
     }>(),
     { selected: false },
 );
 
 const emit = defineEmits<{
     (e: "select"): void;
+    (e: "start-drag", ev: PointerEvent): void;
 }>();
 
 const { viewModel } = useViewModel();
 const { graph, switchGraph } = useGraph();
-const dragMove = useDragMove(toRef(props.node, "position"));
 
 const el = ref<HTMLElement | null>(null);
 const renaming = ref(false);
@@ -109,7 +110,7 @@ const contextMenuItems = computed(() => {
 
 const classes = computed(() => ({
     "--selected": props.selected,
-    "--dragging": dragMove.dragging.value,
+    "--dragging": props.dragging,
     "--two-column": !!props.node.twoColumn,
 }));
 
@@ -127,16 +128,11 @@ const select = () => {
 };
 
 const startDrag = (ev: PointerEvent) => {
-    dragMove.onPointerDown(ev);
-    document.addEventListener("pointermove", dragMove.onPointerMove);
-    document.addEventListener("pointerup", stopDrag);
-    select();
-};
+    if (!props.selected) {
+        select();
+    }
 
-const stopDrag = () => {
-    dragMove.onPointerUp();
-    document.removeEventListener("pointermove", dragMove.onPointerMove);
-    document.removeEventListener("pointerup", stopDrag);
+    emit("start-drag", ev);
 };
 
 const openContextMenu = () => {
