@@ -1,4 +1,10 @@
-import type { GraphTemplate } from "./graphTemplate";
+import {
+    GRAPH_TEMPLATE_INPUT_NODE_TYPE,
+    GraphTemplateInputNode,
+    type GraphTemplate,
+    GRAPH_TEMPLATE_OUTPUT_NODE_TYPE,
+    GraphTemplateOutputNode,
+} from "./graphTemplate";
 import { Graph, IGraphState } from "./graph";
 import { AbstractNode, CalculateFunction, INodeState } from "./node";
 import { NodeInterface } from "./nodeInterface";
@@ -42,51 +48,38 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             if (!this.subgraph) {
                 throw new Error(`GraphNode ${this.id}: calculate called without subgraph being initialized`);
             }
-
-            if (
-                typeof context.engine === "object" &&
-                !!context.engine &&
-                typeof context.engine.runGraph === "function"
-            ) {
-                const graphInputs: Map<string, any> = new Map();
-
-                // gather all values of the unconnected inputs
-                for (const n of this.subgraph.nodes) {
-                    Object.values(n.inputs).forEach((ni) => {
-                        if (ni.connectionCount === 0) {
-                            graphInputs.set(ni.id, ni.value);
-                        }
-                    });
-                }
-
-                // map graph inputs to their respective nodeInterfaceId in the graph
-                Object.entries(inputs).forEach(([k, v]) => {
-                    const gi = this.subgraph!.inputs.find((x) => x.id === k)!;
-                    graphInputs.set(gi.nodeInterfaceId, v);
-                });
-
-                const result: Map<string, Map<string, any>> = await context.engine.runGraph(
-                    this.subgraph,
-                    graphInputs,
-                    context.globalValues,
-                );
-                const flatResult: Map<string, any> = new Map();
-                result.forEach((nodeOutputs, nodeId) => {
-                    const node = this.subgraph!.nodes.find((n) => n.id === nodeId)!;
-                    nodeOutputs.forEach((v, nodeInterfaceKey) => {
-                        flatResult.set(node.outputs[nodeInterfaceKey].id, v);
-                    });
-                });
-
-                const outputs: Record<string, any> = {};
-                this.subgraph.outputs.forEach((graphOutput) => {
-                    outputs[graphOutput.id] = flatResult.get(graphOutput.nodeInterfaceId);
-                });
-
-                outputs._calculationResults = result;
-
-                return outputs;
+            if (!context.engine || typeof context.engine !== "object") {
+                throw new Error(`GraphNode ${this.id}: calculate called but no engine provided in context`);
             }
+
+            const graphInputs = context.engine.getInputValues(this.subgraph);
+
+            // fill subgraph input placeholders
+            const inputNodes = this.subgraph.nodes.filter(
+                (n) => n.type === GRAPH_TEMPLATE_INPUT_NODE_TYPE,
+            ) as GraphTemplateInputNode[];
+            for (const inputNode of inputNodes) {
+                graphInputs.set(inputNode.outputs.placeholder.id, inputs[inputNode.graphInterfaceId]);
+            }
+
+            const result: Map<string, Map<string, any>> = await context.engine.runGraph(
+                this.subgraph,
+                graphInputs,
+                context.globalValues,
+            );
+
+            const outputs: Record<string, any> = {};
+            const outputNodes = this.subgraph.nodes.filter(
+                (n) => n.type === GRAPH_TEMPLATE_OUTPUT_NODE_TYPE,
+            ) as unknown as GraphTemplateOutputNode[];
+            for (const outputNode of outputNodes) {
+                console.log("Output node ID", outputNode.id);
+                outputs[outputNode.graphInterfaceId] = result.get(outputNode.id)?.get("output");
+            }
+
+            outputs._calculationResults = result;
+
+            return outputs;
         };
 
         public override load(state: IGraphNodeState) {

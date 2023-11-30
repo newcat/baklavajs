@@ -84,14 +84,18 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
             this.order.clear();
             this.recalculateOrder = false;
         }
+        const inputValues = this.getInputValues(this.editor.graph);
+        return await this.runGraph(this.editor.graph, inputValues, calculationData);
+    }
 
+    public getInputValues(graph: Graph): Map<string, any> {
         // Gather all values of the unconnected inputs.
         // maps NodeInterface.id -> value
         // The reason it is done here and not during calculation is
         // that this way we prevent race conditions because calculations can be async.
         // For the same reason, we need to gather all output values for nodes that do not have a calculate function.
         const inputValues = new Map<string, any>();
-        for (const n of this.editor.graph.nodes) {
+        for (const n of graph.nodes) {
             Object.values(n.inputs).forEach((ni) => {
                 if (ni.connectionCount === 0) {
                     inputValues.set(ni.id, ni.value);
@@ -103,8 +107,7 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
                 });
             }
         }
-
-        return await this.runGraph(this.editor.graph, inputValues, calculationData);
+        return inputValues;
     }
 
     protected onChange(recalculateOrder: boolean): void {

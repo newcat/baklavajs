@@ -1,11 +1,13 @@
 import { Ref } from "vue";
-import { Connection, Graph, IGraphInterface } from "@baklavajs/core";
-import type { ICommand, ICommandHandler } from "../commands";
 import {
-    SUBGRAPH_INPUT_NODE_TYPE,
-    SUBGRAPH_OUTPUT_NODE_TYPE,
-    SubgraphOutputNode, SubgraphInputNode
-} from "./subgraphInterfaceNodes";
+    Connection,
+    Graph,
+    IGraphInterface,
+    GRAPH_TEMPLATE_INPUT_NODE_TYPE,
+    GRAPH_TEMPLATE_OUTPUT_NODE_TYPE,
+} from "@baklavajs/core";
+import type { ICommand, ICommandHandler } from "../commands";
+import { SubgraphOutputNode, SubgraphInputNode } from "./subgraphInterfaceNodes";
 
 export const SAVE_SUBGRAPH_COMMAND = "SAVE_SUBGRAPH";
 export type SaveSubgraphCommand = ICommand<void>;
@@ -21,7 +23,9 @@ export function registerSaveSubgraphCommand(displayedGraph: Ref<Graph>, handler:
         const interfaceConnections: Connection[] = [];
 
         const inputs: IGraphInterface[] = [];
-        const inputNodes = graph.nodes.filter((n) => n.type === SUBGRAPH_INPUT_NODE_TYPE) as unknown as SubgraphInputNode[];
+        const inputNodes = graph.nodes.filter(
+            (n) => n.type === GRAPH_TEMPLATE_INPUT_NODE_TYPE,
+        ) as unknown as SubgraphInputNode[];
         for (const n of inputNodes) {
             const connections = graph.connections.filter((c) => c.from === n.outputs.placeholder);
             connections.forEach((c) => {
@@ -35,7 +39,9 @@ export function registerSaveSubgraphCommand(displayedGraph: Ref<Graph>, handler:
         }
 
         const outputs: IGraphInterface[] = [];
-        const outputNodes = graph.nodes.filter((n) => n.type === SUBGRAPH_OUTPUT_NODE_TYPE) as unknown as SubgraphOutputNode[];
+        const outputNodes = graph.nodes.filter(
+            (n) => n.type === GRAPH_TEMPLATE_OUTPUT_NODE_TYPE,
+        ) as unknown as SubgraphOutputNode[];
         for (const n of outputNodes) {
             const connections = graph.connections.filter((c) => c.to === n.inputs.placeholder);
             connections.forEach((c) => {

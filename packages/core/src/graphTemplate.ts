@@ -3,12 +3,62 @@ import { BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import type { IConnectionState } from "./connection";
 import type { Editor } from "./editor";
 import { Graph, IGraphInterface, IGraphState } from "./graph";
-import type { INodeState } from "./node";
+import { Node, type INodeState, CalculateFunction } from "./node";
 import type { INodeInterfaceState } from "./nodeInterface";
 import { mapValues } from "./utils";
 import { getGraphNodeTypeString } from "./graphNode";
 
 type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
+
+export const GRAPH_TEMPLATE_INPUT_NODE_TYPE = "__baklava_SubgraphInputNode";
+export const GRAPH_TEMPLATE_OUTPUT_NODE_TYPE = "__baklava_SubgraphOutputNode";
+
+interface IGraphTemplateInterfaceState<I, O> extends INodeState<I, O> {
+    graphInterfaceId: string;
+}
+
+abstract class GraphTemplateInterfaceNode<I, O> extends Node<I, O> {
+    public graphInterfaceId: string;
+
+    constructor() {
+        super();
+        this.graphInterfaceId = uuidv4();
+    }
+
+    onPlaced() {
+        super.onPlaced();
+        this.initializeIo();
+    }
+
+    save(): IGraphTemplateInterfaceState<I, O> {
+        return {
+            ...super.save(),
+            graphInterfaceId: this.graphInterfaceId,
+        };
+    }
+
+    load(state: IGraphTemplateInterfaceState<I, O>) {
+        super.load(state as INodeState<I, O>);
+        this.graphInterfaceId = state.graphInterfaceId;
+    }
+}
+
+export abstract class GraphTemplateInputNode extends GraphTemplateInterfaceNode<
+    { name: string },
+    { placeholder: any }
+> {
+    public override readonly type = GRAPH_TEMPLATE_INPUT_NODE_TYPE;
+}
+
+export abstract class GraphTemplateOutputNode extends GraphTemplateInterfaceNode<
+    { name: string; placeholder: any },
+    { output: any }
+> {
+    public override readonly type = GRAPH_TEMPLATE_OUTPUT_NODE_TYPE;
+    public override calculate: CalculateFunction<{ placeholder: any }, { output: any }> = ({ placeholder }) => ({
+        output: placeholder,
+    });
+}
 
 export interface IGraphTemplateState extends IGraphState {
     name: string;
@@ -96,7 +146,7 @@ export class GraphTemplate implements IGraphState {
         };
     }
 
-    /** 
+    /**
      * Create a new graph instance from this template
      * or load the state into the provided graph instance.
      */
