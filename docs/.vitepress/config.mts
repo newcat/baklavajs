@@ -1,9 +1,13 @@
 import { defineConfig } from "vitepress";
+import { OramaPlugin } from "@orama/plugin-vitepress";
 
 export default defineConfig({
     lang: "en-US",
     title: "BaklavaJS",
     description: "Graph / node editor in the browser using VueJS",
+    vite: {
+        plugins: [OramaPlugin()],
+    },
     themeConfig: {
         editLink: {
             pattern: "https://github.com/newcat/baklavajs/edit/master/docs/:path",
