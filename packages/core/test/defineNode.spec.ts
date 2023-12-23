@@ -1,4 +1,4 @@
-import { defineNode, NodeInterface } from "../src";
+import { defineNode, IEngine, NodeInterface } from "../src";
 
 describe("defineNode", () => {
     it("calls the onCreate lifecycle method correctly", () => {
@@ -63,7 +63,7 @@ describe("defineNode", () => {
             calculate: calculateSpy,
         });
         const n = new TestNode();
-        const result = n.calculate!({ a: 4 }, { globalValues: { test: true }, engine: {} });
+        const result = n.calculate!({ a: 4 }, { globalValues: { test: true }, engine: {} as IEngine<void> });
         expect(result).toEqual({ b: "5" });
         expect(calculateSpy).toHaveBeenCalledWith({ a: 4 }, { globalValues: { test: true }, engine: {} });
     });

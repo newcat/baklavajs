@@ -1,10 +1,4 @@
-import {
-    GRAPH_TEMPLATE_INPUT_NODE_TYPE,
-    GraphTemplateInputNode,
-    type GraphTemplate,
-    GRAPH_TEMPLATE_OUTPUT_NODE_TYPE,
-    GraphTemplateOutputNode,
-} from "./graphTemplate";
+import { type GraphTemplate } from "./graphTemplate";
 import { Graph, IGraphState } from "./graph";
 import { AbstractNode, CalculateFunction, INodeState } from "./node";
 import { NodeInterface } from "./nodeInterface";
@@ -55,11 +49,8 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             const graphInputs = context.engine.getInputValues(this.subgraph);
 
             // fill subgraph input placeholders
-            const inputNodes = this.subgraph.nodes.filter(
-                (n) => n.type === GRAPH_TEMPLATE_INPUT_NODE_TYPE,
-            ) as GraphTemplateInputNode[];
-            for (const inputNode of inputNodes) {
-                graphInputs.set(inputNode.outputs.placeholder.id, inputs[inputNode.graphInterfaceId]);
+            for (const input of this.subgraph.inputs) {
+                graphInputs.set(input.nodeInterfaceId, inputs[input.id]);
             }
 
             const result: Map<string, Map<string, any>> = await context.engine.runGraph(
@@ -69,12 +60,8 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             );
 
             const outputs: Record<string, any> = {};
-            const outputNodes = this.subgraph.nodes.filter(
-                (n) => n.type === GRAPH_TEMPLATE_OUTPUT_NODE_TYPE,
-            ) as unknown as GraphTemplateOutputNode[];
-            for (const outputNode of outputNodes) {
-                console.log("Output node ID", outputNode.id);
-                outputs[outputNode.graphInterfaceId] = result.get(outputNode.id)?.get("output");
+            for (const output of this.subgraph.outputs) {
+                outputs[output.id] = result.get(output.nodeId)?.get("output");
             }
 
             outputs._calculationResults = result;

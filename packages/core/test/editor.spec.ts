@@ -68,14 +68,16 @@ describe("Editor", () => {
 
     it("can prevent node types from being registered", () => {
         const e = new Editor();
-        const before = jest.fn((nt, prevent) => { prevent() });
+        const before = jest.fn((nt, prevent) => {
+            prevent();
+        });
         const after = jest.fn();
         e.events.beforeRegisterNodeType.subscribe(this, before);
         e.events.registerNodeType.subscribe(this, after);
         e.registerNodeType(TestNode);
         expect(before).toHaveBeenCalledTimes(1);
         expect(after).toHaveBeenCalledTimes(0);
-        expect(e.nodeTypes.size).toEqual(0);
+        expect(e.nodeTypes.size).toEqual(2);
     });
 
     it("can unregister node types", () => {
@@ -83,24 +85,26 @@ describe("Editor", () => {
         const ev = jest.fn();
         e.events.unregisterNodeType.subscribe(this, ev);
         e.registerNodeType(TestNode);
-        expect(e.nodeTypes.size).toEqual(1);
+        expect(e.nodeTypes.size).toEqual(3);
         e.unregisterNodeType(TestNode);
-        expect(e.nodeTypes.size).toEqual(0);
+        expect(e.nodeTypes.size).toEqual(2);
         expect(ev).toHaveBeenCalled();
     });
 
     it("can prevent node types from being unregistered", () => {
         const e = new Editor();
-        const before = jest.fn((nt, prevent) => { prevent() });
+        const before = jest.fn((nt, prevent) => {
+            prevent();
+        });
         const after = jest.fn();
         e.events.beforeUnregisterNodeType.subscribe(this, before);
         e.events.unregisterNodeType.subscribe(this, after);
         e.registerNodeType(TestNode);
-        expect(e.nodeTypes.size).toEqual(1);
+        expect(e.nodeTypes.size).toEqual(3);
         e.unregisterNodeType(TestNode);
         expect(before).toHaveBeenCalledTimes(1);
         expect(after).toHaveBeenCalledTimes(0);
-        expect(e.nodeTypes.size).toEqual(1);
+        expect(e.nodeTypes.size).toEqual(3);
     });
 
     it("adds a graph template correctly", () => {
@@ -115,7 +119,7 @@ describe("Editor", () => {
         const gt = getGraphTemplate(e);
         e.addGraphTemplate(gt);
         expect(e.graphTemplates).toHaveLength(1);
-        expect(e.nodeTypes.size).toEqual(2);
+        expect(e.nodeTypes.size).toEqual(4);
 
         gt.events.nameChanged.emit("newName");
         expect(proxyEv).toHaveBeenCalledWith("newName", gt);
@@ -125,7 +129,9 @@ describe("Editor", () => {
         const e = new Editor();
         e.registerNodeType(TestNode);
 
-        const before = jest.fn((gt, prevent) => { prevent() });
+        const before = jest.fn((gt, prevent) => {
+            prevent();
+        });
         const after = jest.fn();
         e.events.beforeAddGraphTemplate.subscribe(this, before);
         e.events.addGraphTemplate.subscribe(this, after);
@@ -133,7 +139,7 @@ describe("Editor", () => {
         const gt = getGraphTemplate(e);
         e.addGraphTemplate(gt);
         expect(e.graphTemplates).toHaveLength(0);
-        expect(e.nodeTypes.size).toEqual(1);
+        expect(e.nodeTypes.size).toEqual(3);
         expect(before).toHaveBeenCalled();
         expect(after).toHaveBeenCalledTimes(0);
     });
@@ -146,7 +152,7 @@ describe("Editor", () => {
 
         const gt = getGraphTemplate(e);
         e.addGraphTemplate(gt);
-        expect(e.nodeTypes.size).toEqual(2);
+        expect(e.nodeTypes.size).toEqual(4);
         const GraphNode = e.nodeTypes.get(getGraphNodeTypeString(gt))!.type;
 
         const g = new Graph(e);
@@ -157,7 +163,7 @@ describe("Editor", () => {
 
         e.removeGraphTemplate(gt);
 
-        expect(e.nodeTypes.size).toEqual(1);
+        expect(e.nodeTypes.size).toEqual(3);
         expect(g.nodes).toHaveLength(0);
         expect(e.graph.nodes).toHaveLength(0);
         expect(ev).toHaveBeenCalledTimes(1);
@@ -170,7 +176,9 @@ describe("Editor", () => {
         e.addGraphTemplate(gt);
         expect(e.graphTemplates).toHaveLength(1);
 
-        const before = jest.fn((gt, prevent) => { prevent() });
+        const before = jest.fn((gt, prevent) => {
+            prevent();
+        });
         const after = jest.fn();
         e.events.beforeRemoveGraphTemplate.subscribe(this, before);
         e.events.removeGraphTemplate.subscribe(this, after);

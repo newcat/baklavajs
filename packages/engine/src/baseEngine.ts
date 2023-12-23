@@ -174,7 +174,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
      * @param calculationData The data which is provided to each node's `calculate` method
      * @param calculationArgs Additional data which is only provided to the engine
      * @returns A promise that resolves to either
-     * - a map that maps rootNodes to their calculated value (what the calculation function of the node returned)
+     * - a map from each node's id to its calculated value (what the calculation function of the node returned)
      * - null if the calculation was prevented from the beforeRun event
      */
     public async runOnce(
