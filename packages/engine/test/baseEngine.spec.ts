@@ -1,15 +1,21 @@
-import { Graph, AbstractNode, INodeUpdateEventData, Editor } from "@baklavajs/core";
-import { BaseEngine, CalculationResult } from "../src";
+import { Graph, AbstractNode, INodeUpdateEventData, Editor, CalculationResult } from "@baklavajs/core";
+import { BaseEngine } from "../src";
 import { TestNode } from "./testNode";
 
 class MockEngine extends BaseEngine<void, []> {
     public runGraphSpy = jest.fn();
+    public getInputValuesSpy = jest.fn();
     public executeSpy = jest.fn();
     public onChangeSpy = jest.fn();
 
     public runGraph(graph: Graph, inputs: Map<string, any>, calculationData: void): Promise<CalculationResult> {
         this.runGraphSpy(graph, inputs, calculationData);
         return Promise.resolve(new Map());
+    }
+
+    public override getInputValues(graph: Graph): Map<string, any> {
+        this.getInputValuesSpy(graph);
+        return new Map();
     }
 
     protected execute(calculationData: void): Promise<CalculationResult> {

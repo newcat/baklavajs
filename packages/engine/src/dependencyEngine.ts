@@ -1,5 +1,5 @@
-import type { Editor, Graph, NodeInterface } from "@baklavajs/core";
-import { BaseEngine, CalculationResult } from "./baseEngine";
+import type { Editor, Graph, NodeInterface, CalculationResult } from "@baklavajs/core";
+import { BaseEngine } from "./baseEngine";
 import { ITopologicalSortingResult, sortTopologically } from "./topologicalSorting";
 
 export const allowMultipleConnections = <T extends Array<any>>(intf: NodeInterface<T>) => {
