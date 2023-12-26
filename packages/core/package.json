@@ -1,6 +1,6 @@
 {
     "name": "@baklavajs/core",
-    "version": "2.1.1",
+    "version": "2.2.1",
     "description": "Core logic of BaklavaJS, a graph editor / node editor for the web",
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
