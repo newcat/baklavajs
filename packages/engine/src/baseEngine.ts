@@ -7,17 +7,11 @@ import {
     Graph,
     CheckConnectionHookResult,
     DummyConnection,
+    CalculationResult,
+    IEngine,
 } from "@baklavajs/core";
 import { BaklavaEvent, DynamicSequentialHook, PreventableBaklavaEvent, SequentialHook } from "@baklavajs/events";
 import { containsCycle } from "./topologicalSorting";
-
-/**
- * Key: node id
- * Value: calculation result of that node
- *   Calculation result key: output interface key
- *   Calculation result value: calculated value for that interface
- */
-export type CalculationResult = Map<string, Map<string, any>>;
 
 export enum EngineStatus {
     /** The engine is currently running a calculation */
@@ -44,7 +38,9 @@ export interface AfterNodeCalculationEventData {
     outputValues: Record<string, any>;
 }
 
-export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<any>> {
+export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<any>>
+    implements IEngine<CalculationData>
+{
     public events = {
         /**
          * This event will be called before all the nodes `calculate` functions are called.
@@ -174,7 +170,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
      * @param calculationData The data which is provided to each node's `calculate` method
      * @param calculationArgs Additional data which is only provided to the engine
      * @returns A promise that resolves to either
-     * - a map that maps rootNodes to their calculated value (what the calculation function of the node returned)
+     * - a map from each node's id to its calculated value (what the calculation function of the node returned)
      * - null if the calculation was prevented from the beforeRun event
      */
     public async runOnce(
@@ -215,6 +211,12 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         inputs: Map<string, any>,
         calculationData: CalculationData,
     ): Promise<CalculationResult>;
+
+    /**
+     * Gathers the values of all unconnected input interfaces in the graph
+     * @returns Map nodeInterface.id -> value
+     */
+    public abstract getInputValues(graph: Graph): Map<string, any>;
 
     /** Check whether a connection can be created.
      * A connection can not be created when it would result in a cyclic graph.

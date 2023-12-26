@@ -1,4 +1,15 @@
-import { Editor, NodeInterface, defineNode } from "@baklavajs/core";
+import {
+    AbstractNode,
+    Editor,
+    Graph,
+    GraphInputNode,
+    GraphOutputNode,
+    GraphTemplate,
+    IGraphNode,
+    NodeInterface,
+    defineNode,
+    getGraphNodeTypeString,
+} from "@baklavajs/core";
 import { TestNode } from "./testNode";
 import {
     AfterNodeCalculationEventData,
@@ -6,6 +17,7 @@ import {
     DependencyEngine,
     allowMultipleConnections,
 } from "../src";
+import { deepObjectToMap } from "./utils";
 
 describe("DependencyEngine", () => {
     it("emits the beforeNodeCalculation and afterNodeCalculation events", async () => {
@@ -99,16 +111,59 @@ describe("DependencyEngine", () => {
         const result = await engine.runOnce();
 
         expect(result).toEqual(
-            new Map([
-                [n1.id, new Map([["a", 3]])],
-                [
-                    n2.id,
-                    new Map([
-                        ["c", 4],
-                        ["d", 2],
-                    ]),
-                ],
-            ]),
+            deepObjectToMap({
+                [n1.id]: { a: 3 },
+                [n2.id]: { c: 4, d: 2 },
+            }),
+        );
+    });
+
+    it("correctly calculates subgraphs", async () => {
+        const editor = new Editor();
+        editor.registerNodeType(TestNode);
+
+        const graph = new Graph(editor);
+        const sn1 = new TestNode();
+        const sn2 = new TestNode();
+        const sInput = new GraphInputNode();
+        const sOutput = new GraphOutputNode();
+        graph.addNode(sn1);
+        graph.addNode(sn2);
+        graph.addNode(sInput);
+        graph.addNode(sOutput);
+        graph.addConnection(sn1.outputs.c, sn2.inputs.a);
+        graph.addConnection(sInput.outputs.placeholder, sn1.inputs.a);
+        graph.addConnection(sn2.outputs.c, sOutput.inputs.placeholder);
+        const subgraphTemplate = GraphTemplate.fromGraph(graph, editor);
+        editor.addGraphTemplate(subgraphTemplate);
+
+        const n1 = new TestNode();
+        const n2 = new TestNode();
+        const nt = editor.nodeTypes.get(getGraphNodeTypeString(subgraphTemplate))!;
+        const graphNode = new nt.type() as AbstractNode & IGraphNode;
+        editor.graph.addNode(n1);
+        editor.graph.addNode(n2);
+        editor.graph.addNode(graphNode);
+        editor.graph.addConnection(n1.outputs.c, graphNode.inputs[sInput.graphInterfaceId]);
+        editor.graph.addConnection(graphNode.outputs[sOutput.graphInterfaceId], n2.inputs.a);
+
+        const engine = new DependencyEngine<void>(editor);
+        const results = await engine.runOnce();
+
+        expect(results).toEqual(
+            deepObjectToMap({
+                [n1.id]: { c: 2, d: 0 },
+                [graphNode.id]: {
+                    [sOutput.graphInterfaceId]: 4,
+                    _calculationResults: {
+                        [graphNode.subgraph!.nodes[2].id]: { placeholder: 2 },
+                        [graphNode.subgraph!.nodes[0].id]: { c: 3, d: 1 },
+                        [graphNode.subgraph!.nodes[1].id]: { c: 4, d: 2 },
+                        [graphNode.subgraph!.nodes[3].id]: { output: 4 },
+                    },
+                },
+                [n2.id]: { c: 5, d: 3 },
+            }),
         );
     });
 });

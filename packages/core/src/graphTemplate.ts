@@ -2,11 +2,18 @@ import { v4 as uuidv4 } from "uuid";
 import { BaklavaEvent, SequentialHook } from "@baklavajs/events";
 import type { IConnectionState } from "./connection";
 import type { Editor } from "./editor";
-import { Graph, IGraphInterface, IGraphState } from "./graph";
+import { Graph, IGraphState } from "./graph";
 import type { INodeState } from "./node";
 import type { INodeInterfaceState } from "./nodeInterface";
 import { mapValues } from "./utils";
 import { getGraphNodeTypeString } from "./graphNode";
+import {
+    GRAPH_INPUT_NODE_TYPE,
+    GRAPH_OUTPUT_NODE_TYPE,
+    GraphInputNodeState,
+    GraphOutputNodeState,
+    IGraphInterface,
+} from "./graphInterface";
 
 type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
 
@@ -29,12 +36,6 @@ export class GraphTemplate implements IGraphState {
     /** List of all connection states in this graph template */
     public connections!: IConnectionState[];
 
-    /** List of all inputs to the graph template */
-    public inputs!: IGraphInterface[];
-
-    /** List of all outputs of the graph template */
-    public outputs!: IGraphInterface[];
-
     /** Editor instance */
     public editor: Editor;
 
@@ -53,6 +54,28 @@ export class GraphTemplate implements IGraphState {
         if (nt) {
             nt.title = v;
         }
+    }
+
+    /** List of all inputs to the graph template */
+    public get inputs(): Readonly<IGraphInterface[]> {
+        const inputNodes = this.nodes.filter((n) => n.type === GRAPH_INPUT_NODE_TYPE) as GraphInputNodeState[];
+        return inputNodes.map((n) => ({
+            id: n.graphInterfaceId,
+            name: n.inputs.name.value,
+            nodeId: n.id,
+            nodeInterfaceId: n.outputs.placeholder.id,
+        }));
+    }
+
+    /** List of all outputs of the graph template */
+    public get outputs(): Readonly<IGraphInterface[]> {
+        const outputNodes = this.nodes.filter((n) => n.type === GRAPH_OUTPUT_NODE_TYPE) as GraphOutputNodeState[];
+        return outputNodes.map((n) => ({
+            id: n.graphInterfaceId,
+            name: n.inputs.name.value,
+            nodeId: n.id,
+            nodeInterfaceId: n.outputs.output.id,
+        }));
     }
 
     constructor(state: Optional<IGraphTemplateState, "id" | "name">, editor: Editor) {
@@ -80,8 +103,6 @@ export class GraphTemplate implements IGraphState {
     public update(state: Omit<IGraphState, "id">) {
         this.nodes = state.nodes;
         this.connections = state.connections;
-        this.inputs = state.inputs;
-        this.outputs = state.outputs;
         this.events.updated.emit();
     }
 
@@ -96,7 +117,7 @@ export class GraphTemplate implements IGraphState {
         };
     }
 
-    /** 
+    /**
      * Create a new graph instance from this template
      * or load the state into the provided graph instance.
      */
@@ -144,12 +165,14 @@ export class GraphTemplate implements IGraphState {
         const inputs: IGraphInterface[] = this.inputs.map((i) => ({
             id: i.id,
             name: i.name,
+            nodeId: getNewId(i.nodeId),
             nodeInterfaceId: getNewId(i.nodeInterfaceId),
         }));
 
         const outputs: IGraphInterface[] = this.outputs.map((o) => ({
             id: o.id,
             name: o.name,
+            nodeId: getNewId(o.nodeId),
             nodeInterfaceId: getNewId(o.nodeInterfaceId),
         }));
 
@@ -164,7 +187,9 @@ export class GraphTemplate implements IGraphState {
         if (!graph) {
             graph = new Graph(this.editor);
         }
-        graph.load(clonedState);
+        const warnings = graph.load(clonedState);
+        warnings.forEach((w) => console.warn(w));
+
         graph.template = this;
         return graph;
     }

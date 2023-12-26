@@ -10,23 +10,26 @@ import {
 } from "@baklavajs/events";
 import { Connection, DummyConnection, IConnection, IConnectionState } from "./connection";
 import type { Editor } from "./editor";
-import type { GraphTemplate } from "./graphTemplate";
+import { type GraphTemplate } from "./graphTemplate";
 import type { IAddConnectionEventData } from "./eventDataTypes";
 import type { AbstractNode, INodeState } from "./node";
 import type { NodeInterface } from "./nodeInterface";
-
-export interface IGraphInterface {
-    id: string;
-    nodeInterfaceId: string;
-    name: string;
-}
+import {
+    GRAPH_INPUT_NODE_TYPE,
+    GRAPH_OUTPUT_NODE_TYPE,
+    IGraphInterface,
+    type GraphInputNode,
+    type GraphOutputNode,
+} from "./graphInterface";
 
 export interface IGraphState {
     id: string;
     nodes: Array<INodeState<unknown, unknown>>;
     connections: IConnectionState[];
-    inputs: IGraphInterface[];
-    outputs: IGraphInterface[];
+    /** @deprecated */
+    inputs: Readonly<IGraphInterface[]>;
+    /** @deprecated */
+    outputs: Readonly<IGraphInterface[]>;
 }
 
 export interface CheckConnectionHookResult {
@@ -49,9 +52,6 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     public id = uuidv4();
     public editor: Editor;
     public template?: GraphTemplate;
-
-    public inputs: IGraphInterface[] = [];
-    public outputs: IGraphInterface[] = [];
 
     public activeTransactions = 0;
 
@@ -101,6 +101,26 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
     /** Whether the graph is currently in the process of destroying itself */
     public get destroying() {
         return this._destroying;
+    }
+
+    public get inputs(): IGraphInterface[] {
+        const inputNodes = this.nodes.filter((n) => n.type === GRAPH_INPUT_NODE_TYPE) as GraphInputNode[];
+        return inputNodes.map((n) => ({
+            id: n.graphInterfaceId,
+            name: n.inputs.name.value,
+            nodeId: n.id,
+            nodeInterfaceId: n.outputs.placeholder.id,
+        }));
+    }
+
+    public get outputs(): IGraphInterface[] {
+        const outputNodes = this.nodes.filter((n) => n.type === GRAPH_OUTPUT_NODE_TYPE) as GraphOutputNode[];
+        return outputNodes.map((n) => ({
+            id: n.graphInterfaceId,
+            name: n.inputs.name.value,
+            nodeId: n.id,
+            nodeInterfaceId: n.outputs.output.id,
+        }));
     }
 
     public constructor(editor: Editor, template?: GraphTemplate) {
@@ -300,8 +320,6 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
 
             // Load state
             this.id = state.id;
-            this.inputs = state.inputs;
-            this.outputs = state.outputs;
 
             for (const n of state.nodes) {
                 // find node type

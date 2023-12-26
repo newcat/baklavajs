@@ -12,6 +12,7 @@ import { Graph, IGraphState } from "./graph";
 import { createGraphNodeType, getGraphNodeTypeString } from "./graphNode";
 import { GraphTemplate, IGraphTemplateState } from "./graphTemplate";
 import type { AbstractNode, AbstractNodeConstructor } from "./node";
+import { GraphInputNode, GraphOutputNode } from "./graphInterface";
 
 export interface IEditorState extends Record<string, any> {
     graph: IGraphState;
@@ -80,6 +81,11 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
     /** Whether the editor is currently in the process of loading a saved graph */
     public get loading() {
         return this._loading;
+    }
+
+    public constructor() {
+        this.registerNodeType(GraphInputNode);
+        this.registerNodeType(GraphOutputNode);
     }
 
     /**

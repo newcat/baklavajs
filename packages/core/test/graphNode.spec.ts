@@ -1,4 +1,4 @@
-import { createGraphNodeType, Editor, Graph, GraphTemplate, INodeState } from "../src";
+import { createGraphNodeType, Editor, Graph, GraphInputNode, GraphOutputNode, GraphTemplate } from "../src";
 import OutputNode from "./OutputNode";
 import TestNode from "./TestNode";
 
@@ -42,17 +42,12 @@ describe("Graph Node", () => {
         n.onPlaced();
         expect(Object.keys(n.inputs)).toHaveLength(0);
         expect(Object.keys(n.outputs)).toHaveLength(1);
-        template.update({
-            ...template.save(),
-            inputs: [
-                {
-                    id: "abc",
-                    name: "Test",
-                    nodeInterfaceId: (template.nodes[0] as INodeState<TestNode["inputs"], TestNode["outputs"]>).inputs.a
-                        .id,
-                },
-            ],
-        });
+
+        const graphInstance = template.createGraph();
+        const inputNode = new GraphInputNode();
+        graphInstance.addNode(inputNode);
+        graphInstance.addConnection(inputNode.outputs.placeholder, (graphInstance.nodes[0] as TestNode).inputs.a);
+        template.update(graphInstance.save());
         expect(Object.keys(n.inputs)).toHaveLength(1);
         expect(Object.keys(n.outputs)).toHaveLength(1);
     });
@@ -92,16 +87,15 @@ describe("Graph Node", () => {
 
     it("keeps connections when updating its interfaces", () => {
         const { template, editor } = getTemplate();
-        template.inputs.push({
-            id: "abc",
-            name: "Test",
-            nodeInterfaceId: (template.nodes[0] as INodeState<TestNode["inputs"], TestNode["outputs"]>).inputs.a.id,
-        });
-        template.outputs.push({
-            id: "def",
-            name: "Output",
-            nodeInterfaceId: (template.nodes[0] as INodeState<TestNode["inputs"], TestNode["outputs"]>).outputs.b.id,
-        });
+
+        const graphInstance = template.createGraph();
+        const inputNode = new GraphInputNode();
+        const outputNode = new GraphOutputNode();
+        graphInstance.addNode(inputNode);
+        graphInstance.addNode(outputNode);
+        graphInstance.addConnection(inputNode.outputs.placeholder, (graphInstance.nodes[0] as TestNode).inputs.a);
+        graphInstance.addConnection((graphInstance.nodes[0] as TestNode).outputs.b, outputNode.inputs.placeholder);
+        template.update(graphInstance.save());
 
         const GraphNode = createGraphNodeType(template);
         const gn = editor.graph.addNode(new GraphNode())!;

@@ -1,15 +1,25 @@
-import { AbstractNode, Graph, GraphTemplate, IGraphInterface, getGraphNodeTypeString } from "@baklavajs/core";
+import {
+    AbstractNode,
+    Graph,
+    GraphTemplate,
+    getGraphNodeTypeString,
+    GRAPH_INPUT_NODE_TYPE,
+    GRAPH_OUTPUT_NODE_TYPE,
+    INodeState,
+    IConnectionState,
+} from "@baklavajs/core";
 import { v4 as uuidv4 } from "uuid";
 import { reactive, Ref } from "vue";
 import type { ICommand, ICommandHandler } from "../commands";
 import { SaveSubgraphCommand, SAVE_SUBGRAPH_COMMAND } from "./saveSubgraph.command";
-import { SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE } from "./subgraphInterfaceNodes";
 import type { SwitchGraph } from "./switchGraph";
+import { SubgraphInputNode, SubgraphOutputNode } from "./subgraphInterfaceNodes";
+import { IViewNodeState } from "../node/viewNode";
 
 export const CREATE_SUBGRAPH_COMMAND = "CREATE_SUBGRAPH";
 export type CreateSubgraphCommand = ICommand<void>;
 
-const IGNORE_NODE_TYPES = [SUBGRAPH_INPUT_NODE_TYPE, SUBGRAPH_OUTPUT_NODE_TYPE];
+const IGNORE_NODE_TYPES = [GRAPH_INPUT_NODE_TYPE, GRAPH_OUTPUT_NODE_TYPE];
 
 export function registerCreateSubgraphCommand(
     displayedGraph: Ref<Graph>,
@@ -43,32 +53,45 @@ export function registerCreateSubgraphCommand(
             (c) => selectedNodesOutputs.includes(c.from) && selectedNodesInputs.includes(c.to),
         );
 
-        const inputInterfaces = inputConnections.map((c) => c.to);
-        const outputInterfaces = outputConnections.map((c) => c.from);
-
+        const nodeStates: Array<INodeState<unknown, unknown>> = selectedNodes.map((n) => n.save());
+        const connectionStates: IConnectionState[] = innerConnections.map((c) => ({
+            id: c.id,
+            from: c.from.id,
+            to: c.to.id,
+        }));
         const interfaceIdMap = new Map<string, string>();
+        const { xLeft, xRight, yTop } = getBoundingBoxForNodes(selectedNodes);
+        console.log(xLeft, xRight, yTop);
 
-        const graphInputs: IGraphInterface[] = [];
-        for (const i of inputInterfaces) {
-            const newId = uuidv4();
-            interfaceIdMap.set(i.id, newId);
-            graphInputs.push({ id: newId, nodeInterfaceId: i.id, name: i.name });
+        for (const [idx, conn] of inputConnections.entries()) {
+            const inputNode = new SubgraphInputNode();
+            inputNode.inputs.name.value = conn.to.name;
+            nodeStates.push({
+                ...inputNode.save(),
+                position: { x: xRight - 300, y: yTop + idx * 200 },
+            } as Omit<IViewNodeState, "twoColumn" | "width">);
+            connectionStates.push({ id: uuidv4(), from: inputNode.outputs.placeholder.id, to: conn.to.id });
+            interfaceIdMap.set(conn.to.id, inputNode.graphInterfaceId);
         }
-
-        const graphOutputs: IGraphInterface[] = [];
-        for (const i of outputInterfaces) {
-            const newId = uuidv4();
-            interfaceIdMap.set(i.id, newId);
-            graphOutputs.push({ id: newId, nodeInterfaceId: i.id, name: i.name });
+        for (const [idx, conn] of outputConnections.entries()) {
+            const outputNode = new SubgraphOutputNode();
+            outputNode.inputs.name.value = conn.from.name;
+            nodeStates.push({
+                ...outputNode.save(),
+                position: { x: xLeft + 100, y: yTop + idx * 200 },
+            } as Omit<IViewNodeState, "twoColumn" | "width">);
+            connectionStates.push({ id: uuidv4(), from: conn.from.id, to: outputNode.inputs.placeholder.id });
+            interfaceIdMap.set(conn.from.id, outputNode.graphInterfaceId);
         }
 
         const subgraphTemplate = reactive<GraphTemplate>(
             new GraphTemplate(
                 {
-                    connections: innerConnections.map((c) => ({ id: c.id, from: c.from.id, to: c.to.id })),
-                    inputs: graphInputs,
-                    outputs: graphOutputs,
-                    nodes: selectedNodes.map((n) => n.save()),
+                    connections: connectionStates,
+                    nodes: nodeStates,
+                    // ignored, but still providing to make TS happy
+                    inputs: [],
+                    outputs: [],
                 },
                 editor,
             ),
@@ -120,4 +143,23 @@ export function registerCreateSubgraphCommand(
         canExecute: canCreateSubgraph,
         execute: createSubgraph,
     });
+}
+
+function getBoundingBoxForNodes(nodes: AbstractNode[]) {
+    const xRight = nodes.reduce((acc: number, cur: AbstractNode) => {
+        const x = cur.position.x;
+        return x < acc ? x : acc;
+    }, Infinity);
+
+    const yTop = nodes.reduce((acc: number, cur: AbstractNode) => {
+        const y = cur.position.y;
+        return y < acc ? y : acc;
+    }, Infinity);
+
+    const xLeft = nodes.reduce((acc: number, cur: AbstractNode) => {
+        const x = cur.position.x + cur.width;
+        return x > acc ? x : acc;
+    }, -Infinity);
+
+    return { xLeft, xRight, yTop };
 }

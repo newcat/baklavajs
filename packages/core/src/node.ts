@@ -10,8 +10,9 @@ import type { INodeUpdateEventData } from "./eventDataTypes";
 import type { Graph } from "./graph";
 import type { NodeInterfaceDefinition, NodeInterface, NodeInterfaceDefinitionStates } from "./nodeInterface";
 import { mapValues } from "./utils";
+import { IEngine } from "./engine";
 
-export interface CalculationContext<G = any, E = any> {
+export interface CalculationContext<G = any, E extends IEngine<G> = IEngine<G>> {
     globalValues: G;
     engine: E;
 }
