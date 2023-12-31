@@ -24,7 +24,7 @@ export interface IClipboard {
 export function useClipboard(
     displayedGraph: Ref<Graph>,
     editor: Ref<Editor>,
-    commandHandler: ICommandHandler
+    commandHandler: ICommandHandler,
 ): IClipboard {
     const token = Symbol("ClipboardToken");
 
@@ -47,9 +47,9 @@ export function useClipboard(
 
         const connections = displayedGraph.value.connections
             .filter(
-                (conn) => interfacesOfSelectedNodes.includes(conn.from) || interfacesOfSelectedNodes.includes(conn.to)
+                (conn) => interfacesOfSelectedNodes.includes(conn.from) || interfacesOfSelectedNodes.includes(conn.to),
             )
-            .map((conn) => ({ from: conn.from.id, to: conn.to.id } as IConnectionState));
+            .map((conn) => ({ from: conn.from.id, to: conn.to.id }) as IConnectionState);
 
         connectionBuffer.value = JSON.stringify(connections);
         nodeBuffer.value = JSON.stringify(displayedGraph.value.selectedNodes.map((n) => n.save()));
@@ -58,7 +58,7 @@ export function useClipboard(
     const findInterface = (
         nodes: AbstractNode[],
         id: string,
-        io?: "input" | "output"
+        io?: "input" | "output",
     ): NodeInterface<any> | undefined => {
         for (const n of nodes) {
             let intf: NodeInterface<any> | undefined;
@@ -103,21 +103,6 @@ export function useClipboard(
             const generatedId = copiedNode.id;
             newNodes.push(copiedNode);
 
-            const tapInterfaces = (intfs: Record<string, NodeInterface<any>>) => {
-                Object.values(intfs).forEach((intf) => {
-                    intf.hooks.load.subscribe(token, (intfState) => {
-                        const newIntfId = uuidv4();
-                        idmap.set(intfState.id, newIntfId);
-                        intf.id = newIntfId;
-                        intf.hooks.load.unsubscribe(token);
-                        return intfState;
-                    });
-                });
-            };
-
-            tapInterfaces(copiedNode.inputs);
-            tapInterfaces(copiedNode.outputs);
-
             copiedNode.hooks.beforeLoad.subscribe(token, (nodeState) => {
                 const ns = nodeState as any;
                 if (ns.position) {
@@ -132,6 +117,17 @@ export function useClipboard(
             copiedNode.load({ ...oldNode, id: generatedId });
             copiedNode.id = generatedId;
             idmap.set(oldNode.id, generatedId);
+
+            for (const intf of Object.values(copiedNode.inputs)) {
+                const newIntfId = uuidv4();
+                idmap.set(intf.id, newIntfId);
+                intf.id = newIntfId;
+            }
+            for (const intf of Object.values(copiedNode.outputs)) {
+                const newIntfId = uuidv4();
+                idmap.set(intf.id, newIntfId);
+                intf.id = newIntfId;
+            }
         }
 
         for (const c of parsedConnectionBuffer) {
@@ -146,6 +142,9 @@ export function useClipboard(
             }
         }
 
+        // select all new nodes
+        displayedGraph.value.selectedNodes = newNodes;
+
         commandHandler.executeCommand<CommitTransactionCommand>(COMMIT_TRANSACTION_COMMAND);
 
         return {
@@ -155,7 +154,7 @@ export function useClipboard(
     };
 
     commandHandler.registerCommand(COPY_COMMAND, {
-        canExecute: () => true,
+        canExecute: () => displayedGraph.value.selectedNodes.length > 0,
         execute: copy,
     });
     commandHandler.registerHotkey(["Control", "c"], COPY_COMMAND);
