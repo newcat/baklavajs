@@ -1,11 +1,5 @@
 <template>
-    <div
-        ref="el"
-        class="baklava-sidebar"
-        :class="{ '--open': graph.sidebar.visible }"
-        :style="styles"
-        @keydown.delete.stop
-    >
+    <div ref="el" class="baklava-sidebar" :class="{ '--open': graph.sidebar.visible }" :style="styles">
         <div v-if="resizable" class="__resizer" @mousedown="startResize" />
 
         <div class="__header">

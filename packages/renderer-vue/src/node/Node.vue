@@ -34,7 +34,6 @@
                     placeholder="Node Name"
                     @blur="doneRenaming"
                     @keydown.enter="doneRenaming"
-                    @keydown.delete.stop
                 />
             </div>
         </slot>

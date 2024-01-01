@@ -1,5 +1,7 @@
 import { ref } from "vue";
 
+const INPUT_ELEMENT_TAGS = ["INPUT", "TEXTAREA", "SELECT"];
+
 export function useHotkeyHandler(executeCommand: (name: string) => void) {
     const pressedKeys = ref<string[]>([]);
     const handlers = ref<Array<{ keys: string[]; commandName: string }>>([]);
@@ -7,6 +9,10 @@ export function useHotkeyHandler(executeCommand: (name: string) => void) {
     const handleKeyDown = (ev: KeyboardEvent) => {
         if (!pressedKeys.value.includes(ev.key)) {
             pressedKeys.value.push(ev.key);
+        }
+
+        if (INPUT_ELEMENT_TAGS.includes(document.activeElement?.tagName ?? "")) {
+            return;
         }
 
         handlers.value.forEach((h) => {
