@@ -1,7 +1,7 @@
 <template>
     <div class="baklava-num-input">
         <div class="__button --dec" @click="decrement">
-            <i-arrow />
+            <IconArrow />
         </div>
         <div v-if="!editMode" class="__content" @click="enterEditMode">
             <div class="__label" :title="intf.name">
@@ -21,42 +21,36 @@
                 style="text-align: right"
                 @blur="leaveEditMode"
                 @keydown.enter="leaveEditMode"
-            >
+            />
         </div>
         <div class="__button --inc" @click="increment">
-            <i-arrow />
+            <IconArrow />
         </div>
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, toRef } from "vue";
-import Arrow from "../../icons/ChevronDown.vue";
+<script setup lang="ts">
+import { toRef } from "vue";
+import IconArrow from "../../icons/ChevronDown.vue";
 import { useBaseNumericInterface } from "../baseNumericInterface";
 import type { NumberInterface } from "./NumberInterface";
 
-export default defineComponent({
-    components: {
-        "i-arrow": Arrow,
-    },
-    props: {
-        intf: {
-            type: Object as () => NumberInterface,
-            required: true,
-        },
-    },
-    setup(props) {
-        const baseNumericInterface = useBaseNumericInterface(toRef(props, "intf"));
+const props = defineProps<{
+    intf: NumberInterface;
+}>();
 
-        const increment = () => {
-            baseNumericInterface.setValue(props.intf.value + 0.1);
-        };
+const { editMode, invalid, tempValue, inputEl, stringRepresentation, enterEditMode, leaveEditMode, setValue } =
+    useBaseNumericInterface(toRef(props, "intf"));
 
-        const decrement = () => {
-            baseNumericInterface.setValue(props.intf.value - 0.1);
-        };
+function increment() {
+    // round to 3 decimal places
+    const rounded = parseFloat((props.intf.value + 0.1).toFixed(3));
+    setValue(rounded);
+}
 
-        return { ...baseNumericInterface, increment, decrement };
-    },
-});
+function decrement() {
+    // round to 3 decimal places
+    const rounded = parseFloat((props.intf.value - 0.1).toFixed(3));
+    setValue(rounded);
+}
 </script>
