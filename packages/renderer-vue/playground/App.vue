@@ -53,6 +53,12 @@ baklavaView.settings.enableMinimap = true;
 baklavaView.settings.sidebar.resizable = false;
 baklavaView.settings.displayValueOnHover = true;
 baklavaView.settings.nodes.resizable = true;
+baklavaView.settings.contextMenu.additionalItems = [
+    { isDivider: true },
+    { label: "Copy", command: Commands.COPY_COMMAND },
+    { label: "Paste", command: Commands.PASTE_COMMAND },
+];
+
 const engine = new DependencyEngine(editor);
 engine.events.afterRun.subscribe(token, (r) => {
     engine.pause();

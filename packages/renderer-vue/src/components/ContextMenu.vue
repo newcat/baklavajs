@@ -25,9 +25,9 @@
                             />
                         </svg>
                     </div>
-                    <context-menu
+                    <ContextMenu
                         v-if="item.submenu"
-                        :value="activeMenu === index"
+                        :model-value="activeMenu === index"
                         :items="item.submenu"
                         :is-nested="true"
                         :is-flipped="{ x: flippedX, y: flippedY }"
@@ -40,8 +40,8 @@
     </transition>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, Ref, ref, watch } from "vue";
+<script setup lang="ts">
+import { computed, Ref, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 
 export interface IMenuItem {
@@ -52,130 +52,104 @@ export interface IMenuItem {
     disabled?: boolean | Readonly<Ref<boolean>>;
 }
 
-export default defineComponent({
-    props: {
-        modelValue: {
-            type: Boolean,
-            default: false,
-        },
-        items: {
-            type: Array as () => IMenuItem[],
-            required: true,
-        },
-        x: {
-            type: Number,
-            default: 0,
-        },
-        y: {
-            type: Number,
-            default: 0,
-        },
-        isNested: {
-            type: Boolean,
-            default: false,
-        },
-        isFlipped: {
-            type: Object as () => { x: boolean; y: boolean },
-            default: () => ({ x: false, y: false }),
-        },
-        flippable: {
-            type: Boolean,
-            default: false,
-        },
+const props = withDefaults(
+    defineProps<{
+        modelValue: boolean;
+        items: IMenuItem[];
+        x?: number;
+        y?: number;
+        isNested?: boolean;
+        isFlipped?: { x: boolean; y: boolean };
+        flippable?: boolean;
+    }>(),
+    {
+        x: 0,
+        y: 0,
+        isNested: false,
+        isFlipped: () => ({ x: false, y: false }),
+        flippable: false,
     },
-    emits: ["click", "update:modelValue"],
-    setup(props, { emit }) {
-        let activeMenuResetTimeout: number | null = null;
+);
 
-        const el = ref<HTMLElement | null>(null);
-        const activeMenu = ref(-1);
-        const height = ref(0);
-        const rootIsFlipped = ref({ x: false, y: false });
+const emit = defineEmits<{
+    "update:modelValue": [boolean];
+    "click": [value: string];
+}>();
 
-        const flippedX = computed(() => props.flippable && (rootIsFlipped.value.x || props.isFlipped.x));
-        const flippedY = computed(() => props.flippable && (rootIsFlipped.value.y || props.isFlipped.y));
+let activeMenuResetTimeout: number | null = null;
 
-        const styles = computed(() => {
-            const s: any = {};
-            if (!props.isNested) {
-                s.top = (flippedY.value ? props.y - height.value : props.y) + "px";
-                s.left = props.x + "px";
-            }
-            return s;
-        });
+const el = ref<HTMLElement | null>(null);
+const activeMenu = ref(-1);
+const height = ref(0);
+const rootIsFlipped = ref({ x: false, y: false });
 
-        const classes = computed(() => {
-            return {
-                "--flipped-x": flippedX.value,
-                "--flipped-y": flippedY.value,
-                "--nested": props.isNested,
-            };
-        });
+const flippedX = computed(() => props.flippable && (rootIsFlipped.value.x || props.isFlipped.x));
+const flippedY = computed(() => props.flippable && (rootIsFlipped.value.y || props.isFlipped.y));
 
-        const itemsWithHoverProperty = computed(() => props.items.map((i) => ({ ...i, hover: false })));
-
-        watch([() => props.y, () => props.items], () => {
-            height.value = props.items.length * 30;
-            const parentWidth = el.value?.parentElement?.offsetWidth ?? 0;
-            const parentHeight = el.value?.parentElement?.offsetHeight ?? 0;
-            rootIsFlipped.value.x = !props.isNested && props.x > parentWidth * 0.75;
-            rootIsFlipped.value.y = !props.isNested && props.y + height.value > parentHeight - 20;
-        });
-
-        onClickOutside(el, () => {
-            if (props.modelValue) {
-                emit("update:modelValue", false);
-            }
-        });
-
-        const onClick = (item: IMenuItem) => {
-            if (!item.submenu && item.value) {
-                emit("click", item.value);
-                emit("update:modelValue", false);
-            }
-        };
-
-        const onChildClick = (value: string) => {
-            emit("click", value);
-            activeMenu.value = -1;
-            if (!props.isNested) {
-                emit("update:modelValue", false);
-            }
-        };
-
-        const onMouseEnter = (event: MouseEvent, index: number) => {
-            if (props.items[index].submenu) {
-                activeMenu.value = index;
-                if (activeMenuResetTimeout !== null) {
-                    clearTimeout(activeMenuResetTimeout);
-                    activeMenuResetTimeout = null;
-                }
-            }
-        };
-
-        const onMouseLeave = (event: MouseEvent, index: number) => {
-            if (props.items[index].submenu) {
-                activeMenuResetTimeout = window.setTimeout(() => {
-                    activeMenu.value = -1;
-                    activeMenuResetTimeout = null;
-                }, 200);
-            }
-        };
-
-        return {
-            el,
-            activeMenu,
-            flippedX,
-            flippedY,
-            styles,
-            classes,
-            itemsWithHoverProperty,
-            onClick,
-            onChildClick,
-            onClickOutside,
-            onMouseEnter,
-            onMouseLeave,
-        };
-    },
+const styles = computed(() => {
+    const s: any = {};
+    if (!props.isNested) {
+        s.top = (flippedY.value ? props.y - height.value : props.y) + "px";
+        s.left = props.x + "px";
+    }
+    return s;
 });
+
+const classes = computed(() => {
+    return {
+        "--flipped-x": flippedX.value,
+        "--flipped-y": flippedY.value,
+        "--nested": props.isNested,
+    };
+});
+
+const itemsWithHoverProperty = computed(() => props.items.map((i) => ({ ...i, hover: false })));
+
+watch([() => props.y, () => props.items], () => {
+    height.value = props.items.length * 30;
+    const parentWidth = el.value?.parentElement?.offsetWidth ?? 0;
+    const parentHeight = el.value?.parentElement?.offsetHeight ?? 0;
+    rootIsFlipped.value.x = !props.isNested && props.x > parentWidth * 0.75;
+    rootIsFlipped.value.y = !props.isNested && props.y + height.value > parentHeight - 20;
+});
+
+onClickOutside(el, () => {
+    if (props.modelValue) {
+        emit("update:modelValue", false);
+    }
+});
+
+const onClick = (item: IMenuItem) => {
+    if (!item.submenu && item.value) {
+        emit("click", item.value);
+        emit("update:modelValue", false);
+    }
+};
+
+const onChildClick = (value: string) => {
+    emit("click", value);
+    activeMenu.value = -1;
+    if (!props.isNested) {
+        emit("update:modelValue", false);
+    }
+};
+
+const onMouseEnter = (event: MouseEvent, index: number) => {
+    if (props.items[index].submenu) {
+        activeMenu.value = index;
+        if (activeMenuResetTimeout !== null) {
+            clearTimeout(activeMenuResetTimeout);
+            activeMenuResetTimeout = null;
+        }
+    }
+};
+
+const onMouseLeave = (event: MouseEvent, index: number) => {
+    if (props.items[index].submenu) {
+        activeMenuResetTimeout = window.setTimeout(() => {
+            activeMenu.value = -1;
+            activeMenuResetTimeout = null;
+        }, 200);
+    }
+};
 </script>

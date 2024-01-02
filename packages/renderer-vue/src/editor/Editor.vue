@@ -13,6 +13,7 @@
         @wheel.self="panZoom.onMouseWheel"
         @keydown="keyDown"
         @keyup="keyUp"
+        @contextmenu.self.prevent="contextMenu.open"
     >
         <slot name="background">
             <Background />
@@ -70,6 +71,17 @@
         <slot name="minimap">
             <Minimap v-if="viewModel.settings.enableMinimap" />
         </slot>
+
+        <slot name="contextMenu" :context-menu="contextMenu">
+            <ContextMenu
+                v-if="viewModel.settings.contextMenu.enabled"
+                v-model="contextMenu.show.value"
+                :items="contextMenu.items.value"
+                :x="contextMenu.x.value"
+                :y="contextMenu.y.value"
+                @click="contextMenu.onClick"
+            />
+        </slot>
     </div>
 </template>
 
@@ -80,6 +92,7 @@ import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaViewModel } from "../viewModel";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
+import { useContextMenu } from "../contextMenu";
 import { providePlugin, useDragMove } from "../utility";
 
 import Background from "./Background.vue";
@@ -90,6 +103,7 @@ import Sidebar from "../sidebar/Sidebar.vue";
 import Minimap from "../components/Minimap.vue";
 import NodePalette from "../nodepalette/NodePalette.vue";
 import Toolbar from "../toolbar/Toolbar.vue";
+import ContextMenu from "../components/ContextMenu.vue";
 
 const props = defineProps<{ viewModel: IBaklavaViewModel }>();
 
@@ -108,6 +122,7 @@ const selectedNodes = computed(() => props.viewModel.displayedGraph.selectedNode
 
 const panZoom = usePanZoom();
 const temporaryConnection = useTemporaryConnection();
+const contextMenu = useContextMenu(viewModelRef);
 
 const nodeContainerStyle = computed(() => ({
     ...panZoom.styles.value,
@@ -152,7 +167,7 @@ const keyUp = (ev: KeyboardEvent) => {
 };
 
 const selectNode = (node: AbstractNode) => {
-    if (!["Control", "Shift"].some(k => props.viewModel.commandHandler.pressedKeys.includes(k))) {
+    if (!["Control", "Shift"].some((k) => props.viewModel.commandHandler.pressedKeys.includes(k))) {
         unselectAllNodes();
     }
     props.viewModel.displayedGraph.selectedNodes.push(node);
