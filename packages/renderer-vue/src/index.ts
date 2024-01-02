@@ -10,3 +10,5 @@ export * from "./utility";
 
 export * as Components from "./components";
 export * as Commands from "./commandList";
+
+export { type IViewSettings } from "./settings";
