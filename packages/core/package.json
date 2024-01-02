@@ -36,7 +36,7 @@
         "rimraf": "^5.0.5",
         "ts-jest": "^29.1.1",
         "ts-node": "^10.9.2",
-        "typedoc": "^0.25.4",
+        "typedoc": "^0.25.6",
         "typescript": "^5.3.3"
     },
     "publishConfig": {

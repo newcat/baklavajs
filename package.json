@@ -16,8 +16,8 @@
         "packages/*"
     ],
     "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^6.16.0",
-        "@typescript-eslint/parser": "^6.16.0",
+        "@typescript-eslint/eslint-plugin": "^6.17.0",
+        "@typescript-eslint/parser": "^6.17.0",
         "eslint": "^8.56.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-vue": "^9.19.2",
@@ -26,7 +26,7 @@
         "prettier": "^3.1.1",
         "prettier-eslint": "^16.2.0",
         "rimraf": "^5.0.5",
-        "typedoc": "^0.25.4",
+        "typedoc": "^0.25.6",
         "typescript": "^5.3.3",
         "vitepress": "^1.0.0-rc.32",
         "vue-eslint-parser": "^9.3.2"
