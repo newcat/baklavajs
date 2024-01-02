@@ -20,7 +20,7 @@ const props = withDefaults(
 );
 
 const href = computed(() => {
-    const transformedModuleName = props.module.replace("@", "_").replace("/", "_");
+    const transformedModuleName = props.module.replace("@", "_").replace("/", "_").replace("-", "_");
     let url = `https://v2.baklava.tech/api/${props.type}/${transformedModuleName}`;
     if (props.type !== "modules") {
         url += `.${props.name}`;

@@ -73,7 +73,7 @@ There are other components that provide slots as well:
       - `node` (type: <code><ApiLink type="classes" module="@baklavajs/core" name="AbstractNode">AbstractNode</ApiLink></code>)
       - `intf` (type: <code><ApiLink type="classes" module="@baklavajs/core" name="NodeInterface">NodeInterface</ApiLink></code>)
 - NodeInterface
-  - `portTooltip` [(default content)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/node/NodeInterface.vue#L11-L13)
+  - `portTooltip` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/node/NodeInterface.vue#L11-L13)
     - Props:
       - `showTooltip` (type: `boolean`)
 
