@@ -69,7 +69,7 @@ import { ref, computed, nextTick, onUpdated, onMounted, onBeforeUnmount } from "
 import { AbstractNode, GRAPH_NODE_TYPE_PREFIX, IGraphNode } from "@baklavajs/core";
 import { useGraph, useViewModel } from "../utility";
 
-import ContextMenu from "../components/ContextMenu.vue";
+import { ContextMenu } from "../contextmenu";
 import VerticalDots from "../icons/VerticalDots.vue";
 import NodeInterface from "./NodeInterface.vue";
 

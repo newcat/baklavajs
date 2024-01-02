@@ -41,16 +41,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, Ref, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
-
-export interface IMenuItem {
-    label?: string;
-    value?: any;
-    isDivider?: boolean;
-    submenu?: IMenuItem[];
-    disabled?: boolean | Readonly<Ref<boolean>>;
-}
+import { IMenuItem } from "./types";
 
 const props = withDefaults(
     defineProps<{

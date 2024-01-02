@@ -23,7 +23,7 @@
 import { computed, defineComponent, ref } from "vue";
 import { GRAPH_NODE_TYPE_PREFIX } from "@baklavajs/core";
 
-import ContextMenu, { IMenuItem } from "../components/ContextMenu.vue";
+import { IMenuItem, ContextMenu } from "../contextmenu";
 import VerticalDots from "../icons/VerticalDots.vue";
 import { useGraph, useViewModel } from "../utility";
 

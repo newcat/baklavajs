@@ -90,10 +90,10 @@ import { computed, provide, Ref, ref, toRef } from "vue";
 
 import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaViewModel } from "../viewModel";
+import { providePlugin, useDragMove } from "../utility";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
-import { useContextMenu } from "../contextMenu";
-import { providePlugin, useDragMove } from "../utility";
+import { useContextMenu } from "./contextMenu";
 
 import Background from "./Background.vue";
 import Node from "../node/Node.vue";
@@ -103,7 +103,7 @@ import Sidebar from "../sidebar/Sidebar.vue";
 import Minimap from "../components/Minimap.vue";
 import NodePalette from "../nodepalette/NodePalette.vue";
 import Toolbar from "../toolbar/Toolbar.vue";
-import ContextMenu from "../components/ContextMenu.vue";
+import ContextMenu from "../contextmenu/ContextMenu.vue";
 
 const props = defineProps<{ viewModel: IBaklavaViewModel }>();
 

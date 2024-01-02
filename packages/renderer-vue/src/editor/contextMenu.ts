@@ -1,8 +1,8 @@
 import { Ref, computed, ref, reactive } from "vue";
 import { AbstractNode } from "@baklavajs/core";
-import { IMenuItem } from "./components/ContextMenu.vue";
-import { IBaklavaViewModel } from "./viewModel";
-import { useNodeCategories, useTransform } from "./utility";
+import { IMenuItem } from "../contextmenu";
+import { IBaklavaViewModel } from "../viewModel";
+import { useNodeCategories, useTransform } from "../utility";
 
 export function useContextMenu(viewModel: Ref<IBaklavaViewModel>) {
     const show = ref(false);
