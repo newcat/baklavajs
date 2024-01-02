@@ -60,6 +60,9 @@ For this, the editor provides the following slots:
         -   `select` (type: `() => void`) callback for node being selected
 -   `sidebar` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/sidebar/Sidebar.vue)
 -   `minimap` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/components/Minimap.vue)
+-   `contextMenu` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/components/ContextMenu.vue)
+    - Props:
+        - `contextMenu` (type: return value of [`useContextMenu`](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/contextMenu.ts))
 
 There are other components that provide slots as well:
 
