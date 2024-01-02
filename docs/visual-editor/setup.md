@@ -71,29 +71,4 @@ const baklava = useBaklava();
 baklava.settings.displayValueOnHover = true;
 ```
 
-Available settings are:
-
-```ts
-interface IViewSettings {
-    /** Use straight connections instead of bezier curves */
-    useStraightConnections: boolean;
-    /** Show a minimap */
-    enableMinimap: boolean;
-    /** Background settings */
-    background: {
-        gridSize: number;
-        gridDivision: number;
-        subGridVisibleThreshold: number;
-    };
-    /** Sidebar settings */
-    sidebar: {
-        /** Width of the sidebar in pixels */
-        width: number;
-        /** Whether users should be able to resize the sidebar */
-        resizable: boolean;
-    };
-    /** Show interface value on port hover */
-    displayValueOnHover: boolean;
-}
-```
-
+You can find all available settings <ApiLink type="interfaces" module="@baklavajs/renderer-vue" name="IViewSettings">here</ApiLink>.

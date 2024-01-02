@@ -1,15 +1,22 @@
 .baklava-node {
-    max-width: 20rem;
     background: var(--baklava-node-color-background);
     color: var(--baklava-node-color-foreground);
     border: 1px solid transparent;
     border-radius: var(--baklava-node-border-radius);
     position: absolute;
     box-shadow: 0 0 4px #000000cc;
-    transition: border-color var(--baklava-visual-transition), box-shadow var(--baklava-visual-transition);
+    transition:
+        border-color var(--baklava-visual-transition),
+        box-shadow var(--baklava-visual-transition);
+
+    width: var(--width);
 
     &:hover {
         border-color: var(--baklava-node-color-hover);
+
+        & .__resize-handle::after {
+            opacity: 1;
+        }
     }
 
     &.--selected {
@@ -74,6 +81,43 @@
         & > .__outputs {
             grid-row: 1;
             grid-column: 2;
+        }
+    }
+
+    & .__resize-handle {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 1rem;
+        height: 1rem;
+        transform: translateX(50%);
+        cursor: ew-resize;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: -0.5rem;
+            width: 1rem;
+            height: 1rem;
+            opacity: 0;
+            border-bottom-right-radius: var(--baklava-node-border-radius);
+            transition: opacity var(--baklava-visual-transition);
+            background: linear-gradient(
+                -45deg,
+                transparent 10%,
+                var(--baklava-node-color-resize-handle) 10%,
+                var(--baklava-node-color-resize-handle) 15%,
+                transparent 15%,
+                transparent 30%,
+                var(--baklava-node-color-resize-handle) 30%,
+                var(--baklava-node-color-resize-handle) 35%,
+                transparent 35%,
+                transparent 50%,
+                var(--baklava-node-color-resize-handle) 50%,
+                var(--baklava-node-color-resize-handle) 55%,
+                transparent 55%
+            );
         }
     }
 }

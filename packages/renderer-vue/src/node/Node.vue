@@ -8,6 +8,8 @@
         :data-node-type="node.type"
         @pointerdown="select"
     >
+        <div v-if="viewModel.settings.nodes.resizable" class="__resize-handle" @mousedown="startResize" />
+
         <slot name="title">
             <div class="__title" @pointerdown.self.stop="startDrag">
                 <template v-if="!renaming">
@@ -63,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onUpdated, onMounted } from "vue";
+import { ref, computed, nextTick, onUpdated, onMounted, onBeforeUnmount } from "vue";
 import { AbstractNode, GRAPH_NODE_TYPE_PREFIX, IGraphNode } from "@baklavajs/core";
 import { useGraph, useViewModel } from "../utility";
 
@@ -92,6 +94,7 @@ const el = ref<HTMLElement | null>(null);
 const renaming = ref(false);
 const tempName = ref("");
 const renameInputEl = ref<HTMLInputElement | null>(null);
+const isResizing = ref(false);
 
 const showContextMenu = ref(false);
 const contextMenuItems = computed(() => {
@@ -114,9 +117,9 @@ const classes = computed(() => ({
 }));
 
 const styles = computed(() => ({
-    top: `${props.node.position?.y ?? 0}px`,
-    left: `${props.node.position?.x ?? 0}px`,
-    width: `${props.node.width ?? 200}px`,
+    "top": `${props.node.position?.y ?? 0}px`,
+    "left": `${props.node.position?.x ?? 0}px`,
+    "--width": `${props.node.width ?? viewModel.value.settings.nodes.defaultWidth}px`,
 }));
 
 const displayedInputs = computed(() => Object.values(props.node.inputs).filter((ni) => !ni.hidden));
@@ -166,6 +169,33 @@ const onRender = () => {
     }
 };
 
-onMounted(onRender);
+const startResize = (ev: MouseEvent) => {
+    isResizing.value = true;
+    ev.preventDefault();
+};
+
+const doResize = (ev: MouseEvent) => {
+    if (!isResizing.value) return;
+    const newWidth = props.node.width + ev.movementX / graph.value.scaling;
+    const minWidth = viewModel.value.settings.nodes.minWidth;
+    const maxWidth = viewModel.value.settings.nodes.maxWidth;
+    props.node.width = Math.max(minWidth, Math.min(maxWidth, newWidth));
+};
+
+const stopResize = () => {
+    isResizing.value = false;
+};
+
+onMounted(() => {
+    onRender();
+
+    window.addEventListener("mousemove", doResize);
+    window.addEventListener("mouseup", stopResize);
+});
 onUpdated(onRender);
+
+onBeforeUnmount(() => {
+    window.removeEventListener("mousemove", doResize);
+    window.removeEventListener("mouseup", stopResize);
+});
 </script>

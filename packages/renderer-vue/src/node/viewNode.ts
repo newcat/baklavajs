@@ -6,9 +6,13 @@ export interface IViewNodeState extends INodeState<unknown, unknown> {
     twoColumn: boolean;
 }
 
-export function setViewNodeProperties(node: AbstractNode) {
+export interface SetViewNodePropertiesSettings {
+    defaultWidth: number;
+}
+
+export function setViewNodeProperties(node: AbstractNode, settings: SetViewNodePropertiesSettings) {
     node.position = node.position ?? { x: 0, y: 0 };
     node.disablePointerEvents = false;
     node.twoColumn = node.twoColumn ?? false;
-    node.width = node.width ?? 200;
+    node.width = node.width ?? settings.defaultWidth;
 }

@@ -31,7 +31,39 @@ export interface IViewSettings {
     };
     /** Show interface value on port hover */
     displayValueOnHover: boolean;
+    /** Node settings */
+    nodes: {
+        /** Minimum width of a node */
+        minWidth: number;
+        /** Maximum width of a node */
+        maxWidth: number;
+        /** Default width of a node */
+        defaultWidth: number;
+        /** Whether users should be able to resize nodes */
+        resizable: boolean;
+    };
 }
+
+const DEFAULT_SETTINGS: () => IViewSettings = () => ({
+    useStraightConnections: false,
+    enableMinimap: false,
+    background: {
+        gridSize: 100,
+        gridDivision: 5,
+        subGridVisibleThreshold: 0.6,
+    },
+    sidebar: {
+        width: 300,
+        resizable: true,
+    },
+    displayValueOnHover: false,
+    nodes: {
+        defaultWidth: 200,
+        maxWidth: 320,
+        minWidth: 150,
+        resizable: false,
+    },
+});
 
 export interface IBaklavaViewModel extends IBaklavaTapable {
     editor: Editor;
@@ -62,20 +94,7 @@ export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
 
     const isSubgraph = computed(() => displayedGraph.value && displayedGraph.value !== editor.value.graph);
 
-    const settings: IViewSettings = reactive({
-        useStraightConnections: false,
-        enableMinimap: false,
-        background: {
-            gridSize: 100,
-            gridDivision: 5,
-            subGridVisibleThreshold: 0.6,
-        },
-        sidebar: {
-            width: 300,
-            resizable: true,
-        },
-        displayValueOnHover: false,
-    } satisfies IViewSettings);
+    const settings: IViewSettings = reactive(DEFAULT_SETTINGS());
 
     const commandHandler = useCommandHandler();
     const history = useHistory(displayedGraph, commandHandler);
@@ -107,7 +126,7 @@ export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
             if (newValue) {
                 newValue.nodeHooks.beforeLoad.subscribe(token, (state, node) => {
                     node.position = (state as IViewNodeState).position ?? { x: 0, y: 0 };
-                    node.width = (state as IViewNodeState).width ?? 200;
+                    node.width = (state as IViewNodeState).width ?? settings.nodes.defaultWidth;
                     node.twoColumn = (state as IViewNodeState).twoColumn ?? false;
                     return state;
                 });
@@ -138,7 +157,9 @@ export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
                     return state;
                 });
 
-                newValue.graphEvents.beforeAddNode.subscribe(token, (node) => setViewNodeProperties(node));
+                newValue.graphEvents.beforeAddNode.subscribe(token, (node) =>
+                    setViewNodeProperties(node, { defaultWidth: settings.nodes.defaultWidth }),
+                );
 
                 editor.value.registerNodeType(SubgraphInputNode, { category: "Subgraphs" });
                 editor.value.registerNodeType(SubgraphOutputNode, { category: "Subgraphs" });

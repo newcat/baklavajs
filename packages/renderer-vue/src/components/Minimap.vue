@@ -231,8 +231,9 @@ watch([showViewBounds, graph.value.panning, () => graph.value.scaling, () => gra
 });
 
 const nodePositions = computed(() => graph.value.nodes.map((n) => n.position));
+const nodeSizes = computed(() => graph.value.nodes.map((n) => n.width));
 watch(
-    nodePositions,
+    [nodePositions, nodeSizes],
     () => {
         updateCanvas();
     },

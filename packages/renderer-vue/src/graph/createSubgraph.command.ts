@@ -11,10 +11,11 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { reactive, Ref } from "vue";
 import type { ICommand, ICommandHandler } from "../commands";
+import { useViewModel } from "../utility";
+import { IViewNodeState } from "../node/viewNode";
 import { SaveSubgraphCommand, SAVE_SUBGRAPH_COMMAND } from "./saveSubgraph.command";
 import type { SwitchGraph } from "./switchGraph";
 import { SubgraphInputNode, SubgraphOutputNode } from "./subgraphInterfaceNodes";
-import { IViewNodeState } from "../node/viewNode";
 
 export const CREATE_SUBGRAPH_COMMAND = "CREATE_SUBGRAPH";
 export type CreateSubgraphCommand = ICommand<void>;
@@ -31,6 +32,7 @@ export function registerCreateSubgraphCommand(
     };
 
     const createSubgraph = () => {
+        const { viewModel } = useViewModel();
         const graph = displayedGraph.value;
         const editor = displayedGraph.value.editor;
 
@@ -68,7 +70,7 @@ export function registerCreateSubgraphCommand(
             inputNode.inputs.name.value = conn.to.name;
             nodeStates.push({
                 ...inputNode.save(),
-                position: { x: xRight - 300, y: yTop + idx * 200 },
+                position: { x: xRight - viewModel.value.settings.nodes.defaultWidth - 100, y: yTop + idx * 200 },
             } as Omit<IViewNodeState, "twoColumn" | "width">);
             connectionStates.push({ id: uuidv4(), from: inputNode.outputs.placeholder.id, to: conn.to.id });
             interfaceIdMap.set(conn.to.id, inputNode.graphInterfaceId);
