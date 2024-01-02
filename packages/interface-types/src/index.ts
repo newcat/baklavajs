@@ -38,9 +38,13 @@ export class NodeInterfaceType<T> {
     }
 }
 
-export const setType = <T>(intf: NodeInterface<T>, type: NodeInterfaceType<T>) => {
+export function setType<T>(intf: NodeInterface<T>, type: NodeInterfaceType<T>) {
     intf.type = type.name;
-};
+}
+/** Use this function to set the type for a NodeInterface with `allowMultipleConnections` */
+export function setTypeForMultipleConnections<T>(intf: NodeInterface<T[]>, type: NodeInterfaceType<T>) {
+    intf.type = type.name;
+}
 
 export class BaklavaInterfaceTypes {
     private editor: Editor;

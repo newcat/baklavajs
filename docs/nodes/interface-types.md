@@ -78,6 +78,11 @@ new NodeInterface<string>("Foo", "value").use(setType, numberType);
 numberType.addConversion(stringType, () => false);
 ```
 
+When using `allowMultipleConnections`, use the `setTypeForMultipleConnections` function:
+```ts
+new NodeInterface<string[]>("Foo", []).use(allowMultipleConnections).use(setTypeForMultipleConnections, numberType);
+```
+
 ## Conversions
 
 By default, only connections between two interfaces of the same type are allowed.

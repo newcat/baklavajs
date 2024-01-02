@@ -19,6 +19,6 @@ export default defineNode({
         advanced: () => new NodeInterface("Advanced", 0).use(setType, numberType),
     },
     calculate({ simple, advanced }) {
-        return { simple: simple!, advanced: advanced! };
+        return { simple: simple, advanced: advanced };
     },
 });
