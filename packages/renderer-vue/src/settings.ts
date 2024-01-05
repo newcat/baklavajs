@@ -17,8 +17,24 @@ export type ContextMenuItem = SimpleContextMenuItem | DividerContextMenuItem | S
 export interface IViewSettings {
     /** Use straight connections instead of bezier curves */
     useStraightConnections: boolean;
-    /** Show a minimap */
-    enableMinimap: boolean;
+    /** Minimap settings */
+    minimap: {
+        /** Whether the minimap should be enabled */
+        enabled: boolean;
+    };
+
+    /** Toolbar settings */
+    toolbar: {
+        /** Whether the minimap should be enabled */
+        enabled: boolean;
+    };
+
+    /** Palette settings */
+    palette: {
+        /** Whether the minimap should be enabled */
+        enabled: boolean;
+    };
+
     /** Background settings */
     background: {
         gridSize: number;
@@ -27,6 +43,8 @@ export interface IViewSettings {
     };
     /** Sidebar settings */
     sidebar: {
+        /** Whether the sidebar should be enabled */
+        enabled: boolean;
         /** Width of the sidebar in pixels */
         width: number;
         /** Whether users should be able to resize the sidebar */
@@ -54,13 +72,22 @@ export interface IViewSettings {
 
 export const DEFAULT_SETTINGS: () => IViewSettings = () => ({
     useStraightConnections: false,
-    enableMinimap: false,
+    toolbar: {
+        enabled: true,
+    },
+    palette: {
+        enabled: true,
+    },
+    minimap: {
+        enabled: false,
+    },
     background: {
         gridSize: 100,
         gridDivision: 5,
         subGridVisibleThreshold: 0.6,
     },
     sidebar: {
+        enabled: true,
         width: 300,
         resizable: true,
     },
