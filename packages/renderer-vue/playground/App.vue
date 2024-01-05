@@ -35,6 +35,7 @@ import SidebarNode from "./SidebarNode";
 import DynamicNode from "./DynamicNode";
 import UpdateTestNode from "./UpdateTestNode";
 import MultiInputNode from "./MultiInputNode";
+import { DialogNode } from "./DialogNode";
 
 import ReactiveOutputTestNode from "./ReactiveOutputTestNode";
 
@@ -78,6 +79,7 @@ nodeInterfaceTypes.addTypes(stringType, numberType, booleanType);
 editor.registerNodeType(TestNode, { category: "Tests" });
 editor.registerNodeType(OutputNode, { category: "Outputs" });
 editor.registerNodeType(BuilderTestNode, { category: "Tests" });
+editor.registerNodeType(DialogNode);
 editor.registerNodeType(MathNode);
 editor.registerNodeType(AdvancedNode);
 editor.registerNodeType(CommentNode, { title: "Comment" });
@@ -95,6 +97,7 @@ editor.graph.addNode(new TestNode());
 editor.graph.addNode(new OutputNode());
 editor.graph.addNode(new BuilderTestNode());
 editor.graph.addNode(new AdvancedNode());
+editor.graph.addNode(new DialogNode());
 
 const calculate = async () => {
     console.log(await engine.runOnce("def"));
