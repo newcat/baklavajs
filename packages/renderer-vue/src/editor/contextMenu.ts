@@ -64,8 +64,8 @@ export function useContextMenu(viewModel: Ref<IBaklavaViewModel>) {
 
     function open(ev: MouseEvent) {
         show.value = true;
-        x.value = ev.offsetX;
-        y.value = ev.offsetY;
+        x.value = ev.pageX - 30;
+        y.value = ev.pageY - 40;
     }
 
     function onClick(value: string) {
