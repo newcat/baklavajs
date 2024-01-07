@@ -25,13 +25,13 @@ export interface IViewSettings {
 
     /** Toolbar settings */
     toolbar: {
-        /** Whether the minimap should be enabled */
+        /** Whether the toolbar should be enabled */
         enabled: boolean;
     };
 
     /** Palette settings */
     palette: {
-        /** Whether the minimap should be enabled */
+        /** Whether the palette should be enabled */
         enabled: boolean;
     };
 
