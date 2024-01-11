@@ -64,8 +64,19 @@ export function useContextMenu(viewModel: Ref<IBaklavaViewModel>) {
 
     function open(ev: MouseEvent) {
         show.value = true;
-        x.value = ev.pageX - 30;
-        y.value = ev.pageY - 40;
+        const target = ev.target as Element;
+        const element = target.closest(".baklava-node");
+        if (!element) {
+            x.value = ev.offsetX;
+            y.value = ev.offsetY;
+            return;
+        }
+        const bounding = target.getBoundingClientRect();
+        const editor = document.querySelector(".baklava-editor") as Element;
+
+        const editorBounding = editor.getBoundingClientRect();
+        x.value = bounding.x + ev.offsetX - editorBounding.x;
+        y.value = bounding.y + ev.offsetY - editorBounding.y;
     }
 
     function onClick(value: string) {
