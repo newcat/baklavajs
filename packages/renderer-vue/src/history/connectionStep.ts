@@ -43,7 +43,11 @@ export default class ConnectionStep implements IStep {
         if (!fromIntf || !toIntf) {
             return;
         }
-        graph.addConnection(fromIntf, toIntf);
+        const connection = graph.addConnection(fromIntf, toIntf);
+        if (connection) {
+            connection.id = this.connectionState!.id;
+        }
+        this.connectionId = connection?.id;
     }
 
     private removeConnection(graph: Graph) {
