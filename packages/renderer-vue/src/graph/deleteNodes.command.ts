@@ -9,7 +9,10 @@ export function registerDeleteNodesCommand(displayedGraph: Ref<Graph>, handler: 
     handler.registerCommand(DELETE_NODES_COMMAND, {
         canExecute: () => displayedGraph.value.selectedNodes.length > 0,
         execute() {
-            displayedGraph.value.selectedNodes.forEach((n) => displayedGraph.value.removeNode(n));
+            for (let i = displayedGraph.value.selectedNodes.length - 1; i >= 0; i--) {
+                const n = displayedGraph.value.selectedNodes[i];
+                displayedGraph.value.removeNode(n);
+            }
         },
     });
     handler.registerHotkey(["Delete"], DELETE_NODES_COMMAND);
