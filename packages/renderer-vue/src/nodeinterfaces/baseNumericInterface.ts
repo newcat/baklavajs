@@ -22,7 +22,7 @@ export class BaseNumericInterface extends NodeInterface<number> implements IVali
     }
 
     public validate(v: number) {
-        return (!this.min || v >= this.min) && (!this.max || v <= this.max);
+        return (this.min === undefined || v >= this.min) && (this.max === undefined || v <= this.max);
     }
 }
 
