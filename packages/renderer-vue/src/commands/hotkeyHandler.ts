@@ -1,6 +1,5 @@
 import { ref } from "vue";
-
-const INPUT_ELEMENT_TAGS = ["INPUT", "TEXTAREA", "SELECT"];
+import { isInputElement } from "../utility";
 
 export function useHotkeyHandler(executeCommand: (name: string) => void) {
     const pressedKeys = ref<string[]>([]);
@@ -11,7 +10,7 @@ export function useHotkeyHandler(executeCommand: (name: string) => void) {
             pressedKeys.value.push(ev.key);
         }
 
-        if (INPUT_ELEMENT_TAGS.includes(document.activeElement?.tagName ?? "")) {
+        if (document.activeElement && isInputElement(document.activeElement)) {
             return;
         }
 
