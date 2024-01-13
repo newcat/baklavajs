@@ -46,6 +46,10 @@ export function setTypeForMultipleConnections<T>(intf: NodeInterface<T[]>, type:
     intf.type = type.name;
 }
 
+export function getType<T>(intf: NodeInterface<T>): string | undefined {
+    return intf.type;
+}
+
 export class BaklavaInterfaceTypes {
     private editor: Editor;
     private types: Map<string, NodeInterfaceType<any>> = new Map();
