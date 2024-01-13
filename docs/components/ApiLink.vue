@@ -9,7 +9,7 @@ import StaticLink from "./StaticLink";
 const props = withDefaults(
     defineProps<{
         module: string;
-        type: "classes" | "modules" | "interfaces";
+        type: "classes" | "modules" | "interfaces" | "functions";
         name?: string;
         hash?: string;
     }>(),

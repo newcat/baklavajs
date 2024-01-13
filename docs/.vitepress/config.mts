@@ -47,6 +47,7 @@ export default defineConfig({
                     { text: "Setup", link: "/visual-editor/setup.md" },
                     { text: "Commands", link: "/visual-editor/commands.md" },
                     { text: "Toolbar", link: "/visual-editor/toolbar.md" },
+                    { text: "Sidebar", link: "/visual-editor/sidebar.md" },
                     { text: "Customization", link: "/visual-editor/customization.md" },
                 ],
             },
