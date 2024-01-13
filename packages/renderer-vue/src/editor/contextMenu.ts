@@ -2,7 +2,7 @@ import { Ref, computed, ref, reactive } from "vue";
 import { AbstractNode } from "@baklavajs/core";
 import { IMenuItem } from "../contextmenu";
 import { IBaklavaViewModel } from "../viewModel";
-import { useNodeCategories, useTransform } from "../utility";
+import { isInputElement, useNodeCategories, useTransform } from "../utility";
 
 export function useContextMenu(viewModel: Ref<IBaklavaViewModel>) {
     const show = ref(false);
@@ -63,9 +63,25 @@ export function useContextMenu(viewModel: Ref<IBaklavaViewModel>) {
     });
 
     function open(ev: MouseEvent) {
+        if (ev.target instanceof Element && isInputElement(ev.target)) {
+            return;
+        }
+
+        ev.preventDefault();
         show.value = true;
-        x.value = ev.offsetX;
-        y.value = ev.offsetY;
+        const target = ev.target as Element;
+        const element = target.closest(".baklava-node");
+        if (!element) {
+            x.value = ev.offsetX;
+            y.value = ev.offsetY;
+            return;
+        }
+        const bounding = target.getBoundingClientRect();
+        const editor = document.querySelector(".baklava-editor") as Element;
+
+        const editorBounding = editor.getBoundingClientRect();
+        x.value = bounding.x + ev.offsetX - editorBounding.x;
+        y.value = bounding.y + ev.offsetY - editorBounding.y;
     }
 
     function onClick(value: string) {
