@@ -9,10 +9,9 @@ export function registerDeleteNodesCommand(displayedGraph: Ref<Graph>, handler: 
     handler.registerCommand(DELETE_NODES_COMMAND, {
         canExecute: () => displayedGraph.value.selectedNodes.length > 0,
         execute() {
-            if(displayedGraph.value.selectedNodes == null) return;
-            for(let i = displayedGraph.value.selectedNodes.length - 1; i >= 0; i--) {
+            for (let i = displayedGraph.value.selectedNodes.length - 1; i >= 0; i--) {
                 const n = displayedGraph.value.selectedNodes[i];
-                displayedGraph.value.removeNode(n)
+                displayedGraph.value.removeNode(n);
             }
         },
     });
