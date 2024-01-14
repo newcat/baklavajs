@@ -104,3 +104,12 @@ This interface displays a text field that the user can type into.
 import { TextInputInterface } from "baklavajs";
 new TextInputInterface("Name", "Edit me");
 ```
+
+## TextareaInputInterface
+
+This interface displays a textarea field that the user can type into.
+
+```js
+import { TextareaInputInterface } from "baklavajs";
+new TextareaInputInterface("Name", "Edit me");
+```

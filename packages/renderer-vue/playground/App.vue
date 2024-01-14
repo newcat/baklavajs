@@ -35,6 +35,7 @@ import SidebarNode from "./SidebarNode";
 import DynamicNode from "./DynamicNode";
 import UpdateTestNode from "./UpdateTestNode";
 import MultiInputNode from "./MultiInputNode";
+import { DialogNode } from "./DialogNode";
 
 import ReactiveOutputTestNode from "./ReactiveOutputTestNode";
 
@@ -78,6 +79,7 @@ nodeInterfaceTypes.addTypes(stringType, numberType, booleanType);
 editor.registerNodeType(TestNode, { category: "Tests" });
 editor.registerNodeType(OutputNode, { category: "Outputs" });
 editor.registerNodeType(BuilderTestNode, { category: "Tests" });
+editor.registerNodeType(DialogNode);
 editor.registerNodeType(MathNode);
 editor.registerNodeType(AdvancedNode);
 editor.registerNodeType(CommentNode, { title: "Comment" });

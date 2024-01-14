@@ -6,3 +6,4 @@ export * from "./select/SelectInterface";
 export * from "./slider/SliderInterface";
 export * from "./text/TextInterface";
 export * from "./textinput/TextInputInterface";
+export * from "./textareainput/TextareaInputInterface";
