@@ -69,7 +69,7 @@
         </slot>
 
         <slot name="minimap">
-            <Minimap v-if="viewModel.settings.minimap.enabled" />
+            <Minimap v-if="viewModel.settings.enableMinimap" />
         </slot>
 
         <slot name="contextMenu" :context-menu="contextMenu">
