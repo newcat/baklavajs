@@ -70,7 +70,7 @@ Settings can be changed by accessing the `settings` property of the view model r
 | name                               | data type         | default |
 | ---------------------------------- | ----------------- | ------- |
 | useStraightConnections             | boolean           | false   |
-| minimap.enabled                    | boolean           | false   |
+| enableMinimap                      | boolean           | false   |
 | toolbar.enabled                    | boolean           | true    |
 | palette.enabled                    | boolean           | true    |
 | background.gridSize                | number            | 100     |

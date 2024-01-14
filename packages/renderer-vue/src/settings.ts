@@ -17,11 +17,9 @@ export type ContextMenuItem = SimpleContextMenuItem | DividerContextMenuItem | S
 export interface IViewSettings {
     /** Use straight connections instead of bezier curves */
     useStraightConnections: boolean;
-    /** Minimap settings */
-    minimap: {
-        /** Whether the minimap should be enabled */
-        enabled: boolean;
-    };
+
+    /** Show a minimap */
+    enableMinimap: boolean;
 
     /** Toolbar settings */
     toolbar: {
@@ -72,14 +70,12 @@ export interface IViewSettings {
 
 export const DEFAULT_SETTINGS: () => IViewSettings = () => ({
     useStraightConnections: false,
+    enableMinimap: false,
     toolbar: {
         enabled: true,
     },
     palette: {
         enabled: true,
-    },
-    minimap: {
-        enabled: false,
     },
     background: {
         gridSize: 100,

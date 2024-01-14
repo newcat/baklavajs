@@ -49,7 +49,7 @@ const baklavaView = useBaklava();
 const editor = baklavaView.editor;
 
 (window as any).editor = baklavaView.editor;
-baklavaView.settings.minimap.enabled = true;
+baklavaView.settings.enableMinimap = true;
 baklavaView.settings.sidebar.resizable = false;
 baklavaView.settings.displayValueOnHover = true;
 baklavaView.settings.nodes.resizable = true;
