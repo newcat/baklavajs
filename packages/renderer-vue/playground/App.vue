@@ -97,7 +97,6 @@ editor.graph.addNode(new TestNode());
 editor.graph.addNode(new OutputNode());
 editor.graph.addNode(new BuilderTestNode());
 editor.graph.addNode(new AdvancedNode());
-editor.graph.addNode(new DialogNode());
 
 const calculate = async () => {
     console.log(await engine.runOnce("def"));

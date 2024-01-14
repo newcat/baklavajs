@@ -1,7 +1,6 @@
 <template>
-    <div class="baklava-textarea">
-        <div v-if="intf.name != ''" class="__text">{{ intf.name }}</div>
-        <textarea v-model="v" rows="5" class="baklava-input" :placeholder="intf.name" />
+    <div>
+        <textarea v-model="v" rows="5" class="baklava-input" :placeholder="intf.name" :title="intf.name" />
     </div>
 </template>
 
