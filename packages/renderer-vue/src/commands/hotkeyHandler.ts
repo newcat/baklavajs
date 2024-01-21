@@ -1,9 +1,28 @@
 import { ref } from "vue";
 import { isInputElement } from "../utility";
 
+export interface HotkeyRegistrationOptions {
+    /**
+     * Whether to prevent the default action of the hotkey.
+     * @default false
+     */
+    preventDefault?: boolean;
+    /**
+     * Whether to stop the propagation of the hotkey.
+     * @default false
+     */
+    stopPropagation?: boolean;
+}
+
+interface HotkeyHandler {
+    keys: string[];
+    commandName: string;
+    options?: HotkeyRegistrationOptions;
+}
+
 export function useHotkeyHandler(executeCommand: (name: string) => void) {
     const pressedKeys = ref<string[]>([]);
-    const handlers = ref<Array<{ keys: string[]; commandName: string }>>([]);
+    const handlers = ref<HotkeyHandler[]>([]);
 
     const handleKeyDown = (ev: KeyboardEvent) => {
         if (!pressedKeys.value.includes(ev.key)) {
@@ -16,6 +35,13 @@ export function useHotkeyHandler(executeCommand: (name: string) => void) {
 
         handlers.value.forEach((h) => {
             if (h.keys.every((k) => pressedKeys.value.includes(k))) {
+                if (h.options?.preventDefault) {
+                    ev.preventDefault();
+                }
+                if (h.options?.stopPropagation) {
+                    ev.stopPropagation();
+                }
+
                 executeCommand(h.commandName);
             }
         });
@@ -28,8 +54,8 @@ export function useHotkeyHandler(executeCommand: (name: string) => void) {
         }
     };
 
-    const registerHotkey = (keys: string[], commandName: string) => {
-        handlers.value.push({ keys, commandName });
+    const registerHotkey = (keys: string[], commandName: string, options?: HotkeyRegistrationOptions) => {
+        handlers.value.push({ keys, commandName, options });
     };
 
     return { pressedKeys, handleKeyDown, handleKeyUp, registerHotkey };

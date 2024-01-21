@@ -1,6 +1,6 @@
 import { reactive, ref } from "vue";
 import { ICommand } from "./command";
-import { useHotkeyHandler } from "./hotkeyHandler";
+import { useHotkeyHandler, HotkeyRegistrationOptions } from "./hotkeyHandler";
 
 export * from "./command";
 
@@ -55,8 +55,9 @@ export interface ICommandHandler {
      * Register a new hotkey combination for the command.
      * @param keys Combination of keys. When all keys in the given array are pressed at the same time, the command will be executed.
      * @param commandName Name of the command that should be executed when the keys are pressed.
+     * @param options Options for the hotkey registration.
      */
-    registerHotkey(keys: string[], commandName: string): void;
+    registerHotkey(keys: string[], commandName: string, options?: HotkeyRegistrationOptions): void;
     /** @internal */
     handleKeyUp(ev: KeyboardEvent): void;
     /** @internal */
