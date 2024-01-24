@@ -20,11 +20,11 @@
         </slot>
 
         <slot name="toolbar">
-            <Toolbar />
+            <Toolbar v-if="viewModel.settings.toolbar.enabled" />
         </slot>
 
         <slot name="palette">
-            <NodePalette />
+            <NodePalette v-if="viewModel.settings.palette.enabled" />
         </slot>
 
         <svg class="connections-container">
@@ -65,7 +65,7 @@
         </div>
 
         <slot name="sidebar">
-            <Sidebar />
+            <Sidebar v-if="viewModel.settings.sidebar.enabled" />
         </slot>
 
         <slot name="minimap">
