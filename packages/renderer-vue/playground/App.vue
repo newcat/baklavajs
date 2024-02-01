@@ -36,6 +36,7 @@ import DynamicNode from "./DynamicNode";
 import UpdateTestNode from "./UpdateTestNode";
 import MultiInputNode from "./MultiInputNode";
 import { DialogNode } from "./DialogNode";
+import ProgrammingNode from "./ProgrammingNode";
 
 import ReactiveOutputTestNode from "./ReactiveOutputTestNode";
 
@@ -90,6 +91,7 @@ editor.registerNodeType(DynamicNode);
 editor.registerNodeType(UpdateTestNode);
 editor.registerNodeType(ReactiveOutputTestNode);
 editor.registerNodeType(MultiInputNode);
+editor.registerNodeType(ProgrammingNode);
 
 editor.graph.addNode(new TestNode());
 editor.graph.addNode(new TestNode());

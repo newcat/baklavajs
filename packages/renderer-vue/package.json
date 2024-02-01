@@ -32,7 +32,8 @@
     },
     "dependencies": {
         "@baklavajs/core": "^2.3.0",
-        "@baklavajs/events": "^2.3.0"
+        "@baklavajs/events": "^2.3.0",
+        "@vueform/multiselect": "^2.6.6"
     },
     "devDependencies": {
         "@types/resize-observer-browser": "^0.1.11",

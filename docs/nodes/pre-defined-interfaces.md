@@ -1,5 +1,31 @@
 # Pre-defined interfaces
 
+## AsyncSelectInterface
+
+Displays a dropdown from which a single value can be chosen.
+The third parameter is a callback to dynamically update the list.
+
+The callback must return an array in the following format `{ label: string; value: any }[]`.
+
+```js
+{
+    label: "I will be displayed", // must be a string
+    value: 1 // can be any type
+}
+```
+
+```js
+import { AsyncSelectInterface } from "baklavajs";
+
+new AsyncSelectInterface("Fruits", { label: "Apple", value: 58 }, async (query: string) => {
+    const fruits = [
+        { label: "Apple", value: 58 },
+        { label: "Orange", value: 2 }
+    ];
+    return fruits.filter(f => f.label.contains(query));
+});
+```
+
 ## ButtonInterface
 
 Displays a button and calls the provided callback when the button is clicked.

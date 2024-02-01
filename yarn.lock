@@ -753,6 +753,7 @@ __metadata:
     "@types/resize-observer-browser": ^0.1.11
     "@vitejs/plugin-vue": ^5.0.2
     "@vue/compiler-sfc": ^3.4.3
+    "@vueform/multiselect": ^2.6.6
     "@vueuse/core": ^10.7.1
     rimraf: ^5.0.5
     rollup-plugin-peer-deps-external: ^2.2.4
@@ -3331,6 +3332,13 @@ __metadata:
   version: 3.4.3
   resolution: "@vue/shared@npm:3.4.3"
   checksum: 29abea1d2564163ae963c9745d7c6bbb469132370fbed5c77090613b549863df5efdf6a862be4ddc9c6b1d2481dce1c7e25719e5add8c680941139fdac09b801
+  languageName: node
+  linkType: hard
+
+"@vueform/multiselect@npm:^2.6.6":
+  version: 2.6.6
+  resolution: "@vueform/multiselect@npm:2.6.6"
+  checksum: b15255427d5ecad5276b1941014c8cd45b57924a65774760afb8ecdc9e1af1e09426b6d2ab1c710e41ea6ae18e15d436898d04c8ed00367190b638876687e58d
   languageName: node
   linkType: hard
 

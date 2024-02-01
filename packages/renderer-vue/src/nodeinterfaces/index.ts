@@ -1,3 +1,4 @@
+export * from "./asyncselect/AsyncSelectInterface";
 export * from "./button/ButtonInterface";
 export * from "./checkbox/CheckboxInterface";
 export * from "./integer/IntegerInterface";
