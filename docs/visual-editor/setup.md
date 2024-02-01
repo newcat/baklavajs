@@ -84,6 +84,7 @@ Settings can be changed by accessing the `settings` property of the view model r
 | nodes.maxWidth                     | number            | 320     |
 | nodes.minWidth                     | boolean           | 150     |
 | nodes.resizable                    | boolean           | false   |
+| nodes.reverseY                     | boolean           | false   |
 | contextMenu.enabled                | boolean           | true    |
 | contextMenu.additionalItems        | ContextMenuItem[] | []      |
 

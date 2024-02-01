@@ -60,6 +60,59 @@ export default defineNode({
 });
 ```
 
+There are also other properties that allow you to customize your nodes :
+
+| name                 | data type | default               |
+| -------------------- | --------- | --------------------- |
+| position.x           | number    | 0                     |
+| position.y           | number    | 0                     |
+| width                | number    | settings.defaultWidth |
+| disablePointerEvents | boolean   | false                 |
+| twoColumn            | boolean   | false                 |
+| reverseY             | boolean?  | undefined             |
+
+```ts
+import { AbstractNode, CalculateFunction, NodeInterface } from "@baklavajs/core";
+import { TextareaInputInterface } from "../src/nodeinterfaces/textareainput/TextareaInputInterface";
+import { ButtonInterface } from "../src";
+import { InputAnswerInterface } from "./interface/InputAnswerInterface";
+
+export default class AnswerNode extends AbstractNode {
+    public type = "answer";
+
+    public inputs: Record<string, NodeInterface<any>> = {
+        input: new NodeInterface("Content", ""),
+        description: new TextareaInputInterface("", "").setPort(false),
+    };
+    public outputs: Record<string, NodeInterface<any>> = {};
+
+    private counter = 0;
+    public constructor() {
+        super();
+        this.initializeIo();
+        this.width = 400;
+        this.title = "Answer";
+        this.reverseY = true;
+    }
+
+    public addChoice(value?: string) {
+        const name = "answer" + ++this.counter;
+        this.addOutput(
+            name,
+            new InputAnswerInterface(name, value, () => {
+                this.removeOutput(name);
+            }),
+        );
+    }
+
+    public onPlaced() {
+        this.addInput("addAnswer", new ButtonInterface("Add " + this.title, () => this.addChoice()));
+    }
+
+    calculate?: CalculateFunction<any, any> | undefined;
+}
+```
+
 ## Class-based approach
 
 For nodes that have dynamic inputs and outputs, it is also possible to use a class-based approach similar to BaklavaJS v1.

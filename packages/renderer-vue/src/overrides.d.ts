@@ -16,6 +16,7 @@ declare module "@baklavajs/core/dist/node" {
         width: number;
         disablePointerEvents: boolean;
         twoColumn: boolean;
+        reverseY?: boolean;
     }
 }
 

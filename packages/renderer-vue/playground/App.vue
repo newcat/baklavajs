@@ -54,6 +54,7 @@ baklavaView.settings.enableMinimap = true;
 baklavaView.settings.sidebar.resizable = false;
 baklavaView.settings.displayValueOnHover = true;
 baklavaView.settings.nodes.resizable = true;
+baklavaView.settings.nodes.reverseY = false;
 baklavaView.settings.contextMenu.additionalItems = [
     { isDivider: true },
     { label: "Copy", command: Commands.COPY_COMMAND },

@@ -60,6 +60,8 @@ export interface IViewSettings {
         defaultWidth: number;
         /** Whether users should be able to resize nodes */
         resizable: boolean;
+        /** Inverts the order of inputs/outputs in nodes. */
+        reverseY: boolean;
     };
     contextMenu: {
         /** Whether the context menu should be enabled */
@@ -93,6 +95,7 @@ export const DEFAULT_SETTINGS: () => IViewSettings = () => ({
         maxWidth: 320,
         minWidth: 150,
         resizable: false,
+        reverseY: false,
     },
     contextMenu: {
         enabled: true,

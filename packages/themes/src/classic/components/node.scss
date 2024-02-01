@@ -62,6 +62,11 @@
     & > .__content {
         padding: 0.75em;
 
+        &.--reverse-y {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
         & > div > div {
             margin: 0.5em 0;
         }

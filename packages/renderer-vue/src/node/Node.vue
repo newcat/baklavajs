@@ -41,7 +41,7 @@
         </slot>
 
         <slot name="content">
-            <div class="__content" @keydown.delete.stop>
+            <div class="__content" @keydown.delete.stop :class="classesContent">
                 <!-- Outputs -->
                 <div class="__outputs">
                     <template v-for="output in displayedOutputs" :key="output.id">
@@ -72,7 +72,6 @@ import { useGraph, useViewModel } from "../utility";
 import { ContextMenu } from "../contextmenu";
 import VerticalDots from "../icons/VerticalDots.vue";
 import NodeInterface from "./NodeInterface.vue";
-
 const props = withDefaults(
     defineProps<{
         node: AbstractNode;
@@ -114,6 +113,10 @@ const classes = computed(() => ({
     "--selected": props.selected,
     "--dragging": props.dragging,
     "--two-column": !!props.node.twoColumn,
+}));
+
+const classesContent = computed(() => ({
+    "--reverse-y": props.node.reverseY ?? viewModel.value.settings.nodes.reverseY,
 }));
 
 const styles = computed(() => ({
