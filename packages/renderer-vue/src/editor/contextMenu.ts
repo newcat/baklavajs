@@ -66,7 +66,10 @@ export function useContextMenu(viewModel: Ref<IBaklavaViewModel>) {
         if (ev.target instanceof Element && isInputElement(ev.target)) {
             return;
         }
-
+        if ((ev.target as Element).classList.contains("baklava-minimap")) {
+            ev.preventDefault();
+            return;
+        }
         ev.preventDefault();
         show.value = true;
         const target = ev.target as Element;
