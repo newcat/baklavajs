@@ -6,11 +6,13 @@
         :class="{
             'baklava-ignore-mouse': !!temporaryConnection.temporaryConnection.value || panZoom.dragging.value,
             '--temporary-connection': !!temporaryConnection.temporaryConnection.value,
+            '--pan-can-move': keyDownActive && !panZoom.dragging.value,
+            '--pan-move': keyDownActive && panZoom.dragging.value,
         }"
         @pointermove.self="onPointerMove"
         @pointerdown="onPointerDown"
         @pointerup="onPointerUp"
-        @wheel.self="panZoom.onMouseWheel"
+        @wheel.self="onWheel"
         @keydown="keyDown"
         @keyup="keyUp"
         @contextmenu="contextMenu.open"
@@ -50,6 +52,7 @@
                         :selected="selectedNodes.includes(node)"
                         :dragging="dragMoves[idx].dragging.value"
                         @select="selectNode(node)"
+                        @unselect="unselectNode(node)"
                         @start-drag="startDrag"
                     >
                         <Node
@@ -57,6 +60,7 @@
                             :selected="selectedNodes.includes(node)"
                             :dragging="dragMoves[idx].dragging.value"
                             @select="selectNode(node)"
+                            @unselect="unselectNode(node)"
                             @start-drag="startDrag"
                         />
                     </slot>
@@ -82,6 +86,17 @@
                 @click="contextMenu.onClick"
             />
         </slot>
+
+        <div
+            v-if="isSelecting"
+            class="selection-box"
+            :style="{
+                width: Math.abs(endX - startX) + 'px',
+                height: Math.abs(endY - startY) + 'px',
+                left: (endX > startX ? startX : endX) + 'px',
+                top: (endY > startY ? startY : endY) + 'px',
+            }"
+        />
     </div>
 </template>
 
@@ -92,6 +107,7 @@ import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaViewModel } from "../viewModel";
 import { providePlugin, useDragMove } from "../utility";
 import { usePanZoom } from "./panZoom";
+import { useSelectionBox } from "./selectionBox";
 import { useTemporaryConnection } from "./temporaryConnection";
 import { useContextMenu } from "./contextMenu";
 
@@ -123,6 +139,10 @@ const selectedNodes = computed(() => props.viewModel.displayedGraph.selectedNode
 const panZoom = usePanZoom();
 const temporaryConnection = useTemporaryConnection();
 const contextMenu = useContextMenu(viewModelRef);
+const keyDownActive = ref(false);
+
+const selectionBox = useSelectionBox(el);
+const { isSelecting, startX, startY, endX, endY } = selectionBox;
 
 const nodeContainerStyle = computed(() => ({
     ...panZoom.styles.value,
@@ -136,7 +156,12 @@ props.viewModel.editor.hooks.load.subscribe(token, (s) => {
 });
 
 const onPointerMove = (ev: PointerEvent) => {
-    panZoom.onPointerMove(ev);
+    if (keyDownActive.value) {
+        panZoom.onPointerMove(ev);
+    }
+    if (!keyDownActive.value) {
+        selectionBox.onPointerMove(ev);
+    }
     temporaryConnection.onMouseMove(ev);
 };
 
@@ -145,6 +170,9 @@ const onPointerDown = (ev: PointerEvent) => {
         if (ev.target === el.value) {
             unselectAllNodes();
             panZoom.onPointerDown(ev);
+            if (!keyDownActive.value) {
+                selectionBox.onPointerDown(ev);
+            }
         }
         temporaryConnection.onMouseDown();
     }
@@ -153,6 +181,13 @@ const onPointerDown = (ev: PointerEvent) => {
 const onPointerUp = (ev: PointerEvent) => {
     panZoom.onPointerUp(ev);
     temporaryConnection.onMouseUp();
+    if (!keyDownActive.value) {
+        selectionBox.onPointerUp(ev);
+    }
+};
+
+const onWheel = (ev: WheelEvent) => {
+    panZoom.onMouseWheel(ev);
 };
 
 const keyDown = (ev: KeyboardEvent) => {
@@ -160,10 +195,15 @@ const keyDown = (ev: KeyboardEvent) => {
         ev.preventDefault();
     }
     props.viewModel.commandHandler.handleKeyDown(ev);
+    if (ev.key === "Control") {
+        keyDownActive.value = true;
+        selectionBox.unselect();
+    }
 };
 
 const keyUp = (ev: KeyboardEvent) => {
     props.viewModel.commandHandler.handleKeyUp(ev);
+    keyDownActive.value = false;
 };
 
 const selectNode = (node: AbstractNode) => {
@@ -171,6 +211,14 @@ const selectNode = (node: AbstractNode) => {
         unselectAllNodes();
     }
     props.viewModel.displayedGraph.selectedNodes.push(node);
+};
+
+const unselectNode = (node: AbstractNode) => {
+    if (["Control"].some((k) => props.viewModel.commandHandler.pressedKeys.includes(k))) {
+        props.viewModel.displayedGraph.selectedNodes = props.viewModel.displayedGraph.selectedNodes.filter(
+            (selected: AbstractNode) => selected !== node,
+        );
+    }
 };
 
 const unselectAllNodes = () => {

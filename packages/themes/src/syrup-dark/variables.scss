@@ -51,4 +51,8 @@
 
     // Misc
     --baklava-visual-transition: 0.1s linear;
+
+    // Selection box
+    --baklava-selectionbox-color-border: #1b202c;
+    --baklava-selectionbox-color-background: var(--baklava-node-color-hover);
 }

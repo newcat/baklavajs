@@ -6,7 +6,7 @@
         :class="classes"
         :style="styles"
         :data-node-type="node.type"
-        @pointerdown="select"
+        @pointerdown="toogleSelect"
     >
         <div v-if="viewModel.settings.nodes.resizable" class="__resize-handle" @mousedown="startResize" />
 
@@ -84,6 +84,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
     (e: "select"): void;
+    (e: "unselect"): void;
     (e: "start-drag", ev: PointerEvent): void;
 }>();
 
@@ -129,11 +130,20 @@ const select = () => {
     emit("select");
 };
 
-const startDrag = (ev: PointerEvent) => {
+const unselect = () => {
+    emit("unselect");
+};
+
+const toogleSelect = () => {
     if (!props.selected) {
         select();
+        return;
     }
+    unselect();
+};
 
+const startDrag = (ev: PointerEvent) => {
+    toogleSelect();
     emit("start-drag", ev);
 };
 
