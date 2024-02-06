@@ -15,4 +15,7 @@ export const DialogNode = defineNode({
     outputs: {
         result: () => new NodeInterface("", ""),
     },
+    calculate({ input, input2 }) {
+        return { result: input + " " + input2 };
+    },
 });

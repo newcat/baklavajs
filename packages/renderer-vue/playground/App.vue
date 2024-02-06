@@ -91,27 +91,33 @@ editor.registerNodeType(UpdateTestNode);
 editor.registerNodeType(ReactiveOutputTestNode);
 editor.registerNodeType(MultiInputNode);
 
-editor.graph.addNode(new TestNode());
-editor.graph.addNode(new TestNode());
-editor.graph.addNode(new TestNode());
-editor.graph.addNode(new OutputNode());
-editor.graph.addNode(new BuilderTestNode());
-editor.graph.addNode(new AdvancedNode());
-
 const calculate = async () => {
     console.log(await engine.runOnce("def"));
 };
 
 const save = () => {
-    console.log(JSON.stringify(editor.save()));
+    const state = JSON.stringify(editor.save());
+    console.log('Saving to localstorage', state);
+    window.localStorage.setItem("state", JSON.stringify(editor.save()));
 };
 
 const load = () => {
-    const s = prompt();
-    if (s) {
-        editor.load(JSON.parse(s));
+    const state = window.localStorage.getItem("state");
+
+    if (!state) {
+        return;
+    }
+
+    try {
+        editor.load(JSON.parse(state));
+        console.log("Loaded state from localStorage")
+    } catch (e) {
+        console.error(e);
+        return;
     }
 };
+
+load();
 
 const saveAndLoad = () => {
     editor.load(editor.save());

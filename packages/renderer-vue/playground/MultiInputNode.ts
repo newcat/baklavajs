@@ -13,7 +13,7 @@ export default defineNode({
                 .use(setTypeForMultipleConnections, stringType),
     },
     outputs: {
-        output: () => new TextInterface("Output", ""),
+        output: () => new NodeInterface("Output", ""),
     },
     calculate({ data }) {
         return { output: data.join(", ") };
