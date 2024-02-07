@@ -25,7 +25,7 @@ import {
     CREATE_SUBGRAPH_COMMAND,
     SAVE_SUBGRAPH_COMMAND,
 } from "../commandList";
-import { SWITCH_TO_MAIN_GRAPH_COMMAND } from "../graph";
+import { DELETE_NODES_COMMAND, SWITCH_TO_MAIN_GRAPH_COMMAND } from "../graph";
 import * as Icons from "../icons";
 import ToolbarButton from "./ToolbarButton.vue";
 
@@ -39,6 +39,7 @@ export default defineComponent({
         const commands = [
             { command: COPY_COMMAND, title: "Copy", icon: Icons.Copy },
             { command: PASTE_COMMAND, title: "Paste", icon: Icons.Clipboard },
+            { command: DELETE_NODES_COMMAND, title: "Delete", icon: Icons.TrashBin },
             { command: UNDO_COMMAND, title: "Undo", icon: Icons.ArrowBackUp },
             { command: REDO_COMMAND, title: "Redo", icon: Icons.ArrowForwardUp },
             { command: CREATE_SUBGRAPH_COMMAND, title: "Create Subgraph", icon: Icons.Hierarchy2 },
