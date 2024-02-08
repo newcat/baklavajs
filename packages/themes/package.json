@@ -21,7 +21,7 @@
     "devDependencies": {
         "@types/sass": "^1.45.0",
         "rimraf": "^5.0.5",
-        "sass": "^1.69.6",
+        "sass": "^1.70.0",
         "ts-node": "^10.9.2",
         "typescript": "^5.3.3"
     },
