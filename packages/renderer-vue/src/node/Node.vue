@@ -41,7 +41,7 @@
         </slot>
 
         <slot name="content">
-            <div class="__content" @keydown.delete.stop :class="classesContent">
+            <div class="__content" :class="classesContent" @keydown.delete.stop>
                 <!-- Outputs -->
                 <div class="__outputs">
                     <template v-for="output in displayedOutputs" :key="output.id">
