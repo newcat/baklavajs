@@ -63,21 +63,15 @@ export function useContextMenu(viewModel: Ref<IBaklavaViewModel>) {
     });
 
     function open(ev: MouseEvent) {
-        if (ev.target instanceof Element && isInputElement(ev.target)) {
+        const target = ev.target;
+        if (!(target instanceof Element) || isInputElement(target)) {
             return;
         }
 
         ev.preventDefault();
         show.value = true;
-        const target = ev.target as Element;
-        const element = target.closest(".baklava-node");
-        if (!element) {
-            x.value = ev.offsetX;
-            y.value = ev.offsetY;
-            return;
-        }
         const bounding = target.getBoundingClientRect();
-        const editor = document.querySelector(".baklava-editor") as Element;
+        const editor = target.closest(".baklava-editor")!;
 
         const editorBounding = editor.getBoundingClientRect();
         x.value = bounding.x + ev.offsetX - editorBounding.x;
