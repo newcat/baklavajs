@@ -7,6 +7,7 @@
         @mousedown.self="mousedown"
         @mousemove.self="mousemove"
         @mouseup="mouseup"
+        @contextmenu.stop.prevent=""
     />
 </template>
 
