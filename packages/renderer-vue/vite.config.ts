@@ -11,7 +11,10 @@ export default defineConfig({
         lib: {
             entry: path.resolve(__dirname, "src/index.ts"),
             name: "BaklavaJSRendererVue",
-            fileName: (format) => `renderer-vue.${format}.js`,
+            fileName: (format) => {
+                const extension = format === "es" ? "mjs" : "cjs";
+                return `renderer-vue.${format}.${extension}`;
+            },
             formats: ["umd", "es"],
         },
         rollupOptions: {

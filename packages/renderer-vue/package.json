@@ -9,13 +9,13 @@
     "files": [
         "dist/**/!(report.html)"
     ],
-    "main": "./dist/renderer-vue.umd.js",
-    "module": "./dist/renderer-vue.es.js",
+    "main": "./dist/renderer-vue.umd.cjs",
+    "module": "./dist/renderer-vue.es.mjs",
     "types": "./dist/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/renderer-vue.es.js",
-            "require": "./dist/renderer-vue.umd.js"
+            "import": "./dist/renderer-vue.es.mjs",
+            "require": "./dist/renderer-vue.umd.cjs"
         }
     },
     "scripts": {
