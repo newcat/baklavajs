@@ -1,5 +1,5 @@
 <template>
-    <div class="baklava-toolbar">
+    <div class="baklava-toolbar" @contextmenu.stop.prevent="">
         <toolbar-button v-for="c in commands" :key="c.command" :command="c.command" :title="c.title" :icon="c.icon" />
 
         <template v-if="isSubgraph">

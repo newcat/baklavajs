@@ -1,5 +1,5 @@
 <template>
-    <div class="baklava-node-palette">
+    <div class="baklava-node-palette" @contextmenu.stop.prevent="">
         <section v-for="c in categories" :key="c.name">
             <h1 v-if="c.name !== 'default'">
                 {{ c.name }}
