@@ -24,8 +24,10 @@ import {
     REDO_COMMAND,
     CREATE_SUBGRAPH_COMMAND,
     SAVE_SUBGRAPH_COMMAND,
+    START_SELECTION_BOX_COMMAND,
+    DELETE_NODES_COMMAND,
+    SWITCH_TO_MAIN_GRAPH_COMMAND,
 } from "../commandList";
-import { DELETE_NODES_COMMAND, SWITCH_TO_MAIN_GRAPH_COMMAND } from "../graph";
 import * as Icons from "../icons";
 import ToolbarButton from "./ToolbarButton.vue";
 
@@ -42,6 +44,7 @@ export default defineComponent({
             { command: DELETE_NODES_COMMAND, title: "Delete selected nodes", icon: Icons.Trash },
             { command: UNDO_COMMAND, title: "Undo", icon: Icons.ArrowBackUp },
             { command: REDO_COMMAND, title: "Redo", icon: Icons.ArrowForwardUp },
+            { command: START_SELECTION_BOX_COMMAND, title: "Box Select", icon: Icons.SelectAll },
             { command: CREATE_SUBGRAPH_COMMAND, title: "Create Subgraph", icon: Icons.Hierarchy2 },
         ];
 

@@ -20,6 +20,18 @@
         pointer-events: none !important;
     }
 
+    .selection-box {
+        position: absolute;
+        border: 1px solid var(--baklava-selectionbox-color-border);
+        background-color: var(--baklava-selectionbox-color-background);
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    &.--start-selection-box {
+        cursor: crosshair;
+    }
+
     & *:not(input):not(textarea) {
         user-select: none;
         -moz-user-select: none;

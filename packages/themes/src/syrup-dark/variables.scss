@@ -49,6 +49,10 @@
     --baklava-node-palette-background: #1b202caa;
     --baklava-node-palette-foreground: white;
 
+    // Selection box
+    --baklava-selectionbox-color-border: var(--baklava-node-color-background);
+    --baklava-selectionbox-color-background: var(--baklava-node-color-hover);
+
     // Misc
     --baklava-visual-transition: 0.1s linear;
 }

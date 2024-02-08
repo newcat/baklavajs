@@ -6,6 +6,7 @@
         :class="{
             'baklava-ignore-mouse': !!temporaryConnection.temporaryConnection.value || panZoom.dragging.value,
             '--temporary-connection': !!temporaryConnection.temporaryConnection.value,
+            '--start-selection-box': selectionBox.startSelection,
         }"
         @pointermove.self="onPointerMove"
         @pointerdown="onPointerDown"
@@ -82,6 +83,8 @@
                 @click="contextMenu.onClick"
             />
         </slot>
+
+        <div v-if="selectionBox.isSelecting" class="selection-box" :style="selectionBox.getStyles()" />
     </div>
 </template>
 
@@ -94,6 +97,7 @@ import { providePlugin, useDragMove } from "../utility";
 import { usePanZoom } from "./panZoom";
 import { useTemporaryConnection } from "./temporaryConnection";
 import { useContextMenu } from "./contextMenu";
+import { useSelectionBox } from "./selectionBox";
 
 import Background from "./Background.vue";
 import Node from "../node/Node.vue";
@@ -123,6 +127,7 @@ const selectedNodes = computed(() => props.viewModel.displayedGraph.selectedNode
 const panZoom = usePanZoom();
 const temporaryConnection = useTemporaryConnection();
 const contextMenu = useContextMenu(viewModelRef);
+const selectionBox = useSelectionBox(el, props.viewModel.commandHandler);
 
 const nodeContainerStyle = computed(() => ({
     ...panZoom.styles.value,
@@ -142,6 +147,10 @@ const onPointerMove = (ev: PointerEvent) => {
 
 const onPointerDown = (ev: PointerEvent) => {
     if (ev.button === 0) {
+        if (selectionBox.onPointerDown(ev)) {
+            return;
+        }
+
         if (ev.target === el.value) {
             unselectAllNodes();
             panZoom.onPointerDown(ev);
