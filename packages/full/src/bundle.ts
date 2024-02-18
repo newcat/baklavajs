@@ -14,7 +14,7 @@ function createBaklava(element: Element): RendererVue.IBaklavaViewModel {
             return { viewModel };
         },
         render() {
-            return h(RendererVue.EditorComponent, { viewModel: this.viewModel });
+            return h(RendererVue.BaklavaEditor, { viewModel: this.viewModel });
         },
     }).mount(element);
 

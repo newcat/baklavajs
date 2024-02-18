@@ -1,11 +1,11 @@
 <template>
     <div id="app">
-        <EditorComponent :view-model="baklavaView">
+        <BaklavaEditor :view-model="baklavaView">
             <template #node="nodeProps">
                 <CommentNodeRenderer v-if="nodeProps.node.type === 'CommentNode'" v-bind="nodeProps" />
                 <NodeComponent v-else v-bind="nodeProps" />
             </template>
-        </EditorComponent>
+        </BaklavaEditor>
         <button @click="calculate">Calculate</button>
         <button @click="save">Save</button>
         <button @click="load">Load</button>
@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { NodeInstanceOf } from "@baklavajs/core";
-import { EditorComponent, Components, SelectInterface, useBaklava, Commands } from "../src";
+import { BaklavaEditor, Components, SelectInterface, useBaklava, Commands } from "../src";
 import { DependencyEngine, applyResult } from "@baklavajs/engine";
 import { BaklavaInterfaceTypes } from "@baklavajs/interface-types";
 
@@ -98,7 +98,7 @@ const calculate = async () => {
 
 const save = () => {
     const state = JSON.stringify(editor.save());
-    console.log('Saving to localstorage', state);
+    console.log("Saving to localstorage", state);
     window.localStorage.setItem("state", JSON.stringify(editor.save()));
 };
 
@@ -111,7 +111,7 @@ const load = () => {
 
     try {
         editor.load(JSON.parse(state));
-        console.log("Loaded state from localStorage")
+        console.log("Loaded state from localStorage");
     } catch (e) {
         console.error(e);
         return;

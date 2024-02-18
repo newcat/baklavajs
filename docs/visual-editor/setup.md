@@ -41,24 +41,22 @@ Now you can pass the view model to the editor component:
 
 ```vue
 <template>
-    <baklava-editor :view-model="baklava" />
+    <!--
+        By default, the editor completely fills its parent HTML element.
+        If you directly use the editor in the <body> element, make sure to use
+        a wrapper <div> with specified width and height properties:
+        <div style="width: 90vw; height: 90vh">
+            <BaklavaEditor :view-model="baklava" />
+        </div>
+    -->
+    <BaklavaEditor :view-model="baklava" />
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { EditorComponent, useBaklava } from "@baklavajs/renderer-vue";
-import "@baklavajs/themes/syrup-dark.css";
+<script setup lang="ts">
+import { BaklavaEditor, useBaklava } from "@baklavajs/renderer-vue";
+import "@baklavajs/themes/dist/syrup-dark.css";
 
-export default defineComponent({
-    components: {
-        "baklava-editor": EditorComponent,
-    },
-    setup() {
-        const baklava = useBaklava();
-        return { baklava };
-    },
-});
-</script>
+const baklava = useBaklava();
 ```
 
 ## Settings
