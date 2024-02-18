@@ -67,32 +67,33 @@ export function useSelectionBox(editorEl: Ref<HTMLElement | null>, handler: ICom
 
     function getNodesInSelection() {
         const selectionBoxRect = getSelectionBoxRect();
+        const editor = document.querySelector(".baklava-editor") as Element;
+        const editorBounding = editor.getBoundingClientRect();
         return nodes.value.filter((node) => {
-            const nodeRect = getNodeRect(node);
+            const nodeRect = getNodeRect(node, editorBounding);
             return isRectOverlap(selectionBoxRect, nodeRect);
         });
     }
 
     function getSelectionBoxRect(): SelectionBoxRect {
-        const editor = document.querySelector(".baklava-editor") as Element;
-        const editorBounding = editor.getBoundingClientRect();
-
         return {
-            left: Math.min(start.value[0], end.value[0]) - editorBounding.left,
-            top: Math.min(start.value[1], end.value[1]) - editorBounding.top,
+            left: Math.min(start.value[0], end.value[0]),
+            top: Math.min(start.value[1], end.value[1]),
             right: Math.max(start.value[0], end.value[0]),
             bottom: Math.max(start.value[1], end.value[1]),
         };
     }
 
-    function getNodeRect(node: AbstractNode): SelectionBoxRect {
+    function getNodeRect(node: AbstractNode, editorBounding: DOMRect): SelectionBoxRect {
         const domNode = document.getElementById(node.id);
         const rect = domNode ? domNode.getBoundingClientRect() : { x: 0, y: 0, width: 0, height: 0 };
+        const left = rect.x - editorBounding.left;
+        const top = rect.y - editorBounding.top;
         return {
-            left: rect.x,
-            top: rect.y,
-            right: rect.x + rect.width,
-            bottom: rect.y + rect.height,
+            left,
+            top,
+            right: left + rect.width,
+            bottom: top + rect.height,
         };
     }
 
