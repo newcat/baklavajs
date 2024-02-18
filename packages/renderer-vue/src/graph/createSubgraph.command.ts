@@ -63,7 +63,6 @@ export function registerCreateSubgraphCommand(
         }));
         const interfaceIdMap = new Map<string, string>();
         const { xLeft, xRight, yTop } = getBoundingBoxForNodes(selectedNodes);
-        console.log(xLeft, xRight, yTop);
 
         for (const [idx, conn] of inputConnections.entries()) {
             const inputNode = new SubgraphInputNode();
@@ -105,6 +104,8 @@ export function registerCreateSubgraphCommand(
             throw new Error("Unable to create subgraph: Could not find corresponding graph node type");
         }
 
+        graph.activeTransactions++;
+
         const node = reactive<AbstractNode>(new nt.type()) as AbstractNode;
         graph.addNode(node);
 
@@ -130,6 +131,8 @@ export function registerCreateSubgraphCommand(
         });
 
         selectedNodes.forEach((n) => graph.removeNode(n));
+
+        graph.activeTransactions--;
 
         if (handler.canExecuteCommand(SAVE_SUBGRAPH_COMMAND)) {
             handler.executeCommand<SaveSubgraphCommand>(SAVE_SUBGRAPH_COMMAND);
