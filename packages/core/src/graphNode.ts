@@ -1,3 +1,4 @@
+import { GraphInputNode, GraphOutputNode, IGraphInterface } from "./graphInterface";
 import { type GraphTemplate } from "./graphTemplate";
 import { Graph, IGraphState } from "./graph";
 import { AbstractNode, CalculateFunction, INodeState } from "./node";
@@ -122,7 +123,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
 
             for (const graphInput of this.subgraph.inputs) {
                 if (!(graphInput.id in this.inputs)) {
-                    this.addInput(graphInput.id, new NodeInterface(graphInput.name, undefined));
+                    this.addInput(graphInput.id, this.createProxyInterface(graphInput, true));
                 } else {
                     this.inputs[graphInput.id].name = graphInput.name;
                 }
@@ -135,7 +136,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
 
             for (const graphOutput of this.subgraph.outputs) {
                 if (!(graphOutput.id in this.outputs)) {
-                    this.addOutput(graphOutput.id, new NodeInterface(graphOutput.name, undefined));
+                    this.addOutput(graphOutput.id, this.createProxyInterface(graphOutput, false));
                 } else {
                     this.outputs[graphOutput.id].name = graphOutput.name;
                 }
@@ -148,6 +149,44 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
 
             // Add an internal output to allow accessing the calculation results of nodes inside the graph
             this.addOutput("_calculationResults", new NodeInterface("_calculationResults", undefined).setHidden(true));
+        }
+
+        /**
+         * When we create a interface in the graph node, we hide certain properties of the interface in the subgraph.
+         * For example, the `type` property or the `allowMultipleConnections` property.
+         * These properties should be proxied to the subgraph interface, so they behave the same as the original interface.
+         */
+        private createProxyInterface(graphInterface: IGraphInterface, isInput: boolean) {
+            const newInterface = new NodeInterface(graphInterface.name, undefined);
+            return new Proxy(newInterface, {
+                get: (target, prop) => {
+                    // we can't proxy the "__v_isRef" property, otherwise we get a maximum stack size exceeded error
+                    if (prop in target || (typeof prop === "string" && prop.startsWith("__v_"))) {
+                        return Reflect.get(target, prop);
+                    }
+                    // try to find the interface connected to our graph input
+                    let placeholderIntfId: string | undefined;
+                    if (isInput) {
+                        const subgraphInterfaceNode = this.subgraph?.nodes.find(
+                            (n) => GraphInputNode.isGraphInputNode(n) && n.graphInterfaceId === graphInterface.id,
+                        ) as GraphInputNode | undefined;
+                        placeholderIntfId = subgraphInterfaceNode?.outputs.placeholder.id;
+                    } else {
+                        const subgraphInterfaceNode = this.subgraph?.nodes.find(
+                            (n) => GraphOutputNode.isGraphOutputNode(n) && n.graphInterfaceId === graphInterface.id,
+                        ) as GraphOutputNode | undefined;
+                        placeholderIntfId = subgraphInterfaceNode?.inputs.placeholder.id;
+                    }
+                    const conn = this.subgraph?.connections.find(
+                        (c) => placeholderIntfId === (isInput ? c.from : c.to)?.id,
+                    );
+                    const intf = isInput ? conn?.to : conn?.from;
+                    if (intf) {
+                        return Reflect.get(intf, prop);
+                    }
+                    return undefined;
+                },
+            });
         }
     };
 }

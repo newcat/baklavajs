@@ -2,7 +2,6 @@ import { NodeInterface, defineNode } from "@baklavajs/core";
 import { allowMultipleConnections } from "@baklavajs/engine";
 import { setTypeForMultipleConnections } from "@baklavajs/interface-types";
 import { stringType } from "./interfaceTypes";
-import { TextInterface } from "../src";
 
 export default defineNode({
     type: "MultiInputNode",
