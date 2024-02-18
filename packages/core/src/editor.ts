@@ -191,6 +191,10 @@ export class Editor implements IBaklavaEventEmitter, IBaklavaTapable {
             this._loading = true;
             state = this.hooks.load.execute(state);
 
+            while (this.graphTemplates.length > 0) {
+                this.removeGraphTemplate(this.graphTemplates[0]);
+            }
+
             state.graphTemplates.forEach((tState) => {
                 const template = new GraphTemplate(tState, this);
                 this.addGraphTemplate(template);
