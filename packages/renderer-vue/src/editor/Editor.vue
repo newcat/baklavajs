@@ -127,7 +127,7 @@ const selectedNodes = computed(() => props.viewModel.displayedGraph.selectedNode
 const panZoom = usePanZoom();
 const temporaryConnection = useTemporaryConnection();
 const contextMenu = useContextMenu(viewModelRef);
-const selectionBox = useSelectionBox(el, props.viewModel.commandHandler);
+const selectionBox = useSelectionBox(el);
 
 const nodeContainerStyle = computed(() => ({
     ...panZoom.styles.value,

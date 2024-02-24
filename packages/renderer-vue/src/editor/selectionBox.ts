@@ -1,7 +1,7 @@
-import { computed, ComputedRef, reactive, ref, Ref } from "vue";
+import { computed, ComputedRef, reactive, ref, Ref, watch } from "vue";
 import { AbstractNode } from "@baklavajs/core";
 import { useGraph, useViewModel } from "../utility";
-import { ICommand, ICommandHandler } from "../commands";
+import { ICommand } from "../commands";
 
 interface SelectionBoxRect {
     left: number;
@@ -15,7 +15,7 @@ type Coordinate = [number, number];
 export const START_SELECTION_BOX_COMMAND = "START_SELECTION_BOX";
 export type StartSelectionBoxCommand = ICommand<void>;
 
-export function useSelectionBox(editorEl: Ref<HTMLElement | null>, handler: ICommandHandler) {
+export function useSelectionBox(editorEl: Ref<HTMLElement | null>) {
     const { viewModel } = useViewModel();
     const { graph } = useGraph();
 
@@ -25,6 +25,24 @@ export function useSelectionBox(editorEl: Ref<HTMLElement | null>, handler: ICom
     const isSelecting = ref(false);
     const start = ref<Coordinate>([0, 0]);
     const end = ref<Coordinate>([0, 0]);
+
+    watch(
+        viewModel,
+        () => {
+            if (viewModel.value.commandHandler.hasCommand(START_SELECTION_BOX_COMMAND)) {
+                return;
+            }
+
+            viewModel.value.commandHandler.registerCommand(START_SELECTION_BOX_COMMAND, {
+                canExecute: () => true,
+                execute() {
+                    startSelection.value = true;
+                },
+            });
+            viewModel.value.commandHandler.registerHotkey(["b"], START_SELECTION_BOX_COMMAND);
+        },
+        { immediate: true },
+    );
 
     function getCoordinatesFromEvent(ev: PointerEvent): Coordinate {
         return [
@@ -111,14 +129,6 @@ export function useSelectionBox(editorEl: Ref<HTMLElement | null>, handler: ICom
             top: (end.value[1] > start.value[1] ? start.value[1] : end.value[1]) + "px",
         };
     }
-
-    handler.registerCommand(START_SELECTION_BOX_COMMAND, {
-        canExecute: () => true,
-        execute() {
-            startSelection.value = true;
-        },
-    });
-    handler.registerHotkey(["b"], START_SELECTION_BOX_COMMAND);
 
     return reactive({
         startSelection,

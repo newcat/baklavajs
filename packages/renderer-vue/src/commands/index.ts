@@ -13,6 +13,11 @@ export interface ICommandHandler {
      */
     pressedKeys: string[];
     /**
+     * Whether the command with the given name exists
+     * @param name - Name of the command
+     */
+    hasCommand(name: string): boolean;
+    /**
      * Register a new command
      * @param name - Name of the command
      * @param command - Command definition
@@ -67,6 +72,8 @@ export interface ICommandHandler {
 export const useCommandHandler: () => ICommandHandler = () => {
     const commands = ref(new Map<string, AbstractCommand>());
 
+    const hasCommand = (name: string): boolean => commands.value.has(name);
+
     const registerCommand = <T extends AbstractCommand>(name: string, command: T): void => {
         if (commands.value.has(name)) {
             throw new Error(`Command "${name}" already exists`);
@@ -106,5 +113,5 @@ export const useCommandHandler: () => ICommandHandler = () => {
 
     const hotkeyHandler = useHotkeyHandler(executeCommand);
 
-    return reactive({ registerCommand, executeCommand, canExecuteCommand, ...hotkeyHandler });
+    return reactive({ hasCommand, registerCommand, executeCommand, canExecuteCommand, ...hotkeyHandler });
 };
