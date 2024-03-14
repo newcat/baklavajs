@@ -61,36 +61,36 @@ For this, the editor provides the following slots:
 -   `sidebar` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/sidebar/Sidebar.vue)
 -   `minimap` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/components/Minimap.vue)
 -   `contextMenu` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/components/ContextMenu.vue)
-    - Props:
-        - `contextMenu` (type: return value of [`useContextMenu`](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/contextMenu.ts))
+    -   Props:
+        -   `contextMenu` (type: return value of [`useContextMenu`](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/contextMenu.ts))
 
 There are other components that provide slots as well:
 
-- Node
-  - `nodeInterface` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/node/NodeInterface.vue)
-    - Props:
-      - `type` (type: `"input"|"output"`)
-      - `node` (type: <code><ApiLink type="classes" module="@baklavajs/core" name="AbstractNode">AbstractNode</ApiLink></code>)
-      - `intf` (type: <code><ApiLink type="classes" module="@baklavajs/core" name="NodeInterface">NodeInterface</ApiLink></code>)
-- NodeInterface
-  - `portTooltip` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/node/NodeInterface.vue#L11-L13)
-    - Props:
-      - `showTooltip` (type: `boolean`)
+-   Node
+    -   `nodeInterface` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/node/NodeInterface.vue)
+        -   Props:
+            -   `type` (type: `"input"|"output"`)
+            -   `node` (type: <code><ApiLink type="classes" module="@baklavajs/core" name="AbstractNode">AbstractNode</ApiLink></code>)
+            -   `intf` (type: <code><ApiLink type="classes" module="@baklavajs/core" name="NodeInterface">NodeInterface</ApiLink></code>)
+-   NodeInterface
+    -   `portTooltip` [(default component)](https://github.com/newcat/baklavajs/blob/master/packages/renderer-vue/src/node/NodeInterface.vue#L11-L13)
+        -   Props:
+            -   `showTooltip` (type: `boolean`)
 
 So, for example, if you want to use a custom component for a certain node type, you could do it like this:
 
 ```vue
 <template>
-    <Editor>
+    <BaklavaEditor>
         <template #node="nodeProps">
             <MyNodeRenderer v-if="nodeProps.node.type === 'MyNodeType'" :key="nodeProps.node.id" v-bind="nodeProps" />
             <BaklavaNode v-else :key="nodeProps.node.id" v-bind="nodeProps" />
         </template>
-    </Editor>
+    </BaklavaEditor>
 </template>
 
 <script setup>
-import { Editor, Components } from "@baklavajs/renderer-vue";
+import { BaklavaEditor, Components } from "@baklavajs/renderer-vue";
 const BaklavaNode = Components.Node;
 
 // example, replace with your component:
