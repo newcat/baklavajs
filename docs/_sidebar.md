@@ -13,5 +13,5 @@
   * [Interface Types](/plugins/interface-types.md)
   * [Options](/plugins/options.md)
 * **Reference**
-  * [API Reference](/api/index.html)
+  * [API Reference](https://v1.baklava.tech/api/index.html)
   * [Contributing Guide](/contributing.md)
