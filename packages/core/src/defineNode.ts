@@ -20,7 +20,7 @@ export interface INodeDefinition<I, O> {
     outputs?: InterfaceFactory<O>;
     /** This function is called by the engine with the input values.
      * It should perform the necessary calculation and then return the output values */
-    calculate?: CalculateFunction<I, O>;
+    calculate?: CalculateFunction<NoInfer<I>, NoInfer<O>>;
     /** Called as soon as an instance of the node is created but before it is placed into a graph */
     onCreate?: (this: Node<I, O>) => void;
     /** Called when the node is placed into a graph */
@@ -45,8 +45,8 @@ export function defineNode<I, O>(definition: INodeDefinition<I, O>): new () => N
 
         public calculate = definition.calculate
             ? (inputs: I, globalValues: any) => {
-                return definition.calculate!.call(this, inputs, globalValues);
-            }
+                  return definition.calculate!.call(this, inputs, globalValues);
+              }
             : undefined;
 
         public onPlaced() {
