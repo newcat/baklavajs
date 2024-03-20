@@ -1,6 +1,6 @@
 {
     "name": "baklavajs",
-    "version": "2.4.2",
+    "version": "2.4.3",
     "description": "Full installation of BaklavaJS including the core and all plugins",
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
@@ -29,11 +29,11 @@
         "access": "public"
     },
     "dependencies": {
-        "@baklavajs/core": "^2.4.1",
-        "@baklavajs/engine": "^2.4.1",
-        "@baklavajs/interface-types": "^2.4.2",
-        "@baklavajs/renderer-vue": "^2.4.2",
-        "@baklavajs/themes": "^2.4.1"
+        "@baklavajs/core": "^2.4.3",
+        "@baklavajs/engine": "^2.4.3",
+        "@baklavajs/interface-types": "^2.4.3",
+        "@baklavajs/renderer-vue": "^2.4.3",
+        "@baklavajs/themes": "^2.4.3"
     },
     "devDependencies": {
         "esbuild": "^0.20.2",
