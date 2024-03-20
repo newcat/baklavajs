@@ -201,6 +201,22 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         return c;
     }
 
+
+    /**
+     * Retrieve the connections associated with a given node.
+     * @param node The node to retrieve the connections for.
+     * @returns The list of connections associated with the given node. If there are no associated connections, an empty array is returned.
+     */
+    public retrieveNodeConnections(node: NodeInterface<any>): Connection[] {
+        return this.connections.filter(item => {
+            if (node.isInput) {
+                return item.to === node;
+            } else {
+                return item.from === node;
+            }
+        })
+    }
+
     /**
      * Remove a connection from the list of connections.
      * @param connection Connection instance that should be removed.
