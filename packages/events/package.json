@@ -28,6 +28,6 @@
         "url": "https://github.com/newcat/baklavajs/issues"
     },
     "devDependencies": {
-        "typescript": "^5.4.2"
+        "typescript": "^5.4.3"
     }
 }

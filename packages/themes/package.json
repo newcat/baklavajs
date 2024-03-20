@@ -23,7 +23,7 @@
         "rimraf": "^5.0.5",
         "sass": "^1.72.0",
         "ts-node": "^10.9.2",
-        "typescript": "^5.4.2"
+        "typescript": "^5.4.3"
     },
     "publishConfig": {
         "access": "public"

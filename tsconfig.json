@@ -7,7 +7,6 @@
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "declaration": true,
-        "baseUrl": ".",
         "skipLibCheck": true
     },
     "exclude": ["node_modules"]

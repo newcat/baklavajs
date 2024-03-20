@@ -19,6 +19,22 @@ export function getGraphNodeTypeString(template: GraphTemplate): string {
     return GRAPH_NODE_TYPE_PREFIX + template.id;
 }
 
+/** Properties that should not be proxied to the original interface */
+const PROXY_INTERFACE_SKIP_PROPERTIES: Array<string | symbol> = [
+    "component",
+    "connectionCount",
+    "events",
+    "hidden",
+    "hooks",
+    "id",
+    "isInput",
+    "name",
+    "nodeId",
+    "port",
+    "templateId",
+    "value",
+] satisfies Array<keyof NodeInterface>;
+
 export function createGraphNodeType(template: GraphTemplate): new () => AbstractNode & IGraphNode {
     return class GraphNode extends AbstractNode implements IGraphNode {
         public type = getGraphNodeTypeString(template);
@@ -161,7 +177,11 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
             return new Proxy(newInterface, {
                 get: (target, prop) => {
                     // we can't proxy the "__v_isRef" property, otherwise we get a maximum stack size exceeded error
-                    if (prop in target || (typeof prop === "string" && prop.startsWith("__v_"))) {
+                    if (
+                        PROXY_INTERFACE_SKIP_PROPERTIES.includes(prop) ||
+                        prop in target ||
+                        (typeof prop === "string" && prop.startsWith("__v_"))
+                    ) {
                         return Reflect.get(target, prop);
                     }
                     // try to find the interface connected to our graph input
