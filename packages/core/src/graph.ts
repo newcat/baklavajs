@@ -88,6 +88,11 @@ export class Graph implements IBaklavaEventEmitter, IBaklavaTapable {
         return this._nodes;
     }
 
+    /** List of all selectedNodes in this graph */
+    public get selectedNodes(): ReadonlyArray<AbstractNode> {
+        return this.selectedNodes;
+    }
+
     /** List of all connections in this graph */
     public get connections(): ReadonlyArray<Connection> {
         return this._connections;
