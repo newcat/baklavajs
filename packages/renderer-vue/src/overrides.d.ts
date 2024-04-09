@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AbstractNode } from "@baklavajs/core/dist/node";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

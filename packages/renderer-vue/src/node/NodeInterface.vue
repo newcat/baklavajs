@@ -37,7 +37,7 @@ import {
 } from "../editor/temporaryConnection";
 
 const ellipsis = (value: any, characters = 100) => {
-    const stringValue = value?.toString ? value.toString() : "";
+    const stringValue: string = typeof value?.toString === "function" ? String(value) : "";
 
     if (stringValue.length > characters) {
         return stringValue.slice(0, characters) + "...";

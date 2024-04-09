@@ -21,9 +21,9 @@
     "devDependencies": {
         "@types/sass": "^1.45.0",
         "rimraf": "^5.0.5",
-        "sass": "^1.72.0",
+        "sass": "^1.74.1",
         "ts-node": "^10.9.2",
-        "typescript": "^5.4.3"
+        "typescript": "^5.4.4"
     },
     "publishConfig": {
         "access": "public"

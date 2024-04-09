@@ -43,12 +43,12 @@
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-visualizer": "^5.12.0",
         "rollup-plugin-vue": "^6.0.0",
-        "sass": "^1.72.0",
-        "typescript": "^5.4.3",
-        "vite": "^5.2.2",
-        "vite-plugin-dts": "^3.7.3",
+        "sass": "^1.74.1",
+        "typescript": "^5.4.4",
+        "vite": "^5.2.8",
+        "vite-plugin-dts": "^3.8.1",
         "vue": "^3.4.21",
-        "vue-tsc": "^2.0.7"
+        "vue-tsc": "^2.0.11"
     },
     "publishConfig": {
         "access": "public"
