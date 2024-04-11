@@ -44,11 +44,11 @@
         "rollup-plugin-visualizer": "^5.12.0",
         "rollup-plugin-vue": "^6.0.0",
         "sass": "^1.74.1",
-        "typescript": "^5.4.4",
+        "typescript": "^5.4.5",
         "vite": "^5.2.8",
         "vite-plugin-dts": "^3.8.1",
         "vue": "^3.4.21",
-        "vue-tsc": "^2.0.11"
+        "vue-tsc": "^2.0.12"
     },
     "publishConfig": {
         "access": "public"
