@@ -1,6 +1,6 @@
 {
     "name": "@baklavajs/engine",
-    "version": "2.4.3",
+    "version": "2.4.4",
     "description": "Execute BaklavaJS graphs",
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
@@ -26,8 +26,8 @@
         "url": "https://github.com/newcat/baklavajs/issues"
     },
     "dependencies": {
-        "@baklavajs/core": "^2.4.3",
-        "@baklavajs/events": "^2.4.3"
+        "@baklavajs/core": "^2.4.4",
+        "@baklavajs/events": "^2.4.4"
     },
     "devDependencies": {
         "@types/jest": "^29.5.12",
