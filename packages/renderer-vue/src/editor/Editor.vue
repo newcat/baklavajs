@@ -95,7 +95,7 @@ import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaViewModel } from "../viewModel";
 import { providePlugin, useDragMove } from "../utility";
 import { usePanZoom } from "./panZoom";
-import { useTemporaryConnection } from "./temporaryConnection";
+import { provideTemporaryConnection } from "./temporaryConnection";
 import { useContextMenu } from "./contextMenu";
 import { useSelectionBox } from "./selectionBox";
 
@@ -125,7 +125,7 @@ const connections = computed(() => props.viewModel.displayedGraph.connections);
 const selectedNodes = computed(() => props.viewModel.displayedGraph.selectedNodes);
 
 const panZoom = usePanZoom();
-const temporaryConnection = useTemporaryConnection();
+const temporaryConnection = provideTemporaryConnection();
 const contextMenu = useContextMenu(viewModelRef);
 const selectionBox = useSelectionBox(el);
 

@@ -1,15 +1,15 @@
-import { provide, ref, Ref } from "vue";
+import { inject, provide, ref, Ref } from "vue";
 import { NodeInterface } from "@baklavajs/core";
 import { ITemporaryConnection, TemporaryConnectionState } from "../connection/connection";
 import { useGraph } from "../utility";
 
-export const TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL = Symbol();
+const TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL = Symbol();
 export interface ITemporaryConnectionHandler {
     hoveredOver: (ni: NodeInterface | undefined) => void;
     temporaryConnection: Ref<ITemporaryConnection | null>;
 }
 
-export function useTemporaryConnection() {
+export function provideTemporaryConnection() {
     const { graph } = useGraph();
 
     const temporaryConnection = ref<ITemporaryConnection | null>(null) as Ref<ITemporaryConnection | null>;
@@ -98,4 +98,12 @@ export function useTemporaryConnection() {
     });
 
     return { temporaryConnection, onMouseMove, onMouseDown, onMouseUp, hoveredOver };
+}
+
+export function useTemporaryConnection() {
+    const temporaryConnection = inject<ITemporaryConnectionHandler>(TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL);
+    if (!temporaryConnection) {
+        throw new Error("useTemporaryConnection must be used within a BaklavaEditor");
+    }
+    return temporaryConnection;
 }

@@ -28,13 +28,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, onUpdated, Ref, ref } from "vue";
+import { computed, onMounted, onUpdated, Ref, ref } from "vue";
 import { AbstractNode, NodeInterface } from "@baklavajs/core";
 import { useViewModel } from "../utility";
-import {
-    ITemporaryConnectionHandler,
-    TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL,
-} from "../editor/temporaryConnection";
+import { useTemporaryConnection } from "../editor/temporaryConnection";
 
 const ellipsis = (value: any, characters = 100) => {
     const stringValue: string = typeof value?.toString === "function" ? String(value) : "";
@@ -52,9 +49,7 @@ const props = defineProps<{
 }>();
 
 const { viewModel } = useViewModel();
-const { hoveredOver, temporaryConnection } = inject<ITemporaryConnectionHandler>(
-    TEMPORARY_CONNECTION_HANDLER_INJECTION_SYMBOL,
-)!;
+const { hoveredOver, temporaryConnection } = useTemporaryConnection();
 
 const el = ref<HTMLElement | null>(null) as Ref<HTMLElement>;
 
