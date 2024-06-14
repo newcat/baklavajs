@@ -55,10 +55,12 @@ export class AsyncForwardEngine<CalculationData = any> extends BaseEngine<
             const getBackNodes = (node: AbstractNode): AbstractNode[] => {
                 const backNodes: AbstractNode[] = [];
                 Object.entries(node.inputs).forEach(([k, v]) => {
-                    let index = graph.connections.findIndex(c => c.to.id === v.id)
-                    if (index >= 0) {
-                        backNodes.push(interfaceToNode.get(graph.connections[index].from.id))
-                    }
+                    graph.connections.forEach(c=>{
+                        if(c.to.id === v.id)
+                        {
+                            backNodes.push(interfaceToNode.get(c.from.id))
+                        }
+                    })
                 });
                 return backNodes;
             }
@@ -66,10 +68,12 @@ export class AsyncForwardEngine<CalculationData = any> extends BaseEngine<
             const getForwardNodes = (node: AbstractNode): AbstractNode[] => {
                 const forwardNodes: AbstractNode[] = [];
                 Object.entries(node.outputs).forEach(([k, v]) => {
-                    let index = graph.connections.findIndex(c => c.from.id === v.id)
-                    if (index >= 0) {
-                        forwardNodes.push(interfaceToNode.get(graph.connections[index].to.id))
-                    }
+                    graph.connections.forEach(c=>{
+                        if(c.from.id === v.id)
+                        {
+                            forwardNodes.push(interfaceToNode.get(c.to.id))
+                        }
+                    })
                 });
                 return forwardNodes;
             }
@@ -140,9 +144,8 @@ export class AsyncForwardEngine<CalculationData = any> extends BaseEngine<
                             })
                             nodesToCalculate.set(n.id, NodeRuntimeStatus.stoped);
                             const forwardNodes: AbstractNode[] = getForwardNodes(n);
-                            const forwardCalc: AbstractNode[] = forwardNodes.filter(n => nodesToCalculate.has(n.id))
                             //从当前节点继续
-                            forwardCalc.forEach(runDeepLeaf)
+                            forwardNodes.forEach(runDeepLeaf)
                         }
                         finally {
                             nodesToCalculate.set(n.id, NodeRuntimeStatus.stoped);
