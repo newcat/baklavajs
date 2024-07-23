@@ -1,4 +1,4 @@
-import type { Editor, Graph, NodeInterface, CalculationResult } from "@baklavajs/core";
+import { Editor, Graph, NodeInterface, CalculationResult, NodeStatus } from "@baklavajs/core";
 import { BaseEngine } from "./baseEngine";
 import { ITopologicalSortingResult, sortTopologically } from "./topologicalSorting";
 
@@ -38,18 +38,24 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
             });
 
             this.events.beforeNodeCalculation.emit({ inputValues: inputsForNode, node: n });
-
+            n.status = NodeStatus.PROCESSING
             let r: any;
-            if (n.calculate) {
-                r = await n.calculate(inputsForNode, { globalValues: calculationData, engine: this });
-            } else {
-                r = {};
-                for (const [k, intf] of Object.entries(n.outputs)) {
-                    r[k] = this.getInterfaceValue(inputs, intf.id);
+            try {
+                if (n.calculate) {
+                    r = await n.calculate(inputsForNode, { globalValues: calculationData, engine: this });
+                } else {
+                    r = {};
+                    for (const [k, intf] of Object.entries(n.outputs)) {
+                        r[k] = this.getInterfaceValue(inputs, intf.id);
+                    }
                 }
+    
+                this.validateNodeCalculationOutput(n, r);
+                n.status = NodeStatus.NONE
+            } catch (error) {
+                n.status = NodeStatus.ERROR
             }
-
-            this.validateNodeCalculationOutput(n, r);
+            
             this.events.afterNodeCalculation.emit({ outputValues: r, node: n });
 
             result.set(n.id, new Map(Object.entries(r)));

@@ -6,6 +6,7 @@
         :class="classes"
         :style="styles"
         :data-node-type="node.type"
+        :data-node-status="node.status"
         @pointerdown="select"
     >
         <div v-if="viewModel.settings.nodes.resizable" class="__resize-handle" @mousedown="startResize" />

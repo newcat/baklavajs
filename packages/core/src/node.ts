@@ -12,6 +12,12 @@ import type { NodeInterfaceDefinition, NodeInterface, NodeInterfaceDefinitionSta
 import { mapValues } from "./utils";
 import { IEngine } from "./engine";
 
+export enum NodeStatus {
+    NONE = "none",
+    PROCESSING = "processing",
+    ERROR = "error"
+}
+
 export interface CalculationContext<G = any, E extends IEngine<G> = IEngine<G>> {
     globalValues: G;
     engine: E;
@@ -28,9 +34,11 @@ export interface INodeState<I, O> {
     type: string;
     title: string;
     id: string;
+    status: NodeStatus;
     inputs: NodeInterfaceDefinitionStates<I> & NodeInterfaceDefinitionStates<Record<string, NodeInterface<any>>>;
     outputs: NodeInterfaceDefinitionStates<O> & NodeInterfaceDefinitionStates<Record<string, NodeInterface<any>>>;
 }
+
 
 export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapable {
     protected _title = "";
@@ -42,6 +50,8 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
 
     public abstract inputs: Record<string, NodeInterface<any>>;
     public abstract outputs: Record<string, NodeInterface<any>>;
+    
+    public abstract status: NodeStatus;
 
     public events = {
         loaded: new BaklavaEvent<AbstractNode, AbstractNode>(this),
@@ -156,6 +166,7 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
         const state: INodeState<any, any> = {
             type: this.type,
             id: this.id,
+            status: this.status,
             title: this.title,
             inputs: inputStates,
             outputs: outputStates,
@@ -238,6 +249,7 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
 export abstract class Node<I, O> extends AbstractNode {
     public abstract inputs: NodeInterfaceDefinition<I>;
     public abstract outputs: NodeInterfaceDefinition<O>;
+    public status: NodeStatus = NodeStatus.NONE;
 
     public load(state: INodeState<I, O>): void {
         super.load(state);

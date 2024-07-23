@@ -1,7 +1,7 @@
 import { GraphInputNode, GraphOutputNode, IGraphInterface } from "./graphInterface";
 import { type GraphTemplate } from "./graphTemplate";
 import { Graph, IGraphState } from "./graph";
-import { AbstractNode, CalculateFunction, INodeState } from "./node";
+import { AbstractNode, CalculateFunction, INodeState, NodeStatus } from "./node";
 import { NodeInterface } from "./nodeInterface";
 
 export interface IGraphNodeState extends INodeState<any, any> {
@@ -48,6 +48,7 @@ export function createGraphNodeType(template: GraphTemplate): new () => Abstract
 
         public inputs: Record<string, NodeInterface<any>> = {};
         public outputs: Record<string, NodeInterface<any>> = {};
+        public status: NodeStatus = NodeStatus.NONE;
 
         public template = template;
         public subgraph: Graph | undefined;
