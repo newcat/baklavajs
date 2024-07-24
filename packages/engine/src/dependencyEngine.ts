@@ -1,4 +1,5 @@
-import { Editor, Graph, NodeInterface, CalculationResult, NodeStatus } from "@baklavajs/core";
+import type { Editor, Graph, NodeInterface, CalculationResult } from "@baklavajs/core";
+import {NodeStatus} from "@baklavajs/core"
 import { BaseEngine } from "./baseEngine";
 import { ITopologicalSortingResult, sortTopologically } from "./topologicalSorting";
 
@@ -54,6 +55,7 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
                 n.status = NodeStatus.NONE
             } catch (error) {
                 n.status = NodeStatus.ERROR
+                throw error
             }
             
             this.events.afterNodeCalculation.emit({ outputValues: r, node: n });

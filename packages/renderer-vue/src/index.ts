@@ -5,7 +5,6 @@
 export * from "./overrides";
 
 export * from "./editor";
-export * from "./contextmenu"
 export * from "./commands";
 export * from "./nodeinterfaces";
 export * from "./viewModel";

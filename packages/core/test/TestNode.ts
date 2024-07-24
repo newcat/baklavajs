@@ -1,4 +1,4 @@
-import { AbstractNode, CalculateFunction, Graph, NodeInterface } from "../src";
+import { AbstractNode, CalculateFunction, Graph, NodeInterface, NodeStatus } from "../src";
 
 export default class TestNode extends AbstractNode {
     public type = "TestNode";
@@ -8,6 +8,7 @@ export default class TestNode extends AbstractNode {
     public outputs = {
         b: new NodeInterface("B", 2),
     };
+    public status = NodeStatus.NONE
 
     public constructor() {
         super();
