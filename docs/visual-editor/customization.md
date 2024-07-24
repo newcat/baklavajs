@@ -39,6 +39,21 @@ For example, to make all nodes of type `MyNodeType` have a blue background, you 
 }
 ```
 
+Baklava will also create and update the `data-node-staus` attribute to nodes in these situations:
+* When the nodes `calculate` function is running
+* When a `calculate` function has thrown an error
+
+```css
+.baklava-node[data-node-status="error"] {
+    background-color: red;
+}
+.baklava-node[data-node-status="processing"] {
+    background-color: yellow;
+}
+```
+
+This attribute is set to `none` when a node is created and upon successful execution.
+
 ## Custom Components
 
 If these options don't fulfill your needs for customization, you can provide custom components.
