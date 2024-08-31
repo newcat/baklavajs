@@ -114,16 +114,16 @@ This attribute can be used to style the interfaces using CSS.
 Here is an example of how to set the color of the ports depending on the interface type:
 
 ```css
-.baklava-node-interface[data-interface-type="string"] .__port {
-    background-color: green;
+.baklava-node-interface[data-interface-type="string"] {
+    --baklava-node-interface-port-color: green;
 }
 
-.baklava-node-interface[data-interface-type="number"] .__port {
-    background-color: red;
+.baklava-node-interface[data-interface-type="number"] {
+    --baklava-node-interface-port-color: red;
 }
 
-.baklava-node-interface[data-interface-type="boolean"] .__port {
-    background-color: purple;
+.baklava-node-interface[data-interface-type="boolean"] {
+    --baklava-node-interface-port-color: purple;
 }
 ```
 

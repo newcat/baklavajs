@@ -6,7 +6,7 @@
         position: absolute;
         width: 10px;
         height: 10px;
-        background: white;
+        background: var(--baklava-node-interface-port-color);
         border-radius: 50%;
         top: calc(50% - 5px);
         cursor: crosshair;
