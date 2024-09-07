@@ -14,6 +14,7 @@
         <button @click="createSubgraph">Create Subgraph</button>
         <button @click="saveAndLoad">Save and Load</button>
         <button @click="changeSidebarWidth">SidebarWidth</button>
+        <button @click="clearHistory">Clear History</button>
     </div>
 </template>
 
@@ -148,6 +149,10 @@ const createSubgraph = () => {
 const changeSidebarWidth = () => {
     baklavaView.settings.sidebar.width = Math.round(Math.random() * 500) + 300;
     baklavaView.settings.sidebar.resizable = !baklavaView.settings.sidebar.resizable;
+};
+
+const clearHistory = () => {
+    baklavaView.commandHandler.executeCommand<Commands.ClearHistoryCommand>(Commands.CLEAR_HISTORY_COMMAND);
 };
 </script>
 
