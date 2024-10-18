@@ -39,3 +39,4 @@ coverage
 !.yarn/versions
 
 .nx/cache
+.nx/workspace-data
