@@ -28,6 +28,8 @@ export default defineComponent({
 
         const width = toRef(viewModel.value.settings.sidebar, "width");
         const resizable = computed(() => viewModel.value.settings.sidebar.resizable);
+        let resizeStartWidth = 0;
+        let resizeStartMouseX = 0;
 
         const node = computed(() => {
             const id = graph.value.sidebar.nodeId;
@@ -50,7 +52,9 @@ export default defineComponent({
             graph.value.sidebar.visible = false;
         };
 
-        const startResize = () => {
+        const startResize = (event: MouseEvent) => {
+            resizeStartWidth = width.value;
+            resizeStartMouseX = event.clientX;
             window.addEventListener("mousemove", onMouseMove);
             window.addEventListener(
                 "mouseup",
@@ -63,7 +67,8 @@ export default defineComponent({
 
         const onMouseMove = (event: MouseEvent) => {
             const maxwidth = el.value?.parentElement?.getBoundingClientRect().width ?? 500;
-            let newWidth = width.value - event.movementX;
+            const deltaX = event.clientX - resizeStartMouseX;
+            let newWidth = resizeStartWidth - deltaX;
             if (newWidth < 300) {
                 newWidth = 300;
             } else if (newWidth > 0.9 * maxwidth) {

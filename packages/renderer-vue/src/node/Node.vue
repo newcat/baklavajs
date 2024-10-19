@@ -94,6 +94,8 @@ const renaming = ref(false);
 const tempName = ref("");
 const renameInputEl = ref<HTMLInputElement | null>(null);
 const isResizing = ref(false);
+let resizeStartWidth = 0;
+let resizeStartMouseX = 0;
 
 const showContextMenu = ref(false);
 const contextMenuItems = computed(() => {
@@ -174,12 +176,15 @@ const onRender = () => {
 
 const startResize = (ev: MouseEvent) => {
     isResizing.value = true;
+    resizeStartWidth = props.node.width;
+    resizeStartMouseX = ev.clientX;
     ev.preventDefault();
 };
 
 const doResize = (ev: MouseEvent) => {
     if (!isResizing.value) return;
-    const newWidth = props.node.width + ev.movementX / graph.value.scaling;
+    const deltaX = ev.clientX - resizeStartMouseX;
+    const newWidth = resizeStartWidth + deltaX / graph.value.scaling;
     const minWidth = viewModel.value.settings.nodes.minWidth;
     const maxWidth = viewModel.value.settings.nodes.maxWidth;
     props.node.width = Math.max(minWidth, Math.min(maxWidth, newWidth));
