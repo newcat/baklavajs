@@ -46,11 +46,12 @@ export function useHistory(graph: Ref<Graph>, commandHandler: ICommandHandler): 
             }
 
             steps.value.push(step);
-            currentIndex.value++;
 
             while (steps.value.length > maxSteps.value) {
                 steps.value.shift();
             }
+
+            currentIndex.value = steps.value.length - 1;
         }
     };
 
