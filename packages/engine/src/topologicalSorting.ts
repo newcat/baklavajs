@@ -87,7 +87,7 @@ export function sortTopologically(
         sorted.push(n);
         const nodesConnectedFromN = adjacency.get(n.id)!;
         while (nodesConnectedFromN.size > 0) {
-            const mId: string = nodesConnectedFromN.values().next().value;
+            const mId: string = nodesConnectedFromN.values().next().value!;
             nodesConnectedFromN.delete(mId);
             if (Array.from(adjacency.values()).every((connectedNodes) => !connectedNodes.has(mId))) {
                 const m = nodes.find((node) => node.id === mId)!;
