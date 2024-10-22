@@ -14,7 +14,7 @@
         @wheel.self="panZoom.onMouseWheel"
         @keydown="keyDown"
         @keyup="keyUp"
-        @contextmenu="contextMenu.open"
+        @contextmenu.self="contextMenu.open"
     >
         <slot name="background">
             <Background />
