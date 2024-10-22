@@ -51,7 +51,7 @@ jobs:
               uses: azure/CLI@v1
               with:
                   inlineScript: |
-                      az cdn endpoint purge --content-paths "/*" --profile-name "baklavajs" --name "baklavajs" --resource-group "Private" --no-wait
+                      az afd endpoint purge --content-paths "/*" --profile-name "baklavajs" --endpoint-name "baklavajs" --resource-group "Private" --no-wait
             - name: Azure Logout
               run: az logout
               if: always()
