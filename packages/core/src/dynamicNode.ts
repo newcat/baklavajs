@@ -185,7 +185,11 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
                     continue;
                 }
 
-                type === "input" ? this.removeInput(k) : this.removeOutput(k);
+                if (type === "input") {
+                    this.removeInput(k);
+                } else {
+                    this.removeOutput(k);
+                }
             }
 
             // add all new interfaces
@@ -195,7 +199,11 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
                 }
 
                 const intf = newInterfaces[k]!();
-                type === "input" ? this.addInput(k, intf) : this.addOutput(k, intf);
+                if (type === "input") {
+                    this.addInput(k, intf);
+                } else {
+                    this.addOutput(k, intf);
+                }
             }
         }
 
