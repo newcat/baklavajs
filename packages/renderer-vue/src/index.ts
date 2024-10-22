@@ -6,6 +6,7 @@ export * from "./overrides";
 
 export * from "./editor";
 export * from "./commands";
+export * from "./connection";
 export * from "./nodeinterfaces";
 export * from "./viewModel";
 export * from "./utility";

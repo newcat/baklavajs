@@ -1,4 +1,4 @@
-import { AbstractNode, NodeInterface } from "@baklavajs/core";
+import type { AbstractNode, NodeInterface } from "@baklavajs/core";
 
 export interface IResolvedDomElements {
     node: HTMLElement | null;
