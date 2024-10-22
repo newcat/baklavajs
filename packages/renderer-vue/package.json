@@ -1,6 +1,6 @@
 {
     "name": "@baklavajs/renderer-vue",
-    "version": "2.5.0",
+    "version": "2.5.1",
     "description": "Vue frontend for BaklavaJS",
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
@@ -32,7 +32,7 @@
         "url": "https://github.com/newcat/baklavajs/issues"
     },
     "dependencies": {
-        "@baklavajs/core": "^2.5.0",
+        "@baklavajs/core": "^2.5.1",
         "@baklavajs/events": "^2.5.0"
     },
     "devDependencies": {
