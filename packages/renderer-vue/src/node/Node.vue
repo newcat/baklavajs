@@ -11,7 +11,7 @@
         <div v-if="viewModel.settings.nodes.resizable" class="__resize-handle" @mousedown="startResize" />
 
         <slot name="title">
-            <div class="__title" @pointerdown.self.stop="startDrag">
+            <div class="__title" @pointerdown.self.stop="startDrag" @contextmenu.prevent="openContextMenu">
                 <template v-if="!renaming">
                     <div class="__title-label">
                         {{ node.title }}
