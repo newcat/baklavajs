@@ -85,6 +85,10 @@ Settings can be changed by accessing the `settings` property of the view model r
 | nodes.reverseY                     | boolean           | false   |
 | contextMenu.enabled                | boolean           | true    |
 | contextMenu.additionalItems        | ContextMenuItem[] | []      |
+| zoomToFit.paddingLeft              | number            | 300     |
+| zoomToFit.paddingRight             | number            | 50      |
+| zoomToFit.paddingTop               | number            | 110     |
+| zoomToFit.paddingBottom            | number            | 50      |
 
 For example, to enable displaying the value of a node interface on hover:
 
