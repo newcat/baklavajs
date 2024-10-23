@@ -4,7 +4,7 @@ import ApiLink from "../components/ApiLink.vue";
 
 # Commands
 
-Commands are an abstraction to allow for extension of actions in Baklava. You can do everything related to commands using the <ApiLink type="interfaces" module="@baklavajs/renderer-vue" name="ICommandHandler"><code>useBaklava</code></ApiLink>
+Commands are an abstraction to allow for extension of actions in Baklava. You can do everything related to commands using the <ApiLink type="interfaces" module="@baklavajs/renderer-vue" name="ICommandHandler"><code>commandHandler</code></ApiLink>
 
 ## Executing existing commands
 
