@@ -8,3 +8,4 @@ export { default as Hierarchy2 } from "./Hierarchy2.vue";
 export { default as SelectAll } from "./SelectAll.vue";
 export { default as Trash } from "./Trash.vue";
 export { default as VerticalDots } from "./VerticalDots.vue";
+export { default as ZoomScan } from "./ZoomScan.vue";

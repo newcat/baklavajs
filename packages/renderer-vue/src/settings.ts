@@ -68,6 +68,12 @@ export interface IViewSettings {
         enabled: boolean;
         additionalItems: ContextMenuItem[];
     };
+    zoomToFit: {
+        paddingLeft: number;
+        paddingRight: number;
+        paddingTop: number;
+        paddingBottom: number;
+    };
 }
 
 export const DEFAULT_SETTINGS: () => IViewSettings = () => ({
@@ -100,5 +106,11 @@ export const DEFAULT_SETTINGS: () => IViewSettings = () => ({
     contextMenu: {
         enabled: true,
         additionalItems: [],
+    },
+    zoomToFit: {
+        paddingLeft: 300,
+        paddingRight: 50,
+        paddingTop: 110,
+        paddingBottom: 50,
     },
 });

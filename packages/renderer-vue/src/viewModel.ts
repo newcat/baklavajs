@@ -11,6 +11,7 @@ import { IViewNodeState, setViewNodeProperties } from "./node/viewNode";
 import { SubgraphInputNode, SubgraphOutputNode } from "./graph/subgraphInterfaceNodes";
 import { registerSidebarCommands } from "./sidebar";
 import { DEFAULT_SETTINGS, IViewSettings } from "./settings";
+import { registerZoomToFitCommands } from "./zoomToFit";
 export interface IBaklavaViewModel extends IBaklavaTapable {
     editor: Editor;
     /** Currently displayed graph */
@@ -55,6 +56,7 @@ export function useBaklava(existingEditor?: Editor): IBaklavaViewModel {
 
     registerGraphCommands(displayedGraph, commandHandler, switchGraph);
     registerSidebarCommands(displayedGraph, commandHandler);
+    registerZoomToFitCommands(displayedGraph, commandHandler, settings);
 
     watch(
         editor,
