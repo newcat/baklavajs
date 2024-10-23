@@ -10,7 +10,7 @@ export function getDomElementOfNode(node: AbstractNode): HTMLElement | null {
     return document.getElementById(node.id);
 }
 
-export default function getDomElements(ni: NodeInterface): IResolvedDomElements {
+export function getDomElements(ni: NodeInterface): IResolvedDomElements {
     const interfaceDOM = document.getElementById(ni.id);
     const portDOM = interfaceDOM?.getElementsByClassName("__port");
 
@@ -20,3 +20,4 @@ export default function getDomElements(ni: NodeInterface): IResolvedDomElements 
         port: portDOM && portDOM.length > 0 ? (portDOM[0] as HTMLElement) : null,
     };
 }
+export default getDomElements;
