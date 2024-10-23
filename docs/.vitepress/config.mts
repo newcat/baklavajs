@@ -12,11 +12,7 @@ export default defineConfig({
         nav: [
             {
                 text: "API Reference",
-                link: "https://v2.baklava.tech/api/",
-            },
-            {
-                text: "v1",
-                link: "https://v1.baklava.tech",
+                link: "https://baklava.tech/api/",
             },
         ],
         sidebar: [

@@ -34,7 +34,7 @@ There is also the `baklavajs` package, which contains the core package as well a
 
 ## Getting Started & Documentation
 
-You can find the documentation here: https://v2.baklava.tech
+You can find the documentation here: https://baklava.tech
 
 ## BaklavaJS v1
 The old version of BaklavaJS can be found here: https://github.com/newcat/baklavajs/tree/v1
