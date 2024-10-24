@@ -14,7 +14,7 @@ import { computed, defineComponent } from "vue";
 
 import ConnectionView from "./ConnectionView.vue";
 import { ITemporaryConnection, TemporaryConnectionState } from "./connection";
-import resolveDom from "./domResolver";
+import { getDomElements } from "./domResolver";
 import { getPortCoordinates } from "./portCoordinates";
 
 export default defineComponent({
@@ -38,9 +38,9 @@ export default defineComponent({
                 };
             }
 
-            const start = getPortCoordinates(resolveDom(props.connection.from));
+            const start = getPortCoordinates(getDomElements(props.connection.from));
             const end = props.connection.to
-                ? getPortCoordinates(resolveDom(props.connection.to))
+                ? getPortCoordinates(getDomElements(props.connection.to))
                 : [props.connection.mx || start[0], props.connection.my || start[1]];
 
             if (props.connection.from.isInput) {

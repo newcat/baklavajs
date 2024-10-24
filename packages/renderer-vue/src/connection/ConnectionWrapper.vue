@@ -6,7 +6,7 @@
 import { computed, defineComponent, ref, onBeforeUnmount, onMounted, nextTick, watch } from "vue";
 import { Connection } from "@baklavajs/core";
 import ConnectionView from "./ConnectionView.vue";
-import resolveDom, { IResolvedDomElements } from "./domResolver";
+import { getDomElements, IResolvedDomElements } from "./domResolver";
 import { TemporaryConnectionState } from "./connection";
 import { useGraph } from "../utility";
 
@@ -51,8 +51,8 @@ export default defineComponent({
         };
 
         const updateCoords = () => {
-            const from = resolveDom(props.connection.from);
-            const to = resolveDom(props.connection.to);
+            const from = getDomElements(props.connection.from);
+            const to = getDomElements(props.connection.to);
             if (from.node && to.node) {
                 if (!resizeObserver) {
                     resizeObserver = new ResizeObserver(() => {

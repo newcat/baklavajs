@@ -20,4 +20,3 @@ export function getDomElements(ni: NodeInterface): IResolvedDomElements {
         port: portDOM && portDOM.length > 0 ? (portDOM[0] as HTMLElement) : null,
     };
 }
-export default getDomElements;
