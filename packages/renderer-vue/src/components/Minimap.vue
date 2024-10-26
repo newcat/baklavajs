@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { AbstractNode } from "@baklavajs/core";
-import getDomElements, { getDomElementOfNode } from "../connection/domResolver";
+import { getDomElements, getDomElementOfNode } from "../connection/domResolver";
 import { getPortCoordinates } from "../connection/portCoordinates";
 import { useGraph, useViewModel } from "../utility";
 
