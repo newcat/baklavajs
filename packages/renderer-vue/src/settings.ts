@@ -1,3 +1,5 @@
+import type { Component } from "vue";
+
 interface SimpleContextMenuItem {
     label: string;
     command: string;
@@ -10,6 +12,12 @@ interface DividerContextMenuItem {
 interface SubmenuContextMenuItem {
     label: string;
     submenu: ContextMenuItem[];
+}
+
+interface ToolbarCommand {
+    command: string;
+    title: string;
+    icon?: Component;
 }
 
 export type ContextMenuItem = SimpleContextMenuItem | DividerContextMenuItem | SubmenuContextMenuItem;
@@ -25,6 +33,10 @@ export interface IViewSettings {
     toolbar: {
         /** Whether the toolbar should be enabled */
         enabled: boolean;
+        useDefaultCommands: boolean;
+        useDefaultSubgraphCommands: boolean;
+        additionalCommands: ToolbarCommand[];
+        additionalSubgraphCommands: ToolbarCommand[];
     };
 
     /** Palette settings */
@@ -81,6 +93,10 @@ export const DEFAULT_SETTINGS: () => IViewSettings = () => ({
     enableMinimap: false,
     toolbar: {
         enabled: true,
+        useDefaultCommands: true,
+        useDefaultSubgraphCommands: true,
+        additionalCommands: [],
+        additionalSubgraphCommands: [],
     },
     palette: {
         enabled: true,
