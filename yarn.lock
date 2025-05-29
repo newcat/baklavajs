@@ -762,11 +762,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@baklavajs/core@^2.5.1, @baklavajs/core@workspace:packages/core":
+"@baklavajs/core@^2.7.0, @baklavajs/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@baklavajs/core@workspace:packages/core"
   dependencies:
-    "@baklavajs/events": ^2.5.0
+    "@baklavajs/events": ^2.7.0
     "@types/jest": ^29.5.14
     "@types/uuid": ^10.0.0
     jest: ^29.7.0
@@ -779,12 +779,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@baklavajs/engine@^2.5.1, @baklavajs/engine@workspace:packages/engine":
+"@baklavajs/engine@^2.7.0, @baklavajs/engine@workspace:packages/engine":
   version: 0.0.0-use.local
   resolution: "@baklavajs/engine@workspace:packages/engine"
   dependencies:
-    "@baklavajs/core": ^2.5.1
-    "@baklavajs/events": ^2.5.0
+    "@baklavajs/core": ^2.7.0
+    "@baklavajs/events": ^2.7.0
     "@types/jest": ^29.5.14
     jest: ^29.7.0
     rimraf: ^6.0.1
@@ -794,7 +794,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@baklavajs/events@^2.5.0, @baklavajs/events@workspace:packages/events":
+"@baklavajs/events@^2.7.0, @baklavajs/events@workspace:packages/events":
   version: 0.0.0-use.local
   resolution: "@baklavajs/events@workspace:packages/events"
   dependencies:
@@ -802,13 +802,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@baklavajs/interface-types@^2.6.0, @baklavajs/interface-types@workspace:packages/interface-types":
+"@baklavajs/interface-types@^2.7.0, @baklavajs/interface-types@workspace:packages/interface-types":
   version: 0.0.0-use.local
   resolution: "@baklavajs/interface-types@workspace:packages/interface-types"
   dependencies:
-    "@baklavajs/core": ^2.5.1
-    "@baklavajs/engine": ^2.5.1
-    "@baklavajs/renderer-vue": ^2.6.0
+    "@baklavajs/core": ^2.7.0
+    "@baklavajs/engine": ^2.7.0
+    "@baklavajs/renderer-vue": ^2.7.0
     "@types/jest": ^29.5.14
     jest: ^29.7.0
     rimraf: ^6.0.1
@@ -818,12 +818,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@baklavajs/renderer-vue@^2.6.0, @baklavajs/renderer-vue@workspace:packages/renderer-vue":
+"@baklavajs/renderer-vue@^2.7.0, @baklavajs/renderer-vue@workspace:packages/renderer-vue":
   version: 0.0.0-use.local
   resolution: "@baklavajs/renderer-vue@workspace:packages/renderer-vue"
   dependencies:
-    "@baklavajs/core": ^2.5.1
-    "@baklavajs/events": ^2.5.0
+    "@baklavajs/core": ^2.7.0
+    "@baklavajs/events": ^2.7.0
     "@types/resize-observer-browser": ^0.1.11
     "@vitejs/plugin-vue": ^5.2.4
     "@vue/compiler-sfc": ^3.5.16
@@ -841,7 +841,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@baklavajs/themes@^2.5.0, @baklavajs/themes@workspace:packages/themes":
+"@baklavajs/themes@^2.7.0, @baklavajs/themes@workspace:packages/themes":
   version: 0.0.0-use.local
   resolution: "@baklavajs/themes@workspace:packages/themes"
   dependencies:
@@ -4826,11 +4826,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "baklavajs@workspace:packages/full"
   dependencies:
-    "@baklavajs/core": ^2.5.1
-    "@baklavajs/engine": ^2.5.1
-    "@baklavajs/interface-types": ^2.6.0
-    "@baklavajs/renderer-vue": ^2.6.0
-    "@baklavajs/themes": ^2.5.0
+    "@baklavajs/core": ^2.7.0
+    "@baklavajs/engine": ^2.7.0
+    "@baklavajs/interface-types": ^2.7.0
+    "@baklavajs/renderer-vue": ^2.7.0
+    "@baklavajs/themes": ^2.7.0
     esbuild: ^0.25.5
     typescript: ^5.8.3
   languageName: unknown
