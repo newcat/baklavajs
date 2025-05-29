@@ -8,6 +8,7 @@ export * from "./editor";
 export * from "./commands";
 export * from "./connection";
 export * from "./nodeinterfaces";
+export * from "./toolbar";
 export * from "./viewModel";
 export * from "./utility";
 export { displayInSidebar } from "./sidebar";

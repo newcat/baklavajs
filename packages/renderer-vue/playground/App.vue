@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { NodeInstanceOf } from "@baklavajs/core";
-import { BaklavaEditor, Components, SelectInterface, useBaklava, Commands } from "../src";
+import { BaklavaEditor, Components, SelectInterface, useBaklava, Commands, DEFAULT_TOOLBAR_COMMANDS } from "../src";
 import { DependencyEngine, applyResult } from "@baklavajs/engine";
 import { BaklavaInterfaceTypes } from "@baklavajs/interface-types";
 
@@ -44,6 +44,7 @@ import ReactiveOutputTestNode from "./ReactiveOutputTestNode";
 import { stringType, numberType, booleanType } from "./interfaceTypes";
 
 import CommentNodeRenderer from "./CommentNodeRenderer.vue";
+import { defineComponent, h } from "vue";
 
 const NodeComponent = Components.Node;
 
@@ -63,6 +64,26 @@ baklavaView.settings.contextMenu.additionalItems = [
     { label: "Paste", command: Commands.PASTE_COMMAND },
 ];
 
+const CLEAR_ALL_COMMAND = "CLEAR_ALL";
+baklavaView.commandHandler.registerCommand(CLEAR_ALL_COMMAND, {
+    execute: () => {
+        baklavaView.displayedGraph.nodes.forEach((node) => {
+            baklavaView.displayedGraph.removeNode(node);
+        });
+    },
+    canExecute: () => baklavaView.displayedGraph.nodes.length > 0,
+});
+baklavaView.settings.toolbar.commands = [
+    ...DEFAULT_TOOLBAR_COMMANDS,
+    {
+        command: CLEAR_ALL_COMMAND,
+        title: "Clear All",
+        icon: defineComponent(() => {
+            return () => h("div", "Clear All");
+        }),
+    },
+];
+
 const engine = new DependencyEngine(editor);
 engine.events.afterRun.subscribe(token, (r) => {
     engine.pause();
@@ -73,10 +94,7 @@ engine.events.afterRun.subscribe(token, (r) => {
 engine.hooks.gatherCalculationData.subscribe(token, () => "def");
 engine.start();
 
-const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor, {
-    viewPlugin: baklavaView,
-    engine,
-});
+const nodeInterfaceTypes = new BaklavaInterfaceTypes(editor, { viewPlugin: baklavaView, engine });
 nodeInterfaceTypes.addTypes(stringType, numberType, booleanType);
 
 editor.registerNodeType(TestNode, { category: "Tests" });
@@ -163,8 +181,12 @@ const zoomToFitRandomNode = () => {
 
     const nodes = baklavaView.displayedGraph.nodes;
     const node = nodes[Math.floor(Math.random() * nodes.length)];
-    baklavaView.commandHandler.executeCommand<Commands.ZoomToFitNodesCommand>(Commands.ZOOM_TO_FIT_NODES_COMMAND, true, [node]);
-}
+    baklavaView.commandHandler.executeCommand<Commands.ZoomToFitNodesCommand>(
+        Commands.ZOOM_TO_FIT_NODES_COMMAND,
+        true,
+        [node],
+    );
+};
 </script>
 
 <style>
