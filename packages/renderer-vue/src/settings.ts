@@ -1,3 +1,5 @@
+import { DEFAULT_TOOLBAR_COMMANDS, DEFAULT_TOOLBAR_SUBGRAPH_COMMANDS, ToolbarCommand } from "./toolbar";
+
 interface SimpleContextMenuItem {
     label: string;
     command: string;
@@ -25,6 +27,8 @@ export interface IViewSettings {
     toolbar: {
         /** Whether the toolbar should be enabled */
         enabled: boolean;
+        commands: ToolbarCommand[];
+        subgraphCommands: ToolbarCommand[];
     };
 
     /** Palette settings */
@@ -34,11 +38,7 @@ export interface IViewSettings {
     };
 
     /** Background settings */
-    background: {
-        gridSize: number;
-        gridDivision: number;
-        subGridVisibleThreshold: number;
-    };
+    background: { gridSize: number; gridDivision: number; subGridVisibleThreshold: number };
     /** Sidebar settings */
     sidebar: {
         /** Whether the sidebar should be enabled */
@@ -68,49 +68,18 @@ export interface IViewSettings {
         enabled: boolean;
         additionalItems: ContextMenuItem[];
     };
-    zoomToFit: {
-        paddingLeft: number;
-        paddingRight: number;
-        paddingTop: number;
-        paddingBottom: number;
-    };
+    zoomToFit: { paddingLeft: number; paddingRight: number; paddingTop: number; paddingBottom: number };
 }
 
 export const DEFAULT_SETTINGS: () => IViewSettings = () => ({
     useStraightConnections: false,
     enableMinimap: false,
-    toolbar: {
-        enabled: true,
-    },
-    palette: {
-        enabled: true,
-    },
-    background: {
-        gridSize: 100,
-        gridDivision: 5,
-        subGridVisibleThreshold: 0.6,
-    },
-    sidebar: {
-        enabled: true,
-        width: 300,
-        resizable: true,
-    },
+    toolbar: { enabled: true, commands: DEFAULT_TOOLBAR_COMMANDS, subgraphCommands: DEFAULT_TOOLBAR_SUBGRAPH_COMMANDS },
+    palette: { enabled: true },
+    background: { gridSize: 100, gridDivision: 5, subGridVisibleThreshold: 0.6 },
+    sidebar: { enabled: true, width: 300, resizable: true },
     displayValueOnHover: false,
-    nodes: {
-        defaultWidth: 200,
-        maxWidth: 320,
-        minWidth: 150,
-        resizable: false,
-        reverseY: false,
-    },
-    contextMenu: {
-        enabled: true,
-        additionalItems: [],
-    },
-    zoomToFit: {
-        paddingLeft: 300,
-        paddingRight: 50,
-        paddingTop: 110,
-        paddingBottom: 50,
-    },
+    nodes: { defaultWidth: 200, maxWidth: 320, minWidth: 150, resizable: false, reverseY: false },
+    contextMenu: { enabled: true, additionalItems: [] },
+    zoomToFit: { paddingLeft: 300, paddingRight: 50, paddingTop: 110, paddingBottom: 50 },
 });
