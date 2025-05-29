@@ -7,12 +7,9 @@ import vueParser from "vue-eslint-parser";
 import eslintConfigPrettier from "eslint-config-prettier";
 
 export default tseslint.config(
-    {
-        ignores: ["packages/*/dist", "node_modules"],
-    },
+    { ignores: ["packages/*/dist", "node_modules"] },
     eslint.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
-    // @ts-expect-error - `pluginVue.configs` is not properly typed
     ...pluginVue.configs["flat/recommended"],
     eslintConfigPrettier,
     {
