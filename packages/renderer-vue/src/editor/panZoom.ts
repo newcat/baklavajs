@@ -1,7 +1,8 @@
 import { computed } from "vue";
-import { useDragMove, useGraph } from "../utility";
+import { useDragMove, useGraph, useViewModel } from "../utility";
 
 export function usePanZoom() {
+    const { viewModel } = useViewModel();
     const { graph } = useGraph();
 
     // State needed for pinch-zoom
@@ -18,6 +19,12 @@ export function usePanZoom() {
     }));
 
     const applyZoom = (centerX: number, centerY: number, newScale: number) => {
+        if (newScale < viewModel.value.settings.panZoom.minScale) {
+            newScale = viewModel.value.settings.panZoom.minScale;
+        } else if (newScale > viewModel.value.settings.panZoom.maxScale) {
+            newScale = viewModel.value.settings.panZoom.maxScale;
+        }
+
         const currentPoint = [
             centerX / graph.value.scaling - graph.value.panning.x,
             centerY / graph.value.scaling - graph.value.panning.y,
