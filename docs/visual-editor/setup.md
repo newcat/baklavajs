@@ -85,6 +85,8 @@ Settings can be changed by accessing the `settings` property of the view model r
 | nodes.reverseY                     | boolean           | false   |
 | contextMenu.enabled                | boolean           | true    |
 | contextMenu.additionalItems        | ContextMenuItem[] | []      |
+| panZoom.minScale                   | number            | 0.05    |
+| panZoom.maxScale                   | number            | 10      |
 | zoomToFit.paddingLeft              | number            | 300     |
 | zoomToFit.paddingRight             | number            | 50      |
 | zoomToFit.paddingTop               | number            | 110     |
