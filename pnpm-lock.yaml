@@ -166,6 +166,15 @@ importers:
         specifier: ^2.7.0
         version: link:../events
     devDependencies:
+      '@baklavajs/engine':
+        specifier: workspace:*
+        version: link:../engine
+      '@baklavajs/interface-types':
+        specifier: workspace:*
+        version: link:../interface-types
+      '@baklavajs/themes':
+        specifier: workspace:*
+        version: link:../themes
       '@types/node':
         specifier: ^24.6.2
         version: 24.6.2
