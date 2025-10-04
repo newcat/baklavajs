@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from "vitest";
 import { NodeInterface } from "../src";
 
 describe("Node Interface", () => {
@@ -13,8 +14,8 @@ describe("Node Interface", () => {
     });
 
     it("calls the 'beforeSetValue' and 'setValue' events when a value is set", () => {
-        const spy1 = jest.fn();
-        const spy2 = jest.fn();
+        const spy1 = vi.fn();
+        const spy2 = vi.fn();
         const newValue = "myValue";
         const ni = new NodeInterface("Test", "test");
         ni.events.beforeSetValue.subscribe(Symbol(), spy1);
@@ -68,7 +69,7 @@ describe("Node Interface", () => {
 
     it("allows using middleware", () => {
         const n = new NodeInterface("Test", 1);
-        const mw = jest.fn();
+        const mw = vi.fn();
         n.use(mw, "hello", 3);
         expect(mw).toHaveBeenCalledWith(n, "hello", 3);
     });

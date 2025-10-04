@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { IConnection } from "@baklavajs/core";
 import { TestNode } from "./testNode";
 import { containsCycle, CycleError, sortTopologically } from "../src";

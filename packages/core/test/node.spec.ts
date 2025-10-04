@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from "vitest";
 import { type AbstractNode, NodeInterface, Graph } from "../src";
 import TestNode from "./TestNode";
 
@@ -20,8 +21,8 @@ describe("Node", () => {
     it("can add an input", () => {
         const n = new TestNode();
         const t = Symbol("token");
-        const beforeAddSpy = jest.fn();
-        const addSpy = jest.fn();
+        const beforeAddSpy = vi.fn();
+        const addSpy = vi.fn();
         n.events.beforeAddInput.subscribe(t, beforeAddSpy);
         n.events.addInput.subscribe(t, addSpy);
         expect(Object.keys(n.inputs)).toHaveLength(1);
@@ -35,7 +36,7 @@ describe("Node", () => {
     it("can prevent adding an input", () => {
         const n = new TestNode();
         const t = Symbol("token");
-        const addSpy = jest.fn();
+        const addSpy = vi.fn();
         n.events.beforeAddInput.subscribe(t, (_, prevent) => {
             prevent();
         });
@@ -49,8 +50,8 @@ describe("Node", () => {
     it("can add an output", () => {
         const n = new TestNode();
         const t = Symbol("token");
-        const beforeAddSpy = jest.fn();
-        const addSpy = jest.fn();
+        const beforeAddSpy = vi.fn();
+        const addSpy = vi.fn();
         n.events.beforeAddOutput.subscribe(t, beforeAddSpy);
         n.events.addOutput.subscribe(t, addSpy);
         expect(Object.keys(n.outputs)).toHaveLength(1);
@@ -64,7 +65,7 @@ describe("Node", () => {
     it("can prevent adding an output", () => {
         const n = new TestNode();
         const t = Symbol("token");
-        const addSpy = jest.fn();
+        const addSpy = vi.fn();
         n.events.beforeAddOutput.subscribe(t, (_, prevent) => {
             prevent();
         });
@@ -98,11 +99,11 @@ describe("Node", () => {
 
     it("emits an event after the title has been changed", () => {
         const n = new TestNode();
-        const spy = jest.fn();
+        const spy = vi.fn();
         n.events.titleChanged.subscribe("x", spy);
         n.title = "newTitle";
         expect(spy).toHaveBeenCalled();
-        expect(spy.mock.lastCall[0]).toBe("newTitle");
+        expect(spy.mock.lastCall?.[0]).toBe("newTitle");
     });
 
     it.todo("correctly loads a state"); // TODO

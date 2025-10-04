@@ -15,7 +15,7 @@
         "build:esm": "tsc --declaration false --outDir dist/esm --module esnext",
         "build:cjs": "tsc --declaration false --outDir dist/cjs",
         "build:declaration": "tsc --emitDeclarationOnly --outDir dist",
-        "build": "rimraf dist && yarn run build:esm && yarn run build:cjs && yarn run build:declaration"
+        "build": "rimraf dist && pnpm run build:esm && pnpm run build:cjs && pnpm run build:declaration"
     },
     "publishConfig": {
         "access": "public"
@@ -28,6 +28,6 @@
         "url": "https://github.com/newcat/baklavajs/issues"
     },
     "devDependencies": {
-        "typescript": "^5.8.3"
+        "typescript": "^5.9.3"
     }
 }

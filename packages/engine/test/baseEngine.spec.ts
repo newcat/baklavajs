@@ -1,12 +1,13 @@
+import { describe, expect, it, vi } from "vitest";
 import { Graph, AbstractNode, INodeUpdateEventData, Editor, CalculationResult } from "@baklavajs/core";
 import { BaseEngine } from "../src";
 import { TestNode } from "./testNode";
 
 class MockEngine extends BaseEngine<void, []> {
-    public runGraphSpy = jest.fn();
-    public getInputValuesSpy = jest.fn();
-    public executeSpy = jest.fn();
-    public onChangeSpy = jest.fn();
+    public runGraphSpy = vi.fn();
+    public getInputValuesSpy = vi.fn();
+    public executeSpy = vi.fn();
+    public onChangeSpy = vi.fn();
 
     public runGraph(graph: Graph, inputs: Map<string, any>, calculationData: void): Promise<CalculationResult> {
         this.runGraphSpy(graph, inputs, calculationData);

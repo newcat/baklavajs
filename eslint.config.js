@@ -1,5 +1,6 @@
 // @ts-check
 
+import path from "node:path";
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginVue from "eslint-plugin-vue";
@@ -20,7 +21,7 @@ export default tseslint.config(
             parserOptions: {
                 parser: tseslint.parser,
                 project: true,
-                tsconfigRootDir: "./",
+                tsconfigRootDir: path.resolve("./"),
                 extraFileExtensions: [".vue"],
             },
         },

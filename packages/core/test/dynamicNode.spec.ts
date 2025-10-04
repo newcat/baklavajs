@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from "vitest";
 import { defineDynamicNode, DynamicNodeDefinition, NodeInterface, IEngine } from "../src";
 
 describe("Dynamic Node", () => {
@@ -34,7 +35,7 @@ describe("Dynamic Node", () => {
     });
 
     it("calls the onCreate lifecycle method correctly", () => {
-        const onCreateSpy = jest.fn();
+        const onCreateSpy = vi.fn();
         const LifecycleTestNode = defineDynamicNode({
             type: "LifecycleTestNode",
             onUpdate: () => ({}),
@@ -45,7 +46,7 @@ describe("Dynamic Node", () => {
     });
 
     it("calls the onPlaced lifecycle method correctly", () => {
-        const onPlacedSpy = jest.fn();
+        const onPlacedSpy = vi.fn();
         const LifecycleTestNode = defineDynamicNode({
             type: "LifecycleTestNode",
             onUpdate: () => ({}),
@@ -57,7 +58,7 @@ describe("Dynamic Node", () => {
     });
 
     it("calls the onDestroy lifecycle method correctly", () => {
-        const onDestroySpy = jest.fn();
+        const onDestroySpy = vi.fn();
         const LifecycleTestNode = defineDynamicNode({
             type: "LifecycleTestNode",
             onUpdate: () => ({}),
@@ -88,7 +89,7 @@ describe("Dynamic Node", () => {
 
     it("calls the calculate method correctly", () => {
         // TODO: Also include custom inputs and outputs
-        const calculateSpy = jest.fn((inputs) => ({ b: (inputs.a + 1).toString() }));
+        const calculateSpy = vi.fn((inputs) => ({ b: (inputs.a + 1).toString() }));
         const TestNode = defineDynamicNode({
             type: "TestNode",
             inputs: {

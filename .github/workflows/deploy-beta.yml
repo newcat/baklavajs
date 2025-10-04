@@ -11,21 +11,19 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v5
               with:
                   fetch-depth: 0
-            - name: Use Node.js 18
-              uses: actions/setup-node@v3
+            - name: Install pnpm
+              uses: pnpm/action-setup@v4
+            - name: Use Node.js 24
+              uses: actions/setup-node@v5
               with:
-                  node-version: "18"
-            - name: Setup Yarn v3
-              run: |
-                corepack enable
-                corepack prepare yarn@stable --activate
+                  node-version: "24"
             - name: Install dependencies
-              run: yarn install --immutable
+              run: pnpm install
             - name: Build
-              run: yarn run build
+              run: pnpm run build
             - name: Publish
               run: |
                   git config --global user.name 'BaklavaJS CICD'
@@ -35,5 +33,5 @@ jobs:
                   lerna publish from-package --dist-tag next --yes
             - name: Build docs
               run: |
-                  yarn run generate-api-docs
-                  yarn run docs:build
+                  pnpm run generate-api-docs
+                  pnpm run docs:build

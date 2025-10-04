@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { NodeInterface, Connection, DummyConnection } from "../src";
 
 describe("Connection", () => {

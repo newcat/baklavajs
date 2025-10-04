@@ -1,8 +1,9 @@
+import { describe, expect, it, vi } from "vitest";
 import { defineNode, IEngine, NodeInterface } from "../src";
 
 describe("defineNode", () => {
     it("calls the onCreate lifecycle method correctly", () => {
-        const onCreateSpy = jest.fn();
+        const onCreateSpy = vi.fn();
         const LifecycleTestNode = defineNode({
             type: "LifecycleTestNode",
             onCreate: onCreateSpy,
@@ -12,7 +13,7 @@ describe("defineNode", () => {
     });
 
     it("calls the onPlaced lifecycle method correctly", () => {
-        const onPlacedSpy = jest.fn();
+        const onPlacedSpy = vi.fn();
         const LifecycleTestNode = defineNode({
             type: "LifecycleTestNode",
             onPlaced: onPlacedSpy,
@@ -23,7 +24,7 @@ describe("defineNode", () => {
     });
 
     it("calls the onDestroy lifecycle method correctly", () => {
-        const onDestroySpy = jest.fn();
+        const onDestroySpy = vi.fn();
         const LifecycleTestNode = defineNode({
             type: "LifecycleTestNode",
             onDestroy: onDestroySpy,
@@ -51,7 +52,7 @@ describe("defineNode", () => {
     });
 
     it("calls the calculate method correctly", () => {
-        const calculateSpy = jest.fn((inputs) => ({ b: (inputs.a + 1).toString() }));
+        const calculateSpy = vi.fn((inputs) => ({ b: (inputs.a + 1).toString() }));
         const TestNode = defineNode({
             type: "TestNode",
             inputs: {

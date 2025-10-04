@@ -43,7 +43,7 @@ export interface IDynamicNodeDefinition<I, O> {
     outputs?: InterfaceFactory<O>;
     /** This function is called whenever the value of one of the static input or output interfaces is changed.
      * It should return a definition for every dynamic interface based on the values of the static interfaces. */
-    onUpdate: (inputs: I, outputs: O) => DynamicNodeUpdateResult;
+    onUpdate: (this: DynamicNode<I, O>, inputs: I, outputs: O) => DynamicNodeUpdateResult;
     /** This function is called by the engine with the input values.
      * It should perform the necessary calculation and then return the output values */
     calculate?: CalculateFunction<Dynamic<I>, Dynamic<O>>;

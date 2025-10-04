@@ -15,8 +15,8 @@
         "build:esm": "tsc -p tsconfig.build.json --declaration false --outDir dist/esm --module esnext",
         "build:cjs": "tsc -p tsconfig.build.json --declaration false --outDir dist/cjs",
         "build:declaration": "tsc -p tsconfig.build.json --emitDeclarationOnly --outDir dist",
-        "build": "rimraf dist && yarn run build:esm && yarn run build:cjs && yarn run build:declaration",
-        "test": "jest --coverage --colors"
+        "build": "rimraf dist && pnpm run build:esm && pnpm run build:cjs && pnpm run build:declaration",
+        "test": "vitest run --coverage"
     },
     "repository": {
         "type": "git",
@@ -30,12 +30,10 @@
         "@baklavajs/events": "^2.7.0"
     },
     "devDependencies": {
-        "@types/jest": "^29.5.14",
-        "jest": "^29.7.0",
+        "@vitest/coverage-v8": "^3.2.4",
         "rimraf": "^6.0.1",
-        "ts-jest": "^29.3.4",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.8.3"
+        "typescript": "^5.9.3",
+        "vitest": "^3.2.4"
     },
     "publishConfig": {
         "access": "public"
