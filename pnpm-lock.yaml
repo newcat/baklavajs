@@ -226,9 +226,6 @@ importers:
 
   packages/themes:
     devDependencies:
-      '@types/sass':
-        specifier: ^1.45.0
-        version: 1.45.0
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
@@ -1665,10 +1662,6 @@ packages:
 
   '@types/resize-observer-browser@0.1.11':
     resolution: {integrity: sha512-cNw5iH8JkMkb3QkCoe7DaZiawbDQEUX8t7iuQaRTyLOyQCR2h+ibBD4GJt7p5yhUHrlOeL7ZtbxNHeipqNsBzQ==}
-
-  '@types/sass@1.45.0':
-    resolution: {integrity: sha512-jn7qwGFmJHwUSphV8zZneO3GmtlgLsmhs/LQyVvQbIIa+fzGMUiHI4HXJZL3FT8MJmgXWbLGiVVY7ElvHq6vDA==}
-    deprecated: This is a stub types definition. sass provides its own type definitions, so you do not need this installed.
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -6452,10 +6445,6 @@ snapshots:
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/resize-observer-browser@0.1.11': {}
-
-  '@types/sass@1.45.0':
-    dependencies:
-      sass: 1.93.2
 
   '@types/trusted-types@2.0.7':
     optional: true

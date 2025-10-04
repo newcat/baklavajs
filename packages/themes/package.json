@@ -19,7 +19,6 @@
         "url": "https://github.com/newcat/baklavajs/issues"
     },
     "devDependencies": {
-        "@types/sass": "^1.45.0",
         "rimraf": "^6.0.1",
         "sass": "^1.93.2",
         "ts-node": "^10.9.2",
