@@ -1,0 +1,3 @@
+linkWorkspacePackages: true
+packages:
+  - 'packages/*'

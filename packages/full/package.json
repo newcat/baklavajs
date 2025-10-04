@@ -16,7 +16,7 @@
         "build:cjs": "tsc --declaration false --outDir dist/cjs",
         "build:declaration": "tsc --emitDeclarationOnly --outDir dist",
         "build:browser": "esbuild src/bundle.ts --bundle --minify --sourcemap --global-name=BaklavaJS --outfile=dist/bundle.js",
-        "build": "rimraf dist && yarn run build:esm && yarn run build:cjs && yarn run build:declaration && yarn build:browser"
+        "build": "rimraf dist && pnpm run build:esm && pnpm run build:cjs && pnpm run build:declaration && pnpm build:browser"
     },
     "repository": {
         "type": "git",
@@ -37,6 +37,7 @@
     },
     "devDependencies": {
         "esbuild": "^0.25.5",
-        "typescript": "^5.8.3"
+        "typescript": "^5.8.3",
+        "vue": "^3.5.22"
     }
 }

@@ -9,10 +9,10 @@ For more information see [Browser Build](./browser-build.md)
 
 BaklavaJS is split into multiple packages:
 
--   `@baklavajs/core`: Contains all the core elements that Baklava needs to work
--   `@baklavajs/engine`: The engine is used to execute the graph
--   `@baklavajs/interface-types`: Adds the functionality to assign types to interfaces, which allows only certain connections to be created
--   `@baklavajs/renderer-vue`: Used to display and edit the graph in a Vue 3 application
+- `@baklavajs/core`: Contains all the core elements that Baklava needs to work
+- `@baklavajs/engine`: The engine is used to execute the graph
+- `@baklavajs/interface-types`: Adds the functionality to assign types to interfaces, which allows only certain connections to be created
+- `@baklavajs/renderer-vue`: Used to display and edit the graph in a Vue 3 application
 
 You can install the packages individually or use the combined `baklavajs` package:
 
@@ -22,6 +22,9 @@ npm i baklavajs
 
 # yarn
 yarn add baklavajs
+
+# pnpm
+pnpm add baklavajs
 ```
 
 Now you can use Baklava in your Vue application:

@@ -3,15 +3,14 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "playground": "cd packages/renderer-vue && yarn run dev",
+        "playground": "cd packages/renderer-vue && pnpm run dev",
         "lint": "eslint \"packages/*/src/**/*.{ts,vue}\"",
         "build": "lerna run build",
         "test": "lerna run test",
         "clean": "rimraf ./packages/*/dist && rimraf ./packages/full/lib",
         "generate-api-docs": "typedoc",
         "docs:dev": "vitepress dev docs",
-        "docs:build": "vitepress build docs",
-        "version": "yarn install && git stage yarn.lock"
+        "docs:build": "vitepress build docs"
     },
     "workspaces": [
         "packages/*"
@@ -31,6 +30,5 @@
         "typescript-eslint": "^8.33.0",
         "vitepress": "^1.6.3",
         "vue-eslint-parser": "^10.1.3"
-    },
-    "packageManager": "yarn@3.5.1"
+    }
 }
