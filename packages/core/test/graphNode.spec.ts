@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from "vitest";
 import { createGraphNodeType, Editor, Graph, GraphInputNode, GraphOutputNode, GraphTemplate } from "../src";
 import OutputNode from "./OutputNode";
 import TestNode from "./TestNode";
@@ -57,7 +58,7 @@ describe("Graph Node", () => {
         const GraphNode = createGraphNodeType(template);
         const n = new GraphNode();
         n.onPlaced();
-        const spy = jest.fn();
+        const spy = vi.fn();
         n.subgraph!.destroy = spy;
         n.onDestroy();
         expect(spy).toHaveBeenCalledTimes(1);

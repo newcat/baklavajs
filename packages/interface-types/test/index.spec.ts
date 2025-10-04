@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { Editor } from "@baklavajs/core";
 import { BaklavaInterfaceTypes, NodeInterfaceType } from "../src";
 

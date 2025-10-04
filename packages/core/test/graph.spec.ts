@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from "vitest";
 import { Editor } from "../src";
 import OutputNode from "./OutputNode";
 import TestNode from "./TestNode";
@@ -14,7 +15,7 @@ describe("Graph", () => {
     it("calls the onPlaced function of a node", () => {
         const e = new Editor();
         const n = new TestNode();
-        const onPlacedSpy = jest.fn();
+        const onPlacedSpy = vi.fn();
         n.onPlaced = onPlacedSpy;
         e.graph.addNode(n);
         expect(n.registerCalled).toBeTruthy();
@@ -24,7 +25,7 @@ describe("Graph", () => {
     it("can remove a node", () => {
         const e = new Editor();
         const n = new TestNode();
-        const onDestroySpy = jest.fn();
+        const onDestroySpy = vi.fn();
         n.onDestroy = onDestroySpy;
         e.graph.addNode(n);
         expect(e.graph.nodes).toHaveLength(1);

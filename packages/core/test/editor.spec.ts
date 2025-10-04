@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from "vitest";
 import { Editor, getGraphNodeTypeString, Graph, GraphTemplate } from "../src";
 import OutputNode from "./OutputNode";
 import TestNode from "./TestNode";
@@ -23,7 +24,7 @@ describe("Editor", () => {
 
     it("can register a new node type", () => {
         const e = new Editor();
-        const ev = jest.fn();
+        const ev = vi.fn();
         e.events.registerNodeType.subscribe(this, ev);
         e.registerNodeType(TestNode);
         expect(e.nodeTypes.get("TestNode")).toEqual({
@@ -68,10 +69,10 @@ describe("Editor", () => {
 
     it("can prevent node types from being registered", () => {
         const e = new Editor();
-        const before = jest.fn((nt, prevent) => {
+        const before = vi.fn((nt, prevent) => {
             prevent();
         });
-        const after = jest.fn();
+        const after = vi.fn();
         e.events.beforeRegisterNodeType.subscribe(this, before);
         e.events.registerNodeType.subscribe(this, after);
         e.registerNodeType(TestNode);
@@ -82,7 +83,7 @@ describe("Editor", () => {
 
     it("can unregister node types", () => {
         const e = new Editor();
-        const ev = jest.fn();
+        const ev = vi.fn();
         e.events.unregisterNodeType.subscribe(this, ev);
         e.registerNodeType(TestNode);
         expect(e.nodeTypes.size).toEqual(3);
@@ -93,10 +94,10 @@ describe("Editor", () => {
 
     it("can prevent node types from being unregistered", () => {
         const e = new Editor();
-        const before = jest.fn((nt, prevent) => {
+        const before = vi.fn((nt, prevent) => {
             prevent();
         });
-        const after = jest.fn();
+        const after = vi.fn();
         e.events.beforeUnregisterNodeType.subscribe(this, before);
         e.events.unregisterNodeType.subscribe(this, after);
         e.registerNodeType(TestNode);
@@ -111,8 +112,8 @@ describe("Editor", () => {
         const e = new Editor();
         e.registerNodeType(TestNode);
 
-        const ev = jest.fn();
-        const proxyEv = jest.fn();
+        const ev = vi.fn();
+        const proxyEv = vi.fn();
         e.events.addGraphTemplate.subscribe(this, ev);
         e.graphTemplateEvents.nameChanged.subscribe(this, proxyEv);
 
@@ -129,10 +130,10 @@ describe("Editor", () => {
         const e = new Editor();
         e.registerNodeType(TestNode);
 
-        const before = jest.fn((gt, prevent) => {
+        const before = vi.fn((gt, prevent) => {
             prevent();
         });
-        const after = jest.fn();
+        const after = vi.fn();
         e.events.beforeAddGraphTemplate.subscribe(this, before);
         e.events.addGraphTemplate.subscribe(this, after);
 
@@ -147,7 +148,7 @@ describe("Editor", () => {
     it("removes a graph template correctly", () => {
         const e = new Editor();
         e.registerNodeType(TestNode);
-        const ev = jest.fn();
+        const ev = vi.fn();
         e.events.removeGraphTemplate.subscribe(this, ev);
 
         const gt = getGraphTemplate(e);
@@ -176,10 +177,10 @@ describe("Editor", () => {
         e.addGraphTemplate(gt);
         expect(e.graphTemplates).toHaveLength(1);
 
-        const before = jest.fn((gt, prevent) => {
+        const before = vi.fn((gt, prevent) => {
             prevent();
         });
-        const after = jest.fn();
+        const after = vi.fn();
         e.events.beforeRemoveGraphTemplate.subscribe(this, before);
         e.events.removeGraphTemplate.subscribe(this, after);
 

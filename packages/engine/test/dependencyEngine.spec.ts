@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from "vitest";
 import {
     AbstractNode,
     Editor,
@@ -27,8 +28,8 @@ describe("DependencyEngine", () => {
         editor.graph.addConnection(n1.outputs.c, n2.inputs.a);
 
         const engine = new DependencyEngine<void>(editor);
-        const beforeSpy = jest.fn();
-        const afterSpy = jest.fn();
+        const beforeSpy = vi.fn();
+        const afterSpy = vi.fn();
         engine.events.beforeNodeCalculation.subscribe("a", beforeSpy);
         engine.events.afterNodeCalculation.subscribe("b", afterSpy);
 
@@ -73,7 +74,7 @@ describe("DependencyEngine", () => {
 
     it("allows using multiple connections", async () => {
         const editor = new Editor();
-        const spy = jest.fn();
+        const spy = vi.fn();
         const MultiNode = defineNode({
             type: "MultiNode",
             inputs: {

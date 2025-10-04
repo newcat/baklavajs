@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { Editor } from "@baklavajs/core";
 import { ForwardEngine } from "../src/forwardEngine";
 import { TestNode } from "./testNode";

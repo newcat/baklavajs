@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { Editor } from "@baklavajs/core";
 import { applyResult } from "../src";
 import { TestNode } from "./testNode";
