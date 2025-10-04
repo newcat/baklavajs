@@ -50,7 +50,7 @@ You can add your own custom commands to the toolbar by:
 
 ```typescript
 import { useBaklava, DEFAULT_TOOLBAR_COMMANDS } from "@baklavajs/renderer-vue";
-import { defineComponent, h } from "vue";
+import { defineComponent, h, markRaw } from "vue";
 
 const baklavaView = useBaklava();
 
@@ -73,9 +73,11 @@ baklavaView.settings.toolbar.commands = [
     {
         command: CLEAR_ALL_COMMAND,
         title: "Clear All", // Tooltip text
-        icon: defineComponent(() => {
-            return () => h("div", "Clear All");
-        }),
+        icon: markRaw(
+            defineComponent(() => {
+                return () => h("div", "Clear All");
+            }),
+        ),
     },
 ];
 ```
@@ -87,11 +89,11 @@ You can create custom icons for your toolbar commands in several ways:
 1. Using a Vue component:
 
 ```typescript
-import { defineComponent, h } from "vue";
+import { defineComponent, h, markRaw } from "vue";
 
-const ClearAllIcon = defineComponent(() => {
+const ClearAllIcon = markRaw(defineComponent(() => {
   return () => h("div", { class: "my-icon-class" }, "X");
-});
+}));
 
 // Use the component as the icon
 {
@@ -104,13 +106,14 @@ const ClearAllIcon = defineComponent(() => {
 2. Using an SVG icon library:
 
 ```typescript
+import { markRaw } from "vue";
 import { TrashIcon } from "@heroicons/vue/24/outline";
 
 // Use the imported icon component directly
 {
   command: CLEAR_ALL_COMMAND,
   title: "Clear All",
-  icon: TrashIcon
+  icon: markRaw(TrashIcon)
 }
 ```
 
@@ -138,7 +141,7 @@ Here's a complete example showing how to customize the toolbar:
 
 ```typescript
 import { useBaklava, TOOLBAR_COMMANDS, TOOLBAR_SUBGRAPH_COMMANDS } from "@baklavajs/renderer-vue";
-import { defineComponent, h } from "vue";
+import { defineComponent, h, markRaw } from "vue";
 
 const baklavaView = useBaklava();
 
@@ -161,9 +164,11 @@ baklavaView.settings.toolbar.commands = [
     {
         command: TOGGLE_MINIMAP_COMMAND,
         title: "Toggle Minimap",
-        icon: defineComponent(() => {
-            return () => h("div", "Map");
-        }),
+        icon: markRaw(
+            defineComponent(() => {
+                return () => h("div", "Map");
+            }),
+        ),
     },
 ];
 

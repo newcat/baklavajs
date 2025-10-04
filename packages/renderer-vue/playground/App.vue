@@ -44,7 +44,7 @@ import ReactiveOutputTestNode from "./ReactiveOutputTestNode";
 import { stringType, numberType, booleanType } from "./interfaceTypes";
 
 import CommentNodeRenderer from "./CommentNodeRenderer.vue";
-import { defineComponent, h } from "vue";
+import { defineComponent, h, markRaw } from "vue";
 
 const NodeComponent = Components.Node;
 
@@ -78,9 +78,11 @@ baklavaView.settings.toolbar.commands = [
     {
         command: CLEAR_ALL_COMMAND,
         title: "Clear All",
-        icon: defineComponent(() => {
-            return () => h("div", "Clear All");
-        }),
+        icon: markRaw(
+            defineComponent(() => {
+                return () => h("div", "Clear All");
+            }),
+        ),
     },
 ];
 
