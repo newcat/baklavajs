@@ -36,6 +36,9 @@
         "@baklavajs/events": "^2.7.0"
     },
     "devDependencies": {
+        "@baklavajs/engine": "workspace:*",
+        "@baklavajs/interface-types": "workspace:*",
+        "@baklavajs/themes": "workspace:*",
         "@types/node": "^24.6.2",
         "@types/resize-observer-browser": "^0.1.11",
         "@vitejs/plugin-vue": "^6.0.1",

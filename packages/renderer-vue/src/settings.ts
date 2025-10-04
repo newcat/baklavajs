@@ -68,6 +68,12 @@ export interface IViewSettings {
         enabled: boolean;
         additionalItems: ContextMenuItem[];
     };
+    panZoom: {
+        /* Minimum zoom scale */
+        minScale: number;
+        /* Maximum zoom scale */
+        maxScale: number;
+    };
     zoomToFit: { paddingLeft: number; paddingRight: number; paddingTop: number; paddingBottom: number };
 }
 
@@ -81,5 +87,6 @@ export const DEFAULT_SETTINGS: () => IViewSettings = () => ({
     displayValueOnHover: false,
     nodes: { defaultWidth: 200, maxWidth: 320, minWidth: 150, resizable: false, reverseY: false },
     contextMenu: { enabled: true, additionalItems: [] },
+    panZoom: { minScale: 0.05, maxScale: 10 },
     zoomToFit: { paddingLeft: 300, paddingRight: 50, paddingTop: 110, paddingBottom: 50 },
 });

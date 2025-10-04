@@ -62,6 +62,14 @@ function zoomToFitRect(graph: Graph, settings: IViewSettings, rect: IRect) {
         scale = 1;
     }
 
+    if (scale < settings.panZoom.minScale) {
+        scale = settings.panZoom.minScale;
+    }
+
+    if (scale > settings.panZoom.maxScale) {
+        scale = settings.panZoom.maxScale;
+    }
+
     const remainingEditorWidth = Math.max(0, editorWidth / scale - rectWidth);
     const remainingEditorHeight = Math.max(0, editorHeight / scale - rectHeight);
 
