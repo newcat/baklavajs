@@ -1,5 +1,5 @@
-import { Graph } from "@baklavajs/core";
-import { Ref } from "vue";
+import type { Graph } from "@baklavajs/core";
+import type { Ref } from "vue";
 import type { ICommand, ICommandHandler } from "../commands";
 import { SAVE_SUBGRAPH_COMMAND } from "./saveSubgraph.command";
 import type { SwitchGraph } from "./switchGraph";

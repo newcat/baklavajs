@@ -1,5 +1,5 @@
-import { Ref } from "vue";
-import { Editor, Graph, GraphTemplate } from "@baklavajs/core";
+import type { Ref } from "vue";
+import { type Editor, Graph, type GraphTemplate } from "@baklavajs/core";
 
 export type SwitchGraph = (newGraph: Graph | GraphTemplate) => void;
 
