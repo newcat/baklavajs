@@ -16,20 +16,20 @@
         "packages/*"
     ],
     "devDependencies": {
-        "@eslint/js": "^9.37.0",
-        "eslint": "^9.37.0",
+        "@eslint/js": "^9.39.0",
+        "eslint": "^9.39.0",
         "eslint-config-prettier": "^10.1.8",
-        "eslint-plugin-vue": "^10.5.0",
-        "globals": "^16.4.0",
+        "eslint-plugin-vue": "^10.5.1",
+        "globals": "^16.5.0",
         "lerna": "^9.0.0",
-        "mermaid": "^11.12.0",
+        "mermaid": "^11.12.1",
         "prettier": "^3.6.2",
-        "rimraf": "^6.0.1",
-        "typedoc": "^0.28.13",
+        "rimraf": "^6.1.0",
+        "typedoc": "^0.28.14",
         "typescript": "^5.9.3",
-        "typescript-eslint": "^8.45.0",
+        "typescript-eslint": "^8.46.2",
         "vitepress": "^1.6.4",
         "vue-eslint-parser": "^10.2.0"
     },
-    "packageManager": "pnpm@10.18.0+sha512.e804f889f1cecc40d572db084eec3e4881739f8dec69c0ff10d2d1beff9a4e309383ba27b5b750059d7f4c149535b6cd0d2cb1ed3aeb739239a4284a68f40cfa"
+    "packageManager": "pnpm@10.20.0"
 }
