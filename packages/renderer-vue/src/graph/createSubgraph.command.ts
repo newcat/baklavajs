@@ -1,18 +1,18 @@
 import {
-    AbstractNode,
-    Graph,
+    type AbstractNode,
+    type Graph,
     GraphTemplate,
     getGraphNodeTypeString,
     GRAPH_INPUT_NODE_TYPE,
     GRAPH_OUTPUT_NODE_TYPE,
-    INodeState,
-    IConnectionState,
+    type INodeState,
+    type IConnectionState,
 } from "@baklavajs/core";
 import { v4 as uuidv4 } from "uuid";
-import { reactive, Ref } from "vue";
+import { reactive, type Ref } from "vue";
 import type { ICommand, ICommandHandler } from "../commands";
 import { useViewModel } from "../utility";
-import { IViewNodeState } from "../node/viewNode";
+import type { IViewNodeState } from "../node/viewNode";
 import { SaveSubgraphCommand, SAVE_SUBGRAPH_COMMAND } from "./saveSubgraph.command";
 import type { SwitchGraph } from "./switchGraph";
 import { SubgraphInputNode, SubgraphOutputNode } from "./subgraphInterfaceNodes";

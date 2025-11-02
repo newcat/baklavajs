@@ -1,10 +1,10 @@
-import { Ref } from "vue";
-import { Graph } from "@baklavajs/core";
-import { ICommandHandler } from "../commands";
+import type { Ref } from "vue";
+import type { Graph } from "@baklavajs/core";
+import type { ICommandHandler } from "../commands";
 import { registerCreateSubgraphCommand } from "./createSubgraph.command";
 import { registerDeleteNodesCommand } from "./deleteNodes.command";
 import { registerSaveSubgraphCommand } from "./saveSubgraph.command";
-import { SwitchGraph } from "./switchGraph";
+import type { SwitchGraph } from "./switchGraph";
 import { registerSwitchToMainGraphCommand } from "./switchToMainGraph.command";
 
 export function registerGraphCommands(displayedGraph: Ref<Graph>, handler: ICommandHandler, switchGraph: SwitchGraph) {
@@ -14,12 +14,10 @@ export function registerGraphCommands(displayedGraph: Ref<Graph>, handler: IComm
     registerSwitchToMainGraphCommand(displayedGraph, handler, switchGraph);
 }
 
-export type { CreateSubgraphCommand } from "./createSubgraph.command";
-export type { DeleteNodesCommand } from "./deleteNodes.command";
-export type { SaveSubgraphCommand } from "./saveSubgraph.command";
-export type { SwitchToMainGraphCommand } from "./switchToMainGraph.command";
+export * from "./createSubgraph.command";
+export * from "./deleteNodes.command";
+export * from "./saveSubgraph.command";
+export * from "./switchToMainGraph.command";
 
-export { CREATE_SUBGRAPH_COMMAND } from "./createSubgraph.command";
-export { DELETE_NODES_COMMAND } from "./deleteNodes.command";
-export { SAVE_SUBGRAPH_COMMAND } from "./saveSubgraph.command";
-export { SWITCH_TO_MAIN_GRAPH_COMMAND } from "./switchToMainGraph.command";
+export * from "./subgraphInterfaceNodes";
+export * from "./switchGraph";

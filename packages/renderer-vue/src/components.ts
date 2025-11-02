@@ -6,4 +6,7 @@ export { ContextMenu } from "./contextmenu";
 export { default as Node } from "./node/Node.vue";
 export { default as NodeInterface } from "./node/NodeInterface.vue";
 export { default as NodePalette } from "./nodepalette/NodePalette.vue";
+export { default as PaletteEntry } from "./nodepalette/PaletteEntry.vue";
 export { default as Sidebar } from "./sidebar/Sidebar.vue";
+export { default as Toolbar } from "./toolbar/Toolbar.vue";
+export { default as ToolbarButton } from "./toolbar/ToolbarButton.vue";
