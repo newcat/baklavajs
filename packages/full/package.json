@@ -1,6 +1,6 @@
 {
     "name": "baklavajs",
-    "version": "2.8.0",
+    "version": "2.8.1",
     "description": "Full installation of BaklavaJS including the core and all plugins",
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
@@ -29,11 +29,11 @@
         "access": "public"
     },
     "dependencies": {
-        "@baklavajs/core": "^2.8.0",
-        "@baklavajs/engine": "^2.8.0",
-        "@baklavajs/interface-types": "^2.8.0",
-        "@baklavajs/renderer-vue": "^2.8.0",
-        "@baklavajs/themes": "^2.8.0"
+        "@baklavajs/core": "^2.8.1",
+        "@baklavajs/engine": "^2.8.1",
+        "@baklavajs/interface-types": "^2.8.1",
+        "@baklavajs/renderer-vue": "^2.8.1",
+        "@baklavajs/themes": "^2.8.1"
     },
     "devDependencies": {
         "esbuild": "^0.25.12",
