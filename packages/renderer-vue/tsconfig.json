@@ -1,6 +1,7 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
+        "rootDir": "src",
         "declarationDir": "dist",
         "lib": ["ESNext", "DOM", "DOM.Iterable", "ES2019"],
         "types": ["resize-observer-browser", "vite/client"],

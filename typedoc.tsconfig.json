@@ -1,10 +1,10 @@
 {
     "$schema": "http://json.schemastore.org/tsconfig",
     "compilerOptions": {
-        "target": "ES2019",
-        "module": "esnext",
+        "target": "ES2022",
+        "module": "preserve",
         "strict": true,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "declaration": true,

@@ -5,18 +5,27 @@
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
     "license": "MIT",
+    "type": "module",
     "files": [
-        "dist/*"
+        "dist"
     ],
-    "main": "dist/cjs/index.js",
-    "types": "dist/index.d.ts",
-    "module": "dist/esm/index.js",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        },
+        "./bundle": "./dist/bundle.js"
+    },
     "scripts": {
-        "build:esm": "tsc --declaration false --outDir dist/esm --module esnext",
-        "build:cjs": "tsc --declaration false --outDir dist/cjs",
-        "build:declaration": "tsc --emitDeclarationOnly --outDir dist",
+        "build:esm": "esbuild src/index.ts src/bundle.ts --outdir=dist/esm --format=esm --sourcemap",
+        "build:cjs": "esbuild src/index.ts src/bundle.ts --outdir=dist/cjs --format=cjs --sourcemap",
+        "build:types": "tsc -p tsconfig.build.json",
         "build:browser": "esbuild src/bundle.ts --bundle --minify --sourcemap --global-name=BaklavaJS --outfile=dist/bundle.js",
-        "build": "rimraf dist && pnpm run build:esm && pnpm run build:cjs && pnpm run build:declaration && pnpm build:browser"
+        "build": "rimraf dist && pnpm run build:esm && pnpm run build:cjs && pnpm run build:types && echo '{\"type\":\"module\"}' > dist/esm/package.json && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json && pnpm run build:browser"
     },
     "repository": {
         "type": "git",
@@ -36,8 +45,7 @@
         "@baklavajs/themes": "^2.8.1"
     },
     "devDependencies": {
-        "esbuild": "^0.25.12",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.2",
         "vue": "^3.5.22"
     }
 }

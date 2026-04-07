@@ -1,15 +1,15 @@
-import { AbstractNode } from "@baklavajs/core/dist/node";
+import { AbstractNode } from "@baklavajs/core/node";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { NodeInterface } from "@baklavajs/core/dist/nodeInterface";
+import { NodeInterface } from "@baklavajs/core/nodeInterface";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Connection } from "@baklavajs/core/dist/connection";
+import { Connection } from "@baklavajs/core/connection";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Graph } from "@baklavajs/core/dist/graph";
+import { Graph } from "@baklavajs/core/graph";
 
-declare module "@baklavajs/core/dist/node" {
+declare module "@baklavajs/core/node" {
     interface AbstractNode {
         position: { x: number; y: number };
         width: number;
@@ -19,19 +19,19 @@ declare module "@baklavajs/core/dist/node" {
     }
 }
 
-declare module "@baklavajs/core/dist/nodeInterface" {
+declare module "@baklavajs/core/nodeInterface" {
     interface NodeInterface {
         displayInSidebar?: boolean;
     }
 }
 
-declare module "@baklavajs/core/dist/connection" {
+declare module "@baklavajs/core/connection" {
     interface Connection {
         isInDanger?: boolean;
     }
 }
 
-declare module "@baklavajs/core/dist/graph" {
+declare module "@baklavajs/core/graph" {
     interface Graph {
         panning: { x: number; y: number };
         scaling: number;
@@ -45,7 +45,7 @@ declare module "@baklavajs/core/dist/graph" {
     }
 }
 
-declare module "@baklavajs/core/dist/graphTemplate" {
+declare module "@baklavajs/core/graphTemplate" {
     interface GraphTemplate {
         panning?: { x: number; y: number };
         scaling?: number;

@@ -5,17 +5,25 @@
     "author": "newcat <freddy.wagner@web.de>",
     "homepage": "https://newcat.github.io/baklavajs",
     "license": "MIT",
+    "type": "module",
     "files": [
-        "dist/*"
+        "dist"
     ],
-    "main": "dist/cjs/index.js",
-    "types": "dist/index.d.ts",
-    "module": "dist/esm/index.js",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        }
+    },
     "scripts": {
-        "build:esm": "tsc -p tsconfig.build.json --declaration false --outDir dist/esm --module esnext",
-        "build:cjs": "tsc -p tsconfig.build.json --declaration false --outDir dist/cjs",
-        "build:declaration": "tsc -p tsconfig.build.json --emitDeclarationOnly --outDir dist",
-        "build": "rimraf dist && pnpm run build:esm && pnpm run build:cjs && pnpm run build:declaration",
+        "build:esm": "esbuild src/*.ts --outdir=dist/esm --format=esm --sourcemap",
+        "build:cjs": "esbuild src/*.ts --outdir=dist/cjs --format=cjs --sourcemap",
+        "build:types": "tsc -p tsconfig.build.json",
+        "build": "rimraf dist && pnpm run build:esm && pnpm run build:cjs && pnpm run build:types && echo '{\"type\":\"module\"}' > dist/esm/package.json && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
         "test": "vitest run --coverage"
     },
     "repository": {
@@ -31,8 +39,8 @@
     },
     "devDependencies": {
         "@vitest/coverage-v8": "^4.0.6",
-        "rimraf": "^6.1.0",
-        "typescript": "^5.9.3",
+        "rimraf": "^6.1.3",
+        "typescript": "^6.0.2",
         "vitest": "^4.0.6"
     },
     "publishConfig": {

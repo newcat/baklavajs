@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
-        "target": "ES2019",
-        "module": "CommonJS",
+        "target": "ES2022",
+        "module": "preserve",
         "strict": true,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "declaration": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "isolatedModules": true
     },
     "exclude": ["node_modules"]
 }

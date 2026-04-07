@@ -21,7 +21,7 @@ export abstract class DynamicNode<I, O> extends Node<Dynamic<I>, Dynamic<O>> {
      * @param globalValues Set of values passed to every node by the engine plugin
      * @return Values for output interfaces
      */
-    public calculate?: CalculateFunction<Dynamic<I>, Dynamic<O>>;
+    public declare calculate?: CalculateFunction<Dynamic<I>, Dynamic<O>>;
 }
 
 export type DynamicNodeDefinition = Record<string, (() => NodeInterface<any>) | undefined>;
@@ -60,7 +60,7 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
         public readonly type = definition.type;
         public inputs = {} as NodeInterfaceDefinition<Dynamic<I>>;
         public outputs = {} as NodeInterfaceDefinition<Dynamic<O>>;
-        public calculate;
+        public declare calculate: CalculateFunction<Dynamic<I>, Dynamic<O>> | undefined;
 
         private preventUpdate = false;
         private readonly staticInputKeys = Object.keys(definition.inputs ?? {});
