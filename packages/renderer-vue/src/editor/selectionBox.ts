@@ -68,14 +68,14 @@ export function useSelectionBox(editorEl: Ref<HTMLElement | null>) {
     }
 
     function onPointerMove(ev: PointerEvent) {
-        start.value = getCoordinatesFromEvent(ev);
+        end.value = getCoordinatesFromEvent(ev);
     }
 
     function onPointerUp(ev: PointerEvent) {
         document.removeEventListener("pointermove", onPointerMove);
         document.removeEventListener("pointerup", onPointerUp);
 
-        start.value = getCoordinatesFromEvent(ev);
+        end.value = getCoordinatesFromEvent(ev);
         isSelecting.value = false;
         const selectedNodes = getNodesInSelection();
         for (const node of selectedNodes) {
