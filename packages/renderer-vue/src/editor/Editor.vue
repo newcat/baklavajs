@@ -176,10 +176,18 @@ const keyUp = (ev: KeyboardEvent) => {
 };
 
 const selectNode = (node: AbstractNode) => {
-    if (!["Control", "Shift"].some((k) => props.viewModel.commandHandler.pressedKeys.includes(k))) {
+    const isMultiSelectModifierPressed = ["Control", "Shift"].some((k) =>
+        props.viewModel.commandHandler.pressedKeys.includes(k),
+    );
+    if (!isMultiSelectModifierPressed) {
         unselectAllNodes();
     }
-    props.viewModel.displayedGraph.selectedNodes.push(node);
+    if (!selectedNodes.value.includes(node)) {
+        props.viewModel.displayedGraph.selectedNodes.push(node);
+    } else if (isMultiSelectModifierPressed) {
+        const idx = selectedNodes.value.indexOf(node);
+        selectedNodes.value.splice(idx, 1);
+    }
 };
 
 const unselectAllNodes = () => {

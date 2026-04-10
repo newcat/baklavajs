@@ -4,5 +4,6 @@ import { NodeInterface } from "@baklavajs/core/nodeInterface";
 declare module "@baklavajs/core/nodeInterface" {
     interface NodeInterface {
         allowMultipleConnections?: boolean;
+        engineType?: string;
     }
 }
