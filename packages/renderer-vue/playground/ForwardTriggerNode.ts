@@ -1,5 +1,5 @@
 import { defineNode, NodeInterface } from "@baklavajs/core";
-import { createExecInterface } from "@baklavajs/engine";
+import { ExecutionFlowInterface } from "@baklavajs/engine";
 import { NumberInterface } from "../src";
 
 export default defineNode({
@@ -9,7 +9,7 @@ export default defineNode({
         value: () => new NumberInterface("Value", 42),
     },
     outputs: {
-        execOut: () => createExecInterface("Exec"),
+        execOut: () => new ExecutionFlowInterface("Exec"),
         value: () => new NodeInterface<number>("Value", 0),
     },
     calculate({ value }) {

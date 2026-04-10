@@ -1,5 +1,9 @@
 # Forward Engine
 
+::: warning
+The forward engine is currently in beta and may have breaking changes even in non-major releases. Use with caution and provide feedback if you try it out!
+:::
+
 The forward engine uses a fundamentally different execution model than the [dependency engine](./dependency).
 Instead of calculating all nodes based on their dependencies, the forward engine starts at a specific node and follows **execution-flow connections** forward, calculating nodes along the way.
 
@@ -10,10 +14,10 @@ execution flows forward through explicit connections, while data dependencies ar
 
 Use the forward engine when you need:
 
--   **Explicit execution flow**: control which nodes run and in what order
--   **Branching**: conditionally execute different paths in your graph
--   **Loops**: execute a subchain of nodes multiple times
--   **Event-driven execution**: start execution from a specific trigger node
+- **Explicit execution flow**: control which nodes run and in what order
+- **Branching**: conditionally execute different paths in your graph
+- **Loops**: execute a subchain of nodes multiple times
+- **Event-driven execution**: start execution from a specific trigger node
 
 If you just need a simple dataflow graph where all nodes are always calculated, use the [dependency engine](./dependency) instead.
 
@@ -21,25 +25,23 @@ If you just need a simple dataflow graph where all nodes are always calculated, 
 
 The forward engine introduces a distinction between two types of connections:
 
--   **Execution-flow connections**: determine _which_ nodes run and _in what order_. Represented by special node interfaces created with `createExecInterface`.
--   **Data connections**: carry values between nodes. These are regular node interfaces, resolved on demand when a node is about to execute.
+- **Execution-flow connections**: determine _which_ nodes run and _in what order_. Represented by special `ExecutionFlowInterface` node interfaces.
+- **Data connections**: carry values between nodes. These are regular node interfaces, resolved on demand when a node is about to execute.
 
 ### Creating execution-flow interfaces
 
-Use the `createExecInterface` helper to create an execution-flow interface:
-
 ```js
 import { defineNode, NodeInterface } from "@baklavajs/core";
-import { createExecInterface } from "@baklavajs/engine";
+import { ExecutionFlowInterface } from "@baklavajs/engine";
 
 const MyNode = defineNode({
     type: "MyNode",
     inputs: {
-        execIn: () => createExecInterface("Exec"),
+        execIn: () => new ExecutionFlowInterface("Exec"),
         value: () => new NodeInterface("Value", 0),
     },
     outputs: {
-        execOut: () => createExecInterface("Exec"),
+        execOut: () => new ExecutionFlowInterface("Exec"),
         result: () => new NodeInterface("Result", 0),
     },
     calculate({ value }) {
@@ -48,7 +50,7 @@ const MyNode = defineNode({
 });
 ```
 
-`createExecInterface` returns a `NodeInterface<boolean>` with the execution-flow type already set. This ensures the `calculate` return type is compatible with the `boolean` type of the interface.
+`ExecutionFlowInterface` is a `NodeInterface<boolean>` with the execution-flow type already set. This ensures the `calculate` return type is compatible with the `boolean` type of the interface.
 
 ::: tip
 Execution-flow outputs must return a truthy value from `calculate` to activate the next node.
@@ -58,10 +60,10 @@ Returning a falsy value (e.g. `false`) skips that execution path, which is how [
 ::: details Using setExecutionFlow manually
 If you need more control, you can also use `setExecutionFlow` directly on any `NodeInterface`. Make sure to use `NodeInterface<boolean>` to avoid type errors:
 
-```js
+```ts
 import { setExecutionFlow } from "@baklavajs/engine";
 
-const intf = new NodeInterface<boolean>("Exec", false);
+const intf = new NodeInterface()<boolean>("Exec", false);
 setExecutionFlow(intf);
 ```
 
@@ -129,11 +131,11 @@ const DataNode = defineNode({
 const ExecNode = defineNode({
     type: "ExecNode",
     inputs: {
-        execIn: () => createExecInterface("Exec"),
+        execIn: () => new ExecutionFlowInterface("Exec"),
         data: () => new NodeInterface("Data", 0),
     },
     outputs: {
-        execOut: () => createExecInterface("Exec"),
+        execOut: () => new ExecutionFlowInterface("Exec"),
         result: () => new NodeInterface("Result", 0),
     },
     calculate({ data }) {
@@ -154,12 +156,12 @@ Branching is achieved by conditionally returning truthy or falsy values for exec
 const BranchNode = defineNode({
     type: "BranchNode",
     inputs: {
-        execIn: () => createExecInterface("Exec"),
+        execIn: () => new ExecutionFlowInterface("Exec"),
         condition: () => new NodeInterface("Condition", false),
     },
     outputs: {
-        trueExec: () => createExecInterface("True"),
-        falseExec: () => createExecInterface("False"),
+        trueExec: () => new ExecutionFlowInterface("True"),
+        falseExec: () => new ExecutionFlowInterface("False"),
     },
     calculate({ condition }) {
         return {
@@ -186,28 +188,28 @@ The forward engine supports loops through the `executeOutput` function, which is
 
 ### `executeOutput(outputKey, outputValues?)`
 
--   `outputKey`: the key of the execution-flow output to fire
--   `outputValues`: optional object with values for the current node's data outputs. Downstream nodes that pull data from this node will see these values during this chain execution.
--   Returns: `Promise<CalculationResult>` — the results of all nodes executed in the chain
+- `outputKey`: the key of the execution-flow output to fire
+- `outputValues`: optional object with values for the current node's data outputs. Downstream nodes that pull data from this node will see these values during this chain execution.
+- Returns: `Promise<CalculationResult>` — the results of all nodes executed in the chain
 
 When `executeOutput` is used for an output, the engine will **not** automatically fire that output again after `calculate` returns. This prevents double-execution.
 
 ### ForLoop example
 
-```js
+```ts
 import { defineNode, NodeInterface } from "@baklavajs/core";
-import { createExecInterface, ForwardCalculationContext } from "@baklavajs/engine";
+import { ExecutionFlowInterface, ForwardCalculationContext } from "@baklavajs/engine";
 
 const ForLoopNode = defineNode({
     type: "ForLoopNode",
     inputs: {
-        execIn: () => createExecInterface("Exec"),
+        execIn: () => new ExecutionFlowInterface("Exec"),
         start: () => new NodeInterface("Start", 0),
         end: () => new NodeInterface("End", 10),
     },
     outputs: {
-        loopBody: () => createExecInterface("Loop Body"),
-        completed: () => createExecInterface("Completed"),
+        loopBody: () => new ExecutionFlowInterface("Loop Body"),
+        completed: () => new ExecutionFlowInterface("Completed"),
         index: () => new NodeInterface("Index", 0),
     },
     async calculate({ start, end }, context) {
@@ -238,5 +240,5 @@ The key insight is that `executeOutput` is just an async function — you can ca
 
 ## Cycle handling
 
--   **Execution-flow connections** are allowed to form cycles. This is necessary for loop support.
--   **Data connections** must remain acyclic. The engine will prevent you from creating data connections that would introduce a cycle.
+- **Execution-flow connections** are allowed to form cycles. This is necessary for loop support.
+- **Data connections** must remain acyclic. The engine will prevent you from creating data connections that would introduce a cycle.

@@ -1,18 +1,18 @@
 import { defineNode, NodeInterface } from "@baklavajs/core";
-import { createExecInterface, ForwardCalculationContext } from "@baklavajs/engine";
+import { ExecutionFlowInterface, ForwardCalculationContext } from "@baklavajs/engine";
 import { NumberInterface } from "../src";
 
 export default defineNode({
     type: "ForwardForLoopNode",
     title: "For Loop",
     inputs: {
-        execIn: () => createExecInterface("Exec"),
+        execIn: () => new ExecutionFlowInterface("Exec"),
         start: () => new NumberInterface("Start", 0),
         end: () => new NumberInterface("End", 5),
     },
     outputs: {
-        loopBody: () => createExecInterface("Loop Body"),
-        completed: () => createExecInterface("Completed"),
+        loopBody: () => new ExecutionFlowInterface("Loop Body"),
+        completed: () => new ExecutionFlowInterface("Completed"),
         index: () => new NodeInterface<number>("Index", 0),
     },
     async calculate({ start, end }, context) {

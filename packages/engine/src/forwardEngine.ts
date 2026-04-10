@@ -186,6 +186,52 @@ export class ForwardEngine<CalculationData = any> extends BaseEngine<
      * @param resultCache Results from nodes already calculated in the current chain.
      *   If a source node is in the cache, its cached output is used instead of recalculating.
      */
+    /**
+     * Resolve the value transferred by a single connection, checking overrides and cache before
+     * falling back to a stateless re-evaluation of the source node.
+     * Returns `undefined` if the source cannot be resolved.
+     */
+    private async resolveConnectionValue(
+        conn: IConnection,
+        graph: Graph,
+        calculationData: CalculationData,
+        outputOverrides: Map<string, Record<string, any>>,
+        resultCache?: CalculationResult,
+    ): Promise<any> {
+        const sourceNodeId = conn.from.nodeId;
+        const sourceNode = sourceNodeId ? graph.findNodeById(sourceNodeId) : undefined;
+        if (!sourceNode) {
+            return undefined;
+        }
+
+        const sourceKey = Object.entries(sourceNode.outputs).find(([, v]) => v.id === conn.from.id)?.[0];
+        if (!sourceKey) {
+            return undefined;
+        }
+
+        // 1. Check output overrides (from executeOutput or subgraph input injection)
+        const overrides = outputOverrides.get(sourceNode.id);
+        if (overrides && sourceKey in overrides) {
+            return this.hooks.transferData.execute(overrides[sourceKey], conn);
+        }
+
+        // 2. Check result cache (node already calculated in this chain)
+        if (resultCache && resultCache.has(sourceNode.id)) {
+            const cachedOutputs = resultCache.get(sourceNode.id)!;
+            if (cachedOutputs.has(sourceKey)) {
+                return this.hooks.transferData.execute(cachedOutputs.get(sourceKey), conn);
+            }
+        }
+
+        // 3. Stateless pull: recursively resolve data node
+        const sourceOutputs = await this.resolveNodeData(sourceNode, graph, calculationData, outputOverrides);
+        if (sourceKey in sourceOutputs) {
+            return this.hooks.transferData.execute(sourceOutputs[sourceKey], conn);
+        }
+
+        return undefined;
+    }
+
     private async gatherInputValues(
         node: AbstractNode,
         graph: Graph,
@@ -200,63 +246,32 @@ export class ForwardEngine<CalculationData = any> extends BaseEngine<
                 continue;
             }
 
-            // Find incoming connections to this input.
-            // When multiple connections exist, prefer one whose source is in the result cache.
             const incomingConnections = graph.connections.filter((c) => c.to.id === intf.id);
             if (incomingConnections.length === 0) {
                 values[key] = intf.value;
                 continue;
             }
 
-            // Pick the best connection: prefer a source that was already calculated
-            let bestConnection = incomingConnections[0];
-            if (incomingConnections.length > 1 && resultCache) {
-                const cachedConn = incomingConnections.find((c) => {
-                    const srcId = c.from.nodeId;
-                    return srcId && resultCache.has(srcId);
-                });
-                if (cachedConn) {
-                    bestConnection = cachedConn;
+            if (intf.allowMultipleConnections) {
+                // Collect values from all incoming connections into an array
+                const multiValues: any[] = [];
+                for (const conn of incomingConnections) {
+                    const v = await this.resolveConnectionValue(conn, graph, calculationData, outputOverrides, resultCache);
+                    multiValues.push(v ?? intf.value);
                 }
-            }
-
-            const sourceNodeId = bestConnection.from.nodeId;
-            const sourceNode = sourceNodeId ? graph.findNodeById(sourceNodeId) : undefined;
-            if (!sourceNode) {
-                values[key] = intf.value;
+                values[key] = multiValues;
                 continue;
             }
 
-            const sourceKey = Object.entries(sourceNode.outputs).find(([, v]) => v.id === bestConnection.from.id)?.[0];
-
-            if (!sourceKey) {
-                values[key] = intf.value;
-                continue;
-            }
-
-            // 1. Check output overrides (from executeOutput or subgraph input injection)
-            const overrides = outputOverrides.get(sourceNode.id);
-            if (overrides && sourceKey in overrides) {
-                values[key] = this.hooks.transferData.execute(overrides[sourceKey], bestConnection);
-                continue;
-            }
-
-            // 2. Check result cache (node already calculated in this chain)
-            if (resultCache && resultCache.has(sourceNode.id)) {
-                const cachedOutputs = resultCache.get(sourceNode.id)!;
-                if (cachedOutputs.has(sourceKey)) {
-                    values[key] = this.hooks.transferData.execute(cachedOutputs.get(sourceKey), bestConnection);
-                    continue;
-                }
-            }
-
-            // 3. Stateless pull: recursively resolve data node
-            const sourceOutputs = await this.resolveNodeData(sourceNode, graph, calculationData, outputOverrides);
-            if (sourceKey in sourceOutputs) {
-                values[key] = this.hooks.transferData.execute(sourceOutputs[sourceKey], bestConnection);
-            } else {
-                values[key] = intf.value;
-            }
+            // Single connection — resolve and assign directly
+            const resolved = await this.resolveConnectionValue(
+                incomingConnections[0],
+                graph,
+                calculationData,
+                outputOverrides,
+                resultCache,
+            );
+            values[key] = resolved ?? intf.value;
         }
 
         return values;
@@ -440,8 +455,16 @@ export class ForwardEngine<CalculationData = any> extends BaseEngine<
     }
 
     public override checkConnection(from: NodeInterface, to: NodeInterface) {
-        // Execution-flow connections are allowed to form cycles (needed for loops)
-        if (isExecutionFlow(from) || isExecutionFlow(to)) {
+        const fromIsExec = isExecutionFlow(from);
+        const toIsExec = isExecutionFlow(to);
+
+        // Reject mixed connections (exec → data or data → exec)
+        if (fromIsExec !== toIsExec) {
+            return { connectionAllowed: false, connectionsInDanger: [] };
+        }
+
+        // Pure execution-flow connections are allowed to form cycles (needed for loops)
+        if (fromIsExec && toIsExec) {
             return {
                 connectionAllowed: true,
                 connectionsInDanger: to.allowMultipleConnections

@@ -1,16 +1,16 @@
 import { defineNode, NodeInterface } from "@baklavajs/core";
-import { createExecInterface } from "@baklavajs/engine";
+import { ExecutionFlowInterface } from "@baklavajs/engine";
 import { TextInterface } from "../src";
 
 export default defineNode({
     type: "ForwardPrintNode",
     title: "Print",
     inputs: {
-        execIn: () => createExecInterface("Exec"),
+        execIn: () => new ExecutionFlowInterface("Exec"),
         value: () => new NodeInterface<unknown>("Value", ""),
     },
     outputs: {
-        execOut: () => createExecInterface("Exec"),
+        execOut: () => new ExecutionFlowInterface("Exec"),
         output: () => new TextInterface("Output", "").setPort(false),
     },
     calculate({ value }) {
