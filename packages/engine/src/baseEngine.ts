@@ -38,9 +38,10 @@ export interface AfterNodeCalculationEventData {
     outputValues: Record<string, any>;
 }
 
-export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<any>>
-    implements IEngine<CalculationData>
-{
+export abstract class BaseEngine<
+    CalculationData,
+    CalculationArgs extends Array<any>,
+> implements IEngine<CalculationData> {
     public events = {
         /**
          * This event will be called before all the nodes `calculate` functions are called.
@@ -331,7 +332,7 @@ export abstract class BaseEngine<CalculationData, CalculationArgs extends Array<
         }
     }
 
-    private findInterfaceByTemplateId(nodes: ReadonlyArray<AbstractNode>, templateId: string): NodeInterface | null {
+    protected findInterfaceByTemplateId(nodes: ReadonlyArray<AbstractNode>, templateId: string): NodeInterface | null {
         for (const n of nodes) {
             for (const intf of [...Object.values(n.inputs), ...Object.values(n.outputs)]) {
                 if (intf.templateId === templateId) {
