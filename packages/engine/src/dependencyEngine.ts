@@ -1,6 +1,10 @@
-import type { Editor, Graph, NodeInterface, CalculationResult } from "@baklavajs/core";
+import type { Editor, Graph, NodeInterface, CalculationResult, IGraphNode } from "@baklavajs/core";
 import { BaseEngine } from "./baseEngine";
 import { ITopologicalSortingResult, sortTopologically } from "./topologicalSorting";
+
+function hasSubgraph(node: unknown): node is IGraphNode {
+    return typeof node === "object" && node !== null && "subgraph" in node;
+}
 
 export const allowMultipleConnections = <T extends Array<any>>(intf: NodeInterface<T>) => {
     intf.allowMultipleConnections = true;
@@ -8,6 +12,7 @@ export const allowMultipleConnections = <T extends Array<any>>(intf: NodeInterfa
 
 export class DependencyEngine<CalculationData = any> extends BaseEngine<CalculationData, []> {
     private order: Map<string, ITopologicalSortingResult> = new Map();
+    private snapshotCache: Map<string, Map<string, any>> | null = null;
 
     public constructor(editor: Editor) {
         super(editor);
@@ -84,11 +89,41 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
             this.order.clear();
             this.recalculateOrder = false;
         }
-        const inputValues = this.getInputValues(this.editor.graph);
-        return await this.runGraph(this.editor.graph, inputValues, calculationData);
+
+        // Pre-snapshot all input values including subgraphs to prevent race conditions
+        // with async calculations. Without this, subgraph inputs would be read live
+        // when the GraphNode is reached during calculation, not at the start.
+        this.snapshotCache = new Map();
+        this.snapshotAllGraphs(this.editor.graph);
+
+        try {
+            const inputValues = this.getInputValues(this.editor.graph);
+            return await this.runGraph(this.editor.graph, inputValues, calculationData);
+        } finally {
+            this.snapshotCache = null;
+        }
+    }
+
+    private snapshotAllGraphs(graph: Graph): void {
+        const inputs = this.computeInputValues(graph);
+        this.snapshotCache!.set(graph.id, inputs);
+        for (const node of graph.nodes) {
+            if (hasSubgraph(node) && node.subgraph) {
+                this.snapshotAllGraphs(node.subgraph);
+            }
+        }
     }
 
     public getInputValues(graph: Graph): Map<string, any> {
+        if (this.snapshotCache?.has(graph.id)) {
+            // Return a copy so that runGraph() can mutate it (propagating values)
+            // without corrupting the snapshot.
+            return new Map(this.snapshotCache.get(graph.id)!);
+        }
+        return this.computeInputValues(graph);
+    }
+
+    private computeInputValues(graph: Graph): Map<string, any> {
         // Gather all values of the unconnected inputs.
         // maps NodeInterface.id -> value
         // The reason it is done here and not during calculation is

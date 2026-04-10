@@ -20,6 +20,22 @@ import {
 } from "../src";
 import { deepObjectToMap } from "./utils";
 
+/** An async node that yields to the event loop, allowing external mutations. */
+const AsyncNode = defineNode({
+    type: "AsyncNode",
+    inputs: {
+        a: () => new NodeInterface("A", 1),
+    },
+    outputs: {
+        c: () => new NodeInterface("C", 0),
+    },
+    async calculate({ a }) {
+        // Yield to the event loop so mutations queued via setTimeout(0) execute
+        await new Promise((resolve) => setTimeout(resolve, 0));
+        return { c: a };
+    },
+});
+
 describe("DependencyEngine", () => {
     it("emits the beforeNodeCalculation and afterNodeCalculation events", async () => {
         const editor = new Editor();
@@ -166,5 +182,56 @@ describe("DependencyEngine", () => {
                 [n2.id]: { c: 5, d: 3 },
             }),
         );
+    });
+
+    it("snapshots subgraph inputs before calculation, preventing mid-flight mutations", async () => {
+        const editor = new Editor();
+        editor.registerNodeType(TestNode);
+
+        // Build a subgraph with a TestNode and an unconnected input on it
+        const subGraph = new Graph(editor);
+        const sn1 = new TestNode();
+        const sInput = new GraphInputNode();
+        const sOutput = new GraphOutputNode();
+        subGraph.addNode(sn1);
+        subGraph.addNode(sInput);
+        subGraph.addNode(sOutput);
+        subGraph.addConnection(sInput.outputs.placeholder, sn1.inputs.a);
+        subGraph.addConnection(sn1.outputs.c, sOutput.inputs.placeholder);
+        // sn1.inputs.b is unconnected — its value should be snapshotted
+        const subgraphTemplate = GraphTemplate.fromGraph(subGraph, editor);
+        editor.addGraphTemplate(subgraphTemplate);
+
+        // Build the parent graph: AsyncNode -> GraphNode
+        // AsyncNode runs first (topologically) and yields to the event loop.
+        const asyncNode = new AsyncNode();
+        const nt = editor.nodeTypes.get(getGraphNodeTypeString(subgraphTemplate))!;
+        const graphNode = new nt.type() as AbstractNode & IGraphNode;
+        editor.graph.addNode(asyncNode);
+        editor.graph.addNode(graphNode);
+        editor.graph.addConnection(asyncNode.outputs.c, graphNode.inputs[sInput.graphInterfaceId]);
+
+        // Set the unconnected subgraph input (sn1.inputs.b equivalent in cloned graph)
+        const clonedSn1 = graphNode.subgraph!.nodes.find((n) => n.type === "TestNode")!;
+        clonedSn1.inputs.b.value = 10;
+
+        const engine = new DependencyEngine<void>(editor);
+
+        // Start the calculation. While the AsyncNode awaits, mutate the subgraph input.
+        const resultPromise = engine.runOnce();
+
+        // This mutation happens during the AsyncNode's await — it should NOT affect
+        // the current calculation because subgraph inputs were already snapshotted.
+        setTimeout(() => {
+            clonedSn1.inputs.b.value = 999;
+        }, 0);
+
+        const results = await resultPromise;
+
+        // asyncNode outputs c: 1 (passthrough of input a=1)
+        // graphNode receives 1 as subgraph input → sn1 gets a=1, b=10 (snapshotted, not 999)
+        // sn1 calculates c = a + b = 1 + 10 = 11
+        const graphNodeResult = results!.get(graphNode.id)!;
+        expect(graphNodeResult.get(sOutput.graphInterfaceId)).toBe(11);
     });
 });
