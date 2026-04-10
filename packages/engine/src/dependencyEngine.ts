@@ -118,7 +118,7 @@ export class DependencyEngine<CalculationData = any> extends BaseEngine<Calculat
         if (this.snapshotCache?.has(graph.id)) {
             // Return a copy so that runGraph() can mutate it (propagating values)
             // without corrupting the snapshot.
-            return new Map(this.snapshotCache.get(graph.id)!);
+            return new Map(this.snapshotCache.get(graph.id));
         }
         return this.computeInputValues(graph);
     }
