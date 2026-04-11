@@ -1,5 +1,6 @@
 <script setup>
 import ApiLink from "../components/ApiLink.vue";
+import SettingsExample from "../.vitepress/components/examples/SettingsExample.vue";
 </script>
 
 # Setup
@@ -98,3 +99,15 @@ For example, to enable displaying the value of a node interface on hover:
 const baklava = useBaklava();
 baklava.settings.displayValueOnHover = true;
 ```
+
+### Try it out
+
+Toggle the settings below and interact with the editor to see the effect:
+
+<BaklavaExample height="470px">
+    <SettingsExample />
+</BaklavaExample>
+
+::: details View source
+<<< @/.vitepress/components/examples/SettingsExample.vue
+:::

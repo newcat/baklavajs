@@ -5,6 +5,7 @@ title: Creating Nodes
 
 <script setup>
 import ApiLink from "../components/ApiLink.vue";
+import NodeDefinitionExample from "../.vitepress/components/examples/NodeDefinitionExample.vue";
 </script>
 
 # Creating Nodes
@@ -59,6 +60,18 @@ export default defineNode({
     },
 });
 ```
+
+### Try it out
+
+This example shows two connected MathNodes. Right-click to add more nodes:
+
+<BaklavaExample height="400px">
+    <NodeDefinitionExample />
+</BaklavaExample>
+
+::: details View source
+<<< @/.vitepress/components/examples/NodeDefinitionExample.vue
+:::
 
 There are also other properties that allow you to customize your nodes :
 

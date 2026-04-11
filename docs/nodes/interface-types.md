@@ -1,8 +1,22 @@
+<script setup>
+import InterfaceTypesExample from "../.vitepress/components/examples/InterfaceTypesExample.vue";
+</script>
+
 # Interface Types
 
 This plugin allows you to add types to node interfaces.
 By default, two node interfaces can only be connected if they have the same type.
 You can, however, override this behavior by using conversions.
+
+Try connecting the nodes below. Notice the colored ports — number (red) and string (green). Connections between compatible types are allowed, while incompatible connections are rejected:
+
+<BaklavaExample height="450px">
+    <InterfaceTypesExample />
+</BaklavaExample>
+
+::: details View source
+<<< @/.vitepress/components/examples/InterfaceTypesExample.vue
+:::
 
 ## Usage
 

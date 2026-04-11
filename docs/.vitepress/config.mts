@@ -1,6 +1,31 @@
 import { defineConfig } from "vitepress";
+import path from "path";
+
+const packagesDir = path.resolve(__dirname, "../../packages");
 
 export default defineConfig({
+    vite: {
+        resolve: {
+            alias: {
+                "@baklavajs/core": path.resolve(packagesDir, "core/dist/esm/index.js"),
+                "@baklavajs/renderer-vue": path.resolve(packagesDir, "renderer-vue/dist/renderer-vue.es.mjs"),
+                "@baklavajs/engine": path.resolve(packagesDir, "engine/dist/esm/index.js"),
+                "@baklavajs/interface-types": path.resolve(packagesDir, "interface-types/dist/esm/index.js"),
+                "@baklavajs/events": path.resolve(packagesDir, "events/dist/esm/index.js"),
+                "@baklavajs/themes": path.resolve(packagesDir, "themes"),
+            },
+        },
+        ssr: {
+            noExternal: [
+                "@baklavajs/core",
+                "@baklavajs/renderer-vue",
+                "@baklavajs/engine",
+                "@baklavajs/interface-types",
+                "@baklavajs/events",
+                "baklavajs",
+            ],
+        },
+    },
     lang: "en-US",
     title: "BaklavaJS",
     description: "Graph / node editor in the browser using VueJS",

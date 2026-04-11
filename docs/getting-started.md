@@ -1,5 +1,9 @@
 # Getting Started
 
+<script setup>
+import GettingStartedExample from './.vitepress/components/examples/GettingStartedExample.vue'
+</script>
+
 ## Installation
 
 ::: tip
@@ -88,3 +92,15 @@ return { baklava };
 ```
 
 That's it! You should now be able to create nodes and connect them.
+
+## Try it out
+
+Right-click the canvas to add nodes, then drag between ports to connect them:
+
+<BaklavaExample height="450px">
+    <GettingStartedExample />
+</BaklavaExample>
+
+::: details View source
+<<< @/.vitepress/components/examples/GettingStartedExample.vue
+:::

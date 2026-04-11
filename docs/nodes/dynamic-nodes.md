@@ -5,6 +5,7 @@ title: Dynamic Nodes
 
 <script setup>
 import ApiLink from "../components/ApiLink.vue";
+import DynamicNodeExample from "../.vitepress/components/examples/DynamicNodeExample.vue";
 </script>
 
 # Dynamic Nodes
@@ -58,6 +59,18 @@ export default defineDynamicNode({
     },
 });
 ```
+
+### Try it out
+
+Change the "Operation" dropdown to see interfaces appear and disappear:
+
+<BaklavaExample height="400px">
+    <DynamicNodeExample />
+</BaklavaExample>
+
+::: details View source
+<<< @/.vitepress/components/examples/DynamicNodeExample.vue
+:::
 
 The definition of a dynamic node is similar to the one of a normal node with these notable differences:
 

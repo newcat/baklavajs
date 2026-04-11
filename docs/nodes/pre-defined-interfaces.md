@@ -1,4 +1,18 @@
+<script setup>
+import InterfaceShowcaseExample from "../.vitepress/components/examples/InterfaceShowcaseExample.vue";
+</script>
+
 # Pre-defined interfaces
+
+All interface types in a single node:
+
+<BaklavaExample height="500px">
+    <InterfaceShowcaseExample />
+</BaklavaExample>
+
+::: details View source
+<<< @/.vitepress/components/examples/InterfaceShowcaseExample.vue
+:::
 
 ## ButtonInterface
 

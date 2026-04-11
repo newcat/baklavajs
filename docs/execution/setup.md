@@ -1,3 +1,7 @@
+<script setup>
+import EngineExample from "../.vitepress/components/examples/EngineExample.vue";
+</script>
+
 # Graph Execution
 
 BaklavaJS not only offers a way to edit compute graphs but also to execute them.
@@ -8,6 +12,16 @@ This is done by _engines_. There are different types of engines which execute th
 
 ::: tip
 If you want the behavior of Baklava V1's engine, use the dependency engine.
+:::
+
+Try changing the input values below — the engine automatically recalculates and displays the result:
+
+<BaklavaExample height="400px">
+    <EngineExample />
+</BaklavaExample>
+
+::: details View source
+<<< @/.vitepress/components/examples/EngineExample.vue
 :::
 
 There are, however, some prerequisites that are indenpendent of the engine implementation:
