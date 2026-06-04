@@ -195,7 +195,9 @@ const token = Symbol("token");
 const engine = new DependencyEngine(dep.editor);
 engine.events.afterRun.subscribe(token, (r) => {
     engine.pause();
-    applyResult(r, dep.editor);
+    applyResult(r, dep.editor, {
+        transferData: (value, connection) => engine.hooks.transferData.execute(value, connection),
+    });
     engine.resume();
     console.log(r);
 });
@@ -211,7 +213,9 @@ const forwardToken = Symbol("forwardToken");
 const forwardEngine = new ForwardEngine(fwd.editor);
 forwardEngine.events.afterRun.subscribe(forwardToken, (r) => {
     forwardEngine.pause();
-    applyResult(r, fwd.editor);
+    applyResult(r, fwd.editor, {
+        transferData: (value, connection) => forwardEngine.hooks.transferData.execute(value, connection),
+    });
     forwardEngine.resume();
     console.log("Forward Engine result:", r);
 });
