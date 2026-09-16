@@ -8,10 +8,16 @@
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "declaration": true,
-        "baseUrl": ".",
         "skipLibCheck": true,
-        "lib": ["DOM"]
+        "lib": ["ES2022", "DOM"]
     },
     "include": ["packages/*/src/*.ts", "packages/*/src/*.d.ts"],
-    "exclude": ["node_modules", "**/dist/**", "**/test/**", "packages/full/**", "packages/renderer-vue/playground"]
+    "exclude": [
+        "node_modules",
+        "**/dist/**",
+        "**/test/**",
+        "packages/full/**",
+        "packages/renderer-vue/playground",
+        "packages/themes/**"
+    ]
 }

@@ -17,13 +17,13 @@ jobs:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
               with:
                   fetch-depth: 0
             - name: Install pnpm
-              uses: pnpm/action-setup@v4
+              uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413
             - name: Use Node.js 24
-              uses: actions/setup-node@v5
+              uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
               with:
                   node-version: "24"
             - name: Install dependencies
@@ -39,9 +39,9 @@ jobs:
                   pnpm run generate-api-docs
                   pnpm run docs:build
             - name: Upload artifact
-              uses: actions/upload-pages-artifact@v4
+              uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
               with:
                   path: "./docs/.vitepress/dist/"
             - name: Deploy
               id: deployment
-              uses: actions/deploy-pages@v4
+              uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
