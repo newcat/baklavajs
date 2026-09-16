@@ -29,6 +29,7 @@ export default defineConfig({
     lang: "en-US",
     title: "BaklavaJS",
     description: "Graph / node editor in the browser using VueJS",
+    base: "/baklavajs/",
     themeConfig: {
         editLink: {
             pattern: "https://github.com/newcat/baklavajs/edit/master/docs/:path",
@@ -37,7 +38,7 @@ export default defineConfig({
         nav: [
             {
                 text: "API Reference",
-                link: "https://baklava.tech/api/",
+                link: "https://newcat.github.io/baklavajs/api/",
             },
         ],
         sidebar: [
