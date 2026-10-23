@@ -2,6 +2,7 @@ import { computed, ComputedRef, reactive, ref, Ref, watch } from "vue";
 import { AbstractNode } from "@baklavajs/core";
 import { useGraph, useViewModel } from "../utility";
 import { ICommand } from "../commands";
+import { getDomElementOfNode } from "../connection/domResolver";
 
 interface SelectionBoxRect {
     left: number;
@@ -85,8 +86,7 @@ export function useSelectionBox(editorEl: Ref<HTMLElement | null>) {
 
     function getNodesInSelection() {
         const selectionBoxRect = getSelectionBoxRect();
-        const editor = document.querySelector(".baklava-editor") as Element;
-        const editorBounding = editor.getBoundingClientRect();
+        const editorBounding = editorEl.value!.getBoundingClientRect();
         return nodes.value.filter((node) => {
             const nodeRect = getNodeRect(node, editorBounding);
             return isRectOverlap(selectionBoxRect, nodeRect);
@@ -103,7 +103,7 @@ export function useSelectionBox(editorEl: Ref<HTMLElement | null>) {
     }
 
     function getNodeRect(node: AbstractNode, editorBounding: DOMRect): SelectionBoxRect {
-        const domNode = document.getElementById(node.id);
+        const domNode = getDomElementOfNode(node);
         const rect = domNode ? domNode.getBoundingClientRect() : { x: 0, y: 0, width: 0, height: 0 };
         const left = rect.x - editorBounding.left;
         const top = rect.y - editorBounding.top;

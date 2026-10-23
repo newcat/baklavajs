@@ -29,7 +29,9 @@ export function useHotkeyHandler(executeCommand: (name: string) => void) {
             pressedKeys.value.push(ev.key);
         }
 
-        if (document.activeElement && isInputElement(document.activeElement)) {
+        // document.activeElement would be the shadow host when the editor is inside a Shadow DOM
+        const target = (ev.composedPath?.()[0] ?? ev.target) as Element | null;
+        if (target && isInputElement(target)) {
             return;
         }
 

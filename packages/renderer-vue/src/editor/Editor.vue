@@ -89,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref, toRef } from "vue";
+import { computed, provide, ref, toRef, watch } from "vue";
 
 import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaViewModel } from "../viewModel";
@@ -98,6 +98,7 @@ import { usePanZoom } from "./panZoom";
 import { provideTemporaryConnection } from "./temporaryConnection";
 import { useContextMenu } from "./contextMenu";
 import { useSelectionBox } from "./selectionBox";
+import { setEditorElement } from "../connection/domResolver";
 
 import Background from "./Background.vue";
 import Node from "../node/Node.vue";
@@ -118,6 +119,16 @@ providePlugin(viewModelRef);
 
 const el = ref<HTMLElement | null>(null);
 provide("editorEl", el);
+// sync, so the element is known before the child components (e.g. connections) are mounted
+watch(
+    el,
+    (newEl) => {
+        if (newEl) {
+            setEditorElement(newEl);
+        }
+    },
+    { flush: "sync" },
+);
 
 const nodes = computed(() => props.viewModel.displayedGraph.nodes);
 const dragMoves = computed(() => props.viewModel.displayedGraph.nodes.map((n) => useDragMove(toRef(n, "position"))));

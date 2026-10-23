@@ -2,6 +2,7 @@ import { Ref } from "vue";
 import { AbstractNode, Graph } from "@baklavajs/core";
 import { ICommand, ICommandHandler } from "./commands";
 import { IViewSettings } from "./settings";
+import { getDomElementOfNode, getEditorElement } from "./connection/domResolver";
 
 interface IRect {
     x1: number;
@@ -18,7 +19,11 @@ export type ZoomToFitRectCommand = ICommand<void, [IRect]>;
 export type ZoomToFitNodesCommand = ICommand<void, [AbstractNode[]]>;
 export type ZoomToFitGraphCommand = ICommand<void>;
 
-export function registerZoomToFitCommands(displayedGraph: Ref<Graph>, handler: ICommandHandler, settings: IViewSettings) {
+export function registerZoomToFitCommands(
+    displayedGraph: Ref<Graph>,
+    handler: ICommandHandler,
+    settings: IViewSettings,
+) {
     handler.registerCommand(ZOOM_TO_FIT_RECT_COMMAND, {
         canExecute: () => true,
         execute: (rect: IRect) => zoomToFitRect(displayedGraph.value, settings, rect),
@@ -42,7 +47,10 @@ function zoomToFitRect(graph: Graph, settings: IViewSettings, rect: IRect) {
         bottom: settings.zoomToFit.paddingBottom,
     };
 
-    const editorEl = document.querySelector(".baklava-editor") as Element;
+    const editorEl = getEditorElement();
+    if (!editorEl) {
+        return;
+    }
     const editorBounding = editorEl.getBoundingClientRect();
 
     const editorWidth = Math.max(0, editorBounding.width - padding.left - padding.right);
@@ -103,7 +111,7 @@ function zoomToFitGraph(graph: Graph, settings: IViewSettings) {
 }
 
 function getNodeRect(node: AbstractNode): IRect {
-    const domElement = document.getElementById(node.id);
+    const domElement = getDomElementOfNode(node);
     const width = domElement?.offsetWidth ?? 0;
     const height = domElement?.offsetHeight ?? 0;
     const posX = node.position?.x ?? 0;
