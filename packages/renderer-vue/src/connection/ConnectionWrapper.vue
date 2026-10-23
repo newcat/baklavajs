@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, onBeforeUnmount, onMounted, nextTick, watch } from "vue";
-import { Connection } from "@baklavajs/core";
+import type { AbstractNode, Connection } from "@baklavajs/core";
 import ConnectionView from "./ConnectionView.vue";
 import { getDomElements, IResolvedDomElements } from "./domResolver";
 import { TemporaryConnectionState } from "./connection";
@@ -30,8 +30,19 @@ export default defineComponent({
             props.connection.isInDanger ? TemporaryConnectionState.FORBIDDEN : TemporaryConnectionState.NONE,
         );
 
-        const fromNodePosition = computed(() => graph.value.findNodeById(props.connection.from.nodeId)?.position);
-        const toNodePosition = computed(() => graph.value.findNodeById(props.connection.to.nodeId)?.position);
+        const fromNode = computed(() => graph.value.findNodeById(props.connection.from.nodeId));
+        const toNode = computed(() => graph.value.findNodeById(props.connection.to.nodeId));
+
+        // Interfaces can be added, removed, reordered or hidden without the node moving or resizing
+        const getInterfaceLayout = (node?: AbstractNode) =>
+            node
+                ? [...Object.values(node.inputs), ...Object.values(node.outputs)]
+                      .map((intf) => `${intf.id}:${intf.hidden}`)
+                      .join()
+                : "";
+        const interfaceLayout = computed(
+            () => getInterfaceLayout(fromNode.value) + "|" + getInterfaceLayout(toNode.value),
+        );
 
         const getPortCoordinates = (resolved: IResolvedDomElements): [number, number] => {
             if (resolved.node && resolved.interface && resolved.port) {
@@ -78,7 +89,12 @@ export default defineComponent({
             }
         });
 
-        watch([fromNodePosition, toNodePosition], () => updateCoords(), { deep: true });
+        // flush: "post" so the coordinates are read after the nodes have been re-rendered
+        watch([() => fromNode.value?.position, () => toNode.value?.position], () => updateCoords(), {
+            deep: true,
+            flush: "post",
+        });
+        watch(interfaceLayout, () => updateCoords(), { flush: "post" });
 
         return { d, state };
     },

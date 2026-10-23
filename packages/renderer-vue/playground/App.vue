@@ -52,6 +52,7 @@ import InterfaceTestNode from "./InterfaceTestNode";
 import SelectTestNode from "./SelectTestNode";
 import SidebarNode from "./SidebarNode";
 import DynamicNode from "./DynamicNode";
+import ReorderTestNode from "./ReorderTestNode";
 import UpdateTestNode from "./UpdateTestNode";
 import MultiInputNode from "./MultiInputNode";
 import { DialogNode } from "./DialogNode";
@@ -116,6 +117,7 @@ function setupEditorInstance() {
     editor.registerNodeType(SelectTestNode);
     editor.registerNodeType(SidebarNode);
     editor.registerNodeType(DynamicNode);
+    editor.registerNodeType(ReorderTestNode);
     editor.registerNodeType(UpdateTestNode);
     editor.registerNodeType(ReactiveOutputTestNode);
     editor.registerNodeType(MultiInputNode);
