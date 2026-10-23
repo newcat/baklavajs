@@ -89,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, provide, Ref, ref, toRef } from "vue";
+import { computed, provide, ref, toRef } from "vue";
 
 import { AbstractNode } from "@baklavajs/core";
 import { IBaklavaViewModel } from "../viewModel";
@@ -113,7 +113,7 @@ const props = defineProps<{ viewModel: IBaklavaViewModel }>();
 
 const token = Symbol("EditorToken");
 
-const viewModelRef = toRef(props, "viewModel") as unknown as Ref<IBaklavaViewModel>;
+const viewModelRef = toRef(props, "viewModel");
 providePlugin(viewModelRef);
 
 const el = ref<HTMLElement | null>(null);

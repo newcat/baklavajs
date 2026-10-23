@@ -140,7 +140,7 @@ export function defineDynamicNode<I, O>(definition: IDynamicNodeDefinition<I, O>
             }
 
             this.preventUpdate = false;
-            this.events.loaded.emit(this as any);
+            this.events.loaded.emit(this);
         }
 
         private onUpdate() {

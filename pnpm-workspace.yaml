@@ -6,3 +6,7 @@ blockExoticSubdeps: true
 minimumReleaseAge: 10080 # 7 days in minutes
 trustPolicy: no-downgrade
 trustPolicyIgnoreAfter: 43200 # 30 days in minutes
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  nx: true

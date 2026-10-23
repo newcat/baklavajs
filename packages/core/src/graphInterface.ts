@@ -37,7 +37,7 @@ abstract class GraphInterfaceNode<I, O> extends Node<I, O> {
     }
 
     load(state: IGraphInterfaceNodeState<I, O>) {
-        super.load(state as INodeState<I, O>);
+        super.load(state);
         this.graphInterfaceId = state.graphInterfaceId;
     }
 }

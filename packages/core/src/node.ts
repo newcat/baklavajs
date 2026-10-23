@@ -146,7 +146,7 @@ export abstract class AbstractNode implements IBaklavaEventEmitter, IBaklavaTapa
                 this.outputs[k].nodeId = this.id;
             }
         });
-        this.events.loaded.emit(this as any);
+        this.events.loaded.emit(this);
     }
 
     public save(): INodeState<any, any> {

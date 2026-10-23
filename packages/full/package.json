@@ -45,7 +45,7 @@
         "@baklavajs/themes": "^2.8.1"
     },
     "devDependencies": {
-        "typescript": "^6.0.2",
-        "vue": "^3.5.22"
+        "typescript": "^6.0.3",
+        "vue": "^3.5.44"
     }
 }
