@@ -93,6 +93,11 @@ return { baklava };
 
 That's it! You should now be able to create nodes and connect them.
 
+::: tip
+By default, any output can be connected to any input.
+If you want to restrict connections to interfaces of the same type, use the [Interface Types](./nodes/interface-types.md) plugin.
+:::
+
 ## Try it out
 
 Right-click the canvas to add nodes, then drag between ports to connect them:

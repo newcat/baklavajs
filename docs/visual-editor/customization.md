@@ -98,6 +98,63 @@ import MyNodeRenderer from "./MyNodeRenderer.vue";
 </script>
 ```
 
+## Adding Nodes from a Custom Panel
+
+If you build your own node list outside of the editor, you can let users drag nodes from it onto the editor.
+The important part is converting the drop position from screen coordinates to graph coordinates, since the graph can be panned and zoomed.
+The `useTransform` function does this conversion for you.
+
+```vue
+<template>
+    <div class="my-node-list">
+        <div v-for="[type, info] in baklava.editor.nodeTypes" :key="type" draggable="true" @dragstart="onDragStart($event, type)">
+            {{ info.title }}
+        </div>
+    </div>
+    <!-- The editor fills this wrapper, so the wrapper has the same position and size as the editor -->
+    <div ref="editorWrapper" class="my-editor-wrapper" @dragover.prevent @drop="onDrop">
+        <BaklavaEditor :view-model="baklava" />
+    </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import { BaklavaEditor, useBaklava, useTransform } from "@baklavajs/renderer-vue";
+
+const baklava = useBaklava();
+const editorWrapper = ref<HTMLElement | null>(null);
+
+function onDragStart(event: DragEvent, type: string) {
+    event.dataTransfer?.setData("baklava/node-type", type);
+}
+
+function onDrop(event: DragEvent) {
+    const type = event.dataTransfer?.getData("baklava/node-type");
+    const nodeInformation = type ? baklava.editor.nodeTypes.get(type) : undefined;
+    if (!nodeInformation || !editorWrapper.value) {
+        return;
+    }
+
+    const node = baklava.displayedGraph.addNode(new nodeInformation.type());
+    if (!node) {
+        return;
+    }
+
+    // Convert the drop position relative to the editor into graph coordinates
+    const { transform } = useTransform();
+    const rect = editorWrapper.value.getBoundingClientRect();
+    const [x, y] = transform(event.clientX - rect.left, event.clientY - rect.top);
+    node.position.x = x;
+    node.position.y = y;
+}
+</script>
+```
+
+::: warning
+`useTransform` only works after the `<BaklavaEditor>` component has been mounted.
+Call it inside the drop handler like in the example above, not directly in `setup`.
+:::
+
 ## List of CSS Classes
 
 Below you can find a list of CSS classes used in Baklava:

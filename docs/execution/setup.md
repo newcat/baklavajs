@@ -10,6 +10,8 @@ This is done by _engines_. There are different types of engines which execute th
 -   [Dependency Engine](./dependency)
 -   [Forward Engine](./forward)
 
+Both engines also run without the visual editor, for example on a server. See [Server-side Execution](./server-side).
+
 ::: tip
 If you want the behavior of Baklava V1's engine, use the dependency engine.
 :::

@@ -79,6 +79,7 @@ export default defineConfig({
                     { text: "Graph Execution", link: "/execution/setup.md" },
                     { text: "Dependency Engine", link: "/execution/dependency.md" },
                     { text: "Forward Engine", link: "/execution/forward.md" },
+                    { text: "Server-side Execution", link: "/execution/server-side.md" },
                 ],
             },
             { text: "Event System", link: "/event-system.md" },

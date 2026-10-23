@@ -5,8 +5,17 @@ import InterfaceTypesExample from "../.vitepress/components/examples/InterfaceTy
 # Interface Types
 
 This plugin allows you to add types to node interfaces.
-By default, two node interfaces can only be connected if they have the same type.
+Once the plugin is set up, two typed node interfaces can only be connected if they have the same type.
 You can, however, override this behavior by using conversions.
+
+::: warning
+Type checking is not active out of the box. Any two interfaces can be connected until you do both of the following:
+
+1. Create a `BaklavaInterfaceTypes` instance for your editor (see [Usage](#usage)).
+2. Assign a type to each interface with `setType`.
+
+An interface without a type can always be connected to any other interface, even when the plugin is active.
+:::
 
 Try connecting the nodes below. Notice the colored ports — number (red) and string (green). Connections between compatible types are allowed, while incompatible connections are rejected:
 
@@ -99,7 +108,7 @@ new NodeInterface<string[]>("Foo", []).use(allowMultipleConnections).use(setType
 
 ## Conversions
 
-By default, only connections between two interfaces of the same type are allowed.
+Without conversions, only connections between two interfaces of the same type are allowed.
 To allow one type to be connected to another type, you can create a conversion.
 A conversion optionally accepts a _transformation function_, that can convert values.
 This is used when executing the graph.
