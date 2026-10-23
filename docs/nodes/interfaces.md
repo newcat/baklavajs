@@ -40,6 +40,14 @@ The components receives these props:
 
 To update the value of the interface, the component can emit the `update:modelValue` event with the new value.
 
+::: warning
+Output values of a node with a `calculate` function are always determined by what `calculate` returns.
+Changing the value of such an output through its component triggers a new calculation, which overwrites the value again.
+The changed value is also not passed on to connected nodes.
+If the user should be able to set a value that influences the node's output, put the component on an input interface (optionally with `.setPort(false)`) and use that value in `calculate`.
+Display components on outputs should only display the value.
+:::
+
 Here is an example component, that display a button that, when clicked, increases the value of the interface by one:
 
 ```vue
